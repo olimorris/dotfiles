@@ -1,0 +1,164 @@
+# Alacritty
+alias eal='code ~/.config/alacritty/alacritty.yml'
+
+# Django + Poetry
+alias djn='django_install'
+alias djm='python manage.py migrate'
+alias djp='django-admin startproject'
+alias dja='python manage.py startapp'
+alias djr='python manage.py runserver'
+alias dji='pip3 install -r requirements.txt'
+alias djmm='python manage.py makemigrations'
+
+alias pa='poetry add'
+alias dpy='docker-compose exec web pytest'
+alias dpa='docker-compose exec web poetry add'
+alias dpi='docker-compose exec web poetry add'
+alias pm='poetry run python manage.py migrate'
+alias pr='poetry run python manage.py runserver'
+alias papp='poetry run python manage.py startapp'
+alias dpu='docker-compose exec web poetry update'
+alias dpr='docker-compose exec web poetry remove'
+alias dcov='docker-compose exec web pytest --cov=decoder'
+alias dpm='docker-compose exec web poetry run python manage.py migrate'
+alias dpyw='docker-compose exec web poetry run ptw --ext=.py,.json --ignore tests_output'
+
+# Docker
+alias dl='docker ps'
+alias dc='docker-compose'
+alias dce='docker-compose exec'
+alias dcs='docker-compose stop'
+alias dcb='docker-compose build'
+alias dcu='docker-compose up -d'
+alias dx='docker system prune -a'
+alias dcd='docker-compose down -v'
+alias dlog='docker-compose logs -f'
+alias dub='docker-compose up -d --build'
+alias dclear='docker rm -fv $(docker ps -aq)'
+
+# Dotfiles
+alias ed='code ~/.dotfiles'
+alias clean='ruby ~/.dotfiles/misc/clean_up.rb'
+alias icons='python ~/.dotfiles/misc/seticons.py'
+alias cleanup='ruby ~/.dotfiles/misc/clean_up.rb ~/Downloads'
+
+# Git
+alias ga='git add'
+alias gaa='git add .'
+alias gc='git commit -m'
+alias gnb='git checkout -b'
+alias gp='git push origin master'
+alias gdm='git checkout -b dev-master'
+alias nah='git reset --hard && git clean -df'
+alias gfix='git rm -r --cached . && git add .'
+
+# Homebrew
+alias bc='brew cask'
+alias br='brew remove'
+alias bu='brew update'
+alias bs='brew search'
+alias bi='brew install'
+alias bcl='brew cask list'
+alias bci='brew cask install'
+alias bcr='brew cask remove'
+alias bupg='brew upgrade && brew cleanup'
+
+# Mac
+alias code='open $@ -a "Visual Studio Code"'
+alias subl="open -a /Applications/Sublime\ Text.app"
+alias reloadapps="defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock"
+
+# Misc
+alias italic='echo -e "\e[3mitalic\e[23m"'
+alias etxt='extract-text'
+alias wifi='wifi-password'
+alias dm="dark-mode dark"
+alias lm="dark-mode light"
+alias essh='code $HOME/.ssh/config'
+alias chmodall='sudo chmod -R 0777'
+alias copyssh='pbcopy < $HOME/.ssh/$1'
+alias tw="./node_modules/.bin/tailwind"
+alias mssh='ruby ~/.dotfiles/misc/ssh.rb'
+alias sep='ruby ~/.dotfiles/misc/make_separator.rb'
+alias dotinstall='/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/olimorris/dotfiles/master/Installer.rb)"'
+alias dropicons='file=/Applications/Dropbox.app/Contents/Resources/emblem-dropbox-uptodate.icns && [ -e "${file}" ] && mv -f "${file}" "${file}.bak"'
+
+# Neovim
+alias nvim='VIMRUNTIME=$HOME/.neovim/runtime $HOME/.neovim/build/bin/nvim'
+
+# PHP
+alias cu='composer update'
+alias ci='composer install'
+alias p='vendor/bin/phpunit'
+alias tm='vendor/bin/phpunit'
+alias sphp='brew-php-switcher'
+alias csu='composer self-update'
+alias phpunit='vendor/bin/phpunit'
+alias cda='composer dump-autoload'
+alias cgu='composer global update'
+alias cor='vendor/bin/codecept run'
+alias clearlogs='sudo echo -n -f >'
+alias pc='clear && vendor/bin/phpunit'
+alias tf='vendor/bin/phpunit --filter='
+alias phplogs='sudo tail -f /usr/local/var/log/* /usr/local/var/log/nginx/* ~/.valet/Log/* /usr/local/opt/php71/var/log/*'
+
+# Python
+alias jup='jupyter notebook'
+alias jupr="jupyter notebook --NotebookApp.allow_origin='https://colab.research.google.com' --port=9090 --no-browser"
+alias pipb='pip freeze > ~/.dotfiles/PIP.txt'
+alias pipi='pip install -r ~/.dotfiles/PIP.txt'
+
+# Rails
+alias rs='bin/rails server'
+alias rr='bin/rails routes'
+alias rup='rails app:update'
+alias rdm='bin/rails db:migrate'
+alias rgm='bin/rails generate model'
+alias rgc='bin/rails generate controller'
+
+# Ruby
+alias rt='rake test'
+alias rtf='ruby -Ilib:test'
+alias urvm='rvm get latest'
+alias rvml='rvm list known'
+alias ug='gem update --system && gem update'
+
+# Shell
+alias c='clear'
+alias tags='ctags -R'
+alias ep='nvim ~/.path'
+alias ev='nvim ~/.config/nvim/init.lua'
+alias ea='nvim ~/.aliases'
+alias et='nvim ~/.tmux.conf'
+alias ef='nvim ~/.functions'
+alias speedup='sudo rm /private/var/log/asl/*.asl'
+alias reloaddns='dscacheutil -flushcache && sudo killall -HUP mDNSResponder'
+
+# Shell navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias cde='cd ~/Code'
+alias desk='cd ~/Desktop'
+alias ....='cd ../../..'
+alias dot='cd ~/.dotfiles'
+alias py='cd ~/Code/Python'
+alias .....='cd ../../../..'
+alias cdp='cd ~/Code/Python'
+
+# Tmux
+alias ta='tmux attach -t'               # Attach to an existing Tmux session - Specify a name
+alias tn='tmux new-session -s'          # Create a new tmux session - Specify a name
+alias tl='tmux list-sessions'           # List all of the open tmux sessions
+alias tk='tmux kill-session -a'         # Kill all of the OTHER tmux sessions
+alias tks='tmux kill-server'            # Kill everything
+alias t='tmux attach || tmux new-session'   # Attaches tmux to the last session; creates a new session if none exists.
+alias tpi='~/.tmux/plugins/tpm/bin/install_plugins' # Installs Tmux plugins
+alias tpu='~/.tmux/plugins/tpm/bin/update_plugins all' # Updates all Tmux plugins
+
+# Neovim / Vim
+alias vi='nvim'
+alias vim='/usr/local/bin/vim'
+
+# OS management
+alias bk='(cd ~/.dotfiles && rake backup)'
+alias up='(cd ~/.dotfiles && rake sync)'

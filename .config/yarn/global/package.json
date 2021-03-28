@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@vitejs/create-app": "^2.0.2",
+    "@vue/cli": "^4.5.11",
+    "jest-coverage-badges": "^1.1.2"
+  }
+}

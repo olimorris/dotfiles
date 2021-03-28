@@ -1,0 +1,151 @@
+#!/bin/bash
+
+################################################################################
+# Core Bash functions
+################################################################################
+
+# Reload Zshrc
+function src()
+{
+    local cache=$ZSH_CACHE_DIR
+    autoload -U compinit zrecompile
+    compinit -d "$cache/zcomp-$HOST"
+
+    for f in ~/.zshrc "$cache/zcomp-$HOST"; do
+        zrecompile -p $f && command rm -f $f.zwc.old
+    done
+
+    echo "Sourced!"
+    exec zsh
+}
+
+# Create a new Tmux session that shares all windows with a previous session
+function ta
+{
+    tmux new-session -s $2 -t $1
+}
+
+# Create a new directory and enter it
+function mkd() {
+    mkdir -p "$@" && cd "$@"
+}
+
+# Show hidden files
+function unhide() {
+    defaults write com.apple.finder AppleShowAllFiles YES
+    killall -KILL Finder
+}
+
+# Hide hidden files
+function hide() {
+    defaults write com.apple.finder AppleShowAllFiles NO
+    killall -KILL Finder
+}
+
+# Print the current timestamp
+function now() {
+    echo $(date '+%F %T') | pbcopy
+}
+
+# `v` with no arguments opens the current directory in Vim, otherwise opens the given location
+function v() {
+    if [ $# -eq 0 ]; then
+        nvim .;
+    else
+        nvim "$@";
+    fi;
+}
+
+# `o` with no arguments opens the current directory, otherwise opens the given location
+function o() {
+    if [ $# -eq 0 ]; then
+        open .;
+    else
+        open "$@";
+    fi;
+}
+
+function django_install
+{
+    # Ensure PIP is up to date
+    python3 -m pip install --upgrade pip
+
+    # Create the environment file
+    venv
+
+    # # Create the requirements file
+    # touch requirements.txt
+    # echo "Django~=2.2.5" >> requirements.txt
+
+    # # Now install Django
+    # pip3 install -r requirements.txt --upgrade --force-reinstall
+
+    # Install Django
+    echo -n "Installing Django...\n"
+    python -m pip install Django --upgrade --force-reinstall
+
+    # Create a project
+    echo -n "\nWhat is the name of the Django project? "
+    read userInput
+    django-admin startproject $userInput .
+}
+
+function pipb() {
+    pip3 freeze > ~/.dotfiles/macos/PIP.txt
+}
+function pipi() {
+    pip3 install -r ~/.dotfiles/macos/PIP.txt
+}
+
+# Run pytest code coverage from within Docker
+# $1 is the name of the Docker container
+# $2 is the name of the project within Django
+# $3 is the directory of the tests - Default: tests/
+function dcov() {
+    docker-compose exec $1 pytest --cov=$2 $3
+}
+
+# Run pytest code coverage
+function cov() {
+    pytest --cov=$1 $2
+}
+
+# Pytest watch
+function dptw(){
+    docker-compose exec $1 poetry run ptw --ext=.py,.json
+}
+
+################################################################################
+# Misc functions
+################################################################################
+
+# Extract text from an image
+function extract_text {
+    FILEPATH=$1
+    convert $1 -resize 400% -type Grayscale $1.tif
+    tesseract -l eng $1.tif output
+}
+
+# Combine images horizontally
+# Example: hcombine my_image.jpg my_image2.jpg
+function hcombine {
+    filename=$(basename -- "$1")
+    extension="${filename##*.}"
+	dt=`date +"%Y-%m-%d %H.%M.%S"`
+    convert +append $1 $2 -gravity center +append "${dt}.${extension}"
+}
+
+# Combine images vertically
+# Example: vcombine my_image.jpg my_image2.jpg
+function vcombine {
+    filename=$(basename -- "$1")
+    extension="${filename##*.}"
+	dt=`date +"%Y-%m-%d %H.%M.%S"`
+    convert $1 $2 -gravity center -append "${dt}.${extension}"
+}
+
+# Run Docker Compose Exec commands
+function de()
+{
+    docker-compose exec $@
+}

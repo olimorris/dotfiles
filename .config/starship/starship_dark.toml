@@ -1,0 +1,34 @@
+[character]
+success_symbol = "[➜](bold #98c379)" #green
+error_symbol = "[➜](bold #e06c75)" #red
+
+[cmd_duration]
+style = "bold #61afef" #blue
+
+[directory]
+style = "bold #c678dd" #purple
+
+[docker_context]
+symbol = " "
+
+[git_branch]
+symbol = " "
+style = "bold #98c379"  #green
+
+[git_status]
+style = "bold #e06c75" #red
+
+[nodejs]
+symbol = " "
+style = "bold #e5c07b" #yellow
+
+[package]
+style = "bold #e06c75" #red
+
+[python]
+symbol = " "
+style = "bold #e5c07b" #yellow
+
+[ruby]
+synbol = " "
+style = "bold #e5c07b" #yellow

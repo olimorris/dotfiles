@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/Users/Oli/.asdf/shims/python3 ~/.dotfiles/misc/dark_mode.py $1

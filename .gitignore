@@ -1,0 +1,92 @@
+# Ignore everything except directories
+*
+!*/
+
+##### WHITELIST #####
+
+# alacritty
+!.config/alacritty/alacritty.yml
+
+# applescript
+!.applescript/**/*
+
+# composer
+!.composer/composer.json
+
+# git
+!.gitconfig
+!.gitignore_global
+!.github/workflows/**/*
+
+# mackup
+!.mackup/**/*
+!.mackup.cfg
+!.mackup_testing.cfg
+
+# neovim
+!.config/nvim/**/*
+!.config/snippets/**/*
+
+# misc
+
+# tests
+!tests/**/*
+
+# tmux
+!.tmux/conf/**/*
+
+# yarn
+!.yarnrc
+!.config/yarn/global/package.json
+
+# dotfiles
+!.hammerspoon/init.lua
+!.config/**/*
+!PIP.txt
+!.config/efm-langserver/config.yaml
+!.gitignore
+!.travis.yml
+!README.md
+!Rakefile
+!mas.txt
+!bin/**/*
+!brew/**/*
+!misc/**/*
+!tasks/**/*
+!.agignore
+!.aliases
+!.bash_profile
+!.bashrc
+!.ctags
+!.functions
+!.path
+!.tmux.conf
+!.tool-versions
+!.vimrc
+!.vimrc.plugins
+!.zprofile
+!.zshrc
+
+##### BLACKLIST #####
+
+# applescript
+.applescript/Convert To JPEG.workflow
+
+# neovim
+.config/nvim/.undo
+.config/nvim/.backup
+.config/nvim/.swap
+.config/nvim/.session
+.config/nvim/.sessionlast_session.vim
+.config/nvim/plugin
+
+# misc
+/backup
+.local
+.DS_Store
+.tresorit
+.tmux/plugins
+misc/ui
+misc/Alfred.alfredpreferences
+.ssh
+.gitconfig

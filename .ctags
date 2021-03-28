@@ -1,0 +1,14 @@
+--recurse=yes
+--tag-relative=yes
+--exclude=.cache
+--exclude=composer.lock
+--exclude=composer.json
+--exclude=tags.lock
+--exclude=tag.lock
+--exclude=pyproject.toml
+--exclude=poetry.lock
+--exclude=node_modules
+--exclude=resources/assets/css
+--exclude=public
+--exclude=storage
+--exclude=.git
