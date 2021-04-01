@@ -99,7 +99,7 @@ if [[ $BATT_PCT -ge 95 ]]; then
   fi
 
 # Green
-elif [[ $BATT_PCT -ge 80 ]]; then
+elif [[ $BATT_PCT -ge 70 ]]; then
   if ((output_tmux)); then
       if ((BATT_CONNECTED)); then
       COLOR="#[fg=$good_color]   "
@@ -111,7 +111,7 @@ elif [[ $BATT_PCT -ge 80 ]]; then
   fi
 
 # Yellow
-elif [[ $BATT_PCT -ge 30 ]] && [[ $BATT_PCT -lt 80 ]]; then
+elif [[ $BATT_PCT -ge 30 ]] && [[ $BATT_PCT -lt 70 ]]; then
   if ((output_tmux)); then
     if ((BATT_CONNECTED)); then
       COLOR="#[fg=$middle_color]   "
