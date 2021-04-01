@@ -26,6 +26,7 @@ keyboard-maestro
 launchcontrol
 ledger-live
 little-snitch
+monitorcontrol
 moom
 nordvpn
 notion

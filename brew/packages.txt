@@ -61,6 +61,7 @@ ripgrep
 shellcheck
 sshuttle
 starship
+telnet
 tesseract
 the_silver_searcher
 tidy-html5
