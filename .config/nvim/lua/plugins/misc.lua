@@ -11,13 +11,10 @@ function M.bufferline()
         animation = false,
         auto_hide = false,
         clickable = false,
-        closable = false,
+        closable = true,
 
         icons = false, -- Webdev icons
-        icon_separator_active = '▎',
-        icon_separator_inactive = '▎',
         icon_close_tab = '',
-        icon_close_tab_modified = '',
 
         maximum_padding = 1
     }
@@ -32,21 +29,10 @@ function M.bufferline()
     })
 end
 ---------------------------------------------------------------------------- }}}
------------------------------------COMMENT---------------------------------- {{{
-function M.comment()
-    local has_plugin = pcall(cmd, 'packadd nvim_comment')
-    if not has_plugin then
-        do
-            return
-        end
-    end
-    require('nvim_comment').setup()
-end
----------------------------------------------------------------------------- }}}
 ----------------------------------DASHBOARD--------------------------------- {{{
 function M.dashboard()
     local home = os.getenv('HOME')
-    
+
     g.dashboard_default_executive = 'telescope'
     g.dashboard_session_directory = sessiondir
 
@@ -54,7 +40,7 @@ function M.dashboard()
     g.dashboard_preview_pipeline = 'lolcat'
     g.dashboard_preview_file = home .. '/.config/nvim/static/neovim.cat'
     g.dashboard_preview_file_height = 8
-    g.dashboard_preview_file_width = 80
+    g.dashboard_preview_file_width = 90
 
     g.dashboard_custom_section = {
         a = {
@@ -72,13 +58,13 @@ function M.dashboard()
         e = {
             description = {'  Find Word               '},
             command = 'Telescope live_grep'
-        },
+        }
         -- f = {
         --     description = {'  Marks                   '},
         --     command = 'Telescope marks'
         -- }
     }
-    g.dashboard_custom_footer = { "[ Oli's Dashboard ]"}
+    g.dashboard_custom_footer = {"[ Oli's Dashboard ]"}
 
     cmd ':ab db Dashboard'
 end
@@ -167,54 +153,40 @@ end
 ---------------------------------------------------------------------------- }}}
 -----------------------------------TESTING---------------------------------- {{{
 function M.testing()
-    -- Vim Test
+    ----------------------------------VIM-TEST---------------------------------- {{{
     g['test#strategy'] = 'floaterm'
 
+    -- Python
     g['test#python#runner'] = 'pytest'
     g['test#python#pytest#options'] = '--color=yes'
     g['test#python#pytest#executable'] = 'docker-compose -f "./docker-compose.yml" exec -T -w /usr/src/app web pytest'
 
+    -- Javascript
     g['test#javascript#runner'] = 'jest'
     g['test#javascript#jest#options'] = '--color=always'
 
-    local DockerDebug = function(cmd)
-
-    end
-    g['test#custom_transformations'] = {docker_debug = DockerDebug()}
-    g['test#transformation'] = 'docker_debug'
-
-    -- Floaterm
+    ---------------------------------------------------------------------------- }}}
+    ----------------------------------FLOATERM---------------------------------- {{{
     g.floaterm_width = 0.8
     g.floaterm_height = 0.8
     g.floaterm_autoinsert = true
-
-    -- Ultest
+    ---------------------------------------------------------------------------- }}}
+    -----------------------------------ULTEST----------------------------------- {{{
     g.ultest_pass_sign = ''
     g.ultest_fail_sign = ''
     g.ultest_running_sign = 'ﱤ'
     utils.create_augroup({{'BufWritePost * UltestNearest'}}, 'UltestRunner')
-
-    utils.map('n', '<Leader>t', '<cmd>TestNearest<CR>', {
+    ---------------------------------------------------------------------------- }}}
+    local opts = {
         silent = true
-    })
-    utils.map('n', '<Leader>u', '<cmd>UltestNearest<CR>', {
-        silent = true
-    })
-    utils.map('n', '<Leader>ta', '<cmd>Ultest<CR>', {
-        silent = true
-    })
-    utils.map('n', '<Leader>tl', '<cmd>TestLast<CR>', {
-        silent = true
-    })
-    utils.map('n', '<Leader>tf', '<cmd>TestFile<CR>', {
-        silent = true
-    })
-    utils.map('n', '<C-x>', '<cmd>FloatermToggle<CR>', {
-        silent = true
-    })
-    utils.map('t', '<C-x>', '<cmd>FloatermToggle<CR>', {
-        silent = true
-    })
+    }
+    utils.map('n', '<Leader>t', '<cmd>TestNearest<CR>', opts)
+    utils.map('n', '<Leader>u', '<cmd>UltestNearest<CR>', opts)
+    utils.map('n', '<Leader>ta', '<cmd>Ultest<CR>', opts)
+    utils.map('n', '<Leader>tl', '<cmd>TestLast<CR>', opts)
+    utils.map('n', '<Leader>tf', '<cmd>TestFile<CR>', opts)
+    utils.map('n', '<C-x>', '<cmd>FloatermToggle<CR>', opts)
+    utils.map('t', '<C-x>', '<cmd>FloatermToggle<CR>', opts)
 end
 ---------------------------------------------------------------------------- }}}
 return M

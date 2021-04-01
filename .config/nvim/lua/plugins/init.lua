@@ -16,7 +16,7 @@ return require('packer').startup(function(use)
 
     -- Appearance
     use {
-        '~/Code/Neoterm/onedark_nvim',
+        '~/Code/Neovim/onedark_nvim',
         requires = 'rktjmp/lush.nvim'
     }
     use {
@@ -84,7 +84,10 @@ return require('packer').startup(function(use)
     }
     use {
         'hrsh7th/vim-vsnip', -- Snippet management
-        requires = 'hrsh7th/vim-vsnip-integ'
+        requires = {
+            {'hrsh7th/vim-vsnip-integ'}, -- Snippet completion and expansion
+            {'rafamadriz/friendly-snippets'} -- Collection of snippets
+        }
     }
     use 'glepnir/lspsaga.nvim' -- Async finder, code action, hover docs -- cool hover menus
     use 'onsails/lspkind-nvim' -- VSCode like icons in menu
@@ -118,14 +121,15 @@ return require('packer').startup(function(use)
     }
     use {
         'rcarriga/vim-ultest', -- Run tests on any type of code base
-        requires = {{'vim-test/vim-test'}, -- Seemless running of tests within neovim
-        {'voldikss/vim-floaterm'} -- Use the terminal in a floating window
+        requires = {
+            {'vim-test/vim-test'}, -- Seemless running of tests within neovim
+            {'voldikss/vim-floaterm'}, -- Use the terminal in a floating window
         },
         run = ':UpdateRemotePlugins',
         config = require('plugins.misc').testing()
     }
     use 'sheerun/vim-polyglot' -- Language packs for every language
-    use 'tpope/vim-surround' -- Use Vim commands within parenthesis and brackets
+    use 'tpope/vim-surround' -- Use vim commands to surround text, tags with brackets, parenthesis etc
     use {
         'windwp/nvim-autopairs', -- Pair brackets, quotation marks etc
         event = {'BufRead *'},
@@ -159,7 +163,7 @@ return require('packer').startup(function(use)
         'JoosepAlviste/nvim-ts-context-commentstring', -- Smart commenting in multi language files - Enabled in Treesitter file
         requires = {
             'terrortylor/nvim-comment',
-            config = require('plugins.misc').comment()
+            config = require('nvim_comment').setup()
         }
     }
 

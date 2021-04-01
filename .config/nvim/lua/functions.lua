@@ -1,28 +1,3 @@
---------------------------------NEOVIM SERVER------------------------------- {{{
-function LogNeovimAPIServer()
-    -- On starting up, Neovim creates a server which is specefic to its
-    -- instance. We write this instance into a text file so that external
-    -- applications can pick this up and make API calls to.
-    server_list = "/Users/Oli/.config/nvim/servers.txt"
-    servers = io.open(server_list, "a")
-    servers:write(vim.v.servername .. ',')
-    servers:close(servers)
-end
-LogNeovimAPIServer()
-function UnlogNeovimAPIServer()
-    -- When we exit Neovim, we clear out the server name from the text file
-    -- to ensure external apps are not querying a redundant server
-    servers = io.open("/Users/Oli/.config/nvim/servers.txt", "r")
-    data = servers:read()
-    servers:close()
-
-    servers = io.open("/Users/Oli/.config/nvim/servers.txt", "w+")
-    new_data = string.gsub(data, vim.v.servername .. ',', '')
-    servers:write(new_data)
-    servers:close()
-end
-utils.create_augroup({{'VimLeave * call v:lua.UnlogNeovimAPIServer()'}}, 'neovim_api_server')
----------------------------------------------------------------------------- }}}
 --------------------------------MINIMAL MODE-------------------------------- {{{
 minimal_mode = 0
 function ToggleMinimal()
@@ -48,6 +23,19 @@ utils.map('n', '<S-m>', ':call v:lua.ToggleMinimal()<cr>', {
     silent = true
 })
 ---------------------------------------------------------------------------- }}}
+-------------------------------QUICKFIX TOGGLE------------------------------ {{{
+function QuickfixToggle()
+    print('toggling')
+    if fn['exists']("g:qfix_win") then
+        cmd 'cclose'
+    else
+        cmd 'copen 10'
+    end
+end
+utils.map('n', '<C-q>', ':call v:lua.QuickfixToggle()<CR>', {
+    silent = true
+})
+---------------------------------------------------------------------------- }}}
 ----------------------------------SNIPPETS---------------------------------- {{
 function SnippetLookup()
     local snippet = fn.input('Snippets to edit: ')
@@ -55,7 +43,7 @@ function SnippetLookup()
     cmd(":edit " .. path .. "/" .. snippet .. ".json")
     print(" ")
 end
-utils.map('n', '<leader>es', ':call v:lua.SnippetLookup()<cr>', {
+utils.map('n', '<leader>es', ':call v:lua.SnippetLookup()<CR>', {
     silent = true
 })
 ---------------------------------------------------------------------------- }}}

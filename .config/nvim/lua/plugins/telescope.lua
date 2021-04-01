@@ -23,6 +23,13 @@ function M.setup()
     function _G.__telescope_files()
         builtins.find_files(options)
     end
+    function _G.__telescope_all_files()
+        options['search_dirs'] = {
+            '~/Code/Neovim',
+            '~/Code/Python'
+        }
+        builtins.find_files(options)
+    end
     function _G.__telescope_live_grep()
         builtins.live_grep(options)
     end
@@ -33,6 +40,7 @@ function M.setup()
     local opts = {silent = true}
     utils.map_lua('n', '<C-f>', '__telescope_current_buffer_fuzzy_find()', opts)
     utils.map_lua('n', '<C-p>', '__telescope_files()', opts)
+    utils.map_lua('n', '<C-o>', '__telescope_all_files()', opts)
     utils.map_lua('n', '<C-g>', '__telescope_live_grep()', opts)
     utils.map_lua('n', '<C-t>', '__telescope_treesitter()', opts)
 
@@ -53,7 +61,7 @@ function M.config()
             prompt_prefix = ' 🔍 ',
             selection_caret = "ﰲ ",
             file_ignore_patterns = {
-                "%.jpg", "%.jpeg", "%.png", "%.svg", "%.otf", "%.ttf"
+                "%.csv", "%.jpg", "%.jpeg", "%.png", "%.svg", "%.otf", "%.ttf", "%.lock", "__pycache__/*", "%.sqlite3", "%.ipynb", "vendor/*", "node_modules/*"
             },
             file_sorter = sorters.get_fzy_sorter,
             generic_sorter = sorters.get_fzy_sorter,

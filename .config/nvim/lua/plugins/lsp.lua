@@ -184,12 +184,12 @@ function M.config()
 
         -- Hover and definitions with scroll ability
         utils.map_lua("n", "K", "require('lspsaga.hover').render_hover_doc()")
-        utils.map_lua("n", "gd", "require('lspsaga.provider').preview_definition()")
+        utils.map_lua("n", "gp", "require('lspsaga.provider').preview_definition()")
 
         -- diagnostic
-        utils.map_lua("n", "<space>d", "require('lspsaga.diagnostic').show_line_diagnostics()")
-        utils.map_lua("n", "gn", "require('lspsaga.diagnostic').lsp_jump_diagnostic_next()")
-        utils.map_lua("n", "gp", "require('lspsaga.diagnostic').lsp_jump_diagnostic_prev()")
+        utils.map_lua("n", "gd", "require('lspsaga.diagnostic').show_line_diagnostics()")
+        utils.map_lua("n", "g[", "require('lspsaga.diagnostic').lsp_jump_diagnostic_prev()")
+        utils.map_lua("n", "g]", "require('lspsaga.diagnostic').lsp_jump_diagnostic_next()")
     end
 
     return M.setup_servers()
