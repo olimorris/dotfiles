@@ -74,7 +74,7 @@ utils.map('n', '$', "<cmd>lua require'hop'.hint_words()<cr>", {})
 ---------------------------------------------------------------------------- }}}
 ---------------------------------INDENTLINE--------------------------------- {{{
 function M.indentline()
-    g.indent_blankline_char = ' '
+    g.indent_blankline_char = '┊'
     g.indent_blankline_use_treesitter = true
     g.indent_blankline_show_current_context = true
     g.indent_blankline_space_char_highlight_list = 'IndentLine'

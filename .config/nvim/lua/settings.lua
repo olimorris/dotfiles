@@ -141,6 +141,5 @@ utils.map('n', '<Leader>r', ' <cmd>w!<CR> <cmd>FloatermNew \'1T python\'.shelles
 ---------------------------------------------------------------------------- }}}
 ----------------------------------COMMANDS---------------------------------- {{{
 -- Indentation based on filetypes
-cmd 'autocmd Filetype lua setlocal ts=2 sw=2 expandtab'
-cmd 'autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 expandtab'
+cmd 'autocmd Filetype lua,javascript,vue setlocal ts=2 sw=2 sts=0 expandtab'
 ---------------------------------------------------------------------------- }}}
