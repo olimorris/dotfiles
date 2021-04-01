@@ -99,30 +99,29 @@ def app_neovim_nightly(mode):
     with open(os.path.expanduser(path_to_nvim_file), 'w') as config_file:
         config_file.write(nvim_contents)
 
-    # Change the neovim via an api call
-    try:
-        # Open the servers list
-        with open(os.path.expanduser("~/.config/nvim/servers.txt"), 'r') as servers_list:
-            servers = servers_list.read()
-            servers_to_keep = ''
+    # Get the neovim servers using neovim-remote
+    servers = subprocess.run(['nvr', '--serverlist'], stdout = subprocess.PIPE)
+    servers = servers.stdout.splitlines()
 
-        # Loop through them and change the theme
-        for server in servers.split(','):
-            try:
-                nvim = attach('socket', path=server)
-                nvim.command("call v:lua.SetTheme('" + mode + "')")
-                servers_to_keep += server + ","
-            except:
-                continue
-            
-        # Clear out any redundant servers
-        if len(servers_to_keep) > 0:
-            with open(os.path.expanduser("~/.config/nvim/servers.txt"), 'w') as servers_list:
-                servers_list.write(servers_to_keep)
+    # Loop through them and change the theme
+    for server in servers:
+        try:
+            nvim = attach('socket', path=server)
+            nvim.command("call v:lua.SetTheme('" + mode + "')")
+        except:
+            continue
 
-        return
-    except FileNotFoundError:
-        return
+    return
+
+def app_safari(mode):
+    path_from = "~/.dotfiles/misc/ui/"
+    path_to = "~/Library/Containers/com.apple.Safari/Data/Library/Safari/StartPage/"
+
+    if mode == "dark":
+        return subprocess.run(['cp', os.path.expanduser(path_from + 'safari_dark.jpg'), os.path.expanduser(path_to + 'defaultBackground')])
+
+    if mode == "light":
+        return subprocess.run(['cp', os.path.expanduser(path_from + 'safari_light.jpg'), os.path.expanduser(path_to + 'defaultBackground')])
 
 def run_apps(mode=None):
     """
