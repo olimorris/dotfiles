@@ -200,11 +200,11 @@ if has_lspinstall then
     -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
     require('lspinstall').post_install_hook = function()
         M.setup_servers() -- reload installed servers
-        vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+        cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
     end
     require('lspinstall').post_uninstall_hook = function()
         M.setup_servers() -- reload installed servers
-        vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+        cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
     end
 end
 ---------------------------------------------------------------------------- }}}
