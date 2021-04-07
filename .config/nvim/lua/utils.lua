@@ -1,15 +1,9 @@
 o = vim.o -- vim options
-
 g = vim.g -- vim global variables
-
 w = vim.wo -- vim window options
-
 b = vim.bo -- vim buffer options
-
 fn = vim.fn -- to call Vim functions e.g. fn.bufnr()
-
 cmd = vim.cmd -- to execute Vim commands e.g. cmd('pwd')
-
 exec = vim.api.nvim_command
 
 local M = {} -- The module to export
@@ -116,3 +110,4 @@ end
 -- so we add the module to the _G global variable.
 _G.utils = M
 return M -- Export the module
+

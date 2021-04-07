@@ -119,7 +119,7 @@ end
 ------------------------------PYTHON DEBUGGING------------------------------ {{{
 function debug_python_test(host, port)
     local debug_host = '0.0.0.0'
-    local debug_port = 3000
+    local debug_port = 5678
 
     utils.echo_info('Waiting for debugger to attach...')
 

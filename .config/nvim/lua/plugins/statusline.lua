@@ -3,6 +3,7 @@ local gls = gl.section
 local condition = require('galaxyline.condition')
 local vcs = require('galaxyline.provider_vcs')
 
+-- Don't show the statusline in these windows
 gl.short_line_list = {'packer', 'NvimTree', 'floaterm', 'dap-repl'}
 
 -----------------------------------COLORS----------------------------------- {{{

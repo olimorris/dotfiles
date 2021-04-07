@@ -16,7 +16,7 @@ return require('packer').startup(function(use)
 
     -- Appearance
     use {
-        '~/Code/Neovim/onedark_nvim',
+        'olimorris/onedark.nvim',
         requires = 'rktjmp/lush.nvim'
     }
     use {
@@ -73,22 +73,19 @@ return require('packer').startup(function(use)
     -- LSP
     use {
         'neovim/nvim-lspconfig', -- Use native LSP
-        requires = {
-            use {'kabouzeid/nvim-lspinstall'}, -- Install LSP servers from within Neovim
-            use {
-                'hrsh7th/nvim-compe', -- Code completion
-                event = {'InsertEnter *'},
-                config = require('plugins.compe').config()
-            }
-        },
+        requires = {use {'kabouzeid/nvim-lspinstall'}, -- Install LSP servers from within Neovim
+        use {
+            'hrsh7th/nvim-compe', -- Code completion
+            event = {'InsertEnter *'},
+            config = require('plugins.compe').config()
+        }},
         setup = require('plugins.lsp').setup(),
         config = require('plugins.lsp').config()
-    } 
+    }
     use {
         'hrsh7th/vim-vsnip', -- Snippet management
-        requires = {
-            {'hrsh7th/vim-vsnip-integ'}, -- Snippet completion and expansion
-            {'rafamadriz/friendly-snippets'} -- Collection of snippets
+        requires = {{'hrsh7th/vim-vsnip-integ'}, -- Snippet completion and expansion
+        {'rafamadriz/friendly-snippets'} -- Collection of snippets
         }
     }
     use 'glepnir/lspsaga.nvim' -- Async finder, code action, hover docs -- cool hover menus
@@ -108,7 +105,9 @@ return require('packer').startup(function(use)
         }, {
             'nvim-treesitter/playground', -- Test Treesitter on files
             after = 'nvim-treesitter'
-        }, {'windwp/nvim-ts-autotag' -- Autoclose and autorename HTML and Vue tags
+        }, {
+            'windwp/nvim-ts-autotag', -- Autoclose and autorename HTML and Vue tags
+            after = 'nvim-treesitter'
         }},
         -- Use TSInstallFromGrammar to install things like python, vue, javascript etc
         config = require('plugins.treesitter').config()
@@ -119,19 +118,25 @@ return require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim', -- Awesome fuzzy finder for everything
         setup = require('plugins.telescope').setup(),
         config = require('plugins.telescope').config(),
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {
+            'nvim-telescope/telescope-frecency.nvim', -- Uses an algorithm to detect which files you may wish to open
+            requires = 'tami5/sql.nvim',
+            after = 'telescope.nvim'
+        }}
     }
     use {
         'rcarriga/vim-ultest', -- Run tests on any type of code base
-        requires = {
-            {'vim-test/vim-test'}, -- Seemless running of tests within neovim
-            {'voldikss/vim-floaterm'}, -- Use the terminal in a floating window
+        requires = {{'vim-test/vim-test'}, -- Seemless running of tests within neovim
+        {'voldikss/vim-floaterm'} -- Use the terminal in a floating window
         },
         run = ':UpdateRemotePlugins',
         config = require('plugins.misc').testing()
     }
-    use 'sheerun/vim-polyglot' -- Language packs for every language
     use 'tpope/vim-surround' -- Use vim commands to surround text, tags with brackets, parenthesis etc
+    use {
+        'nacro90/numb.nvim', -- Peak on line numbers
+        setup = require('numb').setup()
+    }
     use {
         'windwp/nvim-autopairs', -- Pair brackets, quotation marks etc
         event = {'BufRead *'},

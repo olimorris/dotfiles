@@ -69,15 +69,18 @@ o.undodir = fn.stdpath('config')..'/.undo' -- Set the undo directory
 sessiondir = fn.stdpath('config')..'/.session' -- Set the session directory
 ---------------------------------------------------------------------------- }}}
 ----------------------------------MAPPINGS---------------------------------- {{{
+opts = {silent = true}
+
 utils.map('n', ';', ':') -- Faster way to enter a command
-utils.map('i', 'jk', '<esc>', {silent = true}) -- Make escape easier to reach
--- utils.map('n', '<Leader>td', ' <cmd>e todo.txt<CR>', {silent = true})
-utils.map('n', '<Leader>w', ' <cmd>w<CR>', {silent = true})
+utils.map('i', 'jk', '<esc>', opts) -- Make escape easier to reach
+-- utils.map('n', '<Leader>td', ' <cmd>e todo.txt<CR>', opts)
+utils.map('n', '<Leader>w', '<cmd>w<CR>', opts)
+utils.map('n', '<C-q>', '<cmd>qall<CR>', opts) -- Easy quit
 
 -- Working with init.lua
-utils.map('n', '<Leader>v', '<cmd>e $MYVIMRC | cd %:p:h<CR>', {silent = true})
-utils.map('n', '<Leader>s', '<cmd>w<CR><cmd>luafile $MYVIMRC<CR>', {silent = true})
-utils.map('n', '<Leader>p', '<cmd>e $PLUGINRC<CR>', {silent = true})
+utils.map('n', '<Leader>v', '<cmd>e $MYVIMRC | cd %:p:h<CR>', opts)
+utils.map('n', '<Leader>s', '<cmd>w<CR><cmd>luafile $MYVIMRC<CR>', opts)
+utils.map('n', '<Leader>p', '<cmd>e ~/.config/nvim/plugins/init.lua<CR>', opts)
 
 --noremap <silent><c-C>  <cmd>call CloseBufferAndPreviewWindows()<CR>
 
@@ -85,31 +88,31 @@ utils.map('n', '<Leader>p', '<cmd>e $PLUGINRC<CR>', {silent = true})
 -- utils.map('n', '<C-f>', ' :/')
 utils.map('n', '<Leader>f', ' :%s/{search}/{replace}/g')
 utils.map('v', '<Leader>f', ' :s/{search}/{replace}/g')
-utils.map('n', '<Leader>h', '<cmd>nohlsearch<CR>', {silent = true})
+utils.map('n', '<Leader>h', '<cmd>nohlsearch<CR>', opts)
 
 -- Movement
-utils.map('n', 'j', 'gj', {silent = true})
-utils.map('n', 'k', 'gk', {silent = true})
-utils.map('n', 'B', '^', {silent = true})
-utils.map('n', 'E', '$', {silent = true})
+utils.map('n', 'j', 'gj', opts)
+utils.map('n', 'k', 'gk', opts)
+utils.map('n', 'B', '^', opts)
+utils.map('n', 'E', '$', opts)
 
 -- Move lines of code up or down
-utils.map('n', '∆', ' <cmd>m .+1<CR>==', {silent = true})
-utils.map('n', '˚', ' <cmd>m .-2<CR>==', {silent = true})
-utils.map('i', '∆', '<Esc> <cmd>m .+1<CR>==gi', {silent = true})
-utils.map('i', '˚', ' <cmd><Esc>m .-2<CR>==gi', {silent = true})
-utils.map('v', '∆', ' <cmd>m \'>+1<CR>gv=gv', {silent = true})
-utils.map('v', '˚', ' <cmd>m \'<-2<CR>gv=gv', {silent = true})
+utils.map('n', '∆', ' <cmd>m .+1<CR>==', opts)
+utils.map('n', '˚', ' <cmd>m .-2<CR>==', opts)
+utils.map('i', '∆', '<Esc> <cmd>m .+1<CR>==gi', opts)
+utils.map('i', '˚', ' <cmd><Esc>m .-2<CR>==gi', opts)
+utils.map('v', '∆', ' <cmd>m \'>+1<CR>gv=gv', opts)
+utils.map('v', '˚', ' <cmd>m \'<-2<CR>gv=gv', opts)
 
 utils.map('v', '<', '<gv') -- Reselect the visual block after indent
 utils.map('v', '>', '>gv') -- Reselect the visual block after outdent
 
 -- Splits
-utils.map('n', 'sv', '<cmd>vsplit<CR>') -- Create vertical split
-utils.map('n', 'sh', '<cmd>split<CR>') -- Create horizontal split
+utils.map('n', 'sv', '<cmd>vsplit<CR>', opts) -- Create vertical split
+utils.map('n', 'sh', '<cmd>split<CR>', opts) -- Create horizontal split
 utils.map('n', 'sc', '<C-w>q') -- Close the current split
 utils.map('n', 'so', '<C-w>o') -- Close all splits but the current one
-utils.map('n', 'se', '<C-w>=') -- Resize all spltis evenly
+utils.map('n', 'se', '<C-w>=') -- Resize all splits evenly
 
 utils.map('n', '<C-h>', '<C-w>h') -- Move between splits
 utils.map('n', '<C-j>', '<C-w>j') -- Move between splits
@@ -119,9 +122,9 @@ utils.map('n', '<C-l>', '<C-w>l') -- Move between splits
 -- utils.map('n', '<Leader>c', ' <cmd>only \\|  <cmd>tabclose<CR>') -- Close all splits and tabs
 
 -- Tabs
-utils.map('n', '<Leader>tc', '<cmd>tabclose<CR>')
-utils.map('n', '<Leader>to', '<cmd>tabonly<CR>')
-utils.map('n', '<Leader>te', '<cmd>tabe %<CR>')
+utils.map('n', '<Leader>tc', '<cmd>tabclose<CR>', opts)
+utils.map('n', '<Leader>to', '<cmd>tabonly<CR>', opts)
+utils.map('n', '<Leader>te', '<cmd>tabe %<CR>', opts)
 -- Next tab is gt
 -- Previous tab is gT
 

@@ -32,9 +32,6 @@ function QuickfixToggle()
         cmd 'copen 10'
     end
 end
-utils.map('n', '<C-q>', ':call v:lua.QuickfixToggle()<CR>', {
-    silent = true
-})
 ---------------------------------------------------------------------------- }}}
 ----------------------------------SNIPPETS---------------------------------- {{
 function SnippetLookup()

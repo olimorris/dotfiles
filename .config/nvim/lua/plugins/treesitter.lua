@@ -12,7 +12,7 @@ function M.config()
 
     require('nvim-treesitter.configs').setup {
         highlight = {
-            enable = false
+            enable = true -- Needed for colour schemes
         },
         indent = {
             enable = true
@@ -53,7 +53,10 @@ function M.config()
                 enable = true,
                 keymaps = {
                     goto_definition = "gnd", -- mapping to go to definition of symbol under cursor
-                    list_definitions = "gnD" -- mapping to list all definitions in current file
+                    list_definitions = "gnD", -- mapping to list all definitions in current file
+                    list_definitions_toc = "gO",
+                    goto_next_usage = "<a-*>",
+                    goto_previous_usage = "<a-#>",
                 }
             }
         },
