@@ -54,6 +54,7 @@ suspicious-package
 tableplus
 telegram
 textexpander
+tower
 typora
 visual-studio-code
 vlc
