@@ -7,13 +7,20 @@
 # Reload Zshrc
 function src()
 {
+    # Clean the cache
     local cache=$ZSH_CACHE_DIR
     autoload -U compinit zrecompile
     compinit -d "$cache/zcomp-$HOST"
 
+    # Remove any old compiled files
     for f in ~/.zshrc "$cache/zcomp-$HOST"; do
         zrecompile -p $f && command rm -f $f.zwc.old
     done
+
+    # Load the shell dotfiles:
+    # for file in ~/.{aliases,functions,path}; do
+    #     [ -r "$file" ] && [ -f "$file" ] && source "$file"
+    # done
 
     echo "Sourced!"
     exec zsh
