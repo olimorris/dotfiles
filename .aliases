@@ -44,10 +44,11 @@ alias cleanup='ruby ~/.dotfiles/misc/clean_up.rb ~/Downloads'
 
 # Git
 alias ga='git add'
+alias gp='git pull'
 alias gaa='git add .'
 alias gc='git commit -m'
 alias gnb='git checkout -b'
-alias gp='git push origin master'
+alias gpu='git push origin master'
 alias gdm='git checkout -b dev-master'
 alias nah='git reset --hard && git clean -df'
 alias gfix='git rm -r --cached . && git add .'
