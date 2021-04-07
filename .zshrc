@@ -21,7 +21,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git asdf zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(asdf zsh-autosuggestions zsh-syntax-highlighting)
 
 # User configuration
 
@@ -35,7 +35,7 @@ fi
 # Load XDebug
 export XDEBUG_CONFIG="idekey=VSCODE"
 
-# Load the shell dotfile:
+# Load the shell dotfiles:
 for file in ~/.{aliases,functions,path}; do
     [ -r "$file" ] && [ -f "$file" ] && source "$file"
 done
