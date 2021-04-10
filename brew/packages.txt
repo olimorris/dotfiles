@@ -23,6 +23,7 @@ gcc
 gd
 gh
 git
+gnu-sed
 gnupg
 go
 grep

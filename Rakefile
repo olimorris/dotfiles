@@ -44,6 +44,7 @@ task :install do
   Rake::Task['install:python'].invoke
   Rake::Task['install:neovim'].invoke
   Rake::Task['install:pip'].invoke
+  Rake::Task['install:npm'].invoke
   Rake::Task['install:lua'].invoke
   Rake::Task['install:tmux_color'].invoke
   Rake::Task['install:tmux'].invoke
@@ -56,9 +57,9 @@ task :update do
   Rake::Task['update:ohmyzsh'].invoke
   Rake::Task['update:neovim'].invoke
   Rake::Task['update:pip'].invoke
-  Rake::Task['update:tmux'].invoke
   Rake::Task['update:npm'].invoke
   Rake::Task['update:lua'].invoke
+  Rake::Task['update:tmux'].invoke
 end
 
 desc "Sync Everything"
