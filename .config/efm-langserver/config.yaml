@@ -1,5 +1,5 @@
 version: 2
-log-file: "/tmp/efm.log"
+log-file: "/Users/Oli/.cache/nvim/efm.log"
 log-level: 1
 root-markers:
   - .git/
@@ -11,3 +11,57 @@ root-markers:
   - LICENSE
   - .env.dev
   - .env
+
+tools:
+  html-prettier: &html-prettier
+    format-command: './node_modules/.bin/prettier ${--tab-width:tabWidth} ${--single-quote:singleQuote} --parser html'
+
+  css-prettier: &css-prettier
+    format-command: './node_modules/.bin/prettier ${--tab-width:tabWidth} ${--single-quote:singleQuote} --parser css'
+
+  javascript-eslint: &javascript-eslint
+    lint-command: 'eslint -f visualstudio --stdin --stdin-filename ${INPUT}'
+    lint-ignore-exit-code: true
+    lint-stdin: true
+    lint-formats:
+      - "%f(%l,%c): %tarning %m"
+      - "%f(%l,%c): %rror %m"
+
+  javascript-prettier: &javascript-prettier
+    format-command: './node_modules/.bin/prettier ${--config-precedence:configPrecedence} ${--tab-width:tabWidth} ${--single-quote:singleQuote} ${--trailing-comma:trailingComma}'
+
+  lua-lua-format: &lua-lua-format
+    format-command: 'lua-format -i'
+    format-stdin: true
+
+  vue-prettier: &vue-prettier
+    format-command: './node_modules/.bin/prettier ${--config-precedence:configPrecedence} ${--tab-width:tabWidth} ${--single-quote:singleQuote} ${--trailing-comma:trailingComma}'
+
+  json-prettier: &json-prettier
+    format-command: './node_modules/.bin/prettier ${--tab-width:tabWidth} --parser json'
+
+  python-black: &python-black
+    format-command: "black --quiet -"
+    format-stdin: true
+  python-isort: &python-isort
+    format-command: "isort --quiet -"
+    format-stdin: true
+
+languages:
+  html:
+    - <<: *html-prettier
+  css:
+    - <<: *css-prettier
+  python:
+    # - <<: *python-flake8
+    # - <<: *python-mypy
+    # - <<: *python-autopep8
+    # - <<: *python-yapf
+    - <<: *python-black
+    - <<: *python-isort
+  javascript:
+    - <<: *javascript-prettier
+  lua:
+    - <<: *lua-lua-format
+  vue:
+    - <<: *vue-prettier

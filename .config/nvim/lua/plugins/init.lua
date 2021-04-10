@@ -73,12 +73,13 @@ return require('packer').startup(function(use)
     -- LSP
     use {
         'neovim/nvim-lspconfig', -- Use native LSP
-        requires = {use {'kabouzeid/nvim-lspinstall'}, -- Install LSP servers from within Neovim
+        event = {'BufRead *'},
+        -- requires = {use {'kabouzeid/nvim-lspinstall'}, -- Install LSP servers from within Neovim
         use {
             'hrsh7th/nvim-compe', -- Code completion
             event = {'InsertEnter *'},
             config = require('plugins.compe').config()
-        }},
+        },
         setup = require('plugins.lsp').setup(),
         config = require('plugins.lsp').config()
     }
@@ -89,7 +90,6 @@ return require('packer').startup(function(use)
         }
     }
     use 'glepnir/lspsaga.nvim' -- Async finder, code action, hover docs -- cool hover menus
-    use 'onsails/lspkind-nvim' -- VSCode like icons in menu
     use 'kosayoda/nvim-lightbulb' -- Use VSCode lightbulb hint
 
     -- Treesitter
