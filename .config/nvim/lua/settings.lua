@@ -142,7 +142,3 @@ end
 -- Execute a Python file
 utils.map('n', '<Leader>r', ' <cmd>w!<CR> <cmd>FloatermNew \'1T python\'.shellescape(\'@%\', 1)<CR>')
 ---------------------------------------------------------------------------- }}}
-----------------------------------COMMANDS---------------------------------- {{{
--- Indentation based on filetypes
-cmd 'autocmd Filetype lua,javascript,vue setlocal ts=2 sw=2 sts=0 expandtab'
----------------------------------------------------------------------------- }}}

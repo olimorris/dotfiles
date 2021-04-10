@@ -1,3 +1,9 @@
+if not pcall(cmd, 'packadd galaxyline.nvim') then
+    do return end
+end
+
+cmd 'packadd galaxyline.nvim'
+
 local gl = require('galaxyline')
 local gls = gl.section
 local condition = require('galaxyline.condition')

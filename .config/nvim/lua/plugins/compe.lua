@@ -13,20 +13,16 @@ function M.config()
         enabled = true,
         autocomplete = true,
         debug = false,
-        min_length = 2,
-        preselect = 'enable',
-        source_timeout = 200,
-        incomplete_delay = 400,
+        min_length = 1,
+        preselect = 'disable',
         documentation = true,
+        allow_prefix_unmatch = false,
         source = {
-            vsnip = {menu = '[SNP]', priority = 11},
-            nvim_lsp = {menu = '[LSP]', priority = 10, sort = false},
-            path = {menu = '[PATH]', priority = 9},
-            treesitter = {menu = '[TS]', priority = 9},
-            buffer = {menu = '[BUF]', priority = 8},
-            nvim_lua = {menu = '[LUA]', priority = 8},
-            tags = {menu = '[TAG]', priority = 7},
-            spell = true
+            vsnip = true,
+            path = true,
+            buffer = true,
+            nvim_lsp = true,
+            nvim_lua = true,
         }
     }
 ---------------------------------------------------------------------------- }}}

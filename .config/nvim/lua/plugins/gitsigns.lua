@@ -31,15 +31,11 @@ function M.setup()
       ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
       ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
       ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
-
-      -- Text objects
-      ['o ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>',
-      ['x ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>'
     },
     watch_index = {
       interval = 1000
     },
-    sign_priority = 1,
+    sign_priority = 6,
     status_formatter = nil, -- Use default
   }
 end

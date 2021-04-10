@@ -6,10 +6,8 @@ fn = vim.fn -- to call Vim functions e.g. fn.bufnr()
 cmd = vim.cmd -- to execute Vim commands e.g. cmd('pwd')
 exec = vim.api.nvim_command
 
-local M = {} -- The module to export
+local M = {}
 
--- We will create a few autogroup, this function will help to avoid
--- always writing cmd('augroup' .. group) etc..
 function M.create_augroup(autocmds, name)
     cmd('augroup ' .. name)
     cmd('autocmd!')
@@ -25,12 +23,10 @@ function M.create_higroup(highlights)
     end
 end
 
--- Print a tables values
 function M.print_table(t)
     require'pl.pretty'.dump(t)
 end
 
--- Merge two tables together
 function M.merge_tables(a, b)
     if type(a) == 'table' and type(b) == 'table' then
         for k, v in pairs(b) do
