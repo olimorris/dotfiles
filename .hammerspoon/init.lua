@@ -14,3 +14,19 @@ hs.hotkey.bind({"option"}, "/", function()
     end
   end
 )
+-- Visual Studio Code
+hs.hotkey.bind({"option"}, "\\", function()
+  code = hs.application.find('Code')
+  if code then
+    awin = code:mainWindow()
+  end
+  if awin and code and code:isFrontmost() then
+    code:hide()
+  else
+    hs.application.launchOrFocus("/Applications/Visual Studio Code.app")
+    local code = hs.application.find('code')
+    code.setFrontmost(code)
+    code.activate(code)
+  end
+end
+)
