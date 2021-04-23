@@ -27,6 +27,9 @@
 !.config/nvim/**/*
 !.config/snippets/**/*
 
+# nix
+!.nix/**/*
+
 # misc
 
 # tests
