@@ -95,14 +95,14 @@ namespace :install do
     run %( sh <\(curl -L https://nixos.org/nix/install\) --darwin-use-unencrypted-nix-store-volume )
   end
 
-  desc "Install Lua Lsp"
-  task :lua do
-    section "Installing Lua Language Server"
+  # desc "Install Lua Lsp"
+  # task :lua do
+  #   section "Installing Lua Language Server"
 
-    run %( git clone https://github.com/sumneko/lua-language-server ~/.config/lua-language-server )
-    run %( \(cd ~/.config/lua-language-server && git submodule update --init --recursive && cd 3rd/luamake && ninja -f ninja/macos.ninja && cd ../.. && ./3rd/luamake/luamake rebuild \) )
+  #   run %( git clone https://github.com/sumneko/lua-language-server ~/.config/lua-language-server )
+  #   run %( \(cd ~/.config/lua-language-server && git submodule update --init --recursive && cd 3rd/luamake && ninja -f ninja/macos.ninja && cd ../.. && ./3rd/luamake/luamake rebuild \) )
 
-  end
+  # end
 
   desc "Install true color support for Tmux and Alacritty"
   task :tmux_color do
@@ -156,13 +156,13 @@ namespace :update do
     run %( npm install -g npm && npm update -g )
   end
 
-  desc "Update Lua Lsp"
-  task :lua do
-    section "Updating Lua Language Server"
+  # desc "Update Lua Lsp"
+  # task :lua do
+  #   section "Updating Lua Language Server"
 
-    run %( \(cd ~/.config/lua-language-server && git pull && git submodule update --init --recursive && cd 3rd/luamake && ninja -f ninja/macos.ninja && cd ../.. && ./3rd/luamake/luamake rebuild \) )
+  #   run %( \(cd ~/.config/lua-language-server && git pull && git submodule update --init --recursive && cd 3rd/luamake && ninja -f ninja/macos.ninja && cd ../.. && ./3rd/luamake/luamake rebuild \) )
 
-  end
+  # end
 
   desc "Update Tmux plugins"
   task :tmux do
