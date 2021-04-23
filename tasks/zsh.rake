@@ -18,6 +18,7 @@ namespace :install do
       run %( git clone http://github.com/robbyrussell/oh-my-zsh ~/.local/share/oh-my-zsh )
       run %( git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.local/share/oh-my-zsh/custom/plugins/zsh-autosuggestions )
       run %( git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.local/share/oh-my-zsh/custom/plugins/zsh-syntax-highlighting )
+      run %( git clone https://github.com/chisui/zsh-nix-shell.git ~/.local/share/oh-my-zsh/custom/plugins/nix-shell )
       puts "~> Don't forget to run `source ~/.zshrc` from a 'new' zsh shell later."
     else
       puts "~> Oh-My-Zsh is already installed."

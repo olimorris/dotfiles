@@ -63,16 +63,16 @@ namespace :install do
     end
   end
 
-  desc "Install Neovim Nightly"
-  task :neovim do
-    section "Installing Neovim Nightly"
+  # desc "Install Neovim Nightly"
+  # task :neovim do
+  #   section "Installing Neovim Nightly"
 
-    if ! testing?
-      run %( git clone https://github.com/neovim/neovim.git $HOME/.neovim )
-      run %( \(cd $HOME/.neovim && make CMAKE_BUILD_TYPE=Release\) )
-      run %( chmod +x $HOME/.dotfiles/bin/nvim )
-    end
-  end
+  #   if ! testing?
+  #     run %( git clone https://github.com/neovim/neovim.git $HOME/.neovim )
+  #     run %( \(cd $HOME/.neovim && make CMAKE_BUILD_TYPE=Release\) )
+  #     run %( chmod +x $HOME/.dotfiles/bin/nvim )
+  #   end
+  # end
 
   desc "Install PIP files"
   task :pip do
@@ -86,6 +86,13 @@ namespace :install do
     section "Installing NPM files"
 
     run %( xargs npm install --global \< #{NPM_FILE} )
+  end
+
+  desc "Install NixOS"
+  task :nix do
+    section "Installing NixOS"
+
+    run %( sh <\(curl -L https://nixos.org/nix/install\) --darwin-use-unencrypted-nix-store-volume )
   end
 
   desc "Install Lua Lsp"
@@ -123,14 +130,14 @@ namespace :install do
 end
 
 namespace :update do
-  desc "Update Neovim Nightly"
-  task :neovim do
-    section "Updating Neovim Nightly"
+  # desc "Update Neovim Nightly"
+  # task :neovim do
+  #   section "Updating Neovim Nightly"
 
-    if ! testing?
-      run %( \(cd $HOME/.neovim && git pull && make distclean && make CMAKE_BUILD_TYPE=Release\) )
-    end
-  end
+  #   if ! testing?
+  #     run %( \(cd $HOME/.neovim && git pull && make distclean && make CMAKE_BUILD_TYPE=Release\) )
+  #   end
+  # end
 
   desc "Update PIP files"
   task :pip do
