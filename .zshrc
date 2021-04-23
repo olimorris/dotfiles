@@ -21,7 +21,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(asdf zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(asdf zsh-autosuggestions zsh-syntax-highlighting nix-shell)
 
 # User configuration
 
@@ -60,3 +60,6 @@ eval "$(starship init zsh)"
 
 # Remove any duplicates in the path
 typeset -U path
+
+# added by Nix installer
+if [ -e /Users/Oli/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/Oli/.nix-profile/etc/profile.d/nix.sh; fi
