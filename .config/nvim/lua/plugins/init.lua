@@ -1,9 +1,9 @@
 ---------------------------------- INSTALL --------------------------------- {{{
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-    vim.api.nvim_command('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+    vim.api.nvim_command(
+        '!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
-cmd 'autocmd BufWritePost plugins/init.lua PackerCompile' -- Auto compile when there are changes in plugins.lua
 ---------------------------------------------------------------------------- }}}
 ----------------------------------COMMANDS---------------------------------- {{{
 cmd ':ab ps PackerSync'
@@ -14,19 +14,13 @@ cmd ':ab pi PackerInstall'
 return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
-    -- Appearance
-    use {
-        'olimorris/onedark.nvim',
-        requires = 'rktjmp/lush.nvim'
-    }
+---------------------------------APPEARANCE--------------------------------- {{{
+    use {'olimorris/onedark.nvim', requires = 'rktjmp/lush.nvim'}
     use {
         'romgrk/barbar.nvim', -- Tabline
         event = {'VimEnter *'},
         config = require('plugins.misc').bufferline(),
-        requires = {
-            'kyazdani42/nvim-web-devicons',
-            opt = true
-        }
+        requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
     use {
         'dstein64/nvim-scrollview', -- Scrollbars in Neovim
@@ -43,13 +37,8 @@ return require('packer').startup(function(use)
         'glepnir/galaxyline.nvim', -- Status line written in Lua
         branch = 'main',
         event = {'VimEnter *'},
-        requires = {
-            'kyazdani42/nvim-web-devicons',
-            opt = true
-        },
-        config = function()
-            require('plugins.statusline')
-        end
+        requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        config = function() require('plugins.statusline') end
     }
     use {
         'lukas-reineke/indent-blankline.nvim', -- Show indentation lines
@@ -57,20 +46,58 @@ return require('packer').startup(function(use)
         event = {'BufReadPre *', 'BufNewFile *'},
         config = require('plugins.misc').indentline()
     }
+---------------------------------------------------------------------------- }}}
+--------------------------------FUNCTIONALITY------------------------------- {{{
     use {
         'kyazdani42/nvim-tree.lua', -- File explorer
         setup = require('plugins.misc').nvim_tree(),
-        requires = {
-            'kyazdani42/nvim-web-devicons',
-            opt = true
-        }
+        requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
     use {
         'glepnir/dashboard-nvim', -- Beautiful dashboard upon opening Neovim
         config = require('plugins.misc').dashboard()
     }
-
-    -- LSP
+    use {
+        'nvim-telescope/telescope.nvim', -- Awesome fuzzy finder for everything
+        setup = require('plugins.telescope').setup(),
+        config = require('plugins.telescope').config(),
+        requires = {
+            {'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {
+                'nvim-telescope/telescope-frecency.nvim', -- Uses an algorithm to detect which files you may wish to open
+                requires = 'tami5/sql.nvim',
+                after = 'telescope.nvim'
+            }
+        }
+    }
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        event = {'BufRead *'},
+        requires = {
+            {
+                'nvim-treesitter/nvim-treesitter-refactor',
+                after = 'nvim-treesitter'
+            },
+            {
+                'nvim-treesitter/nvim-treesitter-textobjects',
+                after = 'nvim-treesitter'
+            }, {
+                'nvim-treesitter/playground', -- Test Treesitter on files
+                after = 'nvim-treesitter'
+            }, {
+                'windwp/nvim-ts-autotag', -- Autoclose and autorename HTML and Vue tags
+                after = 'nvim-treesitter'
+            }, {
+                'JoosepAlviste/nvim-ts-context-commentstring', -- Smart commenting in multi language files - Enabled in Treesitter file
+                after = 'nvim-treesitter',
+                requires = {
+                    'terrortylor/nvim-comment',
+                    config = require('nvim_comment').setup()
+                }
+            }
+        },
+        -- Use TSInstallFromGrammar to install things like python, vue, javascript etc
+        config = require('plugins.treesitter').config()
+    }
     use {
         'neovim/nvim-lspconfig', -- Use native LSP
         event = {'BufRead *'},
@@ -85,53 +112,13 @@ return require('packer').startup(function(use)
     }
     use {
         'hrsh7th/vim-vsnip', -- Snippet management
-        requires = {{'hrsh7th/vim-vsnip-integ'}, -- Snippet completion and expansion
-        {'rafamadriz/friendly-snippets'} -- Collection of snippets
+        requires = {
+            {'hrsh7th/vim-vsnip-integ'}, -- Snippet completion and expansion
+            {'rafamadriz/friendly-snippets'} -- Collection of snippets
         }
     }
     use 'glepnir/lspsaga.nvim' -- Async finder, code action, hover docs -- cool hover menus
     use 'kosayoda/nvim-lightbulb' -- Use VSCode lightbulb hint
-
-    -- Treesitter
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        event = {'BufRead *'},
-        requires = {{
-            'nvim-treesitter/nvim-treesitter-refactor',
-            after = 'nvim-treesitter'
-        }, {
-            'nvim-treesitter/nvim-treesitter-textobjects',
-            after = 'nvim-treesitter'
-        }, {
-            'nvim-treesitter/playground', -- Test Treesitter on files
-            after = 'nvim-treesitter'
-        }, {
-            'windwp/nvim-ts-autotag', -- Autoclose and autorename HTML and Vue tags
-            after = 'nvim-treesitter'
-        }},
-        -- Use TSInstallFromGrammar to install things like python, vue, javascript etc
-        config = require('plugins.treesitter').config()
-    }
-
-    -- Coding
-    use {
-        'nvim-telescope/telescope.nvim', -- Awesome fuzzy finder for everything
-        setup = require('plugins.telescope').setup(),
-        config = require('plugins.telescope').config(),
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {
-            'nvim-telescope/telescope-frecency.nvim', -- Uses an algorithm to detect which files you may wish to open
-            requires = 'tami5/sql.nvim',
-            after = 'telescope.nvim'
-        }}
-    }
-    use {
-        'rcarriga/vim-ultest', -- Run tests on any type of code base
-        requires = {{'vim-test/vim-test'}, -- Seemless running of tests within neovim
-        {'voldikss/vim-floaterm'} -- Use the terminal in a floating window
-        },
-        run = ':UpdateRemotePlugins',
-        config = require('plugins.misc').testing()
-    }
     use 'tpope/vim-surround' -- Use vim commands to surround text, tags with brackets, parenthesis etc
     use {
         'nacro90/numb.nvim', -- Peak on line numbers
@@ -145,51 +132,51 @@ return require('packer').startup(function(use)
             require('nvim-autopairs').setup()
         end
     }
+    use 'phaazon/hop.nvim' -- EasyMotion like plugin to jump anywhere in a document
+---------------------------------------------------------------------------- }}}
+------------------------------TESTING/DEBUGGING----------------------------- {{{
     use {
         'mfussenegger/nvim-dap', -- Debug Adapter Protocol for Neovim
         opt = true,
-        ft = {'python'}, -- Specify filetypes which load this plugin
-        requires = {{
-            'mfussenegger/nvim-dap-python', -- Easy Python debugging
-            opt = true
-        }, {
-            'theHamsta/nvim-dap-virtual-text', -- help to find variable definitions in debug mode
-            opt = true,
-            after = 'nvim-treesitter'
-        }, {
-            'nvim-telescope/telescope-dap.nvim',
-            opt = true,
-            after = 'telescope.nvim'
-        }},
+        requires = {
+            {
+                'mfussenegger/nvim-dap-python', -- Easy Python debugging
+                opt = true
+            }, {
+                'theHamsta/nvim-dap-virtual-text', -- help to find variable definitions in debug mode
+                opt = true,
+                after = 'nvim-treesitter'
+            },
+            {
+                'nvim-telescope/telescope-dap.nvim',
+                opt = true,
+                after = 'telescope.nvim'
+            }
+        },
         setup = require('plugins.dap').setup(),
         config = require('plugins.dap').config()
     }
-    use 'phaazon/hop.nvim' -- EasyMotion like plugin to jump anywhere in a document
-    use 'tweekmonster/django-plus.vim' -- Django support
     use {
-        'JoosepAlviste/nvim-ts-context-commentstring', -- Smart commenting in multi language files - Enabled in Treesitter file
+        'rcarriga/vim-ultest', -- Run tests on any type of code base
         requires = {
-            'terrortylor/nvim-comment',
-            config = require('nvim_comment').setup()
-        }
+            {'vim-test/vim-test'}, -- Seemless running of tests within neovim
+            {'voldikss/vim-floaterm'} -- Use the terminal in a floating window
+        },
+        run = ':UpdateRemotePlugins',
+        config = require('plugins.misc').testing()
     }
-
-    -- Misc plugins
+---------------------------------------------------------------------------- }}}
+------------------------------------MISC------------------------------------ {{{
     use {
         'christoomey/vim-tmux-navigator', -- Navigate Tmux panes inside of neovim
-        cond = function()
-            return os.getenv('TMUX')
-        end,
-        setup = function()
-            cmd 'packadd vim-tmux-navigator'
-        end
+        cond = function() return os.getenv('TMUX') end,
+        setup = function() cmd 'packadd vim-tmux-navigator' end
     }
     use {
         'dhruvasagar/vim-prosession', -- Sessions per Git branch, easy session switching and also auto-starts sessions
         config = require('plugins.misc').prosession(),
         requires = 'tpope/vim-obsession' -- Continuously update session files
     }
-
     use {
         'dbakker/vim-projectroot', -- Detect the project root of a folder
         config = require('plugins.misc').projectroot()
@@ -198,5 +185,6 @@ return require('packer').startup(function(use)
         '907th/vim-auto-save', -- Autosave buffers
         config = require('plugins.misc').autosave()
     }
+---------------------------------------------------------------------------- }}}
 end)
 ---------------------------------------------------------------------------- }}}

@@ -30,6 +30,7 @@ o.smartcase = true -- Don't ignore case with capitals
 o.splitbelow = true -- Put new windows below current
 o.splitright = true -- Put new windows right of current
 o.termguicolors = true -- True color support
+o.updatetime = 250 -- Reduce update time
 o.wildmode = 'list:longest' -- Command-line completion mode
 o.wildignore = [[*/.git/*,*/node_modules/*]] -- Ignore these files/folders
 
@@ -61,6 +62,7 @@ if fn.isdirectory(fn.stdpath('config')..'/.session') == 0 then
  cmd('call mkdir(stdpath(\'config\').\'/.session\'), \'p\', 0700')
 end
 
+homedir = os.getenv('HOME')
 o.backupdir = fn.stdpath('config')..'/.backup' -- Use backup files
 o.directory = fn.stdpath('config')..'/.swap' -- Use Swap files
 o.undofile = true -- Maintain undo history between sessions

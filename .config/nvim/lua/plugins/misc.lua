@@ -31,14 +31,13 @@ end
 ---------------------------------------------------------------------------- }}}
 ----------------------------------DASHBOARD--------------------------------- {{{
 function M.dashboard()
-    local home = os.getenv('HOME')
 
     g.dashboard_default_executive = 'telescope'
     g.dashboard_session_directory = sessiondir
 
     g.dashboard_preview_command = 'cat'
     g.dashboard_preview_pipeline = 'lolcat'
-    g.dashboard_preview_file = home .. '/.config/nvim/static/neovim.cat'
+    g.dashboard_preview_file = homedir .. '/.config/nvim/static/neovim.cat'
     g.dashboard_preview_file_height = 8
     g.dashboard_preview_file_width = 90
 
@@ -105,8 +104,8 @@ function M.projectroot()
     g.rootmarkers = {'.projectroot', '.git', '.env', '.env.dev', 'pyproject.toml', 'package.json'}
 
     utils.create_augroup(
-        {{'BufEnter * silent! ProjectRootCD'} -- Automatically set the current working directory to the Project Root
-        }, 'SetPWD')
+        {{'VimEnter * silent! ProjectRootCD'} -- Automatically set the current working directory to the Project Root
+        }, 'set_cwd')
     utils.map('n', '<Leader>cd', '<cmd>ProjectRootCD<CR>')
 end
 ---------------------------------------------------------------------------- }}}
@@ -153,40 +152,102 @@ end
 ---------------------------------------------------------------------------- }}}
 -----------------------------------TESTING---------------------------------- {{{
 function M.testing()
-    ----------------------------------VIM-TEST---------------------------------- {{{
+----------------------------------VIM-TEST---------------------------------- {{{
     g['test#strategy'] = 'floaterm'
 
     -- Python
     g['test#python#runner'] = 'pytest'
-    g['test#python#pytest#options'] = '--color=yes'
+    -- g['test#python#pytest#options'] = '--color=yes'
     g['test#python#pytest#executable'] = 'docker-compose -f "./docker-compose.yml" exec -T -w /usr/src/app web pytest'
 
     -- Javascript
     g['test#javascript#runner'] = 'jest'
     g['test#javascript#jest#options'] = '--color=always'
-
-    ---------------------------------------------------------------------------- }}}
-    ----------------------------------FLOATERM---------------------------------- {{{
+---------------------------------------------------------------------------- }}}
+----------------------------------FLOATERM---------------------------------- {{{
     g.floaterm_width = 0.8
     g.floaterm_height = 0.8
     g.floaterm_autoinsert = true
-    ---------------------------------------------------------------------------- }}}
-    -----------------------------------ULTEST----------------------------------- {{{
+---------------------------------------------------------------------------- }}}
+-----------------------------------ULTEST----------------------------------- {{{
     g.ultest_pass_sign = ''
     g.ultest_fail_sign = ''
     g.ultest_running_sign = 'ﱤ'
-    utils.create_augroup({{'BufWritePost * UltestNearest'}}, 'UltestRunner')
-    ---------------------------------------------------------------------------- }}}
-    local opts = {
-        silent = true
-    }
-    utils.map('n', '<Leader>t', '<cmd>TestNearest<CR>', opts)
-    utils.map('n', '<Leader>u', '<cmd>UltestNearest<CR>', opts)
-    utils.map('n', '<Leader>ta', '<cmd>Ultest<CR>', opts)
-    utils.map('n', '<Leader>tl', '<cmd>TestLast<CR>', opts)
-    utils.map('n', '<Leader>tf', '<cmd>TestFile<CR>', opts)
-    utils.map('n', '<C-x>', '<cmd>FloatermToggle<CR>', opts)
-    utils.map('t', '<C-x>', '<cmd>FloatermToggle<CR>', opts)
+    utils.create_augroup({{'BufWritePost * UltestNearest'}}, 'ultest_runner')
+
+    if pcall(cmd, 'packadd nvim-dap') then
+
+        cmd 'packadd nvim-dap'
+        
+        local dap = require('dap')
+        dap.set_log_level('DEBUG')
+
+        -- dap.adapters.python = {
+        --     type = 'executable';
+        --     command = '/Users/Oli/.asdf/shims/python3';
+        --     args = { '-m', 'debugpy.adapter' };
+        -- }
+        -- dap.configurations.python = {
+        --     type = 'python'; -- the type here established the link to the adapter definition: `dap.adapters.python`
+        --     request = 'launch';
+        --     name = "Launch file";
+        --     pythonPath = '~/.asdf/shims/python3'
+        -- }
+
+        dap.adapters.python = {
+            type = "server",
+            host = '0.0.0.0',
+            port = 5678,
+        }
+        dap.configurations.python = {
+            type = "python",
+            request = "attach",
+            connect = {
+                port = 5678,
+                host = '0.0.0.0'
+            };
+            mode = "remote",
+            name = "Remote Attached Debugger",
+            cwd = vim.fn.getcwd(),
+            pathMappings = {
+                {
+                    localRoot = vim.fn.getcwd(), -- Wherever your Python code lives locally.
+                    remoteRoot = "/usr/src/app", -- Wherever your Python code lives in the container.
+                };
+            };
+        }
+
+        g['test#python#pytest#executable'] = 'pytest'
+
+        local docker_cmd = 'docker-compose -f "./docker-compose.yml" exec -T -w /usr/src/app debug python -m debugpy --listen 0.0.0.0:5678 --wait-for-client -m pytest '
+
+        require("ultest").setup({
+            builders = {
+                ['python#pytest'] = function(cmd)
+
+                    return {
+                        dap = {
+                            type = 'python',
+                            request = 'attach',
+                            module = docker_cmd,
+                            args = {cmd[2]}
+                        }
+                    }
+                end
+            }
+        })
+---------------------------------------------------------------------------- }}}
+        local opts = {
+            silent = true
+        }
+        utils.map('n', '<Leader>t', '<cmd>TestNearest<CR>', opts)
+        utils.map('n', '<Leader>u', '<cmd>UltestNearest<CR>', opts)
+        utils.map('n', '<Leader>ta', '<cmd>Ultest<CR>', opts)
+        utils.map('n', '<Leader>tl', '<cmd>TestLast<CR>', opts)
+        utils.map('n', '<Leader>tf', '<cmd>TestFile<CR>', opts)
+        utils.map('n', '<C-x>', '<cmd>FloatermToggle<CR>', opts)
+        utils.map('t', '<C-x>', '<cmd>FloatermToggle<CR>', opts)
+    end
 end
 ---------------------------------------------------------------------------- }}}
 return M
