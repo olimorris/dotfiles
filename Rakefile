@@ -45,7 +45,7 @@ task :install do
   # Rake::Task['install:neovim'].invoke
   Rake::Task['install:pip'].invoke
   Rake::Task['install:npm'].invoke
-  Rake::Task['install:lua'].invoke
+  # Rake::Task['install:lua'].invoke
   Rake::Task['install:tmux_color'].invoke
   Rake::Task['install:tmux'].invoke
   Rake::Task['install:launchagents'].invoke
