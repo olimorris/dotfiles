@@ -3,7 +3,7 @@ success_symbol = "[➜](bold #98c379)" #green
 error_symbol = "[➜](bold #e06c75)" #red
 
 [cmd_duration]
-style = "bold #61afef" #blue
+style = "bold" #white
 
 [directory]
 style = "bold #c678dd" #purple
@@ -17,6 +17,12 @@ style = "bold #98c379"  #green
 
 [git_status]
 style = "bold #e06c75" #red
+
+[nix_shell]
+symbol = " "
+style = "bold #61afef" #blue
+impure_msg = " [impure](bold #e06c75)"
+pure_msg = " [pure](bold)"
 
 [nodejs]
 symbol = " "
