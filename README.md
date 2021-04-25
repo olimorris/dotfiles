@@ -2,7 +2,7 @@
 
 [![build](https://github.com/olimorris/dotfiles/actions/workflows/build.yml/badge.svg)](https://github.com/olimorris/dotfiles/actions/workflows/build.yml)
 
-My macOS dotfiles, written in Ruby. Installation instructions are my own.
+My macOS dotfiles. Installation instructions are my own.
 
 ## Setting up a new Mac
 
