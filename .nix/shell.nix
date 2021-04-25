@@ -18,12 +18,14 @@ mkShell {
     nodePackages.vscode-css-languageserver-bin
     nodePackages.vscode-html-languageserver-bin
     nodePackages.vscode-json-languageserver
+    # nodePackages.vls
     nodePackages.yaml-language-server
+    # nodePackages.vls
     nodePackages.dockerfile-language-server-nodejs
     (lib.optional pkgs.stdenv.isLinux sumneko-lua-language-server)
   ];
 
-  # shellHook = ''
-  #   alias nvim="nvim -u ~/.config/nvim/init.lua"
-  # '';
+  shellHook = ''
+    # alias nvim="nvim -u ~/.config/nvim/init.lua"
+  '';
 }
