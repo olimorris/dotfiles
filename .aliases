@@ -85,7 +85,7 @@ alias sep='ruby ~/.dotfiles/misc/make_separator.rb'
 # alias nvim='VIMRUNTIME=$HOME/.neovim/runtime $HOME/.neovim/build/bin/nvim'
 
 # Nix
-alias nx='(cd ~/.dotfiles/.nix;nix-shell)'
+alias nx='nix-shell ~/.dotfiles/.nix/shell.nix'
 
 # PHP
 alias cu='composer update'
