@@ -1,12 +1,3 @@
-dockerfile-language-server-nodejs
-eslint_d
-eslint
+lua-fmt
 neovim
 npm
-prettier
-pyright
-vls
-vscode-css-languageserver-bin
-vscode-html-languageserver-bin
-vscode-json-languageserver
-yaml-language-server

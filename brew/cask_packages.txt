@@ -35,8 +35,8 @@ openemu
 parallels
 pdf-expert
 pixelsnap
-pokerstars
 postgres
+postman
 qlcolorcode
 qlimagesize
 qlmarkdown

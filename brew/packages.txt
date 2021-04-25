@@ -1,5 +1,6 @@
 ack
 act
+adns
 argon2
 asdf
 aspell
@@ -14,6 +15,7 @@ czmq
 dnsmasq
 docutils
 doxygen
+efm-langserver
 findutils
 fortune
 freetds
