@@ -15,12 +15,17 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
 ---------------------------------APPEARANCE--------------------------------- {{{
-    use {'olimorris/onedark.nvim', requires = 'rktjmp/lush.nvim'}
+    -- use {'olimorris/onedark.nvim', requires = 'rktjmp/lush.nvim'}
+    use {'~/Code/Projects/onedark_nvim', requires = 'rktjmp/lush.nvim'}
     use {
         'romgrk/barbar.nvim', -- Tabline
         event = {'VimEnter *'},
         config = require('plugins.misc').bufferline(),
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    }
+    use {
+        'glepnir/dashboard-nvim', -- Beautiful dashboard upon opening Neovim
+        config = require('plugins.misc').dashboard()
     }
     use {
         'dstein64/nvim-scrollview', -- Scrollbars in Neovim
@@ -52,10 +57,6 @@ return require('packer').startup(function(use)
         'kyazdani42/nvim-tree.lua', -- File explorer
         setup = require('plugins.misc').nvim_tree(),
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
-    }
-    use {
-        'glepnir/dashboard-nvim', -- Beautiful dashboard upon opening Neovim
-        config = require('plugins.misc').dashboard()
     }
     use {
         'nvim-telescope/telescope.nvim', -- Awesome fuzzy finder for everything
@@ -101,7 +102,6 @@ return require('packer').startup(function(use)
     use {
         'neovim/nvim-lspconfig', -- Use native LSP
         event = {'BufRead *'},
-        -- requires = {use {'kabouzeid/nvim-lspinstall'}, -- Install LSP servers from within Neovim
         use {
             'hrsh7th/nvim-compe', -- Code completion
             event = {'InsertEnter *'},
@@ -129,7 +129,9 @@ return require('packer').startup(function(use)
         event = {'BufRead *'},
         setup = function()
             cmd 'packadd nvim-autopairs'
-            require('nvim-autopairs').setup()
+            require('nvim-autopairs').setup({
+                disable_filetype = { "TelescopePrompt" , "vim" },
+            })
         end
     }
     use 'phaazon/hop.nvim' -- EasyMotion like plugin to jump anywhere in a document
@@ -140,9 +142,6 @@ return require('packer').startup(function(use)
         opt = true,
         requires = {
             {
-                'mfussenegger/nvim-dap-python', -- Easy Python debugging
-                opt = true
-            }, {
                 'theHamsta/nvim-dap-virtual-text', -- help to find variable definitions in debug mode
                 opt = true,
                 after = 'nvim-treesitter'
@@ -153,8 +152,7 @@ return require('packer').startup(function(use)
                 after = 'telescope.nvim'
             }
         },
-        setup = require('plugins.dap').setup(),
-        config = require('plugins.dap').config()
+        setup = require('plugins.misc').dap()
     }
     use {
         'rcarriga/vim-ultest', -- Run tests on any type of code base
@@ -162,6 +160,7 @@ return require('packer').startup(function(use)
             {'vim-test/vim-test'}, -- Seemless running of tests within neovim
             {'voldikss/vim-floaterm'} -- Use the terminal in a floating window
         },
+        after = 'nvim-dap',
         run = ':UpdateRemotePlugins',
         config = require('plugins.misc').testing()
     }

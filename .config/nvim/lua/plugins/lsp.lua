@@ -3,7 +3,6 @@ local has_lsp = pcall(cmd, "packadd nvim-lspconfig")
 local has_lspsaga = pcall(cmd, "packadd lspsaga.nvim")
 ------------------------------------SETUP----------------------------------- {{{
 function M.setup()
-
     if not has_lsp then
         do
             return
@@ -103,7 +102,7 @@ local function on_attach(client, bufnr)
         -- Format a document on save
         -- This can be toggled using FormatDisable/FormatEnable
         utils.create_augroup({{'BufWritePost <buffer> lua formatting()'}}, 'lsp_document_format')
-        utils.map("n", "<space>f", "<cmd>lua formatting()<CR>", opts)
+        utils.map_lua("n", "F", "formatting()", opts)
     end
     if client.resolved_capabilities.goto_definition then
         utils.map_lua("n", "gp", "require('lspsaga.provider').preview_definition()", opts)
@@ -131,13 +130,14 @@ end
 --------------------------------SERVER SETUP-------------------------------- {{{
 function M.config()
     if not has_lsp then
-        print("Neovim Lsp has not been installed.")
+        print("LSP has not been installed.")
         do
             return
         end
     end
 
     if not has_lspsaga then
+        print("LSP Saga has not been installed.")
         do
             return
         end
@@ -150,7 +150,7 @@ function M.config()
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
-    ---------------------------------LSP SERVERS-------------------------------- {{{
+---------------------------------LSP SERVERS-------------------------------- {{{
     local util = require('lspconfig/util')
 
     -- https://github.com/theia-ide/typescript-language-server
@@ -175,12 +175,11 @@ function M.config()
         end
     }
 
-    
     lspconfig.sumneko_lua.setup {
         cmd = {
-            os.getenv('HOME') .. '/.config/lua-language-server/bin/macOS/lua-language-server',
+            os.getenv('HOME') .. '/.local/lua-language-server/bin/macOS/lua-language-server',
             '-E',
-            os.getenv('HOME') .. '/.config/lua-language-server/main.lua'
+            os.getenv('HOME') .. '/.local/lua-language-server/main.lua'
         },
         on_attach = on_attach,
         root_dir = function(fname)
