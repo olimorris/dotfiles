@@ -18,6 +18,3 @@ export PATH="${HOME}/.composer/vendor/bin:${PATH}"
 
 # Load local bin
 export PATH="${HOME}/.local/bin:${PATH}"
-
-# Set the Poetry PATH
-export PATH="${HOME}/.poetry/bin:${PATH}"
