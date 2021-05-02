@@ -7,22 +7,37 @@
   }
 }:
 with pkgs;
+let 
+  my-python-packages = python-packages: with python-packages; [
+      django
+      flake8
+      neovim-remote
+      pandas
+      pyflakes
+      requests
+    ];
+    python-with-my-packages = python3.withPackages my-python-packages;
+in
 mkShell {
   buildInputs = [
     neovim-nightly
-    nodePackages.json-server
+    pkgs.gopls
+    pkgs.python3
+    pkgs.poetry
+    python-with-my-packages
+    nodePackages.bash-language-server
+    nodePackages.dockerfile-language-server-nodejs
     nodePackages.eslint
-    nodePackages.pyright
+    nodePackages.json-server
     nodePackages.prettier
+    nodePackages.pyright
     nodePackages.typescript-language-server
+    nodePackages.vim-language-server
+    # nodePackages.vls
     nodePackages.vscode-css-languageserver-bin
     nodePackages.vscode-html-languageserver-bin
     nodePackages.vscode-json-languageserver
-    # nodePackages.vls
     nodePackages.yaml-language-server
-    # nodePackages.vls
-    nodePackages.dockerfile-language-server-nodejs
-    (lib.optional pkgs.stdenv.isLinux sumneko-lua-language-server)
   ];
 
   shellHook = ''
