@@ -263,44 +263,72 @@ function M.testing()
         local dap = require('dap')
         dap.set_log_level('DEBUG')
 
+        -- START: Local debugging
         dap.adapters.python = {
-            type = "server",
-            host = '0.0.0.0',
-            port = 5678,
+            type = 'executable';
+            command = '/Users/Oli/.asdf/shims/python';
+            args = { '-m', 'debugpy.adapter' };
         }
+        dap.configurations.python = {
+            type = 'python'; -- the type here established the link to the adapter definition: `dap.adapters.python`
+            request = 'launch';
+            name = "Launch file";
+            pythonPath = '/Users/Oli/.asdf/shims/python'
+        }
+        -- END
+
+        -- START: Docker debugging
+        -- dap.adapters.python = {
+        --     type = "server",
+        --     host = '0.0.0.0',
+        --     port = 5678,
+        -- }
+        -- END
 
         g['test#python#pytest#executable'] = 'pytest'
 
         require("ultest").setup({
             builders = {
                 ['python#pytest'] = function(cmd)
-
-                    local docker_cmd =
-                        'docker-compose -f "./docker-compose.yml" exec -d -w /usr/src/app debug python -m debugpy --listen 0.0.0.0:5678 --wait-for-client -m ' ..
-                        table.concat(cmd, " ")
-
-                    utils.echo_info("Debugging.")
-                    g.debug_job_id = fn.system(docker_cmd)
-
+                    
+                    -- START: Local debugging
                     return {
                         dap = {
-                            type = "python",
-                            request = "attach",
-                            connect = {
-                                port = 5678,
-                                host = '0.0.0.0'
-                            };
-                            mode = "remote",
-                            name = "Remote Attached Debugger",
-                            cwd = fn.getcwd(),
-                            pathMappings = {
-                                {
-                                    localRoot = fn.getcwd(), -- Wherever your Python code lives locally.
-                                    remoteRoot = "/usr/src/app", -- Wherever your Python code lives in the container.
-                                };
-                            };
+                            type = 'python',
+                            request = 'launch',
+                            module = cmd[1],
                         }
                     }
+                    -- END
+
+                    -- START: Docker debugging
+                    -- local docker_cmd =
+                    --     'docker-compose -f "./docker-compose.yml" exec -d -w /usr/src/app debug python -m debugpy --listen 0.0.0.0:5678 --wait-for-client -m ' ..
+                    --     table.concat(cmd, " ")
+
+                    -- utils.echo_info("Debugging.")
+                    -- g.debug_job_id = fn.system(docker_cmd)
+
+                    -- return {
+                    --     dap = {
+                    --         type = "python",
+                    --         request = "attach",
+                    --         connect = {
+                    --             port = 5678,
+                    --             host = '0.0.0.0'
+                    --         };
+                    --         mode = "remote",
+                    --         name = "Remote Attached Debugger",
+                    --         cwd = fn.getcwd(),
+                    --         pathMappings = {
+                    --             {
+                    --                 localRoot = fn.getcwd(), -- Wherever your Python code lives locally.
+                    --                 remoteRoot = "/usr/src/app", -- Wherever your Python code lives in the container.
+                    --             };
+                    --         };
+                    --     }
+                    -- }
+                    -- END
                 end
             }
         })

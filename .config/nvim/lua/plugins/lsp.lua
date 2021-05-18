@@ -1,6 +1,8 @@
 local M = {}
 local has_lsp = pcall(cmd, "packadd nvim-lspconfig")
 local has_lspsaga = pcall(cmd, "packadd lspsaga.nvim")
+local has_lsptrouble = pcall(cmd, "packadd trouble.nvim")
+local opts = {silent = true}
 ------------------------------------SETUP----------------------------------- {{{
 function M.setup()
     if not has_lsp then
@@ -81,10 +83,6 @@ local function on_attach(client, bufnr)
         }
     })
 
-    local opts = {
-        silent = true
-    }
-
     if client.resolved_capabilities.code_action then
         if pcall(cmd, 'packadd nvim-lightbulb') then
             cmd 'packadd nvim-lightbulb'
@@ -117,14 +115,14 @@ local function on_attach(client, bufnr)
         utils.map_lua("n", "gr", "require('lspsaga.rename').rename()", opts)
     end
     if client.resolved_capabilities.implementation then
-        utils.map("n", "gD", "vim.lsp.buf.implementation()", opts)
+        utils.map("n", "gd", "vim.lsp.buf.implementation()", opts)
     end
 
     utils.map_lua("n", "<Space>", "require('lspsaga.diagnostic').show_line_diagnostics()", opts)
 
-    utils.create_augroup({{"CursorHold * lua require('lspsaga.diagnostic').show_line_diagnostics()"},
-                          {"CursorHoldI * silent! lua require('lspsaga.signaturehelp').signature_help()"}},
-        'lsp_diagnostics')
+    -- utils.create_augroup({{"CursorHold * lua require('lspsaga.diagnostic').show_line_diagnostics()"},
+    --                       {"CursorHoldI * silent! lua require('lspsaga.signaturehelp').signature_help()"}},
+    --     'lsp_diagnostics')
 end
 ---------------------------------------------------------------------------- }}}
 --------------------------------SERVER SETUP-------------------------------- {{{
@@ -141,6 +139,14 @@ function M.config()
         do
             return
         end
+    end
+
+    if has_lsptrouble then
+        cmd 'packadd trouble.nvim'
+        require('trouble').setup {
+            auto_close = true
+        }
+        utils.map('n', 'L', '<cmd>LspTroubleToggle<CR>', opts)
     end
 
     cmd 'packadd lspsaga.nvim'

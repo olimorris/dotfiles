@@ -141,6 +141,7 @@ end
 if fn.filereadable('~/.asdf/shims/python3') then
  g.python3_host_prog = '~/.asdf/shims/python3'
 end
--- Execute a Python file
-utils.map('n', '<Leader>r', ' <cmd>w!<CR> <cmd>FloatermNew \'1T python\'.shellescape(\'@%\', 1)<CR>')
+---------------------------------RUN A FILE--------------------------------- {{{
+utils.map('n', '<Leader>r', '<cmd>FloatermNew python % <CR>')
+---------------------------------------------------------------------------- }}}
 ---------------------------------------------------------------------------- }}}

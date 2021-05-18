@@ -19,7 +19,7 @@ return require('packer').startup(function(use)
     use {'~/Code/Projects/onedark_nvim', requires = 'rktjmp/lush.nvim'}
     use {
         'romgrk/barbar.nvim', -- Tabline
-        event = {'VimEnter *'},
+        event = {'BufReadPre *'},
         config = require('plugins.misc').bufferline(),
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
@@ -29,7 +29,7 @@ return require('packer').startup(function(use)
     }
     use {
         'dstein64/nvim-scrollview', -- Scrollbars in Neovim
-        event = {'VimEnter *'},
+        event = {'BufReadPre *'},
         config = require('plugins.misc').scrollview()
     }
     use {
@@ -41,7 +41,6 @@ return require('packer').startup(function(use)
     use {
         'glepnir/galaxyline.nvim', -- Status line written in Lua
         branch = 'main',
-        event = {'VimEnter *'},
         requires = {'kyazdani42/nvim-web-devicons', opt = true},
         config = function() require('plugins.statusline') end
     }
@@ -81,10 +80,7 @@ return require('packer').startup(function(use)
             {
                 'nvim-treesitter/nvim-treesitter-textobjects',
                 after = 'nvim-treesitter'
-            }, {
-                'nvim-treesitter/playground', -- Test Treesitter on files
-                after = 'nvim-treesitter'
-            }, {
+            },{
                 'windwp/nvim-ts-autotag', -- Autoclose and autorename HTML and Vue tags
                 after = 'nvim-treesitter'
             }, {
@@ -107,6 +103,19 @@ return require('packer').startup(function(use)
             event = {'InsertEnter *'},
             config = require('plugins.compe').config()
         },
+        use {
+            "folke/trouble.nvim",
+            event = {'BufRead *'},
+            requires = {'kyazdani42/nvim-web-devicons', opt = true}
+        },
+        use {
+            'glepnir/lspsaga.nvim', -- Async finder, code action, hover docs -- cool hover menus
+            event = {'BufRead *'}
+        },
+        use {
+            'kosayoda/nvim-lightbulb', -- Use VSCode lightbulb hint
+            event = {'BufRead *'}
+        },
         setup = require('plugins.lsp').setup(),
         config = require('plugins.lsp').config()
     }
@@ -117,8 +126,6 @@ return require('packer').startup(function(use)
             {'rafamadriz/friendly-snippets'} -- Collection of snippets
         }
     }
-    use 'glepnir/lspsaga.nvim' -- Async finder, code action, hover docs -- cool hover menus
-    use 'kosayoda/nvim-lightbulb' -- Use VSCode lightbulb hint
     use 'tpope/vim-surround' -- Use vim commands to surround text, tags with brackets, parenthesis etc
     use {
         'nacro90/numb.nvim', -- Peak on line numbers
@@ -128,10 +135,12 @@ return require('packer').startup(function(use)
         'windwp/nvim-autopairs', -- Pair brackets, quotation marks etc
         event = {'BufRead *'},
         setup = function()
-            cmd 'packadd nvim-autopairs'
-            require('nvim-autopairs').setup({
-                disable_filetype = { "TelescopePrompt" , "vim" },
-            })
+            if pcall(cmd, 'packadd nvim-autopairs') then
+                cmd 'packadd nvim-autopairs'
+                require('nvim-autopairs').setup({
+                    disable_filetype = { "TelescopePrompt" , "vim" },
+                })
+            end
         end
     }
     use 'phaazon/hop.nvim' -- EasyMotion like plugin to jump anywhere in a document

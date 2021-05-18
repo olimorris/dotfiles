@@ -23,16 +23,6 @@ utils.map('n', '<S-m>', ':call v:lua.ToggleMinimal()<cr>', {
     silent = true
 })
 ---------------------------------------------------------------------------- }}}
--------------------------------QUICKFIX TOGGLE------------------------------ {{{
-function QuickfixToggle()
-    print('toggling')
-    if fn['exists']("g:qfix_win") then
-        cmd 'cclose'
-    else
-        cmd 'copen 10'
-    end
-end
----------------------------------------------------------------------------- }}}
 ----------------------------------SNIPPETS---------------------------------- {{
 function SnippetLookup()
     local snippet = fn.input('Snippets to edit: ')
