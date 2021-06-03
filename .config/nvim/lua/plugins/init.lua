@@ -185,10 +185,7 @@ return require('packer').startup(function(use)
         config = require('plugins.misc').prosession(),
         requires = 'tpope/vim-obsession' -- Continuously update session files
     }
-    use {
-        'dbakker/vim-projectroot', -- Detect the project root of a folder
-        config = require('plugins.misc').projectroot()
-    }
+    use 'ahmedkhalf/lsp-rooter.nvim' -- Automatically set the cwd to the projet root
     use {
         '907th/vim-auto-save', -- Autosave buffers
         config = require('plugins.misc').autosave()
