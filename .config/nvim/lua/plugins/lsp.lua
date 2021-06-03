@@ -2,7 +2,7 @@ local M = {}
 local has_lsp = pcall(cmd, "packadd nvim-lspconfig")
 local has_lspsaga = pcall(cmd, "packadd lspsaga.nvim")
 local has_lsptrouble = pcall(cmd, "packadd trouble.nvim")
-local opts = {silent = true}
+local opts = {noremap = true, silent = true}
 ------------------------------------SETUP----------------------------------- {{{
 function M.setup()
     if not has_lsp then
@@ -83,42 +83,45 @@ local function on_attach(client, bufnr)
         }
     })
 
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
     if client.resolved_capabilities.code_action then
         if pcall(cmd, 'packadd nvim-lightbulb') then
             cmd 'packadd nvim-lightbulb'
             utils.create_augroup({{"CursorHold,CursorHoldI * lua require('nvim-lightbulb').update_lightbulb()"}},
                 'lsp_code_action')
         end
-        utils.map_lua("n", "ga", "require('lspsaga.codeaction').code_action()", opts)
-        utils.map_lua("v", "ga", "require('lspsaga.codeaction').range_code_action()", opts)
+        buf_set_keymap("n", "ga", "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts)
+        buf_set_keymap("v", "ga", "<cmd>lua require('lspsaga.codeaction').range_code_action()<CR>", opts)
     end
     if client.resolved_capabilities.document_highlight then
         utils.create_augroup({{'CursorHold <buffer> lua vim.lsp.buf.document_highlight()'},
-                              {'CursorMoved <buffer> lua vim.lsp.buf.clear_references()'}}, 'lsp_document_highlight')
+                            {'CursorMoved <buffer> lua vim.lsp.buf.clear_references()'}}, 'lsp_document_highlight')
     end
     if client.resolved_capabilities.document_formatting then
         -- Format a document on save
         -- This can be toggled using FormatDisable/FormatEnable
         utils.create_augroup({{'BufWritePost <buffer> lua formatting()'}}, 'lsp_document_format')
-        utils.map_lua("n", "F", "formatting()", opts)
+        buf_set_keymap("n", "F", "v:lua.formatting()", opts)
     end
     if client.resolved_capabilities.goto_definition then
-        utils.map_lua("n", "gp", "require('lspsaga.provider').preview_definition()", opts)
+        buf_set_keymap("n", "gp", "<cmd>lua require('lspsaga.provider').preview_definition()<CR>", opts)
     end
     if client.resolved_capabilities.hover then
-        utils.map_lua("n", "K", "require('lspsaga.hover').render_hover_doc()", opts)
+        buf_set_keymap("n", "K", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", opts)
     end
     if client.resolved_capabilities.find_references then
-        utils.map_lua("n", "gf", "require('lspsaga.provider').lsp_finder()", opts)
+        buf_set_keymap("n", "gf", "<cmd>lua require('lspsaga.provider').lsp_finder()<CR>", opts)
     end
     if client.resolved_capabilities.rename then
-        utils.map_lua("n", "gr", "require('lspsaga.rename').rename()", opts)
+        buf_set_keymap("n", "gr", "<cmd>lua require('lspsaga.rename').rename()<CR>", opts)
     end
     if client.resolved_capabilities.implementation then
-        utils.map("n", "gd", "vim.lsp.buf.implementation()", opts)
+        buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
     end
 
-    utils.map_lua("n", "<Space>", "require('lspsaga.diagnostic').show_line_diagnostics()", opts)
+    buf_set_keymap("n", "<Space>", "<cmd>lua require('lspsaga.diagnostic').show_line_diagnostics()<CR>", opts)
 
     -- utils.create_augroup({{"CursorHold * lua require('lspsaga.diagnostic').show_line_diagnostics()"},
     --                       {"CursorHoldI * silent! lua require('lspsaga.signaturehelp').signature_help()"}},
@@ -174,12 +177,12 @@ function M.config()
     }
 
     -- https://github.com/golang/tools/tree/master/gopls
-    lspconfig.gopls.setup {
-        on_attach = function(client)
-            client.resolved_capabilities.document_formatting = false
-            on_attach(client)
-        end
-    }
+    -- lspconfig.gopls.setup {
+    --     on_attach = function(client)
+    --         client.resolved_capabilities.document_formatting = false
+    --         on_attach(client)
+    --     end
+    -- }
 
     lspconfig.sumneko_lua.setup {
         cmd = {
@@ -212,9 +215,9 @@ function M.config()
     }
 
     -- https://github.com/iamcco/vim-language-server
-    lspconfig.vimls.setup {
-        on_attach = on_attach
-    }
+    -- lspconfig.vimls.setup {
+    --     on_attach = on_attach
+    -- }
 
     -- https://github.com/vscode-langservers/vscode-json-languageserver
     lspconfig.jsonls.setup {
