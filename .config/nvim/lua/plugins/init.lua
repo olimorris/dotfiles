@@ -88,7 +88,11 @@ return require('packer').startup(function(use)
                 after = 'nvim-treesitter',
                 requires = {
                     'terrortylor/nvim-comment',
-                    config = require('nvim_comment').setup()
+                    config = function() 
+                        if(pcall(require, 'nvim_comment')) then
+                            require('nvim_comment').setup()
+                        end
+                    end
                 }
             }
         },
@@ -129,7 +133,11 @@ return require('packer').startup(function(use)
     use 'tpope/vim-surround' -- Use vim commands to surround text, tags with brackets, parenthesis etc
     use {
         'nacro90/numb.nvim', -- Peak on line numbers
-        setup = require('numb').setup()
+        setup = function()
+            if pcall(require, 'numb') then 
+                require('numb').setup()
+            end
+        end
     }
     use {
         'windwp/nvim-autopairs', -- Pair brackets, quotation marks etc
