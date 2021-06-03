@@ -8,9 +8,8 @@ unset file;
 # . `brew --prefix`/etc/profile.d/z.sh
 
 # Load bash completion
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
-fi
+# if [ -f $(brew --prefix)/etc/bash_completion ]; then
+#     . $(brew --prefix)/etc/bash_completion
+# fi
 
 export PATH="$HOME/.poetry/bin:$PATH"
-if [ -e /Users/Oli/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/Oli/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

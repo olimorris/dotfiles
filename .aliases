@@ -18,6 +18,7 @@ alias pm='poetry run python manage.py migrate'
 alias pr='poetry run python manage.py runserver'
 alias papp='poetry run python manage.py startapp'
 alias dpu='docker-compose exec web poetry update'
+alias dpug='docker-compose exec web poetry upgrade'
 alias dpr='docker-compose exec web poetry remove'
 alias dcov='docker-compose exec web pytest --cov=decoder'
 alias dpm='docker-compose exec web poetry run python manage.py migrate'
@@ -82,7 +83,7 @@ alias italic='echo -e "\e[3mitalic\e[23m"'
 alias sep='ruby ~/.dotfiles/misc/make_separator.rb'
 
 # Neovim
-# alias nvim='VIMRUNTIME=$HOME/.neovim/runtime $HOME/.neovim/build/bin/nvim'
+alias nvim='VIMRUNTIME=$HOME/.neovim/runtime $HOME/.neovim/build/bin/nvim'
 
 # Nix
 alias nx='nix-shell ~/.dotfiles/.nix/shell.nix'

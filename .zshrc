@@ -61,5 +61,4 @@ eval "$(starship init zsh)"
 # Remove any duplicates in the path
 typeset -U path
 
-# added by Nix installer
-if [ -e /Users/Oli/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/Oli/.nix-profile/etc/profile.d/nix.sh; fi
+alias luamake=/Users/Oli/.local/lua-language-server/3rd/luamake/luamake
