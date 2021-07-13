@@ -1,0 +1,39 @@
+{
+	"Django Model Class": {
+		"prefix": ["class(Django model class)"],
+		"body": ["class ${1:classname}(models.Model):", "\t${3:pass}"],
+		"description": "Model class for Django"
+	},
+	"Django Model Timestamps": {
+		"prefix": ["Timestamps (Django Models)"],
+		"body": [
+			"created_at = models.DateTimeField(auto_now_add=True)",
+			"modified_at = models.DateTimeField(auto_now=True)",
+			"deleted_at = models.DateTimeField(null=True)"
+		],
+		"description": "Created, Modified, Deleted timestamps for Django models"
+	},
+	"Django Rest Serializers": {
+		"prefix": ["class(Serializer)"],
+		"body": [
+			"class ${1:modelname}Serializer(serializers.HyperlinkedModelSerializer):",
+			"\tclass Meta:",
+			"\t\tmodel = $1",
+			"\t\tfields = [$0]"
+		],
+		"description": "Serializer class for Django Rest Framework"
+	},
+	"Django Rest Viewsets": {
+		"prefix": ["class(ViewSet)"],
+		"body": [
+			"class ${1:modelname}ViewSet(viewsets.ModelViewSet):",
+			"\t\"\"\"",
+			"\tAPI endpoint that allows $0",
+			"\t\"\"\"",
+			"\tqueryset = $1.objects.all().order_by('-created_at')",
+			"\tserializer_class = $1Serializer",
+			"\tpermission_classes = [permissions.IsAuthenticated]"
+		],
+		"description": "ViewSet class for Django Rest Framework"
+	}
+}

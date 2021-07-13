@@ -84,7 +84,6 @@ local function on_attach(client, bufnr)
     })
 
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
     if client.resolved_capabilities.code_action then
         if pcall(cmd, 'packadd nvim-lightbulb') then
@@ -99,12 +98,17 @@ local function on_attach(client, bufnr)
         utils.create_augroup({{'CursorHold <buffer> lua vim.lsp.buf.document_highlight()'},
                             {'CursorMoved <buffer> lua vim.lsp.buf.clear_references()'}}, 'lsp_document_highlight')
     end
+
+    -- Formatting is the sole responsibility of efm
+    if client.name ~= 'efm' then client.resolved_capabilities.document_formatting = false end
+
     if client.resolved_capabilities.document_formatting then
-        -- Format a document on save
-        -- This can be toggled using FormatDisable/FormatEnable
-        utils.create_augroup({{'BufWritePost <buffer> lua formatting()'}}, 'lsp_document_format')
-        buf_set_keymap("n", "F", "v:lua.formatting()", opts)
+        buf_set_keymap("n", "<space>=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+        -- utils.create_augroup({{'BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)'}}, 'lsp_document_format')
+    elseif client.resolved_capabilities.document_range_formatting then
+        buf_set_keymap("v", "<space>=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
     end
+
     if client.resolved_capabilities.goto_definition then
         buf_set_keymap("n", "gp", "<cmd>lua require('lspsaga.provider').preview_definition()<CR>", opts)
     end
@@ -121,7 +125,7 @@ local function on_attach(client, bufnr)
         buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
     end
 
-    buf_set_keymap("n", "<Space>", "<cmd>lua require('lspsaga.diagnostic').show_line_diagnostics()<CR>", opts)
+    buf_set_keymap("n", "<space>d", "<cmd>lua require('lspsaga.diagnostic').show_line_diagnostics()<CR>", opts)
 
     -- utils.create_augroup({{"CursorHold * lua require('lspsaga.diagnostic').show_line_diagnostics()"},
     --                       {"CursorHoldI * silent! lua require('lspsaga.signaturehelp').signature_help()"}},
@@ -144,6 +148,8 @@ function M.config()
         end
     end
 
+    cmd 'packadd lspsaga.nvim'
+
     if has_lsptrouble then
         cmd 'packadd trouble.nvim'
         require('trouble').setup {
@@ -151,8 +157,6 @@ function M.config()
         }
         utils.map('n', 'L', '<cmd>LspTroubleToggle<CR>', opts)
     end
-
-    cmd 'packadd lspsaga.nvim'
 
     local lspconfig = require('lspconfig')
     vim.lsp.set_log_level('info')
@@ -278,20 +282,6 @@ function M.config()
     g.format_options_yaml = format_options_prettier
     g.format_options_markdown = format_options_prettier
     g.format_options_vue = format_options_prettier
-
-    FormatToggle = function(value)
-        g[string.format("format_disabled_%s", b.filetype)] = value
-    end
-    cmd 'command! FormatDisable lua FormatToggle(true)'
-    cmd 'command! FormatEnable lua FormatToggle(false)'
-
-    -- We use a custom formatting function to pass our default prettier options
-    -- to the default Lsp formatter, otherwise format as normal
-    _G.formatting = function()
-        if not g[string.format("format_disabled_%s", b.filetype)] then
-            vim.lsp.buf.formatting(g[string.format("format_options_%s", b.filetype)] or {})
-        end
-    end
 
     -- https://github.com/mattn/efm-langserver
     lspconfig.efm.setup {

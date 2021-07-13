@@ -14,7 +14,9 @@ alias pa='poetry add'
 alias dpy='docker-compose exec web pytest'
 alias dpa='docker-compose exec web poetry add'
 alias dpi='docker-compose exec web poetry add'
+alias paa='poetry run django-admin startapp'
 alias pm='poetry run python manage.py migrate'
+alias pmm='poetry run python manage.py makemigrations'
 alias pr='poetry run python manage.py runserver'
 alias papp='poetry run python manage.py startapp'
 alias dpu='docker-compose exec web poetry update'
@@ -39,6 +41,8 @@ alias dclear='docker rm -fv $(docker ps -aq)'
 
 # Dotfiles
 alias ed='code ~/.dotfiles'
+alias up='(cd ~/.dotfiles && rake sync)'
+alias bk='(cd ~/.dotfiles && rake backup)'
 alias clean='ruby ~/.dotfiles/misc/clean_up.rb'
 alias icons='python ~/.dotfiles/misc/seticons.py'
 alias cleanup='ruby ~/.dotfiles/misc/clean_up.rb ~/Downloads'
@@ -82,11 +86,14 @@ alias mssh='ruby ~/.dotfiles/misc/ssh.rb'
 alias italic='echo -e "\e[3mitalic\e[23m"'
 alias sep='ruby ~/.dotfiles/misc/make_separator.rb'
 
-# Neovim
-alias nvim='VIMRUNTIME=$HOME/.neovim/runtime $HOME/.neovim/build/bin/nvim'
+# Neovim / Vim
+alias vi='nvim'
+alias vim='/usr/local/bin/vim'
+alias nvu='(cd ~/.dotfiles && rake update:neovim)'
+# alias nvim='VIMRUNTIME=$HOME/.neovim/runtime $HOME/.neovim/build/bin/nvim'
 
 # Nix
-alias nx='nix-shell ~/.dotfiles/.nix/shell.nix'
+# alias nx='nix-shell ~/.dotfiles/.nix/shell.nix'
 
 # PHP
 alias cu='composer update'
@@ -156,11 +163,3 @@ alias tk='tmux kill-session -a'         # Kill all of the OTHER tmux sessions
 alias t='tmux attach || tmux new-session'   # Attaches tmux to the last session; creates a new session if none exists.
 alias tpi='~/.tmux/plugins/tpm/bin/install_plugins' # Installs Tmux plugins
 alias tpu='~/.tmux/plugins/tpm/bin/update_plugins all' # Updates all Tmux plugins
-
-# Neovim / Vim
-alias vi='nvim'
-alias vim='/usr/local/bin/vim'
-
-# OS management
-alias up='(cd ~/.dotfiles && rake sync)'
-alias bk='(cd ~/.dotfiles && rake backup)'

@@ -11,12 +11,10 @@ function M.config()
     cmd 'packadd nvim-treesitter'
 
     require('nvim-treesitter.configs').setup {
-        highlight = {
-            enable = true -- Needed for colour schemes
-        },
-        indent = {
-            enable = true
-        },
+        ensure_installed = 'maintained',
+        ignore_install = { "comment" },
+        highlight = {enable = true},
+        indent = {enable = true},
         incremental_selection = {
             enable = true,
             disable = {},
@@ -27,21 +25,15 @@ function M.config()
                 node_decremental = "grm" -- decrement to the previous node
             }
         },
+        -- nvim-autopairs plugin
+        autopairs = {enable = true},
+
         -- nvim-ts-autotag plugin
-        autotag = {
-            enable = true
-        },
+        autotag = {enable = true},
+
         -- nvim-ts-context-commentstring plugin
-        context_commentstring = {
-            enable = true
-        },
-        -- Treesitter playground plugin
-        playground = {
-            enable = true,
-            disable = {},
-            updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-            persist_queries = false -- Whether the query persists across vim sessions
-        },
+        context_commentstring = {enable = true},
+
         refactor = {
             highlight_definitions = {
                 enable = false

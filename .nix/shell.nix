@@ -10,6 +10,7 @@ with pkgs;
 let 
   my-python-packages = python-packages: with python-packages; [
       django
+      debugpy
       flake8
       neovim-remote
       pandas

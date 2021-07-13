@@ -148,9 +148,6 @@ function M.dashboard()
     cmd ':ab db Dashboard'
 end
 ---------------------------------------------------------------------------- }}}
--------------------------------------HOP------------------------------------ {{{
-utils.map('n', '$', "<cmd>lua require'hop'.hint_words()<CR>")
----------------------------------------------------------------------------- }}}
 ---------------------------------INDENTLINE--------------------------------- {{{
 function M.indentline()
     g.indent_blankline_char = '┊'
@@ -162,6 +159,12 @@ function M.indentline()
     g.indent_blankline_buftype_exclude = {'terminal', 'nofile'}
     g.indent_blankline_filetype_exclude = {'help', 'markdown', 'gitcommit', 'startify', 'dashboard', 'packer'}
     -- g.indent_blankline_show_trailing_blankline_indent = false
+end
+---------------------------------------------------------------------------- }}}
+---------------------------------LIGHTSPEED--------------------------------- {{{
+function M.lightspeed()
+    utils.map('n', ';', '<Plug>Lightspeed_S', {noremap = false})
+    utils.map('n', '\'', '<Plug>Lightspeed_s', {noremap = false})
 end
 ---------------------------------------------------------------------------- }}}
 ----------------------------------NVIM-TREE--------------------------------- {{{
@@ -176,14 +179,14 @@ function M.nvim_tree()
 end
 ---------------------------------------------------------------------------- }}}
 --------------------------------PROJECT ROOT-------------------------------- {{{
-function M.projectroot()
-    g.rootmarkers = {'.projectroot', '.git', '.env', '.env.dev', 'pyproject.toml', 'package.json'}
+-- function M.projectroot()
+--     g.rootmarkers = {'.projectroot', '.git', '.env', '.env.dev', 'pyproject.toml', 'package.json'}
 
-    utils.create_augroup(
-        {{'VimEnter * silent! ProjectRootCD'} -- Automatically set the current working directory to the Project Root
-        }, 'set_cwd')
-    utils.map('n', '<Leader>cd', '<cmd>ProjectRootCD<CR>', opts)
-end
+--     utils.create_augroup(
+--         {{'VimEnter * silent! ProjectRootCD'} -- Automatically set the current working directory to the Project Root
+--         }, 'set_cwd')
+--     utils.map('n', '<Leader>cd', '<cmd>ProjectRootCD<CR>', opts)
+-- end
 ---------------------------------------------------------------------------- }}}
 ---------------------------------PROSESSION--------------------------------- {{{
 function M.prosession()
@@ -229,10 +232,14 @@ function M.testing()
 ----------------------------------VIM-TEST---------------------------------- {{{
     g['test#strategy'] = 'floaterm'
 
-    -- Python
+    -- Python - Pytest
     g['test#python#runner'] = 'pytest'
     g['test#python#pytest#options'] = '--color=yes'
-    g['test#python#pytest#executable'] = 'docker-compose -f "./docker-compose.yml" exec -T -w /usr/src/app web pytest'
+
+    -- Python - Poetry -> Pytest
+    g['test#python#pytest#executable'] = 'poetry run pytest'
+
+    -- g['test#python#pytest#executable'] = 'docker-compose -f "./docker-compose.yml" exec -T -w /usr/src/app web pytest'
 
     -- Javascript
     g['test#javascript#runner'] = 'jest'
@@ -269,12 +276,24 @@ function M.testing()
             command = '/Users/Oli/.asdf/shims/python';
             args = { '-m', 'debugpy.adapter' };
         }
+        dap.adapters.poetry = {
+            type = 'executable';
+            command = 'poetry';
+            args = { 'run', 'python', '-m', 'debugpy' };
+        }
         dap.configurations.python = {
             type = 'python'; -- the type here established the link to the adapter definition: `dap.adapters.python`
             request = 'launch';
             name = "Launch file";
             pythonPath = '/Users/Oli/.asdf/shims/python'
         }
+        dap.configurations.poetry = {
+            type = 'poetry'; -- the type here established the link to the adapter definition: `dap.adapters.python`
+            request = 'launch';
+            name = "Launch file";
+            -- pythonPath = '/Users/Oli/.asdf/shims/python'
+        }
+        
         -- END
 
         -- START: Docker debugging

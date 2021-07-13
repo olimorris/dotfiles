@@ -1,3 +1,11 @@
-lua-fmt
+bash-language-server
+dockerfile-language-server-nodejs
 neovim
 npm
+pyright
+typescript-language-server
+vls
+vscode-css-languageserver-bin
+vscode-html-languageserver-bin
+vscode-json-languageserver
+yaml-language-server

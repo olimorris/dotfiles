@@ -18,11 +18,7 @@ function M.setup()
     local builtins = require('telescope.builtin')
 
     local options = {
-        shorten_path = false,
-        height = 3,
-        layout_config = {
-            preview_width = 0.6
-        }
+        shorten_path = false
     }
 
     -- Define the Telescope methods here so options can be passed. This neatly
@@ -108,6 +104,13 @@ function M.config()
                 ["project"] = "/Users/Oli/Code/python/UAPI/",
               }
             }
+          },
+          fzf = {
+            fuzzy = true,                    -- false will only do exact matching
+            override_generic_sorter = false, -- override the generic sorter
+            override_file_sorter = true,     -- override the file sorter
+            case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                             -- the default case_mode is "smart_case"
           },
     }
 

@@ -62,3 +62,5 @@ eval "$(starship init zsh)"
 typeset -U path
 
 alias luamake=/Users/Oli/.local/lua-language-server/3rd/luamake/luamake
+
+export PATH="$HOME/.poetry/bin:$PATH"

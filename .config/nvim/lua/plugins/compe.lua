@@ -15,7 +15,6 @@ function M.config()
         debug = false,
         min_length = 1,
         preselect = 'disable',
-        documentation = true,
         allow_prefix_unmatch = false,
         source = {
             vsnip = true,
@@ -23,11 +22,24 @@ function M.config()
             buffer = true,
             nvim_lsp = true,
             nvim_lua = true,
+        },
+        -- Aesthetics
+        max_abbr_width = 100,
+        max_kind_width = 100,
+        max_menu_width = 100,
+        documentation = {
+            border = "rounded",
+            max_width = 120,
+            max_height = math.floor(vim.o.lines * 0.3),
+            min_height = 1
         }
     }
+
+    -- Maximum number of completion-menu items
+    vim.o.pumheight = 10
 ---------------------------------------------------------------------------- }}}
 ----------------------------------SNIPPETS---------------------------------- {{{
-    g.vsnip_snippet_dir = os.getenv('HOME') .. '/.config/snippets'
+    g.vsnip_snippet_dir = os.getenv('HOME') .. '/.dotfiles/.config/snippets'
     
     local t = function(str)
         return vim.api.nvim_replace_termcodes(str, true, true, true)

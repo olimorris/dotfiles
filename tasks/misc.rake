@@ -50,9 +50,9 @@ namespace :install do
     run %( sh ./misc/macos )
   end
 
-  desc "Install Python"
+  desc "Install Servers"
   task :python do
-    section "Installing Python"
+    section "Installing Servers"
 
     if ! testing?
       run %( asdf plugin add python )
@@ -60,6 +60,10 @@ namespace :install do
       run %( asdf install python 3.9.2 )
       run %( asdf global python 3.9.2 2.7.18 )
       run %( ln -s ~/.asdf/installs/python/3.9.2 ~/.asdf/installs/python/global )
+
+      run %( asdf plugin add lua )
+      run %( asdf install lua 5.4.3 )
+      run %( asdf global lua 5.4.3 )
     end
   end
 

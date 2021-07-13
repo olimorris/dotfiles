@@ -9,6 +9,7 @@ daedalus-mainnet
 dash
 discord
 docker
+element
 fantastical
 flux
 focus

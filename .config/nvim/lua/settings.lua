@@ -73,9 +73,7 @@ sessiondir = fn.stdpath('config')..'/.session' -- Set the session directory
 ----------------------------------MAPPINGS---------------------------------- {{{
 opts = {silent = true}
 
-utils.map('n', ';', ':') -- Faster way to enter a command
 utils.map('i', 'jk', '<esc>', opts) -- Make escape easier to reach
--- utils.map('n', '<Leader>td', ' <cmd>e todo.txt<CR>', opts)
 utils.map('n', '<Leader>w', '<cmd>w<CR>', opts)
 utils.map('n', '<C-q>', '<cmd>qall<CR>', opts) -- Easy quit
 

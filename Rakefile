@@ -41,12 +41,12 @@ task :install do
   Rake::Task['install:fonts'].invoke
   Rake::Task['install:xcode'].invoke
   Rake::Task['install:macos'].invoke
-  Rake::Task['install:python'].invoke
-  Rake::Task['install:neovim'].invoke
+  Rake::Task['install:servers'].invoke
+  # Rake::Task['install:neovim'].invoke
   Rake::Task['install:pip'].invoke
   # Rake::Task['install:nix'].invoke
   Rake::Task['install:npm'].invoke
-  Rake::Task['install:lua'].invoke
+  # Rake::Task['install:lua'].invoke
   Rake::Task['install:tmux_color'].invoke
   Rake::Task['install:tmux'].invoke
   Rake::Task['install:launchagents'].invoke
@@ -57,7 +57,7 @@ task :update do
   Rake::Task['update:brew'].invoke
   Rake::Task['update:pip'].invoke
   # Rake::Task['update:neovim'].invoke
-  Rake::Task['update:lua'].invoke
+  # Rake::Task['update:lua'].invoke
   Rake::Task['update:npm'].invoke
   Rake::Task['update:tmux'].invoke
 end

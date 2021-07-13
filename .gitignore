@@ -30,8 +30,6 @@
 # nix
 !.nix/**/*
 
-# misc
-
 # tests
 !tests/**/*
 

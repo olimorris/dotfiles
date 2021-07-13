@@ -19,7 +19,6 @@ return require('packer').startup(function(use)
     use {'~/Code/Projects/onedark_nvim', requires = 'rktjmp/lush.nvim'}
     use {
         'romgrk/barbar.nvim', -- Tabline
-        event = {'BufReadPre *'},
         config = require('plugins.misc').bufferline(),
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
@@ -50,6 +49,7 @@ return require('packer').startup(function(use)
         event = {'BufReadPre *', 'BufNewFile *'},
         config = require('plugins.misc').indentline()
     }
+    
 ---------------------------------------------------------------------------- }}}
 --------------------------------FUNCTIONALITY------------------------------- {{{
     use {
@@ -58,19 +58,35 @@ return require('packer').startup(function(use)
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
     use {
+        'terrortylor/nvim-comment', -- Comment out lines with gcc
+        config = function() 
+            if pcall(require, 'nvim_comment') then
+                require('nvim_comment').setup()
+            end
+        end
+    }
+    use {'kevinhwang91/nvim-hlslens'} -- Seemlessly jump between matches using n and N
+    use {
         'nvim-telescope/telescope.nvim', -- Awesome fuzzy finder for everything
         setup = require('plugins.telescope').setup(),
         config = require('plugins.telescope').config(),
         requires = {
-            {'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {
+            {'nvim-lua/popup.nvim'},
+            {'nvim-lua/plenary.nvim'},
+            {
                 'nvim-telescope/telescope-frecency.nvim', -- Uses an algorithm to detect which files you may wish to open
                 requires = 'tami5/sql.nvim',
+                after = 'telescope.nvim'
+            },
+            {
+                'nvim-telescope/telescope-fzf-native.nvim', -- Use FZF when searching
+                run = 'make',
                 after = 'telescope.nvim'
             }
         }
     }
     use {
-        'nvim-treesitter/nvim-treesitter',
+        'nvim-treesitter/nvim-treesitter', -- Syntax highlighting and navigating for Neovim
         event = {'BufRead *'},
         requires = {
             {
@@ -83,17 +99,9 @@ return require('packer').startup(function(use)
             },{
                 'windwp/nvim-ts-autotag', -- Autoclose and autorename HTML and Vue tags
                 after = 'nvim-treesitter'
-            }, {
+            },{
                 'JoosepAlviste/nvim-ts-context-commentstring', -- Smart commenting in multi language files - Enabled in Treesitter file
                 after = 'nvim-treesitter',
-                requires = {
-                    'terrortylor/nvim-comment',
-                    config = function() 
-                        if(pcall(require, 'nvim_comment')) then
-                            require('nvim_comment').setup()
-                        end
-                    end
-                }
             }
         },
         -- Use TSInstallFromGrammar to install things like python, vue, javascript etc
@@ -108,12 +116,12 @@ return require('packer').startup(function(use)
             config = require('plugins.compe').config()
         },
         use {
-            "folke/trouble.nvim",
+            "folke/trouble.nvim", -- Pops open list showing diagnostics
             event = {'BufRead *'},
             requires = {'kyazdani42/nvim-web-devicons', opt = true}
         },
         use {
-            'glepnir/lspsaga.nvim', -- Async finder, code action, hover docs -- cool hover menus
+            'glepnir/lspsaga.nvim', -- Async finder, code action, hover docs -- cool hover menus for LSP
             event = {'BufRead *'}
         },
         use {
@@ -133,9 +141,11 @@ return require('packer').startup(function(use)
     use 'tpope/vim-surround' -- Use vim commands to surround text, tags with brackets, parenthesis etc
     use {
         'nacro90/numb.nvim', -- Peak on line numbers
-        setup = function()
-            if pcall(require, 'numb') then 
-                require('numb').setup()
+        event = {'BufRead *'},
+        config = function()
+            if pcall(cmd, 'packadd numb') then 
+                cmd 'packadd numb'
+                require('numb').setup(blue)
             end
         end
     }
@@ -151,7 +161,10 @@ return require('packer').startup(function(use)
             end
         end
     }
-    use 'phaazon/hop.nvim' -- EasyMotion like plugin to jump anywhere in a document
+    use {
+        'ggandor/lightspeed.nvim', -- Speedily navigate anywhere in a buffer
+        setup = require('plugins.misc').lightspeed()
+    }
 ---------------------------------------------------------------------------- }}}
 ------------------------------TESTING/DEBUGGING----------------------------- {{{
     use {
@@ -173,12 +186,12 @@ return require('packer').startup(function(use)
     }
     use {
         'rcarriga/vim-ultest', -- Run tests on any type of code base
-        requires = {
-            {'vim-test/vim-test'}, -- Seemless running of tests within neovim
-            {'voldikss/vim-floaterm'} -- Use the terminal in a floating window
-        },
         after = 'nvim-dap',
         run = ':UpdateRemotePlugins',
+        requires = {
+            {'voldikss/vim-floaterm'}, -- Floating terminal
+            {'vim-test/vim-test'}, -- Run tests on any type of code base
+        },
         config = require('plugins.misc').testing()
     }
 ---------------------------------------------------------------------------- }}}
@@ -198,6 +211,7 @@ return require('packer').startup(function(use)
         '907th/vim-auto-save', -- Autosave buffers
         config = require('plugins.misc').autosave()
     }
+    use 'famiu/nvim-reload' -- Reload Neovim config with :Reload or :Restart
 ---------------------------------------------------------------------------- }}}
 end)
 ---------------------------------------------------------------------------- }}}
