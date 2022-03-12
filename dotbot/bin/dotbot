@@ -1,0 +1,45 @@
+#!/usr/bin/env sh
+
+# This is a valid shell script and also a valid Python script. When this file
+# is executed as a shell script, it finds a python binary and executes this
+# file as a Python script, passing along all of the command line arguments.
+# When this file is executed as a Python script, it loads and runs Dotbot. This
+# is useful because we don't know the name of the python binary.
+
+''':' # begin python string; this line is interpreted by the shell as `:`
+command -v python  >/dev/null 2>&1 && exec python  "$0" "$@"
+command -v python3 >/dev/null 2>&1 && exec python3 "$0" "$@"
+command -v python2 >/dev/null 2>&1 && exec python2 "$0" "$@"
+>&2 echo "error: cannot find python"
+exit 1
+'''
+
+# python code
+
+import sys, os
+
+PROJECT_ROOT_DIRECTORY = os.path.dirname(
+    os.path.dirname(os.path.realpath(__file__)))
+
+def inject(lib_path):
+    path = os.path.join(PROJECT_ROOT_DIRECTORY, 'lib', lib_path)
+    sys.path.insert(0, path)
+
+# version dependent libraries
+if sys.version_info[0] >= 3:
+    inject('pyyaml/lib3')
+else:
+    inject('pyyaml/lib')
+
+if os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'dotbot')):
+    if PROJECT_ROOT_DIRECTORY not in sys.path:
+        sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
+        os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY)
+
+import dotbot
+
+def main():
+    dotbot.cli.main()
+
+if __name__ == '__main__':
+    main()

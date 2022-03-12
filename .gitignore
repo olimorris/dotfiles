@@ -15,6 +15,9 @@
 !.config/starship/**/*
 !.config/tmux/**/*
 
+# Dotbot
+!dotbot
+
 # Git
 !.github/**/*
 !.gitignore
