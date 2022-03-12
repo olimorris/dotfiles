@@ -16,6 +16,7 @@
 !.config/tmux/**/*
 
 # Git
+!.github/**/*
 !.gitignore
 !.gitignore_global
 !.gitmodules
