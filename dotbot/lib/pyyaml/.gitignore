@@ -1,0 +1,13 @@
+# build outputs
+/dist/*
+/build/*
+/ext/_yaml.c
+MANIFEST
+
+# cached Python binaries
+*.py[cdo]
+_pycache_/*
+
+# local IDE state
+/.idea/*
+

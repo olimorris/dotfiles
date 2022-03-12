@@ -1,0 +1,24 @@
+# Mac OS X hidden files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Vim swap files
+.*.sw?
+
+# CTags files
+tags
+
+# PhpStorm
+.idea
+
+# Sublime Text
+*.sublime-project
+
+# Node
+node_modules
+npm-debug.log

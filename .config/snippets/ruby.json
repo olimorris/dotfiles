@@ -1,0 +1,69 @@
+{
+	"Class initialize": {
+		"prefix": [
+			"init"
+		],
+		"body": [
+			"def initialize(${1:params})",
+			"\t$0",
+			"end"
+		]
+	},
+	"RSpec describe": {
+		"prefix": [
+			"describe"
+		],
+		"body": [
+			"describe '${1:name}' do",
+			"\t$0",
+			"end"
+		],
+		"description": "RSpec describe block"
+	},
+	"RSpec before": {
+		"prefix": [
+			"before"
+		],
+		"body": [
+			"before do",
+			"\t$0",
+			"end"
+		],
+		"description": "RSpec before block"
+	},
+	"RSpec context": {
+		"prefix": [
+			"context"
+		],
+		"body": [
+			"context \"${1:context}\" do",
+			"\tit \"${2:it}\" do",
+			"\t\t$0",
+			"\tend",
+			"end"
+		],
+		"description": "RSpec context block"
+	},
+	"factory_bot define": {
+		"prefix": [
+			"FactoryBot"
+		],
+		"body": [
+			"FactoryBot.define do",
+			"\t$0",
+			"end"
+		],
+		"description": "factory_bot define block"
+	},
+	"factory_bot factory": {
+		"prefix": [
+			"factory"
+		],
+		"body": [
+			"factory :${1:factory} do",
+			"\t$0",
+			"end"
+		],
+		"description": "factory_bot factory block"
+	}
+}

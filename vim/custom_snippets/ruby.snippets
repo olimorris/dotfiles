@@ -1,0 +1,8 @@
+snippet d
+	def ${1}
+		${0}
+	end
+
+snippet lp
+	$LOAD_PATH.unshift("#{File.dirname(__FILE__)}${1:/../lib}")
+	${0}

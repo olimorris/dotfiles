@@ -1,0 +1,47 @@
+- defaults:
+    link:
+      force: true
+      create: true
+      relink: true
+
+- clean: ["~"]
+
+- link:
+    # Config directory
+    ~/.config/alacritty: .config/alacritty
+    ~/.config/efm-langserver: .config/efm-langserver
+    ~/.config/hammerspoon: .config/hammerspoon
+    ~/.config/karabiner: .config/karabiner
+    ~/.config/kitty: .config/kitty
+    ~/.config/nvim: .config/nvim
+    ~/.config/snippets: .config/snippets
+    ~/.config/starship: .config/starship
+    ~/.config/tmux: .config/tmux
+
+    # Dotfiles
+    ~/.applescript: .applescript
+    ~/.aliases: zsh/.aliases
+    ~/.bash_profile: bash/.bash_profile
+    ~/.bashrc: bash/.bashrc
+    ~/.color_mode: .color_mode
+    ~/.composer: .composer
+    ~/.env: zsh/.env
+    ~/.functions: zsh/.functions
+    ~/.gitconfig: .gitconfig
+    ~/.gitignore_global: .gitignore_global
+    ~/.mackup: mackup/.mackup
+    ~/.mackup.cfg: mackup/.mackup.cfg
+    ~/.nix: nix
+    ~/.profile: bash/.profile
+    ~/.ssh: .ssh
+    ~/.tool-versions: .tool-versions
+    ~/.vimrc: vim/.vimrc
+    ~/.vimrc.plugins: vim/.vimrc.plugins
+    ~/.vim/custom_snippets: vim/custom_snippets
+    ~/.zshenv: zsh/.zshenv
+    ~/.zprofile: zsh/.zprofile
+    ~/.zshrc: zsh/.zshrc
+    ~/.local/share/zsh/bookmarks: zsh/bookmarks
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]

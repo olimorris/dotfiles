@@ -1,0 +1,202 @@
+snippet $
+$this->
+endsnippet
+
+snippet class
+<?php
+
+namespace ${1}
+
+class ${2}
+{
+	${0}
+}
+endsnippet
+
+snippet trait
+<?php
+
+namespace ${1}
+
+trait ${2}
+{
+	${0}
+}
+endsnippet
+
+snippet interface
+<?php
+
+namespace ${1}
+
+interface ${2}
+{
+	${0}
+}
+endsnippet
+
+snippet tb
+/** @test */
+endsnippet
+
+snippet test
+<?php
+
+namespace Tests\\${1:Unit};
+
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+class ${2}Test extends TestCase
+{
+	use RefreshDatabase;
+
+	${0}
+}
+endsnippet
+
+snippet met
+public function ${1}(${2})
+{
+	${0}
+}
+endsnippet
+
+snippet imet
+public function ${1}(${2});
+endsnippet
+
+snippet metc
+/**
+ * ${1}
+ *
+ * @param  ${2}
+ * @return ${3}
+ */
+public function ${4}(${5})
+{
+	${6}
+}
+endsnippet
+
+snippet pmet
+protected function ${1}(${2})
+{
+	${0}
+}
+endsnippet
+
+snippet smet
+public static function ${1}(${2})
+{
+	${0}
+}
+endsnippet
+
+snippet rg
+Route::get('${1}', '${2}');
+endsnippet
+
+snippet rp
+Route::post('${1}', '${2}');
+endsnippet
+
+snippet /*
+/**
+ * ${1}
+ *
+ * ${2}
+ */
+endsnippet
+
+snippet --
+/*
+|--------------------------------------------------------------------------
+| ${1}
+|--------------------------------------------------------------------------
+*/
+endsnippet
+
+snippet rel
+/**
+ * ${1}
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\\$3
+ */
+public function ${2}()
+{
+	return $this->${3}('${4}');
+}
+endsnippet
+
+snippet hm
+public function ${1}()
+{
+	return $this->hasMany($1);
+}
+endsnippet
+
+snippet if
+if (${1}) {
+	${0}
+}
+endsnippet
+
+snippet fore
+foreach (${1} as ${2}) {
+	${0}
+}
+endsnippet
+
+snippet con
+public function __construct(${1})
+{
+	${0}
+}
+endsnippet
+
+snippet asst
+$this->assertTrue(${0});
+endsnippet
+
+snippet assf
+$this->assertFalse(${0});
+endsnippet
+
+snippet asse
+$this->assertEquals(${0});
+endsnippet
+
+snippet assn
+$this->assertNull(${0});
+endsnippet
+
+snippet tmet
+/** @test */
+public function ${1}()
+{
+	${0}
+}
+endsnippet
+
+snippet eh
+$this->withoutExceptionHandling();
+endsnippet
+
+snippet dd
+eval(\Psy\sh());
+endsnippet
+
+snippet factory
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(${1}, function (Faker\Generator $faker) {
+	return [
+		${0}
+	];
+});
+endsnippet
+
+snippet uf
+$user = factory(\App\User::class)->create();
+endsnippet

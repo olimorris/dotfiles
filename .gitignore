@@ -1,0 +1,62 @@
+# Ignore everything except directories
+*
+!*/
+
+################################### WHITELIST ##################################
+
+# Config
+!.config/alacritty/**/*
+!.config/efm-langserver/**/*
+!.config/hammerspoon/init.lua
+!.config/karabiner/karabiner.json
+!.config/kitty/**/*
+!.config/nvim/**/*
+!.config/snippets/**/*
+!.config/starship/**/*
+!.config/tmux/**/*
+
+# Git
+!.gitignore
+!.gitignore_global
+!.gitmodules
+
+# Vim
+!vim/**/*
+
+# Zsh
+!zsh/**/*
+
+# Misc dirs
+!bash/**/*
+!bin/**/*
+!commands/**/*
+!mackup/**/*
+!nix/**/*
+!packages/**/*
+!tasks/**/*
+!tests/**/*
+
+# Misc files
+!.color_mode
+!.tool-versions
+!install
+!install.conf.yaml
+!Rakefile
+!README.md
+!stylua.toml
+!uninstall
+
+################################### BLACKLIST ##################################
+
+# Tmux
+.config/tmux/plugins
+.config/tmux/resurrect
+
+# Zsh
+.env
+bookmarks
+
+# Others
+.DS_Store
+backup
+

@@ -1,0 +1,7 @@
+eslint_d
+eslint
+fixjson
+jsonlint
+neovim
+npm
+prettier

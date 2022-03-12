@@ -1,0 +1,47 @@
+extends html
+
+snippet form
+	<%= form_for :${1} do |f| %>
+		${0}
+	<% end %>
+
+snippet field
+	<p>
+		<%= f.label :${1:} %><br>
+		<%= f.text_field :$1 %>
+	</p>
+	${0}
+
+snippet area
+	<p>
+		<%= f.label :${1:} %><br>
+		<%= f.text_area :$1 %>
+	</p>
+	${0}
+
+snippet submit
+	<%= f.submit %>
+	${0}
+
+snippet rc
+	<%= ${0} %>
+
+snippet rce
+	<%= ${0} %>
+
+snippet link
+	<%= link_to '${1}', ${0} %>
+
+snippet errors
+	<% if @${1:}.errors.any? %>
+	<div id="error_explanation">
+		<h2>
+		<%= pluralize(@$1.errors.count, "error") %> prohibited this $1 from being saved:
+		</h2>
+		<ul>
+			<% @$1.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+			<% end %>
+		</ul>
+	</div>
+	<% end %>
