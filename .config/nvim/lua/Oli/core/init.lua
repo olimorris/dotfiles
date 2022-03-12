@@ -1,10 +1,12 @@
 ---------------------------------LOAD CONFIG-------------------------------- {{{
 LockPlugins = false -- To prevent rogue updates, lock the plugins
 
+-- Call the cache plugin
+pcall(require, "impatient")
+
 local core_modules = {
   config_namespace .. ".core.utils",
   config_namespace .. ".core.options",
-  config_namespace .. ".core.plugins",
   config_namespace .. ".core.functions",
   config_namespace .. ".core.autocmds",
 }
@@ -16,6 +18,11 @@ for _, module in ipairs(core_modules) do
     })
   end
 end
+
+-- Defer the plugins to last as we have packer compiled
+vim.defer_fn(function()
+  require(config_namespace .. ".core.plugins").load()
+end, 0)
 --------------------------------------------------------------------------- }}}
 ----------------------------LOAD NEOVIM MAPPINGS---------------------------- {{{
 local ok, mappings = om.safe_require(config_namespace .. ".core.mappings")

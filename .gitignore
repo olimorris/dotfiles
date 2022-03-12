@@ -52,6 +52,9 @@
 
 ################################### BLACKLIST ##################################
 
+# Config
+.config/nvim/plugin
+
 # Tmux
 .config/tmux/plugins
 .config/tmux/resurrect
