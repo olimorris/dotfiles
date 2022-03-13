@@ -92,16 +92,16 @@ namespace :install do
     end
   end
 
-  # desc "Install Neovim"
-  # task :neovim do
-  #   section "Installing Neovim"
+  desc "Install Neovim"
+  task :neovim do
+    section "Installing Neovim"
 
-  #   if ! testing?
-  #       run %( git clone https://github.com/neovim/neovim --branch v0.6.0 ~/.neovim )
-  #       run %( \(cd ~/.neovim && git checkout stable && make -j4 && sudo make install\) )
-  #       run %( rm -rf ~/.neovim )
-  #     end
-  # end
+    if ! testing?
+        time = Time.new.strftime("%s")
+        run %( git clone --depth 1 --branch nightly https://github.com/neovim/neovim ~/.neovim/#{time} )
+        run %( \(cd ~/.neovim/#{time} && make -j4 && sudo make install\) )
+      end
+  end
 
   desc 'Install Vim plugins'
   task :vim do
@@ -209,15 +209,15 @@ namespace :install do
 end
 
 namespace :update do
-  # desc "Update Neovim"
-  # task :neovim do
-  #   section "Updating Neovim"
+  desc "Update Neovim"
+  task :neovim do
+    section "Updating Neovim"
 
-  #   if ! testing?
-  #     run %( rm -rf /usr/local/bin/nvim )
-  #     Rake::Task['install:neovim'].invoke
-  #   end
-  # end
+    if ! testing?
+      run %( rm -rf /usr/local/bin/nvim )
+      Rake::Task['install:neovim'].invoke
+    end
+  end
 
   desc 'Update Vim plugins'
   task :vim do
