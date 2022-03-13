@@ -47,7 +47,12 @@ function ReloadConfig()
   dofile(vim.env.MYVIMRC)
   vim.notify("Reloaded config!")
 end
-vim.api.nvim_set_keymap("n", "<Leader>r", "<cmd>call v:lua.ReloadConfig()<CR>", opts)
+om.command({
+  "Reload",
+  function()
+    return ReloadConfig()
+  end,
+})
 --------------------------------------------------------------------------- }}}
 -----------------------------RUBOCOP FORMATTING----------------------------- {{{
 function FormatWithRuboCop()
