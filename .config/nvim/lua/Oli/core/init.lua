@@ -31,7 +31,7 @@ if ok then
 end
 --------------------------------------------------------------------------- }}}
 ---------------------------------LOAD THEME--------------------------------- {{{
-vim.o.background = "light"
+vim.o.background = "dark"
 local ok, theme = om.safe_require(config_namespace .. ".core.theme")
 if ok then
   theme.init()
@@ -39,7 +39,7 @@ end
 
 ---TESTING ONEDARKPRO
 ---TEST CASE #1
--- vim.o.background = "light"
+-- vim.o.background = "dark"
 -- require('onedarkpro').load()
 ---TEST CASE #2
 -- vim.cmd [[ colorscheme onedarkpro ]]

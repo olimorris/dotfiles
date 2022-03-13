@@ -82,7 +82,7 @@ schemes:
       text: CellForeground
       background: "#bfceff" # syntax-selection-color
 
-colors: *light
+colors: *dark
 
 background_opacity: 1
 
