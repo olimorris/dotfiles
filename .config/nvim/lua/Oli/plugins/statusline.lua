@@ -37,8 +37,8 @@ local function using_session()
 end
 
 -- Determine if there is enough space in the window to display components
-local function there_is_width(winid)
-  return vim.api.nvim_win_get_width(winid) > 80
+local function there_is_width()
+  return vim.api.nvim_win_get_width(0) > 80
 end
 
 local function async_run()
