@@ -1,5 +1,6 @@
 local M = {}
-local opts = { noremap = true, silent = true }
+local silent = { noremap = true, silent = true }
+local noisy = { noremap = true, silent = false }
 ------------------------------------NOTES----------------------------------- {{{
 --[[
         Some notes on how I structure my key mappings within Neovim
@@ -21,37 +22,41 @@ vim.g.maplocalleader = ","
 ---------------------------------------------------------------------------- }}}
 -----------------------------------NEOVIM----------------------------------- {{{
 M.neovim = function()
-  vim.api.nvim_set_keymap("i", "jk", "<esc>", opts) -- Easy escape in insert mode
-  vim.api.nvim_set_keymap("n", "<Leader>qa", "<cmd>qall<CR>", opts) -- Easy quit
-  vim.api.nvim_set_keymap("n", "<C-s>", "<cmd>w<CR>", opts) -- Easy save
+  vim.api.nvim_set_keymap("i", "jk", "<esc>", silent) -- Easy escape in insert mode
+  vim.api.nvim_set_keymap("n", "<Leader>qa", "<cmd>qall<CR>", silent) -- Easy quit
+  vim.api.nvim_set_keymap("n", "<C-s>", "<cmd>silent! write<CR>", silent) -- Easy save
 
-  vim.api.nvim_set_keymap("n", "<c-n>", "<cmd>enew<CR>", opts) -- New buffer
-  vim.api.nvim_set_keymap("n", "<c-y>", "<cmd>%y+<CR>", opts) -- Copy the whole file
+  vim.api.nvim_set_keymap("n", "<c-n>", "<cmd>enew<CR>", silent) -- New buffer
+  vim.api.nvim_set_keymap("n", "<c-y>", "<cmd>%y+<CR>", silent) -- Copy the whole file
 
   -- Appending to end of lines
-  vim.api.nvim_set_keymap("n", "<LocalLeader>,", "<cmd>norm A,<CR>", opts) -- Comma
-  vim.api.nvim_set_keymap("n", "<LocalLeader>;", "<cmd>norm A;<CR>", opts) -- Semicolon
+  vim.api.nvim_set_keymap("n", "<LocalLeader>,", "<cmd>norm A,<CR>", silent) -- Comma
+  vim.api.nvim_set_keymap("n", "<LocalLeader>;", "<cmd>norm A;<CR>", silent) -- Semicolon
 
   -- Wrapping lines
-  vim.api.nvim_set_keymap("n", "<LocalLeader>(", [[ciw(<c-r>")<esc>]], opts) -- Wrap in ()
-  vim.api.nvim_set_keymap("v", "<LocalLeader>(", [[c(<c-r>")<esc>]], opts) -- Wrap in ()
+  vim.api.nvim_set_keymap("n", "<LocalLeader>(", [[ciw(<c-r>")<esc>]], silent) -- Wrap in ()
+  vim.api.nvim_set_keymap("v", "<LocalLeader>(", [[c(<c-r>")<esc>]], silent) -- Wrap in ()
 
-  vim.api.nvim_set_keymap("n", "<LocalLeader>{", [[ciw{<c-r>"}<esc>]], opts) -- Wrap in {}
-  vim.api.nvim_set_keymap("v", "<LocalLeader>{", [[c{<c-r>"}<esc>]], opts) -- Wrap in {}
+  vim.api.nvim_set_keymap("n", "<LocalLeader>{", [[ciw{<c-r>"}<esc>]], silent) -- Wrap in {}
+  vim.api.nvim_set_keymap("v", "<LocalLeader>{", [[c{<c-r>"}<esc>]], silent) -- Wrap in {}
 
-  vim.api.nvim_set_keymap("n", '<LocalLeader>"', [[ciw"<c-r>""<esc>]], opts) -- Wrap in ""
-  vim.api.nvim_set_keymap("v", '<LocalLeader>"', [[c"<c-r>""<esc>]], opts) -- Wrap in ""
+  vim.api.nvim_set_keymap("n", '<LocalLeader>"', [[ciw"<c-r>""<esc>]], silent) -- Wrap in ""
+  vim.api.nvim_set_keymap("v", '<LocalLeader>"', [[c"<c-r>""<esc>]], silent) -- Wrap in ""
 
   -- Replace cursor words
-  vim.api.nvim_set_keymap("n", "<LocalLeader>[", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], opts) -- File
-  vim.api.nvim_set_keymap("n", "<LocalLeader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], opts) -- Line
+  vim.api.nvim_set_keymap("n", "<LocalLeader>[", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy) -- File
+  vim.api.nvim_set_keymap("n", "<LocalLeader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy) -- Line
 
   -- Capitalize word
-  vim.api.nvim_set_keymap("n", "<LocalLeader>U", "gUiw`]", opts)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>U", "gUiw`]", silent)
+
+  -- Shift words in visual mode
+  vim.api.nvim_set_keymap("v", "<", "<gv", silent)
+  vim.api.nvim_set_keymap("v", ">", ">gv", silent)
 
   -- Finding and highlighting values
   -- vim.api.nvim_set_keymap('n', '<C-f>', ' :/')
-  vim.api.nvim_set_keymap("n", "<Esc>", "<Esc>:noh<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Esc>", "<Esc>:noh<CR>", silent)
   vim.api.nvim_set_keymap("v", "<LocalLeader>f", " :s/{search}/{replace}/g", {})
   vim.api.nvim_set_keymap("n", "<LocalLeader>f", " :%s/{search}/{replace}/g", {})
 
@@ -71,18 +76,22 @@ M.neovim = function()
     { noremap = true, expr = true }
   )
 
-  vim.api.nvim_set_keymap("n", "B", "^", opts) -- Beginning of a line
-  vim.api.nvim_set_keymap("n", "E", "$", opts) -- End of a line
+  vim.api.nvim_set_keymap("n", "B", "^", silent) -- Beginning of a line
+  vim.api.nvim_set_keymap("n", "E", "$", silent) -- End of a line
 
-  vim.api.nvim_set_keymap("n", "<CR>", "o<Esc>", opts) -- Insert blank line without entering insert mode
+  vim.api.nvim_set_keymap("n", "<CR>", "o<Esc>", silent) -- Insert blank line without entering insert mode
+
+  -- Allow using of the alt key
+  vim.api.nvim_set_keymap("n", "¬", "<a-l>", silent)
+  vim.api.nvim_set_keymap("n", "˙", "<a-h>", silent)
+  vim.api.nvim_set_keymap("n", "∆", "<a-j>", silent)
+  vim.api.nvim_set_keymap("n", "˚", "<a-k>", silent)
 
   -- Move lines of code up or down
-  vim.api.nvim_set_keymap("n", "∆", " <cmd>m .+1<CR>==", opts)
-  vim.api.nvim_set_keymap("n", "˚", " <cmd>m .-2<CR>==", opts)
-  vim.api.nvim_set_keymap("v", "∆", " <cmd>m '>+1<CR>gv=gv", opts)
-  vim.api.nvim_set_keymap("v", "˚", " <cmd>m '<-2<CR>gv=gv", opts)
-  vim.api.nvim_set_keymap("i", "∆", "<Esc> <cmd>m .+1<CR>==gi", opts)
-  vim.api.nvim_set_keymap("i", "˚", " <cmd><Esc>m .-2<CR>==gi", opts)
+  vim.api.nvim_set_keymap("n", "∆", "<cmd>move+<CR>==", silent)
+  vim.api.nvim_set_keymap("n", "˚", "<cmd>move-2<CR>==", silent)
+  vim.api.nvim_set_keymap("v", "∆", ":move'>+<CR>='[gv", silent)
+  vim.api.nvim_set_keymap("v", "˚", ":move-2<CR>='[gv", silent)
 
   vim.api.nvim_set_keymap("v", "<", "<gv", {}) -- Reselect the visual block after indent
   vim.api.nvim_set_keymap("v", ">", ">gv", {}) -- Reselect the visual block after outdent
@@ -91,33 +100,65 @@ M.neovim = function()
   -- INFO: Some of these have been replaced by the use of focus.nvim
   vim.api.nvim_set_keymap("n", "<LocalLeader>sc", "<C-w>q", {}) -- Close the current split
   vim.api.nvim_set_keymap("n", "<LocalLeader>so", "<C-w>o", {}) -- Close all splits but the current one
-  -- vim.api.nvim_set_keymap("n", "<LocalLeader>se", "<C-w>=", {}) -- Resize all splits evenly
-  -- vim.api.nvim_set_keymap("n", "<LocalLeader>sv", "<cmd>vsplit<CR>", opts) -- Create vertical split
-  -- vim.api.nvim_set_keymap("n", "<LocalLeader>sh", "<cmd>split<CR>", opts) -- Create horizontal split
-
-  -- vim.api.nvim_set_keymap('n', '<Leader>c', ' <cmd>only \\|  <cmd>tabclose<CR>') -- Close all splits and tabs
 
   -- Tabs
-  -- vim.api.nvim_set_keymap("n", "<Leader>te", "<cmd>tabe %<CR>", opts)
-  -- vim.api.nvim_set_keymap("n", "<Leader>to", "<cmd>tabonly<CR>", opts)
-  -- vim.api.nvim_set_keymap("n", "<Leader>tc", "<cmd>tabclose<CR>", opts)
+  -- vim.api.nvim_set_keymap("n", "<Leader>te", "<cmd>tabe %<CR>", silent)
+  -- vim.api.nvim_set_keymap("n", "<Leader>to", "<cmd>tabonly<CR>", silent)
+  -- vim.api.nvim_set_keymap("n", "<Leader>tc", "<cmd>tabclose<CR>", silent)
 
   -- Next tab is gt
   -- Previous tab is gT
 
   -- Terminal mode
-  vim.api.nvim_set_keymap("t", "jk", "<C-\\><C-n>", opts) -- Easy escape in terminal mode
+  vim.api.nvim_set_keymap("t", "jk", "<C-\\><C-n>", silent) -- Easy escape in terminal mode
   vim.api.nvim_set_keymap("t", "<esc>", "<C-\\><C-n>", {}) -- Escape in the terminal closes it
   vim.api.nvim_set_keymap("t", ":q!", "<C-\\><C-n>:q!<CR>", {}) -- In the terminal :q quits it
+
+  -- Misc
+  vim.api.nvim_set_keymap("n", "<Leader>r", "<cmd>call v:lua.ReloadConfig()<CR>", silent)
+
+  -- Multiple cursors
+  -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
+  -- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
+
+  -- 1. Position the cursor anywhere in the word you wish to change;
+  -- 2. Hit cn, type the new word, then go back to Normal mode;
+  -- 3. Hit . n-1 times, where n is the number of replacements.
+  vim.api.nvim_set_keymap("n", "cn", "*``cgn", silent) -- Changing a word
+  vim.api.nvim_set_keymap("n", "cN", "*``cgN", silent) -- Changing a word (in backwards direction)
+
+  -- 1. Position the cursor over a word; alternatively, make a selection.
+  -- 2. Hit cq to start recording the macro.
+  -- 3. Once you are done with the macro, go back to normal mode.
+  -- 4. Hit Enter to repeat the macro over search matches.
+  function om.mappings.setup_mc()
+    vim.api.nvim_set_keymap(
+      "n",
+      "<Enter>",
+      [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]],
+      { noremap = false, silent = true }
+    )
+  end
+  vim.g.mc = [[y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>]]
+  vim.api.nvim_set_keymap("x", "cn", [[g:mc . "``cgn"]], { expr = true, silent = true })
+  vim.api.nvim_set_keymap("x", "cN", [[g:mc . "``cgN"]], { expr = true, silent = true })
+  vim.api.nvim_set_keymap("n", "cq", [[:lua om.mappings.setup_mc()<CR>*``qz]], { noremap = true, silent = true })
+  vim.api.nvim_set_keymap("n", "cQ", [[:lua om.mappings.setup_mc()<CR>#``qz]], { noremap = true, silent = true })
+  vim.api.nvim_set_keymap(
+    "x",
+    "cq",
+    [[":\<C-u>lua om.mappings.setup_mc()\<CR>" . "gv" . g:mc . "``qz"]],
+    { expr = true }
+  )
 end
 ---------------------------------------------------------------------------- }}}
 -----------------------------------PLUGINS---------------------------------- {{{
 M.aerial = function()
-  vim.api.nvim_set_keymap("n", "<C-t>", "<cmd>AerialToggle<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<C-t>", "<cmd>AerialToggle<CR>", silent)
 end
 
 M.bufdelete = function()
-  vim.api.nvim_set_keymap("n", "<C-c>", "<cmd>Bwipeout!<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<C-c>", "<cmd>Bwipeout!<CR>", silent)
 end
 
 M.bufferline = function()
@@ -139,16 +180,16 @@ M.bufferline = function()
 end
 
 M.cryptoprice = function()
-  vim.api.nvim_set_keymap("n", "<LocalLeader>c", "<cmd>lua require('cryptoprice').toggle()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>c", "<cmd>lua require('cryptoprice').toggle()<CR>", silent)
 end
 
 M.dap = function()
-  vim.api.nvim_set_keymap("n", "<F1>", "<cmd>lua require('dap').toggle_breakpoint()<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<F2>", "<cmd>lua require('dap').continue()<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<F3>", "<cmd>lua require('dap').step_into()<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<F4>", "<cmd>lua require('dap').step_over()<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<F5>", "<cmd>lua require('dap').repl.toggle({height = 6})<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<F9>", "<cmd>lua require('dap').repl.run_last()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<F1>", "<cmd>lua require('dap').toggle_breakpoint()<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<F2>", "<cmd>lua require('dap').continue()<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<F3>", "<cmd>lua require('dap').step_into()<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<F4>", "<cmd>lua require('dap').step_over()<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<F5>", "<cmd>lua require('dap').repl.toggle({height = 6})<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<F9>", "<cmd>lua require('dap').repl.run_last()<CR>", silent)
 
   function DapStop()
     local _, dap = om.safe_require("dap")
@@ -160,21 +201,21 @@ M.dap = function()
 end
 
 M.harpoon = function()
-  vim.api.nvim_set_keymap("n", "<LocalLeader>ha", '<cmd>lua require("harpoon.mark").add_file()<CR>', opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>hl", "<cmd>Telescope harpoon marks<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>hn", '<cmd>lua require("harpoon.ui").nav_next()<CR>', opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>hp", '<cmd>lua require("harpoon.ui").nav_prev()<CR>', opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>h1", '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>h1", '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>h2", '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>h3", '<cmd>lua require("harpoon.ui").nav_file(3)<CR>', opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>h4", '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>h5", '<cmd>lua require("harpoon.ui").nav_file(5)<CR>', opts)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>ha", '<cmd>lua require("harpoon.mark").add_file()<CR>', silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>hl", "<cmd>Telescope harpoon marks<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>hn", '<cmd>lua require("harpoon.ui").nav_next()<CR>', silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>hp", '<cmd>lua require("harpoon.ui").nav_prev()<CR>', silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>h1", '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>h1", '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>h2", '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>h3", '<cmd>lua require("harpoon.ui").nav_file(3)<CR>', silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>h4", '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>h5", '<cmd>lua require("harpoon.ui").nav_file(5)<CR>', silent)
 end
 
 M.hop = function()
-  vim.api.nvim_set_keymap("n", "s", "<cmd>HopChar1<CR>", opts)
-  vim.api.nvim_set_keymap("o", "s", "<cmd>HopChar1<CR>", opts)
+  vim.api.nvim_set_keymap("n", "s", "<cmd>HopChar1<CR>", silent)
+  vim.api.nvim_set_keymap("o", "s", "<cmd>HopChar1<CR>", silent)
 
   -- Override f/F keys
   vim.api.nvim_set_keymap(
@@ -214,7 +255,7 @@ M.focus = function()
       "n",
       "<LocalLeader>s" .. direction,
       "<cmd>lua require('focus').split_command('" .. direction .. "')<CR>",
-      opts
+      silent
     )
   end
   -- Use `<LocalLeader>sh` to split the screen to the left, same as command FocusSplitLeft etc
@@ -223,7 +264,7 @@ M.focus = function()
   focusmap("k")
   focusmap("l")
 
-  vim.api.nvim_set_keymap("n", "<LocalLeader>ss", "<cmd>lua pcall(require('focus').split_nicely())<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>ss", "<cmd>lua pcall(require('focus').split_nicely())<CR>", silent)
 end
 
 M.lsp = function(client, bufnr)
@@ -419,11 +460,16 @@ M.marks = function()
 end
 
 M.minimap = function()
-  vim.api.nvim_set_keymap("n", "<LocalLeader>m", "<cmd>MinimapToggle<CR><cmd>MinimapRefresh<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>m", "<cmd>MinimapToggle<CR><cmd>MinimapRefresh<CR>", silent)
 end
 
 M.neoclip = function()
-  vim.api.nvim_set_keymap("n", "<LocalLeader>p", "<cmd>lua require('telescope').extensions.neoclip.default()<CR>", opts)
+  vim.api.nvim_set_keymap(
+    "n",
+    "<LocalLeader>p",
+    "<cmd>lua require('telescope').extensions.neoclip.default()<CR>",
+    silent
+  )
 end
 
 M.packer = function()
@@ -472,88 +518,93 @@ M.packer = function()
 end
 
 M.persisted = function()
-  vim.api.nvim_set_keymap("n", "<Leader>s", '<cmd>lua require("persisted").toggle()<CR>', opts)
+  vim.api.nvim_set_keymap("n", "<Leader>s", '<cmd>lua require("persisted").toggle()<CR>', silent)
 end
 
 M.qf_helper = function()
   -- The '!' ensures that the cursor doesn't move to the QF or LL
-  vim.api.nvim_set_keymap("n", "<Leader>q", "<cmd>QFToggle!<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<Leader>l", "<cmd>LLToggle!<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Leader>q", "<cmd>QFToggle!<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<Leader>l", "<cmd>LLToggle!<CR>", silent)
 end
 
 M.search = function()
-  vim.api.nvim_set_keymap("n", "/", '<cmd>lua require("searchbox").match_all()<CR>', opts)
-  vim.api.nvim_set_keymap("v", "/", '<cmd>lua require("searchbox").match_all()<CR>', opts)
+  vim.api.nvim_set_keymap("n", "/", '<cmd>lua require("searchbox").match_all()<CR>', silent)
+  vim.api.nvim_set_keymap("v", "/", '<cmd>lua require("searchbox").match_all()<CR>', silent)
 
-  vim.api.nvim_set_keymap("n", "<LocalLeader>r", '<cmd>lua require("searchbox").replace()<CR>', opts)
-  vim.api.nvim_set_keymap("v", "<LocalLeader>r", '<cmd>lua require("searchbox").replace()<CR>', opts)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>r", '<cmd>lua require("searchbox").replace()<CR>', silent)
+  vim.api.nvim_set_keymap("v", "<LocalLeader>r", '<cmd>lua require("searchbox").replace()<CR>', silent)
 end
 
 M.telescope = function()
-  vim.api.nvim_set_keymap("n", "T", "<cmd>Telescope diagnostics bufnr=0 <CR>", opts)
+  vim.api.nvim_set_keymap("n", "T", "<cmd>Telescope diagnostics bufnr=0 <CR>", silent)
 
   vim.api.nvim_set_keymap(
     "n",
     "<C-p>",
     "<cmd>lua require('telescope.builtin').find_files({hidden=true,path_display=smart}) <CR>",
-    opts
+    silent
   )
-  vim.api.nvim_set_keymap("n", "<C-f>", "<cmd>Telescope current_buffer_fuzzy_find <CR>", opts)
-  vim.api.nvim_set_keymap("n", "<Leader>p", "<cmd>Telescope project display_type=full <CR>", opts)
+  vim.api.nvim_set_keymap("n", "<C-f>", "<cmd>Telescope current_buffer_fuzzy_find <CR>", silent)
+  vim.api.nvim_set_keymap("n", "<Leader>p", "<cmd>Telescope project display_type=full <CR>", silent)
   vim.api.nvim_set_keymap(
     "n",
     "<Leader>e",
     "<cmd>lua require('telescope.builtin').find_files({prompt_title='Neovim Config',cwd='~/.config/nvim/lua'})<CR>",
-    opts
+    silent
   )
-  vim.api.nvim_set_keymap("n", "<C-g>", "<cmd>Telescope live_grep path_display=shorten grep_open_files=true<CR>", opts)
-  -- vim.api.nvim_set_keymap("n", "<C-t>", "<cmd>Telescope treesitter<CR>", opts)
+  vim.api.nvim_set_keymap(
+    "n",
+    "<C-g>",
+    "<cmd>Telescope live_grep path_display=shorten grep_open_files=true<CR>",
+    silent
+  )
+  -- vim.api.nvim_set_keymap("n", "<C-t>", "<cmd>Telescope treesitter<CR>", silent)
   vim.api.nvim_set_keymap(
     "n",
     "<Leader><Leader>",
     "<cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
-    opts
+    silent
   )
-  vim.api.nvim_set_keymap("n", "<Leader>g", "<cmd>Telescope live_grep path_display=smart<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Leader>g", "<cmd>Telescope live_grep path_display=smart<CR>", silent)
 end
 
 M.todo_comments = function()
-  vim.api.nvim_set_keymap("n", "<Leader>c", "<cmd>TodoTelescope<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Leader>c", "<cmd>TodoTelescope<CR>", silent)
 end
 
 M.toggleterm = function()
-  vim.api.nvim_set_keymap("n", "<C-x>", "<cmd>ToggleTerm<CR>", opts)
-  vim.api.nvim_set_keymap("t", "<C-x>", "<cmd>ToggleTerm<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<C-x>", "<cmd>ToggleTerm<CR>", silent)
+  vim.api.nvim_set_keymap("t", "<C-x>", "<cmd>ToggleTerm<CR>", silent)
 end
 
 M.treesitter = function()
   -- Treesitter Unit
   -- vau and viu select outer and inner units
   -- cau and ciu change outer and inner units
-  vim.api.nvim_set_keymap("x", "iu", '<cmd>lua require"treesitter-unit".select()<CR>', opts)
-  vim.api.nvim_set_keymap("x", "au", '<cmd>lua require"treesitter-unit".select(true)<CR>', opts)
-  vim.api.nvim_set_keymap("o", "iu", '<cmd><c-u>lua require"treesitter-unit".select()<CR>', opts)
-  vim.api.nvim_set_keymap("o", "au", '<cmd><c-u>lua require"treesitter-unit".select(true)<CR>', opts)
+  vim.api.nvim_set_keymap("x", "iu", '<cmd>lua require"treesitter-unit".select()<CR>', silent)
+  vim.api.nvim_set_keymap("x", "au", '<cmd>lua require"treesitter-unit".select(true)<CR>', silent)
+  vim.api.nvim_set_keymap("o", "iu", '<cmd><c-u>lua require"treesitter-unit".select()<CR>', silent)
+  vim.api.nvim_set_keymap("o", "au", '<cmd><c-u>lua require"treesitter-unit".select(true)<CR>', silent)
 end
 
 M.tmux = function()
-  vim.api.nvim_set_keymap("n", "<C-k>", "<cmd>lua require('tmux').move_up()<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<C-j>", "<cmd>lua require('tmux').move_down()<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<C-h>", "<cmd>lua require('tmux').move_left()<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<C-l>", "<cmd>lua require('tmux').move_right()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<C-k>", "<cmd>lua require('tmux').move_up()<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<C-j>", "<cmd>lua require('tmux').move_down()<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<C-h>", "<cmd>lua require('tmux').move_left()<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<C-l>", "<cmd>lua require('tmux').move_right()<CR>", silent)
 end
 
 M.vim_test = function()
-  vim.api.nvim_set_keymap("n", "<Leader>t", "<cmd>TestNearest<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>ta", "<cmd>TestAll<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>tl", "<cmd>TestLast<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>tf", "<cmd>TestFile<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>ts", "<cmd>TestSuite<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>tn", "<cmd>TestNearest<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<Leader>t", "<cmd>TestNearest<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>ta", "<cmd>TestAll<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>tl", "<cmd>TestLast<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>tf", "<cmd>TestFile<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>ts", "<cmd>TestSuite<CR>", silent)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>tn", "<cmd>TestNearest<CR>", silent)
 end
 
 M.undotree = function()
-  vim.api.nvim_set_keymap("n", "<LocalLeader>u", "<cmd>UndotreeToggle<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>u", "<cmd>UndotreeToggle<CR>", silent)
 end
 
 M.visual_multi = function()
@@ -566,7 +617,7 @@ M.visual_multi = function()
 end
 
 M.yabs = function()
-  vim.api.nvim_set_keymap("n", "<LocalLeader>d", "<cmd>lua require('yabs'):run_default_task()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<LocalLeader>d", "<cmd>lua require('yabs'):run_default_task()<CR>", silent)
 end
 ---------------------------------------------------------------------------- }}}
 return M
