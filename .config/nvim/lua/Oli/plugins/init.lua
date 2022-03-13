@@ -13,9 +13,13 @@ local autoload = function()
       "nvim-lua/plenary.nvim", -- Required dependency for many plugins. Super useful Lua functions
       lock = LockPlugins,
     },
-    -- cache everything!
     {
-      "lewis6991/impatient.nvim",
+      "antoinemadec/FixCursorHold.nvim", -- Fix neovim CursorHold and CursorHoldI autocmd events performance bug
+      lock = LockPlugins,
+    },
+    {
+      "lewis6991/impatient.nvim", -- Speeds up load times
+      lock = LockPlugins,
     },
   }
 end
