@@ -9,9 +9,9 @@ treesitter.setup({
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "<CR>",
+      init_selection = "@",
       -- scope_incremental = "<CR>",
-      node_incremental = "<CR>", -- increment to the upper named parent
+      node_incremental = "@", -- increment to the upper named parent
       node_decremental = "<BS>", -- decrement to the previous node
     },
   },
