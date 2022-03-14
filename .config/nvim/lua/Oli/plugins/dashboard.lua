@@ -42,14 +42,14 @@ function M.setup()
     return b
   end
   dashboard.section.buttons.val = {
-    button("s", "   Load session", ':lua require("persisted").load()<CR>'),
+    button("s", "   Load session", ":lua require(\"persisted\").load()<CR>"),
     button("b", "   Bookmarks", ":Telescope harpoon marks<CR>"),
     button("r", "   Recently used files", ":Telescope frecency<CR>"),
     button("n", "   New file", ":ene <BAR> startinsert <CR>"),
     button("f", "   Find file", ":Telescope find_files hidden=true path_display=smart<CR>"),
     button("p", "   Find project", ":Telescope project<CR>"),
     button("w", "   Find word", ":Telescope live_grep path_display=smart<CR>"),
-    button("u", "   Update plugins", ":PS<CR>"), -- Packer sync
+    button("u", "   Update plugins", ":lua require(\"packer\").sync()<CR>"), -- Packer sync
     button("q", "   Quit Neovim", ":qa<CR>"),
   }
   dashboard.section.buttons.opts = {
