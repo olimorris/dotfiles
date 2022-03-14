@@ -132,22 +132,22 @@ M.neovim = function()
   -- 3. Once you are done with the macro, go back to normal mode.
   -- 4. Hit Enter to repeat the macro over search matches.
   function om.mappings.setup_mc()
-    vim.api.nvim_set_keymap(
+    vim.keymap.set(
       "n",
       "<Enter>",
       [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]],
-      { noremap = false, silent = true }
+      { remap = true, silent = true }
     )
   end
-  vim.g.mc = [[y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>]]
+  vim.g.mc = vim.api.nvim_replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]], true, true, true)
   vim.api.nvim_set_keymap("x", "cn", [[g:mc . "``cgn"]], { expr = true, silent = true })
   vim.api.nvim_set_keymap("x", "cN", [[g:mc . "``cgN"]], { expr = true, silent = true })
-  vim.api.nvim_set_keymap("n", "cq", [[:lua om.mappings.setup_mc()<CR>*``qz]], { noremap = true, silent = true })
-  vim.api.nvim_set_keymap("n", "cQ", [[:lua om.mappings.setup_mc()<CR>#``qz]], { noremap = true, silent = true })
+  vim.api.nvim_set_keymap("n", "cq", [[:\<C-u>call v:lua.om.mappings.setup_mc()<CR>*``qz]], { silent = true })
+  vim.api.nvim_set_keymap("n", "cQ", [[:\<C-u>call v:lua.om.mappings.setup_mc()<CR>#``qz]], { silent = true })
   vim.api.nvim_set_keymap(
     "x",
     "cq",
-    [[":\<C-u>lua om.mappings.setup_mc()\<CR>" . "gv" . g:mc . "``qz"]],
+    [[":\<C-u>call v:lua.om.mappings.setup_mc()<CR>gv" . g:mc . "``qz"]],
     { expr = true }
   )
 end
