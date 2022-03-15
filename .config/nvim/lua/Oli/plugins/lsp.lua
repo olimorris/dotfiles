@@ -84,14 +84,20 @@ om.command({
 })
 ---------------------------------------------------------------------------- }}}
 -----------------------------------ATTACH----------------------------------- {{{
-local ok, aerial = om.safe_require("aerial", { silent = true })
+local symbols, aerial = om.safe_require("aerial", { silent = true })
+local maps, legendary = om.safe_require("legendary", { silent = true })
 
 function om.lsp.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-  if ok then
+
+  if symbols then
     om.lsp.on_attach = pcall(aerial.on_attach, client, bufnr)
   end
-  require(config_namespace .. ".core.mappings").lsp(client, bufnr)
+
+  if maps then
+    legendary.bind_keymaps(require(config_namespace .. ".core.mappings").lsp_keymaps(client, bufnr))
+    legendary.bind_autocmds(require(config_namespace .. ".core.autocmds").lsp_autocmds(client))
+  end
 end
 ---------------------------------------------------------------------------- }}}
 --------------------------------SETUP SERVERS------------------------------- {{{

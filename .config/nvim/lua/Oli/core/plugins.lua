@@ -43,9 +43,6 @@ local function setup_plugins()
       use({
         "wbthomason/packer.nvim",
         event = "VimEnter",
-        setup = function()
-          require(config_namespace .. ".core.mappings").packer()
-        end,
       })
       use_rocks("penlight")
 

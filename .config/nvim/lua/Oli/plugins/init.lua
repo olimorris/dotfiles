@@ -34,7 +34,6 @@ local appearance = function()
     --     end
     -- }) -- My theme
     { "~/Code/Projects/onedarkpro.nvim" }, -- My theme
-    { "kyazdani42/nvim-web-devicons", lock = LockPlugins }, -- Web icons for various plugins
     {
       "goolord/alpha-nvim", -- Dashboard for Neovim
       lock = LockPlugins,
@@ -45,6 +44,9 @@ local appearance = function()
     {
       "feline-nvim/feline.nvim", -- Lua statusline
       lock = LockPlugins,
+      requires = {
+        { "kyazdani42/nvim-web-devicons", lock = LockPlugins }, -- Web icons for various plugins
+      },
       config = function()
         require(config_namespace .. ".plugins.statusline").setup()
       end,
@@ -53,7 +55,6 @@ local appearance = function()
       "noib3/cokeline.nvim", -- Buffers in the tabline
       lock = LockPlugins,
       config = function()
-        require(config_namespace .. ".core.mappings").bufferline()
         require(config_namespace .. ".plugins.bufferline").setup()
       end,
     },
@@ -61,9 +62,6 @@ local appearance = function()
       "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
       lock = LockPlugins,
       cmd = { "Bdelete", "Bwipeout" },
-      setup = function()
-        require(config_namespace .. ".core.mappings").bufdelete()
-      end,
     },
     {
       "lewis6991/gitsigns.nvim", -- Git signs in the sign column
@@ -84,7 +82,6 @@ local appearance = function()
         "NvimTreeFocus",
       },
       setup = function()
-        require(config_namespace .. ".core.mappings").file_explorer()
         require(config_namespace .. ".plugins.file_explorer").setup()
       end,
       config = function()
@@ -124,9 +121,6 @@ local appearance = function()
       "wfxr/minimap.vim", -- Display a minimap
       lock = LockPlugins,
       cmd = { "MinimapToggle", "Minimap", "MinimapRefresh" },
-      setup = function()
-        require(config_namespace .. ".core.mappings").minimap()
-      end,
       config = function()
         require(config_namespace .. ".plugins.others").minimap()
       end,
@@ -143,9 +137,6 @@ local appearance = function()
       "stevearc/qf_helper.nvim", -- Improves the quickfix and location list windows
       lock = LockPlugins,
       cmd = { "copen", "lopen", "QFToggle", "LLToggle", "QFOpen", "LLOpen" },
-      setup = function()
-        require(config_namespace .. ".core.mappings").qf_helper()
-      end,
       config = function()
         require(config_namespace .. ".plugins.others").qf_helper()
       end,
@@ -159,9 +150,6 @@ local editor_features = function()
       -- "olimorris/persisted.nvim", -- Session management
       "~/Code/Projects/persisted.nvim",
       module = "persisted",
-      setup = function()
-        require(config_namespace .. ".core.mappings").persisted()
-      end,
       config = function()
         require(config_namespace .. ".plugins.others").persisted()
       end,
@@ -205,9 +193,6 @@ local editor_features = function()
           "nvim-telescope/telescope-smart-history.nvim", -- Show project dependant history
           lock = LockPlugins,
           after = "telescope.nvim",
-          setup = function()
-            require(config_namespace .. ".core.mappings").harpoon()
-          end,
           config = function()
             require("telescope").load_extension("smart_history")
           end,
@@ -228,18 +213,12 @@ local editor_features = function()
           cmd = "AerialToggle",
           module = "aerial",
           after = "telescope.nvim",
-          setup = function()
-            require(config_namespace .. ".core.mappings").aerial()
-          end,
           config = function()
             require("telescope").load_extension("aerial")
             require(config_namespace .. ".plugins.others").aerial()
           end,
         },
       },
-      setup = function()
-        require(config_namespace .. ".core.mappings").telescope()
-      end,
       config = function()
         require(config_namespace .. ".plugins.telescope")
       end,
@@ -248,9 +227,6 @@ local editor_features = function()
       "beauwilliams/focus.nvim", -- Auto-resize splits/windows
       lock = LockPlugins,
       module = "focus",
-      setup = function()
-        require(config_namespace .. ".core.mappings").focus()
-      end,
       config = function()
         require(config_namespace .. ".plugins.others").focus()
       end,
@@ -259,9 +235,6 @@ local editor_features = function()
       "mbbill/undotree", -- Visually see your undos
       lock = LockPlugins,
       cmd = "UndotreeToggle",
-      setup = function()
-        require(config_namespace .. ".core.mappings").undotree()
-      end,
       config = function()
         require(config_namespace .. ".plugins.others").undotree()
       end,
@@ -269,53 +242,44 @@ local editor_features = function()
     {
       "VonHeikemen/searchbox.nvim", -- Search box in the top right corner
       lock = LockPlugins,
-      keys = { "/", "<LocalLeader>r" },
+      module = "searchbox",
       requires = {
         { "MunifTanjim/nui.nvim", lock = LockPlugins },
       },
       config = function()
-        require(config_namespace .. ".core.mappings").search()
         require(config_namespace .. ".plugins.others").search()
       end,
     },
     {
       "phaazon/hop.nvim", -- Speedily navigate anywhere in a buffer
       lock = LockPlugins,
-      keys = { "<localleader>h", "f", "F", "s" },
+      module = "hop",
       config = function()
-        require(config_namespace .. ".core.mappings").hop()
         require(config_namespace .. ".plugins.others").hop()
       end,
     },
     {
-      "folke/which-key.nvim", -- Info panel containing your keybindings
+      "AckslD/nvim-neoclip.lua", -- Clipboard history
       lock = LockPlugins,
+      requires = {
+        { "tami5/sqlite.lua", lock = LockPlugins },
+      },
       config = function()
-        require(config_namespace .. ".plugins.which_key")
+        require(config_namespace .. ".plugins.others").neoclip()
       end,
     },
-    -- {
-    --   "AckslD/nvim-neoclip.lua", -- Clipboard history
-    --   lock = LockPlugins,
-    --   requires = {
-    --     { "tami5/sqlite.lua", lock = LockPlugins },
-    --   },
-    --   setup = function()
-    --     require(config_namespace .. ".core.mappings").neoclip()
-    --   end,
-    --   config = function()
-    --     require(config_namespace .. ".plugins.others").neoclip()
-    --   end,
-    -- },
     {
       "akinsho/nvim-toggleterm.lua", -- Easily toggle and position the terminal
       lock = LockPlugins,
       cmd = { "ToggleTerm", "Test*" },
-      setup = function()
-        require(config_namespace .. ".core.mappings").toggleterm()
-      end,
       config = function()
         require(config_namespace .. ".plugins.others").toggleterm()
+      end,
+    },
+    {
+      "mrjones2014/legendary.nvim",
+      config = function()
+        require(config_namespace .. ".plugins.legendary").setup()
       end,
     },
   }
@@ -412,10 +376,12 @@ local coding = function()
           lock = LockPlugins,
           after = "nvim-treesitter",
         },
+        {
+          "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
+          lock = LockPlugins,
+          after = "nvim-treesitter",
+        },
       },
-      setup = function()
-        require(config_namespace .. ".core.mappings").treesitter()
-      end,
       config = function()
         require(config_namespace .. ".plugins.treesitter")
       end,
@@ -429,9 +395,6 @@ local coding = function()
       "pianocomposer321/yabs.nvim", -- Build and run your code
       lock = LockPlugins,
       module = "yabs",
-      setup = function()
-        require(config_namespace .. ".core.mappings").yabs()
-      end,
       config = function()
         require(config_namespace .. ".plugins.others").yabs()
       end,
@@ -453,9 +416,6 @@ local coding = function()
       "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
       lock = LockPlugins,
       event = "BufRead",
-      setup = function()
-        require(config_namespace .. ".core.mappings").todo_comments()
-      end,
       config = function()
         require(config_namespace .. ".plugins.others").todo_comments()
       end,
@@ -473,7 +433,6 @@ local coding = function()
       lock = LockPlugins,
       cmd = { "Test*" },
       setup = function()
-        require(config_namespace .. ".core.mappings").vim_test()
         require(config_namespace .. ".plugins.testing").vim_test()
       end,
     },
@@ -507,9 +466,6 @@ local coding = function()
           end,
         },
       },
-      setup = function()
-        require(config_namespace .. ".core.mappings").dap()
-      end,
       config = function()
         require(config_namespace .. ".plugins.others").dap()
       end,
@@ -537,9 +493,6 @@ local others = function()
       lock = LockPlugins,
       cond = function()
         return os.getenv("TMUX")
-      end,
-      setup = function()
-        require(config_namespace .. ".core.mappings").tmux()
       end,
     },
     {

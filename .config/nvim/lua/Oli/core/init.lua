@@ -8,7 +8,6 @@ local core_modules = {
   config_namespace .. ".core.utils",
   config_namespace .. ".core.options",
   config_namespace .. ".core.functions",
-  config_namespace .. ".core.autocmds",
 }
 for _, module in ipairs(core_modules) do
   local ok, result = pcall(require, module)

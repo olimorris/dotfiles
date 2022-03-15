@@ -9,6 +9,10 @@ wk.setup({
   plugins = { marks = false },
   presets = {
     operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
+    motions = false,
+    text_objects = false,
+    windows = false,
+    nav = false,
   },
   ignore_missing = true, -- do not show commands with no label
   show_help = false, -- hide the help message on the command line
@@ -23,7 +27,8 @@ wk.register({
   ["<C-g>"] = "Telescope: Find in open buffers",
   ["<C-s>"] = "Save current buffer",
   ["<C-r>"] = "Redo",
-  ["\\"] = "Open NvimTree",
+  ["\\"] = "Toggle NvimTree",
+  ["cn"] = "Multipe cursors: Replace word",
   T = "Lsp diagnostics",
   [vim.g.mapleader] = {
     [vim.g.mapleader] = "Telescope: Frequent files",
@@ -140,4 +145,4 @@ wk.register({
     ["]"] = "Go to next mark",
     [","] = "Set the next available mark",
   },
-})
+}, {})

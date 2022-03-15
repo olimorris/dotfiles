@@ -1,153 +1,149 @@
----------------------------------BUFFERLINE--------------------------------- {{{
--- Reload Cokeline when the theme has been changed
-if om.safe_require("cokeline", { silent = true }) then
-  om.augroup("RefreshBufferlineColors", {
+local M = {}
+
+function M.default_autocmds()
+  local autocmds = {
     {
-      events = { "ColorScheme" },
-      targets = { "*" },
-      command = function()
-        require(config_namespace .. ".plugins.bufferline").setup()
-      end,
+      name = "FiletypeIndentation",
+      {
+        "FileType",
+        ":setlocal shiftwidth=2 tabstop=2",
+        opts = {
+          pattern = { "css", "eruby", "html", "lua", "javascript", "json", "ruby", "vue" },
+        },
+      },
     },
-  })
-end
---------------------------------------------------------------------------- }}}
-------------------------------CLEAR COMMANDLINE----------------------------- {{{
---- automatically clear commandline messages after a few seconds delay
---- source: http://unix.stackexchange.com/a/613645
----@return function
-local function clear_commandline()
-  --- Track the timer object and stop any previous timers before setting
-  --- a new one so that each change waits for 5 secs and that 5 secs is
-  --- deferred each time
-  local timer
-  return function()
-    if timer then
-      timer:stop()
-    end
-    timer = vim.defer_fn(function()
-      if vim.fn.mode() == "n" then
-        vim.cmd([[echon '']])
-      end
-    end, 5000)
+    {
+      name = "MarkdownLineWrapping",
+      {
+        "FileType",
+        ":setlocal wrap",
+        opts = {
+          pattern = { "markdown" },
+        },
+      },
+    },
+    {
+      name = "QuickfixFormatting",
+      {
+        { "BufEnter", "WinEnter" },
+        ":if &buftype == 'quickfix' | setlocal nocursorline | setlocal number | endif",
+        opts = {
+          pattern = { "*" },
+        },
+      },
+    },
+    {
+      name = "ReloadTheme",
+      {
+        "ColorScheme",
+        function()
+          require(config_namespace .. ".core.theme").init()
+        end,
+        opts = {
+          pattern = { "*" },
+        },
+      },
+    },
+    {
+      name = "AddRubyFiletypes",
+      {
+        { "BufNewFile", "BufRead" },
+        ":set ft=ruby",
+        opts = {
+          pattern = { "*.json.jbuilder", "*.jbuilder", "*.rake" },
+        },
+      },
+    },
+  }
+
+  -- Reload bufferline when the theme has been changed
+  if om.safe_require("cokeline", { silent = true }) then
+    table.insert(autocmds, {
+      name = "RefreshBufferlineColors",
+      {
+        "ColorScheme",
+        function()
+          return require(config_namespace .. ".plugins.bufferline").setup()
+        end,
+        opts = { pattern = "*" },
+      },
+    })
   end
-end
+  --
+  -- Reload statusline when the theme has been changed
+  if om.safe_require("feline", { silent = true }) then
+    table.insert(autocmds, {
+      name = "RefreshStatuslineColors",
+      {
+        "ColorScheme",
+        function()
+          require(config_namespace .. ".plugins.statusline").setup()
+        end,
+        opts = { pattern = "*" },
+      },
+    })
+  end
 
-om.augroup("ClearCommandMessages", {
-  {
-    events = { "BufWritePost", "CmdlineLeave", "CmdlineChanged" },
-    targets = { ":" },
-    command = clear_commandline(),
-  },
-})
---------------------------------------------------------------------------- }}}
-----------------------------------DASHBOARD--------------------------------- {{{
--- Do not show folds and hide the tabline when Alpha is present
-if om.safe_require("alpha", { silent = true }) then
-  om.augroup("AlphaTabline", {
+  if om.safe_require("alpha", { silent = true }) then
+    table.insert(autocmds, {
+      name = "AlphaDashboardFormatting",
+      {
+        "FileType",
+        ":set showtabline=0 | setlocal nofoldenable",
+        opts = { pattern = "alpha" },
+      },
+      {
+        "BufUnload",
+        ":set showtabline=2",
+        opts = { pattern = "<buffer>" },
+      },
+    })
+  end
+
+  -- Highlight text when yanked
+  table.insert(autocmds, {
+    name = "YankHighlight",
     {
-      events = { "Filetype" },
-      targets = { "alpha" },
-      command = "set showtabline=0 | setlocal nofoldenable",
-    },
-    {
-      events = { "BufUnload" },
-      targets = { "<buffer>" },
-      command = "set showtabline=2",
+      "TextYankPost",
+      vim.highlight.on_yank,
+      opts = { pattern = "*" },
     },
   })
-end
---------------------------------------------------------------------------- }}}
-----------------------------HIGHLIGHT YANKED TEXT--------------------------- {{{
--- Highlight text is yanked
-om.augroup("YankHighlight", {
-  {
-    events = { "TextYankPost" },
-    targets = { "*" },
-    command = vim.highlight.on_yank,
-  },
-})
---------------------------------------------------------------------------- }}}
----------------------------------INDENTATION-------------------------------- {{{
-om.augroup("FileTypeIndentation", {
-  {
-    events = { "Filetype" },
-    targets = { "css", "eruby", "html", "lua", "javascript", "json", "ruby", "vue" },
-    command = "setlocal shiftwidth=2 tabstop=2",
-  },
-})
---------------------------------------------------------------------------- }}}
-----------------------------------QUICKFIX---------------------------------- {{{
--- Show actual line numbers, not releative ones
-om.augroup("QuickfixFormatting", {
-  {
-    events = { "BufEnter", "WinEnter" },
-    targets = { "*" },
-    command = "if &buftype == 'quickfix' | setlocal nocursorline | setlocal number | endif",
-  },
-})
---------------------------------------------------------------------------- }}}
--------------------------------RELOAD PLUGINS------------------------------- {{{
-om.augroup("ReloadPlugins", {
-  {
-    events = "BufWritePost",
-    targets = {
-      "$DOTFILES/.config/nvim/lua/Oli/core/*.lua",
-      "$DOTFILES/.config/nvim/lua/Oli/plugins/*.lua",
-      "$MYVIMRC",
-    },
-    modifiers = { "++nested" },
-    command = function()
-      print("Updating Plugins")
-      -- require("nvim").ex.source("<afile>")
-      -- require("nvim").ex.PackerSync()
-    end,
-  },
-})
---------------------------------------------------------------------------- }}}
----------------------------------STATUSLINE--------------------------------- {{{
--- Reload Feline when the theme has been changed
-if om.safe_require("feline", { silent = true }) then
-  om.augroup("RefreshStatuslineColors", {
-    {
-      events = { "ColorScheme" },
-      targets = { "*" },
-      command = function()
-        require(config_namespace .. ".plugins.statusline").setup()
-        -- require("feline").reset_highlights()
-      end,
-    },
-  })
+  return autocmds
 end
 
---------------------------------------------------------------------------- }}}
------------------------------------SYNTAX----------------------------------- {{{
-om.augroup("AdditionalRubyFiletypes", {
-  {
-    events = { "BufNewFile", "BufRead" },
-    targets = { "*.json.jbuilder", "*.jbuilder", "*.rake" },
-    command = "set ft=ruby",
-  },
-})
---------------------------------------------------------------------------- }}}
-------------------------------------THEME----------------------------------- {{{
-om.augroup("ReloadTheme", {
-  {
-    events = { "ColorScheme" },
-    targets = { "*" },
-    command = function()
-      require(config_namespace .. ".core.theme").init()
-    end,
-  },
-})
---------------------------------------------------------------------------- }}}
-----------------------------------WRAPPING---------------------------------- {{{
--- Wrapping
-om.augroup("LineWrapping", {
-  {
-    events = { "FileType" },
-    targets = { "markdown" },
-    command = "setlocal wrap",
-  },
-})
---------------------------------------------------------------------------- }}}
+function M.lsp_autocmds(client)
+  local autocmds = {
+    {
+      name = "LspOnAttachAutocmds",
+      clear = true,
+      {
+        { "CursorHold", "CursorHoldI" },
+        ":silent! lua vim.lsp.buf.document_highlight()",
+        opts = { pattern = "<buffer>" },
+      },
+      {
+        "CursorMoved",
+        ":silent! lua vim.lsp.buf.clear_references()",
+        opts = { pattern = "<buffer>" },
+      },
+    },
+  }
+
+  if client and client.resolved_capabilities.code_lens then
+    table.insert(autocmds, {
+      {
+        name = "LspCodeLens",
+        clear = true,
+        {
+          { "BufEnter", "CursorHold", "CursorHoldI" },
+          ":silent! lua vim.lsp.codelens.refresh()",
+          opts = { pattern = "<buffer>" },
+        },
+      },
+    })
+  end
+  return autocmds
+end
+
+return M

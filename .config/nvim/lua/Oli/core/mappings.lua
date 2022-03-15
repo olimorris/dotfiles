@@ -98,8 +98,10 @@ M.neovim = function()
 
   -- Splits
   -- INFO: Some of these have been replaced by the use of focus.nvim
-  vim.api.nvim_set_keymap("n", "<LocalLeader>sc", "<C-w>q", {}) -- Close the current split
-  vim.api.nvim_set_keymap("n", "<LocalLeader>so", "<C-w>o", {}) -- Close all splits but the current one
+  function splits()
+    vim.api.nvim_set_keymap("n", "<LocalLeader>sc", "<C-w>q", {}) -- Close the current split
+    vim.api.nvim_set_keymap("n", "<LocalLeader>so", "<C-w>o", {}) -- Close all splits but the current one
+  end
 
   -- Tabs
   -- vim.api.nvim_set_keymap("n", "<Leader>te", "<cmd>tabe %<CR>", silent)
@@ -153,173 +155,356 @@ M.neovim = function()
 end
 ---------------------------------------------------------------------------- }}}
 -----------------------------------PLUGINS---------------------------------- {{{
-M.aerial = function()
-  vim.api.nvim_set_keymap("n", "<C-t>", "<cmd>AerialToggle<CR>", silent)
-end
+M.default_keymaps = function()
+  local h = require("legendary.helpers")
+  return {
+    -- Legendary
+    { "<C-p>", require("legendary").find, description = "Search keybinds and commands", mode = { "n", "i", "v" } },
 
-M.bufdelete = function()
-  vim.api.nvim_set_keymap("n", "<C-c>", "<cmd>Bwipeout!<CR>", silent)
-end
+    -- Aerial
+    { "<C-t>", "<cmd>AerialToggle<CR>", description = "Aerial", opts = silent },
 
-M.bufferline = function()
-  -- noremap with <Plug> doesn't work!
-  vim.api.nvim_set_keymap("n", "<Tab>", "<Plug>(cokeline-focus-next)", { noremap = false })
-  vim.api.nvim_set_keymap("n", "<S-Tab>", "<Plug>(cokeline-focus-prev)", { noremap = false })
+    -- Buffer delete
+    { "<C-c>", "<cmd>Bwipeout!<CR>", description = "Close Buffer", opts = silent },
 
-  for i = 1, 9 do
-    -- Navigate to a buffer with a given index of i
-    vim.api.nvim_set_keymap(
-      "n",
-      ("<Localleader>%s"):format(i),
-      ("<Plug>(cokeline-focus-%s)"):format(i),
-      { silent = true }
-    )
-    -- Switch a buffer with another buffer with a given index of i
-    vim.api.nvim_set_keymap("n", ("<Leader>%s"):format(i), ("<Plug>(cokeline-switch-%s)"):format(i), { silent = true })
-  end
-end
+    -- Bufferline
+    { "<Tab>", "<Plug>(cokeline-focus-next)", description = "Next buffer", opts = { noremap = false } },
+    { "<S-Tab>", "<Plug>(cokeline-focus-prev)", description = "Previous buffer", opts = { noremap = false } },
+    { "<LocalLeader>1", "<Plug>(cokeline-focus-1)", description = "Buffer focus on 1", opts = silent },
+    { "<LocalLeader>2", "<Plug>(cokeline-focus-2)", description = "Buffer focus on 2", opts = silent },
+    { "<LocalLeader>3", "<Plug>(cokeline-focus-3)", description = "Buffer focus on 3", opts = silent },
+    { "<LocalLeader>4", "<Plug>(cokeline-focus-4)", description = "Buffer focus on 4", opts = silent },
+    { "<LocalLeader>5", "<Plug>(cokeline-focus-5)", description = "Buffer focus on 5", opts = silent },
+    { "<LocalLeader>6", "<Plug>(cokeline-focus-6)", description = "Buffer focus on 6", opts = silent },
+    { "<LocalLeader>7", "<Plug>(cokeline-focus-7)", description = "Buffer focus on 7", opts = silent },
+    { "<LocalLeader>8", "<Plug>(cokeline-focus-8)", description = "Buffer focus on 8", opts = silent },
+    { "<LocalLeader>9", "<Plug>(cokeline-focus-9)", description = "Buffer focus on 9", opts = silent },
+    { "<Leader>1", "<Plug>(cokeline-switch-1)", description = "Buffer switch to 1", opts = silent },
+    { "<Leader>2", "<Plug>(cokeline-switch-2)", description = "Buffer switch to 2", opts = silent },
+    { "<Leader>3", "<Plug>(cokeline-switch-3)", description = "Buffer switch to 3", opts = silent },
+    { "<Leader>4", "<Plug>(cokeline-switch-4)", description = "Buffer switch to 4", opts = silent },
+    { "<Leader>5", "<Plug>(cokeline-switch-5)", description = "Buffer switch to 5", opts = silent },
+    { "<Leader>6", "<Plug>(cokeline-switch-6)", description = "Buffer switch to 6", opts = silent },
+    { "<Leader>7", "<Plug>(cokeline-switch-7)", description = "Buffer switch to 7", opts = silent },
+    { "<Leader>8", "<Plug>(cokeline-switch-8)", description = "Buffer switch to 8", opts = silent },
+    { "<Leader>9", "<Plug>(cokeline-switch-9)", description = "Buffer switch to 9", opts = silent },
 
-M.cryptoprice = function()
-  vim.api.nvim_set_keymap("n", "<LocalLeader>c", "<cmd>lua require('cryptoprice').toggle()<CR>", silent)
-end
-
-M.dap = function()
-  vim.api.nvim_set_keymap("n", "<F1>", "<cmd>lua require('dap').toggle_breakpoint()<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<F2>", "<cmd>lua require('dap').continue()<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<F3>", "<cmd>lua require('dap').step_into()<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<F4>", "<cmd>lua require('dap').step_over()<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<F5>", "<cmd>lua require('dap').repl.toggle({height = 6})<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<F9>", "<cmd>lua require('dap').repl.run_last()<CR>", silent)
-
-  function DapStop()
-    local _, dap = om.safe_require("dap")
-    dap.disconnect()
-    dap.close()
-    dap.close()
-  end
-  vim.api.nvim_set_keymap("n", "<F6>", "<cmd>call v:lua.DapStop()<CR>", {})
-end
-
-M.harpoon = function()
-  vim.api.nvim_set_keymap("n", "<LocalLeader>ha", '<cmd>lua require("harpoon.mark").add_file()<CR>', silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>hl", "<cmd>Telescope harpoon marks<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>hn", '<cmd>lua require("harpoon.ui").nav_next()<CR>', silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>hp", '<cmd>lua require("harpoon.ui").nav_prev()<CR>', silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>h1", '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>h1", '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>h2", '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>h3", '<cmd>lua require("harpoon.ui").nav_file(3)<CR>', silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>h4", '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>h5", '<cmd>lua require("harpoon.ui").nav_file(5)<CR>', silent)
-end
-
-M.hop = function()
-  vim.api.nvim_set_keymap("n", "s", "<cmd>HopChar1<CR>", silent)
-  vim.api.nvim_set_keymap("o", "s", "<cmd>HopChar1<CR>", silent)
-
-  -- Override f/F keys
-  vim.api.nvim_set_keymap(
-    "n",
-    "f",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
-    opts
-  )
-  vim.api.nvim_set_keymap(
-    "n",
-    "F",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
-    opts
-  )
-  vim.api.nvim_set_keymap(
-    "o",
-    "f",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>",
-    opts
-  )
-  vim.api.nvim_set_keymap(
-    "o",
-    "F",
-    "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>",
-    opts
-  )
-end
-
-M.file_explorer = function()
-  vim.api.nvim_set_keymap("n", "\\", "<cmd>NvimTreeToggle<CR>", { silent = true })
-  vim.api.nvim_set_keymap("n", "<C-z>", "<cmd>NvimTreeFindFile<CR>", { silent = true })
-end
-
-M.focus = function()
-  local focusmap = function(direction)
-    vim.api.nvim_set_keymap(
-      "n",
-      "<LocalLeader>s" .. direction,
-      "<cmd>lua require('focus').split_command('" .. direction .. "')<CR>",
-      silent
-    )
-  end
-  -- Use `<LocalLeader>sh` to split the screen to the left, same as command FocusSplitLeft etc
-  focusmap("h")
-  focusmap("j")
-  focusmap("k")
-  focusmap("l")
-
-  vim.api.nvim_set_keymap("n", "<LocalLeader>ss", "<cmd>lua pcall(require('focus').split_nicely())<CR>", silent)
-end
-
-M.lsp = function(client, bufnr)
-  local maps = {
-    ["<LocalLeader>lD"] = { vim.lsp.buf.declaration, "Declaration" },
-    ["<LocalLeader>ld"] = { vim.lsp.buf.definition, "Definition" },
-    ["<LocalLeader>lr"] = { vim.lsp.buf.references, "References" },
-    ["<LocalLeader>lI"] = { vim.lsp.buf.incoming_calls, "Incoming calls" },
-    ["L"] = {
-      "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
-      "Line diagnostics",
+    -- Dap
+    {
+      "<F1>",
+      "<cmd>lua require('dap').toggle_breakpoint()<CR>",
+      description = "Debug: Set breakpoint",
+      opts = silent,
     },
-    ["K"] = { vim.lsp.buf.hover, "Hover" },
+    { "<F2>", "<cmd>lua require('dap').continue()<CR>", description = "Debug: Continue", opts = silent },
+    { "<F3>", "<cmd>lua require('dap').step_into()<CR>", description = "Debug: Step into", opts = silent },
+    { "<F4>", "<cmd>lua require('dap').step_over()<CR>", description = "Debug: Step over", opts = silent },
+    {
+      "<F5>",
+      "<cmd>lua require('dap').repl.toggle({height = 6})<CR>",
+      description = "Debug: Show REPL",
+      opts = silent,
+    },
+    { "<F6>", "<cmd>lua require('dap').repl.run_last()<CR>", description = "Debug: Run last", opts = silent },
+    {
+      "<F9>",
+      function()
+        local _, dap = om.safe_require("dap")
+        dap.disconnect()
+        dap.close()
+        dap.close()
+      end,
+      description = "Debug: Stop",
+    },
+
+    -- Focus
+    {
+      "<LocalLeader>ss",
+      "<cmd>lua pcall(require('focus').split_nicely())<CR>",
+      description = "Split",
+      opts = silent,
+    },
+    {
+      "<LocalLeader>sh",
+      "<cmd>lua require('focus').split_command('h')<CR>",
+      description = "Split: Left",
+      opts = silent,
+    },
+    {
+      "<LocalLeader>sj",
+      "<cmd>lua require('focus').split_command('j')<CR>",
+      description = "Split: Down",
+      opts = silent,
+    },
+    {
+      "<LocalLeader>sk",
+      "<cmd>lua require('focus').split_command('k')<CR>",
+      description = "Split: Up",
+      opts = silent,
+    },
+    {
+      "<LocalLeader>sl",
+      "<cmd>lua require('focus').split_command('l')<CR>",
+      description = "Split: Right",
+      opts = silent,
+    },
+
+    -- Harpoon
+    {
+      "<LocalLeader>ha",
+      '<cmd>lua require("harpoon.mark").add_file()<CR>',
+      description = "Harpoon: Add file",
+      opts = silent,
+    },
+    { "<LocalLeader>hl", "<cmd>Telescope harpoon marks<CR>", description = "Harpoon: List marks", opts = silent },
+    {
+      "<LocalLeader>hn",
+      '<cmd>lua require("harpoon.ui"},.nav_next()<CR>',
+      description = "Harpoon: Next mark",
+      opts = silent,
+    },
+    {
+      "<LocalLeader>hp",
+      '<cmd>lua require("harpoon.ui").nav_prev()<CR>',
+      description = "Harpoon: Previous mark",
+      opts = silent,
+    },
+    {
+      "<LocalLeader>h1",
+      '<cmd>lua require("harpoon.ui").nav_file(1)<CR>',
+      description = "Harpoon: Go to 1",
+      opts = silent,
+    },
+    {
+      "<LocalLeader>h2",
+      '<cmd>lua require("harpoon.ui").nav_file(2)<CR>',
+      description = "Harpoon: Go to 2",
+      opts = silent,
+    },
+    {
+      "<LocalLeader>h3",
+      '<cmd>lua require("harpoon.ui").nav_file(3)<CR>',
+      description = "Harpoon: Go to 3",
+      opts = silent,
+    },
+    {
+      "<LocalLeader>h4",
+      '<cmd>lua require("harpoon.ui").nav_file(4)<CR>',
+      description = "Harpoon: Go to 4",
+      opts = silent,
+    },
+    {
+      "<LocalLeader>h5",
+      '<cmd>lua require("harpoon.ui").nav_file(5)<CR>',
+      description = "Harpoon: Go to 5",
+      opts = silent,
+    },
+
+    -- Hop
+    { "s", "<cmd>lua require'hop'.hint_char1()<CR>", description = "Hop", mode = { "n", "o" } },
+    -- File Explorer
+    { "\\", "<cmd>NvimTreeToggle<CR>", description = "NvimTree: Toggle", opts = silent },
+    { "<C-z>", "<cmd>NvimTreeFindFile<CR>", description = "NvimTree: Find File", opts = silent },
+
+    -- Minimap
+    {
+      "<LocalLeader>m",
+      function()
+        vim.cmd("MinimapToggle")
+        vim.cmd("MinimapRefresh")
+      end,
+      description = "Minimap toggle",
+    },
+
+    -- Neoclip
+    {
+      "<LocalLeader>p",
+      "<cmd>lua require('telescope').extensions.neoclip.default()<CR>",
+      description = "Neoclip",
+      opts = silent,
+    },
+
+    -- Persisted
+    { "<Leader>s", '<cmd>lua require("persisted").toggle()<CR>', description = "Session Toggle", opts = silent },
+
+    -- QF Helper
+    -- The '!' ensures that the cursor doesn't move to the QF or LL
+    { "<Leader>q", "<cmd>QFToggle!<CR>", description = "Quickfix toggle", opts = silent },
+    { "<Leader>l", "<cmd>LLToggle!<CR>", description = "Location List toggle", opts = silent },
+
+    -- Search
+    {
+      "//",
+      '<cmd>lua require("searchbox").match_all()<CR>',
+      description = "Search",
+      mode = { "n", "v" },
+      opts = silent,
+    },
+    {
+      "<LocalLeader>r",
+      '<cmd>lua require("searchbox").replace()<CR>',
+      description = "Search and replace",
+      mode = { "n", "v" },
+      opts = silent,
+    },
+
+    -- Telescope
+    { "fd", h.lazy_required_fn("telescope.builtin", "diagnostics"), description = "Find diagnostics" },
+    {
+      "ff",
+      h.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
+      description = "Find files",
+    },
+    { "fb", h.lazy_required_fn("telescope.builtin", "buffers"), description = "Find open buffers" },
+    { "fp", "<cmd>Telescope project display_type=full<CR>", description = "Find projects" },
+    {
+      "<C-f>",
+      h.lazy_required_fn("telescope.builtin", "current_buffer_fuzzy_find"),
+      description = "Find in buffers",
+    },
+    {
+      "<C-g>",
+      h.lazy_required_fn("telescope.builtin", "live_grep", { path_display = "shorten", grep_open_files = true }),
+      description = "Find in open files",
+    },
+    {
+      "<Leader>g",
+      h.lazy_required_fn("telescope.builtin", "live_grep", { path_display = "smart" }),
+      description = "Find in pwd",
+    },
+    {
+      "<Leader><Leader>",
+      "<cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
+      description = "Find recent files",
+    },
+
+    -- Todo comments
+    { "<Leader>c", "<cmd>TodoTelescope<CR>", description = "Todo comments", opts = silent },
+
+    -- Toggleterm
+    { "<C-x>", "<cmd>ToggleTerm<CR>", description = "Toggleterm", mode = { "n", "t" }, opts = silent },
+
+    -- Treesitter Unit
+    -- vau and viu select outer and inner units
+    -- cau and ciu change outer and inner units
+    -- vim.api.nvim_set_keymap("x", "iu", '<cmd>lua require"treesitter-unit".select()<CR>', silent)
+    -- vim.api.nvim_set_keymap("x", "au", '<cmd>lua require"treesitter-unit".select(true)<CR>', silent)
+    -- vim.api.nvim_set_keymap("o", "iu", '<cmd><c-u>lua require"treesitter-unit".select()<CR>', silent)
+    -- vim.api.nvim_set_keymap("o", "au", '<cmd><c-u>lua require"treesitter-unit".select(true)<CR>', silent)
+
+    -- Tmux
+    {
+      "<C-k>",
+      "<cmd>lua require('tmux').move_up()<CR>",
+      description = "Tmux: Move up",
+    },
+    {
+      "<C-j>",
+      "<cmd>lua require('tmux').move_down()<CR>",
+      description = "Tmux: Move down",
+    },
+    {
+      "<C-h>",
+      "<cmd>lua require('tmux').move_left()<CR>",
+      description = "Tmux: Move left",
+    },
+    {
+      "<C-l>",
+      "<cmd>lua require('tmux').move_right()<CR>",
+      description = "Tmux: Move right",
+    },
+
+    -- Vim Test
+    { "<Leader>t", "<cmd>TestNearest<CR>", description = "Test nearest" },
+    { "<LocalLeader>ta", "<cmd>TestAll<CR>", description = "Test all" },
+    { "<LocalLeader>tl", "<cmd>TestLast<CR>", description = "Test last" },
+    { "<LocalLeader>tf", "<cmd>TestFile<CR>", description = "Test file" },
+    { "<LocalLeader>ts", "<cmd>TestSuite<CR>", description = "Test suite" },
+
+    -- Undotree
+    { "<LocalLeader>u", "<cmd>UndotreeToggle<CR>", description = "Undotree toggle" },
+
+    -- Yabs
+    {
+      "<LocalLeader>d",
+      "<cmd>lua require('yabs'):run_default_task()<CR>",
+      description = "Build file",
+      opts = silent,
+    },
+  }
+end
+
+M.lsp_keymaps = function(client, bufnr)
+  local h = require("legendary.helpers")
+  local maps = {
+    { "gd", vim.lsp.buf.definition, description = "LSP: Go to definition", opts = { buffer = bufnr } },
+    {
+      "gr",
+      h.lazy_required_fn("telescope.builtin", "lsp_references"),
+      description = "LSP: Find references",
+      opts = { buffer = bufnr },
+    },
+    {
+      "L",
+      "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
+      description = "LSP: Line diagnostics",
+    },
+    { "gh", vim.lsp.buf.hover, description = "LSP: Show hover information", opts = { buffer = bufnr } },
+    {
+      "<leader>p",
+      h.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer"),
+      description = "LSP: Peek definition",
+      opts = { buffer = bufnr },
+    },
+    { "F", vim.lsp.buf.code_action, description = "LSP: Show code actions", opts = { buffer = bufnr } },
+    { "[", vim.diagnostic.goto_prev, description = "LSP: Go to previous diagnostic item", opts = { buffer = bufnr } },
+    { "]", vim.diagnostic.goto_next, description = "LSP: Go to next diagnostic item", opts = { buffer = bufnr } },
   }
 
   if client.resolved_capabilities.implementation then
-    maps["<LocalLeader>li"] = { vim.lsp.buf.implementation, "Implementation" }
+    table.insert(maps, {
+      "gi",
+      vim.lsp.buf.implementation,
+      description = "LSP: Go to implementation",
+      opts = { buffer = bufnr },
+    })
   end
   if client.resolved_capabilities.type_definition then
-    maps["<LocalLeader>lt"] = {
-      vim.lsp.buf.type_definition,
-      "Type definition",
-    }
+    table.insert(
+      maps,
+      { "gt", vim.lsp.buf.type_definition, description = "LSP: Go to type definition", opts = { buffer = bufnr } }
+    )
   end
   if client.supports_method("textDocument/rename") then
-    maps["<LocalLeader>ln"] = { vim.lsp.buf.rename, "Rename" }
+    table.insert(
+      maps,
+      { "<leader>rn", vim.lsp.buf.rename, description = "LSP: Rename symbol", opts = { buffer = bufnr } }
+    )
   end
   if client.supports_method("textDocument/signatureHelp") then
-    maps["<LocalLeader>ls"] = { vim.lsp.buf.signature_help, "Signature help" }
+    table.insert(
+      maps,
+      { "gs", vim.lsp.buf.signature_help, description = "LSP: Show signature help", opts = { buffer = bufnr } }
+    )
   end
 
-  maps["<LocalLeader>l["] = {
-    function()
-      vim.diagnostic.goto_prev({
-        float = {
-          border = "rounded",
-          focusable = false,
-          source = "always",
-        },
-      })
-    end,
-    "Previous diagnostic",
-  }
-  maps["<LocalLeader>l]"] = {
-    function()
-      vim.diagnostic.goto_next({
-        float = {
-          border = "rounded",
-          focusable = false,
-          source = "always",
-        },
-      })
-    end,
-    "Next diagnostic",
-  }
+  local lsps_that_can_format = { ["null-ls"] = true, solargraph = true }
+
+  if om.contains(lsps_that_can_format, client.name) and client.resolved_capabilities.document_formatting then
+    -- om.augroup("LspFormat", {
+    --     {
+    --         events = { "BufWritePre" },
+    --         targets = { "<buffer>" },
+    --         command = vim.lsp.buf.formatting_sync,
+    --     },
+    -- })
+    table.insert(
+      maps,
+      { "<LocalLeader>lf", vim.lsp.buf.formatting, description = "LSP: Format", opts = { buffer = bufnr } }
+    )
+  else
+    client.resolved_capabilities.document_formatting = false
+  end
 
   local ok, lightbulb = om.safe_require("nvim-lightbulb")
   if ok then
@@ -341,283 +526,9 @@ M.lsp = function(client, bufnr)
       },
     })
   end
-  maps["<LocalLeader>lc"] = {
-    vim.lsp.buf.range_code_action,
-    "Code action",
-  }
-  if client and client.resolved_capabilities.code_lens then
-    om.augroup("LspCodeLens", {
-      {
-        events = { "BufEnter", "CursorHold", "InsertLeave" },
-        targets = { "<buffer>" },
-        command = vim.lsp.codelens.refresh,
-      },
-    })
-  end
-  if client and client.resolved_capabilities.document_highlight then
-    om.augroup("LspDocumentHighlight", {
-      {
-        events = { "CursorHold", "CursorHoldI" },
-        targets = { "<buffer>" },
-        command = vim.lsp.buf.document_highlight,
-      },
-      {
-        events = { "CursorMoved" },
-        targets = { "<buffer>" },
-        command = vim.lsp.buf.clear_references,
-      },
-    })
-  end
+
   -- List of LSP servers that we allow to format
-  local lsps_that_can_format = { ["null-ls"] = true, solargraph = true }
-
-  if om.contains(lsps_that_can_format, client.name) and client.resolved_capabilities.document_formatting then
-    -- om.augroup("LspFormat", {
-    --     {
-    --         events = { "BufWritePre" },
-    --         targets = { "<buffer>" },
-    --         command = vim.lsp.buf.formatting_sync,
-    --     },
-    -- })
-    maps["<localleader>lf"] = { vim.lsp.buf.formatting, "Format" }
-  else
-    client.resolved_capabilities.document_formatting = false
-  end
-  -- Register our key bindings with which-key
-  require("which-key").register(maps, { buffer = 0 })
-end
-
-M.marks = function()
-  --[[ Notes:
-	mx              Set mark x
-    m,              Set the next available alphabetical (lowercase) mark
-    m;              Toggle the next available mark at the current line
-    dmx             Delete mark x
-    dm-             Delete all marks on the current line
-    dm<space>       Delete all marks in the current buffer
-    m]              Move to next mark
-    m[              Move to previous mark
-    m:              Preview mark. This will prompt you for a specific mark to
-                    preview; press <cr> to preview the next mark.
-
-	Only configured for Bookmark 0:
-    m[0-9]          Add a bookmark from bookmark group[0-9].
-    dm[0-9]         Delete all bookmarks from bookmark group[0-9].
-
-    m}              Move to the next bookmark having the same type as the bookmark under
-                    the cursor. Works across buffers.
-    m{              Move to the previous bookmark having the same type as the bookmark under
-                    the cursor. Works across buffers.
-    dm=             Delete the bookmark under the cursor.
-	--]]
-
-  local ok, marks = om.safe_require("marks")
-  if not ok then
-    return
-  end
-
-  marks.setup({
-    mappings = {
-      -- Marks
-      delete = "mxx", -- Delete a letter mark
-      delete_buf = "mxb", -- Delete all marks in the buffer
-      delete_line = "md", -- Delete all marks on the line
-
-      next = "m]", -- Go to the next mark
-      prev = "m[", -- Go to the previous mark
-      preview = "mp", -- Preview the mark (enter the mark name or press <cr>)
-      set = "ms", -- Set a mark
-      set_next = "m,", -- Set the next available lowercase mark
-      toggle = "mm", -- Toggle the next available mark
-
-      -- Bookmarks
-      set_bookmark0 = "mbs0",
-      set_bookmark1 = "mbs1",
-      set_bookmark2 = "mbs2",
-      set_bookmark3 = "mbs3",
-      set_bookmark4 = "mbs4",
-      set_bookmark5 = "mbs5",
-      set_bookmark6 = "mbs6",
-      set_bookmark7 = "mbs7",
-      set_bookmark8 = "mbs8",
-      set_bookmark9 = "mbs9",
-      delete_bookmark = "mbd",
-      delete_bookmark0 = "mbx0",
-      delete_bookmark1 = "mbx1",
-      delete_bookmark2 = "mbx2",
-      delete_bookmark3 = "mbx3",
-      delete_bookmark4 = "mbx4",
-      delete_bookmark5 = "mbx5",
-      delete_bookmark6 = "mbx6",
-      delete_bookmark7 = "mbx7",
-      delete_bookmark8 = "mbx8",
-      delete_bookmark9 = "mbx9",
-      next_bookmark = "mb]",
-      prev_bookmark = "mb[",
-      annotate = "mba",
-    },
-  })
-end
-
-M.minimap = function()
-  vim.api.nvim_set_keymap("n", "<LocalLeader>m", "<cmd>MinimapToggle<CR><cmd>MinimapRefresh<CR>", silent)
-end
-
-M.neoclip = function()
-  vim.api.nvim_set_keymap(
-    "n",
-    "<LocalLeader>p",
-    "<cmd>lua require('telescope').extensions.neoclip.default()<CR>",
-    silent
-  )
-end
-
-M.packer = function()
-  om.command({
-    "PC",
-    function()
-      require(config_namespace .. ".core.plugins")
-      require("packer").compile()
-    end,
-  })
-  om.command({
-    "PCL",
-    function()
-      require(config_namespace .. ".core.plugins")
-      require("packer").clean()
-    end,
-  })
-  om.command({
-    "PI",
-    function()
-      require(config_namespace .. ".core.plugins")
-      require("packer").install()
-    end,
-  })
-  om.command({
-    "PS",
-    function()
-      require(config_namespace .. ".core.plugins")
-      require("packer").sync()
-    end,
-  })
-  om.command({
-    "PST",
-    function()
-      require(config_namespace .. ".core.plugins")
-      require("packer").status()
-    end,
-  })
-  om.command({
-    "PU",
-    function()
-      require(config_namespace .. ".core.plugins")
-      require("packer").update()
-    end,
-  })
-end
-
-M.persisted = function()
-  vim.api.nvim_set_keymap("n", "<Leader>s", '<cmd>lua require("persisted").toggle()<CR>', silent)
-end
-
-M.qf_helper = function()
-  -- The '!' ensures that the cursor doesn't move to the QF or LL
-  vim.api.nvim_set_keymap("n", "<Leader>q", "<cmd>QFToggle!<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<Leader>l", "<cmd>LLToggle!<CR>", silent)
-end
-
-M.search = function()
-  vim.api.nvim_set_keymap("n", "/", '<cmd>lua require("searchbox").match_all()<CR>', silent)
-  vim.api.nvim_set_keymap("v", "/", '<cmd>lua require("searchbox").match_all()<CR>', silent)
-
-  vim.api.nvim_set_keymap("n", "<LocalLeader>r", '<cmd>lua require("searchbox").replace()<CR>', silent)
-  vim.api.nvim_set_keymap("v", "<LocalLeader>r", '<cmd>lua require("searchbox").replace()<CR>', silent)
-end
-
-M.telescope = function()
-  vim.api.nvim_set_keymap("n", "T", "<cmd>Telescope diagnostics bufnr=0 <CR>", silent)
-
-  vim.api.nvim_set_keymap(
-    "n",
-    "<C-p>",
-    "<cmd>lua require('telescope.builtin').find_files({hidden=true,path_display=smart}) <CR>",
-    silent
-  )
-  vim.api.nvim_set_keymap("n", "<C-f>", "<cmd>Telescope current_buffer_fuzzy_find <CR>", silent)
-  vim.api.nvim_set_keymap("n", "<Leader>p", "<cmd>Telescope project display_type=full <CR>", silent)
-  vim.api.nvim_set_keymap(
-    "n",
-    "<Leader>e",
-    "<cmd>lua require('telescope.builtin').find_files({prompt_title='Neovim Config',cwd='~/.config/nvim/lua'})<CR>",
-    silent
-  )
-  vim.api.nvim_set_keymap(
-    "n",
-    "<C-g>",
-    "<cmd>Telescope live_grep path_display=shorten grep_open_files=true<CR>",
-    silent
-  )
-  -- vim.api.nvim_set_keymap("n", "<C-t>", "<cmd>Telescope treesitter<CR>", silent)
-  vim.api.nvim_set_keymap(
-    "n",
-    "<Leader><Leader>",
-    "<cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
-    silent
-  )
-  vim.api.nvim_set_keymap("n", "<Leader>g", "<cmd>Telescope live_grep path_display=smart<CR>", silent)
-end
-
-M.todo_comments = function()
-  vim.api.nvim_set_keymap("n", "<Leader>c", "<cmd>TodoTelescope<CR>", silent)
-end
-
-M.toggleterm = function()
-  vim.api.nvim_set_keymap("n", "<C-x>", "<cmd>ToggleTerm<CR>", silent)
-  vim.api.nvim_set_keymap("t", "<C-x>", "<cmd>ToggleTerm<CR>", silent)
-end
-
-M.treesitter = function()
-  -- Treesitter Unit
-  -- vau and viu select outer and inner units
-  -- cau and ciu change outer and inner units
-  vim.api.nvim_set_keymap("x", "iu", '<cmd>lua require"treesitter-unit".select()<CR>', silent)
-  vim.api.nvim_set_keymap("x", "au", '<cmd>lua require"treesitter-unit".select(true)<CR>', silent)
-  vim.api.nvim_set_keymap("o", "iu", '<cmd><c-u>lua require"treesitter-unit".select()<CR>', silent)
-  vim.api.nvim_set_keymap("o", "au", '<cmd><c-u>lua require"treesitter-unit".select(true)<CR>', silent)
-end
-
-M.tmux = function()
-  vim.api.nvim_set_keymap("n", "<C-k>", "<cmd>lua require('tmux').move_up()<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<C-j>", "<cmd>lua require('tmux').move_down()<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<C-h>", "<cmd>lua require('tmux').move_left()<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<C-l>", "<cmd>lua require('tmux').move_right()<CR>", silent)
-end
-
-M.vim_test = function()
-  vim.api.nvim_set_keymap("n", "<Leader>t", "<cmd>TestNearest<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>ta", "<cmd>TestAll<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>tl", "<cmd>TestLast<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>tf", "<cmd>TestFile<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>ts", "<cmd>TestSuite<CR>", silent)
-  vim.api.nvim_set_keymap("n", "<LocalLeader>tn", "<cmd>TestNearest<CR>", silent)
-end
-
-M.undotree = function()
-  vim.api.nvim_set_keymap("n", "<LocalLeader>u", "<cmd>UndotreeToggle<CR>", silent)
-end
-
-M.visual_multi = function()
-  vim.g.VM_maps = {
-    ["Find Under"] = "<C-e>",
-    ["Find Subword Under"] = "<C-e>",
-    ["Select Cursor Down"] = "\\j",
-    ["Select Cursor Up"] = "\\k",
-  }
-end
-
-M.yabs = function()
-  vim.api.nvim_set_keymap("n", "<LocalLeader>d", "<cmd>lua require('yabs'):run_default_task()<CR>", silent)
+  return maps
 end
 ---------------------------------------------------------------------------- }}}
 return M
