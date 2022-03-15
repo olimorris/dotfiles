@@ -91,20 +91,20 @@ end
 function M.setup()
   local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
   M.vi_mode_colors = {
-    NORMAL = colors.green,
-    OP = colors.green,
-    INSERT = colors.red,
-    VISUAL = colors.blue,
-    LINES = colors.blue,
-    BLOCK = colors.blue,
-    REPLACE = colors.purple,
-    ["V-REPLACE"] = colors.purple,
+    NORMAL = colors.purple,
+    OP = colors.purple,
+    INSERT = colors.green,
+    VISUAL = colors.orange,
+    LINES = colors.orange,
+    BLOCK = colors.orange,
+    REPLACE = colors.green,
+    ["V-REPLACE"] = colors.green,
     ENTER = colors.cyan,
     MORE = colors.cyan,
     SELECT = colors.orange,
-    COMMAND = colors.green,
-    SHELL = colors.green,
-    TERM = colors.green,
+    COMMAND = colors.purple,
+    SHELL = colors.purple,
+    TERM = colors.purple,
     NONE = colors.yellow,
   }
 
@@ -121,24 +121,239 @@ function M.setup()
     }
   end
 
+  local function block(bg, fg)
+    if not bg then
+      bg = colors.statusline_bg
+    end
+    if not fg then
+      fg = colors.statusline_text
+    end
+    return {
+      body = {
+        fg = fg,
+        bg = bg,
+      },
+      sep_left = {
+        fg = colors.bg,
+        bg = bg,
+      },
+      sep_right = {
+        fg = bg,
+        bg = colors.bg,
+      },
+    }
+  end
+
+  local function inverse_block()
+    return {
+      body = {
+        fg = colors.bg,
+        bg = vim.o.background == "light" and colors.black or colors.gray,
+      },
+      sep_left = {
+        fg = colors.bg,
+        bg = vim.o.background == "light" and colors.black or colors.gray,
+      },
+      sep_right = {
+        fg = vim.o.background == "light" and colors.black or colors.gray,
+        bg = colors.bg,
+      },
+    }
+  end
+
   M.components.inactive = { { { provider = "", hl = InactiveStatusHL } } }
   ---------------------------------------------------------------------------- }}}
   -------------------------------LEFT COMPONENTS------------------------------ {{{
   M.components.active[1] = {
     {
-      provider = " ",
-      enabled = not bg_to_mode_color,
-      hl = function()
-        return { fg = "NONE", bg = vi_mode_utils.get_mode_color() }
+      provider = function()
+        return require("feline.providers.vi_mode").get_vim_mode() .. " "
       end,
+      icon = "",
+      hl = function()
+        return {
+          fg = colors.bg,
+          bg = vi_mode_utils.get_mode_color(),
+        }
+      end,
+      left_sep = {
+        str = "vertical_bar_thin",
+        hl = function()
+          return {
+            fg = vi_mode_utils.get_mode_color(),
+            bg = vi_mode_utils.get_mode_color(),
+          }
+        end,
+      },
       right_sep = {
-        str = "",
-        enabled = not bg_to_mode_color,
+        str = "slant_right",
+        hl = function()
+          return {
+            fg = vi_mode_utils.get_mode_color(),
+            bg = colors.bg,
+          }
+        end,
+      },
+    },
+    {
+      provider = function()
+        return "  " .. require("feline.providers.git").git_branch() .. " "
+      end,
+      truncate_hide = true,
+      enabled = function()
+        return git.git_info_exists() and there_is_width()
+      end,
+      hl = function()
+        return block().body
+      end,
+      left_sep = {
+        str = "slant_right",
+        hl = function()
+          return block().sep_left
+        end,
+      },
+      right_sep = {
+        str = "slant_right",
+        hl = function()
+          return block().sep_right
+        end,
+      },
+    },
+    { -- Spacer for if there is no width
+      provider = " ",
+      enabled = function()
+        return not there_is_width()
+      end,
+      hl = function()
+        return {
+          bg = bg_to_mode_color and vi_mode_utils.get_mode_color() or "NONE",
+        }
+      end,
+    },
+    {
+      provider = function()
+        return " "
+          .. require("feline.providers.file").file_info({
+            icon = "",
+          }, {
+            type = "short",
+          })
+          .. " "
+      end,
+      hl = function()
+        return block().body
+      end,
+      left_sep = {
+        str = "slant_right",
+        hl = function()
+          return block().sep_left
+        end,
+      },
+      right_sep = {
+        str = "slant_right",
+        hl = function()
+          return block().sep_right
+        end,
+      },
+    },
+    {
+      provider = "diagnostic_errors",
+      icon = " ",
+      enabled = function()
+        return there_is_width()
+      end,
+      hl = function()
+        return block(colors.red, colors.bg).body
+      end,
+      left_sep = {
+        str = "slant_right",
+        hl = function()
+          return block(colors.red).sep_left
+        end,
+      },
+      right_sep = {
+        str = "slant_right",
+        hl = function()
+          return block(colors.red).sep_right
+        end,
+      },
+    },
+    {
+      provider = "diagnostic_warnings",
+      icon = " ",
+      enabled = function()
+        return there_is_width()
+      end,
+      hl = function()
+        return block(colors.yellow, colors.bg).body
+      end,
+      left_sep = {
+        str = "slant_right",
+        hl = function()
+          return block(colors.yellow).sep_left
+        end,
+      },
+      right_sep = {
+        str = "slant_right",
+        hl = function()
+          return block(colors.yellow).sep_right
+        end,
+      },
+    },
+    {
+      provider = "diagnostic_hints",
+      icon = " ",
+      enabled = function()
+        return there_is_width()
+      end,
+      hl = function()
+        return default_hl()
+      end,
+      left_sep = {
+        str = " ",
+        hl = function()
+          return default_hl()
+        end,
+      },
+      right_sep = {
+        str = " ",
         hl = function()
           return default_hl()
         end,
       },
     },
+    {
+      provider = "diagnostic_info",
+      icon = " ",
+      enabled = function()
+        return there_is_width()
+      end,
+      hl = function()
+        return default_hl()
+      end,
+      left_sep = {
+        str = " ",
+        hl = function()
+          return default_hl()
+        end,
+      },
+      right_sep = {
+        str = " ",
+        hl = function()
+          return default_hl()
+        end,
+      },
+    },
+    -- Fill in the section between the left and the right components
+    {
+      hl = function()
+        return default_hl()
+      end,
+    },
+  }
+  ---------------------------------------------------------------------------- }}}
+  ------------------------------RIGHT COMPONENTS------------------------------ {{{
+  M.components.active[2] = {
     {
       provider = function()
         return async_run()
@@ -156,209 +371,103 @@ function M.setup()
         end,
       },
       right_sep = {
-        str = "|",
+        str = "",
         hl = function()
           return default_hl()
+        end,
+      },
+    },
+    -- {
+    -- {
+    --     provider = "line_percentage",
+    --     hl = function()
+    --         return inverse_block().body
+    --     end,
+    --     left_sep = {
+    --         str = "slant_left",
+    --         hl = function()
+    --             return inverse_block().sep_right
+    --         end
+    --     },
+    --     right_sep = {
+    --         str = "slant_left",
+    --         hl = function()
+    --             return inverse_block().sep_left
+    --         end
+    --     }
+    -- },
+    {
+      provider = function()
+        local filename = vim.api.nvim_buf_get_name(0)
+        local extension = vim.fn.fnamemodify(filename, ":e")
+        local filetype = vim.bo.filetype
+
+        local icon = om.get_icon(filename, extension, {})
+        return " " .. icon.str .. " " .. filetype .. " "
+      end,
+      hl = function()
+        return block().body
+      end,
+      left_sep = {
+        str = "slant_left",
+        hl = function()
+          return block().sep_right
+        end,
+      },
+      right_sep = {
+        str = "slant_left",
+        hl = function()
+          return block().sep_left
         end,
       },
     },
     {
       provider = function()
         if vim.g.persisting then
-          return "  "
+          return "   "
         elseif vim.g.persisting == false then
-          return "  "
+          return "   "
         end
       end,
       enabled = function()
         return using_session()
       end,
       hl = function()
-        return default_hl()
+        return block().body
       end,
-    },
-    { -- Spacer for if there is no width
-      provider = " ",
-      enabled = function(winid)
-        return not there_is_width(winid)
-      end,
-      hl = function()
-        return {
-          bg = bg_to_mode_color and vi_mode_utils.get_mode_color() or "NONE",
-        }
-      end,
-    },
-    {
-      provider = {
-        name = "file_info",
-        opts = { type = "relative", colored_icon = false },
-      },
-      icon = "",
       left_sep = {
-        str = " ",
+        str = "slant_left",
         hl = function()
-          return default_hl()
+          return block().sep_right
         end,
       },
-      hl = function()
-        return default_hl()
-      end,
-    },
-    -- {
-    --     provider = "lsp_client_names",
-    --     truncate_hide = true,
-    --     enabled = function(winid)
-    --         return lsp.is_lsp_attached() and there_is_width(winid)
-    --     end,
-    --     icon = "",
-    --     hl = function()
-    --         return default_hl()
-    --     end,
-    --     left_sep = {
-    --         str = " [LSP: ",
-    --         hl = function()
-    --             return default_hl()
-    --         end
-    --     },
-    --     right_sep = {
-    --         str = "]",
-    --         hl = function()
-    --             return default_hl()
-    --         end
-    --     }
-    -- },
-    -- Fill in the section between the left and the right components
-    {
-      hl = function()
-        return default_hl()
-      end,
-    },
-  }
-  ---------------------------------------------------------------------------- }}}
-  ------------------------------RIGHT COMPONENTS------------------------------ {{{
-  M.components.active[2] = {
-    {
-      provider = "diagnostic_errors",
-      icon = "  ",
-      enabled = function(winid)
-        return there_is_width(winid)
-      end,
-      hl = function()
-        return default_hl()
-      end,
-    },
-    {
-      provider = "diagnostic_warnings",
-      icon = "  ",
-      enabled = function(winid)
-        return there_is_width(winid)
-      end,
-      hl = function()
-        return default_hl()
-      end,
-    },
-    {
-      provider = "diagnostic_hints",
-      icon = "  ",
-      enabled = function(winid)
-        return there_is_width(winid)
-      end,
-      hl = function()
-        return default_hl()
-      end,
-    },
-    {
-      provider = "diagnostic_info",
-      icon = "  ",
-      enabled = function(winid)
-        return there_is_width(winid)
-      end,
-      hl = function()
-        return default_hl()
-      end,
-    },
-    {
-      provider = " |",
-      enabled = function(winid)
-        return lsp.diagnostics_exist() and there_is_width(winid)
-      end,
-      hl = function()
-        return default_hl()
-      end,
-    },
-    {
-      provider = "git_branch",
-      truncate_hide = true,
-      enabled = function(winid)
-        return git.git_info_exists(winid) and there_is_width(winid)
-      end,
-      hl = function()
-        return default_hl()
-      end,
-      left_sep = {
-        str = " ",
+      right_sep = {
+        str = "slant_left",
         hl = function()
-          return default_hl()
+          return block().sep_left
         end,
       },
     },
     {
-      provider = "git_diff_added",
-      enabled = function(winid)
-        return git.git_info_exists(winid) and there_is_width(winid)
+      provider = function()
+        return " " .. require("feline.providers.cursor").line_percentage()
       end,
       hl = function()
-        return default_hl()
+        return inverse_block().body
       end,
-      icon = " +",
+      left_sep = {
+        str = "slant_left",
+        hl = function()
+          return inverse_block().sep_right
+        end,
+      },
+      right_sep = {
+        str = " ",
+        hl = function()
+          return inverse_block().body
+        end,
+      },
     },
-    {
-      provider = "git_diff_changed",
-      enabled = function(winid)
-        return git.git_info_exists(winid) and there_is_width(winid)
-      end,
-      hl = function()
-        return default_hl()
-      end,
-      icon = " ~",
-    },
-    {
-      provider = "git_diff_removed",
-      enabled = function(winid)
-        return git.git_info_exists(winid) and there_is_width(winid)
-      end,
-      hl = function()
-        return default_hl()
-      end,
-      icon = " -",
-    },
-    -- {
-    --     provider = " | ",
-    --     enabled = function(winid)
-    --         return git.git_info_exists(winid) and there_is_width(winid)
-    --     end,
-    --     hl = function()
-    --         return default_hl()
-    --     end
-    -- },
-    -- {
-    --     provider = "line_percentage",
-    --     hl = function()
-    --         return default_hl()
-    --     end,
-    --     right_sep = {
-    --         str = " ",
-    --         hl = function()
-    --             return default_hl()
-    --         end
-    --     }
-    -- },
-    -- {
-    --     provider = "scroll_bar",
-    --     hl = function()
-    --         return default_hl()
-    --     end
-    -- }
   }
   ---------------------------------------------------------------------------- }}}
   -------------------------------FINALISE SETUP------------------------------- {{{

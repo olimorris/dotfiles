@@ -22,6 +22,8 @@ M.init = function()
         -- bg = "#1e1e1e",
         brackets = "#abb2bf", -- fg / gray
         statusline_div = "#2e323b", -- gray
+        statusline_bg = "#2e323b", -- gray
+        statusline_text = "#696C77", -- gray
         cursorline = "#2e323b",
         indentline = "#3c414d",
         telescope_prompt = utils.lighten(onedarkpro.get_colors("onedark").bg, 0.97),
@@ -30,6 +32,8 @@ M.init = function()
       onelight = {
         brackets = "#e05661", -- red
         statusline_div = "#f0f0f0", -- gray
+        statusline_bg = "#f0f0f0", -- gray
+        statusline_text = "#b5b5b5", -- gray
         telescope_prompt = utils.darken(onedarkpro.get_colors("onelight").bg, 0.98),
         telescope_results = utils.darken(onedarkpro.get_colors("onelight").bg, 0.95),
       },

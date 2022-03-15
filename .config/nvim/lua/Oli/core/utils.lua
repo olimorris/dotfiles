@@ -140,6 +140,23 @@ function om.select(prompt, choices, callback)
   vim.ui.select(choices, { prompt = prompt }, callback)
 end
 
+function om.get_icon(filename, extension, opts)
+  local ok, devicons = om.safe_require("nvim-web-devicons")
+  if not ok then
+    vim.notify("nvim-web-devicons not installed")
+  end
+
+  local icon_str, icon_color = devicons.get_icon_color(filename, extension, { default = true })
+
+  icon = { str = icon_str }
+
+  if opts.colored_icon ~= false then
+    icon.hl = { fg = icon_color }
+  end
+
+  return icon
+end
+
 ---Run a process asynchronously
 ---@param process table (command, args, callback)
 ---@return nil
@@ -184,7 +201,8 @@ function om.async_run(process)
 
     if event == "exit" then
       -- Popupulate the QF window on a completed run
-      vim.fn.setqflist({}, " ", { title = cmd, lines = lines, efm = efm })
+      -- vim.fn.setqflist({}, " ", { title = "Command Output", lines = lines, efm = efm })
+      vim.fn.setqflist({}, " ", { title = "Command Output", lines = lines })
 
       if data == 0 then
         vim.g.async_status = "success"
