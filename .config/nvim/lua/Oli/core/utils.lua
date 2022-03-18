@@ -148,7 +148,7 @@ function om.get_icon(filename, extension, opts)
 
   local icon_str, icon_color = devicons.get_icon_color(filename, extension, { default = true })
 
-  icon = { str = icon_str }
+  local icon = { str = icon_str }
 
   if opts.colored_icon ~= false then
     icon.hl = { fg = icon_color }

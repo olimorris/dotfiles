@@ -163,6 +163,25 @@ function M.setup()
 
   M.components.inactive = { { { provider = "", hl = InactiveStatusHL } } }
   ---------------------------------------------------------------------------- }}}
+  ------------------------------CUSTOM COMPONENTS----------------------------- {{{
+  function line_percentage()
+    local curr_line = vim.api.nvim_win_get_cursor(0)[1]
+    local lines = vim.api.nvim_buf_line_count(0)
+    local percent = string.format("%s", 100)
+
+    if curr_line ~= lines then
+      percent = string.format("%s", math.ceil(curr_line / lines * 99))
+    end
+
+    return lines, percent
+  end
+  function line_col()
+    local row = vim.api.nvim_win_get_cursor(0)[1]
+    local col = vim.api.nvim_win_get_cursor(0)[2]
+
+    return row .. ":" .. col
+  end
+  ---------------------------------------------------------------------------- }}}
   -------------------------------LEFT COMPONENTS------------------------------ {{{
   M.components.active[1] = {
     {
@@ -353,121 +372,135 @@ function M.setup()
   }
   ---------------------------------------------------------------------------- }}}
   ------------------------------RIGHT COMPONENTS------------------------------ {{{
-  M.components.active[2] = {
+  M.components.active[2] =
+    --------------------------------ASYNC TESTING------------------------------- {{{
     {
-      provider = function()
-        return async_run()
-      end,
-      enabled = function()
-        return async_run() ~= nil
-      end,
-      hl = function()
-        return default_hl()
-      end,
-      left_sep = {
-        str = " ",
+      {
+        provider = function()
+          return async_run()
+        end,
+        enabled = function()
+          return async_run() ~= nil
+        end,
         hl = function()
           return default_hl()
         end,
+        left_sep = {
+          str = " ",
+          hl = function()
+            return default_hl()
+          end,
+        },
+        right_sep = {
+          str = "",
+          hl = function()
+            return default_hl()
+          end,
+        },
       },
-      right_sep = {
-        str = "",
-        hl = function()
-          return default_hl()
-        end,
-      },
-    },
-    -- {
-    -- {
-    --     provider = "line_percentage",
-    --     hl = function()
-    --         return inverse_block().body
-    --     end,
-    --     left_sep = {
-    --         str = "slant_left",
-    --         hl = function()
-    --             return inverse_block().sep_right
-    --         end
-    --     },
-    --     right_sep = {
-    --         str = "slant_left",
-    --         hl = function()
-    --             return inverse_block().sep_left
-    --         end
-    --     }
-    -- },
-    {
-      provider = function()
-        local filename = vim.api.nvim_buf_get_name(0)
-        local extension = vim.fn.fnamemodify(filename, ":e")
-        local filetype = vim.bo.filetype
+      ---------------------------------------------------------------------------- }}}
+      ----------------------------------FILETYPE---------------------------------- {{{
+      {
+        provider = function()
+          local filename = vim.api.nvim_buf_get_name(0)
+          local extension = vim.fn.fnamemodify(filename, ":e")
+          local filetype = vim.bo.filetype
 
-        local icon = om.get_icon(filename, extension, {})
-        return " " .. icon.str .. " " .. filetype .. " "
-      end,
-      hl = function()
-        return block().body
-      end,
-      left_sep = {
-        str = "slant_left",
-        hl = function()
-          return block().sep_right
+          local icon = om.get_icon(filename, extension, {})
+          return " " .. icon.str .. " " .. filetype .. " "
         end,
-      },
-      right_sep = {
-        str = "slant_left",
         hl = function()
-          return block().sep_left
+          return block().body
         end,
+        left_sep = {
+          str = "slant_left",
+          hl = function()
+            return block().sep_right
+          end,
+        },
+        right_sep = {
+          str = "slant_left",
+          hl = function()
+            return block().sep_left
+          end,
+        },
       },
-    },
-    {
-      provider = function()
-        if vim.g.persisting then
-          return "   "
-        elseif vim.g.persisting == false then
-          return "   "
-        end
-      end,
-      enabled = function()
-        return using_session()
-      end,
-      hl = function()
-        return block().body
-      end,
-      left_sep = {
-        str = "slant_left",
+      ---------------------------------------------------------------------------- }}}
+      -----------------------------------SESSION---------------------------------- {{{
+      {
+        provider = function()
+          if vim.g.persisting then
+            return "   "
+          elseif vim.g.persisting == false then
+            return "   "
+          end
+        end,
+        enabled = function()
+          return using_session()
+        end,
         hl = function()
-          return block().sep_right
+          return block().body
         end,
+        left_sep = {
+          str = "slant_left",
+          hl = function()
+            return block().sep_right
+          end,
+        },
+        right_sep = {
+          str = "slant_left",
+          hl = function()
+            return block().sep_left
+          end,
+        },
       },
-      right_sep = {
-        str = "slant_left",
-        hl = function()
-          return block().sep_left
+      ---------------------------------------------------------------------------- }}}
+      ---------------------------------LINE COLUMN-------------------------------- {{{
+      {
+        provider = function()
+          return " " .. line_col() .. " "
         end,
-      },
-    },
-    {
-      provider = function()
-        return " " .. require("feline.providers.cursor").line_percentage()
-      end,
-      hl = function()
-        return inverse_block().body
-      end,
-      left_sep = {
-        str = "slant_left",
-        hl = function()
-          return inverse_block().sep_right
-        end,
-      },
-      right_sep = {
-        str = " ",
         hl = function()
           return inverse_block().body
         end,
+        left_sep = {
+          str = "slant_left",
+          hl = function()
+            return inverse_block().sep_right
+          end,
+        },
+        right_sep = {
+          str = "slant_left",
+          hl = function()
+            return inverse_block().sep_left
+          end,
+        },
       },
-    },
+      ---------------------------------------------------------------------------- }}}
+      -------------------------------LINE PERCENTAGE------------------------------ {{{
+      {
+        provider = function()
+          local lines, percent = line_percentage()
+
+          return " " .. percent .. "%%/" .. lines
+        end,
+        hl = function()
+          return inverse_block().body
+        end,
+        left_sep = {
+          str = "slant_left",
+          hl = function()
+            return inverse_block().sep_right
+          end,
+        },
+        right_sep = {
+          str = " ",
+          hl = function()
+            return inverse_block().body
+          end,
+        },
+      },
+  ---------------------------------------------------------------------------- }}}
   }
   ---------------------------------------------------------------------------- }}}
   -------------------------------FINALISE SETUP------------------------------- {{{

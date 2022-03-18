@@ -6,12 +6,12 @@ function M.setup()
     return
   end
 
-  local spacer = "  "
+  local spacer = " "
   local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
 
   bufferline.setup({
 
-    show_if_buffers_are_at_least = 2,
+    show_if_buffers_are_at_least = 1,
 
     buffers = {
       new_buffers_position = "last",
@@ -24,55 +24,97 @@ function M.setup()
 
     default_hl = {
       fg = function(buffer)
-        return buffer.is_focused and colors.purple or colors.gray
+        if buffer.is_focused then
+          return (vim.o.background == "light" and colors.black or colors.bufferline_unfocus)
+        else
+          return colors.gray
+        end
       end,
       bg = "NONE",
       style = function(buffer)
-        return buffer.is_focused and "bold" or "NONE"
+        return buffer.is_focused and "bold"
       end,
     },
 
     components = {
+      -- Vim logo
+      {
+        text = function(buffer)
+          if buffer.index == 1 then
+            return "   "
+          else
+            return ""
+          end
+        end,
+        fg = colors.vim,
+      },
+      {
+        text = "",
+        fg = function(buffer)
+          return (buffer.is_focused and colors.statusline_bg or colors.bg)
+        end,
+      },
       -- Buffer index
       {
         text = function(buffer)
           return buffer.index ~= 1 and spacer or ""
+        end,
+        bg = function(buffer)
+          return buffer.is_focused and colors.statusline_bg
         end,
       },
       {
         text = function(buffer)
           return buffer.index .. ": "
         end,
-        style = function(buffer)
-          return buffer.is_focused and "bold" or nil
+        fg = function(buffer)
+          return buffer.is_focused and colors.purple
         end,
+        bg = function(buffer)
+          return buffer.is_focused and colors.statusline_bg
+        end,
+        style = "italic"
       },
-      -- Buffer name
+      -- Buffer unique name
       {
         text = function(buffer)
           return buffer.unique_prefix
+        end,
+        bg = function(buffer)
+          return buffer.is_focused and colors.statusline_bg
         end,
         fg = function(buffer)
           return buffer.is_focused and colors.purple or colors.gray
         end,
         style = "italic",
       },
+      -- Buffer name
       {
         text = function(buffer)
-          return buffer.filename
+          return buffer.filename .. " "
         end,
-        style = function(buffer)
-          return buffer.is_focused and "bold" or nil
+        bg = function(buffer)
+          return buffer.is_focused and colors.statusline_bg
         end,
       },
       -- Buffer modified
       {
         text = function(buffer)
-          return buffer.is_modified and " ●" or ""
+          return buffer.is_modified and "●" or ""
         end,
         truncation = { priority = 1 },
+        bg = function(buffer)
+          return buffer.is_focused and colors.statusline_bg
+        end,
         fg = function(buffer)
           return buffer.is_focused and colors.red
+        end,
+      },
+      {
+        text = "",
+        fg = colors.bg,
+        bg = function(buffer)
+          return buffer.is_focused and colors.statusline_bg
         end,
       },
       { text = spacer },
