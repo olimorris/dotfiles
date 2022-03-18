@@ -34,7 +34,7 @@ def app_macos(mode):
     """
     path_to_file = "~/.color_mode"
 
-    # Open the neovim file
+    # Open the color_mode file
     with open(os.path.expanduser(path_to_file), "r") as config_file:
         contents = config_file.read()
 
@@ -196,7 +196,7 @@ def app_neovim(mode):
     for server in servers:
         try:
             nvim = attach("socket", path=server)
-            nvim.command("call v:lua.ToggleTheme('" + mode + "')")
+            nvim.command("call v:lua.om.ToggleTheme('" + mode + "')")
         except:
             continue
 
