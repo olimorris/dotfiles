@@ -220,7 +220,7 @@ function M.setup()
       end,
       truncate_hide = true,
       enabled = function()
-        return git.git_info_exists() and there_is_width()
+        return git.git_info_exists()
       end,
       hl = function()
         return block().body
@@ -237,17 +237,6 @@ function M.setup()
           return block().sep_right
         end,
       },
-    },
-    { -- Spacer for if there is no width
-      provider = " ",
-      enabled = function()
-        return not there_is_width()
-      end,
-      hl = function()
-        return {
-          bg = bg_to_mode_color and vi_mode_utils.get_mode_color() or "NONE",
-        }
-      end,
     },
     {
       provider = function()
@@ -278,9 +267,6 @@ function M.setup()
     {
       provider = "diagnostic_errors",
       icon = " ",
-      enabled = function()
-        return there_is_width()
-      end,
       hl = function()
         return block(colors.red, colors.bg).body
       end,
@@ -300,9 +286,6 @@ function M.setup()
     {
       provider = "diagnostic_warnings",
       icon = " ",
-      enabled = function()
-        return there_is_width()
-      end,
       hl = function()
         return block(colors.yellow, colors.bg).body
       end,
@@ -322,9 +305,6 @@ function M.setup()
     {
       provider = "diagnostic_hints",
       icon = " ",
-      enabled = function()
-        return there_is_width()
-      end,
       hl = function()
         return default_hl()
       end,
@@ -344,9 +324,6 @@ function M.setup()
     {
       provider = "diagnostic_info",
       icon = " ",
-      enabled = function()
-        return there_is_width()
-      end,
       hl = function()
         return default_hl()
       end,

@@ -15,6 +15,7 @@ end
 if vim.fn.filereadable(os.getenv("HOME_DIR") .. ".asdf/shims/python") then
 	vim.g.python3_host_prog = os.getenv("HOME_DIR") .. ".asdf/shims/python"
 end
+
 --------------------------------------------------------------------------- }}}
 -------------------------------BUFFER OPTIONS------------------------------- {{{
 vim.bo.autoindent = true
@@ -41,6 +42,7 @@ vim.opt.hlsearch = false -- Don't highlight found searches
 vim.opt.ignorecase = true -- Ignore case
 vim.opt.incsearch = true -- Shows the match while typing
 vim.opt.joinspaces = false -- No double spaces with join after a dot
+vim.opt.laststatus = 3 -- Use global statusline
 vim.opt.modelines = 1 -- Only use folding settings for this file
 vim.opt.mouse = "a" -- Use the mouse in all modes
 vim.opt.scrolloff = 5 -- Set the cursor 5 lines down instead of directly at the top of the file
@@ -90,6 +92,9 @@ vim.opt.undodir = vim.fn.stdpath("data") .. "/undos" -- Set the undo directory
 vim.wo.colorcolumn = "80,120" -- Make a ruler at 80px and 120px
 vim.wo.list = true -- Show some invisible characters like tabs etc
 vim.wo.numberwidth = 2 -- Make the line number column thinner
+---Note: Setting number and relative number gives you hybrid mode
+---https://jeffkreeftmeijer.com/vim-number/
+vim.wo.number = true -- Set the absolute number
 vim.wo.relativenumber = true -- Set the relative number
 vim.wo.signcolumn = "yes" -- Show information next to the line numbers
 vim.wo.wrap = false -- Do not display text over multiple lines
