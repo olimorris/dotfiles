@@ -98,10 +98,7 @@ local appearance = function()
     {
       "norcalli/nvim-colorizer.lua", -- Highlight hex and rgb colors within Neovim
       lock = LockPlugins,
-      cond = function()
-        local ft = vim.bo.filetype
-        return (ft == "html" or ft == "css" or ft == "lua" or ft == "javascript" or ft == "eruby")
-      end,
+      cmd = {"Colorizer*"},
       config = function()
         require(config_namespace .. ".plugins.others").colorizer()
       end,

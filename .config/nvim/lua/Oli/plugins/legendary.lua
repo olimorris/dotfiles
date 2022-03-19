@@ -13,6 +13,9 @@ function M.setup()
     autocmds = require(config_namespace .. ".core.autocmds").default_autocmds(),
     auto_register_which_key = false,
   })
+
+  legendary.bind_keymaps(require(config_namespace .. ".core.mappings").plugin_keymaps())
+  legendary.bind_keymaps(require(config_namespace .. ".core.commands").plugin_commands())
 end
 
 return M

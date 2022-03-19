@@ -1,6 +1,5 @@
-local opts = { noremap = true, silent = true }
 --------------------------------LOAD SESSIONS------------------------------- {{{
-function LoadSession()
+function om.LoadSession()
   local ok, persisted = om.safe_require("persisted")
   if not ok then
     return
@@ -22,15 +21,9 @@ function LoadSession()
     vim.cmd('lua require("persisted").stop()')
   end)
 end
-om.command({
-  "Sessions",
-  function()
-    return LoadSession()
-  end,
-})
 --------------------------------------------------------------------------- }}}
 ----------------------------RELOAD NEOVIM CONFIG---------------------------- {{{
-function ReloadConfig()
+function om.ReloadConfig()
   local ok, plenary = om.safe_require("plenary.reload")
   if ok then
     RELOAD = plenary.reload_module
@@ -47,15 +40,9 @@ function ReloadConfig()
   dofile(vim.env.MYVIMRC)
   vim.notify("Reloaded config!")
 end
-om.command({
-  "Reload",
-  function()
-    return ReloadConfig()
-  end,
-})
 --------------------------------------------------------------------------- }}}
 -----------------------------RUBOCOP FORMATTING----------------------------- {{{
-function FormatWithRuboCop()
+function om.FormatWithRuboCop()
   -- Runs unsafe options on the code base!
   local filepath = vim.fn.expand("%:p")
   om.async_run({
@@ -71,15 +58,9 @@ function FormatWithRuboCop()
     },
   })
 end
-om.command({
-  "RC",
-  function()
-    return FormatWithRuboCop()
-  end,
-})
 --------------------------------------------------------------------------- }}}
 ----------------------------------SNIPPETS---------------------------------- {{{
-function EditSnippet()
+function om.EditSnippet()
   local path = Homedir .. "/.config/snippets"
   local snippets = { "ruby", "python", "global", "package" }
 
@@ -90,15 +71,9 @@ function EditSnippet()
     vim.cmd(":edit " .. path .. "/" .. choice .. ".json")
   end)
 end
-om.command({
-  "Es",
-  function()
-    return EditSnippet()
-  end,
-})
 --------------------------------------------------------------------------- }}}
 ---------------------------------TEST ASYNC--------------------------------- {{{
-function RunTestSuiteAsync()
+function om.RunTestSuiteAsync()
   om.async_run({
     command = vim.g["test#" .. vim.bo.filetype .. "#asyncrun"],
     callbacks = {
@@ -108,15 +83,9 @@ function RunTestSuiteAsync()
     },
   })
 end
-om.command({
-  "TestAll",
-  function()
-    return RunTestSuiteAsync()
-  end,
-})
 --------------------------------------------------------------------------- }}}
 -----------------------------TOGGLE LINE NUMBERS---------------------------- {{{
-function ToggleLineNumbers()
+function om.ToggleLineNumbers()
   if vim.wo.relativenumber then
     vim.wo.relativenumber = false
     vim.wo.number = true
@@ -125,10 +94,9 @@ function ToggleLineNumbers()
     vim.wo.number = false
   end
 end
-vim.api.nvim_set_keymap("n", "<LocalLeader>n", "<cmd>call v:lua.ToggleLineNumbers()<CR>", opts)
 --------------------------------------------------------------------------- }}}
 --------------------------------TOGGLE THEME-------------------------------- {{{
-function ToggleTheme(mode)
+function om.ToggleTheme(mode)
   if vim.o.background == mode then
     return
   end
@@ -139,17 +107,4 @@ function ToggleTheme(mode)
     vim.o.background = "dark"
   end
 end
-
-om.command({
-  "Tme",
-  function()
-    return ToggleTheme()
-  end,
-})
-om.command({
-  "Theme",
-  function()
-    return ToggleTheme()
-  end,
-})
 --------------------------------------------------------------------------- }}}

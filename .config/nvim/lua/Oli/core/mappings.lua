@@ -20,45 +20,79 @@ local noisy = { noremap = true, silent = false }
 vim.g.mapleader = " " -- space is the leader!
 vim.g.maplocalleader = ","
 ---------------------------------------------------------------------------- }}}
------------------------------------NEOVIM----------------------------------- {{{
-M.neovim = function()
-  vim.api.nvim_set_keymap("i", "jk", "<esc>", silent) -- Easy escape in insert mode
-  vim.api.nvim_set_keymap("n", "<Leader>qa", "<cmd>qall<CR>", silent) -- Easy quit
-  vim.api.nvim_set_keymap("n", "<C-s>", "<cmd>silent! write<CR>", silent) -- Easy save
+-----------------------------------DEFAULTS--------------------------------- {{{
+M.default_keymaps = function()
+  local maps = {
+    { "jk", "<esc>", description = "Escape in insert mode", mode = { "i" } },
 
-  vim.api.nvim_set_keymap("n", "<c-n>", "<cmd>enew<CR>", silent) -- New buffer
-  vim.api.nvim_set_keymap("n", "<c-y>", "<cmd>%y+<CR>", silent) -- Copy the whole file
+    { "<Leader>qa", "<cmd>qall<CR>", description = "Quit Neovim" },
+    { "<C-s>", "<cmd>silent! write<CR>", description = "Save buffer", mode = { "n", "i" } },
+    { "<C-n>", "<cmd>enew<CR>", description = "New buffer" },
+    { "<C-y>", "<cmd>%y+<CR>", description = "Copy buffer" },
 
-  -- Appending to end of lines
-  vim.api.nvim_set_keymap("n", "<LocalLeader>,", "<cmd>norm A,<CR>", silent) -- Comma
-  vim.api.nvim_set_keymap("n", "<LocalLeader>;", "<cmd>norm A;<CR>", silent) -- Semicolon
+    { "<LocalLeader>,", "<cmd>norm A,<CR>", description = "Append comma" },
+    { "<LocalLeader>;", "<cmd>norm A;<CR>", description = "Append semicolon" },
 
-  -- Wrapping lines
-  vim.api.nvim_set_keymap("n", "<LocalLeader>(", [[ciw(<c-r>")<esc>]], silent) -- Wrap in ()
-  vim.api.nvim_set_keymap("v", "<LocalLeader>(", [[c(<c-r>")<esc>]], silent) -- Wrap in ()
+    { "<LocalLeader>(", [[ciw(<c-r>")<esc>]], description = "Wrap in brackets ()" },
+    { "<LocalLeader>(", [[c(<c-r>")<esc>]], description = "Wrap in brackets ()", mode = { "v" } },
+    { "<LocalLeader>{", [[ciw{<c-r>"}<esc>]], description = "Wrap in curly braces {}" },
+    { "<LocalLeader>{", [[c{<c-r>"}<esc>]], description = "Wrap in curly braces {}", mode = { "v" } },
+    { '<LocalLeader>"', [[ciw"<c-r>""<esc>]], description = "Wrap in quotes" },
+    { '<LocalLeader>"', [[c"<c-r>""<esc>]], description = "Wrap in quotes", mode = { "v" } },
 
-  vim.api.nvim_set_keymap("n", "<LocalLeader>{", [[ciw{<c-r>"}<esc>]], silent) -- Wrap in {}
-  vim.api.nvim_set_keymap("v", "<LocalLeader>{", [[c{<c-r>"}<esc>]], silent) -- Wrap in {}
+    {
+      "<LocalLeader>[",
+      [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
+      description = "Replace cursor words in file",
+      opts = { silent = false },
+    },
+    { "<LocalLeader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], description = "Replace cursor words in line" },
 
-  vim.api.nvim_set_keymap("n", '<LocalLeader>"', [[ciw"<c-r>""<esc>]], silent) -- Wrap in ""
-  vim.api.nvim_set_keymap("v", '<LocalLeader>"', [[c"<c-r>""<esc>]], silent) -- Wrap in ""
+    { "<LocalLeader>U", "gUiw`", description = "Capitalize word" },
 
-  -- Replace cursor words
-  vim.api.nvim_set_keymap("n", "<LocalLeader>[", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy) -- File
-  vim.api.nvim_set_keymap("n", "<LocalLeader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy) -- Line
+    { "<", "<gv", description = "Outdent", mode = { "v" } },
+    { ">", ">gv", description = "Indent", mode = { "v" } },
 
-  -- Capitalize word
-  vim.api.nvim_set_keymap("n", "<LocalLeader>U", "gUiw`]", silent)
+    { "<Esc>", "<cmd>:noh<CR>", description = "Clear searches" },
+    {
+      "<LocalLeader>f",
+      ":s/{search}/{replace}/g",
+      description = "Search and replace",
+      mode = { "n", "v" },
+      opts = { silent = false },
+    },
+    { "B", "^", description = "Beginning of a line" },
+    { "E", "$", description = "End of a line" },
+    { "<CR>", "o<Esc>", "Insert blank line below" },
+    { "<S-CR>", "O<Esc>", "Insert blank line above" },
 
-  -- Shift words in visual mode
-  vim.api.nvim_set_keymap("v", "<", "<gv", silent)
-  vim.api.nvim_set_keymap("v", ">", ">gv", silent)
+    { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
+    { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
 
-  -- Finding and highlighting values
-  -- vim.api.nvim_set_keymap('n', '<C-f>', ' :/')
-  vim.api.nvim_set_keymap("n", "<Esc>", "<Esc>:noh<CR>", silent)
-  vim.api.nvim_set_keymap("v", "<LocalLeader>f", " :s/{search}/{replace}/g", {})
-  vim.api.nvim_set_keymap("n", "<LocalLeader>f", " :%s/{search}/{replace}/g", {})
+    { "∆", "<cmd>move+<CR>==", description = "Move line down" },
+    { "˚", "<cmd>move-2<CR>==", description = "Move line up" },
+    { "∆", ":move'>+<CR>='[gv", description = "Move line down", mode = { "v" } },
+    { "˚", ":move-2<CR>='[gv", description = "Move line up", mode = { "v" } },
+  }
+
+  -- Allow using of the alt key
+  -- vim.api.nvim_set_keymap("n", "¬", "<a-l>", silent)
+  -- vim.api.nvim_set_keymap("n", "˙", "<a-h>", silent)
+  -- vim.api.nvim_set_keymap("n", "∆", "<a-j>", silent)
+  -- vim.api.nvim_set_keymap("n", "˚", "<a-k>", silent)
+
+  -- Tabs
+  -- vim.api.nvim_set_keymap("n", "<Leader>te", "<cmd>tabe %<CR>", silent)
+  -- vim.api.nvim_set_keymap("n", "<Leader>to", "<cmd>tabonly<CR>", silent)
+  -- vim.api.nvim_set_keymap("n", "<Leader>tc", "<cmd>tabclose<CR>", silent)
+
+  -- Next tab is gt
+  -- Previous tab is gT
+
+  -- Terminal mode
+  vim.api.nvim_set_keymap("t", "jk", "<C-\\><C-n>", silent) -- Easy escape in terminal mode
+  vim.api.nvim_set_keymap("t", "<esc>", "<C-\\><C-n>", {}) -- Escape in the terminal closes it
+  vim.api.nvim_set_keymap("t", ":q!", "<C-\\><C-n>:q!<CR>", {}) -- In the terminal :q quits it
 
   -- Movement
   -- Automatically save movements larger than 5 lines to the jumplist
@@ -75,49 +109,6 @@ M.neovim = function()
     "v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'k' : 'gk'",
     { noremap = true, expr = true }
   )
-
-  vim.api.nvim_set_keymap("n", "B", "^", silent) -- Beginning of a line
-  vim.api.nvim_set_keymap("n", "E", "$", silent) -- End of a line
-
-  vim.api.nvim_set_keymap("n", "<CR>", "o<Esc>", silent) -- Insert blank line without entering insert mode
-
-  -- Allow using of the alt key
-  vim.api.nvim_set_keymap("n", "¬", "<a-l>", silent)
-  vim.api.nvim_set_keymap("n", "˙", "<a-h>", silent)
-  vim.api.nvim_set_keymap("n", "∆", "<a-j>", silent)
-  vim.api.nvim_set_keymap("n", "˚", "<a-k>", silent)
-
-  -- Move lines of code up or down
-  vim.api.nvim_set_keymap("n", "∆", "<cmd>move+<CR>==", silent)
-  vim.api.nvim_set_keymap("n", "˚", "<cmd>move-2<CR>==", silent)
-  vim.api.nvim_set_keymap("v", "∆", ":move'>+<CR>='[gv", silent)
-  vim.api.nvim_set_keymap("v", "˚", ":move-2<CR>='[gv", silent)
-
-  vim.api.nvim_set_keymap("v", "<", "<gv", {}) -- Reselect the visual block after indent
-  vim.api.nvim_set_keymap("v", ">", ">gv", {}) -- Reselect the visual block after outdent
-
-  -- Splits
-  -- INFO: Some of these have been replaced by the use of focus.nvim
-  function splits()
-    vim.api.nvim_set_keymap("n", "<LocalLeader>sc", "<C-w>q", {}) -- Close the current split
-    vim.api.nvim_set_keymap("n", "<LocalLeader>so", "<C-w>o", {}) -- Close all splits but the current one
-  end
-
-  -- Tabs
-  -- vim.api.nvim_set_keymap("n", "<Leader>te", "<cmd>tabe %<CR>", silent)
-  -- vim.api.nvim_set_keymap("n", "<Leader>to", "<cmd>tabonly<CR>", silent)
-  -- vim.api.nvim_set_keymap("n", "<Leader>tc", "<cmd>tabclose<CR>", silent)
-
-  -- Next tab is gt
-  -- Previous tab is gT
-
-  -- Terminal mode
-  vim.api.nvim_set_keymap("t", "jk", "<C-\\><C-n>", silent) -- Easy escape in terminal mode
-  vim.api.nvim_set_keymap("t", "<esc>", "<C-\\><C-n>", {}) -- Escape in the terminal closes it
-  vim.api.nvim_set_keymap("t", ":q!", "<C-\\><C-n>:q!<CR>", {}) -- In the terminal :q quits it
-
-  -- Misc
-  vim.api.nvim_set_keymap("n", "<Leader>r", "<cmd>call v:lua.ReloadConfig()<CR>", silent)
 
   -- Multiple cursors
   -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
@@ -152,10 +143,12 @@ M.neovim = function()
     [[":\<C-u>call v:lua.om.mappings.setup_mc()<CR>gv" . g:mc . "``qz"]],
     { expr = true }
   )
+
+  return maps
 end
 ---------------------------------------------------------------------------- }}}
 -----------------------------------PLUGINS---------------------------------- {{{
-M.default_keymaps = function()
+M.plugin_keymaps = function()
   local h = require("legendary.helpers")
   return {
     -- Legendary

@@ -48,7 +48,7 @@ function M.default_commands()
         require(config_namespace .. ".core.plugins")
         require("packer").update()
       end,
-      description = "Packer: Status",
+      description = "Packer: Update",
     },
     -- Persisted
     {
@@ -73,21 +73,72 @@ function M.default_commands()
       description = "Session: Stop"
     },
     {
-      ":SessionLoad",
-      function()
-        require("persisted").load()
-      end,
-      description = "Session: Load"
-    },
-    {
       ":SessionDelete",
       function()
         require("persisted").delete()
       end,
       description = "Session: Delete"
     },
-    --
+    {
+      ":Sessions",
+      function()
+        om.LoadSession()
+      end,
+      description = "Session: Load"
+    },
+    {
+      ":Reload",
+      function()
+        om.ReloadConfig()
+      end,
+      description = "Reload Neovim config"
+    },
+    {
+      ":Rubocop",
+      function()
+        om.FormatWithRuboCop()
+      end,
+      description = "Format with Rubocop"
+    },
+    {
+      ":Snippets",
+      function()
+        om.EditSnippet()
+      end,
+      description = "Edit Snippets"
+    },
+    {
+      ":TestAll",
+      function()
+        om.RunTestSuiteAsync()
+      end,
+      description = "Test all"
+    },
+    {
+      ":Theme",
+      function()
+        om.ToggleTheme()
+      end,
+      description = "Toggle theme"
+    },
+    {
+      ":LineNumbers",
+      function()
+        om.ToggleLineNumbers()
+      end,
+      description = "Toggle line numbers"
+    },
   }
 end
 
+function M.plugin_commands()
+  return {
+    -- Colorizer
+    {
+      ":ColorizerToggle",
+      ":ColorizerToggle",
+      description = "Colorizer toggle"
+    },
+  }
+end
 return M

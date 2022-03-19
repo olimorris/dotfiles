@@ -145,7 +145,7 @@ M.dressing = function()
 
   dressing.setup({
     input = { default_prompt = "> ", winblend = 0 },
-    select = { backend = "telescope", telescope = { theme = "dropdown" } },
+    select = { backend = "telescope" },
   })
 end
 
@@ -341,6 +341,7 @@ M.qf_helper = function()
     },
   })
 end
+
 M.search = function()
   local ok, search = om.safe_require("searchbox")
   if not ok then
