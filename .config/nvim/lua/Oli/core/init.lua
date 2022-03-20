@@ -1,4 +1,3 @@
----------------------------------LOAD CONFIG-------------------------------- {{{
 LockPlugins = false -- To prevent rogue updates, lock the plugins
 
 -- Call the cache plugin
@@ -22,11 +21,3 @@ end
 vim.defer_fn(function()
   require(config_namespace .. ".core.plugins").load()
 end, 0)
---------------------------------------------------------------------------- }}}
----------------------------------LOAD THEME--------------------------------- {{{
-vim.o.background = "dark"
-local ok, theme = om.safe_require(config_namespace .. ".core.theme")
-if ok then
-  theme.init()
-end
---------------------------------------------------------------------------- }}}

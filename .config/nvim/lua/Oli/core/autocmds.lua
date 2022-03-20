@@ -33,18 +33,6 @@ function M.default_autocmds()
       },
     },
     {
-      name = "ReloadTheme",
-      {
-        "ColorScheme",
-        function()
-          require(config_namespace .. ".core.theme").init()
-        end,
-        opts = {
-          pattern = { "*" },
-        },
-      },
-    },
-    {
       name = "AddRubyFiletypes",
       {
         { "BufNewFile", "BufRead" },
@@ -69,7 +57,7 @@ function M.default_autocmds()
       },
     })
   end
-  --
+
   -- Reload statusline when the theme has been changed
   if om.safe_require("feline", { silent = true }) then
     table.insert(autocmds, {

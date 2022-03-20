@@ -1,6 +1,6 @@
 local M = {}
 
-M.init = function()
+M.setup = function()
   local ok, onedarkpro = om.safe_require("onedarkpro", { silent = true })
   if not ok then
     return
@@ -173,8 +173,6 @@ M.init = function()
     },
   })
   onedarkpro.load()
-
-  om.theme_colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
 end
 
 return M

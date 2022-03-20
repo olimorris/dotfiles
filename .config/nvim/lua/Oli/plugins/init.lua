@@ -33,7 +33,11 @@ local appearance = function()
     --         require("onedarkpro").load()
     --     end
     -- }) -- My theme
-    { "~/Code/Projects/onedarkpro.nvim" }, -- My theme
+    { "~/Code/Projects/onedarkpro.nvim",
+      config = function()
+        require(config_namespace .. ".plugins.theme").setup()
+      end
+    }, -- My theme
     {
       "goolord/alpha-nvim", -- Dashboard for Neovim
       lock = LockPlugins,
@@ -420,7 +424,8 @@ local coding = function()
     {
       "numToStr/Comment.nvim", -- Comment out lines with gcc
       lock = LockPlugins,
-      keys = { "gcc", "gc" },
+      module = "Comment",
+      keys = { "gcc", "gc", "gbc" },
       config = function()
         require(config_namespace .. ".plugins.others").comment()
       end,

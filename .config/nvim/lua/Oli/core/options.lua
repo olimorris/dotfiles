@@ -31,6 +31,7 @@ vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.clipboard = { "unnamedplus" } -- Use the system clipboard
 vim.opt.completeopt = { "menuone", "noselect" } -- Completion opions for code completion
 vim.opt.cursorlineopt = "screenline,number" -- Highlight the screen line of the cursor with CursorLine and the line number with CursorLineNr
+vim.opt.background = "dark"
 vim.opt.encoding = "UTF-8" -- Set the encoding type
 vim.opt.emoji = false -- Turn off emojis
 vim.opt.foldenable = true -- Enable folding
