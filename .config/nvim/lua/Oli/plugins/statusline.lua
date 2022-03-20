@@ -11,7 +11,16 @@ local bg_to_mode_color = false -- Set the whole statusbar to be the color of the
 
 M.components = { active = {}, inactive = {} }
 M.force_inactive = {
-  filetypes = { "^aerial$", "^NvimTree$", "^neo$", "^neo-tree-popup$", "^toggleterm$", "^undotree$" },
+  filetypes = {
+    "^aerial$",
+    "^NvimTree$",
+    "^neo$",
+    "^neo-tree-popup$",
+    "^packer$",
+    "^TelescopePrompt$",
+    "^toggleterm$",
+    "^undotree$",
+  },
 }
 M.disable = {
   filetypes = {
@@ -477,8 +486,8 @@ function M.setup()
           end,
         },
       },
-  ---------------------------------------------------------------------------- }}}
-  }
+      ---------------------------------------------------------------------------- }}}
+    }
   ---------------------------------------------------------------------------- }}}
   -------------------------------FINALISE SETUP------------------------------- {{{
   feline.setup({

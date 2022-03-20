@@ -39,7 +39,17 @@ M.config = function()
       dotfiles = false,
       custom = { ".git", "node_modules", ".cache", ".vscode", ".DS_Store" },
     },
-    view = { width = 35 },
+    actions = {
+      open_file = {
+        resize_window = true,
+      },
+    },
+    view = {
+      allow_resize = true,
+      side = "left",
+      width = 25,
+      hide_root_folder = true,
+    },
   })
 end
 
