@@ -166,7 +166,7 @@ def app_neovim(mode):
     """
     from pynvim import attach
 
-    nvim_config = nvim_path + "/lua/Oli/core/init.lua"
+    nvim_config = nvim_path + "/lua/Oli/core/options.lua"
 
     # Open the neovim file
     with open(os.path.expanduser(nvim_config), "r") as config_file:
@@ -175,12 +175,12 @@ def app_neovim(mode):
     # Change the mode to ensure on a fresh startup, the color is remembered
     if mode == "dark":
         nvim_contents = nvim_contents.replace(
-            'vim.o.background = "light"', 'vim.o.background = "dark"'
+            'vim.opt.background = "light"', 'vim.opt.background = "dark"'
         )
 
     if mode == "light":
         nvim_contents = nvim_contents.replace(
-            'vim.o.background = "dark"', 'vim.o.background = "light"'
+            'vim.opt.background = "dark"', 'vim.opt.background = "light"'
         )
 
     with open(os.path.expanduser(nvim_config), "w") as config_file:
