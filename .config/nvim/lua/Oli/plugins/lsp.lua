@@ -37,17 +37,6 @@ vim.diagnostic.config({
 local max_width = math.max(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.max(math.floor(vim.o.lines * 0.3), 30)
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = "single",
-  max_width = max_width,
-  max_height = max_height,
-})
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  border = "single",
-  max_width = max_width,
-  max_height = max_height,
-})
-
 -- Sign column
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
@@ -55,33 +44,45 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 ---------------------------------------------------------------------------- }}}
-----------------------------------COMMANDS-----------------------------------{{{
-om.command({
-  "LspLog",
-  function()
-    vim.cmd("edit " .. vim.lsp.get_log_path())
-  end,
+----------------------------------HANDLERS---------------------------------- {{{
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "single",
+  max_width = max_width,
+  max_height = max_height,
 })
-om.command({
-  "LspFormat",
-  function()
-    vim.lsp.buf.formatting_sync(nil, 1000)
-  end,
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = "single",
+  max_width = max_width,
+  max_height = max_height,
 })
-om.command({
-  "LspI",
-  function()
-    for _, name in pairs(om.lsp.servers) do
-      vim.cmd("LspInstall " .. name)
+
+-- Format on save, asynchronously and save the file
+-- https://github.com/mrjones2014/dotfiles/blob/e6786500fc3b17d1d26a4e6ca93b33e5305798b1/.config/nvim/lua/lsp/init.lua#L4
+vim.lsp.handlers["textDocument/formatting"] = function(err, result, client)
+  if err ~= nil then
+    vim.api.nvim_err_write(err)
+    return
+  end
+
+  if result == nil then
+    return
+  end
+
+  if
+    vim.api.nvim_buf_get_var(client.bufnr, "format_changedtick")
+    == vim.api.nvim_buf_get_var(client.bufnr, "changedtick")
+  then
+    local view = vim.fn.winsaveview()
+    vim.lsp.util.apply_text_edits(result, client.bufnr, "utf-16")
+    vim.fn.winrestview(view)
+    if client.bufnr == vim.api.nvim_get_current_buf() then
+      vim.b.format_saving = true
+      vim.cmd("update")
+      vim.b.format_saving = false
     end
-  end,
-})
-om.command({
-  "LspUninstall",
-  function()
-    vim.cmd("LspUninstallAll")
-  end,
-})
+  end
+end
 ---------------------------------------------------------------------------- }}}
 -----------------------------------ATTACH----------------------------------- {{{
 local symbols, aerial = om.safe_require("aerial", { silent = true })
@@ -96,7 +97,8 @@ function om.lsp.on_attach(client, bufnr)
 
   if maps then
     legendary.bind_keymaps(require(config_namespace .. ".core.mappings").lsp_keymaps(client, bufnr))
-    legendary.bind_autocmds(require(config_namespace .. ".core.autocmds").lsp_autocmds(client))
+    legendary.bind_autocmds(require(config_namespace .. ".core.autocmds").lsp_autocmds(client, bufnr))
+    legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_commands(client, bufnr))
   end
 end
 ---------------------------------------------------------------------------- }}}

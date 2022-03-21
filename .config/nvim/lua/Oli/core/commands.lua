@@ -3,6 +3,101 @@ local M = {}
 function M.default_commands()
   return {
     {
+      ":Uuid",
+      function()
+        local uuid = vim.fn.system("uuidgen"):gsub("\n", ""):lower()
+        local line = vim.fn.getline(".")
+        vim.schedule(function()
+          vim.fn.setline(".", vim.fn.strpart(line, 0, vim.fn.col(".")) .. uuid .. vim.fn.strpart(line, vim.fn.col(".")))
+        end)
+      end,
+      description = "Generate a UUID and insert it into the buffer",
+    },
+    {
+      ":Sessions",
+      function()
+        om.LoadSession()
+      end,
+      description = "Session: Load",
+    },
+    {
+      ":Reload",
+      function()
+        om.ReloadConfig()
+      end,
+      description = "Reload Neovim config",
+    },
+    {
+      ":Rubocop",
+      function()
+        om.FormatWithRuboCop()
+      end,
+      description = "Format with Rubocop",
+    },
+    {
+      ":Snippets",
+      function()
+        om.EditSnippet()
+      end,
+      description = "Edit Snippets",
+    },
+    {
+      ":TestAll",
+      function()
+        om.RunTestSuiteAsync()
+      end,
+      description = "Test all",
+    },
+    {
+      ":Theme",
+      function()
+        om.ToggleTheme()
+      end,
+      description = "Toggle theme",
+    },
+    {
+      ":LineNumbers",
+      function()
+        om.ToggleLineNumbers()
+      end,
+      description = "Toggle line numbers",
+    },
+  }
+end
+
+function M.plugin_commands()
+  return {
+    -- Colorizer
+    {
+      ":ColorizerToggle",
+      description = "Colorizer toggle",
+    },
+    -- LSP
+    {
+      ":LspLog",
+      function()
+        vim.cmd("edit " .. vim.lsp.get_log_path())
+      end,
+      description = "Show LSP logs",
+    },
+    {
+      ":LspInstall",
+      function()
+        for _, name in pairs(om.lsp.servers) do
+          vim.cmd("LspInstall " .. name)
+        end
+      end,
+      description = "Install LSP servers",
+    },
+    {
+      ":LspUninstall",
+      function()
+        vim.cmd("LspUninstallAll")
+      end,
+      description = "Uninstall LSP servers",
+    },
+    -- Packer
+    {
       ":PC",
       function()
         require(config_namespace .. ".core.plugins")
@@ -53,92 +148,55 @@ function M.default_commands()
     -- Persisted
     {
       ":SessionSave",
-      function()
-        require("persisted").save()
-      end,
-      description = "Session: Save"
+      description = "Session: Save",
     },
     {
       ":SessionStart",
-      function()
-        require("persisted").start()
-      end,
-      description = "Session: Start"
+      description = "Session: Start",
     },
     {
       ":SessionStop",
-      function()
-        require("persisted").stop()
-      end,
-      description = "Session: Stop"
+      description = "Session: Stop",
     },
     {
       ":SessionDelete",
-      function()
-        require("persisted").delete()
-      end,
-      description = "Session: Delete"
-    },
-    {
-      ":Sessions",
-      function()
-        om.LoadSession()
-      end,
-      description = "Session: Load"
-    },
-    {
-      ":Reload",
-      function()
-        om.ReloadConfig()
-      end,
-      description = "Reload Neovim config"
-    },
-    {
-      ":Rubocop",
-      function()
-        om.FormatWithRuboCop()
-      end,
-      description = "Format with Rubocop"
-    },
-    {
-      ":Snippets",
-      function()
-        om.EditSnippet()
-      end,
-      description = "Edit Snippets"
-    },
-    {
-      ":TestAll",
-      function()
-        om.RunTestSuiteAsync()
-      end,
-      description = "Test all"
-    },
-    {
-      ":Theme",
-      function()
-        om.ToggleTheme()
-      end,
-      description = "Toggle theme"
-    },
-    {
-      ":LineNumbers",
-      function()
-        om.ToggleLineNumbers()
-      end,
-      description = "Toggle line numbers"
+      description = "Session: Delete",
     },
   }
 end
 
-function M.plugin_commands()
-  return {
-    -- Colorizer
+function M.lsp_commands(client, bufnr)
+  local commands = {
     {
-      ":ColorizerToggle",
-      ":ColorizerToggle",
-      description = "Colorizer toggle"
+      ":LspRestart",
+      description = "Restart any attached LSP clients",
+      opts = { buffer = bufnr },
+    },
+    {
+      ":LspStart",
+      description = "Start the LSP client manually",
+      opts = { buffer = bufnr },
+    },
+    {
+      ":LspInfo",
+      description = "Show attached LSP clients",
+      opts = { buffer = bufnr },
     },
   }
+
+  if client.name == "null-ls" or client.name == "solargraph" then
+    table.insert(commands, {
+      ":LspFormat",
+      function()
+        vim.b.format_changedtick = vim.b.changedtick
+        vim.lsp.buf.formatting({})
+      end,
+      description = "Format the current document with LSP",
+      opts = { buffer = bufnr },
+    })
+  end
+
+  return commands
 end
+
 return M

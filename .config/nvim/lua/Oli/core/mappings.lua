@@ -429,32 +429,41 @@ end
 
 M.lsp_keymaps = function(client, bufnr)
   local h = require("legendary.helpers")
-  local maps = {
-    { "gd", vim.lsp.buf.definition, description = "LSP: Go to definition", opts = { buffer = bufnr } },
-    {
-      "gr",
-      h.lazy_required_fn("telescope.builtin", "lsp_references"),
-      description = "LSP: Find references",
-      opts = { buffer = bufnr },
-    },
-    {
-      "L",
-      "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
-      description = "LSP: Line diagnostics",
-    },
-    { "gh", vim.lsp.buf.hover, description = "LSP: Show hover information", opts = { buffer = bufnr } },
-    {
-      "<leader>p",
-      h.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer"),
-      description = "LSP: Peek definition",
-      opts = { buffer = bufnr },
-    },
-    { "F", vim.lsp.buf.code_action, description = "LSP: Show code actions", opts = { buffer = bufnr } },
-    { "[", vim.diagnostic.goto_prev, description = "LSP: Go to previous diagnostic item", opts = { buffer = bufnr } },
-    { "]", vim.diagnostic.goto_next, description = "LSP: Go to next diagnostic item", opts = { buffer = bufnr } },
-  }
+  local maps = {}
 
-  if client.resolved_capabilities.implementation then
+  if client.name ~= "null-ls" then
+    maps = {
+      { "gd", vim.lsp.buf.definition, description = "LSP: Go to definition", opts = { buffer = bufnr } },
+      {
+        "gr",
+        h.lazy_required_fn("telescope.builtin", "lsp_references"),
+        description = "LSP: Find references",
+        opts = { buffer = bufnr },
+      },
+      {
+        "L",
+        "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
+        description = "LSP: Line diagnostics",
+      },
+      { "gh", vim.lsp.buf.hover, description = "LSP: Show hover information", opts = { buffer = bufnr } },
+      {
+        "<leader>p",
+        h.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer"),
+        description = "LSP: Peek definition",
+        opts = { buffer = bufnr },
+      },
+      { "F", vim.lsp.buf.code_action, description = "LSP: Show code actions", opts = { buffer = bufnr } },
+      {
+        "[",
+        vim.diagnostic.goto_prev,
+        description = "LSP: Go to previous diagnostic item",
+        opts = { buffer = bufnr },
+      },
+      { "]", vim.diagnostic.goto_next, description = "LSP: Go to next diagnostic item", opts = { buffer = bufnr } },
+    }
+  end
+
+  if client.name ~= "null-ls" and client.resolved_capabilities.implementation then
     table.insert(maps, {
       "gi",
       vim.lsp.buf.implementation,
@@ -462,19 +471,19 @@ M.lsp_keymaps = function(client, bufnr)
       opts = { buffer = bufnr },
     })
   end
-  if client.resolved_capabilities.type_definition then
+  if client.name ~= "null-ls" and client.resolved_capabilities.type_definition then
     table.insert(
       maps,
       { "gt", vim.lsp.buf.type_definition, description = "LSP: Go to type definition", opts = { buffer = bufnr } }
     )
   end
-  if client.supports_method("textDocument/rename") then
+  if client.name ~= "null-ls" and client.supports_method("textDocument/rename") then
     table.insert(
       maps,
       { "<leader>rn", vim.lsp.buf.rename, description = "LSP: Rename symbol", opts = { buffer = bufnr } }
     )
   end
-  if client.supports_method("textDocument/signatureHelp") then
+  if client.name ~= "null-ls" and client.supports_method("textDocument/signatureHelp") then
     table.insert(
       maps,
       { "gs", vim.lsp.buf.signature_help, description = "LSP: Show signature help", opts = { buffer = bufnr } }
@@ -491,36 +500,19 @@ M.lsp_keymaps = function(client, bufnr)
     --         command = vim.lsp.buf.formatting_sync,
     --     },
     -- })
-    table.insert(
-      maps,
-      { "<LocalLeader>lf", vim.lsp.buf.formatting, description = "LSP: Format", opts = { buffer = bufnr } }
-    )
+    table.insert(maps, {
+      "<LocalLeader>lf",
+      function()
+        vim.b.format_changedtick = vim.b.changedtick
+        vim.lsp.buf.formatting({})
+      end,
+      description = "LSP: Format",
+      opts = { buffer = bufnr },
+    })
   else
     client.resolved_capabilities.document_formatting = false
   end
 
-  local ok, lightbulb = om.safe_require("nvim-lightbulb")
-  if ok then
-    lightbulb.setup({
-      sign = {
-        enabled = false,
-      },
-      float = {
-        enabled = true,
-      },
-    })
-    om.augroup("LspCodeAction", {
-      {
-        events = { "CursorHold", "CursorHoldI" },
-        targets = { "<buffer>" },
-        command = function()
-          lightbulb.update_lightbulb()
-        end,
-      },
-    })
-  end
-
-  -- List of LSP servers that we allow to format
   return maps
 end
 ---------------------------------------------------------------------------- }}}

@@ -100,37 +100,67 @@ function M.default_autocmds()
   return autocmds
 end
 
-function M.lsp_autocmds(client)
-  local autocmds = {
-    {
-      name = "LspOnAttachAutocmds",
-      clear = true,
+function M.lsp_autocmds(client, bufnr)
+  local autocmds = {}
+  if client.name ~= "null-ls" then
+    autocmds = {
       {
-        { "CursorHold", "CursorHoldI" },
-        ":silent! lua vim.lsp.buf.document_highlight()",
-        opts = { pattern = "<buffer>" },
-      },
-      {
-        "CursorMoved",
-        ":silent! lua vim.lsp.buf.clear_references()",
-        opts = { pattern = "<buffer>" },
-      },
-    },
-  }
-
-  if client and client.resolved_capabilities.code_lens then
-    table.insert(autocmds, {
-      {
-        name = "LspCodeLens",
+        name = "LspOnAttachAutocmds",
         clear = true,
         {
-          { "BufEnter", "CursorHold", "CursorHoldI" },
-          ":silent! lua vim.lsp.codelens.refresh()",
-          opts = { pattern = "<buffer>" },
+          { "CursorHold", "CursorHoldI" },
+          ":silent! lua vim.lsp.buf.document_highlight()",
+          opts = { buffer = bufnr },
+        },
+        {
+          "CursorMoved",
+          ":silent! lua vim.lsp.buf.clear_references()",
+          opts = { buffer = bufnr },
         },
       },
+    }
+  end
+
+  if client.name ~= "null-ls" and client.resolved_capabilities.code_lens then
+    table.insert(autocmds, {
+      { "BufEnter", "CursorHold", "CursorHoldI" },
+      ":silent! lua vim.lsp.codelens.refresh()",
+      opts = { buffer = bufnr },
     })
   end
+
+  if client.name == "null-ls" or client.name == "solargraph" then
+    table.insert(autocmds, {
+      { "BufWritePost" },
+      function()
+        vim.b.format_changedtick = vim.b.changedtick
+        vim.lsp.buf.formatting()
+      end,
+      opts = { buffer = bufnr },
+    })
+  end
+
+  if client.name ~= "null-ls" then
+    local ok, lightbulb = om.safe_require("nvim-lightbulb")
+    if ok then
+      lightbulb.setup({
+        sign = {
+          enabled = false,
+        },
+        float = {
+          enabled = true,
+        },
+      })
+    end
+    table.insert(autocmds, {
+      { "CursorHold", "CursorHoldI" },
+      function()
+        lightbulb.update_lightbulb()
+      end,
+      opts = { buffer = bufnr },
+    })
+  end
+
   return autocmds
 end
 
