@@ -23,7 +23,7 @@ telescope.setup({
       vertical = { mirror = false },
       width = 0.87,
       height = 0.80,
-      preview_cutoff = 120,
+      preview_cutoff = 50,
     },
 
     -- Searching
