@@ -44,3 +44,4 @@ visual-studio-code
 vlc
 whatsapp
 zeplin
+zoom
