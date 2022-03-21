@@ -22,25 +22,6 @@ function om.LoadSession()
   end)
 end
 --------------------------------------------------------------------------- }}}
-----------------------------RELOAD NEOVIM CONFIG---------------------------- {{{
-function om.ReloadConfig()
-  local ok, plenary = om.safe_require("plenary.reload")
-  if ok then
-    RELOAD = plenary.reload_module
-  end
-
-  for name, _ in pairs(package.loaded) do
-    if name:match("^" .. config_namespace) then
-      package.loaded[name] = nil
-      if ok then
-        RELOAD(name)
-      end
-    end
-  end
-  dofile(vim.env.MYVIMRC)
-  vim.notify("Reloaded config!")
-end
---------------------------------------------------------------------------- }}}
 -----------------------------RUBOCOP FORMATTING----------------------------- {{{
 function om.FormatWithRuboCop()
   -- Runs unsafe options on the code base!

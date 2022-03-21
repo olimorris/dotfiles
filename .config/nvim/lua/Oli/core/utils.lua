@@ -123,6 +123,23 @@ function om.print_table(tbl)
   require("pl.pretty").dump(tbl)
 end
 
+---Reload lua modules
+---@param path string
+---@param recursive string
+function om.reload(path, recursive)
+  if recursive then
+    for key, value in pairs(package.loaded) do
+      if key ~= "_G" and value and vim.fn.match(key, path) ~= -1 then
+        package.loaded[key] = nil
+        require(key)
+      end
+    end
+  else
+    package.loaded[path] = nil
+    require(path)
+  end
+end
+
 ---Use Neovim native UI select
 ---@param prompt string
 ---@param choices table
@@ -239,3 +256,4 @@ function om.async_run(process)
   })
 end
 ---------------------------------------------------------------------------- }}}
+
