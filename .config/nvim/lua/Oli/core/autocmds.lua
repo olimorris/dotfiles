@@ -129,7 +129,7 @@ function M.lsp_autocmds(client, bufnr)
     })
   end
 
-  if client.name == "null-ls" or client.name == "solargraph" then
+  if client.name == "null-ls" then
     table.insert(autocmds, {
       { "BufWritePost" },
       function()
