@@ -21,13 +21,6 @@ function M.default_commands()
       description = "Session: Load",
     },
     {
-      ":Reload",
-      function()
-        om.ReloadConfig()
-      end,
-      description = "Reload Neovim config",
-    },
-    {
       ":Rubocop",
       function()
         om.FormatWithRuboCop()
@@ -147,19 +140,19 @@ function M.plugin_commands()
     },
     -- Persisted
     {
-      ":SessionSave",
+      "SessionSave",
       description = "Session: Save",
     },
     {
-      ":SessionStart",
+      "SessionStart",
       description = "Session: Start",
     },
     {
-      ":SessionStop",
+      "SessionStop",
       description = "Session: Stop",
     },
     {
-      ":SessionDelete",
+      "SessionDelete",
       description = "Session: Delete",
     },
   }

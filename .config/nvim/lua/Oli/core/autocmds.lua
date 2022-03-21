@@ -42,6 +42,28 @@ function M.default_autocmds()
         },
       },
     },
+    {
+      name = "Packer reload and compile notification",
+      {
+        { "BufWritePost" },
+        function()
+          om.reload("Oli.plugins", true)
+          require("packer").compile()
+        end,
+        opts = {
+          pattern = { "*/Oli/plugins/*.lua" },
+        },
+      },
+      {
+        { "User" },
+        function()
+          vim.notify("Packer compile complete", nil, { title = "Packer" })
+        end,
+        opts = {
+          pattern = { "PackerCompileDone" },
+        },
+      },
+    },
   }
 
   -- Reload bufferline when the theme has been changed
@@ -129,16 +151,16 @@ function M.lsp_autocmds(client, bufnr)
     })
   end
 
-  if client.name == "null-ls" then
-    table.insert(autocmds, {
-      { "BufWritePost" },
-      function()
-        vim.b.format_changedtick = vim.b.changedtick
-        vim.lsp.buf.formatting()
-      end,
-      opts = { buffer = bufnr },
-    })
-  end
+  -- if client.name == "null-ls" then
+  --   table.insert(autocmds, {
+  --     { "BufWritePost" },
+  --     function()
+  --       vim.b.format_changedtick = vim.b.changedtick
+  --       vim.lsp.buf.formatting()
+  --     end,
+  --     opts = { buffer = bufnr },
+  --   })
+  -- end
 
   if client.name ~= "null-ls" then
     local ok, lightbulb = om.safe_require("nvim-lightbulb")

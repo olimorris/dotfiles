@@ -1,6 +1,5 @@
 local M = {}
 local silent = { noremap = true, silent = true }
-local noisy = { noremap = true, silent = false }
 ------------------------------------NOTES----------------------------------- {{{
 --[[
         Some notes on how I structure my key mappings within Neovim
@@ -43,7 +42,7 @@ M.default_keymaps = function()
     {
       "<LocalLeader>[",
       [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
-      description = "Replace cursor words in file",
+      description = "Replace cursor words in current buffer",
       opts = { silent = false },
     },
     { "<LocalLeader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], description = "Replace cursor words in line" },
@@ -69,8 +68,8 @@ M.default_keymaps = function()
     { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
     { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
 
-    { "∆", "<cmd>move+<CR>==", description = "Move line down" },
     { "˚", "<cmd>move-2<CR>==", description = "Move line up" },
+    { "∆", "<cmd>move+<CR>==", description = "Move line down" },
     { "∆", ":move'>+<CR>='[gv", description = "Move line down", mode = { "v" } },
     { "˚", ":move-2<CR>='[gv", description = "Move line up", mode = { "v" } },
   }
@@ -342,10 +341,15 @@ M.plugin_keymaps = function()
     -- Search
     {
       "//",
-      '<cmd>lua require("searchbox").match_all()<CR>',
+      function(visual_selection)
+        if visual_selection then
+          require("searchbox").match_all({ visual_mode = true })
+        else
+          require("searchbox").match_all()
+        end
+      end,
       description = "Search",
       mode = { "n", "v" },
-      opts = silent,
     },
     {
       "<LocalLeader>r",
@@ -356,7 +360,7 @@ M.plugin_keymaps = function()
     },
 
     -- Telescope
-    { "fd", h.lazy_required_fn("telescope.builtin", "diagnostics"), description = "Find diagnostics" },
+    { "fd", h.lazy_required_fn("telescope.builtin", "diagnostics", { bufnr = 0 }), description = "Find diagnostics" },
     {
       "ff",
       h.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
@@ -507,13 +511,6 @@ M.lsp_keymaps = function(client, bufnr)
   local lsps_that_can_format = { ["null-ls"] = true, solargraph = true }
 
   if om.contains(lsps_that_can_format, client.name) and client.resolved_capabilities.document_formatting then
-    -- om.augroup("LspFormat", {
-    --     {
-    --         events = { "BufWritePre" },
-    --         targets = { "<buffer>" },
-    --         command = vim.lsp.buf.formatting_sync,
-    --     },
-    -- })
     table.insert(maps, {
       "<LocalLeader>lf",
       function()
