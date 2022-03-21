@@ -33,10 +33,11 @@ local appearance = function()
     --         require("onedarkpro").load()
     --     end
     -- }) -- My theme
-    { "~/Code/Projects/onedarkpro.nvim",
+    {
+      "~/Code/Projects/onedarkpro.nvim",
       config = function()
         require(config_namespace .. ".plugins.theme").setup()
-      end
+      end,
     }, -- My theme
     {
       "goolord/alpha-nvim", -- Dashboard for Neovim
@@ -102,7 +103,7 @@ local appearance = function()
     {
       "norcalli/nvim-colorizer.lua", -- Highlight hex and rgb colors within Neovim
       lock = LockPlugins,
-      cmd = {"Colorizer*"},
+      cmd = { "Colorizer*" },
       config = function()
         require(config_namespace .. ".plugins.others").colorizer()
       end,

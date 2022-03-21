@@ -51,21 +51,6 @@ M.autopairs = function()
   cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 end
 
-M.indentline = function()
-  local ok, indentline = om.safe_require("indent_blankline")
-  if not ok then
-    return
-  end
-
-  indentline.setup({
-    use_treesitter = true,
-    show_first_indent_level = false, -- Hide indentline for the first column
-
-    filetype_exclude = filetypes_to_exclude,
-    buftype_exclude = { "terminal", "nofile" },
-  })
-end
-
 M.colorizer = function()
   local ok, colorizer = om.safe_require("colorizer")
   if not ok then
@@ -182,12 +167,20 @@ M.hop = function()
   hop.setup({ keys = "etovxqpdygfbzcisuran" })
 end
 
-M.indent_o_matic = function()
-  local ok, indent_o_matic = om.safe_require("indent-o-matic")
+M.indentline = function()
+  local ok, indentline = om.safe_require("indent_blankline")
   if not ok then
     return
   end
-  indent_o_matic.setup({})
+
+  indentline.setup({
+    use_treesitter = true,
+    show_first_indent_level = false,
+    show_trailing_blankline_indent = false,
+
+    filetype_exclude = filetypes_to_exclude,
+    buftype_exclude = { "terminal", "nofile" },
+  })
 end
 
 M.luasnip = function()
