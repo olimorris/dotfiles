@@ -60,7 +60,6 @@ M.setup = function()
     },
     hlgroups = {
       ModeMsg = { link = "LineNr" }, -- Make command line text darker
-      VertSplit = { fg = "${bg}" }, -- Hide the vertical split line
 
       -- Highlight brackets with a custom color
       TSPunctBracket = { fg = "${brackets}" },
