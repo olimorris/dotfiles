@@ -182,6 +182,20 @@ M.plugin_keymaps = function()
     { "<Leader>8", "<Plug>(cokeline-switch-8)", description = "Buffer switch to 8", opts = silent },
     { "<Leader>9", "<Plug>(cokeline-switch-9)", description = "Buffer switch to 9", opts = silent },
 
+    -- Comments
+    {
+      "gcc",
+      function(visual_selection)
+        if visual_selection then
+          require("Comment.api").locked.toggle_linewise_op(vim.fn.visualmode())
+        else
+          require("Comment.api").locked.toggle_current_linewise()
+        end
+      end,
+      description = "Comment toggle",
+      mode = { "n", "x" },
+    },
+
     -- Dap
     {
       "<F1>",
