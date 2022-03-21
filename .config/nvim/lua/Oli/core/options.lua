@@ -10,10 +10,10 @@ vim.g.neoterm_autoinsert = 0 -- Do not start terminal in insert mode
 vim.g.neoterm_autoscroll = 1 -- Autoscroll the terminal
 vim.g.loaded_perl_provider = 0 -- Do not load Perl
 if vim.fn.filereadable(os.getenv("HOME_DIR") .. ".asdf/shims/python2") then
-	vim.g.python_host_prog = os.getenv("HOME_DIR") .. ".asdf/shims/python2"
+  vim.g.python_host_prog = os.getenv("HOME_DIR") .. ".asdf/shims/python2"
 end
 if vim.fn.filereadable(os.getenv("HOME_DIR") .. ".asdf/shims/python") then
-	vim.g.python3_host_prog = os.getenv("HOME_DIR") .. ".asdf/shims/python"
+  vim.g.python3_host_prog = os.getenv("HOME_DIR") .. ".asdf/shims/python"
 end
 
 --------------------------------------------------------------------------- }}}
@@ -55,11 +55,11 @@ vim.opt.shada = "!,'0,f0,<50,s10,h"
 vim.opt.shell = "/opt/homebrew/bin/zsh" -- Use zsh as the default shell
 vim.opt.shiftround = true -- Round indent
 vim.opt.shortmess = {
-	A = true, -- ignore annoying swap file messages
-	c = true, -- Do not show completion messages in command line
-	F = true, -- Do not show file info when editing a file, in the command line
-	I = true, -- Do not show the intro message
-	W = true, -- Do not show "written" in command line when writing
+  A = true, -- ignore annoying swap file messages
+  c = true, -- Do not show completion messages in command line
+  F = true, -- Do not show file info when editing a file, in the command line
+  I = true, -- Do not show the intro message
+  W = true, -- Do not show "written" in command line when writing
 }
 vim.opt.showcmd = false -- Do not show me what I'm typing
 vim.opt.showmatch = true -- Do not show matching brackets by flickering
@@ -102,26 +102,26 @@ vim.wo.wrap = false -- Do not display text over multiple lines
 ---------------------------------------------------------------------------- }}}
 --------------------------DISABLE BUILT IN PLUGINS-------------------------- {{{
 local disabled_plugins = {
-	"2html_plugin",
-	"getscript",
-	"getscriptPlugin",
-	"gzip",
-	"logipat",
-	"netrw",
-	"netrwPlugin",
-	"netrwSettings",
-	"netrwFileHandlers",
-	"matchit",
-	"tar",
-	"tarPlugin",
-	"rrhelper",
-	"spellfile_plugin",
-	"vimball",
-	"vimballPlugin",
-	"zip",
-	"zipPlugin",
+  "2html_plugin",
+  "getscript",
+  "getscriptPlugin",
+  "gzip",
+  "logipat",
+  "netrw",
+  "netrwPlugin",
+  "netrwSettings",
+  "netrwFileHandlers",
+  "matchit",
+  "tar",
+  "tarPlugin",
+  "rrhelper",
+  "spellfile_plugin",
+  "vimball",
+  "vimballPlugin",
+  "zip",
+  "zipPlugin",
 }
 for _, plugin in pairs(disabled_plugins) do
-	vim.g["loaded_" .. plugin] = 1
+  vim.g["loaded_" .. plugin] = 1
 end
 ---------------------------------------------------------------------------- }}}
