@@ -134,6 +134,22 @@ M.dressing = function()
   })
 end
 
+M.fidget = function()
+  local ok, fidget = om.safe_require("fidget")
+  if not ok then
+    return
+  end
+
+  fidget.setup({
+    text = {
+      spinner = "dots"
+    },
+    window = {
+      blend = 0
+    }
+  })
+end
+
 M.focus = function()
   local ok, focus = om.safe_require("focus")
   if not ok then
@@ -340,7 +356,6 @@ M.search = function()
   if not ok then
     return
   end
-  print(vim.fn.bufname())
 
   search.setup({
     hooks = {

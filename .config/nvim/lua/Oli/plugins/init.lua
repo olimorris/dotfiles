@@ -339,6 +339,13 @@ local coding = function()
       requires = {
         { "neovim/nvim-lspconfig", lock = LockPlugins }, -- Use Neovims native LSP config
         { "kosayoda/nvim-lightbulb", lock = LockPlugins }, -- VSCode style lightbulb if there is a code action available
+        {
+          "j-hui/fidget.nvim", -- LSP progress notifications
+          lock = LockPlugins,
+          config = function()
+            require(config_namespace .. ".plugins.others").fidget()
+          end,
+        },
       },
       config = function()
         require(config_namespace .. ".plugins.lsp")
