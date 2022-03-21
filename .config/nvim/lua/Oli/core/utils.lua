@@ -1,13 +1,5 @@
 ----------------------------------NAMESPACE--------------------------------- {{{
---- First seen in https://github.com/akinsho/dotfiles/blob/main/.config/nvim
---- Inspired by @tjdevries' astraunauta.nvim/ @TimUntersberger's config
---- store all callbacks in one global table so they are able to survive re-requiring this file
-_G.__om_global_callbacks = __om_global_callbacks or {}
-
 _G.om = {
-  _store = __om_global_callbacks,
-  --- work around to place functions in the global scope but namespaced within a table.
-  --- TODO: refactor this once nvim allows passing lua functions to mappings
   mappings = {},
 }
 ---------------------------------------------------------------------------- }}}
