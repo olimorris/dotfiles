@@ -142,7 +142,8 @@ M.fidget = function()
 
   fidget.setup({
     text = {
-      spinner = "dots"
+      spinner = "line",
+      done = ""
     },
     window = {
       blend = 0
@@ -403,12 +404,12 @@ M.toggleterm = function()
     direction = "float",
     float_opts = {
       border = "single",
-      height = function()
-        return math.floor(0.9 * vim.fn.winheight("%"))
-      end,
-      width = function()
-        return math.floor(0.9 * vim.fn.winwidth("%"))
-      end,
+      -- height = function()
+      --   return math.floor(0.9 * vim.fn.winheight("%"))
+      -- end,
+      -- width = function()
+      --   return math.floor(0.9 * vim.fn.winwidth("%"))
+      -- end,
       highlights = {
         background = "ToggleTerm",
         border = "ToggleTermBorder",

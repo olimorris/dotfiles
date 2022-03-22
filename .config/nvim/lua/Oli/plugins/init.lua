@@ -244,6 +244,7 @@ local editor_features = function()
     {
       "VonHeikemen/searchbox.nvim", -- Search box in the top right corner
       lock = LockPlugins,
+      cmd = "SearchBox*",
       module = "searchbox",
       requires = {
         { "MunifTanjim/nui.nvim", lock = LockPlugins },

@@ -48,7 +48,7 @@ M.config = function()
       allow_resize = true,
       side = "left",
       width = 25,
-      hide_root_folder = true,
+      hide_root_folder = false,
     },
   })
 end

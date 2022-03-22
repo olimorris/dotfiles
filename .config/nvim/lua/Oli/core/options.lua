@@ -34,6 +34,15 @@ vim.opt.cursorlineopt = "screenline,number" -- Highlight the screen line of the 
 vim.opt.background = "dark"
 vim.opt.encoding = "UTF-8" -- Set the encoding type
 vim.opt.emoji = false -- Turn off emojis
+vim.opt.fillchars = {
+  horiz = "━",
+  horizup = "┻",
+  horizdown = "┳",
+  vert = "┃",
+  vertleft = "┫",
+  vertright = "┣",
+  verthoriz = "╋",
+}
 vim.opt.foldenable = true -- Enable folding
 vim.opt.foldlevel = 0 -- Fold by default
 vim.opt.foldmethod = "marker" -- Fold based on markers as opposed to indentation
