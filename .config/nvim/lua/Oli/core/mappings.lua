@@ -42,8 +42,7 @@ M.default_keymaps = function()
     {
       "<LocalLeader>[",
       [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
-      description = "Replace cursor words in current buffer",
-      opts = { silent = false },
+      description = "Replace cursor words in buffer",
     },
     { "<LocalLeader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], description = "Replace cursor words in line" },
 
@@ -53,13 +52,13 @@ M.default_keymaps = function()
     { ">", ">gv", description = "Indent", mode = { "v" } },
 
     { "<Esc>", "<cmd>:noh<CR>", description = "Clear searches" },
-    {
-      "<LocalLeader>f",
-      ":s/{search}/{replace}/g",
-      description = "Search and replace",
-      mode = { "n", "v" },
-      opts = { silent = false },
-    },
+    -- {
+    --   "<LocalLeader>f",
+    --   ":s/{search}/{replace}/g",
+    --   description = "Search and replace",
+    --   mode = { "n", "v" },
+    --   opts = { silent = false },
+    -- },
     { "B", "^", description = "Beginning of a line" },
     { "E", "$", description = "End of a line" },
     { "<CR>", "o<Esc>", "Insert blank line below" },
@@ -154,32 +153,32 @@ M.plugin_keymaps = function()
     { "<C-p>", require("legendary").find, description = "Search keybinds and commands", mode = { "n", "i", "v" } },
 
     -- Aerial
-    { "<C-t>", "<cmd>AerialToggle<CR>", description = "Aerial", opts = silent },
+    { "<C-t>", "<cmd>AerialToggle<CR>", description = "Aerial" },
 
     -- Buffer delete
-    { "<C-c>", "<cmd>Bwipeout!<CR>", description = "Close Buffer", opts = silent },
+    { "<C-c>", "<cmd>Bwipeout!<CR>", description = "Close Buffer" },
 
     -- Bufferline
     { "<Tab>", "<Plug>(cokeline-focus-next)", description = "Next buffer", opts = { noremap = false } },
     { "<S-Tab>", "<Plug>(cokeline-focus-prev)", description = "Previous buffer", opts = { noremap = false } },
-    { "<LocalLeader>1", "<Plug>(cokeline-focus-1)", description = "Buffer focus on 1", opts = silent },
-    { "<LocalLeader>2", "<Plug>(cokeline-focus-2)", description = "Buffer focus on 2", opts = silent },
-    { "<LocalLeader>3", "<Plug>(cokeline-focus-3)", description = "Buffer focus on 3", opts = silent },
-    { "<LocalLeader>4", "<Plug>(cokeline-focus-4)", description = "Buffer focus on 4", opts = silent },
-    { "<LocalLeader>5", "<Plug>(cokeline-focus-5)", description = "Buffer focus on 5", opts = silent },
-    { "<LocalLeader>6", "<Plug>(cokeline-focus-6)", description = "Buffer focus on 6", opts = silent },
-    { "<LocalLeader>7", "<Plug>(cokeline-focus-7)", description = "Buffer focus on 7", opts = silent },
-    { "<LocalLeader>8", "<Plug>(cokeline-focus-8)", description = "Buffer focus on 8", opts = silent },
-    { "<LocalLeader>9", "<Plug>(cokeline-focus-9)", description = "Buffer focus on 9", opts = silent },
-    { "<Leader>1", "<Plug>(cokeline-switch-1)", description = "Buffer switch to 1", opts = silent },
-    { "<Leader>2", "<Plug>(cokeline-switch-2)", description = "Buffer switch to 2", opts = silent },
-    { "<Leader>3", "<Plug>(cokeline-switch-3)", description = "Buffer switch to 3", opts = silent },
-    { "<Leader>4", "<Plug>(cokeline-switch-4)", description = "Buffer switch to 4", opts = silent },
-    { "<Leader>5", "<Plug>(cokeline-switch-5)", description = "Buffer switch to 5", opts = silent },
-    { "<Leader>6", "<Plug>(cokeline-switch-6)", description = "Buffer switch to 6", opts = silent },
-    { "<Leader>7", "<Plug>(cokeline-switch-7)", description = "Buffer switch to 7", opts = silent },
-    { "<Leader>8", "<Plug>(cokeline-switch-8)", description = "Buffer switch to 8", opts = silent },
-    { "<Leader>9", "<Plug>(cokeline-switch-9)", description = "Buffer switch to 9", opts = silent },
+    { "<LocalLeader>1", "<Plug>(cokeline-focus-1)", description = "Buffer focus on 1" },
+    { "<LocalLeader>2", "<Plug>(cokeline-focus-2)", description = "Buffer focus on 2" },
+    { "<LocalLeader>3", "<Plug>(cokeline-focus-3)", description = "Buffer focus on 3" },
+    { "<LocalLeader>4", "<Plug>(cokeline-focus-4)", description = "Buffer focus on 4" },
+    { "<LocalLeader>5", "<Plug>(cokeline-focus-5)", description = "Buffer focus on 5" },
+    { "<LocalLeader>6", "<Plug>(cokeline-focus-6)", description = "Buffer focus on 6" },
+    { "<LocalLeader>7", "<Plug>(cokeline-focus-7)", description = "Buffer focus on 7" },
+    { "<LocalLeader>8", "<Plug>(cokeline-focus-8)", description = "Buffer focus on 8" },
+    { "<LocalLeader>9", "<Plug>(cokeline-focus-9)", description = "Buffer focus on 9" },
+    { "<Leader>1", "<Plug>(cokeline-switch-1)", description = "Buffer switch to 1" },
+    { "<Leader>2", "<Plug>(cokeline-switch-2)", description = "Buffer switch to 2" },
+    { "<Leader>3", "<Plug>(cokeline-switch-3)", description = "Buffer switch to 3" },
+    { "<Leader>4", "<Plug>(cokeline-switch-4)", description = "Buffer switch to 4" },
+    { "<Leader>5", "<Plug>(cokeline-switch-5)", description = "Buffer switch to 5" },
+    { "<Leader>6", "<Plug>(cokeline-switch-6)", description = "Buffer switch to 6" },
+    { "<Leader>7", "<Plug>(cokeline-switch-7)", description = "Buffer switch to 7" },
+    { "<Leader>8", "<Plug>(cokeline-switch-8)", description = "Buffer switch to 8" },
+    { "<Leader>9", "<Plug>(cokeline-switch-9)", description = "Buffer switch to 9" },
 
     -- Comments
     {
@@ -200,18 +199,16 @@ M.plugin_keymaps = function()
       "<F1>",
       "<cmd>lua require('dap').toggle_breakpoint()<CR>",
       description = "Debug: Set breakpoint",
-      opts = silent,
     },
-    { "<F2>", "<cmd>lua require('dap').continue()<CR>", description = "Debug: Continue", opts = silent },
-    { "<F3>", "<cmd>lua require('dap').step_into()<CR>", description = "Debug: Step into", opts = silent },
-    { "<F4>", "<cmd>lua require('dap').step_over()<CR>", description = "Debug: Step over", opts = silent },
+    { "<F2>", "<cmd>lua require('dap').continue()<CR>", description = "Debug: Continue" },
+    { "<F3>", "<cmd>lua require('dap').step_into()<CR>", description = "Debug: Step into" },
+    { "<F4>", "<cmd>lua require('dap').step_over()<CR>", description = "Debug: Step over" },
     {
       "<F5>",
       "<cmd>lua require('dap').repl.toggle({height = 6})<CR>",
       description = "Debug: Show REPL",
-      opts = silent,
     },
-    { "<F6>", "<cmd>lua require('dap').repl.run_last()<CR>", description = "Debug: Run last", opts = silent },
+    { "<F6>", "<cmd>lua require('dap').repl.run_last()<CR>", description = "Debug: Run last" },
     {
       "<F9>",
       function()
@@ -228,89 +225,76 @@ M.plugin_keymaps = function()
       "<LocalLeader>ss",
       "<cmd>lua pcall(require('focus').split_nicely())<CR>",
       description = "Split",
-      opts = silent,
     },
     {
       "<LocalLeader>sh",
       "<cmd>lua require('focus').split_command('h')<CR>",
       description = "Split: Left",
-      opts = silent,
     },
     {
       "<LocalLeader>sj",
       "<cmd>lua require('focus').split_command('j')<CR>",
       description = "Split: Down",
-      opts = silent,
     },
     {
       "<LocalLeader>sk",
       "<cmd>lua require('focus').split_command('k')<CR>",
       description = "Split: Up",
-      opts = silent,
     },
     {
       "<LocalLeader>sl",
       "<cmd>lua require('focus').split_command('l')<CR>",
       description = "Split: Right",
-      opts = silent,
     },
 
     -- Harpoon
     {
-      "<LocalLeader>ha",
+      "<LocalLeader>a",
       '<cmd>lua require("harpoon.mark").add_file()<CR>',
       description = "Harpoon: Add file",
-      opts = silent,
     },
-    { "<LocalLeader>hl", "<cmd>Telescope harpoon marks<CR>", description = "Harpoon: List marks", opts = silent },
+    { "<LocalLeader>b", "<cmd>Telescope harpoon marks<CR>", description = "Harpoon: List marks" },
     {
       "<LocalLeader>hn",
       '<cmd>lua require("harpoon.ui"},.nav_next()<CR>',
       description = "Harpoon: Next mark",
-      opts = silent,
     },
     {
       "<LocalLeader>hp",
       '<cmd>lua require("harpoon.ui").nav_prev()<CR>',
       description = "Harpoon: Previous mark",
-      opts = silent,
     },
     {
       "<LocalLeader>h1",
       '<cmd>lua require("harpoon.ui").nav_file(1)<CR>',
       description = "Harpoon: Go to 1",
-      opts = silent,
     },
     {
       "<LocalLeader>h2",
       '<cmd>lua require("harpoon.ui").nav_file(2)<CR>',
       description = "Harpoon: Go to 2",
-      opts = silent,
     },
     {
       "<LocalLeader>h3",
       '<cmd>lua require("harpoon.ui").nav_file(3)<CR>',
       description = "Harpoon: Go to 3",
-      opts = silent,
     },
     {
       "<LocalLeader>h4",
       '<cmd>lua require("harpoon.ui").nav_file(4)<CR>',
       description = "Harpoon: Go to 4",
-      opts = silent,
     },
     {
       "<LocalLeader>h5",
       '<cmd>lua require("harpoon.ui").nav_file(5)<CR>',
       description = "Harpoon: Go to 5",
-      opts = silent,
     },
 
     -- Hop
     { "s", "<cmd>lua require'hop'.hint_char1()<CR>", description = "Hop", mode = { "n", "o" } },
     -- File Explorer
-    { "\\", "<cmd>NvimTreeToggle<CR>", description = "NvimTree: Toggle", opts = silent },
-    { "<C-z>", "<cmd>NvimTreeFindFile<CR>", description = "NvimTree: Find File", opts = silent },
+    { "\\", "<cmd>NvimTreeToggle<CR>", description = "NvimTree: Toggle" },
+    { "<C-z>", "<cmd>NvimTreeFindFile<CR>", description = "NvimTree: Find File" },
 
     -- Minimap
     {
@@ -327,16 +311,15 @@ M.plugin_keymaps = function()
       "<LocalLeader>p",
       "<cmd>lua require('telescope').extensions.neoclip.default()<CR>",
       description = "Neoclip",
-      opts = silent,
     },
 
     -- Persisted
-    { "<Leader>s", '<cmd>lua require("persisted").toggle()<CR>', description = "Session Toggle", opts = silent },
+    { "<Leader>s", '<cmd>lua require("persisted").toggle()<CR>', description = "Session Toggle" },
 
     -- QF Helper
     -- The '!' ensures that the cursor doesn't move to the QF or LL
-    { "<Leader>q", "<cmd>QFToggle!<CR>", description = "Quickfix toggle", opts = silent },
-    { "<Leader>l", "<cmd>LLToggle!<CR>", description = "Location List toggle", opts = silent },
+    { "<Leader>q", "<cmd>QFToggle!<CR>", description = "Quickfix toggle" },
+    { "<Leader>l", "<cmd>LLToggle!<CR>", description = "Location List toggle" },
 
     -- Search
     {
@@ -349,14 +332,19 @@ M.plugin_keymaps = function()
         end
       end,
       description = "Search",
-      mode = { "n", "v" },
+      mode = { "n", "x" },
     },
     {
       "<LocalLeader>r",
-      '<cmd>lua require("searchbox").replace()<CR>',
+      function(visual_selection)
+        if visual_selection then
+          vim.cmd(":'<,'>SearchBoxReplace visual_mode=true")
+        else
+          vim.cmd(":SearchBoxReplace")
+        end
+      end,
       description = "Search and replace",
-      mode = { "n", "v" },
-      opts = silent,
+      mode = { "n", "x" },
     },
 
     -- Telescope
@@ -390,10 +378,10 @@ M.plugin_keymaps = function()
     },
 
     -- Todo comments
-    { "<Leader>c", "<cmd>TodoTelescope<CR>", description = "Todo comments", opts = silent },
+    { "<Leader>c", "<cmd>TodoTelescope<CR>", description = "Todo comments" },
 
     -- Toggleterm
-    { "<C-x>", "<cmd>ToggleTerm<CR>", description = "Toggleterm", mode = { "n", "t" }, opts = silent },
+    { "<C-x>", "<cmd>ToggleTerm<CR>", description = "Toggleterm", mode = { "n", "t" } },
 
     -- Treesitter Unit
     -- vau and viu select outer and inner units
@@ -440,7 +428,6 @@ M.plugin_keymaps = function()
       "<LocalLeader>d",
       "<cmd>lua require('yabs'):run_default_task()<CR>",
       description = "Build file",
-      opts = silent,
     },
   }
 end
@@ -508,7 +495,7 @@ M.lsp_keymaps = function(client, bufnr)
     )
   end
 
-  local lsps_that_can_format = { ["null-ls"] = true, solargraph = true }
+  local lsps_that_can_format = { ["null-ls"] = true }
 
   if om.contains(lsps_that_can_format, client.name) and client.resolved_capabilities.document_formatting then
     table.insert(maps, {

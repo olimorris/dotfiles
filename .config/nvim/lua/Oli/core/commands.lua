@@ -140,19 +140,31 @@ function M.plugin_commands()
     },
     -- Persisted
     {
-      "SessionSave",
+      ":SessionSave",
+      function()
+        require("persisted").save()
+      end,
       description = "Session: Save",
     },
     {
-      "SessionStart",
+      ":SessionStart",
+      function()
+        require("persisted").start()
+      end,
       description = "Session: Start",
     },
     {
-      "SessionStop",
+      ":SessionStop",
+      function()
+        require("persisted").stop()
+      end,
       description = "Session: Stop",
     },
     {
-      "SessionDelete",
+      ":SessionDelete",
+      function()
+        require("persisted").delete()
+      end,
       description = "Session: Delete",
     },
   }
