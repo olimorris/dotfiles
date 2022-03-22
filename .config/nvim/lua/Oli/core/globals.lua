@@ -247,7 +247,7 @@ function om.async_run(process)
   end
 
   -- Execute the job
-  vim.fn.jobstart(cmd_to_execute(), {
+  local id = vim.fn.jobstart(cmd_to_execute(), {
     on_stderr = on_event,
     on_stdout = on_event,
     on_exit = on_event,
