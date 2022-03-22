@@ -19,15 +19,16 @@ cd ~/.dotfiles && rake install
 
 ## :wrench: What actually happens
 
-* All of your Homebrew and macOS apps will be installed
-* All of your application settings from [Mackup](https://github.com/lra/mackup) will be restored
-* All of your fonts will be installed
-* All of your custom launch agents will be installed
-* All of your development environments will be installed and configured
+* Your [Homebrew](https://brew.sh) and macOS apps will be installed
+* Your application settings will be restored with [Mackup](https://github.com/lra/mackup)
+* Your dotfiles will be restored with [Dotbot](https://github.com/anishathalye/dotbot)
+* Your fonts will be installed
+* Your custom launch agents will be installed
+* Your development environments will be installed and configured
 
 ## :page_facing_up: Things to note
 
-* When you run `Neovim` for the first time all of your plugins will automatically install
+* Your plugins will automatically install when you run [neovim](https://github.com/neovim/neovim) for the first time
 * Sync your Code Tresor to `~/Code`
 
 ### Syncing to GitHub
@@ -49,5 +50,5 @@ cd ~/.dotfiles && rake sync
 
 ## :clap: Thanks
 
-* [Kevin Jalbert](https://kevinjalbert.com/synchronizing-my-dotfiles/)
+* [Kevin Jalbert](https://kevinjalbert.com/synchronizing-my-dotfiles)
 * [mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles)
