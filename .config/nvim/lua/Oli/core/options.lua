@@ -27,12 +27,10 @@ vim.bo.tabstop = 4 -- Number of spaces in a tab
 vim.bo.wrapmargin = 1
 --------------------------------------------------------------------------- }}}
 ---------------------------------VIM OPTIONS-------------------------------- {{{
-vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.clipboard = { "unnamedplus" } -- Use the system clipboard
 vim.opt.completeopt = { "menuone", "noselect" } -- Completion opions for code completion
 vim.opt.cursorlineopt = "screenline,number" -- Highlight the screen line of the cursor with CursorLine and the line number with CursorLineNr
 vim.opt.background = "dark"
-vim.opt.encoding = "UTF-8" -- Set the encoding type
 vim.opt.emoji = false -- Turn off emojis
 vim.opt.fillchars = {
   horiz = "━",
@@ -46,12 +44,7 @@ vim.opt.fillchars = {
 vim.opt.foldenable = true -- Enable folding
 vim.opt.foldlevel = 0 -- Fold by default
 vim.opt.foldmethod = "marker" -- Fold based on markers as opposed to indentation
--- vim.opt.hidden = true -- Enable modified buffers in the background - NOW IN v0.6
-vim.opt.history = 1000 -- Remember more stuff
-vim.opt.hlsearch = false -- Don't highlight found searches
 vim.opt.ignorecase = true -- Ignore case
-vim.opt.incsearch = true -- Shows the match while typing
-vim.opt.joinspaces = false -- No double spaces with join after a dot
 vim.opt.laststatus = 3 -- Use global statusline
 vim.opt.modelines = 1 -- Only use folding settings for this file
 vim.opt.mouse = "a" -- Use the mouse in all modes
@@ -70,8 +63,8 @@ vim.opt.shortmess = {
   I = true, -- Do not show the intro message
   W = true, -- Do not show "written" in command line when writing
 }
-vim.opt.showcmd = false -- Do not show me what I'm typing
-vim.opt.showmatch = true -- Do not show matching brackets by flickering
+-- vim.opt.showcmd = true -- Do not show me what I'm typing
+vim.opt.showmatch = true -- Show matching brackets by flickering
 vim.opt.showmode = false -- Do not show the mode
 vim.opt.sidescrolloff = 8 -- The minimal number of columns to keep to the left and to the right of the cursor if 'nowrap' is set
 vim.opt.smartcase = true -- Don't ignore case with capitals
