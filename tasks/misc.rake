@@ -270,7 +270,7 @@ namespace :update do
   task :rails do
     section 'Updating Rails YARD directives'
 
-    run %( git -C ~/.dotfiles/misc/enhance-rails-intellisense-in-solargraph pull )
+    run %( git -C ~/.dotfiles/others/enhance-rails-intellisense-in-solargraph pull )
   end
 
   desc 'Update Servers'

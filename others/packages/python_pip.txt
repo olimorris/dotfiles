@@ -9,5 +9,6 @@ platformdirs==2.5.1
 psutil==5.9.0
 pynvim==0.4.3
 PyYAML==6.0
+termcolor==1.1.0
 tomli==2.0.1
 yamllint==1.26.3
