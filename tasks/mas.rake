@@ -1,4 +1,4 @@
-MAS_FILE = File.expand_path('../../packages/app_store.txt', __FILE__)
+MAS_FILE = File.expand_path('../../others/packages/app_store.txt', __FILE__)
 
 namespace :backup do
   desc 'Backup App Store'

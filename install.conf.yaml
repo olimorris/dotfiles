@@ -19,29 +19,31 @@
     ~/.config/tmux: .config/tmux
 
     # Dotfiles
-    ~/.applescript: .applescript
     ~/.aliases: zsh/.aliases
-    ~/.bash_profile: bash/.bash_profile
-    ~/.bashrc: bash/.bashrc
-    ~/.color_mode: .color_mode
-    ~/.composer: .composer
     ~/.env: zsh/.env
     ~/.functions: zsh/.functions
-    ~/.gitconfig: .gitconfig
-    ~/.gitignore_global: .gitignore_global
-    ~/.mackup: mackup/.mackup
-    ~/.mackup.cfg: mackup/.mackup.cfg
-    ~/.nix: nix
-    ~/.profile: bash/.profile
-    ~/.ssh: .ssh
     ~/.tool-versions: .tool-versions
-    ~/.vimrc: vim/.vimrc
-    ~/.vimrc.plugins: vim/.vimrc.plugins
-    ~/.vim/custom_snippets: vim/custom_snippets
     ~/.zshenv: zsh/.zshenv
     ~/.zprofile: zsh/.zprofile
     ~/.zshrc: zsh/.zshrc
     ~/.local/share/zsh/bookmarks: zsh/bookmarks
+
+    # Others
+    ~/.applescript: others/.applescript
+    ~/.bash_profile: others/bash/.bash_profile
+    ~/.bashrc: others/bash/.bashrc
+    ~/.color_mode: others/.color_mode
+    ~/.composer: others/.composer
+    ~/.gitconfig: others/git/.gitconfig
+    ~/.gitignore_global: others/git/.gitignore_global
+    ~/.mackup: others/mackup/.mackup
+    ~/.mackup.cfg: others/mackup/.mackup.cfg
+    ~/.nix: others/nix
+    ~/.profile: others/bash/.profile
+    ~/.ssh: others/ssh
+    ~/.vimrc: others/vim/.vimrc
+    ~/.vimrc.plugins: others/vim/.vimrc.plugins
+    ~/.vim/custom_snippets: others/vim/custom_snippets
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

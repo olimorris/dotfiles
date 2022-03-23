@@ -25,26 +25,30 @@
 !.gitmodules
 
 # Vim
+!minimal.vim
 !vim/**/*
 
 # Zsh
 !zsh/**/*
 
-# Misc dirs
-!bash/**/*
+# others dirs
 !bin/**/*
 !commands/**/*
-!mackup/**/*
-!nix/**/*
-!packages/**/*
+!others/bash/**/*
+!others/git/**/*
+!others/mackup/**/*
+!others/nix/**/*
+!others/packages/**/*
+!others/vim/**/*
 !tasks/**/*
 !tests/**/*
 
-# Misc files
-!.color_mode
+# others files
 !.tool-versions
+!others/.color_mode
 !install
 !install.conf.yaml
+!NEOVIM_USAGE.md
 !Rakefile
 !README.md
 !stylua.toml
@@ -64,7 +68,7 @@
 bookmarks
 
 # Others
-misc
+others/enhance-rails-intellisense-in-solargraph
 .DS_Store
 backup
 
