@@ -12,10 +12,8 @@ local bg_to_mode_color = false -- Set the whole statusbar to be the color of the
 M.components = { active = {}, inactive = {} }
 M.force_inactive = {
   filetypes = {
-    "^aerial$",
-    "^NvimTree$",
-    "^neo$",
-    "^neo-tree-popup$",
+    -- "^aerial$",
+    -- "^NvimTree$",
     "^packer$",
     "^TelescopePrompt$",
     "^toggleterm$",

@@ -7,6 +7,7 @@ function M.setup()
   end
 
   local spacer = " "
+  local separator = ""
   local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
 
   bufferline.setup({
@@ -16,7 +17,7 @@ function M.setup()
     buffers = {
       new_buffers_position = "last",
       filter_visible = function(buffer)
-        return buffer.type ~= "terminal" and buffer.type ~= "quickfix" and buffer.filetype ~= "alpha"
+        return buffer.type ~= "terminal" and buffer.type ~= "quickfix"
       end,
     },
 
@@ -49,7 +50,7 @@ function M.setup()
         fg = colors.vim,
       },
       {
-        text = "",
+        text = separator,
         fg = function(buffer)
           return (buffer.is_focused and colors.statusline_bg or colors.bg)
         end,
@@ -111,7 +112,7 @@ function M.setup()
         end,
       },
       {
-        text = "",
+        text = separator,
         fg = colors.bg,
         bg = function(buffer)
           return buffer.is_focused and colors.statusline_bg

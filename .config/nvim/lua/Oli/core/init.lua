@@ -1,8 +1,5 @@
 LockPlugins = false -- To prevent rogue updates, lock the plugins
 
--- Call the cache plugin
-pcall(require, "impatient")
-
 local core_modules = {
   config_namespace .. ".core.globals",
   config_namespace .. ".core.options",

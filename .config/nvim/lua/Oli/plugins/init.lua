@@ -26,19 +26,13 @@ end
 
 local appearance = function()
   return {
-    -- use({ "olimorris/onedarkpro.nvim" })
-    -- use({
-    --     "~/Code/Projects/onedarkpro.nvim",
-    --     config = function()
-    --         require("onedarkpro").load()
-    --     end
-    -- }) -- My theme
     {
-      "~/Code/Projects/onedarkpro.nvim",
+    --"olimorris/onedarkpro.nvim",
+      "~/Code/Projects/onedarkpro.nvim", -- My onedarkpro theme
       config = function()
         require(config_namespace .. ".plugins.theme").setup()
       end,
-    }, -- My theme
+    },
     {
       "goolord/alpha-nvim", -- Dashboard for Neovim
       lock = LockPlugins,
@@ -47,7 +41,7 @@ local appearance = function()
       end,
     },
     {
-      "feline-nvim/feline.nvim", -- Lua statusline
+      "feline-nvim/feline.nvim", -- Statusline
       lock = LockPlugins,
       requires = {
         { "kyazdani42/nvim-web-devicons", lock = LockPlugins }, -- Web icons for various plugins
@@ -57,7 +51,7 @@ local appearance = function()
       end,
     },
     {
-      "noib3/cokeline.nvim", -- Buffers in the tabline
+      "noib3/cokeline.nvim", -- Bufferline
       lock = LockPlugins,
       config = function()
         require(config_namespace .. ".plugins.bufferline").setup()
@@ -71,7 +65,6 @@ local appearance = function()
     {
       "lewis6991/gitsigns.nvim", -- Git signs in the sign column
       lock = LockPlugins,
-      event = "BufRead",
       config = function()
         require(config_namespace .. ".plugins.gitsigns")
       end,
@@ -113,10 +106,7 @@ local appearance = function()
       lock = LockPlugins,
       ft = "markdown",
       config = function()
-        local ok, headlines = om.safe_require("headlines")
-        if ok then
-          headlines.setup()
-        end
+        require(config_namespace .. ".plugins.others").headlines()
       end,
     },
     {
@@ -130,7 +120,6 @@ local appearance = function()
     {
       "lukas-reineke/indent-blankline.nvim", -- Show indentation lines
       lock = LockPlugins,
-      event = "BufRead",
       config = function()
         require(config_namespace .. ".plugins.others").indentline()
       end,
@@ -262,16 +251,6 @@ local editor_features = function()
       end,
     },
     {
-      "AckslD/nvim-neoclip.lua", -- Clipboard history
-      lock = LockPlugins,
-      requires = {
-        { "tami5/sqlite.lua", lock = LockPlugins },
-      },
-      config = function()
-        require(config_namespace .. ".plugins.others").neoclip()
-      end,
-    },
-    {
       "akinsho/nvim-toggleterm.lua", -- Easily toggle and position the terminal
       lock = LockPlugins,
       cmd = { "ToggleTerm", "Test*" },
@@ -281,6 +260,7 @@ local editor_features = function()
     },
     {
       "mrjones2014/legendary.nvim",
+      lock = LockPlugins,
       config = function()
         require(config_namespace .. ".plugins.legendary").setup()
       end,
@@ -355,7 +335,7 @@ local coding = function()
     {
       "jose-elias-alvarez/null-ls.nvim", -- General language server to enable awesome things with the LSP
       lock = LockPlugins,
-      event = "BufRead",
+      after = "nvim-lsp-installer",
       config = function()
         require(config_namespace .. ".plugins.null-ls")
       end,

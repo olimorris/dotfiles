@@ -30,7 +30,7 @@ local apps = {
     -- l - Reserved
     m = "HEY", -- Mail
     n = "Bear", -- Notes
-    p = "1Password 7",
+    p = "1Password",
     r = "Reeder",
     t = "kitty", -- Terminal
     z = "Todoist"

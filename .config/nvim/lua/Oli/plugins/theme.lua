@@ -111,8 +111,8 @@ M.setup = function()
       AlphaFooter = { fg = "${fg}", style = "italic" },
 
       -- Fidget plugin
-      FidgetTitle = { fg = "${purple}"},
-      FidgetTask = { fg = "${gray}"},
+      FidgetTitle = { fg = "${purple}" },
+      FidgetTask = { fg = "${gray}" },
 
       -- LSP plugin
       LspDiagnosticsVirtualTextError = {

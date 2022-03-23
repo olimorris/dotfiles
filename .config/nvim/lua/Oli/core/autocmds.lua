@@ -99,12 +99,16 @@ function M.default_autocmds()
       name = "AlphaDashboardFormatting",
       {
         "FileType",
-        ":set showtabline=0 | setlocal nofoldenable",
+        function()
+          vim.opt.showtabline = 0
+        end,
         opts = { pattern = "alpha" },
       },
       {
         "BufUnload",
-        ":set showtabline=2",
+        function()
+          vim.opt.showtabline = 2
+        end,
         opts = { pattern = "<buffer>" },
       },
     })

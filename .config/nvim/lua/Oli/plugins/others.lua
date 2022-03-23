@@ -143,11 +143,11 @@ M.fidget = function()
   fidget.setup({
     text = {
       spinner = "line",
-      done = ""
+      done = "",
     },
     window = {
-      blend = 0
-    }
+      blend = 0,
+    },
   })
 end
 
@@ -172,6 +172,15 @@ M.harpoon = function()
   harpoon.setup({
     global_settings = { save_on_toggle = true, mark_branch = true },
   })
+end
+
+M.headlines = function()
+  local ok, headlines = om.safe_require("headlines")
+  if not ok then
+    return
+  end
+
+  headlines.setup()
 end
 
 M.hop = function()
@@ -273,26 +282,6 @@ M.minimap = function()
   vim.g.minimap_cursor_color = "MapCursor"
   vim.g.minimap_range_color = "MapRange"
   vim.g.minimap_close_filetypes = { "alpha", "NvimTree", "toggleterm" }
-end
-
-M.neoclip = function()
-  local ok, neoclip = om.safe_require("neoclip")
-  if not ok then
-    return
-  end
-
-  neoclip.setup({
-    default_register = { '"', "+", "*" },
-    settings = {
-      enable_persistant_history = true, -- Store clipboard data in the sql db
-    },
-    keys = {
-      telescope = {
-        i = { paste = "<CR>", paste_behind = "<c-p>", custom = {} },
-        n = { paste = "<CR>", paste_behind = "<c-p>", custom = {} },
-      },
-    },
-  })
 end
 
 M.persisted = function()
