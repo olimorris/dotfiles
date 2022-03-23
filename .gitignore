@@ -46,6 +46,7 @@
 # others files
 !.tool-versions
 !others/.color_mode
+!others/ssh/config
 !install
 !install.conf.yaml
 !NEOVIM_USAGE.md
