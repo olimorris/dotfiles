@@ -7,7 +7,7 @@
 # Config
 !.config/alacritty/**/*
 !.config/efm-langserver/**/*
-!.config/hammerspoon/init.lua
+!.config/hammerspoon/**/*
 !.config/karabiner/karabiner.json
 !.config/kitty/**/*
 !.config/nvim/**/*
