@@ -166,6 +166,16 @@ function om.get_icon(filename, extension, opts)
   return icon
 end
 
+---Return true if any pattern in the tbl matches the provided value
+---@param tbl table
+---@param val string
+---@return boolean
+function om.find_pattern_match(tbl, val)
+    return tbl and next(vim.tbl_filter(function(pattern)
+        return val:match(pattern)
+    end, tbl))
+end
+
 ---Run a process asynchronously
 ---@param process table (command, args, callback)
 ---@return nil

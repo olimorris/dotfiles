@@ -4,12 +4,14 @@ if not ok then
 end
 ---------------------------------PROPERTIES--------------------------------- {{{
 local M = {}
-local lsp = require("feline.providers.lsp")
-local git = require("feline.providers.git")
-local vi_mode_utils = require("feline.providers.vi_mode")
-local bg_to_mode_color = false -- Set the whole statusbar to be the color of the vim
 
 M.components = { active = {}, inactive = {} }
+
+M.filetypes_to_mask = {
+  "^aerial$",
+  "^NvimTree$",
+}
+
 M.force_inactive = {
   filetypes = {
     -- "^aerial$",
@@ -20,6 +22,7 @@ M.force_inactive = {
     "^undotree$",
   },
 }
+
 M.disable = {
   filetypes = {
     "^alpha$",
@@ -38,6 +41,10 @@ M.disable = {
 }
 ---------------------------------------------------------------------------- }}}
 -----------------------------------HELPERS---------------------------------- {{{
+local lsp = require("feline.providers.lsp")
+local git = require("feline.providers.git")
+local vi_mode_utils = require("feline.providers.vi_mode")
+
 -- Determine if we're using a session file
 local function using_session()
   return (vim.g.persisting ~= nil)
@@ -93,6 +100,10 @@ local function async_run()
   return nil
 end
 
+local function mask_plugin()
+  return om.find_pattern_match(M.filetypes_to_mask, vim.bo.filetype)
+end
+
 local function nvim_gps()
   local has_gps, gps = om.safe_require("nvim-gps")
   return has_gps, gps
@@ -128,8 +139,8 @@ function M.setup()
 
   local function default_hl()
     return {
-      fg = bg_to_mode_color and colors.bg or colors.gray,
-      bg = bg_to_mode_color and vi_mode_utils.get_mode_color() or "NONE",
+      fg = colors.gray,
+      bg = "NONE",
     }
   end
 
@@ -257,13 +268,13 @@ function M.setup()
     ----------------------------------FILE INFO--------------------------------- {{{
     {
       provider = function()
-        return " "
-          .. require("feline.providers.file").file_info({
-            icon = "",
-          }, {
-            type = "short",
-          })
-          .. " "
+        local file = require("feline.providers.file").file_info({ icon = "" }, { type = "short" })
+
+        if mask_plugin() then
+          file = vim.bo.filetype
+        end
+
+        return " " .. file .. " "
       end,
       hl = function()
         return block().body
@@ -372,12 +383,12 @@ function M.setup()
         local _, gps = nvim_gps()
         return gps.get_location()
       end,
-      short_provider = function ()
+      short_provider = function()
         return ""
       end,
-      enabled = function ()
+      enabled = function()
         local has_gps, gps = nvim_gps()
-        return has_gps and gps.is_available()
+        return has_gps and vim.g.enable_gps and gps.is_available()
       end,
       hl = function()
         return default_hl()
@@ -443,6 +454,9 @@ function M.setup()
 
           local icon = om.get_icon(filename, extension, {})
           return " " .. icon.str .. " " .. filetype .. " "
+        end,
+        enabled = function()
+          return not mask_plugin()
         end,
         hl = function()
           return block().body
