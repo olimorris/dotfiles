@@ -89,6 +89,14 @@ function M.plugin_commands()
       end,
       description = "Uninstall LSP servers",
     },
+    -- neogen
+    {
+      ":Neogen",
+      function()
+        require("neogen").generate()
+      end,
+      description = "Generate annotation",
+    },
     -- Packer
     {
       ":PC",

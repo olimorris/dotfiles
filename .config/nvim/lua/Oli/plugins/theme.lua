@@ -24,6 +24,8 @@ M.setup = function()
         cursorline = "#2e323b",
         indentline = "#3c414d",
 
+        ghost_text = utils.darken(onedarkpro.get_colors("onedark").fg, 0.50),
+
         statusline_div = "#2e323b", -- gray
         statusline_bg = "#2e323b", -- gray
         statusline_text = "#696C77", -- gray
@@ -36,6 +38,8 @@ M.setup = function()
       onelight = {
         vim = "#029632", -- green
         brackets = "#e05661", -- red
+
+        ghost_text = utils.lighten(onedarkpro.get_colors("onelight").fg, 0.40),
 
         statusline_div = "#f0f0f0", -- gray
         statusline_bg = "#f0f0f0", -- gray
@@ -75,9 +79,6 @@ M.setup = function()
       AerialStructIcon = { fg = "${cyan}" },
 
       -- Alpha (dashboard) plugin
-      -- AlphaHeader = {
-      --   fg = (vim.o.background == "dark" and "${red}" or "${green}"),
-      -- },
       AlphaHeader1 = {
         fg = "${red}",
       },
@@ -109,6 +110,9 @@ M.setup = function()
         style = "italic,bold",
       },
       AlphaFooter = { fg = "${fg}", style = "italic" },
+
+      -- Cmp
+      GhostText = { fg = "${ghost_text}"},
 
       -- Fidget plugin
       FidgetTitle = { fg = "${purple}" },

@@ -209,71 +209,6 @@ M.indentline = function()
   })
 end
 
-M.luasnip = function()
-  local ok, luasnip = om.safe_require("luasnip")
-  if not ok then
-    return
-  end
-
-  local types = require("luasnip.util.types")
-
-  luasnip.config.set_config({
-    history = false,
-    region_check_events = "CursorMoved,CursorHold,InsertEnter",
-    delete_check_events = "InsertLeave",
-    ext_opts = {
-      [types.choiceNode] = {
-        passive = {
-          virt_text = { { "●", "Operator" } },
-          hl_group = "LuaSnipChoiceNode",
-        },
-      },
-      [types.insertNode] = {
-        active = {
-          virt_text = { { "●", "Type" } },
-          hl_group = "LuaSnipInsertNode",
-        },
-      },
-    },
-  })
-
-  -- Tell Neovim about our custom snippets directory which is outside of our config
-  -- Update the package.json file in this path if you add any new snippets
-  vim.o.runtimepath = vim.o.runtimepath .. ",~/.dotfiles/.config/snippets"
-
-  -- Tell LuaSnip that we want our snippets to be like VSCode
-  require("luasnip.loaders.from_vscode").lazy_load()
-end
-
-M.marks = function()
-  local ok, marks = om.safe_require("marks")
-  if not ok then
-    return
-  end
-
-  vim.cmd("silent! command mb MarksListBuf")
-  vim.cmd("silent! command ml MarksListAll")
-
-  local bookmark = { sign = "", virt_text = "  Bookmark" }
-
-  marks.setup({
-    default_mappings = false, -- whether to map keybinds or not
-    cyclic = true, -- whether movements cycle back to the beginning/end of buffer
-    -- marks.nvim allows you to configure up to 10 bookmark groups, each with its own sign/virttext
-    bookmark_0 = bookmark,
-    bookmark_1 = bookmark,
-    bookmark_2 = bookmark,
-    bookmark_3 = bookmark,
-    bookmark_4 = bookmark,
-    bookmark_5 = bookmark,
-    bookmark_6 = bookmark,
-    bookmark_7 = bookmark,
-    bookmark_8 = bookmark,
-    bookmark_9 = bookmark,
-    excluded_filetypes = filetypes_to_exclude,
-  })
-end
-
 M.minimap = function()
   vim.g.minimap_auto_start = 0
   vim.g.minimap_width = 15
@@ -282,6 +217,17 @@ M.minimap = function()
   vim.g.minimap_cursor_color = "MapCursor"
   vim.g.minimap_range_color = "MapRange"
   vim.g.minimap_close_filetypes = { "alpha", "NvimTree", "toggleterm" }
+end
+
+M.neogen = function()
+  local ok, neogen = om.safe_require("neogen")
+  if not ok then
+    return
+  end
+
+  neogen.setup({
+    snippet_engine = "luasnip",
+  })
 end
 
 M.persisted = function()

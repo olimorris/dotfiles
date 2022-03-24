@@ -10,9 +10,8 @@ local silent = { noremap = true, silent = true }
         	2) Local Leader - Used for commands related to filetype/buffer options
         	3) Leader - Used for commands that are global or span Neovim
 
-        * The which-key.nvim plugin is used as a popup to remind me of possible
-        key bindings. Pressing either the Leader or Local Leader key will result
-        in which-key appearing
+        * I use legendary.nvim to set all of my mapping and display them in a 
+        floating window
 ]]
 ---------------------------------------------------------------------------- }}}
 -----------------------------------LEADERS---------------------------------- {{{
@@ -146,6 +145,7 @@ M.default_keymaps = function()
 end
 ---------------------------------------------------------------------------- }}}
 -----------------------------------PLUGINS---------------------------------- {{{
+-----------------------------------GENERAL---------------------------------- {{{
 M.plugin_keymaps = function()
   local h = require("legendary.helpers")
   return {
@@ -431,7 +431,54 @@ M.plugin_keymaps = function()
     },
   }
 end
+---------------------------------------------------------------------------- }}}
+---------------------------------COMPLETION--------------------------------- {{{
+M.completion_keymaps = function()
+  local _, cmp = om.safe_require("cmp")
+  local _, luasnip = om.safe_require("luasnip")
 
+  local function has_words_before()
+    local line, col = vim.api.nvim_win_get_cursor(0)
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+  end
+
+  return {
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, {
+      "i",
+      "s",
+    }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, {
+      "i",
+      "s",
+    }),
+    ["<C-e>"] = cmp.mapping.close(),
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<CR>"] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = false, -- hitting <CR> when nothing is selected, does nothing
+    }),
+    -- ["<CR>"] = cmp.mapping.confirm({ select = true }),
+  }
+end
+---------------------------------------------------------------------------- }}}
+-------------------------------------LSP------------------------------------ {{{
 M.lsp_keymaps = function(client, bufnr)
   local h = require("legendary.helpers")
   local maps = {}
@@ -513,5 +560,6 @@ M.lsp_keymaps = function(client, bufnr)
 
   return maps
 end
+---------------------------------------------------------------------------- }}}
 ---------------------------------------------------------------------------- }}}
 return M

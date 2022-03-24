@@ -27,7 +27,7 @@ end
 local appearance = function()
   return {
     {
-    --"olimorris/onedarkpro.nvim",
+      --"olimorris/onedarkpro.nvim",
       "~/Code/Projects/onedarkpro.nvim", -- My onedarkpro theme
       config = function()
         require(config_namespace .. ".plugins.theme").setup()
@@ -277,16 +277,22 @@ local completion = function()
         {
           "L3MON4D3/LuaSnip", -- Code snippets
           lock = LockPlugins,
-          event = "InsertEnter",
-          module = "luasnip",
           requires = {
             {
               "rafamadriz/friendly-snippets", -- Collection of code snippets across many languages
               lock = LockPlugins,
             },
+            {
+              "danymat/neogen", -- Generate annotations
+              lock = LockPlugins,
+              config = function()
+                require(config_namespace .. ".plugins.others").neogen()
+              end,
+            },
           },
           config = function()
-            require(config_namespace .. ".plugins.others").luasnip()
+            require(config_namespace .. ".plugins.luasnip").setup()
+            require(config_namespace .. ".plugins.luasnip").snippets()
           end,
         },
         { "onsails/lspkind-nvim", lock = LockPlugins }, -- VS Code like icons
@@ -298,13 +304,12 @@ local completion = function()
         { "hrsh7th/cmp-path", lock = LockPlugins },
       },
       config = function()
-        require(config_namespace .. ".plugins.cmp")
+        require(config_namespace .. ".plugins.completion")
       end,
     },
     {
       "windwp/nvim-autopairs", -- Automatically inserts a closing bracket, moustache etc
       lock = LockPlugins,
-      after = "nvim-cmp",
       config = function()
         require(config_namespace .. ".plugins.others").autopairs()
       end,
@@ -343,7 +348,6 @@ local coding = function()
     {
       "nvim-treesitter/nvim-treesitter", -- Syntax highlighting and code navigation for Neovim
       lock = LockPlugins,
-      event = { "BufRead", "BufNewFile" },
       run = ":TSUpdate",
       requires = {
         {
@@ -382,17 +386,8 @@ local coding = function()
       cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
     },
     {
-      "pianocomposer321/yabs.nvim", -- Build and run your code
-      lock = LockPlugins,
-      module = "yabs",
-      config = function()
-        require(config_namespace .. ".plugins.others").yabs()
-      end,
-    },
-    {
       "abecodes/tabout.nvim", -- Tab out from parenthesis, quotes, brackets...
       lock = LockPlugins,
-      after = "nvim-cmp",
       config = function()
         require(config_namespace .. ".plugins.others").tabout()
       end,
@@ -400,7 +395,6 @@ local coding = function()
     {
       "tpope/vim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
       lock = LockPlugins,
-      event = "InsertEnter",
     },
     {
       "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
@@ -417,6 +411,14 @@ local coding = function()
       keys = { "gcc", "gc", "gbc" },
       config = function()
         require(config_namespace .. ".plugins.others").comment()
+      end,
+    },
+    {
+      "pianocomposer321/yabs.nvim", -- Build and run your code
+      lock = LockPlugins,
+      module = "yabs",
+      config = function()
+        require(config_namespace .. ".plugins.others").yabs()
       end,
     },
     {
@@ -464,7 +466,6 @@ local coding = function()
     {
       "ahmedkhalf/project.nvim", -- Automatically set the cwd to the project root
       lock = LockPlugins,
-      event = "BufRead",
       config = function()
         require(config_namespace .. ".plugins.others").project_nvim()
       end,
