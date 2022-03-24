@@ -375,6 +375,14 @@ local coding = function()
           lock = LockPlugins,
           after = "nvim-treesitter",
         },
+        {
+          "SmiteshP/nvim-gps", -- Show the current treesitter location in the statusline
+          lock = LockPlugins,
+          module = "nvim-gps",
+          config = function()
+            require(config_namespace .. ".plugins.others").nvim_gps()
+          end,
+        },
       },
       config = function()
         require(config_namespace .. ".plugins.treesitter")

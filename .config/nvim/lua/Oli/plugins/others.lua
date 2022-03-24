@@ -230,6 +230,18 @@ M.neogen = function()
   })
 end
 
+M.nvim_gps = function()
+  local ok, gps = om.safe_require("nvim-gps")
+  if not ok then
+    return
+  end
+
+  gps.setup({
+    disable_icons = false,
+    depth = 2,
+  })
+end
+
 M.persisted = function()
   local ok, persisted = om.safe_require("persisted")
   if not ok then
