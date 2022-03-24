@@ -163,6 +163,20 @@ M.focus = function()
   })
 end
 
+M.gps = function()
+  local ok, gps = om.safe_require("nvim-gps")
+  if not ok then
+    return
+  end
+
+  vim.g.enable_gps = false
+
+  gps.setup({
+    disable_icons = false,
+    depth = 2,
+  })
+end
+
 M.harpoon = function()
   local ok, harpoon = om.safe_require("harpoon")
   if not ok then
@@ -230,17 +244,6 @@ M.neogen = function()
   })
 end
 
-M.nvim_gps = function()
-  local ok, gps = om.safe_require("nvim-gps")
-  if not ok then
-    return
-  end
-
-  gps.setup({
-    disable_icons = false,
-    depth = 2,
-  })
-end
 
 M.persisted = function()
   local ok, persisted = om.safe_require("persisted")

@@ -65,6 +65,18 @@ function M.plugin_commands()
       ":ColorizerToggle",
       description = "Colorizer toggle",
     },
+    -- GPS
+    {
+      ":NvimGPS",
+      function()
+        if vim.g.enable_gps then
+          vim.g.enable_gps = false
+        else
+          vim.g.enable_gps = true
+        end
+      end,
+      description = "Toggle Nvim GPS",
+    },
     -- LSP
     {
       ":LspLog",

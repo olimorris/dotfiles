@@ -380,7 +380,7 @@ local coding = function()
           lock = LockPlugins,
           module = "nvim-gps",
           config = function()
-            require(config_namespace .. ".plugins.others").nvim_gps()
+            require(config_namespace .. ".plugins.others").gps()
           end,
         },
       },
