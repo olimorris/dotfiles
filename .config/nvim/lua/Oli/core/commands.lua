@@ -3,7 +3,7 @@ local M = {}
 function M.default_commands()
   return {
     {
-      ":Uuid",
+      "Uuid",
       function()
         local uuid = vim.fn.system("uuidgen"):gsub("\n", ""):lower()
         local line = vim.fn.getline(".")
@@ -14,42 +14,35 @@ function M.default_commands()
       description = "Generate a UUID and insert it into the buffer",
     },
     {
-      ":Sessions",
+      "Sessions",
       function()
         om.LoadSession()
       end,
       description = "Session: Load",
     },
     {
-      ":Rubocop",
-      function()
-        om.FormatWithRuboCop()
-      end,
-      description = "Format with Rubocop",
-    },
-    {
-      ":Snippets",
+      "Snippets",
       function()
         om.EditSnippet()
       end,
       description = "Edit Snippets",
     },
     {
-      ":TestAll",
+      "TestAll",
       function()
         om.RunTestSuiteAsync()
       end,
       description = "Test all",
     },
     {
-      ":Theme",
+      "Theme",
       function()
         om.ToggleTheme()
       end,
       description = "Toggle theme",
     },
     {
-      ":LineNumbers",
+      "LineNumbers",
       function()
         om.ToggleLineNumbers()
       end,
@@ -62,12 +55,12 @@ function M.plugin_commands()
   return {
     -- Colorizer
     {
-      ":ColorizerToggle",
+      "ColorizerToggle",
       description = "Colorizer toggle",
     },
     -- GPS
     {
-      ":NvimGPS",
+      "NvimGPS",
       function()
         if vim.g.enable_gps then
           vim.g.enable_gps = false
@@ -79,14 +72,14 @@ function M.plugin_commands()
     },
     -- LSP
     {
-      ":LspLog",
+      "LspLog",
       function()
         vim.cmd("edit " .. vim.lsp.get_log_path())
       end,
       description = "Show LSP logs",
     },
     {
-      ":LspInstall",
+      "LspInstall",
       function()
         for _, name in pairs(om.lsp.servers) do
           vim.cmd("LspInstall " .. name)
@@ -95,7 +88,7 @@ function M.plugin_commands()
       description = "Install LSP servers",
     },
     {
-      ":LspUninstall",
+      "LspUninstall",
       function()
         vim.cmd("LspUninstallAll")
       end,
@@ -103,7 +96,7 @@ function M.plugin_commands()
     },
     -- neogen
     {
-      ":Neogen",
+      "Neogen",
       function()
         require("neogen").generate()
       end,
@@ -111,7 +104,7 @@ function M.plugin_commands()
     },
     -- Packer
     {
-      ":PC",
+      "PackerCompile",
       function()
         require(config_namespace .. ".core.plugins")
         require("packer").compile()
@@ -119,7 +112,7 @@ function M.plugin_commands()
       description = "Packer: Compile",
     },
     {
-      ":PCL",
+      "PackerClean",
       function()
         require(config_namespace .. ".core.plugins")
         require("packer").clean()
@@ -127,7 +120,7 @@ function M.plugin_commands()
       description = "Packer: Clean",
     },
     {
-      ":PI",
+      "PackerInstall",
       function()
         require(config_namespace .. ".core.plugins")
         require("packer").install()
@@ -135,7 +128,7 @@ function M.plugin_commands()
       description = "Packer: Install",
     },
     {
-      ":PS",
+      "PackerSync",
       function()
         require(config_namespace .. ".core.plugins")
         require("packer").sync()
@@ -143,7 +136,7 @@ function M.plugin_commands()
       description = "Packer: Sync",
     },
     {
-      ":PST",
+      "PackerStatus",
       function()
         require(config_namespace .. ".core.plugins")
         require("packer").status()
@@ -151,7 +144,7 @@ function M.plugin_commands()
       description = "Packer: Status",
     },
     {
-      ":PU",
+      "PackerUpdate",
       function()
         require(config_namespace .. ".core.plugins")
         require("packer").update()
@@ -160,28 +153,28 @@ function M.plugin_commands()
     },
     -- Persisted
     {
-      ":SessionSave",
+      "SessionSave",
       function()
         require("persisted").save()
       end,
       description = "Session: Save",
     },
     {
-      ":SessionStart",
+      "SessionStart",
       function()
         require("persisted").start()
       end,
       description = "Session: Start",
     },
     {
-      ":SessionStop",
+      "SessionStop",
       function()
         require("persisted").stop()
       end,
       description = "Session: Stop",
     },
     {
-      ":SessionDelete",
+      "SessionDelete",
       function()
         require("persisted").delete()
       end,
@@ -193,17 +186,17 @@ end
 function M.lsp_commands(client, bufnr)
   local commands = {
     {
-      ":LspRestart",
+      "LspRestart",
       description = "Restart any attached LSP clients",
       opts = { buffer = bufnr },
     },
     {
-      ":LspStart",
+      "LspStart",
       description = "Start the LSP client manually",
       opts = { buffer = bufnr },
     },
     {
-      ":LspInfo",
+      "LspInfo",
       description = "Show attached LSP clients",
       opts = { buffer = bufnr },
     },
@@ -211,7 +204,7 @@ function M.lsp_commands(client, bufnr)
 
   if client.name == "null-ls" or client.name == "solargraph" then
     table.insert(commands, {
-      ":LspFormat",
+      "LspFormat",
       function()
         vim.b.format_changedtick = vim.b.changedtick
         vim.lsp.buf.formatting({})

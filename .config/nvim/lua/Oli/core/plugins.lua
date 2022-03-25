@@ -84,7 +84,7 @@ M.load = function()
   end
 
   add_packer()
-  init_packer()
+  -- init_packer()
   setup_plugins()
 end
 
