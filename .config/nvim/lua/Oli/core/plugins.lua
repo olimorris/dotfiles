@@ -58,7 +58,7 @@ local function setup_plugins()
         end,
       },
       git = {
-        clone_timeout = 600, -- Timeout for git clones (seconds)
+        clone_timeout = 60, -- Timeout for git clones (seconds)
       },
       auto_clean = true,
       compile_on_sync = true,

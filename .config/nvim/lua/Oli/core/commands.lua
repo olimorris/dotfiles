@@ -3,15 +3,11 @@ local M = {}
 function M.default_commands()
   return {
     {
-      "Uuid",
+      "LineNumbers",
       function()
-        local uuid = vim.fn.system("uuidgen"):gsub("\n", ""):lower()
-        local line = vim.fn.getline(".")
-        vim.schedule(function()
-          vim.fn.setline(".", vim.fn.strpart(line, 0, vim.fn.col(".")) .. uuid .. vim.fn.strpart(line, vim.fn.col(".")))
-        end)
+        om.ToggleLineNumbers()
       end,
-      description = "Generate a UUID and insert it into the buffer",
+      description = "Toggle line numbers",
     },
     {
       "Sessions",
@@ -42,11 +38,15 @@ function M.default_commands()
       description = "Toggle theme",
     },
     {
-      "LineNumbers",
+      "Uuid",
       function()
-        om.ToggleLineNumbers()
+        local uuid = vim.fn.system("uuidgen"):gsub("\n", ""):lower()
+        local line = vim.fn.getline(".")
+        vim.schedule(function()
+          vim.fn.setline(".", vim.fn.strpart(line, 0, vim.fn.col(".")) .. uuid .. vim.fn.strpart(line, vim.fn.col(".")))
+        end)
       end,
-      description = "Toggle line numbers",
+      description = "Generate a UUID and insert it into the buffer",
     },
   }
 end
@@ -55,7 +55,7 @@ function M.plugin_commands()
   return {
     -- Colorizer
     {
-      "ColorizerToggle",
+      ":ColorizerToggle",
       description = "Colorizer toggle",
     },
     -- GPS

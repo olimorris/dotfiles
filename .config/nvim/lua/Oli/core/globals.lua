@@ -130,8 +130,10 @@ function om.reload(path, recursive)
   if recursive then
     for key, value in pairs(package.loaded) do
       if key ~= "_G" and value and vim.fn.match(key, path) ~= -1 then
-        package.loaded[key] = nil
-        require(key)
+        if string.match(key, "legendary") ~= "legendary" then
+          package.loaded[key] = nil
+          require(key)
+        end
       end
     end
   else
@@ -171,9 +173,9 @@ end
 ---@param val string
 ---@return boolean
 function om.find_pattern_match(tbl, val)
-    return tbl and next(vim.tbl_filter(function(pattern)
-        return val:match(pattern)
-    end, tbl))
+  return tbl and next(vim.tbl_filter(function(pattern)
+    return val:match(pattern)
+  end, tbl))
 end
 
 ---Run a process asynchronously
@@ -266,4 +268,3 @@ function om.async_run(process)
   })
 end
 ---------------------------------------------------------------------------- }}}
-
