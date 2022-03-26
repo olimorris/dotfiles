@@ -54,6 +54,7 @@ alias icons='python ~/.dotfiles/commands/seticons.py'
 alias cleanup='ruby ~/.dotfiles/commands/clean_up.rb ~/Downloads'
 
 # Git
+alias lg='lazygit'
 alias ga='git add'
 alias gp='git pull'
 alias gaa='git add .'
