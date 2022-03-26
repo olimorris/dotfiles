@@ -177,6 +177,15 @@ M.gps = function()
   })
 end
 
+M.hlargs = function()
+  local ok, hlargs = om.safe_require("hlargs")
+  if not ok then
+    return
+  end
+
+  hlargs.setup()
+end
+
 M.harpoon = function()
   local ok, harpoon = om.safe_require("harpoon")
   if not ok then

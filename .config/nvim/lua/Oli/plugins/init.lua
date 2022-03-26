@@ -396,6 +396,13 @@ local coding = function()
             require(config_namespace .. ".plugins.others").gps()
           end,
         },
+        {
+          "m-demare/hlargs.nvim", --Highlight argument definitions
+          lock = LockPlugins,
+          config = function()
+            require(config_namespace .. ".plugins.others").hlargs()
+          end,
+        },
       },
       config = function()
         require(config_namespace .. ".plugins.treesitter")

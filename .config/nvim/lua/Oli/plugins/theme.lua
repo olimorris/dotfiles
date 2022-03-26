@@ -50,6 +50,9 @@ M.setup = function()
       },
     },
     filetype_hlgroups = {
+      lua = {
+        Hlargs = { fg = "${red}", style = "italic" },
+      },
       yaml = { TSField = { fg = "${red}" } },
       ruby = {
         TSParameter = { fg = "${fg}" },
@@ -112,7 +115,7 @@ M.setup = function()
       AlphaFooter = { fg = "${fg}", style = "italic" },
 
       -- Cmp
-      GhostText = { fg = "${ghost_text}"},
+      GhostText = { fg = "${ghost_text}" },
 
       -- Fidget plugin
       FidgetTitle = { fg = "${purple}" },
