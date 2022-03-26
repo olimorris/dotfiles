@@ -69,19 +69,32 @@ local appearance = function()
         require(config_namespace .. ".plugins.gitsigns")
       end,
     },
+    -- {
+    --   "kyazdani42/nvim-tree.lua", -- File explorer
+    --   lock = LockPlugins,
+    --   requires = "nvim-web-devicons",
+    --   cmd = {
+    --     "NvimTreeToggle",
+    --     "NvimTreeOpen",
+    --     "NvimTreeFindFile",
+    --     "NvimTreeFocus",
+    --   },
+    --   setup = function()
+    --     require(config_namespace .. ".plugins.file_explorer").setup()
+    --   end,
+    --   config = function()
+    --     require(config_namespace .. ".plugins.file_explorer").config()
+    --   end,
+    -- },
     {
-      "kyazdani42/nvim-tree.lua", -- File explorer
+      "nvim-neo-tree/neo-tree.nvim",
+      branch = "v2.x",
       lock = LockPlugins,
-      requires = "nvim-web-devicons",
-      cmd = {
-        "NvimTreeToggle",
-        "NvimTreeOpen",
-        "NvimTreeFindFile",
-        "NvimTreeFocus",
+      requires = {
+        { "nvim-lua/plenary.nvim", lock = LockPlugins },
+        { "kyazdani42/nvim-web-devicons", lock = LockPlugins },
+        { "MunifTanjim/nui.nvim", lock = LockPlugins },
       },
-      setup = function()
-        require(config_namespace .. ".plugins.file_explorer").setup()
-      end,
       config = function()
         require(config_namespace .. ".plugins.file_explorer").config()
       end,

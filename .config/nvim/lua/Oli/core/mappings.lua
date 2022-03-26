@@ -292,9 +292,10 @@ M.plugin_keymaps = function()
 
     -- Hop
     { "s", "<cmd>lua require'hop'.hint_char1()<CR>", description = "Hop", mode = { "n", "o" } },
+
     -- File Explorer
-    { "\\", "<cmd>NvimTreeToggle<CR>", description = "NvimTree: Toggle" },
-    { "<C-z>", "<cmd>NvimTreeFindFile<CR>", description = "NvimTree: Find File" },
+    { "\\", "<cmd>Neotree toggle<CR>", description = "Neotree: Toggle" },
+    { "<C-z>", "<cmd>Neotree reveal %:p<CR>", description = "Neotree: Find File" },
 
     -- Minimap
     {

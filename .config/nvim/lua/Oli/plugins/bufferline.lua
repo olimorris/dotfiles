@@ -122,7 +122,7 @@ function M.setup()
     },
 
     sidebar = {
-      filetype = "NvimTree",
+      filetype = "neo-tree",
       components = {
         {
           text = "  File Explorer",

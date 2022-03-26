@@ -9,6 +9,7 @@ M.components = { active = {}, inactive = {} }
 
 M.filetypes_to_mask = {
   "^aerial$",
+  "^neo--tree$",
   "^NvimTree$",
 }
 
