@@ -58,10 +58,11 @@ local function setup_plugins()
         end,
       },
       git = {
-        clone_timeout = 60, -- Timeout for git clones (seconds)
+        clone_timeout = 240, -- Timeout for git clones (seconds)
       },
       auto_clean = true,
       compile_on_sync = true,
+      max_jobs = 10,
       profile = {
         enable = true,
         threshold = 1, -- the amount in ms that a plugins load time must be over for it to be included in the profile
@@ -84,7 +85,6 @@ M.load = function()
   end
 
   add_packer()
-  -- init_packer()
   setup_plugins()
 end
 
