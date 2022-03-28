@@ -107,6 +107,7 @@ rubocop
 rubocop-ast
 ruby-progressbar
 ruby2_keywords
+rubygems-update
 securerandom
 set
 shellwords

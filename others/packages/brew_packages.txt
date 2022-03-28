@@ -17,6 +17,7 @@ gnupg
 go
 hey
 httpie
+lazygit
 librsync
 libtermkey
 libvterm

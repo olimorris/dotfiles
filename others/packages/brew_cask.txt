@@ -22,6 +22,7 @@ ledger-live
 little-snitch
 lunar
 microsoft-teams
+monitorcontrol
 moom
 nordvpn
 notion
