@@ -1,3 +1,5 @@
+ZSH_PLUGINS_DIR = File.expand_path('~/.local/share/zsh/plugins', __dir__)
+
 namespace :install do
 
   desc "Install Zsh"
@@ -12,18 +14,22 @@ namespace :install do
     end
   end
 
-  desc "Install Oh-My-Zsh"
-  task :ohmyzsh do
-    section "Installing Oh-My-Zsh"
+  desc "Install Zsh Plugins"
+  task :zsh_plugins do
+    section "Installing Zsh Plugins"
 
-    unless File.exists?("#{ENV['HOME']}/.local/share/oh-my-zsh/oh-my-zsh.sh")
-      run %( git clone http://github.com/robbyrussell/oh-my-zsh ~/.local/share/oh-my-zsh )
-      run %( git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.local/share/oh-my-zsh/custom/plugins/zsh-autosuggestions )
-      run %( git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.local/share/oh-my-zsh/custom/plugins/zsh-syntax-highlighting )
-      run %( chsh -s $(which zsh) )
-      puts "~> Don't forget to run `source ~/.zshrc` from a 'new' Zsh shell later."
-    else
-      puts "~> Oh-My-Zsh is already installed."
-    end
+    run %( git clone https://github.com/zsh-users/zsh-syntax-highlighting #{ZSH_PLUGINS_DIR}/zsh-syntax-highlighting )
+    run %( git clone https://github.com/zsh-users/zsh-autosuggestions #{ZSH_PLUGINS_DIR}/zsh-autosuggestions )
+    run %( git clone https://github.com/zsh-users/zsh-completions #{ZSH_PLUGINS_DIR}/zsh-completions )
+    # run %( $(brew --prefix)/opt/fzf/install )
+  end
+end
+
+namespace :update do
+  desc "Update Zsh Plugins"
+  task :zsh_plugins do
+    section "Updating Zsh Plugins"
+
+    run %( cd #{ZSH_PLUGINS_DIR} && ls | xargs -I{} git -C {} pull )
   end
 end

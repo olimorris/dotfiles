@@ -1,44 +1,12 @@
-
 ################################################################################
-# OH MY ZSH
+# Zsh
 ################################################################################
 
-# Path to your oh-my-zsh installation.
-ZSH=$HOME/.local/share/oh-my-zsh
-ZSH_CACHE_DIR=$ZSH/cache
-ZSH_CUSTOM=$ZSH/custom
+ZSH=$HOME/.local/share/zsh
+PLUGIN_DIR=$ZSH/plugins
 
-# Don't need a theme as we're using Starship
-# ZSH_THEME=robbyrussell
-
-# Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="false"
-
-# Command execution timestamp
 HIST_STAMPS="yyyy-mm-dd"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    asdf
-    fzf
-    sudo
-    thefuck
-    tmux
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-)
-
-################################ PLUGIN SETTINGS ###############################
-
-# Tmux
-ZSH_TMUX_AUTOCONNECT=true
-
-################################ INIT OH MY ZSH ################################
-
-# Activate Oh My Zsh
-source $ZSH/oh-my-zsh.sh
 
 ################################################################################
 # STARSHIP - For a beautiful prompt
@@ -48,8 +16,19 @@ source $ZSH/oh-my-zsh.sh
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 ################################################################################
-# Evals
+# Plugins
 ################################################################################
+
+source $PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
+fpath=($PLUGIN_DIR/zsh-completions/src $fpath)
+
+# fzf
+if [[ ! "$PATH" == */opt/homebrew/opt/fzf/bin* ]]; then
+	export PATH="${PATH:+${PATH}:}/opt/homebrew/opt/fzf/bin"
+fi
+[[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2>/dev/null
+source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
 
 eval "$(thefuck --alias)"
 eval "$(starship init zsh)"

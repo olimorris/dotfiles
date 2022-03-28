@@ -32,7 +32,7 @@ task :install do
   Rake::Task['install:brew'].invoke
   Rake::Task['install:brew_packages'].invoke
   Rake::Task['install:zsh'].invoke
-  Rake::Task['install:ohmyzsh'].invoke
+  Rake::Task['install:zsh_plugins'].invoke
   Rake::Task['install:brew_cask_packages'].invoke
   Rake::Task['install:mas'].invoke
   Rake::Task['install:brew_clean_up'].invoke
@@ -61,6 +61,7 @@ task :update do
   section 'Updating'
   Rake::Task['tests:setup'].invoke if testing?
   Rake::Task['update:brew'].invoke
+  Rake::Task['update:zsh_plugins'].invoke
   Rake::Task['update:dotbot'].invoke
   Rake::Task['update:neovim'].invoke
   Rake::Task['update:vim'].invoke

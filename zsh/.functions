@@ -77,14 +77,14 @@ function bl() {
 function src()
 {
     # Clean the cache
-    local cache=$ZSH_CACHE_DIR
-    autoload -U compinit zrecompile
-    compinit -d "$cache/zcomp-$HOST"
+    # local cache=$ZSH_CACHE_DIR
+    # autoload -U compinit zrecompile
+    # compinit -d "$cache/zcomp-$HOST"
     
     # Remove any old compiled files
-    for f in ~/.zshrc "$cache/zcomp-$HOST"; do
-        zrecompile -p $f && command rm -f $f.zwc.old
-    done
+    # for f in ~/.zshrc "$cache/zcomp-$HOST"; do
+    #     zrecompile -p $f && command rm -f $f.zwc.old
+    # done
     
     # Load the shell dotfiles:
     # for file in ~/.{aliases,functions,path}; do
