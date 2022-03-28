@@ -1,3 +1,23 @@
+-----------------------------------LAZYGIT---------------------------------- {{{
+function om.Lazygit()
+  local Terminal = require("toggleterm.terminal").Terminal
+  return Terminal:new({
+    cmd = "lazygit",
+    dir = "git_dir",
+    direction = "float",
+    float_opts = {
+      border = "double",
+      width = function()
+        return math.floor(0.95 * vim.fn.winwidth("%"))
+      end,
+    },
+    on_open = function(term)
+      vim.cmd("startinsert!")
+      vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+    end,
+  })
+end
+--------------------------------------------------------------------------- }}}
 --------------------------------LOAD SESSIONS------------------------------- {{{
 function om.LoadSession()
   local ok, persisted = om.safe_require("persisted")

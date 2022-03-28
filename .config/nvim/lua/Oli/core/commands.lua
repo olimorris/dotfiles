@@ -102,6 +102,14 @@ function M.plugin_commands()
       end,
       description = "Toggle Nvim GPS",
     },
+    -- Lazygit
+    {
+      "Lazygit",
+      function()
+        om.Lazygit():toggle()
+      end,
+      description = "Lazygit",
+    },
     -- LSP
     {
       "LspLog",
