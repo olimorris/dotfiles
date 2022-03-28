@@ -98,6 +98,10 @@ M.setup = function()
       -- Cmp
       GhostText = { fg = "${ghost_text}" },
 
+      -- coverage
+      CoverageCovered = { fg = "${green}"},
+      CoverageUncovered = { fg = "${red}"},
+
       -- Fidget plugin
       FidgetTitle = { fg = "${purple}" },
       FidgetTask = { fg = "${gray}" },

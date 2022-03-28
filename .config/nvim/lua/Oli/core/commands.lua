@@ -58,6 +58,35 @@ function M.plugin_commands()
       ":ColorizerToggle",
       description = "Colorizer toggle",
     },
+    -- Coverage
+    {
+      "Coverage Toggle",
+      function()
+        require("coverage").toggle()
+      end,
+      description = "Coverage: Toggle",
+    },
+    {
+      "Coverage Load",
+      function()
+        require("coverage").load(true)
+      end,
+      description = "Coverage: Load"
+    },
+    {
+      "Coverage Clear",
+      function()
+        require("coverage").clear()
+      end,
+      description = "Coverage: Clear"
+    },
+    {
+      "Coverage Summary",
+      function()
+        require("coverage").summary()
+      end,
+      description = "Coverage: Summary"
+    },
     -- GPS
     {
       "NvimGPS",

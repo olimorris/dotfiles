@@ -458,6 +458,14 @@ local coding = function()
       end,
     },
     {
+      "andythigpen/nvim-coverage", -- Display test coverage information
+      lock = LockPlugins,
+      module = "coverage",
+      config = function()
+        require(config_namespace .. ".plugins.testing").coverage()
+      end,
+    },
+    {
       "mfussenegger/nvim-dap", -- Debug Adapter Protocol for Neovim
       lock = LockPlugins,
       module = "dap",
