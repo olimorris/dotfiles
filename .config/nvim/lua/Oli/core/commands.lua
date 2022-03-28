@@ -55,7 +55,10 @@ function M.plugin_commands()
   return {
     -- Colorizer
     {
-      ":ColorizerToggle",
+      "Color Toggle",
+      function()
+        vim.cmd([[ColorizerToggle]])
+      end,
       description = "Colorizer toggle",
     },
     -- Coverage
@@ -71,21 +74,21 @@ function M.plugin_commands()
       function()
         require("coverage").load(true)
       end,
-      description = "Coverage: Load"
+      description = "Coverage: Load",
     },
     {
       "Coverage Clear",
       function()
         require("coverage").clear()
       end,
-      description = "Coverage: Clear"
+      description = "Coverage: Clear",
     },
     {
       "Coverage Summary",
       function()
         require("coverage").summary()
       end,
-      description = "Coverage: Summary"
+      description = "Coverage: Summary",
     },
     -- GPS
     {

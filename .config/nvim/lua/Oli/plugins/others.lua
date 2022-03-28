@@ -253,7 +253,6 @@ M.neogen = function()
   })
 end
 
-
 M.persisted = function()
   local ok, persisted = om.safe_require("persisted")
   if not ok then
@@ -363,9 +362,9 @@ M.toggleterm = function()
     direction = "float",
     float_opts = {
       border = "single",
-      -- height = function()
-      --   return math.floor(0.9 * vim.fn.winheight("%"))
-      -- end,
+      height = function()
+        return math.floor(0.9 * vim.fn.winheight("%"))
+      end,
       -- width = function()
       --   return math.floor(0.9 * vim.fn.winwidth("%"))
       -- end,
@@ -379,6 +378,7 @@ M.toggleterm = function()
     hide_numbers = true,
     close_on_exit = true,
   })
+
 end
 
 M.undotree = function()
