@@ -10,16 +10,16 @@ M.components = { active = {}, inactive = {} }
 M.filetypes_to_mask = {
   "^aerial$",
   "^neo--tree$",
+  "^neo--tree--popup$",
   "^NvimTree$",
+  "^toggleterm$",
 }
 
 M.force_inactive = {
   filetypes = {
-    -- "^aerial$",
-    -- "^NvimTree$",
+    "^frecency$",
     "^packer$",
     "^TelescopePrompt$",
-    "^toggleterm$",
     "^undotree$",
   },
 }

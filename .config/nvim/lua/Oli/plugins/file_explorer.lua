@@ -26,8 +26,9 @@ M.config = function()
 
   file_explorer.setup({
     close_if_last_window = true,
+    git_status_async = false,
     enable_git_status = false,
-    enable_diagnostics = true,
+    enable_diagnostics = false,
     filesystem = {
       filtered_items = {
         hide_dotfiles = false,
