@@ -8,32 +8,15 @@ function M.setup()
 
   local dashboard = require("alpha.themes.dashboard")
 
-  local function pick_color()
-    local colors = {
-      "AlphaHeader1",
-      "AlphaHeader2",
-      "AlphaHeader3",
-      "AlphaHeader4",
-      "AlphaHeader5",
-      "AlphaHeader6",
-      "AlphaHeader7",
-    }
-    return colors[math.random(#colors)]
-  end
-
   -- Header
   dashboard.section.header.val = {
-    [[ _______             ____   ____.__         ]],
-    [[ \      \   ____  ___\   \ /   /|__| _____  ]],
-    [[ /   |   \_/ __ \/  _ \   Y   / |  |/     \ ]],
-    [[/    |    \  ___(  <_> )     /  |  |  Y Y  \]],
-    [[\____|__  /\___  >____/ \___/   |__|__|_|  /]],
-    [[        \/     \/                        \/ ]],
+    [[███    ██ ███████  ██████  ██    ██ ██ ███    ███]],
+    [[████   ██ ██      ██    ██ ██    ██ ██ ████  ████]],
+    [[██ ██  ██ █████   ██    ██ ██    ██ ██ ██ ████ ██]],
+    [[██  ██ ██ ██      ██    ██  ██  ██  ██ ██  ██  ██]],
+    [[██   ████ ███████  ██████    ████   ██ ██      ██]],
   }
-  dashboard.section.header.opts.hl = pick_color()
-
-  -- Button menu
-  local set_color = pick_color()
+  dashboard.section.header.opts.hl = "AlphaHeader"
 
   local function button(sc, txt, keybind, keybind_opts)
     local b = dashboard.button(sc, txt, keybind, keybind_opts)
@@ -57,16 +40,24 @@ function M.setup()
   }
 
   -- Footer
-  dashboard.section.footer.val = require("alpha.fortune")
+  local function footer()
+    local total_plugins = #vim.tbl_keys(packer_plugins)
+    local datetime = os.date(" %d-%m-%Y")
+    local version = vim.version()
+    local nvim_version_info = "   Neovim v" .. version.major .. "." .. version.minor .. "." .. version.patch
+
+    return datetime .. "   " .. total_plugins .. " plugins" .. nvim_version_info
+  end
+  dashboard.section.footer.val = footer()
   dashboard.section.footer.opts.hl = "AlphaFooter"
 
   -- Layout
   dashboard.config.layout = {
-    { type = "padding", val = 1 },
+    { type = "padding", val = 2 },
     dashboard.section.header,
-    { type = "padding", val = 1 },
+    { type = "padding", val = 2 },
     dashboard.section.buttons,
-    { type = "padding", val = 0 },
+    { type = "padding", val = 1 },
     dashboard.section.footer,
   }
 

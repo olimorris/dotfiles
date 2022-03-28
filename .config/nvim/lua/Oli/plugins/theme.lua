@@ -82,37 +82,18 @@ M.setup = function()
       AerialStructIcon = { fg = "${cyan}" },
 
       -- Alpha (dashboard) plugin
-      AlphaHeader1 = {
-        fg = "${red}",
+      AlphaHeader = {
+        fg = (vim.o.background == "dark" and "${green}" or "${orange}"),
       },
-      AlphaHeader2 = {
-        fg = "${cyan}",
-      },
-      AlphaHeader3 = {
-        fg = "${blue}",
-      },
-      AlphaHeader4 = {
-        fg = "${green}",
-      },
-      AlphaHeader5 = {
-        fg = "${yellow}",
-      },
-      AlphaHeader6 = {
-        fg = "${orange}",
-      },
-      AlphaHeader7 = {
-        fg = "${purple}",
-      },
-
       AlphaButtonText = {
-        fg = (vim.o.background == "dark" and "${blue}" or "${purple}"),
+        fg = (vim.o.background == "dark" and "${blue}" or "${red}"),
         style = "bold",
       },
       AlphaButtonShortcut = {
-        fg = (vim.o.background == "dark" and "${yellow}" or "${blue}"),
+        fg = (vim.o.background == "dark" and "${yellow}" or "${green}"),
         style = "italic,bold",
       },
-      AlphaFooter = { fg = "${fg}", style = "italic" },
+      AlphaFooter = { fg = "${gray}", style = "italic" },
 
       -- Cmp
       GhostText = { fg = "${ghost_text}" },
