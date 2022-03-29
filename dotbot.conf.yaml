@@ -29,7 +29,7 @@
     ~/.local/share/zsh/bookmarks: .config/zsh/bookmarks
 
     # Others
-    ~/.applescript: .config/.applescript
+    ~/.applescript: .config/applescript
     ~/.bash_profile: .config/bash/.bash_profile
     ~/.bashrc: .config/bash/.bashrc
     ~/.color_mode: .config/.color_mode
