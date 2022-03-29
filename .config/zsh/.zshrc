@@ -30,5 +30,9 @@ fi
 [[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2>/dev/null
 source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
 
+# asdf
+source /opt/homebrew/opt/asdf/libexec/asdf.sh
+
 eval "$(thefuck --alias)"
 eval "$(starship init zsh)"
+

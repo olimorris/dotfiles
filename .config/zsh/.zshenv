@@ -54,7 +54,7 @@ export PKG_CONFIG_PATH="/opt/homebrew/opt/ruby/lib/pkgconfig"
 # Use 1Password for managing SSH keys
 export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 
-# Load our .env file
+# Load custom .env file
 # As per: https://gist.github.com/mihow/9c7f559807069a03e302605691f85572#gistcomment-3903516
 if [ -f .env ]; then
     export $(grep -v '^#' .env | xargs)
