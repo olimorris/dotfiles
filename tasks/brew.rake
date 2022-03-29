@@ -1,6 +1,6 @@
-BREW_TAPS_FILE = File.expand_path('../../others/packages/brew_taps.txt', __FILE__)
-BREW_PACKAGES_FILE = File.expand_path('../../others/packages/brew_packages.txt', __FILE__)
-BREW_CASK_PACKAGES_FILE = File.expand_path('../../others/packages/brew_cask.txt', __FILE__)
+BREW_TAPS_FILE = File.expand_path('../../misc/packages/brew_taps.txt', __FILE__)
+BREW_PACKAGES_FILE = File.expand_path('../../misc/packages/brew_packages.txt', __FILE__)
+BREW_CASK_PACKAGES_FILE = File.expand_path('../../misc/packages/brew_cask.txt', __FILE__)
 
 # HEAD_ONLY_FORMULAS = %w( neovim )
 HEAD_ONLY_FORMULAS = ""

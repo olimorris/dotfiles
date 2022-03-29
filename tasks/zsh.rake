@@ -1,6 +1,14 @@
 ZSH_PLUGINS_DIR = File.expand_path('~/.local/share/zsh/plugins', __dir__)
 
 namespace :install do
+  desc "Install Zsh Plugins"
+  task :zsh_plugins do
+    section "Installing Zsh Plugins"
+
+    run %( git clone https://github.com/zsh-users/zsh-syntax-highlighting #{ZSH_PLUGINS_DIR}/zsh-syntax-highlighting )
+    run %( git clone https://github.com/zsh-users/zsh-autosuggestions #{ZSH_PLUGINS_DIR}/zsh-autosuggestions )
+    run %( git clone https://github.com/zsh-users/zsh-completions #{ZSH_PLUGINS_DIR}/zsh-completions )
+  end
 
   desc "Install Zsh"
   task :zsh do
@@ -14,15 +22,6 @@ namespace :install do
     end
   end
 
-  desc "Install Zsh Plugins"
-  task :zsh_plugins do
-    section "Installing Zsh Plugins"
-
-    run %( git clone https://github.com/zsh-users/zsh-syntax-highlighting #{ZSH_PLUGINS_DIR}/zsh-syntax-highlighting )
-    run %( git clone https://github.com/zsh-users/zsh-autosuggestions #{ZSH_PLUGINS_DIR}/zsh-autosuggestions )
-    run %( git clone https://github.com/zsh-users/zsh-completions #{ZSH_PLUGINS_DIR}/zsh-completions )
-    # run %( $(brew --prefix)/opt/fzf/install )
-  end
 end
 
 namespace :update do

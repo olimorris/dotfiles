@@ -6,14 +6,22 @@
 
 # Config
 !.config/alacritty/**/*
+!.config/bash/**/*
+!.config/composer/composer.json
 !.config/efm-langserver/**/*
+!.config/git/**/*
 !.config/hammerspoon/**/*
 !.config/karabiner/karabiner.json
 !.config/kitty/**/*
+!.config/mackup/**/*
+!.config/nix/**/*
 !.config/nvim/**/*
 !.config/snippets/**/*
+!.config/ssh/config
 !.config/starship/**/*
 !.config/tmux/**/*
+!.config/vim/**/*
+!.config/zsh/**/*
 
 # Dotbot
 !dotbot
@@ -28,25 +36,16 @@
 !minimal.vim
 !vim/**/*
 
-# Zsh
-!zsh/**/*
-
 # others dirs
 !bin/**/*
 !commands/**/*
-!others/bash/**/*
-!others/git/**/*
-!others/mackup/**/*
-!others/nix/**/*
-!others/packages/**/*
-!others/vim/**/*
+!misc/packages/**/*
 !tasks/**/*
 !tests/**/*
 
 # others files
 !.tool-versions
-!others/.color_mode
-!others/ssh/config
+!.config/.color_mode
 !install
 !install.conf.yaml
 !NEOVIM_USAGE.md
@@ -69,7 +68,7 @@
 bookmarks
 
 # Others
-others/enhance-rails-intellisense-in-solargraph
+misc/enhance-rails-intellisense-in-solargraph
 .DS_Store
 backup
 
