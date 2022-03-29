@@ -25,6 +25,9 @@
 
 # Dotbot
 !dotbot
+!dotbot.conf.yaml
+!dotbot_install
+!dotbot_uninstall
 
 # Git
 !.github/**/*
@@ -46,13 +49,10 @@
 # others files
 !.tool-versions
 !.config/.color_mode
-!install
-!install.conf.yaml
 !NEOVIM_USAGE.md
 !Rakefile
 !README.md
 !stylua.toml
-!uninstall
 
 ################################### BLACKLIST ##################################
 

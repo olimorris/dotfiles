@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
+# Dotbot uninstall script
+# https://github.com/anishathalye/dotbot/wiki/Tips-and-Tricks#uninstall-script
 from __future__ import print_function
 
 import yaml
 import os
 
-CONFIG="install.conf.yaml"
+CONFIG="dotbot.conf.yaml"
 
 stream = open(CONFIG, "r")
 conf = yaml.load(stream, yaml.FullLoader)
