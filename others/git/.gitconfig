@@ -25,3 +25,5 @@
 	rebase = false
 [init]
 	defaultBranch = main
+[delta]
+	line-numbers = true
