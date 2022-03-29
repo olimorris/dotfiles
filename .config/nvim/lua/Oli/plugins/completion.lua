@@ -32,8 +32,8 @@ cmp.setup({
   },
   mapping = require(config_namespace .. ".core.mappings").completion_keymaps(),
   sources = { -- Ordered by priority
-    { name = "nvim_lsp", max_item_count = 5 },
     { name = "luasnip", max_item_count = 5 },
+    { name = "nvim_lsp", max_item_count = 5 },
     {
       name = "buffer",
       max_item_count = 5,

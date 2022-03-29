@@ -468,12 +468,31 @@ M.completion_keymaps = function()
       "i",
       "s",
     }),
-    ["<C-e>"] = cmp.mapping.close(),
+    ["<ESC>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.mapping.close()()
+      else
+        fallback()
+      end
+    end, {
+      "i",
+      "c",
+    }),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<CR>"] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = false, -- hitting <CR> when nothing is selected, does nothing
+      select = true, -- hitting <CR> when nothing is selected, does nothing
+    }),
+    ["<Right>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.mapping.confirm({ select = true })()
+      else
+        fallback()
+      end
+    end, {
+      "i",
+      "s",
+      "c",
     }),
     -- ["<CR>"] = cmp.mapping.confirm({ select = true }),
   }
