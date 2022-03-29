@@ -146,7 +146,7 @@ function M.plugin_commands()
     {
       "PackerCompile",
       function()
-        require(config_namespace .. ".core.plugins")
+        require(config_namespace .. ".plugins")
         require("packer").compile()
       end,
       description = "Packer: Compile",
@@ -154,7 +154,7 @@ function M.plugin_commands()
     {
       "PackerClean",
       function()
-        require(config_namespace .. ".core.plugins")
+        require(config_namespace .. ".plugins")
         require("packer").clean()
       end,
       description = "Packer: Clean",
@@ -162,7 +162,7 @@ function M.plugin_commands()
     {
       "PackerInstall",
       function()
-        require(config_namespace .. ".core.plugins")
+        require(config_namespace .. ".plugins")
         require("packer").install()
       end,
       description = "Packer: Install",
@@ -170,7 +170,7 @@ function M.plugin_commands()
     {
       "PackerSync",
       function()
-        require(config_namespace .. ".core.plugins")
+        require(config_namespace .. ".plugins")
         require("packer").sync()
       end,
       description = "Packer: Sync",
@@ -178,7 +178,7 @@ function M.plugin_commands()
     {
       "PackerStatus",
       function()
-        require(config_namespace .. ".core.plugins")
+        require(config_namespace .. ".plugins")
         require("packer").status()
       end,
       description = "Packer: Status",
@@ -186,7 +186,7 @@ function M.plugin_commands()
     {
       "PackerUpdate",
       function()
-        require(config_namespace .. ".core.plugins")
+        require(config_namespace .. ".plugins")
         require("packer").update()
       end,
       description = "Packer: Update",
@@ -219,6 +219,14 @@ function M.plugin_commands()
         require("persisted").delete()
       end,
       description = "Session: Delete",
+    },
+    -- Startup time
+    {
+      "Startup Time",
+      function()
+        vim.cmd([[StartupTime]])
+      end,
+      description = "Profile Neovim's startup time",
     },
   }
 end

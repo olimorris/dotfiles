@@ -16,5 +16,5 @@ end
 
 -- Defer the plugins to last as we have packer compiled
 vim.defer_fn(function()
-  require(config_namespace .. ".core.plugins").load()
+  require(config_namespace .. ".plugins")
 end, 0)
