@@ -150,7 +150,7 @@ M.plugin_keymaps = function()
   local h = require("legendary.helpers")
   return {
     -- Legendary
-    { "<C-p>", require("legendary").find, description = "Search keybinds and commands", mode = { "n", "i", "v" } },
+    { "<C-p>", require("legendary").find, description = "Search keybinds and commands", mode = { "n", "i", "x" } },
 
     -- Aerial
     { "<C-t>", "<cmd>AerialToggle<CR>", description = "Aerial" },

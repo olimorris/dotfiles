@@ -183,7 +183,9 @@ M.hlargs = function()
     return
   end
 
-  hlargs.setup()
+  hlargs.setup({
+    paint_arg_declarations = false,
+  })
 end
 
 M.harpoon = function()
@@ -373,7 +375,9 @@ M.toggleterm = function()
         border = "ToggleTermBorder",
       },
     },
-    -- open_mapping = "",
+    -- direction = "horizontal",
+    -- size = 8,
+    -- shade_terminals = true,
     shading_factor = 3, -- Match our background
     hide_numbers = true,
     close_on_exit = true,

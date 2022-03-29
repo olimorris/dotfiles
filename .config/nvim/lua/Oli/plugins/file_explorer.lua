@@ -29,37 +29,26 @@ M.config = function()
     git_status_async = false,
     enable_git_status = false,
     enable_diagnostics = false,
+    default_component_configs = {
+      icon = {
+        folder_open = "",
+        folder_closed = "",
+        folder_empty = "ﰊ",
+        default = "*",
+      },
+      indent = {
+        with_markers = false,
+      },
+    },
     filesystem = {
       filtered_items = {
         hide_dotfiles = false,
         hide_gitignored = false,
       },
     },
-    -- ignore_ft_on_setup = {
-    --   "aerial",
-    --   "alpha",
-    --   "dashboard",
-    --   "startify",
-    --   "terminal",
-    --   "quickfix",
-    -- }, -- will not open on setup if the filetype is in this list
-    -- hijack_cursor = true, -- put the cursor at the start of the filename
-    -- git = { enable = false, ignore = false },
-    -- filters = {
-    --   dotfiles = false,
-    --   custom = { ".git", "node_modules", ".cache", ".vscode", ".DS_Store" },
-    -- },
-    -- actions = {
-    --   open_file = {
-    --     resize_window = true,
-    --   },
-    -- },
-    -- view = {
-    --   allow_resize = true,
-    --   side = "left",
-    --   width = 35,
-    --   hide_root_folder = false,
-    -- },
+    window = {
+      width = 35,
+    },
   })
 end
 

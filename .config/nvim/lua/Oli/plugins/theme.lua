@@ -9,7 +9,7 @@ M.setup = function()
 
   onedarkpro.setup({
     plugins = { polygot = false, telescope = false },
-    styles = { comments = "italic", keywords = "bold,italic" },
+    styles = { comments = "italic", keywords = "italic" },
     options = {
       bold = true,
       italic = true,
@@ -55,7 +55,10 @@ M.setup = function()
       },
       yaml = { TSField = { fg = "${red}" } },
       ruby = {
-        TSParameter = { fg = "${fg}" },
+        Hlargs = { fg = "${red}" },
+        TSFunction = { fg = "${blue}", style = "bold" },
+        TSInclude = { fg = "${blue}", style = "italic" },
+        TSParameter = { fg = "${fg}", style = "italic" },
         TSSymbol = { fg = "${cyan}" },
       },
       scss = {
@@ -99,8 +102,8 @@ M.setup = function()
       GhostText = { fg = "${ghost_text}" },
 
       -- coverage
-      CoverageCovered = { fg = "${green}"},
-      CoverageUncovered = { fg = "${red}"},
+      CoverageCovered = { fg = "${green}" },
+      CoverageUncovered = { fg = "${red}" },
 
       -- Fidget plugin
       FidgetTitle = { fg = "${purple}" },

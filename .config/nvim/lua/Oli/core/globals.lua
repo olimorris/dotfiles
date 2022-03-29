@@ -13,76 +13,76 @@ end
 
 om.nightly = om.has("nvim-0.7")
 
-function om._create(f)
-  table.insert(om._store, f)
-  return #om._store
-end
+-- function om._create(f)
+--   table.insert(om._store, f)
+--   return #om._store
+-- end
 
-function om._execute(id, args)
-  om._store[id](args)
-end
+-- function om._execute(id, args)
+--   om._store[id](args)
+-- end
 
----@class Autocommand
----@field events string[] list of autocommand events
----@field targets string[] list of autocommand patterns
----@field modifiers string[] e.g. nested, once
----@field command string | function
----Borrowed from https://github.com/akinsho/dotfiles/blob/main/.config/nvim/lua/as/globals.lua
+-- ---@class Autocommand
+-- ---@field events string[] list of autocommand events
+-- ---@field targets string[] list of autocommand patterns
+-- ---@field modifiers string[] e.g. nested, once
+-- ---@field command string | function
+-- ---Borrowed from https://github.com/akinsho/dotfiles/blob/main/.config/nvim/lua/as/globals.lua
 
----@param command Autocommand
-local function is_valid_target(command)
-  local valid_type = command.targets and vim.tbl_islist(command.targets)
-  return valid_type or vim.startswith(command.events[1], "User ")
-end
+-- ---@param command Autocommand
+-- local function is_valid_target(command)
+--   local valid_type = command.targets and vim.tbl_islist(command.targets)
+--   return valid_type or vim.startswith(command.events[1], "User ")
+-- end
 
----Create an autocommand
----@param name string
----@param commands Autocommand[]
-function om.augroup(name, commands)
-  vim.cmd("augroup " .. name)
-  vim.cmd("autocmd!")
-  for _, c in ipairs(commands) do
-    if c.command and c.events and is_valid_target(c) then
-      local command = c.command
-      if type(command) == "function" then
-        local fn_id = om._create(command)
-        command = string.format("lua om._execute(%s)", fn_id)
-      end
-      c.events = type(c.events) == "string" and { c.events } or c.events
-      vim.cmd(
-        string.format(
-          "autocmd %s %s %s %s",
-          table.concat(c.events, ","),
-          table.concat(c.targets or {}, ","),
-          table.concat(c.modifiers or {}, " "),
-          command
-        )
-      )
-    else
-      vim.notify(
-        string.format("An autocommand in %s is specified incorrectly: %s", name, vim.inspect(name)),
-        vim.log.levels.ERROR
-      )
-    end
-  end
-  vim.cmd("augroup END")
-end
+-- ---Create an autocommand
+-- ---@param name string
+-- ---@param commands Autocommand[]
+-- function om.augroup(name, commands)
+--   vim.cmd("augroup " .. name)
+--   vim.cmd("autocmd!")
+--   for _, c in ipairs(commands) do
+--     if c.command and c.events and is_valid_target(c) then
+--       local command = c.command
+--       if type(command) == "function" then
+--         local fn_id = om._create(command)
+--         command = string.format("lua om._execute(%s)", fn_id)
+--       end
+--       c.events = type(c.events) == "string" and { c.events } or c.events
+--       vim.cmd(
+--         string.format(
+--           "autocmd %s %s %s %s",
+--           table.concat(c.events, ","),
+--           table.concat(c.targets or {}, ","),
+--           table.concat(c.modifiers or {}, " "),
+--           command
+--         )
+--       )
+--     else
+--       vim.notify(
+--         string.format("An autocommand in %s is specified incorrectly: %s", name, vim.inspect(name)),
+--         vim.log.levels.ERROR
+--       )
+--     end
+--   end
+--   vim.cmd("augroup END")
+-- end
 
----Create a neovim command
----@param args table
-function om.command(args)
-  local nargs = args.nargs or 0
-  local name = args[1]
-  local rhs = args[2]
-  local types = (args.types and type(args.types) == "table") and table.concat(args.types, " ") or ""
+-- ---Create a neovim command
+-- ---@param args table
+-- function om.command(args)
+--   local nargs = args.nargs or 0
+--   local name = args[1]
+--   local rhs = args[2]
+--   local types = (args.types and type(args.types) == "table") and table.concat(args.types, " ") or ""
 
-  if type(rhs) == "function" then
-    local fn_id = om._create(rhs)
-    rhs = string.format("lua om._execute(%d%s)", fn_id, nargs > 0 and ", <f-args>" or "")
-  end
+--   if type(rhs) == "function" then
+--     local fn_id = om._create(rhs)
+--     rhs = string.format("lua om._execute(%d%s)", fn_id, nargs > 0 and ", <f-args>" or "")
+--   end
 
-  vim.cmd(string.format("command! -nargs=%s %s %s %s", nargs, types, name, rhs))
-end
+--   vim.cmd(string.format("command! -nargs=%s %s %s %s", nargs, types, name, rhs))
+-- end
 
 ---Source a lua or vimscript file
 ---@param path string path relative to the nvim directory
