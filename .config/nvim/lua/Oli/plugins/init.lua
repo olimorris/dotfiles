@@ -279,6 +279,10 @@ packer.startup({
       "mrjones2014/legendary.nvim", -- A legend for all keymaps, commands and autocmds
       lock = LockPlugins,
       config = function()
+        -- Do not reload this plugin
+        if vim.g.packer_reloaded then
+          return
+        end
         require(config_namespace .. ".plugins.legendary").setup()
       end,
     })
