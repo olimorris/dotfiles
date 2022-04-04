@@ -43,6 +43,20 @@ function M.default_autocmds()
       },
     },
     {
+      name = "Terminal mappings",
+      { "TermOpen" },
+      function()
+        if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
+          local opts = { silent = false, buffer = 0 }
+          vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+          vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
+        end
+      end,
+      opts = {
+        pattern = "term://*",
+      },
+    },
+    {
       name = "Packer reload and compile notification",
       {
         { "BufWritePost" },

@@ -12,8 +12,13 @@ function om.Lazygit()
       end,
     },
     on_open = function(term)
+      -- Escape key does nothing
+      if vim.fn.mapcheck("jk", "t") ~= "" then
+        vim.api.nvim_buf_del_keymap(term.bufnr, "t", "jk")
+        vim.api.nvim_buf_del_keymap(term.bufnr, "t", "<esc>")
+      end
       vim.cmd("startinsert!")
-      vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+      -- vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
     end,
   })
 end

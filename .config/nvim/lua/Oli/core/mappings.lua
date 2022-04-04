@@ -81,11 +81,6 @@ M.default_keymaps = function()
   -- Next tab is gt
   -- Previous tab is gT
 
-  -- Terminal mode
-  vim.api.nvim_set_keymap("t", "jk", "<C-\\><C-n>", silent) -- Easy escape in terminal mode
-  vim.api.nvim_set_keymap("t", "<esc>", "<C-\\><C-n>", {}) -- Escape in the terminal closes it
-  vim.api.nvim_set_keymap("t", ":q!", "<C-\\><C-n>:q!<CR>", {}) -- In the terminal :q quits it
-
   -- Movement
   -- Automatically save movements larger than 5 lines to the jumplist
   -- Use Ctrl-o/Ctrl-i to navigate backwards and forwards through the jumplist
