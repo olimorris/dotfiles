@@ -13,7 +13,7 @@ if vim.fn.empty(vim.fn.glob(PACKER_INSTALLED_PATH)) > 0 then
     "https://github.com/wbthomason/packer.nvim",
     PACKER_INSTALLED_PATH,
   })
-vim.cmd("packadd packer.nvim")
+  vim.cmd("packadd packer.nvim")
 end
 
 local packer = require("packer")
@@ -445,6 +445,11 @@ return packer.startup({
       config = function()
         require(config_namespace .. ".plugins.others").comment()
       end,
+    })
+    use({
+      "fedepujol/move.nvim", -- Move lines and blocks
+      lock = LockPlugins,
+      cmd = { "MoveLine", "MoveBlock", "MoveHChar", "MoveHBlock" },
     })
     use({
       "pianocomposer321/yabs.nvim", -- Build and run your code

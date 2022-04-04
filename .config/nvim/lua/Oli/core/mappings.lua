@@ -65,11 +65,6 @@ M.default_keymaps = function()
 
     { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
     { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
-
-    { "<a-j>", "<cmd>move+<CR>==", description = "Move line down" },
-    { "<a-k>", "<cmd>move-2<CR>==", description = "Move line up" },
-    { "<a-j>", ":move'>+<CR>='[gv", description = "Move line down", mode = { "v" } },
-    { "<a-k>", ":move-2<CR>='[gv", description = "Move line up", mode = { "v" } },
   }
 
   -- Allow using of the alt key
@@ -305,6 +300,28 @@ M.plugin_keymaps = function()
         vim.cmd("MinimapRefresh")
       end,
       description = "Minimap toggle",
+    },
+
+    -- Move
+    {
+      "<A-j>",
+      { n = ":MoveLine(1)<CR>", x = ":MoveBlock(1)<CR>" },
+      description = "Move text down",
+    },
+    {
+      "<A-k>",
+      { n = ":MoveLine(-1)<CR>", x = ":MoveBlock(-1)<CR>" },
+      description = "Move text up",
+    },
+    {
+      "<A-h>",
+      { n = ":MoveHChar(-1)<CR>", x = ":MoveHBlock(-1)<CR>" },
+      description = "Move text left",
+    },
+    {
+      "<A-l>",
+      { n = ":MoveHChar(1)<CR>", x = ":MoveHBlock(1)<CR>" },
+      description = "Move text right",
     },
 
     -- Neoclip
