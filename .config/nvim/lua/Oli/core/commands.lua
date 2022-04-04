@@ -1,5 +1,5 @@
 local M = {}
-
+-----------------------------------DEFAULT---------------------------------- {{{
 function M.default_commands()
   return {
     {
@@ -50,9 +50,18 @@ function M.default_commands()
     },
   }
 end
-
+---------------------------------------------------------------------------- }}}
+-----------------------------------PLUGINS---------------------------------- {{{
 function M.plugin_commands()
   return {
+    -- Alpha
+  {
+      "Dashboard",
+      function()
+        vim.cmd([[Alpha]])
+      end,
+      description = "Show the Alpha dashboard"
+    },
     -- Colorizer
     {
       "Color Toggle",
@@ -109,30 +118,6 @@ function M.plugin_commands()
         om.Lazygit():toggle()
       end,
       description = "Lazygit",
-    },
-    -- LSP
-    {
-      "LspLog",
-      function()
-        vim.cmd("edit " .. vim.lsp.get_log_path())
-      end,
-      description = "Show LSP logs",
-    },
-    {
-      "LspInstall",
-      function()
-        for _, name in pairs(om.lsp.servers) do
-          vim.cmd("LspInstall " .. name)
-        end
-      end,
-      description = "Install LSP servers",
-    },
-    {
-      "LspUninstall",
-      function()
-        vim.cmd("LspUninstallAll")
-      end,
-      description = "Uninstall LSP servers",
     },
     -- neogen
     {
@@ -230,7 +215,8 @@ function M.plugin_commands()
     },
   }
 end
-
+---------------------------------------------------------------------------- }}}
+-------------------------------------LSP------------------------------------ {{{
 function M.lsp_commands(client, bufnr)
   local commands = {
     {
@@ -248,6 +234,29 @@ function M.lsp_commands(client, bufnr)
       description = "Show attached LSP clients",
       opts = { buffer = bufnr },
     },
+    {
+      "LspLog",
+      function()
+        vim.cmd("edit " .. vim.lsp.get_log_path())
+      end,
+      description = "Show LSP logs",
+    },
+    {
+      "LspInstall",
+      function()
+        for _, name in pairs(om.lsp.servers) do
+          vim.cmd("LspInstall " .. name)
+        end
+      end,
+      description = "Install LSP servers",
+    },
+    {
+      "LspUninstall",
+      function()
+        vim.cmd("LspUninstallAll")
+      end,
+      description = "Uninstall LSP servers",
+    },
   }
 
   if client.name == "null-ls" or client.name == "solargraph" then
@@ -264,5 +273,5 @@ function M.lsp_commands(client, bufnr)
 
   return commands
 end
-
+---------------------------------------------------------------------------- }}}
 return M

@@ -1,5 +1,5 @@
 local M = {}
-
+------------------------------DEFAULT COMMANDS------------------------------ {{{
 function M.default_autocmds()
   local autocmds = {
     {
@@ -127,6 +127,8 @@ function M.default_autocmds()
   return autocmds
 end
 
+---------------------------------------------------------------------------- }}}
+-------------------------------------LSP------------------------------------ {{{
 function M.lsp_autocmds(client, bufnr)
   local autocmds = {}
   if client.name ~= "null-ls" then
@@ -190,5 +192,5 @@ function M.lsp_autocmds(client, bufnr)
 
   return autocmds
 end
-
+---------------------------------------------------------------------------- }}}
 return M

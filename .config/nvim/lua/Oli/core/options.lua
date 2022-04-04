@@ -4,7 +4,7 @@ Homedir = os.getenv("HOME")
 Sessiondir = vim.fn.stdpath("data") .. "/sessions"
 --------------------------------------------------------------------------- }}}
 -------------------------------GLOBAL OPTIONS------------------------------- {{{
-vim.g.did_load_filetypes = 1 -- Do not use built in filetype.vim as we use filetype.nvim instead
+vim.g.did_load_filetypes = 0 -- Do not use built in filetype.vim as we use filetype.nvim instead
 
 vim.g.neoterm_autoinsert = 0 -- Do not start terminal in insert mode
 vim.g.neoterm_autoscroll = 1 -- Autoscroll the terminal

@@ -13,9 +13,11 @@ cmp.setup({
   },
   preselect = cmp.PreselectMode.None,
   window = {
+    completion = {
+      border = "single"
+    },
     documentation = {
       border = "single",
-      winhighlight = "Normal:CmpDocumentation,FloatBorder:CmpDocumentationBorder",
     },
   },
   experimental = { ghost_text = { hl_group = "GhostText" } },

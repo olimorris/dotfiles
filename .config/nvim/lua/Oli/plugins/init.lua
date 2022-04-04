@@ -1,4 +1,5 @@
 ----------------------------------BOOTSTRAP--------------------------------- {{{
+local PACKER_COMPILED_PATH = vim.fn.stdpath("cache") .. "/packer/packer_compiled.lua"
 local PACKER_INSTALLED_PATH = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
 -- Install Packer if it doesn't exist
@@ -12,13 +13,13 @@ if vim.fn.empty(vim.fn.glob(PACKER_INSTALLED_PATH)) > 0 then
     "https://github.com/wbthomason/packer.nvim",
     PACKER_INSTALLED_PATH,
   })
+vim.cmd("packadd packer.nvim")
 end
 
-vim.cmd("packadd packer.nvim")
 local packer = require("packer")
 ---------------------------------------------------------------------------- }}}
 -----------------------------------PLUGINS---------------------------------- {{{
-packer.startup({
+return packer.startup({
   function(use, use_rocks)
     ----------------------------------AUTOLOAD---------------------------------- {{{
     -- use_rocks("penlight")
@@ -534,7 +535,7 @@ packer.startup({
       end,
     })
     ---------------------------------------------------------------------------- }}}
---------------------------------PACKER CONFIG------------------------------- {{{
+    --------------------------------PACKER CONFIG------------------------------- {{{
     if packer_install then
       packer.sync()
     end

@@ -1,8 +1,10 @@
+------------------------------------SETUP----------------------------------- {{{
 local ok, lsp_installer = om.safe_require("nvim-lsp-installer")
 if not ok then
   return
 end
 om.lsp = {}
+---------------------------------------------------------------------------- }}}
 -----------------------------------SERVERS---------------------------------- {{{
 -- The servers to automatically install using LSPI
 om.lsp.servers = {
@@ -95,14 +97,14 @@ function om.lsp.on_attach(client, bufnr)
     om.lsp.on_attach = pcall(aerial.on_attach, client, bufnr)
   end
 
-  if maps then
+  if maps and not vim.g.packer_reloaded then
     legendary.bind_keymaps(require(config_namespace .. ".core.mappings").lsp_keymaps(client, bufnr))
     legendary.bind_autocmds(require(config_namespace .. ".core.autocmds").lsp_autocmds(client, bufnr))
     legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_commands(client, bufnr))
   end
 end
 ---------------------------------------------------------------------------- }}}
---------------------------------SETUP SERVERS------------------------------- {{{
+-------------------------------CONFIG SERVERS------------------------------- {{{
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 local ok, cmp_nvim_lsp = om.safe_require("cmp_nvim_lsp")
@@ -136,6 +138,7 @@ end
 lsp_installer.on_server_ready(function(server)
   local default_opts = { on_attach = om.lsp.on_attach, capabilities = capabilities }
 
+  -- Set custom server config
   local server_opts = {
     -- ["efm"] = function()
     --     default_opts.cmd = {

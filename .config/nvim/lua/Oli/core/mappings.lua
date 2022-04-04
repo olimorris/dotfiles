@@ -468,16 +468,7 @@ M.completion_keymaps = function()
       "i",
       "s",
     }),
-    ["<ESC>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.mapping.close()()
-      else
-        fallback()
-      end
-    end, {
-      "i",
-      "c",
-    }),
+    ["<C-e>"] = cmp.mapping.close(),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<CR>"] = cmp.mapping.confirm({
