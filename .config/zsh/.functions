@@ -5,137 +5,136 @@ local bookmarks_dir="$HOME/.local/share/zsh/bookmarks"
 ################################### BOOKMARKS ##################################
 
 # Bookmark current working directory.
-function bm() {
-    
-    [[ -z "$1" ]] && \
-    echo "Error: Provide a name for the bookmark." && \
-    return
-    
-    wd=$(pwd)
-    
-    [[ ! -f $bookmarks_dir ]] && \
-    echo "$1=$wd" > $bookmarks_dir && \
-    echo "$1 added." && \
-    return
-    
-    while IFS= read -r line; do
-        [[ $line =~ $1  ]] && echo "Bookmark $1 already exists." && return
-    done < $bookmarks_dir
-    
-    echo "$1=$wd" >> $bookmarks_dir && echo "$1 added."
+function ba() {
+
+	[[ -z "$1" ]] &&
+		echo "Error: Provide a name for the bookmark." &&
+		return
+
+	wd=$(pwd)
+
+	[[ ! -f $bookmarks_dir ]] &&
+		echo "$1=$wd" >$bookmarks_dir &&
+		echo "$1 added." &&
+		return
+
+	while IFS= read -r line; do
+		[[ $line =~ $1 ]] && echo "Bookmark $1 already exists." && return
+	done <$bookmarks_dir
+
+	echo "$1=$wd" >>$bookmarks_dir && echo "$1 added."
 }
 
 # Jump to bookmark.
 function j() {
-    [[ ! -f $bookmarks_dir ]] && \
-    echo "You don't have any bookmarks yet." && \
-    return
-    
-    [[ $SHELL == "/opt/homebrew/bin/zsh" ]] && setopt local_options BASH_REMATCH
-    
-    [[ -z "$1" ]] && \
-    echo "Error: Provide a bookmark name." && \
-    return
-    
-    local bookmarks=$(cat $bookmarks_dir)
-    
-    [[ $bookmarks =~ ($1=[[:print:]]*) ]] && \
-    [[ ${BASH_REMATCH[1]} =~ (=[[:print:]]*) ]] && \
-    cd ${BASH_REMATCH[1]:1} && \
-    return
-    
-    echo "Bookmark $1 does not exist."
+	[[ ! -f $bookmarks_dir ]] &&
+		echo "You don't have any bookmarks yet." &&
+		return
+
+	[[ $SHELL == "/opt/homebrew/bin/zsh" ]] && setopt local_options BASH_REMATCH
+
+	[[ -z "$1" ]] &&
+		echo "Error: Provide a bookmark name." &&
+		return
+
+	local bookmarks=$(cat $bookmarks_dir)
+
+	[[ $bookmarks =~ ($1=[[:print:]]*) ]] &&
+		[[ ${BASH_REMATCH[1]} =~ (=[[:print:]]*) ]] &&
+		cd ${BASH_REMATCH[1]:1} &&
+		return
+
+	echo "Bookmark $1 does not exist."
 }
 
 # Remove a bookmark.
-function db() {
-    [[ ! -f $bookmarks_dir ]] && \
-    echo "You don't have any bookmarks yet." && \
-    return
-    
-    [[ -z "$1" ]] && \
-    echo "Error: Provide a bookmark name." && \
-    return
-    
-    arg="/^$1=.*/d"
-    sed -i "" $arg $bookmarks_dir
-    echo "Bookmark $1 removed."
+function bd() {
+	[[ ! -f $bookmarks_dir ]] &&
+		echo "You don't have any bookmarks yet." &&
+		return
+
+	[[ -z "$1" ]] &&
+		echo "Error: Provide a bookmark name." &&
+		return
+
+	arg="/^$1=.*/d"
+	sed -i "" $arg $bookmarks_dir
+	echo "Bookmark $1 removed."
 }
 
 # List bookmarks.
 function bl() {
-    [[ ! -f $bookmarks_dir ]] && \
-    echo "You don't have any bookmarks yet." && \
-    return
-    
-    cat $bookmarks_dir
+	[[ ! -f $bookmarks_dir ]] &&
+		echo "You don't have any bookmarks yet." &&
+		return
+
+	cat $bookmarks_dir
 }
 
 ##################################### CORE #####################################
 
 # Reload the shell
-function src()
-{
-    # Clean the cache
-    # local cache=$ZSH_CACHE_DIR
-    # autoload -U compinit zrecompile
-    # compinit -d "$cache/zcomp-$HOST"
-    
-    # Remove any old compiled files
-    # for f in ~/.zshrc "$cache/zcomp-$HOST"; do
-    #     zrecompile -p $f && command rm -f $f.zwc.old
-    # done
-    
-    # Load the shell dotfiles:
-    # for file in ~/.{aliases,functions,path}; do
-    #     [ -r "$file" ] && [ -f "$file" ] && source "$file"
-    # done
-    
-    echo "Sourced!"
-    exec zsh
+function src() {
+	# Clean the cache
+	# local cache=$ZSH_CACHE_DIR
+	# autoload -U compinit zrecompile
+	# compinit -d "$cache/zcomp-$HOST"
+
+	# Remove any old compiled files
+	# for f in ~/.zshrc "$cache/zcomp-$HOST"; do
+	#     zrecompile -p $f && command rm -f $f.zwc.old
+	# done
+
+	# Load the shell dotfiles:
+	# for file in ~/.{aliases,functions,path}; do
+	#     [ -r "$file" ] && [ -f "$file" ] && source "$file"
+	# done
+
+	echo "Sourced!"
+	exec zsh
 }
 
 # Create a new directory and enter it
 function mkd() {
-    mkdir -p "$@" && cd "$@"
+	mkdir -p "$@" && cd "$@"
 }
 
 # Show hidden files
 function unhide() {
-    defaults write com.apple.finder AppleShowAllFiles YES
-    killall -KILL Finder
+	defaults write com.apple.finder AppleShowAllFiles YES
+	killall -KILL Finder
 }
 
 # Hide hidden files
 function hide() {
-    defaults write com.apple.finder AppleShowAllFiles NO
-    killall -KILL Finder
+	defaults write com.apple.finder AppleShowAllFiles NO
+	killall -KILL Finder
 }
 
 # Print the current timestamp
 function now() {
-    now=$(date '+%F %T')
-    echo $now | pbcopy
-    echo $now
-    echo '...has been copied to the clipboard'
+	now=$(date '+%F %T')
+	echo $now | pbcopy
+	echo $now
+	echo '...has been copied to the clipboard'
 }
 
 # 'nv' with no arguments opens the current directory in Vim, otherwise opens the given location
 function nv() {
-    if [ $# -eq 0 ]; then
-        nvim;
-    else
-        nvim "$@";
-    fi;
+	if [ $# -eq 0 ]; then
+		nvim
+	else
+		nvim "$@"
+	fi
 }
 
 # 'o' with no arguments opens the current directory, otherwise opens the given location
 function o() {
-    if [ $# -eq 0 ]; then
-        open .;
-    else
-        open "$@";
-    fi;
+	if [ $# -eq 0 ]; then
+		open .
+	else
+		open "$@"
+	fi
 }
 
 #################################### DOCKER ####################################
@@ -143,92 +142,91 @@ function o() {
 # Run specific Docker commands where the first arg is the docker env to use
 # e.g. dev or prod
 function dk() {
-    envtouse=$1
-    shift
-    docker-compose -f "docker-compose.${envtouse}.yml" $@
+	envtouse=$1
+	shift
+	docker-compose -f "docker-compose.${envtouse}.yml" $@
 }
 
 #################################### PYTHON ####################################
 
 function pipb() {
-    pip3 freeze > ~/.dotfiles/macos/PIP.txt
+	pip3 freeze >~/.dotfiles/macos/PIP.txt
 }
 function pipi() {
-    pip3 install -r ~/.dotfiles/macos/PIP.txt
+	pip3 install -r ~/.dotfiles/macos/PIP.txt
 }
 
 ##################################### TMUX #####################################
 
 # Boot tmux if tmux exists and is not running.
 function exec_tmux() {
-  which tmux &> /dev/null && \
-    [ -n "$PS1" ] && \
-    [[ ! "$TERM" =~ screen ]] && \
-    [[ ! "$TERM" =~ tmux ]] && \
-    [ -z "$TMUX" ] && \
-    exec tmux
+	which tmux &>/dev/null &&
+		[ -n "$PS1" ] &&
+		[[ ! "$TERM" =~ screen ]] &&
+		[[ ! "$TERM" =~ tmux ]] &&
+		[ -z "$TMUX" ] &&
+		exec tmux
 }
 
 # Create a new Tmux session that shares all windows with a previous session
 function ta {
-    tmux new-session -s $2 -t $1
+	tmux new-session -s $2 -t $1
 }
 
-
 function popuptmux {
-    width=${2:-85%}
-    height=${2:-85%}
-    if [ "$(tmux display-message -p -F "#{session_name}")" = "popup" ];then
-        tmux detach-client
-    else
-        tmux popup -d '#{pane_current_path}' -xC -yC -w$width -h$height -E "tmux attach -t popup || tmux new -s popup"
-    fi
+	width=${2:-85%}
+	height=${2:-85%}
+	if [ "$(tmux display-message -p -F "#{session_name}")" = "popup" ]; then
+		tmux detach-client
+	else
+		tmux popup -d '#{pane_current_path}' -xC -yC -w$width -h$height -E "tmux attach -t popup || tmux new -s popup"
+	fi
 }
 
 ##################################### MISC #####################################
 
 # Make an asdf global symlink
 function asdf_glob() {
-    OUTPUT=$(ln -s ~/.asdf/installs/$1/$2 ~/.asdf/installs/$1/global)
-    echo "${OUTPUT}"
+	OUTPUT=$(ln -s ~/.asdf/installs/$1/$2 ~/.asdf/installs/$1/global)
+	echo "${OUTPUT}"
 }
 
 # Copy the pwd
 function cpwd() {
-    pwd | pbcopy
+	pwd | pbcopy
 }
 
 # Close unneeded applications to free up memory
 function close_apps() {
-    osascript -e 'quit app "ColorSlurp"'
-    osascript -e 'quit app "PixelSnap 2"'
-    osascript -e 'quit app "Dash"'
-    osascript -e 'quit app "Fantastical Helper"'
-    osascript -e 'quit app "Hand Mirror"'
-    osascript -e 'quit app "Hazeover"'
-    osascript -e 'quit app "Logi Options Daemon"'
-    osascript -e 'quit app "LogiFacecamService"'
-    osascript -e 'quit app "Mail"'
-    osascript -e 'quit app "Music Creation"'
-    osascript -e 'quit app "One Switch"'
-    osascript -e 'quit app "Photos"'
-    osascript -e 'quit app "Tresorit"'
-    osascript -e 'quit app "TV"'
+	osascript -e 'quit app "ColorSlurp"'
+	osascript -e 'quit app "PixelSnap 2"'
+	osascript -e 'quit app "Dash"'
+	osascript -e 'quit app "Fantastical Helper"'
+	osascript -e 'quit app "Hand Mirror"'
+	osascript -e 'quit app "Hazeover"'
+	osascript -e 'quit app "Logi Options Daemon"'
+	osascript -e 'quit app "LogiFacecamService"'
+	osascript -e 'quit app "Mail"'
+	osascript -e 'quit app "Music Creation"'
+	osascript -e 'quit app "One Switch"'
+	osascript -e 'quit app "Photos"'
+	osascript -e 'quit app "Tresorit"'
+	osascript -e 'quit app "TV"'
 }
 
 function print_divider() {
-    divider=""
-    wincols=$(expr $(tput cols) - 1)
-    for _ in {0..$wincols}; do
-        divider+="-"
-    done
-    echo $divider
+	divider=""
+	wincols=$(expr $(tput cols) - 1)
+	for _ in {0..$wincols}; do
+		divider+="-"
+	done
+	echo $divider
 }
 
 # Test that 256 colors are working in the terminal
 function col {
-    echo -e 'Should be a smooth gradient:'
-    awk 'BEGIN{
+	echo -e 'Should be a smooth gradient:'
+	awk 'BEGIN{
         s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
         for (colnum = 0; colnum<77; colnum++) {
             r = 255-(colnum*255/76);
@@ -245,96 +243,99 @@ function col {
 
 # Test that italics are working in the terminal
 function italic {
-    echo -e "\e[3mThis text should be in italics\e[23m"
+	echo -e "\e[3mThis text should be in italics\e[23m"
 }
 
 # Set the brightness of the screen
 function lu {
-    lunar set brightness $@
+	lunar set brightness $@
 }
 
 # Extract text from an image
 function extract_text {
-    FILEPATH=$1
-    convert $1 -resize 400% -type Grayscale $1.tif
-    tesseract -l eng $1.tif output
+	FILEPATH=$1
+	convert $1 -resize 400% -type Grayscale $1.tif
+	tesseract -l eng $1.tif output
 }
 
 # Make it easy to run rake commands in our dotfiles
 function dotfile_tasks {
-    echo "Do you wish to run a dotfile rake command?"
-    select yn in "Yes" "No"; do
-        case $yn in
-            Yes ) (cd ~/.dotfiles && rake $@); break;;
-            No ) break;;
-        esac
-    done
+	echo "Do you wish to run a dotfile rake command?"
+	select yn in "Yes" "No"; do
+		case $yn in
+		Yes)
+			(cd ~/.dotfiles && rake $@)
+			break
+			;;
+		No) break ;;
+		esac
+	done
 }
 
 # Combine images horizontally
 # Example: hcombine my_image.jpg my_image2.jpg
 function hcombine {
-    filename=$(basename -- "$1")
-    extension="${filename##*.}"
-    dt=`date +"%Y-%m-%d %H.%M.%S"`
-    convert +append $1 $2 -gravity center +append "${dt}.${extension}"
+	filename=$(basename -- "$1")
+	extension="${filename##*.}"
+	dt=$(date +"%Y-%m-%d %H.%M.%S")
+	convert +append $1 $2 -gravity center +append "${dt}.${extension}"
 }
 
 # Combine images vertically
 # Example: vcombine my_image.jpg my_image2.jpg
 function vcombine {
-    filename=$(basename -- "$1")
-    extension="${filename##*.}"
-    dt=`date +"%Y-%m-%d %H.%M.%S"`
-    convert $1 $2 -gravity center -append "${dt}.${extension}"
+	filename=$(basename -- "$1")
+	extension="${filename##*.}"
+	dt=$(date +"%Y-%m-%d %H.%M.%S")
+	convert $1 $2 -gravity center -append "${dt}.${extension}"
 }
 
 # Easily switch Postgres versions
 # https://gist.github.com/jbranchaud/3cda6be6e1dc69c6f55435a387018dac
 function switch_pg {
-  local version_to_run=$1
-  local currently_running_version=$(psql --no-psqlrc -t -c 'show server_version;' postgres | xargs)
+	local version_to_run=$1
+	local currently_running_version=$(psql --no-psqlrc -t -c 'show server_version;' postgres | xargs)
 
-  # check if you're erroneously switching to the same version
-  if [ "$version_to_run" = "$currently_running_version" ]; then
-    echo "Postgres $version_to_run is already running."
-    return 1
-  fi
+	# check if you're erroneously switching to the same version
+	if [ "$version_to_run" = "$currently_running_version" ]; then
+		echo "Postgres $version_to_run is already running."
+		return 1
+	fi
 
-  echo Switching from $currently_running_version to $version_to_run
-  # stop the currently running postgres server
-  $HOME/.asdf/installs/postgres/$currently_running_version/bin/pg_ctl \
-    -D $HOME/.asdf/installs/postgres/$currently_running_version/data \
-    stop
+	echo Switching from $currently_running_version to $version_to_run
+	# stop the currently running postgres server
+	$HOME/.asdf/installs/postgres/$currently_running_version/bin/pg_ctl \
+		-D $HOME/.asdf/installs/postgres/$currently_running_version/data \
+		stop
 
-  # start the server to be started
-  $HOME/.asdf/installs/postgres/$version_to_run/bin/pg_ctl \
-    -D $HOME/.asdf/installs/postgres/$version_to_run/data \
-    start
+	# start the server to be started
+	$HOME/.asdf/installs/postgres/$version_to_run/bin/pg_ctl \
+		-D $HOME/.asdf/installs/postgres/$version_to_run/data \
+		start
 
-  # switch the global asdf version, this ensures that `psql` is shimmed to the right version-directory
-  asdf global postgres $version_to_run
+	# switch the global asdf version, this ensures that `psql` is shimmed to the right version-directory
+	asdf global postgres $version_to_run
 }
 
 function pgstart {
-    local version_to_run=$1
+	local version_to_run=$1
 
-    if [ -z "$version_to_run" ]; then
-        version_to_run="14.1"
-    fi
+	if [ -z "$version_to_run" ]; then
+		version_to_run="14.1"
+	fi
 
-    $HOME/.asdf/installs/postgres/$version_to_run/bin/pg_ctl \
-    -D $HOME/.asdf/installs/postgres/$version_to_run/data \
-    start
+	$HOME/.asdf/installs/postgres/$version_to_run/bin/pg_ctl \
+		-D $HOME/.asdf/installs/postgres/$version_to_run/data \
+		start
 }
 function pgstop {
-    local version_to_run=$1
+	local version_to_run=$1
 
-    if [ -z "$version_to_run" ]; then
-        version_to_run="14.1"
-    fi
+	if [ -z "$version_to_run" ]; then
+		version_to_run="14.1"
+	fi
 
-    $HOME/.asdf/installs/postgres/$version_to_run/bin/pg_ctl \
-    -D $HOME/.asdf/installs/postgres/$version_to_run/data \
-    stop
+	$HOME/.asdf/installs/postgres/$version_to_run/bin/pg_ctl \
+		-D $HOME/.asdf/installs/postgres/$version_to_run/data \
+		stop
 }

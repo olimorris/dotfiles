@@ -48,14 +48,14 @@ source $PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # fzf
-if [[ ! "$PATH" == */opt/homebrew/opt/fzf/bin* ]]; then
-	export PATH="${PATH:+${PATH}:}/opt/homebrew/opt/fzf/bin"
+if [[ ! "$PATH" == *$(brew --prefix)/opt/fzf/bin* ]]; then
+	export PATH="${PATH:+${PATH}:}$(brew --prefix)/opt/fzf/bin"
 fi
-[[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2>/dev/null
-source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+[[ $- == *i* ]] && source "$(brew --prefix)/opt/fzf/shell/completion.zsh" 2>/dev/null
+source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
 
 # asdf
-source /opt/homebrew/opt/asdf/libexec/asdf.sh
+source $(brew --prefix)/opt/asdf/libexec/asdf.sh
 
 # Starship - Change the default starship location
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
