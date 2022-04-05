@@ -37,21 +37,6 @@ M.aerial = function()
   })
 end
 
-M.autopairs = function()
-  local ok1, autopairs = om.safe_require("nvim-autopairs")
-  local ok2, cmp_autopairs = om.safe_require("nvim-autopairs.completion.cmp")
-  if not (ok1 or ok2) then
-    return
-  end
-
-  autopairs.setup({
-    check_ts = true, -- Use Treesitter
-  })
-
-  local cmp = require("cmp")
-  cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-end
-
 M.colorizer = function()
   local ok, colorizer = om.safe_require("colorizer")
   if not ok then

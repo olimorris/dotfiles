@@ -326,13 +326,6 @@ return packer.startup({
         require(config_namespace .. ".plugins.completion")
       end,
     })
-    use({
-      "windwp/nvim-autopairs", -- Automatically inserts a closing bracket, moustache etc
-      lock = LockPlugins,
-      config = function()
-        require(config_namespace .. ".plugins.others").autopairs()
-      end,
-    })
     ---------------------------------------------------------------------------- }}}
     -----------------------------------CODING----------------------------------- {{{
     use({

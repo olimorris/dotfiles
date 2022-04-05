@@ -17,9 +17,6 @@ treesitter.setup({
   },
   indent = { enable = true },
 
-  -- nvim-autopairs plugin
-  autopairs = { enable = true },
-
   -- nvim-ts-autotag plugin
   autotag = { enable = true },
 
