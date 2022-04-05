@@ -6,6 +6,7 @@ local filetypes_to_exclude = {
   "help",
   "gitcommit",
   "dashboard",
+  "neo-tree",
   "NvimTree",
   "packer",
   "lspinfo",
