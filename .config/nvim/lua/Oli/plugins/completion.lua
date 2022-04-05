@@ -9,15 +9,23 @@ end
 
 cmp.setup({
   completion = {
-    completeopt = "menu,menuone,noinsert",
+    completeopt = "menuone,noinsert",
   },
   preselect = cmp.PreselectMode.None,
   window = {
     completion = {
-      border = "single"
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+      scrollbar = "║",
+      autocomplete = {
+        require("cmp.types").cmp.TriggerEvent.InsertEnter,
+        require("cmp.types").cmp.TriggerEvent.TextChanged,
+      },
     },
     documentation = {
-      border = "single",
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+      scrollbar = "║",
     },
   },
   experimental = { ghost_text = { hl_group = "GhostText" } },
@@ -48,4 +56,5 @@ cmp.setup({
     { name = "nvim_lua" },
     { name = "path" },
   },
+  preselect = cmp.PreselectMode.Item,
 })

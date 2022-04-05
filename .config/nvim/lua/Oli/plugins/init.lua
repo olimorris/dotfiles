@@ -291,6 +291,7 @@ return packer.startup({
     ---------------------------------COMPLETION--------------------------------- {{{
     use({
       "hrsh7th/nvim-cmp", -- Code completion menu
+      branch = "dev",  -- For floating menu
       lock = LockPlugins,
       requires = {
         {
