@@ -31,12 +31,13 @@ M.default_keymaps = function()
     { "<LocalLeader>,", "<cmd>norm A,<CR>", description = "Append comma" },
     { "<LocalLeader>;", "<cmd>norm A;<CR>", description = "Append semicolon" },
 
-    { "<LocalLeader>(", [[ciw(<c-r>")<esc>]], description = "Wrap in brackets ()" },
-    { "<LocalLeader>(", [[c(<c-r>")<esc>]], description = "Wrap in brackets ()", mode = { "v" } },
-    { "<LocalLeader>{", [[ciw{<c-r>"}<esc>]], description = "Wrap in curly braces {}" },
-    { "<LocalLeader>{", [[c{<c-r>"}<esc>]], description = "Wrap in curly braces {}", mode = { "v" } },
-    { '<LocalLeader>"', [[ciw"<c-r>""<esc>]], description = "Wrap in quotes" },
-    { '<LocalLeader>"', [[c"<c-r>""<esc>]], description = "Wrap in quotes", mode = { "v" } },
+    { "<LocalLeader>(", { n = [[ciw(<c-r>")<esc>]], v = [[c(<c-r>")<esc>]] }, description = "Wrap in brackets ()" },
+    {
+      "<LocalLeader>{",
+      { n = [[ciw{<c-r>"}<esc>]], v = [[c{<c-r>"}<esc>]] },
+      description = "Wrap in curly braces {}",
+    },
+    { '<LocalLeader>"', { n = [[ciw"<c-r>""<esc>]], v = [[c"<c-r>""<esc>]] }, description = "Wrap in quotes" },
 
     {
       "<LocalLeader>[",
@@ -67,19 +68,58 @@ M.default_keymaps = function()
     { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
   }
 
-  -- Allow using of the alt key
-  -- vim.api.nvim_set_keymap("n", "¬", "<a-l>", silent)
-  -- vim.api.nvim_set_keymap("n", "˙", "<a-h>", silent)
-  -- vim.api.nvim_set_keymap("n", "∆", "<a-j>", silent)
-  -- vim.api.nvim_set_keymap("n", "˚", "<a-k>", silent)
+  ------------------------------MULTIPLE CURSORS------------------------------ {{{
+  -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
+  -- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
 
-  -- Tabs
-  -- vim.api.nvim_set_keymap("n", "<Leader>te", "<cmd>tabe %<CR>", silent)
-  -- vim.api.nvim_set_keymap("n", "<Leader>to", "<cmd>tabonly<CR>", silent)
-  -- vim.api.nvim_set_keymap("n", "<Leader>tc", "<cmd>tabclose<CR>", silent)
+  -- 1. Position the cursor anywhere in the word you wish to change;
+  -- 2. Or, visually make a selection;
+  -- 3. Hit cn, type the new word, then go back to Normal mode;
+  -- 4. Hit `.` n-1 times, where n is the number of replacements.
+  table.insert(maps, { "cn", "*``cgn", description = "Multiple cursors" })
+  table.insert(maps, { "cn", "*``cgN", description = "Multiple cursors (backwards)" })
 
-  -- Next tab is gt
-  -- Previous tab is gT
+  vim.g.mc = vim.api.nvim_replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]], true, true, true)
+  table.insert(
+    maps,
+    { "cn", [[g:mc . "``cgn"]], description = "Multiple cursors", mode = { "x" }, opts = { expr = true } }
+  )
+  table.insert(
+    maps,
+    { "cn", [[g:mc . "``cgN"]], description = "Multiple cursors (backwards)", mode = { "x" }, opts = { expr = true } }
+  )
+
+  -- 1. Position the cursor over a word; alternatively, make a selection.
+  -- 2. Hit cq to start recording the macro.
+  -- 3. Once you are done with the macro, go back to normal mode.
+  -- 4. Hit Enter to repeat the macro over search matches.
+  function om.mappings.setup_mc()
+    vim.keymap.set(
+      "n",
+      "<Enter>",
+      [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]],
+      { remap = true, silent = true }
+    )
+  end
+  table.insert(
+    maps,
+    { "cq", [[:\<C-u>call v:lua.om.mappings.setup_mc()<CR>*``qz]], description = "Multiple cursors macros" }
+  )
+  table.insert(
+    maps,
+    { "cQ", [[:\<C-u>call v:lua.om.mappings.setup_mc()<CR>#``qz]], description = "Multiple cursors macros (backwards)" }
+  )
+  table.insert(
+    maps,
+    {
+      "cq",
+      [[":\<C-u>call v:lua.om.mappings.setup_mc()<CR>gv" . g:mc . "``qz"]],
+      description = "Multiple cursors macros",
+      mode = { "x" },
+      opts = { expr = true },
+    }
+  )
+  ---------------------------------------------------------------------------- }}}
 
   -- Movement
   -- Automatically save movements larger than 5 lines to the jumplist
@@ -97,40 +137,6 @@ M.default_keymaps = function()
     { noremap = true, expr = true }
   )
 
-  -- Multiple cursors
-  -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
-  -- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
-
-  -- 1. Position the cursor anywhere in the word you wish to change;
-  -- 2. Hit cn, type the new word, then go back to Normal mode;
-  -- 3. Hit . n-1 times, where n is the number of replacements.
-  vim.api.nvim_set_keymap("n", "cn", "*``cgn", silent) -- Changing a word
-  vim.api.nvim_set_keymap("n", "cN", "*``cgN", silent) -- Changing a word (in backwards direction)
-
-  -- 1. Position the cursor over a word; alternatively, make a selection.
-  -- 2. Hit cq to start recording the macro.
-  -- 3. Once you are done with the macro, go back to normal mode.
-  -- 4. Hit Enter to repeat the macro over search matches.
-  function om.mappings.setup_mc()
-    vim.keymap.set(
-      "n",
-      "<Enter>",
-      [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]],
-      { remap = true, silent = true }
-    )
-  end
-  vim.g.mc = vim.api.nvim_replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]], true, true, true)
-  vim.api.nvim_set_keymap("x", "cn", [[g:mc . "``cgn"]], { expr = true, silent = true })
-  vim.api.nvim_set_keymap("x", "cN", [[g:mc . "``cgN"]], { expr = true, silent = true })
-  vim.api.nvim_set_keymap("n", "cq", [[:\<C-u>call v:lua.om.mappings.setup_mc()<CR>*``qz]], { silent = true })
-  vim.api.nvim_set_keymap("n", "cQ", [[:\<C-u>call v:lua.om.mappings.setup_mc()<CR>#``qz]], { silent = true })
-  vim.api.nvim_set_keymap(
-    "x",
-    "cq",
-    [[":\<C-u>call v:lua.om.mappings.setup_mc()<CR>gv" . g:mc . "``qz"]],
-    { expr = true }
-  )
-
   return maps
 end
 ---------------------------------------------------------------------------- }}}
@@ -140,7 +146,12 @@ M.plugin_keymaps = function()
   local h = require("legendary.helpers")
   return {
     -- Legendary
-    { "<C-p>", require("legendary").find, description = "Search keybinds and commands", mode = { "n", "i", "x" } },
+    {
+      "<C-p>",
+      require("legendary").find,
+      description = "Search keybinds and commands",
+      mode = { "n", "i", "x", "v" },
+    },
 
     -- Aerial
     { "<C-t>", "<cmd>AerialToggle<CR>", description = "Aerial" },
