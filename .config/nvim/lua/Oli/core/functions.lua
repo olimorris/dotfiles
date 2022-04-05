@@ -12,7 +12,7 @@ function om.Lazygit()
       end,
     },
     on_open = function(term)
-      -- Escape key does nothing
+      -- Escape key does nothing in Lazygit
       if vim.fn.mapcheck("jk", "t") ~= "" then
         vim.api.nvim_buf_del_keymap(term.bufnr, "t", "jk")
         vim.api.nvim_buf_del_keymap(term.bufnr, "t", "<esc>")
