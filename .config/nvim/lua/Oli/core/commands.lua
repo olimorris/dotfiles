@@ -14,7 +14,7 @@ function M.default_commands()
       function()
         om.LoadSession()
       end,
-      description = "Session: Load",
+      description = "Session: List",
     },
     {
       "Snippets",
