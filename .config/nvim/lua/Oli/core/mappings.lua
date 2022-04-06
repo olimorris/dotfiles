@@ -66,33 +66,60 @@ M.default_keymaps = function()
 
     { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
     { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
+
+    -- Multiple Cursors
+    -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
+    -- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
+
+    -- 1. Position the cursor anywhere in the word you wish to change;
+    -- 2. Or, visually make a selection;
+    -- 3. Hit cn, type the new word, then go back to Normal mode;
+    -- 4. Hit `.` n-1 times, where n is the number of replacements.
+    {
+      "cn",
+      {
+        n = { "*``cgn" },
+        x = { [[g:mc . "``cgn"]], opts = { expr = true } },
+      },
+      description = "Multiple cursors",
+    },
+    {
+      "cN",
+      {
+        n = { "*``cgN" },
+        x = { [[g:mc . "``cgN"]], opts = { expr = true } },
+      },
+      description = "Multiple cursors (backwards)",
+    },
+
+    -- 1. Position the cursor over a word; alternatively, make a selection.
+    -- 2. Hit cq to start recording the macro.
+    -- 3. Once you are done with the macro, go back to normal mode.
+    -- 4. Hit Enter to repeat the macro over search matches.
+    {
+      "cq",
+      {
+        n = { [[:\<C-u>call v:lua.om.mappings.setup_mc()<CR>*``qz]] },
+        x = { [[":\<C-u>call v:lua.om.mappings.setup_mc()<CR>gv" . g:mc . "``qz"]], opts = { expr = true } },
+      },
+      description = "Multiple cursors: Macros",
+    },
+    {
+      "cQ",
+      {
+        n = { [[:\<C-u>call v:lua.om.mappings.setup_mc()<CR>#``qz]] },
+        x = {
+          [[":\<C-u>call v:lua.as.mappings.setup_CR()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
+          opts = { expr = true },
+        },
+      },
+      description = "Multiple cursors: Macros (backwards)",
+    },
   }
 
-  ------------------------------MULTIPLE CURSORS------------------------------ {{{
-  -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
-  -- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
-
-  -- 1. Position the cursor anywhere in the word you wish to change;
-  -- 2. Or, visually make a selection;
-  -- 3. Hit cn, type the new word, then go back to Normal mode;
-  -- 4. Hit `.` n-1 times, where n is the number of replacements.
-  table.insert(maps, { "cn", "*``cgn", description = "Multiple cursors" })
-  table.insert(maps, { "cn", "*``cgN", description = "Multiple cursors (backwards)" })
-
+  -- Functions for multiple cursors
   vim.g.mc = vim.api.nvim_replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]], true, true, true)
-  table.insert(
-    maps,
-    { "cn", [[g:mc . "``cgn"]], description = "Multiple cursors", mode = { "x" }, opts = { expr = true } }
-  )
-  table.insert(
-    maps,
-    { "cn", [[g:mc . "``cgN"]], description = "Multiple cursors (backwards)", mode = { "x" }, opts = { expr = true } }
-  )
 
-  -- 1. Position the cursor over a word; alternatively, make a selection.
-  -- 2. Hit cq to start recording the macro.
-  -- 3. Once you are done with the macro, go back to normal mode.
-  -- 4. Hit Enter to repeat the macro over search matches.
   function om.mappings.setup_mc()
     vim.keymap.set(
       "n",
@@ -101,25 +128,6 @@ M.default_keymaps = function()
       { remap = true, silent = true }
     )
   end
-  table.insert(
-    maps,
-    { "cq", [[:\<C-u>call v:lua.om.mappings.setup_mc()<CR>*``qz]], description = "Multiple cursors macros" }
-  )
-  table.insert(
-    maps,
-    { "cQ", [[:\<C-u>call v:lua.om.mappings.setup_mc()<CR>#``qz]], description = "Multiple cursors macros (backwards)" }
-  )
-  table.insert(
-    maps,
-    {
-      "cq",
-      [[":\<C-u>call v:lua.om.mappings.setup_mc()<CR>gv" . g:mc . "``qz"]],
-      description = "Multiple cursors macros",
-      mode = { "x" },
-      opts = { expr = true },
-    }
-  )
-  ---------------------------------------------------------------------------- }}}
 
   -- Movement
   -- Automatically save movements larger than 5 lines to the jumplist
