@@ -6,19 +6,25 @@ function om.Lazygit()
     dir = "git_dir",
     direction = "float",
     float_opts = {
-      border = "double",
+      border = "single",
       height = vim.fn.winheight("%"),
       width = vim.fn.winwidth("%"),
     },
     on_open = function(term)
+      vim.o.laststatus = 0
+      vim.o.showtabline = 0
+
       -- Escape key does nothing in Lazygit
       if vim.fn.mapcheck("jk", "t") ~= "" then
         vim.api.nvim_buf_del_keymap(term.bufnr, "t", "jk")
         vim.api.nvim_buf_del_keymap(term.bufnr, "t", "<esc>")
       end
       vim.cmd("startinsert!")
-      -- vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
     end,
+    on_close = function(term)
+      vim.o.laststatus = 3
+      vim.o.showtabline = 2
+    end
   })
 end
 --------------------------------------------------------------------------- }}}
