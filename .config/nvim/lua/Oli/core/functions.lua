@@ -7,9 +7,8 @@ function om.Lazygit()
     direction = "float",
     float_opts = {
       border = "double",
-      width = function()
-        return math.floor(0.95 * vim.fn.winwidth("%"))
-      end,
+      height = vim.fn.winheight("%"),
+      width = vim.fn.winwidth("%"),
     },
     on_open = function(term)
       -- Escape key does nothing in Lazygit
