@@ -109,26 +109,6 @@ function M.default_autocmds()
     })
   end
 
-  if om.safe_require("alpha", { silent = true }) then
-    table.insert(autocmds, {
-      name = "AlphaDashboardFormatting",
-      {
-        "FileType",
-        function()
-          vim.opt.showtabline = 0
-        end,
-        opts = { pattern = "alpha" },
-      },
-      {
-        "BufUnload",
-        function()
-          vim.opt.showtabline = 2
-        end,
-        opts = { pattern = "<buffer>" },
-      },
-    })
-  end
-
   -- Highlight text when yanked
   table.insert(autocmds, {
     name = "YankHighlight",
