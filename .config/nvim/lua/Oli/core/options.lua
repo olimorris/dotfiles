@@ -27,10 +27,10 @@ vim.bo.tabstop = 4 -- Number of spaces in a tab
 vim.bo.wrapmargin = 1
 --------------------------------------------------------------------------- }}}
 ---------------------------------VIM OPTIONS-------------------------------- {{{
+vim.o.background = "dark"
 vim.opt.clipboard = { "unnamedplus" } -- Use the system clipboard
 vim.opt.completeopt = { "menuone", "noselect" } -- Completion opions for code completion
 vim.opt.cursorlineopt = "screenline,number" -- Highlight the screen line of the cursor with CursorLine and the line number with CursorLineNr
-vim.opt.background = "dark"
 vim.opt.emoji = false -- Turn off emojis
 vim.opt.fillchars = {
   horiz = "━",

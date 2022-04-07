@@ -86,14 +86,14 @@ M.setup = function()
 
       -- Alpha (dashboard) plugin
       AlphaHeader = {
-        fg = (vim.o.background == "dark" and "${green}" or "${orange}"),
+        fg = (vim.o.background == "dark" and "${green}" or "${red}"),
       },
       AlphaButtonText = {
-        fg = (vim.o.background == "dark" and "${blue}" or "${red}"),
+        fg = "${blue}",
         style = "bold",
       },
       AlphaButtonShortcut = {
-        fg = (vim.o.background == "dark" and "${purple}" or "${green}"),
+        fg = (vim.o.background == "dark" and "${purple}" or "${yellow}"),
         style = "italic,bold",
       },
       AlphaFooter = { fg = "${gray}", style = "italic" },
