@@ -278,6 +278,7 @@ return packer.startup({
     })
     use({
       "mrjones2014/legendary.nvim", -- A legend for all keymaps, commands and autocmds
+      branch = "matjones/106-teal",
       lock = LockPlugins,
       config = function()
         -- Do not reload this plugin
