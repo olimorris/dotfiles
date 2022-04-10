@@ -58,7 +58,7 @@ function M.setup()
       -- Buffer index
       {
         text = function(buffer)
-          return buffer.index ~= 1 and spacer or ""
+          return buffer.index ~= 1 and spacer or " "
         end,
         bg = function(buffer)
           return buffer.is_focused and colors.statusline_bg
