@@ -100,8 +100,6 @@ namespace :install do
       time = Time.new.strftime('%s')
       run %( git clone --depth 1 --branch nightly https://github.com/neovim/neovim ~/.neovim/#{time} )
       run %( \(cd ~/.neovim/#{time} && make -j4 && make install\) )
-      run %( rm -rf ~/.neovim/latest)
-      run %( ln -s ~/.neovim/#{time} ~/.neovim/latest)
     end
   end
 
@@ -216,6 +214,7 @@ namespace :update do
     section 'Updating Neovim'
 
     unless testing?
+      run %( mv ~/.neovim/latest ~/.neovim/backup )
       run %( rm -rf /usr/local/bin/nvim )
       Rake::Task['install:neovim'].invoke
     end
@@ -278,5 +277,23 @@ namespace :update do
     section 'Updating servers'
 
     run %( asdf plugin update --all )
+  end
+end
+
+namespace :rollback do
+  desc 'Rollback Neovim'
+  task :neovim do
+    section 'Rolling back Neovim'
+
+    unless testing?
+      run %( rm -rf /usr/local/bin/nvim )
+
+      # Delete the most recent folder
+      run %( cd ~/.neovim & rm -rf .DS_Store)
+      run %( (cd ~/.neovim && ls -Art | tail -n 1 | xargs rm -rf) )
+
+      # Restore Neovim from the previous nightly build
+      run %( (cd ~/.neovim && ls -Art | fgrep -v .DS_Store | tail -n 1 | xargs -I{} cp -s ~/.neovim/{}/build/bin/nvim /usr/local/bin) )
+    end
   end
 end
