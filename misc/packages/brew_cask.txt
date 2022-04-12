@@ -30,6 +30,7 @@ openemu
 pdf-expert
 pixelsnap
 postman
+raycast
 screenflow
 signal
 sketch
