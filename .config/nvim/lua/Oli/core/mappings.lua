@@ -165,7 +165,7 @@ M.plugin_keymaps = function()
     { "<C-t>", "<cmd>AerialToggle<CR>", description = "Aerial" },
 
     -- Buffer delete
-    { "<C-c>", "<cmd>Bwipeout!<CR>", description = "Close Buffer" },
+    { "<C-c>", "<cmd>Bwipeout<CR>", description = "Close Buffer" },
 
     -- Bufferline
     { "<Tab>", "<Plug>(cokeline-focus-next)", description = "Next buffer", opts = { noremap = false } },
@@ -504,17 +504,6 @@ M.completion_keymaps = function()
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<CR>"] = cmp.mapping.confirm({
       select = true, -- hitting <CR> when nothing is selected, does nothing
-    }),
-    ["<Right>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.mapping.confirm({ select = true })()
-      else
-        fallback()
-      end
-    end, {
-      "i",
-      "s",
-      "c",
     }),
     -- ["<CR>"] = cmp.mapping.confirm({ select = true }),
   }
