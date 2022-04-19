@@ -9,7 +9,7 @@ M.setup = function()
 
   onedarkpro.setup({
     plugins = { polygot = false, telescope = false },
-    styles = { comments = "italic", keywords = "italic" },
+    styles = { comments = "italic", keywords = "italic", virtual_text = "italic,underline" },
     options = {
       bold = true,
       italic = true,
@@ -104,24 +104,6 @@ M.setup = function()
       -- Fidget plugin
       FidgetTitle = { fg = "${purple}" },
       FidgetTask = { fg = "${gray}" },
-
-      -- LSP plugin
-      LspDiagnosticsVirtualTextError = {
-        fg = "${red}",
-        style = "italic,underline",
-      },
-      LspDiagnosticsVirtualTextWarning = {
-        fg = "${yellow}",
-        style = "italic,underline",
-      },
-      LspDiagnosticsVirtualTextInformation = {
-        fg = "${blue}",
-        style = "italic,underline",
-      },
-      LspDiagnosticsVirtualTextHint = {
-        fg = "${cyan}",
-        style = "italic,underline",
-      },
 
       -- Luasnip
       LuaSnipChoiceNode = { fg = "${yellow}" },

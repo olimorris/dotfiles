@@ -156,9 +156,10 @@ return packer.startup({
     use({
       -- "olimorris/persisted.nvim", -- Session management
       "~/Code/Projects/persisted.nvim",
-      module = "persisted",
+      -- module = "persisted",
       config = function()
         require(config_namespace .. ".plugins.others").persisted()
+        require("telescope").load_extension("persisted")
       end,
     })
     use({
@@ -291,7 +292,6 @@ return packer.startup({
     ---------------------------------COMPLETION--------------------------------- {{{
     use({
       "hrsh7th/nvim-cmp", -- Code completion menu
-      branch = "dev",  -- For floating menu
       lock = LockPlugins,
       requires = {
         {
