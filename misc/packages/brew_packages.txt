@@ -19,16 +19,13 @@ hey
 httpie
 lazygit
 librsync
-libtermkey
 libvterm
 little-cms2
 luajit
-luajit-openresty
 luarocks
-luv
 mackup
 mas
-msgpack
+neovim
 ninja
 node
 openssl@3
@@ -41,7 +38,6 @@ starship
 subversion
 thefuck
 tmux
-tree-sitter
 universal-ctags
 vim
 watchman
