@@ -54,6 +54,9 @@ M.setup = function()
         Hlargs = { fg = "${red}", style = "italic" },
       },
       yaml = { TSField = { fg = "${red}" } },
+      python = {
+        TSFunction = { fg = "${blue}", style = "bold" },
+      },
       ruby = {
         Hlargs = { fg = "${red}" },
         TSFunction = { fg = "${blue}", style = "bold" },
