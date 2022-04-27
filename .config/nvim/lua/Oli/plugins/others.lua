@@ -248,13 +248,21 @@ M.persisted = function()
   end
 
   persisted.setup({
-    dir = Sessiondir .. "/",
+    save_dir = Sessiondir .. "/",
     use_git_branch = true,
     before_save = function()
       -- Clear out Minimap before saving the session
       -- With Minimap open it stops the session restoring to the last cursor position
       pcall(vim.cmd, "bw minimap")
     end,
+    telescope = {
+      before_source = function()
+        persisted.stop()
+      end,
+      after_source = function(session)
+        print(session.branch)
+      end
+    },
   })
 end
 
@@ -368,7 +376,6 @@ M.toggleterm = function()
     hide_numbers = true,
     close_on_exit = true,
   })
-
 end
 
 M.undotree = function()
