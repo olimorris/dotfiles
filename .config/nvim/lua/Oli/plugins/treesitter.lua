@@ -27,10 +27,10 @@ treesitter.setup({
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "@",
-      -- scope_incremental = "<CR>",
-      node_incremental = "@", -- increment to the upper named parent
-      node_decremental = "<BS>", -- decrement to the previous node
+      init_selection = "<M-w>",
+      scope_incremental = "<CR>",
+      node_incremental = "<Tab>", -- increment to the upper named parent
+      node_decremental = "<S-Tab>", -- decrement to the previous node
     },
   },
   indent = { enable = true },
