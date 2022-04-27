@@ -8,10 +8,13 @@ function M.setup()
 
   local spacer = " "
   local separator = ""
-  local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
+  local colors = vim.g.onedarkpro_colors
+
+  if not colors then
+    return
+  end
 
   bufferline.setup({
-
     show_if_buffers_are_at_least = 1,
 
     buffers = {
@@ -74,7 +77,7 @@ function M.setup()
         bg = function(buffer)
           return buffer.is_focused and colors.statusline_bg
         end,
-        style = "italic"
+        style = "italic",
       },
       -- Buffer unique name
       {

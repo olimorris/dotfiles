@@ -115,6 +115,10 @@ end
 function M.setup()
   local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
 
+  if not colors then
+    return
+  end
+
   M.vi_mode_colors = {
     NORMAL = colors.purple,
     OP = colors.purple,
