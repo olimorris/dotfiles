@@ -15,8 +15,8 @@ cmp.setup({
   window = {
     completion = {
       border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
       scrollbar = "║",
+      winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
       autocomplete = {
         require("cmp.types").cmp.TriggerEvent.InsertEnter,
         require("cmp.types").cmp.TriggerEvent.TextChanged,
@@ -56,5 +56,5 @@ cmp.setup({
     { name = "nvim_lua" },
     { name = "path" },
   },
-  preselect = cmp.PreselectMode.Item,
+  preselect = cmp.PreselectMode.None,
 })

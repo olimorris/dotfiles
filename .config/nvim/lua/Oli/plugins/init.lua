@@ -165,8 +165,6 @@ return packer.startup({
     use({
       "nvim-telescope/telescope.nvim", -- Awesome fuzzy finder for everything
       lock = LockPlugins,
-      cmd = "Telescope",
-      module_pattern = "telescope.*",
       requires = {
         {
           "nvim-telescope/telescope-project.nvim", -- Switch between projects
