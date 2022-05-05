@@ -4,25 +4,8 @@ if not ok then
 end
 
 treesitter.setup({
-  ensure_installed = {
-    "bash",
-    "css",
-    "dockerfile",
-    "go",
-    "html",
-    "javascript",
-    "json",
-    "lua",
-    "markdown",
-    "php",
-    "python",
-    "regex",
-    "ruby",
-    "toml",
-    "vim",
-    "vue",
-    "yaml",
-  },
+  ensure_installed = "all",
+  ignore_install = { "phpdoc" }, -- list of parser which cause issues or crashes
   highlight = { enable = true },
   incremental_selection = {
     enable = true,
