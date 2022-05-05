@@ -259,9 +259,6 @@ M.persisted = function()
       before_source = function()
         persisted.stop()
       end,
-      after_source = function(session)
-        print(session.branch)
-      end
     },
   })
 end
