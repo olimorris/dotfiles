@@ -56,29 +56,29 @@ function M.default_autocmds()
         pattern = "term://*",
       },
     },
-    {
-      name = "Packer reload and compile notification",
-      {
-        { "BufWritePost" },
-        function()
-          vim.g.packer_reloaded = true
-          om.reload("Oli.plugins", true)
-          require("packer").compile()
-        end,
-        opts = {
-          pattern = { "*/Oli/plugins/*.lua" },
-        },
-      },
-      {
-        { "User" },
-        function()
-          vim.notify("Packer compile complete", nil, { title = "Packer" })
-        end,
-        opts = {
-          pattern = { "PackerCompileDone" },
-        },
-      },
-    },
+    -- {
+    --   name = "Packer reload and compile notification",
+    --   {
+    --     { "BufWritePost" },
+    --     function()
+    --       vim.g.packer_reloaded = true
+    --       om.reload("Oli.plugins", true)
+    --       require("packer").compile()
+    --     end,
+    --     opts = {
+    --       pattern = { "*/Oli/plugins/*.lua" },
+    --     },
+    --   },
+    --   {
+    --     { "User" },
+    --     function()
+    --       vim.notify("Packer compile complete", nil, { title = "Packer" })
+    --     end,
+    --     opts = {
+    --       pattern = { "PackerCompileDone" },
+    --     },
+    --   },
+    -- },
   }
 
   -- Reload bufferline when the theme has been changed
