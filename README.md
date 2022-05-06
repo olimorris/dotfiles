@@ -14,6 +14,10 @@ My macOS dotfiles. Installation instructions are my own.
 ```bash
 cd ~/.dotfiles && rake install
 ```
+* Open up Neovim and run:
+```lua
+:PackerSync
+```
 * Install Aqueux for your beautiful wallpaper transitions
 * Ensure that `.dotfiles` is linked to your GitHub repo
 
