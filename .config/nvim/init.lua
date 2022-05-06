@@ -1,5 +1,8 @@
--- Call the cache plugin
-pcall(require, "impatient")
+local present, impatient = pcall(require, "impatient")
+
+if present then
+   impatient.enable_profile()
+end
 
 -- Global config namespace
 -- We namespace the config so that when we reload our modules it picks up all

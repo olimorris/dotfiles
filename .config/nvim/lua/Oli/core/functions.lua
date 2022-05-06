@@ -24,7 +24,7 @@ function om.Lazygit()
     on_close = function(term)
       vim.o.laststatus = 3
       vim.o.showtabline = 2
-    end
+    end,
   })
 end
 --------------------------------------------------------------------------- }}}
@@ -51,6 +51,15 @@ function om.LoadSession()
     vim.cmd('lua require("persisted").stop()')
   end)
 end
+--------------------------------------------------------------------------- }}}
+-----------------------------------PACKER----------------------------------- {{{
+function om.PackerSync()
+  require(config_namespace .. ".plugins")
+  require("packer").sync()
+end
+vim.cmd([[
+  command! PackerSync :lua om.PackerSync()
+]])
 --------------------------------------------------------------------------- }}}
 -----------------------------RUBOCOP FORMATTING----------------------------- {{{
 function om.FormatWithRuboCop()

@@ -131,7 +131,6 @@ function M.plugin_commands()
     {
       "PackerCompile",
       function()
-        vim.g.packer_reloaded = true
         require(config_namespace .. ".plugins")
         require("packer").compile()
       end,
