@@ -176,6 +176,21 @@ function M.plugin_commands()
       end,
       description = "Packer: Update",
     },
+    {
+      "PackerSnapshot",
+      "<cmd>PackerSnapshot default<cr>",
+      description = "Packer: Snapshot",
+    },
+    {
+      "PackerSnapshotDelete",
+      "<cmd>PackerSnapshotDelete default<cr>",
+      description = "Packer: Delete Snapshot",
+    },
+    {
+      "PackerSnapshotRollback",
+      "<cmd>PackerSnapshotRollback default<cr>",
+      description = "Packer: Rollback Snapshot",
+    },
     -- Persisted
     {
       "SessionSave",

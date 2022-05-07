@@ -53,13 +53,22 @@ function om.LoadSession()
 end
 --------------------------------------------------------------------------- }}}
 -----------------------------------PACKER----------------------------------- {{{
-function om.PackerSync()
+vim.api.nvim_create_user_command("PackerSync", function()
   require(config_namespace .. ".plugins")
   require("packer").sync()
-end
-vim.cmd([[
-  command! PackerSync :lua om.PackerSync()
-]])
+end, {})
+vim.api.nvim_create_user_command("PackerSnapshot", function(info)
+  require(config_namespace .. ".plugins")
+  require("packer").snapshot(info.args)
+end, { nargs = "+" })
+vim.api.nvim_create_user_command("PackerSnapshotDelete", function(info)
+  require(config_namespace .. ".plugins")
+  require("packer.snapshot").delete(info.args)
+end, { nargs = "+" })
+vim.api.nvim_create_user_command("PackerSnapshotRollback", function(info)
+  require(config_namespace .. ".plugins")
+  require("packer").rollback(info.args)
+end, { nargs = "+" })
 --------------------------------------------------------------------------- }}}
 -----------------------------RUBOCOP FORMATTING----------------------------- {{{
 function om.FormatWithRuboCop()
