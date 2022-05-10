@@ -7,7 +7,7 @@ end
 packer.startup({
   function(use, use_rocks)
     ----------------------------------AUTOLOAD---------------------------------- {{{
-    -- use_rocks("penlight")
+    use_rocks("penlight")
     use({
       "wbthomason/packer.nvim",
       opt = "true",
