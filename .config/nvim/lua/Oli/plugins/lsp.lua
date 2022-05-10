@@ -131,4 +131,5 @@ lsp_installer.setup({
 for _, name in pairs(om.lsp.servers) do
   require("lspconfig")[name].setup(default_config)
 end
+vim.cmd([[ do User LspAttachBuffers ]])
 ---------------------------------------------------------------------------- }}}
