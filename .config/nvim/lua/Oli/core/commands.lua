@@ -179,7 +179,7 @@ function M.plugin_commands()
     {
       "PackerSnapshot",
       "<cmd>PackerSnapshot default<cr>",
-      description = "Packer: Snapshot",
+      description = "Packer: Create Snapshot",
     },
     {
       "PackerSnapshotDelete",
