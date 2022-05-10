@@ -53,22 +53,35 @@ function om.LoadSession()
 end
 --------------------------------------------------------------------------- }}}
 -----------------------------------PACKER----------------------------------- {{{
-vim.api.nvim_create_user_command("PackerSync", function()
+-- Maintain a custom command for Packer Syncing. This is useful for when we
+-- have a fresh Neovim install and can't call on Legendary.nvim to run
+-- custom commands.
+vim.api.nvim_create_user_command("PackerInstall", function()
   require(config_namespace .. ".plugins")
   require("packer").sync()
 end, {})
-vim.api.nvim_create_user_command("PackerSnapshot", function(info)
-  require(config_namespace .. ".plugins")
-  require("packer").snapshot(info.args)
-end, { nargs = "+" })
-vim.api.nvim_create_user_command("PackerSnapshotDelete", function(info)
-  require(config_namespace .. ".plugins")
-  require("packer.snapshot").delete(info.args)
-end, { nargs = "+" })
-vim.api.nvim_create_user_command("PackerSnapshotRollback", function(info)
-  require(config_namespace .. ".plugins")
-  require("packer").rollback(info.args)
-end, { nargs = "+" })
+
+-- Return a list of Packer snapshots
+function om.GetSnapshots()
+  om.path_to_snapshots = vim.fn.stdpath("cache") .. "/packer.nvim/"
+  local snapshots = vim.fn.glob(om.path_to_snapshots .. "*", true, true)
+
+  for i, _ in ipairs(snapshots) do
+    snapshots[i] = snapshots[i]:gsub(om.path_to_snapshots, "")
+  end
+
+  return snapshots
+end
+
+vim.api.nvim_create_user_command("PackerRollback", function()
+  om.select("Rollback to snapshot", om.GetSnapshots(), function(choice)
+    if choice == nil then
+      return
+    end
+    require(config_namespace .. ".plugins")
+    require("packer").rollback(om.path_to_snapshots .. choice)
+  end)
+end, {})
 --------------------------------------------------------------------------- }}}
 -----------------------------RUBOCOP FORMATTING----------------------------- {{{
 function om.FormatWithRuboCop()

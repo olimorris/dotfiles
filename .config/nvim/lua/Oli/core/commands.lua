@@ -55,12 +55,12 @@ end
 function M.plugin_commands()
   return {
     -- Alpha
-  {
+    {
       "Dashboard",
       function()
         vim.cmd([[Alpha]])
       end,
-      description = "Show the Alpha dashboard"
+      description = "Show the Alpha dashboard",
     },
     -- Colorizer
     {
@@ -145,17 +145,11 @@ function M.plugin_commands()
       description = "Packer: Clean",
     },
     {
-      "PackerInstall",
-      function()
-        require(config_namespace .. ".plugins")
-        require("packer").install()
-      end,
-      description = "Packer: Install",
-    },
-    {
       "PackerSync",
       function()
+        local snapshot = os.date("!%Y-%m-%d %H_%M_%S")
         require(config_namespace .. ".plugins")
+        require("packer").snapshot(snapshot .. "_sync")
         require("packer").sync()
       end,
       description = "Packer: Sync",
@@ -169,26 +163,32 @@ function M.plugin_commands()
       description = "Packer: Status",
     },
     {
-      "PackerUpdate",
-      function()
-        require(config_namespace .. ".plugins")
-        require("packer").update()
-      end,
-      description = "Packer: Update",
-    },
-    {
       "PackerSnapshot",
-      "<cmd>PackerSnapshot default<cr>",
+      function()
+        local snapshot = os.date("!%Y-%m-%d %H_%M_%S")
+        require(config_namespace .. ".plugins")
+        require("packer").snapshot(snapshot)
+      end,
       description = "Packer: Create Snapshot",
     },
     {
       "PackerSnapshotDelete",
-      "<cmd>PackerSnapshotDelete default<cr>",
+      function()
+        om.select("Delete snapshot", om.GetSnapshots(), function(choice)
+          if choice == nil then
+            return
+          end
+          require(config_namespace .. ".plugins")
+          require("packer.snapshot").delete(om.path_to_snapshots .. choice)
+        end)
+      end,
       description = "Packer: Delete Snapshot",
     },
     {
-      "PackerSnapshotRollback",
-      "<cmd>PackerSnapshotRollback default<cr>",
+      "PackerRollback",
+      function()
+        vim.cmd("PackerRollback")
+      end,
       description = "Packer: Rollback Snapshot",
     },
     -- Persisted
