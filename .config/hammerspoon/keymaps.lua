@@ -8,7 +8,7 @@ local hyper = { "cmd", "alt", "ctrl", "shift" }
  	this, a table can be passed which contains the app name followed by the filename
 ]]
 local apps = {
-  b = "Chrome", -- Browser
+  b = { "Chrome", "Google Chrome" }, -- Browser
   c = { "Code", "Visual Studio Code" },
   e = "Microsoft Excel",
   f = "Finder",
@@ -121,15 +121,15 @@ end)
 hs.eventtap.new({ hs.eventtap.event.types.otherMouseUp }, function(event)
   local button = event:getProperty(hs.eventtap.event.properties.mouseEventButtonNumber)
   if button == 3 then
-    hs.eventtap.keyStroke({ 'cmd' }, '[')
+    hs.eventtap.keyStroke({ "cmd" }, "[")
   end
   if button == 4 then
-    hs.eventtap.keyStroke({ 'cmd' }, ']')
+    hs.eventtap.keyStroke({ "cmd" }, "]")
   end
 end):start()
 
 ------------------------------------ OTHERS ------------------------------------
 -- bind shift+ctrl+option+l to lock screen
-hs.hotkey.bind({ 'alt', 'ctrl', 'shift' }, 'L', function()
+hs.hotkey.bind({ "alt", "ctrl", "shift" }, "L", function()
   hs.caffeinate.lockScreen()
 end)
