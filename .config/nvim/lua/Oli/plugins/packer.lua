@@ -38,7 +38,6 @@ packer.init({
   auto_clean = true,
   compile_on_sync = true,
   max_jobs = 10,
-  snapshot = "default"
 })
 
 return packer

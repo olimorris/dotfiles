@@ -124,7 +124,7 @@ packer.startup({
     use({
       -- "olimorris/persisted.nvim", -- Session management
       "~/Code/Projects/persisted.nvim",
-      -- module = "persisted",
+      module = "persisted",
       config = function()
         require(config_namespace .. ".plugins.others").persisted()
         require("telescope").load_extension("persisted")
