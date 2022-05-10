@@ -86,7 +86,7 @@ vim.lsp.handlers["textDocument/formatting"] = function(err, result, client)
   end
 end
 ---------------------------------------------------------------------------- }}}
------------------------------------ATTACH----------------------------------- {{{
+----------------------------------ON ATTACH--------------------------------- {{{
 local symbols, aerial = om.safe_require("aerial", { silent = true })
 local maps, legendary = om.safe_require("legendary", { silent = true })
 
@@ -104,15 +104,21 @@ function om.lsp.on_attach(client, bufnr)
   end
 end
 ---------------------------------------------------------------------------- }}}
--------------------------------CONFIG SERVERS------------------------------- {{{
+--------------------------------SETUP SERVERS------------------------------- {{{
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-local ok, cmp_nvim_lsp = om.safe_require("cmp_nvim_lsp")
-if ok then
+local nvim_lsp_ok, cmp_nvim_lsp = om.safe_require("cmp_nvim_lsp")
+if nvim_lsp_ok then
   capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 end
 
-lsp_installer.settings({
+local default_config = {
+  capabilities = capabilities,
+  on_attach = om.lsp.on_attach,
+}
+
+lsp_installer.setup({
+  ensure_installed = om.lsp.servers,
+  automatic_installation = true,
   log_level = vim.log.levels.DEBUG,
   ui = {
     icons = {
@@ -122,53 +128,7 @@ lsp_installer.settings({
     },
   },
 })
-
--- Install LSP servers if they're not already installed
 for _, name in pairs(om.lsp.servers) do
-  local config_ok, server = lsp_installer.get_server(name)
-  -- Check that the server is supported in nvim-lsp-installer
-  if config_ok then
-    if not server:is_installed() then
-      vim.notify("Installing " .. name, nil)
-      server:install()
-    end
-  end
+  require("lspconfig")[name].setup(default_config)
 end
-
-lsp_installer.on_server_ready(function(server)
-  local default_opts = { on_attach = om.lsp.on_attach, capabilities = capabilities }
-
-  -- Set custom server config
-  local server_opts = {
-    -- ["efm"] = function()
-    --     default_opts.cmd = {
-    --         vim.fn.stdpath("data") .. "/lsp_servers/efm/efm-langserver",
-    --         "-c",
-    --         Homedir .. "/.config/efm-langserver/config.yaml"
-    --     }
-    --     default_opts.on_attach = on_attach
-    --     default_opts.capabilities = capabilities
-    --     default_opts.flags = { debounce_text_changes = 150 }
-    --     default_opts.filetypes = {
-    --         "css",
-    --         "eruby",
-    --         "html",
-    --         "javascript",
-    --         "json",
-    --         "lua",
-    --         "python",
-    --         "scss",
-    --         "sh",
-    --         "yaml",
-    --         "vue"
-    --     }
-    --     default_opts.init_options = { documentFormatting = true }
-    --
-    --     return default_opts
-    -- end
-  }
-
-  server:setup(server_opts[server.name] and server_opts[server.name]() or default_opts)
-  vim.cmd("do User LspAttachBuffers")
-end)
 ---------------------------------------------------------------------------- }}}
