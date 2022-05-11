@@ -147,10 +147,7 @@ function M.plugin_commands()
     {
       "PackerSync",
       function()
-        local snapshot = os.date("!%Y-%m-%d %H_%M_%S")
-        require(config_namespace .. ".plugins")
-        require("packer").snapshot(snapshot .. "_sync")
-        require("packer").sync()
+        vim.cmd("PackerSync")
       end,
       description = "Packer: Sync",
     },

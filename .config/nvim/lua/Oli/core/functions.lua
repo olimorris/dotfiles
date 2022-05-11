@@ -61,6 +61,14 @@ vim.api.nvim_create_user_command("PackerInstall", function()
   require("packer").sync()
 end, {})
 
+vim.api.nvim_create_user_command("PackerSync", function()
+  local snapshot = os.date("!%Y-%m-%d %H_%M_%S")
+  require(config_namespace .. ".plugins")
+  require("packer").snapshot(snapshot .. "_sync")
+  require("packer").sync()
+  require("packer").compile()
+end, {})
+
 -- Return a list of Packer snapshots
 function om.GetSnapshots()
   om.path_to_snapshots = vim.fn.stdpath("cache") .. "/packer.nvim/"
@@ -78,8 +86,7 @@ vim.api.nvim_create_user_command("PackerRollback", function()
     if choice == nil then
       return
     end
-    require(config_namespace .. ".plugins")
-    require("packer").rollback(om.path_to_snapshots .. choice)
+    require("packer").rollback(om.path_to_snapshots .. choice, require(config_namespace .. ".plugins"))
   end)
 end, {})
 --------------------------------------------------------------------------- }}}
