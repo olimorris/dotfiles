@@ -1,11 +1,11 @@
 local M = {}
 
 M.setup = function()
-  local ok, onedarkpro = om.safe_require("onedarkpro", { silent = true })
+  local ok, onedarkpro = pcall(load, "onedarkpro")
   if not ok then
     return
   end
-  local utils = require("onedarkpro.utils")
+  local utils = load("onedarkpro.utils")
 
   onedarkpro.setup({
     plugins = { polygot = false, telescope = false },

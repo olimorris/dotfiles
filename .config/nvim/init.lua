@@ -10,7 +10,13 @@ end
 -- Ref: https://www.reddit.com/r/neovim/comments/puuskh/comment/he5vnqc
 _G.config_namespace = "Oli"
 
-local ok, _ = pcall(require, config_namespace .. ".core")
+-- Allow us to use :source $MYVIMRC to reload portions of our config
+_G.load = function(module)
+   package.loaded[module] = nil
+   return require(module)
+end
+
+local ok, _ = load(config_namespace .. ".core")
 
 if not ok then
     vim.notify("Error: Could not load default modules")
