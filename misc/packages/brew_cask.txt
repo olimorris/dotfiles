@@ -36,6 +36,7 @@ signal
 sketch
 slack
 spotify
+steam
 tableplus
 textexpander
 textmate
