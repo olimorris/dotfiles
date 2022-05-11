@@ -12,14 +12,14 @@ local apps = {
   c = { "Code", "Visual Studio Code" },
   e = "Microsoft Excel",
   f = "Finder",
-  g = "Tower", -- Git client
+  -- g = "Tower", -- Git client
   -- h - Reserved
   i = "Slack", -- IM
   -- j - Reserved
   -- k - Reserved
   -- l - Reserved
   m = "HEY", -- Mail
-  n = "Bear", -- Notes
+  n = "Notion", -- Notes
   p = "1Password",
   r = "Reeder",
   t = "kitty", -- Terminal
