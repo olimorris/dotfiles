@@ -353,6 +353,16 @@ M.plugin_keymaps = function()
     { "<Leader>q", "<cmd>QFToggle!<CR>", description = "Quickfix toggle" },
     { "<Leader>l", "<cmd>LLToggle!<CR>", description = "Location List toggle" },
 
+    -- Refactoring.nvim
+    {
+      "<LocalLeader>re",
+      function()
+        require("telescope").extensions.refactoring.refactors()
+      end,
+      description = "Refactor",
+      mode = { "v", "x" },
+    },
+
     -- Search
     {
       "//",
