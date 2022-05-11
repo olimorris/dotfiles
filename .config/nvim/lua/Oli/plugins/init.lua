@@ -1,7 +1,7 @@
 local present, packer = pcall(require, config_namespace .. ".plugins.packer")
 
 if not present then
-   return false
+  return false
 end
 
 packer.startup({
@@ -45,7 +45,7 @@ packer.startup({
     use({
       "feline-nvim/feline.nvim", -- Statusline
       requires = {
-        { "kyazdani42/nvim-web-devicons",  }, -- Web icons for various plugins
+        { "kyazdani42/nvim-web-devicons" }, -- Web icons for various plugins
       },
       config = function()
         require(config_namespace .. ".plugins.statusline").setup()
@@ -71,9 +71,9 @@ packer.startup({
       "nvim-neo-tree/neo-tree.nvim",
       branch = "v2.x",
       requires = {
-        { "nvim-lua/plenary.nvim",  },
-        { "kyazdani42/nvim-web-devicons",  },
-        { "MunifTanjim/nui.nvim",  },
+        { "nvim-lua/plenary.nvim" },
+        { "kyazdani42/nvim-web-devicons" },
+        { "MunifTanjim/nui.nvim" },
       },
       config = function()
         require(config_namespace .. ".plugins.file_explorer").config()
@@ -152,7 +152,7 @@ packer.startup({
           "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
           after = "telescope.nvim",
           requires = {
-            { "tami5/sqlite.lua",  },
+            { "tami5/sqlite.lua" },
           },
           config = function()
             require("telescope").load_extension("frecency")
@@ -162,7 +162,7 @@ packer.startup({
           "nvim-telescope/telescope-smart-history.nvim", -- Show project dependant history
           after = "telescope.nvim",
           requires = {
-            { "tami5/sqlite.lua",  },
+            { "tami5/sqlite.lua" },
           },
           config = function()
             require("telescope").load_extension("smart_history")
@@ -211,7 +211,7 @@ packer.startup({
       cmd = "SearchBox*",
       module = "searchbox",
       requires = {
-        { "MunifTanjim/nui.nvim",  },
+        { "MunifTanjim/nui.nvim" },
       },
       config = function()
         require(config_namespace .. ".plugins.others").search()
@@ -260,13 +260,13 @@ packer.startup({
             require(config_namespace .. ".plugins.luasnip").snippets()
           end,
         },
-        { "onsails/lspkind-nvim",  }, -- VS Code like icons
+        { "onsails/lspkind-nvim" }, -- VS Code like icons
         -- cmp sources --
-        { "saadparwaiz1/cmp_luasnip",  },
-        { "hrsh7th/cmp-nvim-lua",  },
-        { "hrsh7th/cmp-nvim-lsp",  },
-        { "hrsh7th/cmp-buffer",  },
-        { "hrsh7th/cmp-path",  },
+        { "saadparwaiz1/cmp_luasnip" },
+        { "hrsh7th/cmp-nvim-lua" },
+        { "hrsh7th/cmp-nvim-lsp" },
+        { "hrsh7th/cmp-buffer" },
+        { "hrsh7th/cmp-path" },
       },
       config = function()
         require(config_namespace .. ".plugins.completion")
@@ -275,10 +275,21 @@ packer.startup({
     ---------------------------------------------------------------------------- }}}
     -----------------------------------CODING----------------------------------- {{{
     use({
+      "~/Code/Projects/refactoring.nvim",
+      requires = {
+        { "nvim-lua/plenary.nvim" },
+        { "nvim-treesitter/nvim-treesitter" },
+      },
+      config = function()
+        require(config_namespace .. ".plugins.others").refactoring()
+        require("telescope").load_extension("refactoring")
+      end,
+    })
+    use({
       "williamboman/nvim-lsp-installer", -- Install LSP servers from within Neovim
       requires = {
-        { "neovim/nvim-lspconfig",  }, -- Use Neovims native LSP config
-        { "kosayoda/nvim-lightbulb",  }, -- VSCode style lightbulb if there is a code action available
+        { "neovim/nvim-lspconfig" }, -- Use Neovims native LSP config
+        { "kosayoda/nvim-lightbulb" }, -- VSCode style lightbulb if there is a code action available
         {
           "j-hui/fidget.nvim", -- LSP progress notifications
           config = function()
