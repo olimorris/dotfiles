@@ -97,7 +97,7 @@ function om.lsp.on_attach(client, bufnr)
     om.lsp.on_attach = pcall(aerial.on_attach, client, bufnr)
   end
 
-  if maps and not vim.g.packer_reloaded then
+  if maps then
     legendary.bind_keymaps(require(config_namespace .. ".core.mappings").lsp_keymaps(client, bufnr))
     legendary.bind_autocmds(require(config_namespace .. ".core.autocmds").lsp_autocmds(client, bufnr))
     legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_commands(client, bufnr))

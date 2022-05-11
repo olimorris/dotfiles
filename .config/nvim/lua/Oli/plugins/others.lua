@@ -285,6 +285,14 @@ M.project_nvim = function()
   })
 end
 
+M.refactoring = function()
+  local ok, refactoring = om.safe_require("refactoring")
+  if not ok then
+    return
+  end
+  refactoring.setup({})
+end
+
 M.qf_helper = function()
   local ok, qf_helper = om.safe_require("qf_helper")
   if not ok then
