@@ -12,7 +12,7 @@ function M.default_commands()
     {
       "Sessions",
       function()
-        om.LoadSession()
+        vim.cmd [[Telescope persisted]]
       end,
       description = "Session: List",
     },
@@ -225,6 +225,12 @@ function M.plugin_commands()
       end,
       description = "Profile Neovim's startup time",
     },
+    -- Treesitter
+    {
+      "Treesitter Playground",
+      ":TSPlayground<CR>",
+      description = "Treesitter Playground"
+    }
   }
 end
 ---------------------------------------------------------------------------- }}}
