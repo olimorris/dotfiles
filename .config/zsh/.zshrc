@@ -46,6 +46,7 @@ source $PLUGIN_DIR/zsh-completions/zsh-completions.plugin.zsh
 
 source $PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $PLUGIN_DIR/zsh-auto-notify/auto-notify.plugin.zsh
 
 # fzf
 if [[ ! "$PATH" == *$(brew --prefix)/opt/fzf/bin* ]]; then
