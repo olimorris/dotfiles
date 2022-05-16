@@ -29,7 +29,7 @@ function M.setup()
     default_hl = {
       fg = function(buffer)
         if buffer.is_focused then
-          return (vim.o.background == "light" and colors.black or colors.bufferline_unfocus)
+          return (vim.o.background == "light" and colors.black or colors.bufferline_text_focus)
         else
           return colors.gray
         end
