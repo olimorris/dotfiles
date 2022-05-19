@@ -8,7 +8,6 @@ dash
 docker
 fd
 flux
-fontforge
 fortune
 fzf
 git
@@ -19,6 +18,8 @@ hey
 httpie
 lazygit
 librsync
+libspiro
+libuninameslist
 libvterm
 little-cms2
 luajit
@@ -29,6 +30,7 @@ neovim
 ninja
 node
 openssl@3
+pango
 php
 reattach-to-user-namespace
 ripgrep
