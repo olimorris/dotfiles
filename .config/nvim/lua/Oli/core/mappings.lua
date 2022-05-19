@@ -64,6 +64,8 @@ M.default_keymaps = function()
     { "<CR>", "o<Esc>", "Insert blank line below" },
     { "<S-CR>", "O<Esc>", "Insert blank line above" },
 
+    { "<LocalLeader>sv", "<C-w>v", description = "Split: Vertical" },
+    { "<LocalLeader>sh", "<C-w>h", description = "Split: Horizontal" },
     { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
     { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
 
@@ -227,33 +229,6 @@ M.plugin_keymaps = function()
         dap.close()
       end,
       description = "Debug: Stop",
-    },
-
-    -- Focus
-    {
-      "<LocalLeader>ss",
-      "<cmd>lua pcall(require('focus').split_nicely())<CR>",
-      description = "Split",
-    },
-    {
-      "<LocalLeader>sh",
-      "<cmd>lua require('focus').split_command('h')<CR>",
-      description = "Split: Left",
-    },
-    {
-      "<LocalLeader>sj",
-      "<cmd>lua require('focus').split_command('j')<CR>",
-      description = "Split: Down",
-    },
-    {
-      "<LocalLeader>sk",
-      "<cmd>lua require('focus').split_command('k')<CR>",
-      description = "Split: Up",
-    },
-    {
-      "<LocalLeader>sl",
-      "<cmd>lua require('focus').split_command('l')<CR>",
-      description = "Split: Right",
     },
 
     -- Harpoon
