@@ -193,13 +193,6 @@ packer.startup({
       end,
     })
     use({
-      "beauwilliams/focus.nvim", -- Auto-resize splits/windows
-      module = "focus",
-      config = function()
-        require(config_namespace .. ".plugins.others").focus()
-      end,
-    })
-    use({
       "mbbill/undotree", -- Visually see your undos
       cmd = "UndotreeToggle",
       config = function()

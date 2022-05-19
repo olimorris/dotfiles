@@ -137,18 +137,6 @@ M.fidget = function()
   })
 end
 
-M.focus = function()
-  local ok, focus = om.safe_require("focus")
-  if not ok then
-    return
-  end
-
-  focus.setup({
-    excluded_filetypes = filetypes_to_exclude,
-    excluded_buftypes = { "help", "terminal" },
-  })
-end
-
 M.gps = function()
   local ok, gps = om.safe_require("nvim-gps")
   if not ok then
