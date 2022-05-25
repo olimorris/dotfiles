@@ -9,26 +9,14 @@ end
 
 cmp.setup({
   completion = {
-    completeopt = "menuone,noinsert",
+    completeopt = "menu,menuone,noinsert",
+    keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
+    keyword_length = 1,
   },
-  preselect = cmp.PreselectMode.None,
-  window = {
-    completion = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      scrollbar = "║",
-      winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-      autocomplete = {
-        require("cmp.types").cmp.TriggerEvent.InsertEnter,
-        require("cmp.types").cmp.TriggerEvent.TextChanged,
-      },
-    },
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-      scrollbar = "║",
-    },
+  experimental = {
+    ghost_text = false,
+    native_menu = false,
   },
-  experimental = { ghost_text = { hl_group = "GhostText" } },
   formatting = {
     format = lspkind.cmp_format({
       mode = "symbol",
