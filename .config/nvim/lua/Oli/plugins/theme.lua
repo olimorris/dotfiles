@@ -8,7 +8,7 @@ M.setup = function()
   local utils = load("onedarkpro.utils")
 
   onedarkpro.setup({
-    plugins = { polygot = false, telescope = false },
+    plugins = { polygot = false },
     styles = { comments = "italic", keywords = "italic", virtual_text = "italic,underline" },
     options = {
       bold = true,
@@ -116,39 +116,6 @@ M.setup = function()
       MapBase = { fg = "${gray}" },
       MapCursor = { fg = "${purple}", bg = "${cursorline}" },
       -- MapRange = { fg = "${fg}" },
-
-      -- Telescope
-      TelescopeBorder = {
-        fg = "${telescope_results}",
-        bg = "${telescope_results}",
-      },
-      TelescopePromptBorder = {
-        fg = "${telescope_prompt}",
-        bg = "${telescope_prompt}",
-      },
-      TelescopePromptCounter = { fg = "${fg}" },
-      TelescopePromptNormal = { fg = "${fg}", bg = "${telescope_prompt}" },
-      TelescopePromptPrefix = {
-        fg = "${purple}",
-        bg = "${telescope_prompt}",
-      },
-      TelescopePromptTitle = {
-        fg = "${telescope_prompt}",
-        bg = "${purple}",
-      },
-
-      TelescopePreviewTitle = {
-        fg = "${telescope_results}",
-        bg = "${green}",
-      },
-      TelescopeResultsTitle = {
-        fg = "${telescope_results}",
-        bg = "${telescope_results}",
-      },
-
-      TelescopeMatching = { fg = "${purple}" },
-      TelescopeNormal = { bg = "${telescope_results}" },
-      TelescopeSelection = { bg = "${telescope_prompt}" },
     },
   })
   onedarkpro.load()
