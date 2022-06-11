@@ -31,9 +31,6 @@ M.setup = function()
         statusline_text = "#696C77", -- gray
 
         bufferline_text_focus = "#949aa2",
-
-        telescope_prompt = "#2e323a",
-        telescope_results = "#21252d",
       },
       onelight = {
         vim = "#029632", -- green
@@ -44,9 +41,6 @@ M.setup = function()
         statusline_div = "#f0f0f0", -- gray
         statusline_bg = "#f0f0f0", -- gray
         statusline_text = "#b5b5b5", -- gray
-
-        telescope_prompt = "#f5f5f5",
-        telescope_results = "#eeeeee",
       },
     },
     filetype_hlgroups = {
