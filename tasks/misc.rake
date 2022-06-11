@@ -99,7 +99,9 @@ namespace :install do
     unless testing?
       time = Time.new.strftime('%s')
       run %( git clone --depth 1 --branch nightly https://github.com/neovim/neovim ~/.neovim/#{time} )
-      run %( \(cd ~/.neovim/#{time} && make -j4 && make install\) )
+      run %( rm -rf /usr/local/bin/nvim )
+      run %( rm -rf /opt/homebrew/bin/nvim )
+      run %( \(cd ~/.neovim/#{time} && make CMAKE_BUILD_TYPE=RelWithDebInfo && make install\) )
     end
   end
 
@@ -215,7 +217,6 @@ namespace :update do
 
     unless testing?
       run %( mv ~/.neovim/latest ~/.neovim/backup )
-      run %( rm -rf /usr/local/bin/nvim )
       Rake::Task['install:neovim'].invoke
     end
   end
@@ -287,6 +288,7 @@ namespace :rollback do
 
     unless testing?
       run %( rm -rf /usr/local/bin/nvim )
+      run %( rm -rf /opt/homebrew/bin/nvim )
 
       # Delete the most recent folder
       run %( cd ~/.neovim & rm -rf .DS_Store)
