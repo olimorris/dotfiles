@@ -368,6 +368,7 @@ M.toggleterm = function()
     shading_factor = 3, -- Match our background
     hide_numbers = true,
     close_on_exit = true,
+    start_in_insert = true,
   })
 end
 
