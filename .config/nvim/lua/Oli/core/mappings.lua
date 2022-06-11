@@ -560,18 +560,18 @@ M.lsp_keymaps = function(client, bufnr)
 
   local lsps_that_can_format = { ["null-ls"] = true }
 
-  if om.contains(lsps_that_can_format, client.name) and client.server_capabilities.document_formatting then
+  if om.contains(lsps_that_can_format, client.name) and client.server_capabilities.documentFormattingProvider then
     table.insert(maps, {
       "<LocalLeader>lf",
       function()
         vim.b.format_changedtick = vim.b.changedtick
-        vim.lsp.buf.formatting({})
+        vim.lsp.buf.format({ async = true })
       end,
       description = "LSP: Format",
       opts = { buffer = bufnr },
     })
   else
-    client.server_capabilities.document_formatting = false
+    client.server_capabilities.documentFormattingProvider = false
   end
 
   return maps

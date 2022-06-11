@@ -282,7 +282,7 @@ function M.lsp_commands(client, bufnr)
       "LspFormat",
       function()
         vim.b.format_changedtick = vim.b.changedtick
-        vim.lsp.buf.formatting({})
+        vim.lsp.buf.format({ async = true })
       end,
       description = "Format the current document with LSP",
       opts = { buffer = bufnr },
