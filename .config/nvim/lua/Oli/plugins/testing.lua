@@ -51,4 +51,22 @@ M.vim_test = function()
   vim.g["test#javascript#jest#options"] = "--color=always"
 end
 ---------------------------------------------------------------------------- }}}
+----------------------------------NEO-TEST---------------------------------- {{{
+M.neotest = function()
+  local ok, neotest = om.safe_require("neotest")
+  if not ok then
+    return
+  end
+
+  neotest.setup({
+    adapters = {
+      require("neotest-python"),
+      require("neotest-plenary"),
+      require("neotest-vim-test")({
+        ignore_file_types = { "python", "vim", "lua" },
+      }),
+    },
+  })
+end
+---------------------------------------------------------------------------- }}}
 return M
