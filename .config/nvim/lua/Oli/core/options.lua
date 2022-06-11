@@ -76,7 +76,7 @@ vim.opt.textwidth = 120 -- Total allowed width on the screen
 vim.opt.timeout = true -- This option and 'timeoutlen' determine the behavior when part of a mapped key sequence has been received. This is on by default but being explicit!
 vim.opt.timeoutlen = 500 -- Time in milliseconds to wait for a mapped sequence to complete.
 vim.opt.ttimeoutlen = 10 -- Time in milliseconds to wait for a key code sequence to complete
-vim.opt.updatetime = 300 -- If in this many milliseconds nothing is typed, the swap file will be written to disk. Also used for CursorHold autocommand
+vim.opt.updatetime = 100 -- If in this many milliseconds nothing is typed, the swap file will be written to disk. Also used for CursorHold autocommand and set to 100 as per https://github.com/antoinemadec/FixCursorHold.nvim
 vim.opt.wildmode = "list:longest" -- Command-line completion mode
 vim.opt.wildignore = { "*/.git/*", "*/node_modules/*" } -- Ignore these files/folders
 
