@@ -253,7 +253,6 @@ packer.startup({
             require(config_namespace .. ".plugins.luasnip").snippets()
           end,
         },
-        { "onsails/lspkind-nvim" }, -- VS Code like icons
         -- cmp sources --
         { "saadparwaiz1/cmp_luasnip" },
         { "hrsh7th/cmp-nvim-lua" },

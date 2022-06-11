@@ -1,11 +1,38 @@
 local has_cmp, cmp = om.safe_require("cmp")
 local has_snip, luasnip = om.safe_require("luasnip")
-local has_icons, lspkind = om.safe_require("lspkind")
 
-if not has_cmp or not has_snip or not has_icons then
+if not has_cmp or not has_snip then
   vim.notify("Could not load completion plugins")
   return
 end
+
+local icons = {
+  Text = "",
+  Method = "",
+  Function = "",
+  Constructor = "⌘",
+  Field = "ﰠ",
+  Variable = "",
+  Class = "ﴯ",
+  Interface = "",
+  Module = "",
+  Property = "ﰠ",
+  Unit = "塞",
+  Value = "",
+  Enum = "",
+  Keyword = "廓",
+  Snippet = "",
+  Color = "",
+  File = "",
+  Reference = "",
+  Folder = "",
+  EnumMember = "",
+  Constant = "",
+  Struct = "פּ",
+  Event = "",
+  Operator = "",
+  TypeParameter = "",
+}
 
 cmp.setup({
   completion = {
@@ -18,10 +45,13 @@ cmp.setup({
     native_menu = false,
   },
   formatting = {
-    format = lspkind.cmp_format({
-      mode = "symbol",
-      with_text = true,
-    }),
+    fields = { "kind", "abbr", "menu" },
+    format = function(_, vim_item)
+      vim_item.menu = vim_item.kind
+      vim_item.kind = icons[vim_item.kind]
+
+      return vim_item
+    end,
   },
   snippet = {
     expand = function(args)
