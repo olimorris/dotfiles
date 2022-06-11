@@ -144,7 +144,7 @@ function M.lsp_autocmds(client, bufnr)
     }
   end
 
-  if client.name ~= "null-ls" and client.resolved_capabilities.code_lens then
+  if client.name ~= "null-ls" and client.server_capabilities.code_lens then
     table.insert(autocmds, {
       { "BufEnter", "CursorHold", "CursorHoldI" },
       ":silent! lua vim.lsp.codelens.refresh()",

@@ -531,7 +531,7 @@ M.lsp_keymaps = function(client, bufnr)
     }
   end
 
-  if client.name ~= "null-ls" and client.resolved_capabilities.implementation then
+  if client.name ~= "null-ls" and client.server_capabilities.implementation then
     table.insert(maps, {
       "gi",
       vim.lsp.buf.implementation,
@@ -539,7 +539,7 @@ M.lsp_keymaps = function(client, bufnr)
       opts = { buffer = bufnr },
     })
   end
-  if client.name ~= "null-ls" and client.resolved_capabilities.type_definition then
+  if client.name ~= "null-ls" and client.server_capabilities.type_definition then
     table.insert(
       maps,
       { "gt", vim.lsp.buf.type_definition, description = "LSP: Go to type definition", opts = { buffer = bufnr } }
@@ -560,7 +560,7 @@ M.lsp_keymaps = function(client, bufnr)
 
   local lsps_that_can_format = { ["null-ls"] = true }
 
-  if om.contains(lsps_that_can_format, client.name) and client.resolved_capabilities.document_formatting then
+  if om.contains(lsps_that_can_format, client.name) and client.server_capabilities.document_formatting then
     table.insert(maps, {
       "<LocalLeader>lf",
       function()
@@ -571,7 +571,7 @@ M.lsp_keymaps = function(client, bufnr)
       opts = { buffer = bufnr },
     })
   else
-    client.resolved_capabilities.document_formatting = false
+    client.server_capabilities.document_formatting = false
   end
 
   return maps
