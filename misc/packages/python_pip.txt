@@ -6,7 +6,7 @@ mypy-extensions==0.4.3
 neovim-remote==2.5.1
 pathspec==0.9.0
 platformdirs==2.5.2
-psutil==5.9.0
+psutil==5.9.1
 pynvim==0.4.3
 PyYAML==6.0
 termcolor==1.1.0
