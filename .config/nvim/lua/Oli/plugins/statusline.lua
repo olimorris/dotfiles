@@ -104,11 +104,6 @@ end
 local function mask_plugin()
   return om.find_pattern_match(M.filetypes_to_mask, vim.bo.filetype)
 end
-
-local function nvim_gps()
-  local has_gps, gps = om.safe_require("nvim-gps")
-  return has_gps, gps
-end
 ---------------------------------------------------------------------------- }}}
 ---------------------------------COMPONENTS--------------------------------- {{{
 ------------------------------------SETUP----------------------------------- {{{
@@ -366,36 +361,6 @@ function M.setup()
     {
       provider = "diagnostic_info",
       icon = " ",
-      hl = function()
-        return default_hl()
-      end,
-      left_sep = {
-        str = " ",
-        hl = function()
-          return default_hl()
-        end,
-      },
-      right_sep = {
-        str = " ",
-        hl = function()
-          return default_hl()
-        end,
-      },
-    },
-    ---------------------------------------------------------------------------- }}}
-    -------------------------------------GPS------------------------------------ {{{
-    {
-      provider = function()
-        local _, gps = nvim_gps()
-        return gps.get_location()
-      end,
-      short_provider = function()
-        return ""
-      end,
-      enabled = function()
-        local has_gps, gps = nvim_gps()
-        return has_gps and vim.g.enable_gps and gps.is_available()
-      end,
       hl = function()
         return default_hl()
       end,

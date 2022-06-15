@@ -137,20 +137,6 @@ M.fidget = function()
   })
 end
 
-M.gps = function()
-  local ok, gps = om.safe_require("nvim-gps")
-  if not ok then
-    return
-  end
-
-  vim.g.enable_gps = false
-
-  gps.setup({
-    disable_icons = false,
-    depth = 2,
-  })
-end
-
 M.hlargs = function()
   local ok, hlargs = om.safe_require("hlargs")
   if not ok then

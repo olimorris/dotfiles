@@ -332,13 +332,6 @@ packer.startup({
           after = "nvim-treesitter",
         },
         {
-          "SmiteshP/nvim-gps", -- Show the current treesitter location in the statusline
-          module = "nvim-gps",
-          config = function()
-            require(config_namespace .. ".plugins.others").gps()
-          end,
-        },
-        {
           "m-demare/hlargs.nvim", --Highlight argument definitions
           config = function()
             require(config_namespace .. ".plugins.others").hlargs()
