@@ -102,6 +102,7 @@ namespace :install do
       run %( rm -rf /usr/local/bin/nvim )
       run %( rm -rf /opt/homebrew/bin/nvim )
       run %( \(cd ~/.neovim/#{time} && make CMAKE_BUILD_TYPE=RelWithDebInfo && make install\) )
+      run %( ln -s ~/.neovim/#{time} ~/.neovim/latest )
     end
   end
 
