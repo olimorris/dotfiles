@@ -12,7 +12,7 @@ function M.default_commands()
     {
       "Sessions",
       function()
-        vim.cmd [[Telescope persisted]]
+        vim.cmd([[Telescope persisted]])
       end,
       description = "Session: List",
     },
@@ -29,6 +29,27 @@ function M.default_commands()
         om.RunTestSuiteAsync()
       end,
       description = "Test all",
+    },
+    {
+      "NeotestNearest",
+      function()
+        return require("neotest").run.run()
+      end,
+      description = "Test nearest",
+    },
+    {
+      "NeotestFile",
+      function()
+        return require("neotest").run.run(vim.fn.expand("%"))
+      end,
+      description = "Test file",
+    },
+    {
+      "NeotestSummary",
+      function()
+        return require("neotest").summary.toggle()
+      end,
+      description = "Show test summary",
     },
     {
       "Theme",
@@ -98,18 +119,6 @@ function M.plugin_commands()
         require("coverage").summary()
       end,
       description = "Coverage: Summary",
-    },
-    -- GPS
-    {
-      "NvimGPS",
-      function()
-        if vim.g.enable_gps then
-          vim.g.enable_gps = false
-        else
-          vim.g.enable_gps = true
-        end
-      end,
-      description = "Toggle Nvim GPS",
     },
     -- Lazygit
     {
@@ -229,8 +238,8 @@ function M.plugin_commands()
     {
       "Treesitter Playground",
       ":TSPlayground<CR>",
-      description = "Treesitter Playground"
-    }
+      description = "Treesitter Playground",
+    },
   }
 end
 ---------------------------------------------------------------------------- }}}

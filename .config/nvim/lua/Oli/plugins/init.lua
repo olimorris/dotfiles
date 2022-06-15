@@ -391,18 +391,16 @@ packer.startup({
       end,
     })
     use({
-      "rcarriga/neotest",
+      "nvim-neotest/neotest",
       requires = {
-        "nvim-lua/plenary.nvim",
-        "rcarriga/neotest-python",
-        "rcarriga/neotest-plenary",
-        "rcarriga/neotest-vim-test",
-        "nvim-treesitter/nvim-treesitter",
+        "~/Code/Projects/neotest-rspec",
+        "haydenmeade/neotest-jest",
+        "nvim-neotest/neotest-python",
         "antoinemadec/FixCursorHold.nvim",
       },
       config = function()
         require(config_namespace .. ".plugins.testing").neotest()
-      end
+      end,
     })
     use({
       "andythigpen/nvim-coverage", -- Display test coverage information

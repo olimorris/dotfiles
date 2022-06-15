@@ -60,11 +60,37 @@ M.neotest = function()
 
   neotest.setup({
     adapters = {
-      require("neotest-python"),
-      require("neotest-plenary"),
-      require("neotest-vim-test")({
-        ignore_file_types = { "python", "vim", "lua" },
+      require("neotest-python")({
+        runner = "pytest",
       }),
+      require("neotest-jest"),
+      require("neotest-rspec"),
+    },
+    diagnostic = false,
+    icons = {
+      expanded = "",
+      child_prefix = "",
+      child_indent = "",
+      final_child_prefix = "",
+      non_collapsible = "",
+      collapsed = "",
+
+      passed = "",
+      running = "",
+      failed = "",
+      unknown = "",
+    },
+    summary = {
+      mappings = {
+        attach = "a",
+        expand = { "<CR>", "<2-LeftMouse>" },
+        expand_all = "e",
+        jumpto = "i",
+        output = "o",
+        run = "r",
+        short = "O",
+        stop = "u",
+      },
     },
   })
 end

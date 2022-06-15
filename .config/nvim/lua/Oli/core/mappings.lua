@@ -431,11 +431,11 @@ M.plugin_keymaps = function()
     },
 
     -- Vim Test
-    { "<Leader>t", "<cmd>TestNearest<CR>", description = "Test nearest" },
-    { "<LocalLeader>ta", "<cmd>TestAll<CR>", description = "Test all" },
-    { "<LocalLeader>tl", "<cmd>TestLast<CR>", description = "Test last" },
-    { "<LocalLeader>tf", "<cmd>TestFile<CR>", description = "Test file" },
-    { "<LocalLeader>ts", "<cmd>TestSuite<CR>", description = "Test suite" },
+    { "<Leader>t", "<cmd>TestNearest<CR>", description = "Vim-test: nearest" },
+    { "<LocalLeader>ta", "<cmd>TestAll<CR>", description = "Vim-test: all" },
+    { "<LocalLeader>tl", "<cmd>TestLast<CR>", description = "Vim-test: last" },
+    { "<LocalLeader>tf", "<cmd>TestFile<CR>", description = "Vim-test: file" },
+    { "<LocalLeader>ts", "<cmd>TestSuite<CR>", description = "Vim-test: suite" },
 
     -- Undotree
     { "<LocalLeader>u", "<cmd>UndotreeToggle<CR>", description = "Undotree toggle" },
