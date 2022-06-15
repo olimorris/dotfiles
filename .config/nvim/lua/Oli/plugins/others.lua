@@ -229,6 +229,7 @@ M.nvim_autopairs = function()
     },
   })
 end
+
 M.persisted = function()
   local ok, persisted = om.safe_require("persisted")
   if not ok then
@@ -312,6 +313,15 @@ M.search = function()
       end,
     },
   })
+end
+
+M.stickybuf = function()
+  local ok, stickybuf = om.safe_require("stickybuf")
+  if not ok then
+    return
+  end
+
+  stickybuf.setup()
 end
 
 M.tabout = function()

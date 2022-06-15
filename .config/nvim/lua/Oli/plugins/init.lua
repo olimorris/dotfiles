@@ -452,6 +452,12 @@ packer.startup({
     ---------------------------------------------------------------------------- }}}
     -----------------------------------OTHERS----------------------------------- {{{
     use({
+      "stevearc/stickybuf.nvim", -- Ensure buffers are not opened in certain filetypes
+      config = function()
+        require(config_namespace .. ".plugins.others").stickybuf()
+      end
+    })
+    use({
       "nathom/tmux.nvim", -- Navigate Tmux panes inside of neovim
       cond = function()
         return os.getenv("TMUX")
