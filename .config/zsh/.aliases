@@ -78,6 +78,7 @@ alias code='open $@ -a "Visual Studio Code"'
 alias reloadapps="defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock"
 
 # Misc
+alias ls='ls --color=auto'
 alias fk='fuck' # Overwrite mistakes
 alias fck='fuck'
 alias etxt='extract-text'
@@ -105,6 +106,8 @@ alias nvu='(cd ~/.dotfiles && rake update:neovim)'
 # alias nx='nix-shell ~/.dotfiles/.nix/shell.nix'
 
 # PHP
+alias art='php artisan'
+alias sail='vendor/bin/sail up'
 alias cu='composer update'
 alias ci='composer install'
 alias p='vendor/bin/phpunit'

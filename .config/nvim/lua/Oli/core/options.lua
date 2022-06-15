@@ -28,6 +28,7 @@ vim.bo.wrapmargin = 1
 --------------------------------------------------------------------------- }}}
 ---------------------------------VIM OPTIONS-------------------------------- {{{
 vim.o.background = "dark"
+-- vim.o.cmdheight = 0 -- Hide the command bar
 vim.opt.clipboard = { "unnamedplus" } -- Use the system clipboard
 vim.opt.completeopt = { "menuone", "noselect" } -- Completion opions for code completion
 vim.opt.cursorlineopt = "screenline,number" -- Highlight the screen line of the cursor with CursorLine and the line number with CursorLineNr

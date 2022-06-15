@@ -38,7 +38,6 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 # Plugins
 ################################################################################
 
-# Initialize zshcompletions
 fpath=($PLUGIN_DIR/zsh-completions/src $fpath)
 autoload -U compinit
 compinit
