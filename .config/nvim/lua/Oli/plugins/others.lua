@@ -229,6 +229,20 @@ M.neogen = function()
   })
 end
 
+M.nvim_autopairs = function()
+  local ok, autopairs = om.safe_require("nvim-autopairs")
+  if not ok then
+    return
+  end
+
+  autopairs.setup({
+    close_triple_quotes = true,
+    check_ts = true,
+    fast_wrap = {
+      map = "<c-e>",
+    },
+  })
+end
 M.persisted = function()
   local ok, persisted = om.safe_require("persisted")
   if not ok then

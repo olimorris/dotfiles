@@ -309,6 +309,13 @@ packer.startup({
           after = "nvim-treesitter",
         },
         {
+          "windwp/nvim-autopairs", -- Autopair plugin
+          after = "nvim-treesitter",
+          config = function()
+            require(config_namespace .. ".plugins.others").nvim_autopairs()
+          end
+        },
+        {
           "JoosepAlviste/nvim-ts-context-commentstring", -- Smart commenting in multi language files - Enabled in Treesitter file
           after = "nvim-treesitter",
         },
