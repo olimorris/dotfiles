@@ -45,6 +45,13 @@ function M.default_commands()
       description = "Test file",
     },
     {
+      "NeotestOutput",
+      function()
+        return require("neotest").output.open()
+      end,
+      description = "Open test output",
+    },
+    {
       "NeotestSummary",
       function()
         return require("neotest").summary.toggle()
@@ -140,7 +147,7 @@ function M.plugin_commands()
     {
       "PackerCompile",
       function()
-        require(config_namespace .. ".plugins")
+        require(config_namespace .. ".plugins.packer")
         require("packer").compile()
       end,
       description = "Packer: Compile",
@@ -148,7 +155,7 @@ function M.plugin_commands()
     {
       "PackerClean",
       function()
-        require(config_namespace .. ".plugins")
+        require(config_namespace .. ".plugins.packer")
         require("packer").clean()
       end,
       description = "Packer: Clean",
@@ -156,14 +163,14 @@ function M.plugin_commands()
     {
       "PackerSync",
       function()
-        vim.cmd("PackerSync")
+        om.PackerSync()
       end,
       description = "Packer: Sync",
     },
     {
       "PackerStatus",
       function()
-        require(config_namespace .. ".plugins")
+        require(config_namespace .. ".plugins.packer")
         require("packer").status()
       end,
       description = "Packer: Status",
