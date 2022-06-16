@@ -1,9 +1,10 @@
 vim.cmd("packadd packer.nvim")
 
-local PACKER_COMPILED_PATH = vim.fn.stdpath("cache") .. "/packer.nvim/packer_compiled.lua"
 local PACKER_INSTALLED_PATH = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
 local present, packer = pcall(require, "packer")
+local plugins = require(config_namespace .. ".plugins").plugins
+local lua_rocks = require(config_namespace .. ".plugins").lua_rocks
 
 if not present then
   vim.notify("Downloading packer.nvim...", nil, { title = "Packer" })
@@ -37,7 +38,17 @@ packer.init({
   },
   auto_clean = true,
   compile_on_sync = true,
-  max_jobs = 10,
+  max_jobs = 15,
+  compile_path = PACKER_COMPILED_PATH,
+  snapshot_path = PACKER_SNAPSHOT_PATH,
+  log = { level = "warn" },
 })
 
-return packer
+return packer.startup(function(use, use_rock)
+  for _, plugins in ipairs(plugins) do
+    use(plugins)
+  end
+  for _, lua_rocks in ipairs(lua_rocks) do
+    use_rock(lua_rocks)
+  end
+end)

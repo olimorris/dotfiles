@@ -32,7 +32,7 @@ function M.setup()
     button("f", "   Find file", ":Telescope find_files hidden=true path_display=smart<CR>"),
     button("p", "   Find project", ":Telescope project<CR>"),
     button("w", "   Find word", ":Telescope live_grep path_display=smart<CR>"),
-    button("u", "   Update plugins", ':PackerSync<CR>'), -- Packer sync
+    button("u", "   Update plugins", ':lua om.PackerSync()<CR>'), -- Packer sync
     button("q", "   Quit Neovim", ":qa<CR>"),
   }
   dashboard.section.buttons.opts = {

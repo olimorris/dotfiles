@@ -57,28 +57,37 @@ end
 -- have a fresh Neovim install and can't call on Legendary.nvim to run
 -- custom commands.
 vim.api.nvim_create_user_command("PackerInstall", function()
-  require(config_namespace .. ".plugins")
+  require(config_namespace .. ".plugins.packer")
   require("packer").sync()
 end, {})
 
-vim.api.nvim_create_user_command("PackerSync", function()
+function om.PackerSync()
   local snapshot = os.date("!%Y-%m-%d %H_%M_%S")
-  require(config_namespace .. ".plugins")
+  require(config_namespace .. ".plugins.packer")
   require("packer").snapshot(snapshot .. "_sync")
   require("packer").sync()
-  require("packer").compile()
-end, {})
+end
 
 -- Return a list of Packer snapshots
 function om.GetSnapshots()
-  om.path_to_snapshots = vim.fn.stdpath("cache") .. "/packer.nvim/"
-  local snapshots = vim.fn.glob(om.path_to_snapshots .. "*", true, true)
+  local snapshots = vim.fn.glob(PACKER_SNAPSHOT_PATH .. "/*", true, true)
 
   for i, _ in ipairs(snapshots) do
-    snapshots[i] = snapshots[i]:gsub(om.path_to_snapshots, "")
+    snapshots[i] = snapshots[i]:gsub(PACKER_SNAPSHOT_PATH .. "/", "")
   end
 
   return snapshots
+end
+
+local function get_plugins()
+  local list = {}
+  local plugins = require(config_namespace .. ".plugins").plugins
+  for _, item in pairs(plugins) do
+    if not item.disable then
+      table.insert(list, item[1]:match("/(%S*)"))
+    end
+  end
+  return list
 end
 
 vim.api.nvim_create_user_command("PackerRollback", function()
@@ -86,7 +95,11 @@ vim.api.nvim_create_user_command("PackerRollback", function()
     if choice == nil then
       return
     end
-    require("packer").rollback(om.path_to_snapshots .. choice, require(config_namespace .. ".plugins"))
+
+    require(config_namespace .. ".plugins.packer")
+    require("packer").rollback(PACKER_SNAPSHOT_PATH .. "/" .. choice, table.unpack(get_plugins()))
+
+    vim.notify("Rollback to: " .. choice)
   end)
 end, {})
 --------------------------------------------------------------------------- }}}
