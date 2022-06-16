@@ -64,6 +64,7 @@ M.neotest = function()
         runner = "pytest",
       }),
       require("neotest-jest"),
+      require("neotest-go"),
       require("neotest-rspec"),
     },
     diagnostic = false,

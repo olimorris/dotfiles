@@ -10,7 +10,7 @@ local silent = { noremap = true, silent = true }
         	2) Local Leader - Used for commands related to filetype/buffer options
         	3) Leader - Used for commands that are global or span Neovim
 
-        * I use legendary.nvim to set all of my mapping and display them in a 
+        * I use legendary.nvim to set all of my mapping and display them in a
         floating window
 ]]
 ---------------------------------------------------------------------------- }}}
