@@ -205,6 +205,35 @@ M.plugin_keymaps = function()
       mode = { "n", "x" },
     },
 
+    -- Copilot
+    {
+      "<C-a>",
+      "copilot#Accept()",
+      description = "Copilot: Accept suggestion",
+      mode = { "i" },
+      opts = { script = true, expr = true, silent = true },
+    },
+    {
+      "<M-]>",
+      "<Plug>(copilot-next)",
+      description = "Copilot: Next",
+      mode = { "i" },
+      opts = { silent = true },
+    },
+    {
+      "<M-[>",
+      "<Plug>(copilot-previous)",
+      description = "Copilot: Previous",
+      mode = { "i" },
+      opts = { silent = true },
+    },
+    {
+      "<C-\\>",
+      "<Cmd>vertical Copilot panel<CR>",
+      description = "Copilot: Panel",
+      mode = { "n", "i" },
+    },
+
     -- Dap
     {
       "<F1>",
@@ -490,7 +519,6 @@ M.completion_keymaps = function()
     ["<CR>"] = cmp.mapping.confirm({
       select = true, -- hitting <CR> when nothing is selected, does nothing
     }),
-    -- ["<CR>"] = cmp.mapping.confirm({ select = true }),
   }
 end
 ---------------------------------------------------------------------------- }}}

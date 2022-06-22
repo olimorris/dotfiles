@@ -436,11 +436,6 @@ return packer.startup({
           end,
         },
       },
-  {
-    "github/copilot.vim", -- AI programming
-    cmd = "Copilot",
-  },
-  {
       config = function()
         require(config_namespace .. ".plugins.others").dap()
       end,

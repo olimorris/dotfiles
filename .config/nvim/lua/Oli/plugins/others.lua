@@ -64,6 +64,16 @@ M.comment = function()
   })
 end
 
+M.copilot = function()
+  vim.g.copilot_no_tab_map = true
+
+  vim.g.copilot_filetypes = {
+    ["*"] = true,
+    TelescopePrompt = false,
+    ["neo-tree-popup"] = false,
+  }
+end
+
 M.dap = function()
   local ok, dap = om.safe_require("dap")
   if not ok then
