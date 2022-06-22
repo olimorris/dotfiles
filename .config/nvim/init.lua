@@ -10,10 +10,6 @@ end
 -- Ref: https://www.reddit.com/r/neovim/comments/puuskh/comment/he5vnqc
 _G.config_namespace = "Oli"
 
--- Global variables
-_G.PACKER_COMPILED_PATH = vim.fn.stdpath("cache") .. "/packer.nvim/packer_compiled.lua"
-_G.PACKER_SNAPSHOT_PATH = vim.fn.stdpath("cache") .. "/packer.nvim/snapshots"
-
 -- Allow us to use :source $MYVIMRC to reload portions of our config
 _G.load = function(module)
   package.loaded[module] = nil
@@ -24,8 +20,4 @@ local ok, _ = load(config_namespace .. ".core")
 
 if not ok then
   vim.notify("Error: Could not load default modules")
-end
-
-if vim.fn.filereadable(PACKER_COMPILED_PATH) == 1 then
-  vim.cmd(("source %s"):format(PACKER_COMPILED_PATH))
 end

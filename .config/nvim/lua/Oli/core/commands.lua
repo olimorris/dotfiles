@@ -200,6 +200,7 @@ function M.plugin_commands()
     {
       "PackerRollback",
       function()
+        require(config_namespace .. ".plugins")
         vim.cmd("PackerRollback")
       end,
       description = "Packer: Rollback Snapshot",
