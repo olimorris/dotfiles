@@ -9,7 +9,6 @@ namespace :install do
     run %( git clone https://github.com/zsh-users/zsh-autosuggestions #{ZSH_PLUGINS_DIR}/zsh-autosuggestions )
     run %( git clone https://github.com/zsh-users/zsh-completions #{ZSH_PLUGINS_DIR}/zsh-completions )
     run %( git clone https://github.com/MichaelAquilina/zsh-auto-notify #{ZSH_PLUGINS_DIR}/zsh-auto-notify )
-    run %( git clone https://github.com/marlonrichert/zsh-autocomplete #{ZSH_PLUGINS_DIR}/zsh-autocomplete )
   end
 
   desc "Install Zsh"
