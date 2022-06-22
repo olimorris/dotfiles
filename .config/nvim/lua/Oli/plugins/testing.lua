@@ -1,4 +1,5 @@
 local M = {}
+
 ----------------------------------COVERAGE---------------------------------- {{{
 M.coverage = function()
   local ok, coverage = om.safe_require("coverage")
@@ -51,7 +52,7 @@ M.vim_test = function()
   vim.g["test#javascript#jest#options"] = "--color=always"
 end
 ---------------------------------------------------------------------------- }}}
-----------------------------------NEO-TEST---------------------------------- {{{
+-----------------------------------NEOTEST---------------------------------- {{{
 M.neotest = function()
   local ok, neotest = om.safe_require("neotest")
   if not ok then
@@ -60,12 +61,9 @@ M.neotest = function()
 
   neotest.setup({
     adapters = {
-      require("neotest-python")({
-        runner = "pytest",
-      }),
-      require("neotest-jest"),
-      require("neotest-go"),
+      require("neotest-plenary"),
       require("neotest-rspec"),
+      require("neotest-minitest"),
     },
     diagnostic = false,
     icons = {
