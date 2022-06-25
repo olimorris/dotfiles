@@ -10,6 +10,7 @@ fd
 flux
 fortune
 fzf
+gh
 git
 git-flow-avh
 gnupg
@@ -19,14 +20,18 @@ httpie
 lazygit
 librsync
 libspiro
+libtermkey
 libuninameslist
 libvterm
 little-cms2
 luajit
+luajit-openresty
 luarocks
+luv
 mackup
 mas
-neovim
+msgpack
+neofetch
 ninja
 node
 openssl@3
@@ -40,6 +45,7 @@ starship
 subversion
 thefuck
 tmux
+tree-sitter
 universal-ctags
 vim
 watchman
