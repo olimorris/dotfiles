@@ -267,17 +267,6 @@ return packer.startup({
     ---------------------------------------------------------------------------- }}}
     -----------------------------------CODING----------------------------------- {{{
     use({
-      "~/Code/Projects/refactoring.nvim",
-      requires = {
-        { "nvim-lua/plenary.nvim" },
-        { "nvim-treesitter/nvim-treesitter" },
-      },
-      config = function()
-        require(config_namespace .. ".plugins.others").refactoring()
-        require("telescope").load_extension("refactoring")
-      end,
-    })
-    use({
       "williamboman/nvim-lsp-installer", -- Install LSP servers from within Neovim
       requires = {
         { "neovim/nvim-lspconfig" }, -- Use Neovims native LSP config
@@ -428,22 +417,20 @@ return packer.startup({
             require("nvim-dap-virtual-text").setup()
           end,
         },
-        {
-          "rcarriga/nvim-dap-ui", -- Nice UI for debugging
-          after = "nvim-dap",
-          config = function()
-            require(config_namespace .. ".plugins.others").dap_ui()
-          end,
-        },
       },
       config = function()
         require(config_namespace .. ".plugins.others").dap()
       end,
     })
     use({
-      "ahmedkhalf/project.nvim", -- Automatically set the cwd to the project root
+      "~/Code/Projects/refactoring.nvim",
+      requires = {
+        { "nvim-lua/plenary.nvim" },
+        { "nvim-treesitter/nvim-treesitter" },
+      },
       config = function()
-        require(config_namespace .. ".plugins.others").project_nvim()
+        require(config_namespace .. ".plugins.others").refactoring()
+        require("telescope").load_extension("refactoring")
       end,
     })
     use({
@@ -454,6 +441,12 @@ return packer.startup({
     })
     ---------------------------------------------------------------------------- }}}
     -----------------------------------OTHERS----------------------------------- {{{
+    use({
+      "ahmedkhalf/project.nvim", -- Automatically set the cwd to the project root
+      config = function()
+        require(config_namespace .. ".plugins.others").project_nvim()
+      end,
+    })
     use({
       "stevearc/stickybuf.nvim", -- Ensure buffers are not opened in certain filetypes
       config = function()

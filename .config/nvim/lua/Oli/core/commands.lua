@@ -45,6 +45,13 @@ function M.default_commands()
       description = "Test file",
     },
     {
+      "NeotestDebug",
+      function()
+        return require("neotest").run.run({ strategy = "dap" })
+      end,
+      description = "Debug current test",
+    },
+    {
       "NeotestOutput",
       function()
         return require("neotest").output.open()

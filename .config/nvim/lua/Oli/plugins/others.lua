@@ -104,7 +104,7 @@ M.dap_ui = function()
   end
 
   dap_ui.setup({
-    sidebar = {
+    layouts = {
       elements = {
         -- You can change the order of elements in the sidebar
         { id = "scopes", size = 0.4 },
@@ -114,7 +114,6 @@ M.dap_ui = function()
       },
       size = 40,
     },
-    tray = { size = 10 },
   })
 end
 
