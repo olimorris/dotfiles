@@ -295,30 +295,24 @@ return packer.startup({
       requires = {
         {
           "windwp/nvim-ts-autotag", -- Autoclose and autorename HTML and Vue tags
-          after = "nvim-treesitter",
         },
         {
           "windwp/nvim-autopairs", -- Autopair plugin
-          after = "nvim-treesitter",
           config = function()
             require(config_namespace .. ".plugins.others").nvim_autopairs()
           end
         },
         {
           "JoosepAlviste/nvim-ts-context-commentstring", -- Smart commenting in multi language files - Enabled in Treesitter file
-          after = "nvim-treesitter",
         },
         {
           "David-Kunz/treesitter-unit", -- Better selection of Treesitter code
-          after = "nvim-treesitter",
         },
         {
           "RRethy/nvim-treesitter-endwise", -- add "end" in Ruby and other languages
-          after = "nvim-treesitter",
         },
         {
           "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
-          after = "nvim-treesitter",
         },
         {
           "m-demare/hlargs.nvim", --Highlight argument definitions
@@ -401,18 +395,12 @@ return packer.startup({
     })
     use({
       "mfussenegger/nvim-dap", -- Debug Adapter Protocol for Neovim
-      module = "dap",
       requires = {
         {
           "suketa/nvim-dap-ruby", -- Ruby rdbg config
-          after = "nvim-dap",
-          config = function()
-            require("dap-ruby").setup()
-          end,
         },
         {
           "theHamsta/nvim-dap-virtual-text", -- help to find variable definitions in debug mode
-          after = "nvim-dap",
           config = function()
             require("nvim-dap-virtual-text").setup()
           end,
