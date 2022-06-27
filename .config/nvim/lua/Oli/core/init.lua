@@ -2,6 +2,7 @@ local core_modules = {
   config_namespace .. ".core.globals",
   config_namespace .. ".core.options",
   config_namespace .. ".core.functions",
+  config_namespace .. ".plugins",
 }
 
 for _, module in ipairs(core_modules) do

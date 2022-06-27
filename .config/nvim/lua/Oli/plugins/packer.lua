@@ -1,12 +1,8 @@
-vim.cmd("packadd packer.nvim")
-
 local PACKER_INSTALLED_PATH = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
-local present, packer = pcall(require, "packer")
-
-if not present then
+if vim.fn.empty(vim.fn.glob(PACKER_INSTALLED_PATH)) > 0 then
   vim.notify("Downloading packer.nvim...", nil, { title = "Packer" })
-  vim.fn.system({
+  PACKER_BOOTSTRAP = vim.fn.system({
     "git",
     "clone",
     "https://github.com/wbthomason/packer.nvim",
@@ -14,18 +10,12 @@ if not present then
     "20",
     PACKER_INSTALLED_PATH,
   })
-  vim.cmd("packadd packer.nvim")
-  present, packer = pcall(require, "packer")
+  vim.cmd [[packadd packer.nvim]]
+end
 
-  if present then
-    vim.notify("Packer downloaded successfully", nil, { title = "Packer" })
-  else
-    vim.notify("Couldn't download Packer", nil, { title = "Packer" })
-    return
-  end
-
-  require(config_namespace .. ".plugins")
-  packer.sync()
+local present, packer = pcall(require, "packer")
+if not present then
+  return
 end
 
 packer.init({
@@ -39,6 +29,7 @@ packer.init({
     clone_timeout = 240, -- Timeout for git clones (seconds)
   },
   auto_clean = true,
+  ensure_dependencies = true,
   compile_on_sync = true,
   max_jobs = 15,
 })

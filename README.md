@@ -32,7 +32,7 @@ cd ~/.dotfiles && rake install
 
 ## :page_facing_up: Things to note
 
-* Your plugins will automatically install when you run [neovim](https://github.com/neovim/neovim) for the first time
+* Your plugins will automatically install when you run [Neovim](https://github.com/neovim/neovim) for the first time
 * Sync your Code Tresor to `~/Code`
 
 ### Syncing to GitHub
