@@ -56,19 +56,20 @@ function M.default_autocmds()
         pattern = "term://*",
       },
     },
-    -- {
-    --   name = "Packer reload and compile notification",
-    --   {
-    --     { "BufWritePost" },
-    --     function()
-    --       vim.g.packer_reloaded = true
-    --       om.reload("Oli.plugins", true)
-    --       require("packer").compile()
-    --     end,
-    --     opts = {
-    --       pattern = { "*/Oli/plugins/*.lua" },
-    --     },
-    --   },
+    {
+      name = "Packer reload and compile notification",
+      {
+        { "BufWritePost" },
+        function()
+          -- vim.g.packer_reloaded = true
+          om.reload("Oli.plugins", true)
+          require("packer").compile()
+        end,
+        opts = {
+          pattern = { "*/Oli/plugins/*.lua" },
+        },
+      },
+    },
     --   {
     --     { "User" },
     --     function()
