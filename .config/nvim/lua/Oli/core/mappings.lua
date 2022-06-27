@@ -363,8 +363,34 @@ M.plugin_keymaps = function()
       function()
         require("telescope").extensions.refactoring.refactors()
       end,
-      description = "Refactor",
+      description = "Refactoring",
       mode = { "v", "x" },
+    },
+    {
+      "<LocalLeader>rd",
+      function()
+        require("refactoring").debug.printf({ below = false })
+      end,
+      description = "Refactoring: Printf",
+    },
+    {
+      "<LocalLeader>rv",
+      function(visual_selection)
+        if visual_selection then
+          require("refactoring").debug.print_var({})
+        else
+          require("refactoring").debug.print_var({ normal = true })
+        end
+      end,
+      description = "Refactoring: Print_Var",
+      mode = { "n", "v" },
+    },
+    {
+      "<LocalLeader>rc",
+      function()
+        require("refactoring").debug.cleanup()
+      end,
+      description = "Refactoring: Cleanup",
     },
 
     -- Search
@@ -483,8 +509,8 @@ M.completion_keymaps = function()
   local _, cmp = om.safe_require("cmp")
   local _, luasnip = om.safe_require("luasnip")
 
-  local function has_words_before()
-    local line, col = vim.api.nvim_win_get_cursor(0)
+  local has_words_before = function()
+    local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
   end
 
@@ -494,6 +520,8 @@ M.completion_keymaps = function()
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
+      elseif has_words_before() then
+        cmp.complete()
       else
         fallback()
       end
