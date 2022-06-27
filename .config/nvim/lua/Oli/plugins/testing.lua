@@ -1,5 +1,4 @@
 local M = {}
-
 ----------------------------------COVERAGE---------------------------------- {{{
 M.coverage = function()
   local ok, coverage = om.safe_require("coverage")

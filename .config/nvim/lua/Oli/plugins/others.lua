@@ -80,7 +80,7 @@ M.dap = function()
     return
   end
 
-  -- dap.set_log_level("TRACE")
+  dap.set_log_level("TRACE")
 
   vim.fn.sign_define("DapBreakpoint", {
     text = "",
@@ -94,6 +94,11 @@ M.dap = function()
     linehl = "",
     numhl = "DebugHighlight",
   })
+
+  local ok, ruby = om.safe_require("dap-ruby")
+  if ok then
+    ruby.setup()
+  end
 end
 
 M.dap_ui = function()
