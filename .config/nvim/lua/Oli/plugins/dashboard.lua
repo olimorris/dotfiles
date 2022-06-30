@@ -10,13 +10,19 @@ function M.setup()
 
   -- Header
   dashboard.section.header.val = {
-    [[███    ██ ███████  ██████  ██    ██ ██ ███    ███]],
-    [[████   ██ ██      ██    ██ ██    ██ ██ ████  ████]],
-    [[██ ██  ██ █████   ██    ██ ██    ██ ██ ██ ████ ██]],
-    [[██  ██ ██ ██      ██    ██  ██  ██  ██ ██  ██  ██]],
-    [[██   ████ ███████  ██████    ████   ██ ██      ██]],
+    [[                                             ]],
+    [[      ███████████           █████      ██]],
+    [[     ███████████             █████ ]],
+    [[     ████████████████ ███████████ ███   ███████]],
+    [[    ████████████████ ████████████ █████ ██████████████]],
+    [[   █████████████████████████████ █████ █████ ████ █████]],
+    [[ ██████████████████████████████████ █████ █████ ████ █████]],
+    [[██████  ███ █████████████████ ████ █████ █████ ████ ██████]],
   }
-  dashboard.section.header.opts.hl = "AlphaHeader"
+  dashboard.section.header.opts = {
+    hl = "AlphaHeader",
+    position = "center",
+  }
 
   local function button(sc, txt, keybind, keybind_opts)
     local b = dashboard.button(sc, txt, keybind, keybind_opts)
@@ -25,14 +31,14 @@ function M.setup()
     return b
   end
   dashboard.section.buttons.val = {
-    button("s", "   Load session", ':lua require("persisted").load()<CR>'),
+    button("l", "   Load session", ':lua require("persisted").load()<CR>'),
     button("b", "   Bookmarks", ":Telescope harpoon marks<CR>"),
     button("r", "   Recently used files", ":Telescope frecency<CR>"),
     button("n", "   New file", ":ene <BAR> startinsert <CR>"),
     button("f", "   Find file", ":Telescope find_files hidden=true path_display=smart<CR>"),
-    button("p", "   Find project", ":Telescope project<CR>"),
-    button("w", "   Find word", ":Telescope live_grep path_display=smart<CR>"),
-    button("u", "   Update plugins", ':lua om.PackerSync()<CR>'), -- Packer sync
+    button("s", "   Find session", ':Telescope persisted<CR>'),
+    -- button("w", "   Find word", ":Telescope live_grep path_display=smart<CR>"),
+    button("u", "   Update plugins", ":lua om.PackerSync()<CR>"), -- Packer sync
     button("q", "   Quit Neovim", ":qa<CR>"),
   }
   dashboard.section.buttons.opts = {
@@ -53,9 +59,9 @@ function M.setup()
 
   -- Layout
   dashboard.config.layout = {
-    { type = "padding", val = 2 },
+    { type = "padding", val = 1 },
     dashboard.section.header,
-    { type = "padding", val = 2 },
+    { type = "padding", val = 1 },
     dashboard.section.buttons,
     { type = "padding", val = 1 },
     dashboard.section.footer,
