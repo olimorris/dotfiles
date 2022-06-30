@@ -1,5 +1,4 @@
 local present, packer = pcall(require, config_namespace .. ".plugins.packer")
-
 if not present then
   return false
 end
@@ -459,7 +458,7 @@ return packer.startup({
     ------------------------------PACKER BOOTSTRAP------------------------------ {{{
     if PACKER_BOOTSTRAP then
       require("packer").sync()
-    ---------------------------------------------------------------------------- }}}
     end
+    ---------------------------------------------------------------------------- }}}
   end,
 })

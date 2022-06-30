@@ -1,5 +1,5 @@
 local PACKER_INSTALLED_PATH = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
-
+------------------------------PACKER BOOTSTRAP------------------------------ {{{
 if vim.fn.empty(vim.fn.glob(PACKER_INSTALLED_PATH)) > 0 then
   vim.notify("Downloading packer.nvim...", nil, { title = "Packer" })
   PACKER_BOOTSTRAP = vim.fn.system({
@@ -10,9 +10,10 @@ if vim.fn.empty(vim.fn.glob(PACKER_INSTALLED_PATH)) > 0 then
     "20",
     PACKER_INSTALLED_PATH,
   })
-  vim.cmd [[packadd packer.nvim]]
+  vim.cmd([[packadd packer.nvim]])
 end
-
+---------------------------------------------------------------------------- }}}
+---------------------------------PACKER INIT-------------------------------- {{{
 local present, packer = pcall(require, "packer")
 if not present then
   return
@@ -31,7 +32,7 @@ packer.init({
   auto_clean = true,
   ensure_dependencies = true,
   compile_on_sync = true,
-  max_jobs = 15,
+  max_jobs = 30,
 })
-
+---------------------------------------------------------------------------- }}}
 return packer
