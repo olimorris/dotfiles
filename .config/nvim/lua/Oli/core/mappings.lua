@@ -364,7 +364,7 @@ M.plugin_keymaps = function()
         require("telescope").extensions.refactoring.refactors()
       end,
       description = "Refactoring",
-      mode = { "v", "x" },
+      mode = { "n", "v", "x" },
     },
     {
       "<LocalLeader>rd",
