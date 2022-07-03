@@ -6,6 +6,7 @@ function M.setup()
     return
   end
 
+  -- Stop legendary keybinds being loaded multiple times in a session
   if not vim.g.legendary then
     legendary.setup({
       include_builtin = false,
@@ -17,6 +18,7 @@ function M.setup()
 
     legendary.bind_keymaps(require(config_namespace .. ".core.mappings").plugin_keymaps())
     legendary.bind_keymaps(require(config_namespace .. ".core.commands").plugin_commands())
+    legendary.bind_autocmds(require(config_namespace .. ".core.autocmds").plugin_autocmds())
   end
 
   vim.g.legendary = true

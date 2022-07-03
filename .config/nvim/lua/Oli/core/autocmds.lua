@@ -174,4 +174,19 @@ function M.lsp_autocmds(client, bufnr)
   return autocmds
 end
 ---------------------------------------------------------------------------- }}}
+-----------------------------------PLUGINS---------------------------------- {{{
+function M.plugin_autocmds()
+  local autocmds = {
+    {
+      name = "AlphaDashboard",
+      {
+        "FileType",
+        ":setlocal showtabline=0",
+        opts = { pattern = "alpha" },
+      },
+    },
+  }
+  return autocmds
+end
+---------------------------------------------------------------------------- }}}
 return M

@@ -31,41 +31,6 @@ function M.default_commands()
       description = "Test all",
     },
     {
-      "NeotestNearest",
-      function()
-        return require("neotest").run.run()
-      end,
-      description = "Test nearest",
-    },
-    {
-      "NeotestFile",
-      function()
-        return require("neotest").run.run(vim.fn.expand("%"))
-      end,
-      description = "Test file",
-    },
-    {
-      "NeotestDebug",
-      function()
-        return require("neotest").run.run({ strategy = "dap" })
-      end,
-      description = "Debug current test",
-    },
-    {
-      "NeotestOutput",
-      function()
-        return require("neotest").output.open()
-      end,
-      description = "Open test output",
-    },
-    {
-      "NeotestSummary",
-      function()
-        return require("neotest").summary.toggle()
-      end,
-      description = "Show test summary",
-    },
-    {
       "Theme",
       function()
         om.ToggleTheme()
@@ -149,6 +114,42 @@ function M.plugin_commands()
         require("neogen").generate()
       end,
       description = "Generate annotation",
+    },
+    -- Neotest
+    {
+      "NeotestNearest",
+      function()
+        return require("neotest").run.run()
+      end,
+      description = "Test nearest",
+    },
+    {
+      "NeotestFile",
+      function()
+        return require("neotest").run.run(vim.fn.expand("%"))
+      end,
+      description = "Test file",
+    },
+    {
+      "NeotestSuite",
+      function()
+        return require("neotest").run.run({ suite = true })
+      end,
+      description = "Test suite",
+    },
+    {
+      "NeotestOutput",
+      function()
+        return require("neotest").output.open()
+      end,
+      description = "Open test output",
+    },
+    {
+      "NeotestSummary",
+      function()
+        return require("neotest").summary.toggle()
+      end,
+      description = "Show test summary",
     },
     -- Packer
     {
