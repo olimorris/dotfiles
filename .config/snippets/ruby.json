@@ -9,6 +9,14 @@
 			"end"
 		]
 	},
+	"Ruby Debug": {
+		"prefix": [
+			"db"
+		],
+		"body": [
+			"require 'debug';binding.break"
+		]
+	},
 	"RSpec describe": {
 		"prefix": [
 			"describe"
