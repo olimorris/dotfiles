@@ -113,7 +113,6 @@ return packer.startup({
     })
     use({
       "stevearc/qf_helper.nvim", -- Improves the quickfix and location list windows
-      cmd = { "copen", "lopen", "QFToggle", "LLToggle", "QFOpen", "LLOpen" },
       config = function()
         require(config_namespace .. ".plugins.others").qf_helper()
       end,
@@ -178,8 +177,6 @@ return packer.startup({
         },
         {
           "stevearc/aerial.nvim", -- Toggled list of classes, methods etc in current file
-          cmd = "AerialToggle",
-          module = "aerial",
           after = "telescope.nvim",
           config = function()
             require("telescope").load_extension("aerial")
@@ -200,8 +197,6 @@ return packer.startup({
     })
     use({
       "VonHeikemen/searchbox.nvim", -- Search box in the top right corner
-      cmd = "SearchBox*",
-      module = "searchbox",
       requires = {
         { "MunifTanjim/nui.nvim" },
       },
@@ -211,14 +206,12 @@ return packer.startup({
     })
     use({
       "phaazon/hop.nvim", -- Speedily navigate anywhere in a buffer
-      module = "hop",
       config = function()
         require(config_namespace .. ".plugins.others").hop()
       end,
     })
     use({
       "akinsho/nvim-toggleterm.lua", -- Easily toggle and position the terminal
-      cmd = { "ToggleTerm", "Test*" },
       config = function()
         require(config_namespace .. ".plugins.others").toggleterm()
       end,
@@ -337,26 +330,19 @@ return packer.startup({
       end,
     })
     use({
-      "tpope/vim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
-    })
-    use({
       "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
-      event = "BufRead",
       config = function()
         require(config_namespace .. ".plugins.others").todo_comments()
       end,
     })
     use({
       "numToStr/Comment.nvim", -- Comment out lines with gcc
-      module = "Comment",
-      keys = { "gcc", "gc", "gbc" },
       config = function()
         require(config_namespace .. ".plugins.others").comment()
       end,
     })
     use({
       "fedepujol/move.nvim", -- Move lines and blocks
-      cmd = { "MoveLine", "MoveBlock", "MoveHChar", "MoveHBlock" },
     })
     use({
       "pianocomposer321/yabs.nvim", -- Build and run your code
@@ -365,13 +351,13 @@ return packer.startup({
         require(config_namespace .. ".plugins.others").yabs()
       end,
     })
-    use({
-      "vim-test/vim-test", -- Run tests on any type of code base
-      cmd = { "Test*" },
-      setup = function()
-        require(config_namespace .. ".plugins.testing").vim_test()
-      end,
-    })
+    -- use({
+    --   "vim-test/vim-test", -- Run tests on any type of code base
+    --   cmd = { "Test*" },
+    --   setup = function()
+    --     require(config_namespace .. ".plugins.testing").vim_test()
+    --   end,
+    -- })
     use({
       "nvim-neotest/neotest",
       requires = {
