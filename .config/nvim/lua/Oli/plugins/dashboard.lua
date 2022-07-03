@@ -31,13 +31,12 @@ function M.setup()
     return b
   end
   dashboard.section.buttons.val = {
-    button("l", "   Load session", ':lua require("persisted").load()<CR>'),
+    button("l", "   Load session", ':lua require("persisted").load()<CR>'),
+    button("s", "   Find session", ':Telescope persisted<CR>'),
+    button("n", "   New file", ":ene <BAR> startinsert <CR>"),
     button("b", "   Bookmarks", ":Telescope harpoon marks<CR>"),
     button("r", "   Recently used files", ":Telescope frecency<CR>"),
-    button("n", "   New file", ":ene <BAR> startinsert <CR>"),
-    button("f", "   Find file", ":Telescope find_files hidden=true path_display=smart<CR>"),
-    button("s", "   Find session", ':Telescope persisted<CR>'),
-    -- button("w", "   Find word", ":Telescope live_grep path_display=smart<CR>"),
+    button("f", "   Find file", ":Telescope find_files hidden=true path_display=smart<CR>"),
     button("u", "   Update plugins", ":lua om.PackerSync()<CR>"), -- Packer sync
     button("q", "   Quit Neovim", ":qa<CR>"),
   }
@@ -48,11 +47,10 @@ function M.setup()
   -- Footer
   local function footer()
     local total_plugins = #vim.tbl_keys(packer_plugins)
-    local datetime = os.date(" %d-%m-%Y")
     local version = vim.version()
-    local nvim_version_info = "   Neovim v" .. version.major .. "." .. version.minor .. "." .. version.patch
+    local nvim_version_info = "  Neovim v" .. version.major .. "." .. version.minor .. "." .. version.patch
 
-    return datetime .. "   " .. total_plugins .. " plugins" .. nvim_version_info
+    return " " .. total_plugins .. " plugins" .. nvim_version_info
   end
   dashboard.section.footer.val = footer()
   dashboard.section.footer.opts.hl = "AlphaFooter"

@@ -70,6 +70,7 @@ M.copilot = function()
   vim.g.copilot_filetypes = {
     ["*"] = true,
     TelescopePrompt = false,
+    TelescopeResults = false,
     ["neo-tree-popup"] = false,
   }
 end
@@ -242,6 +243,15 @@ M.nvim_autopairs = function()
       map = "<c-e>",
     },
   })
+end
+
+M.nvim_surround = function()
+  local ok, surround = om.safe_require("nvim-surround")
+  if not ok then
+    return
+  end
+
+  surround.setup()
 end
 
 M.persisted = function()
