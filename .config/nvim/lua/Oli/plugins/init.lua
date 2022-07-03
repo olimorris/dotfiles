@@ -329,6 +329,12 @@ return packer.startup({
         require(config_namespace .. ".plugins.others").tabout()
       end,
     })
+    -- use({
+    --   "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
+    --   config = function()
+    --     require(config_namespace .. ".plugins.others").nvim_surround()
+    --   end,
+    -- })
     use({
       "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
       config = function()
