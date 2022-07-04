@@ -4,7 +4,7 @@
 
 My macOS dotfiles. Installation instructions are my own.
 
-<img src="https://user-images.githubusercontent.com/9512444/160488003-a9cacd6a-7492-4a49-a27a-1a19eff3d0b8.png" alt="Neovim">
+<img src="https://user-images.githubusercontent.com/9512444/177219642-6e75da11-ede9-4f71-9886-35497b47b8a5.png" alt="Neovim">
 
 ## :computer: Setting up a new Mac
 
