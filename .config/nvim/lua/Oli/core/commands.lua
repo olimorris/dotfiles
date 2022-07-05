@@ -10,6 +10,13 @@ function M.default_commands()
       description = "Toggle line numbers",
     },
     {
+      "CopyMessage",
+      function()
+        vim.cmd([[let @+ = execute('messages')]])
+      end,
+      description = "Copy message output",
+    },
+    {
       "Sessions",
       function()
         vim.cmd([[Telescope persisted]])
