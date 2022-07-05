@@ -27,3 +27,5 @@
 	defaultBranch = main
 [delta]
 	line-numbers = true
+[credential]
+	helper = manager-core
