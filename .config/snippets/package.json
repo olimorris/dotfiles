@@ -6,6 +6,10 @@
         "path": "./global.json"
       },
       {
+        "language": "lua",
+        "path": "./lua.json"
+      },
+      {
         "language": "python",
         "path": "./python.json"
       },

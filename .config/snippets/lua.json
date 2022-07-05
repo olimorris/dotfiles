@@ -1,0 +1,10 @@
+{
+	"Print table": {
+		"prefix": [
+			"pt"
+		],
+		"body": [
+			"om.print_table($0)"
+		]
+	}
+}
