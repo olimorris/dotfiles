@@ -246,7 +246,7 @@ M.plugin_keymaps = function()
     {
       "<F5>",
       "<cmd>lua require('dap').repl.toggle({height = 6})<CR>",
-      description = "Debug: Show REPL",
+      description = "Debug: Toggle REPL",
     },
     { "<F6>", "<cmd>lua require('dap').repl.run_last()<CR>", description = "Debug: Run last" },
     {
