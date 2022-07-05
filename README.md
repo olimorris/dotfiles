@@ -8,18 +8,14 @@ My macOS dotfiles. Installation instructions are my own.
 
 ## :computer: Setting up a new Mac
 
-* Download and install Tresorit and sync the `.dotfiles` Tresor to `~/` (wait for full sync to take place!)
+* Download and install Tresorit and sync the `.dotfiles` Tresor to `/Users/Oli` (wait for a full sync to take place!)
 * Ensure you're signed into iCloud and the App Store
 * Open up a terminal and run:
 ```bash
 cd ~/.dotfiles && rake install
 ```
-* Open up Neovim and run:
-```lua
-:PackerInstall
-```
 * Install Aqueux for your beautiful wallpaper transitions
-* Ensure that `.dotfiles` is linked to your GitHub repo
+* Ensure that `~/.dotfiles` is linked to your GitHub repo
 
 ## :wrench: What actually happens
 
