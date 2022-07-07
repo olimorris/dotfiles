@@ -26,9 +26,7 @@ M.setup = function()
 
         ghost_text = "#555961",
 
-        statusline_div = "#2e323b", -- gray
         statusline_bg = "#2e323b", -- gray
-        statusline_text = "#696C77", -- gray
 
         bufferline_text_focus = "#949aa2",
       },
@@ -38,9 +36,7 @@ M.setup = function()
 
         ghost_text = "#c3c3c3",
 
-        statusline_div = "#f0f0f0", -- gray
         statusline_bg = "#f0f0f0", -- gray
-        statusline_text = "#b5b5b5", -- gray
       },
     },
     filetype_hlgroups = {

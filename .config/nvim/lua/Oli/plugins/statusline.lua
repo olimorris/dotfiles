@@ -133,7 +133,7 @@ function M.setup()
   }
 
   local InactiveStatusHL = {
-    fg = colors.statusline_div,
+    fg = colors.statusline_bg,
     bg = "NONE",
     style = "underline",
   }
@@ -150,7 +150,7 @@ function M.setup()
       bg = colors.statusline_bg
     end
     if not fg then
-      fg = colors.statusline_text
+      fg = colors.gray
     end
     return {
       body = {
@@ -172,14 +172,14 @@ function M.setup()
     return {
       body = {
         fg = colors.bg,
-        bg = vim.o.background == "light" and colors.black or colors.gray,
+        bg = colors.gray,
       },
       sep_left = {
         fg = colors.bg,
-        bg = vim.o.background == "light" and colors.black or colors.gray,
+        bg = colors.gray,
       },
       sep_right = {
-        fg = vim.o.background == "light" and colors.black or colors.gray,
+        fg = colors.gray,
         bg = colors.bg,
       },
     }
@@ -304,7 +304,7 @@ function M.setup()
       left_sep = {
         str = "slant_right",
         hl = function()
-          return block(colors.red).sep_left
+          return block(colors.red, colors.bg).sep_left
         end,
       },
       right_sep = {
