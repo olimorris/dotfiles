@@ -2,42 +2,42 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 [character]
-success_symbol = "[➜](bold #1da912)" #green
-error_symbol = "[➜](bold #e05661)" #red
+success_symbol = "[➜](bold #98c379)" #green
+error_symbol = "[➜](bold #e06c75)" #red
 
 [cmd_duration]
-style = "bold" #black
+style = "bold" #white
 
 [directory]
-style = "bold #9a77cf" #purple
+style = "bold #c678dd" #purple
 
 [docker_context]
 symbol = " "
 
 [git_branch]
 symbol = " "
-style = "bold #1da912" #green
+style = "bold #98c379"  #green
 
 [git_status]
-style = "bold #bebebe" #gray
+style = "bold #4c4f55" #gray
 
 [nix_shell]
 symbol = " "
-style = "bold #118dc3" #blue
-impure_msg = " [impure](bold #e05661)"
+style = "bold #61afef" #blue
+impure_msg = " [impure](bold #e06c75)"
 pure_msg = " [pure](bold)"
 
 [nodejs]
 symbol = " "
-style = "bold #eea825" #yellow
+style = "bold #e5c07b" #yellow
 
 [package]
-style = "bold #e05661" #red
+style = "bold #e06c75" #red
 
 [python]
 symbol = " "
-style = "bold #eea825" #yellow
+style = "bold #e5c07b" #yellow
 
 [ruby]
 symbol = " "
-style = "bold #e05661" #red
+style = "bold #e06c75" #red
