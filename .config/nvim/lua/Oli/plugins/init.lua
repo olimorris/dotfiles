@@ -329,12 +329,12 @@ return packer.startup({
         require(config_namespace .. ".plugins.others").tabout()
       end,
     })
-    -- use({
-    --   "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
-    --   config = function()
-    --     require(config_namespace .. ".plugins.others").nvim_surround()
-    --   end,
-    -- })
+    use({
+      "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
+      config = function()
+        require(config_namespace .. ".plugins.others").nvim_surround()
+      end,
+    })
     use({
       "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
       config = function()
@@ -357,31 +357,25 @@ return packer.startup({
         require(config_namespace .. ".plugins.others").yabs()
       end,
     })
-    -- use({
-    --   "vim-test/vim-test", -- Run tests on any type of code base
-    --   cmd = { "Test*" },
-    --   setup = function()
-    --     require(config_namespace .. ".plugins.testing").vim_test()
-    --   end,
-    -- })
     use({
       "nvim-neotest/neotest",
       requires = {
         "~/Code/Projects/neotest-rspec",
         "~/Code/Projects/neotest-minitest",
+        "~/Code/Projects/neotest-phpunit",
         "nvim-neotest/neotest-plenary",
         "nvim-neotest/neotest-python",
         "antoinemadec/FixCursorHold.nvim",
       },
       config = function()
-        require(config_namespace .. ".plugins.testing").neotest()
+        require(config_namespace .. ".plugins.others").neotest()
       end,
     })
     use({
       "andythigpen/nvim-coverage", -- Display test coverage information
       module = "coverage",
       config = function()
-        require(config_namespace .. ".plugins.testing").coverage()
+        require(config_namespace .. ".plugins.others").coverage()
       end,
     })
     use({

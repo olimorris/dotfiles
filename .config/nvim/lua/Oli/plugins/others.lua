@@ -75,6 +75,23 @@ M.copilot = function()
   }
 end
 
+M.coverage = function()
+  local ok, coverage = om.safe_require("coverage")
+  if not ok then
+    return
+  end
+
+  local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
+
+  coverage.setup({
+    commands = false,
+    highlights = {
+      covered = { fg = colors.green },
+      uncovered = { fg = colors.red },
+    },
+  })
+end
+
 M.dap = function()
   local ok, dap = om.safe_require("dap")
   if not ok then
@@ -96,31 +113,12 @@ M.dap = function()
     numhl = "DebugHighlight",
   })
 
+  dap.configurations.ruby = {}
+
   local ok, ruby = om.safe_require("dap-ruby")
   if ok then
     ruby.setup()
   end
-end
-
-M.dap_ui = function()
-  local ok, dap_ui = om.safe_require("dapui")
-  if not ok then
-    print("No Dap UI")
-    return
-  end
-
-  dap_ui.setup({
-    layouts = {
-      elements = {
-        -- You can change the order of elements in the sidebar
-        { id = "scopes", size = 0.4 },
-        { id = "stacks", size = 0.2 },
-        { id = "breakpoints", size = 0.2 },
-        { id = "watches", size = 0.2 },
-      },
-      size = 40,
-    },
-  })
 end
 
 M.dressing = function()
@@ -230,6 +228,53 @@ M.neogen = function()
   })
 end
 
+M.neotest = function()
+  local ok, neotest = om.safe_require("neotest")
+  if not ok then
+    return
+  end
+
+  neotest.setup({
+    adapters = {
+      require("neotest-plenary"),
+      require("neotest-rspec"),
+      require("neotest-minitest"),
+      require("neotest-phpunit"),
+    },
+    diagnostic = false,
+    icons = {
+      expanded = "",
+      child_prefix = "",
+      child_indent = "",
+      final_child_prefix = "",
+      non_collapsible = "",
+      collapsed = "",
+
+      passed = "",
+      running = "",
+      failed = "",
+      unknown = "",
+    },
+    floating = {
+      border = "single",
+      max_height = 0.8,
+      max_width = 0.9,
+    },
+    summary = {
+      mappings = {
+        attach = "a",
+        expand = { "<CR>", "<2-LeftMouse>" },
+        expand_all = "e",
+        jumpto = "i",
+        output = "o",
+        run = "r",
+        short = "O",
+        stop = "u",
+      },
+    },
+  })
+end
+
 M.nvim_autopairs = function()
   local ok, autopairs = om.safe_require("nvim-autopairs")
   if not ok then
@@ -270,6 +315,7 @@ M.persisted = function()
     end,
     telescope = {
       before_source = function()
+        vim.api.nvim_input("<ESC>:%bd<CR>")
         persisted.stop()
       end,
     },
