@@ -13,6 +13,7 @@ om.lsp.servers = {
   "dockerls",
   -- "efm",
   "html",
+  "intelephense",
   "jsonls",
   "pyright",
   "solargraph",
