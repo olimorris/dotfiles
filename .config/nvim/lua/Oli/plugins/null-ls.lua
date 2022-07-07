@@ -13,6 +13,7 @@ local sources = {
   -- Formatting
   null_ls.builtins.formatting.stylua,
   null_ls.builtins.formatting.fixjson,
+  null_ls.builtins.formatting.phpcsfixer,
   null_ls.builtins.formatting.rubocop,
   null_ls.builtins.formatting.shfmt.with({
     filetypes = { "sh", "zsh" },
