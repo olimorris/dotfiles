@@ -31,8 +31,9 @@ autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
-bindkey "^[[A" up-line-or-beginning-search   # Up
-bindkey "^[[B" down-line-or-beginning-search # Down
+bindkey "^[[A" up-line-or-beginning-search   # <Up> Go to previous history item
+bindkey "^[[B" down-line-or-beginning-search # <Down> Go to next history item
+bindkey '^[[Z' reverse-menu-complete # <S-Tab> Go to previous item in menu
 
 ################################################################################
 # Plugins
