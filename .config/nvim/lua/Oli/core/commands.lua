@@ -114,6 +114,30 @@ function M.plugin_commands()
       end,
       description = "Lazygit",
     },
+    -- LSP Installer
+    {
+      "LspAdd",
+      function()
+        vim.cmd("LspInstall")
+      end,
+      description = "Add LSP server for filetype",
+    },
+    {
+      "LspInstallAll",
+      function()
+        for _, name in pairs(om.lsp.servers) do
+          vim.cmd("LspInstall " .. name)
+        end
+      end,
+      description = "Install LSP servers",
+    },
+    {
+      "LspUninstall",
+      function()
+        vim.cmd("LspUninstallAll")
+      end,
+      description = "Uninstall LSP servers",
+    },
     -- neogen
     {
       "Neogen",
@@ -124,39 +148,11 @@ function M.plugin_commands()
     },
     -- Neotest
     {
-      "NeotestNearest",
-      function()
-        return require("neotest").run.run()
-      end,
-      description = "Test nearest",
-    },
-    {
-      "NeotestFile",
-      function()
-        return require("neotest").run.run(vim.fn.expand("%"))
-      end,
-      description = "Test file",
-    },
-    {
-      "NeotestSuite",
-      function()
-        return require("neotest").run.run({ suite = true })
-      end,
-      description = "Test suite",
-    },
-    {
       "NeotestOutput",
       function()
         return require("neotest").output.open()
       end,
       description = "Open test output",
-    },
-    {
-      "NeotestSummary",
-      function()
-        return require("neotest").summary.toggle()
-      end,
-      description = "Show test summary",
     },
     -- Packer
     {
@@ -290,22 +286,6 @@ function M.lsp_commands(client, bufnr)
         vim.cmd("edit " .. vim.lsp.get_log_path())
       end,
       description = "Show LSP logs",
-    },
-    {
-      "LspInstall",
-      function()
-        for _, name in pairs(om.lsp.servers) do
-          vim.cmd("LspInstall " .. name)
-        end
-      end,
-      description = "Install LSP servers",
-    },
-    {
-      "LspUninstall",
-      function()
-        vim.cmd("LspUninstallAll")
-      end,
-      description = "Uninstall LSP servers",
     },
   }
 

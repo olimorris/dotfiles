@@ -69,6 +69,28 @@ M.default_keymaps = function()
     { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
     { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
 
+    -- Move
+    {
+      "<A-j>",
+      { n = ":MoveLine(1)<CR>", x = ":MoveBlock(1)<CR>" },
+      description = "Move text down",
+    },
+    {
+      "<A-k>",
+      { n = ":MoveLine(-1)<CR>", x = ":MoveBlock(-1)<CR>" },
+      description = "Move text up",
+    },
+    {
+      "<A-h>",
+      { n = ":MoveHChar(-1)<CR>", x = ":MoveHBlock(-1)<CR>" },
+      description = "Move text left",
+    },
+    {
+      "<A-l>",
+      { n = ":MoveHChar(1)<CR>", x = ":MoveHBlock(1)<CR>" },
+      description = "Move text right",
+    },
+
     -- Multiple Cursors
     -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
     -- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
@@ -304,7 +326,7 @@ M.plugin_keymaps = function()
     },
 
     -- Hop
-    { "s", "<cmd>lua require'hop'.hint_char1()<CR>", description = "Hop", mode = { "n", "o" } },
+    { "f", "<cmd>lua require'hop'.hint_char1()<CR>", description = "Hop", mode = { "n", "o" } },
 
     -- File Explorer
     { "\\", "<cmd>Neotree toggle<CR>", description = "Neotree: Toggle" },
@@ -320,34 +342,27 @@ M.plugin_keymaps = function()
       description = "Minimap toggle",
     },
 
-    -- Move
-    {
-      "<A-j>",
-      { n = ":MoveLine(1)<CR>", x = ":MoveBlock(1)<CR>" },
-      description = "Move text down",
-    },
-    {
-      "<A-k>",
-      { n = ":MoveLine(-1)<CR>", x = ":MoveBlock(-1)<CR>" },
-      description = "Move text up",
-    },
-    {
-      "<A-h>",
-      { n = ":MoveHChar(-1)<CR>", x = ":MoveHBlock(-1)<CR>" },
-      description = "Move text left",
-    },
-    {
-      "<A-l>",
-      { n = ":MoveHChar(1)<CR>", x = ":MoveHBlock(1)<CR>" },
-      description = "Move text right",
-    },
-
     -- Neoclip
     {
       "<LocalLeader>p",
       "<cmd>lua require('telescope').extensions.neoclip.default()<CR>",
       description = "Neoclip",
     },
+
+    -- Neotest
+    { "<LocalLeader>t", '<cmd>lua require("neotest").run.run()<CR>', description = "Test nearest" },
+    { "<LocalLeader>tf", '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>', description = "Test file" },
+    {
+      "<LocalLeader>ts",
+      function()
+        local neotest = require("neotest")
+        for _, adapter_id in ipairs(neotest.run.adapters()) do
+          neotest.run.run({ suite = true, adapter = adapter_id })
+        end
+      end,
+      description = "Test suite",
+    },
+    { "`", '<cmd>lua require("neotest").summary.toggle()<CR>', description = "Toggle test summary" },
 
     -- Persisted
     { "<Leader>s", '<cmd>lua require("persisted").toggle()<CR>', description = "Session Toggle" },
@@ -435,12 +450,12 @@ M.plugin_keymaps = function()
     },
     {
       "<C-g>",
-      h.lazy_required_fn("telescope.builtin", "live_grep", { path_display = "shorten", grep_open_files = true }),
+      h.lazy_required_fn("telescope.builtin", "live_grep", { path_display = { "shorten" }, grep_open_files = true }),
       description = "Find in open files",
     },
     {
       "<Leader>g",
-      h.lazy_required_fn("telescope.builtin", "live_grep", { path_display = "smart" }),
+      h.lazy_required_fn("telescope.builtin", "live_grep", { path_display = { "smart" } }),
       description = "Find in pwd",
     },
     {
@@ -484,13 +499,6 @@ M.plugin_keymaps = function()
       "<cmd>lua require('tmux').move_right()<CR>",
       description = "Tmux: Move right",
     },
-
-    -- Vim Test
-    { "<Leader>t", "<cmd>TestNearest<CR>", description = "Vim-test: nearest" },
-    { "<LocalLeader>ta", "<cmd>TestAll<CR>", description = "Vim-test: all" },
-    { "<LocalLeader>tl", "<cmd>TestLast<CR>", description = "Vim-test: last" },
-    { "<LocalLeader>tf", "<cmd>TestFile<CR>", description = "Vim-test: file" },
-    { "<LocalLeader>ts", "<cmd>TestSuite<CR>", description = "Vim-test: suite" },
 
     -- Undotree
     { "<LocalLeader>u", "<cmd>UndotreeToggle<CR>", description = "Undotree toggle" },
