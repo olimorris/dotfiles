@@ -5,7 +5,6 @@ M.setup = function()
   if not ok then
     return
   end
-  local utils = load("onedarkpro.utils")
 
   onedarkpro.setup({
     plugins = { polygot = false },
@@ -106,9 +105,11 @@ M.setup = function()
       MapBase = { fg = "${gray}" },
       MapCursor = { fg = "${purple}", bg = "${cursorline}" },
       -- MapRange = { fg = "${fg}" },
+
+      -- Scrollbar
+      ScrollView = { bg = "${gray}"},
     },
   })
-  onedarkpro.load()
 end
 
 return M
