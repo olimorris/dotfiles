@@ -23,6 +23,9 @@ M.default_keymaps = function()
   local maps = {
     { "jk", "<esc>", description = "Escape in insert mode", mode = { "i" } },
 
+    -- Replace selected text without yanking it
+    { "p", '"_dP', description = "without ", mode = { "v" } },
+
     { "<Leader>qa", "<cmd>qall<CR>", description = "Quit Neovim" },
     { "<C-s>", "<cmd>silent! write<CR>", description = "Save buffer", mode = { "n", "i" } },
     { "<C-n>", "<cmd>enew<CR>", description = "New buffer" },
@@ -156,18 +159,18 @@ M.default_keymaps = function()
   -- Movement
   -- Automatically save movements larger than 5 lines to the jumplist
   -- Use Ctrl-o/Ctrl-i to navigate backwards and forwards through the jumplist
-  vim.api.nvim_set_keymap(
-    "n",
-    "j",
-    "v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'j' : 'gj'",
-    { noremap = true, expr = true }
-  )
-  vim.api.nvim_set_keymap(
-    "n",
-    "k",
-    "v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'k' : 'gk'",
-    { noremap = true, expr = true }
-  )
+  -- vim.api.nvim_set_keymap(
+  --   "n",
+  --   "j",
+  --   "v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'j' : 'gj'",
+  --   { noremap = true, expr = true }
+  -- )
+  -- vim.api.nvim_set_keymap(
+  --   "n",
+  --   "k",
+  --   "v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'k' : 'gk'",
+  --   { noremap = true, expr = true }
+  -- )
 
   return maps
 end
@@ -323,6 +326,18 @@ M.plugin_keymaps = function()
       "<LocalLeader>h5",
       '<cmd>lua require("harpoon.ui").nav_file(5)<CR>',
       description = "Harpoon: Go to 5",
+    },
+
+    --hlslens
+    {
+      "n",
+      [[<cmd>execute('normal! ' . v:count1 . 'n')<CR><cmd>lua require('hlslens').start()<CR>]],
+      description = "Next result",
+    },
+    {
+      "N",
+      [[<cmd>execute('normal! ' . v:count1 . 'N')<CR><cmd>lua require('hlslens').start()<CR>]],
+      description = "Previous result",
     },
 
     -- Hop
