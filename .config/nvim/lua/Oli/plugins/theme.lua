@@ -7,8 +7,14 @@ M.setup = function()
   end
 
   onedarkpro.setup({
-    plugins = { polygot = false },
-    styles = { comments = "italic", keywords = "italic", virtual_text = "italic,underline" },
+    plugins = {
+      polygot = false,
+    },
+    styles = {
+      comments = "italic",
+      keywords = "italic",
+      virtual_text = "italic,underline",
+    },
     options = {
       bold = true,
       italic = true,
@@ -32,6 +38,7 @@ M.setup = function()
       onelight = {
         vim = "#029632", -- green
         brackets = "#e05661", -- red
+        scrollbar = "#eeeeee",
 
         ghost_text = "#c3c3c3",
 
@@ -105,11 +112,8 @@ M.setup = function()
       MapBase = { fg = "${gray}" },
       MapCursor = { fg = "${purple}", bg = "${cursorline}" },
       -- MapRange = { fg = "${fg}" },
-
-      -- Scrollbar
-      ScrollView = { bg = "${gray}"},
     },
   })
+  vim.cmd("colorscheme onedarkpro")
 end
-
 return M
