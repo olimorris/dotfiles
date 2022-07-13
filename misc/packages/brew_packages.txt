@@ -3,6 +3,7 @@ asdf
 brew-cask-completion
 cmake
 code-minimap
+composer
 dark-mode
 dash
 docker
@@ -15,7 +16,6 @@ git
 git-flow-avh
 gnupg
 go
-hey
 httpie
 lazygit
 librsync
@@ -24,6 +24,7 @@ libtermkey
 libuninameslist
 libvterm
 little-cms2
+lolcat
 luajit
 luajit-openresty
 luarocks
@@ -36,7 +37,7 @@ ninja
 node
 openssl@3
 pango
-php
+php-cs-fixer
 reattach-to-user-namespace
 ripgrep
 ruby-build

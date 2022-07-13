@@ -81,6 +81,7 @@ msgpack
 multi_json
 multipart-post
 mutex_m
+neovim
 net-http
 net-imap
 net-pop
