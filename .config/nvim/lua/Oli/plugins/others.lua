@@ -445,6 +445,15 @@ M.tabout = function()
   })
 end
 
+M.textobj_diagnostic = function()
+  local ok, textobj = om.safe_require("textobj-diagnostic")
+  if not ok then
+    return
+  end
+
+  textobj.setup({ create_default_keymaps = false })
+end
+
 M.todo_comments = function()
   local ok, todo = om.safe_require("todo-comments")
   if not ok then

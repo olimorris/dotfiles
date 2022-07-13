@@ -241,6 +241,9 @@ return packer.startup({
         require(config_namespace .. ".plugins.legendary").setup()
       end,
     })
+    use({
+      "fedepujol/move.nvim", -- Move lines and blocks
+    })
     ---------------------------------------------------------------------------- }}}
     ---------------------------------COMPLETION--------------------------------- {{{
     use({
@@ -277,6 +280,7 @@ return packer.startup({
     })
     ---------------------------------------------------------------------------- }}}
     -----------------------------------CODING----------------------------------- {{{
+    -------------------------------------LSP------------------------------------ {{{
     use({
       "williamboman/nvim-lsp-installer", -- Install LSP servers from within Neovim
       requires = {
@@ -301,6 +305,14 @@ return packer.startup({
       end,
     })
     use({
+      "andrewferrier/textobj-diagnostic.nvim",
+      config = function()
+        require(config_namespace .. ".plugins.others").textobj_diagnostic()
+      end,
+    })
+    ---------------------------------------------------------------------------- }}}
+    ---------------------------------TREESITTER--------------------------------- {{{
+    use({
       "nvim-treesitter/nvim-treesitter", -- Smarter code understanding like syntax Highlight and navigation
       run = ":TSUpdate",
       requires = {
@@ -311,7 +323,7 @@ return packer.startup({
           "windwp/nvim-autopairs", -- Autopair plugin
           config = function()
             require(config_namespace .. ".plugins.others").nvim_autopairs()
-          end
+          end,
         },
         {
           "JoosepAlviste/nvim-ts-context-commentstring", -- Smart commenting in multi language files - Enabled in Treesitter file
@@ -326,9 +338,16 @@ return packer.startup({
           "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
         },
         {
-          "m-demare/hlargs.nvim", --Highlight argument definitions
+          "m-demare/hlargs.nvim", -- Highlight argument definitions
           config = function()
             require(config_namespace .. ".plugins.others").hlargs()
+          end,
+        },
+        {
+          "abecodes/tabout.nvim", -- Tab out from parenthesis, quotes, brackets...
+          after = "nvim-cmp",
+          config = function()
+            require(config_namespace .. ".plugins.others").tabout()
           end,
         },
       },
@@ -340,42 +359,8 @@ return packer.startup({
       "nvim-treesitter/playground", -- View Treesitter definitions
       cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
     })
-    use({
-      "abecodes/tabout.nvim", -- Tab out from parenthesis, quotes, brackets...
-      after = "nvim-cmp",
-      wants = "nvim-treesitter",
-      config = function()
-        require(config_namespace .. ".plugins.others").tabout()
-      end,
-    })
-    use({
-      "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
-      config = function()
-        require(config_namespace .. ".plugins.others").nvim_surround()
-      end,
-    })
-    use({
-      "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
-      config = function()
-        require(config_namespace .. ".plugins.others").todo_comments()
-      end,
-    })
-    use({
-      "numToStr/Comment.nvim", -- Comment out lines with gcc
-      config = function()
-        require(config_namespace .. ".plugins.others").comment()
-      end,
-    })
-    use({
-      "fedepujol/move.nvim", -- Move lines and blocks
-    })
-    use({
-      "pianocomposer321/yabs.nvim", -- Build and run your code
-      module = "yabs",
-      config = function()
-        require(config_namespace .. ".plugins.others").yabs()
-      end,
-    })
+    ---------------------------------------------------------------------------- }}}
+-----------------------------------TESTING---------------------------------- {{{
     use({
       "nvim-neotest/neotest",
       requires = {
@@ -397,6 +382,8 @@ return packer.startup({
         require(config_namespace .. ".plugins.others").coverage()
       end,
     })
+    ---------------------------------------------------------------------------- }}}
+----------------------------------DEBUGGING--------------------------------- {{{
     use({
       "mfussenegger/nvim-dap", -- Debug Adapter Protocol for Neovim
       requires = {
@@ -414,6 +401,7 @@ return packer.startup({
         require(config_namespace .. ".plugins.others").dap()
       end,
     })
+    ---------------------------------------------------------------------------- }}}
     use({
       "~/Code/Projects/refactoring.nvim",
       requires = {
@@ -429,7 +417,32 @@ return packer.startup({
       "github/copilot.vim", -- AI programming
       config = function()
         require(config_namespace .. ".plugins.others").copilot()
-      end
+      end,
+    })
+    use({
+      "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
+      config = function()
+        require(config_namespace .. ".plugins.others").nvim_surround()
+      end,
+    })
+    use({
+      "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
+      config = function()
+        require(config_namespace .. ".plugins.others").todo_comments()
+      end,
+    })
+    use({
+      "numToStr/Comment.nvim", -- Comment out lines with gcc
+      config = function()
+        require(config_namespace .. ".plugins.others").comment()
+      end,
+    })
+    use({
+      "pianocomposer321/yabs.nvim", -- Build and run your code
+      module = "yabs",
+      config = function()
+        require(config_namespace .. ".plugins.others").yabs()
+      end,
     })
     ---------------------------------------------------------------------------- }}}
     -----------------------------------OTHERS----------------------------------- {{{
@@ -443,7 +456,7 @@ return packer.startup({
       "stevearc/stickybuf.nvim", -- Ensure buffers are not opened in certain filetypes
       config = function()
         require(config_namespace .. ".plugins.others").stickybuf()
-      end
+      end,
     })
     use({
       "nathom/tmux.nvim", -- Navigate Tmux panes inside of neovim
