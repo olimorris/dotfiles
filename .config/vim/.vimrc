@@ -487,15 +487,15 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.html.erb,*.blade.php"
         end
     endfunction
 
-    function! GitBranch()
-        let git = fugitive#head()
-
-        if git != ''
-            return ' ' .fugitive#head()
-        else
-            return ''
-        endif
-    endfunction
+    " function! GitBranch()
+    "     let git = fugitive#head()
+    "
+    "     if git != ''
+    "         return ' ' .fugitive#head()
+    "     else
+    "         return ''
+    "     endif
+    " endfunction
 
     function! ProjectName()
         return GetProjectDir()
