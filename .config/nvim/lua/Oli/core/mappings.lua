@@ -72,28 +72,6 @@ M.default_keymaps = function()
     { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
     { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
 
-    -- Move
-    {
-      "<A-j>",
-      { n = ":MoveLine(1)<CR>", x = ":MoveBlock(1)<CR>" },
-      description = "Move text down",
-    },
-    {
-      "<A-k>",
-      { n = ":MoveLine(-1)<CR>", x = ":MoveBlock(-1)<CR>" },
-      description = "Move text up",
-    },
-    {
-      "<A-h>",
-      { n = ":MoveHChar(-1)<CR>", x = ":MoveHBlock(-1)<CR>" },
-      description = "Move text left",
-    },
-    {
-      "<A-l>",
-      { n = ":MoveHChar(1)<CR>", x = ":MoveHBlock(1)<CR>" },
-      description = "Move text right",
-    },
-
     -- Multiple Cursors
     -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
     -- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
@@ -341,7 +319,7 @@ M.plugin_keymaps = function()
     },
 
     -- Hop
-    { "f", "<cmd>lua require'hop'.hint_char1()<CR>", description = "Hop", mode = { "n", "o" } },
+    { "h", "<cmd>lua require'hop'.hint_char1()<CR>", description = "Hop", mode = { "n", "o" } },
 
     -- File Explorer
     { "\\", "<cmd>Neotree toggle<CR>", description = "Neotree: Toggle" },
@@ -355,6 +333,28 @@ M.plugin_keymaps = function()
         vim.cmd("MinimapRefresh")
       end,
       description = "Minimap toggle",
+    },
+
+    -- Move.nvim
+    {
+      "<A-j>",
+      { n = ":MoveLine(1)<CR>", x = ":MoveBlock(1)<CR>" },
+      description = "Move text down",
+    },
+    {
+      "<A-k>",
+      { n = ":MoveLine(-1)<CR>", x = ":MoveBlock(-1)<CR>" },
+      description = "Move text up",
+    },
+    {
+      "<A-h>",
+      { n = ":MoveHChar(-1)<CR>", x = ":MoveHBlock(-1)<CR>" },
+      description = "Move text left",
+    },
+    {
+      "<A-l>",
+      { n = ":MoveHChar(1)<CR>", x = ":MoveHBlock(1)<CR>" },
+      description = "Move text right",
     },
 
     -- Neoclip
@@ -479,6 +479,34 @@ M.plugin_keymaps = function()
       description = "Find recent files",
     },
 
+    -- Textobj diagnostics
+    {
+      "]d",
+      function()
+        require("textobj-diagnostic").next_diag_inclusive({
+          severity = {
+            min = vim.diagnostic.severity.WARN,
+            max = vim.diagnostic.severity.ERROR,
+          },
+        })
+      end,
+      description = "Select next diagnostic",
+      mode = { "x", "o" },
+    },
+    {
+      "[d",
+      function()
+        require("textobj-diagnostic").prev_diag({
+          severity = {
+            min = vim.diagnostic.severity.WARN,
+            max = vim.diagnostic.severity.ERROR,
+          },
+        })
+      end,
+      description = "Select previous diagnostic",
+      mode = { "x", "o" },
+    },
+
     -- Todo comments
     { "<Leader>c", "<cmd>TodoTelescope<CR>", description = "Todo comments" },
 
@@ -591,6 +619,7 @@ M.lsp_keymaps = function(client, bufnr)
         "L",
         "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
         description = "LSP: Line diagnostics",
+        mode = { "n", "x" },
       },
       { "gh", vim.lsp.buf.hover, description = "LSP: Show hover information", opts = { buffer = bufnr } },
       {

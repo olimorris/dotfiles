@@ -13,16 +13,6 @@ function M.default_autocmds()
       },
     },
     {
-      name = "MarkdownLineWrapping",
-      {
-        "FileType",
-        ":setlocal wrap",
-        opts = {
-          pattern = { "markdown" },
-        },
-      },
-    },
-    {
       name = "QuickfixFormatting",
       {
         { "BufEnter", "WinEnter" },
