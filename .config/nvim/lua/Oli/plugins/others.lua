@@ -37,6 +37,15 @@ M.aerial = function()
   })
 end
 
+M.cinnamon = function()
+  local ok, cinnamon = om.safe_require("cinnamon")
+  if not ok then
+    return
+  end
+
+  cinnamon.setup()
+end
+
 M.colorizer = function()
   local ok, colorizer = om.safe_require("colorizer")
   if not ok then
@@ -368,6 +377,35 @@ M.qf_helper = function()
       min_height = 5,
     },
   })
+end
+
+M.scrollbar = function()
+  local ok, scrollbar = om.safe_require("scrollbar")
+  if not ok then
+    return
+  end
+
+  local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
+
+  scrollbar.setup({
+    max_lines = 500,
+    handle = {
+      color = colors.scrollbar,
+    },
+    marks = {
+      Search = { color = colors.orange },
+      Error = { color = colors.red },
+      Warn = { color = colors.yellow },
+      Info = { color = colors.blue },
+      Hint = { color = colors.cyan },
+      Misc = { color = colors.purple },
+    },
+  })
+
+  local ok, hlslens = om.safe_require("hlslens")
+  if ok then
+    require("scrollbar.handlers.search").setup()
+  end
 end
 
 M.search = function()

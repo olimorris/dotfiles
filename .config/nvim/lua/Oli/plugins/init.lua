@@ -31,6 +31,7 @@ return packer.startup({
     use({
       --"olimorris/onedarkpro.nvim",
       "~/Code/Projects/onedarkpro.nvim", -- My onedarkpro theme
+      as = "onedarkpro",
       config = function()
         require(config_namespace .. ".plugins.theme").setup()
       end,
@@ -109,6 +110,24 @@ return packer.startup({
       "lukas-reineke/indent-blankline.nvim", -- Show indentation lines
       config = function()
         require(config_namespace .. ".plugins.others").indentline()
+      end,
+    })
+    use({
+      "petertriho/nvim-scrollbar", -- A scrollbar for the current window
+      after = "onedarkpro",
+      requires = {
+        {
+          "kevinhwang91/nvim-hlslens", -- Highlight searches
+        },
+        {
+          "declancm/cinnamon.nvim", -- Smooth scrolling
+          config = function()
+            require(config_namespace .. ".plugins.others").cinnamon()
+          end,
+        },
+      },
+      config = function()
+        require(config_namespace .. ".plugins.others").scrollbar()
       end,
     })
     use({
