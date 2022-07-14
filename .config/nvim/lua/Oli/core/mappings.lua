@@ -319,7 +319,7 @@ M.plugin_keymaps = function()
     },
 
     -- Hop
-    { "h", "<cmd>lua require'hop'.hint_char1()<CR>", description = "Hop", mode = { "n", "o" } },
+    { "s", "<cmd>lua require'hop'.hint_char1()<CR>", description = "Hop", mode = { "n", "o" } },
 
     -- File Explorer
     { "\\", "<cmd>Neotree toggle<CR>", description = "Neotree: Toggle" },
