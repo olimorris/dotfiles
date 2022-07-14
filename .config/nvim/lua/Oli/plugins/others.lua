@@ -247,7 +247,6 @@ M.neotest = function()
     adapters = {
       require("neotest-plenary"),
       require("neotest-rspec"),
-      require("neotest-minitest"),
       require("neotest-phpunit"),
     },
     diagnostic = false,
@@ -324,7 +323,7 @@ M.persisted = function()
     end,
     telescope = {
       before_source = function()
-        vim.api.nvim_input("<ESC>:%bd<CR>")
+        vim.api.nvim_input("<ESC>:%bd!<CR>")
         persisted.stop()
       end,
     },
@@ -358,7 +357,9 @@ M.refactoring = function()
   if not ok then
     return
   end
+
   refactoring.setup({})
+  require("telescope").load_extension("refactoring")
 end
 
 M.qf_helper = function()

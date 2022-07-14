@@ -187,11 +187,10 @@ return packer.startup({
         },
         {
           "ThePrimeagen/harpoon", -- Mark buffers for faster navigation
-          module = "harpoon",
           after = "telescope.nvim",
           config = function()
-            require("telescope").load_extension("harpoon")
             require(config_namespace .. ".plugins.others").harpoon()
+            require("telescope").load_extension("harpoon")
           end,
         },
         {
@@ -365,7 +364,6 @@ return packer.startup({
       "nvim-neotest/neotest",
       requires = {
         "~/Code/Projects/neotest-rspec",
-        "~/Code/Projects/neotest-minitest",
         "~/Code/Projects/neotest-phpunit",
         "nvim-neotest/neotest-plenary",
         "nvim-neotest/neotest-python",
@@ -403,14 +401,14 @@ return packer.startup({
     })
     ---------------------------------------------------------------------------- }}}
     use({
-      "~/Code/Projects/refactoring.nvim",
+      "ThePrimeagen/refactoring.nvim",
+      after = "telescope.nvim",
       requires = {
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" },
       },
       config = function()
         require(config_namespace .. ".plugins.others").refactoring()
-        require("telescope").load_extension("refactoring")
       end,
     })
     use({
