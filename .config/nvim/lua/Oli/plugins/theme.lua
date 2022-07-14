@@ -92,7 +92,7 @@ M.setup = function()
         style = "bold",
       },
       AlphaButtonShortcut = {
-        fg = (vim.o.background == "dark" and "${purple}" or "${yellow}"),
+        fg = (vim.o.background == "dark" and "${green}" or "${yellow}"),
         style = "italic,bold",
       },
       AlphaFooter = { fg = "${gray}", style = "italic" },
