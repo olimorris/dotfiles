@@ -6,23 +6,13 @@ function M.setup()
     return
   end
 
+  require("alpha.term")
   local dashboard = require("alpha.themes.dashboard")
 
-  -- Header
-  dashboard.section.header.val = {
-    [[                                             ]],
-    [[      ███████████           █████      ██]],
-    [[     ███████████             █████ ]],
-    [[     ████████████████ ███████████ ███   ███████]],
-    [[    ████████████████ ████████████ █████ ██████████████]],
-    [[   █████████████████████████████ █████ █████ ████ █████]],
-    [[ ██████████████████████████████████ █████ █████ ████ █████]],
-    [[██████  ███ █████████████████ ████ █████ █████ ████ ██████]],
-  }
-  dashboard.section.header.opts = {
-    hl = "AlphaHeader",
-    position = "center",
-  }
+  -- Terminal header
+  dashboard.section.terminal.command = "cat | lolcat --seed=27 " .. os.getenv("HOME") .. "/.config/nvim/static/neovim.cat"
+  dashboard.section.terminal.width = 69
+  dashboard.section.terminal.height = 8
 
   local function button(sc, txt, keybind, keybind_opts)
     local b = dashboard.button(sc, txt, keybind, keybind_opts)
@@ -30,15 +20,15 @@ function M.setup()
     b.opts.hl_shortcut = "AlphaButtonShortcut"
     return b
   end
+
   dashboard.section.buttons.val = {
     button("l", "   Load session", ':lua require("persisted").load()<CR>'),
-    button("s", "   Find session", ':Telescope persisted<CR>'),
     button("n", "   New file", ":ene <BAR> startinsert <CR>"),
     button("b", "   Bookmarks", ":Telescope harpoon marks<CR>"),
     button("r", "   Recently used files", ":Telescope frecency<CR>"),
     button("f", "   Find file", ":Telescope find_files hidden=true path_display=smart<CR>"),
     button("u", "   Update plugins", ":lua om.PackerSync()<CR>"), -- Packer sync
-    button("q", "   Quit Neovim", ":qa<CR>"),
+    button("q", "   Quit Neovim", ":qa!<CR>"),
   }
   dashboard.section.buttons.opts = {
     spacing = 0,
@@ -58,8 +48,8 @@ function M.setup()
   -- Layout
   dashboard.config.layout = {
     { type = "padding", val = 1 },
-    dashboard.section.header,
-    { type = "padding", val = 1 },
+    dashboard.section.terminal,
+    { type = "padding", val = 10 },
     dashboard.section.buttons,
     { type = "padding", val = 1 },
     dashboard.section.footer,
