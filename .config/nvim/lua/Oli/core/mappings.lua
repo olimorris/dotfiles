@@ -169,8 +169,8 @@ M.plugin_keymaps = function()
     -- Aerial
     { "<C-t>", "<cmd>AerialToggle<CR>", description = "Aerial" },
 
-    -- Buffer delete
-    { "<C-c>", "<cmd>Bwipeout<CR>", description = "Close Buffer" },
+    -- bufdelete.nvim 
+    { "<C-c>", "<cmd>Bdelete<CR>", description = "Close Buffer" },
 
     -- Bufferline
     { "<Tab>", "<Plug>(cokeline-focus-next)", description = "Next buffer", opts = { noremap = false } },
@@ -355,13 +355,6 @@ M.plugin_keymaps = function()
       "<A-l>",
       { n = ":MoveHChar(1)<CR>", x = ":MoveHBlock(1)<CR>" },
       description = "Move text right",
-    },
-
-    -- Neoclip
-    {
-      "<LocalLeader>p",
-      "<cmd>lua require('telescope').extensions.neoclip.default()<CR>",
-      description = "Neoclip",
     },
 
     -- Neotest
