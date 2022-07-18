@@ -122,8 +122,6 @@ M.dap = function()
     numhl = "DebugHighlight",
   })
 
-  dap.configurations.ruby = {}
-
   local ok, ruby = om.safe_require("dap-ruby")
   if ok then
     ruby.setup()
