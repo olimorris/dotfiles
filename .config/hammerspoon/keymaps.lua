@@ -14,7 +14,7 @@ local apps = {
   f = "Finder",
   -- g = "Tower", -- Git client
   -- h - Reserved
-  i = "Slack", -- IM
+  -- i = "Slack", -- IM
   -- j - Reserved
   -- k - Reserved
   -- l - Reserved
