@@ -21,6 +21,7 @@ M.setup = function()
       underline = true,
       undercurl = true,
       cursorline = true,
+      -- transparency = true,
     },
     colors = {
       onedark = {
@@ -34,6 +35,8 @@ M.setup = function()
         statusline_bg = "#2e323b", -- gray
 
         bufferline_text_focus = "#949aa2",
+        telescope_prompt = "#2e323a",
+        telescope_results = "#21252d",
       },
       onelight = {
         vim = "#029632", -- green
@@ -43,6 +46,9 @@ M.setup = function()
         ghost_text = "#c3c3c3",
 
         statusline_bg = "#f0f0f0", -- gray
+
+        telescope_prompt = "#f5f5f5",
+        telescope_results = "#eeeeee",
       },
     },
     filetype_hlgroups = {
@@ -112,6 +118,39 @@ M.setup = function()
       MapBase = { fg = "${gray}" },
       MapCursor = { fg = "${purple}", bg = "${cursorline}" },
       -- MapRange = { fg = "${fg}" },
+
+      -- Telescope
+      TelescopeBorder = {
+        fg = "${telescope_results}",
+        bg = "${telescope_results}",
+      },
+      TelescopePromptBorder = {
+        fg = "${telescope_prompt}",
+        bg = "${telescope_prompt}",
+      },
+      TelescopePromptCounter = { fg = "${fg}" },
+      TelescopePromptNormal = { fg = "${fg}", bg = "${telescope_prompt}" },
+      TelescopePromptPrefix = {
+        fg = "${purple}",
+        bg = "${telescope_prompt}",
+      },
+      TelescopePromptTitle = {
+        fg = "${telescope_prompt}",
+        bg = "${purple}",
+      },
+
+      TelescopePreviewTitle = {
+        fg = "${telescope_results}",
+        bg = "${green}",
+      },
+      TelescopeResultsTitle = {
+        fg = "${telescope_results}",
+        bg = "${telescope_results}",
+      },
+
+      TelescopeMatching = { fg = "${purple}" },
+      TelescopeNormal = { bg = "${telescope_results}" },
+      TelescopeSelection = { bg = "${telescope_prompt}" },
     },
   })
   vim.cmd("colorscheme onedarkpro")
