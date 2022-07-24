@@ -114,13 +114,15 @@ function M.plugin_commands()
       end,
       description = "Lazygit",
     },
-    -- LSP Installer
+
+    -- Mason
     {
-      "LspAdd",
-      function()
-        vim.cmd("LspInstall")
-      end,
-      description = "Add LSP server for filetype",
+      ":Mason<CR>",
+      description = "Open Mason",
+    },
+    {
+      ":MasonUninstallAll<CR>",
+      description = "Uninstall all Mason packages",
     },
     {
       "LspInstallAll",

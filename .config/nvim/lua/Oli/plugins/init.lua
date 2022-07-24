@@ -142,6 +142,12 @@ return packer.startup({
     ---------------------------------------------------------------------------- }}}
     -------------------------------EDITOR FEATURES------------------------------ {{{
     use({
+      "williamboman/mason.nvim", -- Easily install and manage LSP servers, DAP servers, linters, and formatters
+      config = function()
+        require(config_namespace .. ".plugins.others").mason()
+      end,
+    })
+    use({
       -- "olimorris/persisted.nvim", -- Session management
       "~/Code/Projects/persisted.nvim",
       module = "persisted",
@@ -284,7 +290,8 @@ return packer.startup({
     -----------------------------------CODING----------------------------------- {{{
     -------------------------------------LSP------------------------------------ {{{
     use({
-      "williamboman/nvim-lsp-installer", -- Install LSP servers from within Neovim
+      "williamboman/mason-lspconfig.nvim", -- Install LSP servers from within Neovim
+      after = "mason.nvim",
       requires = {
         { "neovim/nvim-lspconfig" }, -- Use Neovims native LSP config
         { "kosayoda/nvim-lightbulb" }, -- VSCode style lightbulb if there is a code action available
@@ -301,7 +308,7 @@ return packer.startup({
     })
     use({
       "jose-elias-alvarez/null-ls.nvim", -- General language server for linting, formatting etc
-      after = "nvim-lsp-installer",
+      after = "mason-lspconfig.nvim",
       config = function()
         require(config_namespace .. ".plugins.null-ls")
       end,

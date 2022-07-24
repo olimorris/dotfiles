@@ -1,5 +1,5 @@
 ------------------------------------SETUP----------------------------------- {{{
-local ok, lsp_installer = om.safe_require("nvim-lsp-installer")
+local ok, mason = om.safe_require("mason-lspconfig")
 if not ok then
   return
 end
@@ -117,25 +117,19 @@ if nvim_lsp_ok then
   capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 end
 
-local default_config = {
-  capabilities = capabilities,
-  on_attach = om.lsp.on_attach,
-}
-
-lsp_installer.setup({
+mason.setup({
   ensure_installed = om.lsp.servers,
   automatic_installation = true,
-  log_level = vim.log.levels.DEBUG,
-  ui = {
-    icons = {
-      server_installed = "",
-      server_pending = "",
-      server_uninstalled = "",
-    },
-  },
 })
-for _, name in pairs(om.lsp.servers) do
-  require("lspconfig")[name].setup(default_config)
-end
+
+mason.setup_handlers({
+  function(server_name)
+    require("lspconfig")[server_name].setup({
+      capabilities = capabilities,
+      on_attach = om.lsp.on_attach,
+    })
+  end,
+})
+
 vim.cmd([[ do User LspAttachBuffers ]])
 ---------------------------------------------------------------------------- }}}

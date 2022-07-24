@@ -214,6 +214,24 @@ M.indentline = function()
   })
 end
 
+M.mason = function()
+  local ok, mason = om.safe_require("mason")
+  if not ok then
+    return
+  end
+
+  mason.setup({
+    log_level = vim.log.levels.DEBUG,
+    ui = {
+      icons = {
+        package_installed = "",
+        package_pending = "",
+        package_uninstalled = "",
+      },
+    },
+  })
+end
+
 M.minimap = function()
   vim.g.minimap_auto_start = 0
   vim.g.minimap_width = 15
@@ -306,7 +324,7 @@ M.nvim_navic = function()
   vim.g.navic_silence = true
 
   navic.setup({
-    highlight = true
+    highlight = true,
   })
 end
 
