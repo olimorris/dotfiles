@@ -38,12 +38,14 @@ return packer.startup({
     })
     use({
       "goolord/alpha-nvim", -- Dashboard for Neovim
+      after = "onedarkpro",
       config = function()
         require(config_namespace .. ".plugins.dashboard").setup()
       end,
     })
     use({
       "feline-nvim/feline.nvim", -- Statusline
+      after = "onedarkpro",
       requires = {
         { "kyazdani42/nvim-web-devicons" }, -- Web icons for various plugins
       },
@@ -53,6 +55,7 @@ return packer.startup({
     })
     use({
       "noib3/cokeline.nvim", -- Bufferline
+      after = "onedarkpro",
       config = function()
         require(config_namespace .. ".plugins.bufferline").setup()
       end,
@@ -359,7 +362,7 @@ return packer.startup({
       cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
     })
     ---------------------------------------------------------------------------- }}}
------------------------------------TESTING---------------------------------- {{{
+    -----------------------------------TESTING---------------------------------- {{{
     use({
       "nvim-neotest/neotest",
       requires = {
@@ -381,7 +384,7 @@ return packer.startup({
       end,
     })
     ---------------------------------------------------------------------------- }}}
-----------------------------------DEBUGGING--------------------------------- {{{
+    ----------------------------------DEBUGGING--------------------------------- {{{
     use({
       "mfussenegger/nvim-dap", -- Debug Adapter Protocol for Neovim
       requires = {
