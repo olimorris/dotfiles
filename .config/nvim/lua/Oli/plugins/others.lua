@@ -296,6 +296,20 @@ M.nvim_autopairs = function()
   })
 end
 
+M.nvim_navic = function()
+  local ok, navic = om.safe_require("nvim-navic")
+  if not ok then
+    return
+  end
+
+  -- Silence errors
+  vim.g.navic_silence = true
+
+  navic.setup({
+    highlight = true
+  })
+end
+
 M.nvim_surround = function()
   local ok, surround = om.safe_require("nvim-surround")
   if not ok then

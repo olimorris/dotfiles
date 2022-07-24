@@ -5,8 +5,6 @@ end
 ---------------------------------PROPERTIES--------------------------------- {{{
 local M = {}
 
-M.components = { active = {}, inactive = {} }
-
 M.filetypes_to_mask = {
   "^aerial$",
   "^neo--tree$",
@@ -106,6 +104,8 @@ local function mask_plugin()
 end
 ---------------------------------------------------------------------------- }}}
 ---------------------------------COMPONENTS--------------------------------- {{{
+M.components = { active = {}, inactive = {} }
+M.winbar_components = { active = {}, inactive = {} }
 ------------------------------------SETUP----------------------------------- {{{
 function M.setup()
   local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
@@ -385,13 +385,12 @@ function M.setup()
         return default_hl()
       end,
     },
+    ---------------------------------------------------------------------------- }}}
   }
   ---------------------------------------------------------------------------- }}}
-  ---------------------------------------------------------------------------- }}}
   ------------------------------RIGHT COMPONENTS------------------------------ {{{
-  M.components.active[2] =
+  M.components.active[2] = {
     --------------------------------ASYNC TESTING------------------------------- {{{
-    {
       {
         provider = function()
           return async_run()
@@ -523,6 +522,24 @@ function M.setup()
       ---------------------------------------------------------------------------- }}}
     }
   ---------------------------------------------------------------------------- }}}
+  ------------------------------WINBAR COMPONENTS----------------------------- {{{
+  local navic_ok, navic = om.safe_require("nvim-navic")
+  if navic_ok then
+    M.winbar_components.active[1] = {
+      {
+        provider = function()
+          return navic.get_location()
+        end,
+        enabled = function()
+          return navic.is_available()
+        end,
+        hl = function()
+          return default_hl()
+        end,
+      },
+    }
+  end
+  ---------------------------------------------------------------------------- }}}
   -------------------------------FINALISE SETUP------------------------------- {{{
   feline.setup({
     colors = { fg = "NONE", bg = "NONE" },
@@ -530,6 +547,10 @@ function M.setup()
     components = M.components,
     disable = M.disable,
     force_inactive = M.force_inactive,
+  })
+
+  feline.winbar.setup({
+    components = M.winbar_components,
   })
 end
 ---------------------------------------------------------------------------- }}}

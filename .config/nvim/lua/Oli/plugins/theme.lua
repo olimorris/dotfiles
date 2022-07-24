@@ -35,6 +35,7 @@ M.setup = function()
         statusline_bg = "#2e323b", -- gray
 
         bufferline_text_focus = "#949aa2",
+
         telescope_prompt = "#2e323a",
         telescope_results = "#21252d",
       },
@@ -113,6 +114,18 @@ M.setup = function()
       -- Luasnip
       LuaSnipChoiceNode = { fg = "${yellow}" },
       LuaSnipInsertNode = { fg = "${yellow}" },
+
+      -- Nvim navic
+      NavicIconsClass = { fg = "${purple}" },
+      NavicIconsFunction = { fg = "${blue}" },
+      NavicIconsVariable = { fg = "${red}" },
+      NavicIconsConstant = { fg = "${orange}" },
+      NavicIconsBoolean = { fg = "${orange}" },
+      NavicIconsString = { fg = "${green}" },
+      NavicIconsObject = { fg = "${purple}" },
+      NavicIconsProperty = { fg = "${fg}" },
+      NavicText = { fg = "${gray}", style = "italic" },
+      NavicSeparator = { fg = "${gray}" },
 
       -- Minimap
       MapBase = { fg = "${gray}" },

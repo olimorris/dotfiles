@@ -448,6 +448,13 @@ return packer.startup({
     ---------------------------------------------------------------------------- }}}
     -----------------------------------OTHERS----------------------------------- {{{
     use({
+      "SmiteshP/nvim-navic",
+      requires = "neovim/nvim-lspconfig",
+      config = function()
+        require(config_namespace .. ".plugins.others").nvim_navic()
+      end,
+    })
+    use({
       "ahmedkhalf/project.nvim", -- Automatically set the cwd to the project root
       config = function()
         require(config_namespace .. ".plugins.others").project_nvim()
