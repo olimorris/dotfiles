@@ -90,7 +90,7 @@ end
 ----------------------------------SNIPPETS---------------------------------- {{{
 function om.EditSnippet()
   local path = Homedir .. "/.config/snippets"
-  local snippets = { "ruby", "python", "global", "package" }
+  local snippets = { "lua", "ruby", "python", "global", "package" }
 
   om.select("Snippet to edit", snippets, function(choice)
     if choice == nil then
