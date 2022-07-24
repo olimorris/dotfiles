@@ -46,6 +46,16 @@ function M.default_autocmds()
         pattern = "term://*",
       },
     },
+    {
+      name = "Remove whitespace on save",
+      {
+        { "BufWritePre" },
+        [[%s/\s\+$//e]],
+        opts = {
+          pattern = { "*" },
+        },
+      },
+    },
     --   {
     --     { "User" },
     --     function()
