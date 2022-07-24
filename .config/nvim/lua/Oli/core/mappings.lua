@@ -64,8 +64,10 @@ M.default_keymaps = function()
     -- },
     { "B", "^", description = "Beginning of a line" },
     { "E", "$", description = "End of a line" },
-    { "<CR>", "o<Esc>", "Insert blank line below" },
-    { "<S-CR>", "O<Esc>", "Insert blank line above" },
+    { "<CR>", "o<Esc>", description = "Insert blank line below" },
+    { "<S-CR>", "O<Esc>", description = "Insert blank line above" },
+
+    { "<S-w>", ":set winbar=<CR>", description = "Hide WinBar" },
 
     { "<LocalLeader>sv", "<C-w>v", description = "Split: Vertical" },
     { "<LocalLeader>sh", "<C-w>h", description = "Split: Horizontal" },
@@ -169,7 +171,7 @@ M.plugin_keymaps = function()
     -- Aerial
     { "<C-t>", "<cmd>AerialToggle<CR>", description = "Aerial" },
 
-    -- bufdelete.nvim 
+    -- bufdelete.nvim
     { "<C-c>", "<cmd>Bdelete<CR>", description = "Close Buffer" },
 
     -- Bufferline
