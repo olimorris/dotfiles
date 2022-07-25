@@ -17,6 +17,8 @@ if which go >/dev/null; then
   path+=("$GOPATH/bin")
 fi
 
+path+=("${HOME}/.local/share/nvim/mason/bin")
+
 # Remove any duplicates in the path
 typeset -U path
 

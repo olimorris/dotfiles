@@ -155,7 +155,7 @@ alias rprod='tail -f log/production.log'
 
 # Ruby
 alias rt='rake test'
-alias sb='~/.local/share/nvim/lsp_servers/solargraph/bin/solargraph bundle'
+alias sb='~/.local/share/nvim/mason/packages/solargraph/bin/solargraph bundle'
 alias ug='gem update --system && gem update'
 
 # Shell
