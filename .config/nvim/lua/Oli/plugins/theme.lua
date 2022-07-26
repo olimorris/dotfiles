@@ -161,7 +161,7 @@ M.setup = function()
         bg = "${telescope_results}",
       },
 
-      TelescopeMatching = { fg = "${purple}" },
+      TelescopeMatching = { fg = "${blue}" },
       TelescopeNormal = { bg = "${telescope_results}" },
       TelescopeSelection = { bg = "${telescope_prompt}" },
     },
