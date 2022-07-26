@@ -3,27 +3,27 @@ import json
 from pathlib import Path
 from termcolor import cprint
 
-icon_file = str(Path.home()) + '/.dotfiles/others/ui/icons/icons.json'
+icon_file = str(Path.home()) + '/.dotfiles/misc/ui/icons/icons.json'
 
 # Open the JSON icon file
 with open(icon_file) as json_file:
     data = json.load(json_file)
-    
+
     # Loop through each app and begin to replace the icons
     for app in data.values():
-        
+
         # Set the icon paths
         icon = app['new_icon']
         icon = icon.replace(" ", "\ ")
-        icon_path = str(Path.home()) + '/.dotfiles/others/ui/icons/icon_files/' + icon
-        
+        icon_path = str(Path.home()) + '/.dotfiles/misc/ui/icons/icon_files/' + icon
+
         # Set the application paths
         app_icon = app['icon'].replace(" ", "\ ")
         app_escaped = app['name'].replace(" ", "\ ")
         app_path = '/Applications/' + app['name']
         app_path_escaped = '/Applications/' + app_escaped
         app_new_icon = app_path_escaped + '/Contents/Resources/' + app_icon
-        
+
         # Change the icons via the command line
         if os.path.exists(app_path):
             try:
