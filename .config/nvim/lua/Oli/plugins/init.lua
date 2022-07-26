@@ -139,6 +139,19 @@ return packer.startup({
         require(config_namespace .. ".plugins.others").qf_helper()
       end,
     })
+    use({
+      "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
+      config = function()
+        require(config_namespace .. ".plugins.others").todo_comments()
+      end,
+    })
+    use({
+      "SmiteshP/nvim-navic", -- Winbar component showing current code context
+      requires = "neovim/nvim-lspconfig",
+      config = function()
+        require(config_namespace .. ".plugins.others").nvim_navic()
+      end,
+    })
     ---------------------------------------------------------------------------- }}}
     -------------------------------EDITOR FEATURES------------------------------ {{{
     use({
@@ -410,6 +423,7 @@ return packer.startup({
       end,
     })
     ---------------------------------------------------------------------------- }}}
+    -----------------------------------OTHERS----------------------------------- {{{
     use({
       "ThePrimeagen/refactoring.nvim",
       after = "telescope.nvim",
@@ -434,12 +448,6 @@ return packer.startup({
       end,
     })
     use({
-      "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
-      config = function()
-        require(config_namespace .. ".plugins.others").todo_comments()
-      end,
-    })
-    use({
       "numToStr/Comment.nvim", -- Comment out lines with gcc
       config = function()
         require(config_namespace .. ".plugins.others").comment()
@@ -453,14 +461,8 @@ return packer.startup({
       end,
     })
     ---------------------------------------------------------------------------- }}}
-    -----------------------------------OTHERS----------------------------------- {{{
-    use({
-      "SmiteshP/nvim-navic",
-      requires = "neovim/nvim-lspconfig",
-      config = function()
-        require(config_namespace .. ".plugins.others").nvim_navic()
-      end,
-    })
+    ---------------------------------------------------------------------------- }}}
+    ------------------------------------MISC------------------------------------ {{{
     use({
       "ahmedkhalf/project.nvim", -- Automatically set the cwd to the project root
       config = function()
