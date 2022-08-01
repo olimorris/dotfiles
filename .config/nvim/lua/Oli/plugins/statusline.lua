@@ -108,7 +108,7 @@ M.components = { active = {}, inactive = {} }
 M.winbar_components = { active = {}, inactive = {} }
 ------------------------------------SETUP----------------------------------- {{{
 function M.setup()
-  local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
+  local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_theme)
 
   if not colors then
     return

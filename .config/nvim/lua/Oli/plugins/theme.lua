@@ -21,6 +21,7 @@ M.setup = function()
       underline = true,
       undercurl = true,
       cursorline = true,
+      terminal_colors = true,
       -- transparency = true,
     },
     colors = {
@@ -118,7 +119,7 @@ M.setup = function()
       -- Nvim navic
       NavicIconsClass = { fg = "${purple}" },
       NavicIconsFunction = { fg = "${blue}" },
-      NavicIconsVariable = { fg = "${red}" },
+      NavicIconsVariable = { fg = "${orange}" },
       NavicIconsConstant = { fg = "${orange}" },
       NavicIconsBoolean = { fg = "${orange}" },
       NavicIconsString = { fg = "${green}" },
