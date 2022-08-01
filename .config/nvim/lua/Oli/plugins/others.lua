@@ -530,6 +530,20 @@ M.toggleterm = function()
   })
 end
 
+M.trouble = function()
+  local ok, trouble = om.safe_require("trouble")
+  if not ok then
+    return
+  end
+
+  trouble.setup({
+    mode = "document_diagnostics",
+    height = 8,
+    padding = false,
+    use_diagnostic_signs = true
+  })
+end
+
 M.undotree = function()
   vim.g.undotree_SplitWidth = 35
   vim.g.undotree_DiffpanelHeight = 7

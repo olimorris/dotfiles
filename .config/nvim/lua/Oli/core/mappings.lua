@@ -677,6 +677,13 @@ M.lsp_keymaps = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
   end
 
+  -- Trouble.nvim
+  table.insert(maps, {
+    "T",
+    "<cmd>TroubleToggle<CR>",
+    description = "LSP: Trouble",
+  })
+
   return maps
 end
 ---------------------------------------------------------------------------- }}}
