@@ -618,7 +618,7 @@ M.lsp_keymaps = function(client, bufnr)
       },
       { "gh", vim.lsp.buf.hover, description = "LSP: Show hover information", opts = { buffer = bufnr } },
       {
-        "<leader>p",
+        "<LocalLeader>p",
         h.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer"),
         description = "LSP: Peek definition",
         opts = { buffer = bufnr },
