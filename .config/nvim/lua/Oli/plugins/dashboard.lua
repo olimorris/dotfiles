@@ -49,7 +49,7 @@ function M.setup()
   dashboard.config.layout = {
     { type = "padding", val = 1 },
     dashboard.section.terminal,
-    { type = "padding", val = 10 },
+    { type = "padding", val = 9 },
     dashboard.section.buttons,
     { type = "padding", val = 1 },
     dashboard.section.footer,
