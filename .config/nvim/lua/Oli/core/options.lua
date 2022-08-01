@@ -5,7 +5,6 @@ Sessiondir = vim.fn.stdpath("data") .. "/sessions"
 --------------------------------------------------------------------------- }}}
 -------------------------------GLOBAL OPTIONS------------------------------- {{{
 vim.g.did_load_filetypes = 0 -- Do not use built in filetype.vim as we use filetype.nvim instead
-
 vim.g.neoterm_autoinsert = 0 -- Do not start terminal in insert mode
 vim.g.neoterm_autoscroll = 1 -- Autoscroll the terminal
 vim.g.loaded_perl_provider = 0 -- Do not load Perl
@@ -28,7 +27,7 @@ vim.bo.wrapmargin = 1
 --------------------------------------------------------------------------- }}}
 ---------------------------------VIM OPTIONS-------------------------------- {{{
 vim.o.background = "dark"
--- vim.o.cmdheight = 0 -- Hide the command bar
+vim.opt.cmdheight = 0 -- Hide the command bar
 vim.opt.clipboard = { "unnamedplus" } -- Use the system clipboard
 vim.opt.completeopt = { "menuone", "noselect" } -- Completion opions for code completion
 vim.opt.cursorlineopt = "screenline,number" -- Highlight the screen line of the cursor with CursorLine and the line number with CursorLineNr
