@@ -21,7 +21,7 @@ M.setup = function()
       underline = true,
       undercurl = true,
       cursorline = true,
-      terminal_colors = true,
+      -- terminal_colors = true,
       -- transparency = true,
     },
     colors = {
@@ -77,6 +77,7 @@ M.setup = function()
     },
     hlgroups = {
       ModeMsg = { link = "LineNr" }, -- Make command line text darker
+      StatusLine = { bg = "NONE", fg = "NONE" },
 
       -- Highlight brackets with a custom color
       TSPunctBracket = { fg = "${brackets}" },

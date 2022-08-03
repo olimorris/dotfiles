@@ -15,6 +15,7 @@ M.filetypes_to_mask = {
 
 M.force_inactive = {
   filetypes = {
+    "^alpha$",
     "^frecency$",
     "^packer$",
     "^TelescopePrompt$",
