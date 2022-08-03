@@ -332,14 +332,6 @@ return packer.startup({
         require(config_namespace .. ".plugins.others").textobj_diagnostic()
       end,
     })
-    use({
-      "folke/trouble.nvim",
-      requires = "kyazdani42/nvim-web-devicons",
-      cmd = "Trouble*",
-      config = function()
-        require(config_namespace .. ".plugins.others").trouble()
-      end,
-    })
     ---------------------------------------------------------------------------- }}}
     ---------------------------------TREESITTER--------------------------------- {{{
     use({
