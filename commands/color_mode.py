@@ -4,7 +4,6 @@ import os
 import sys
 import subprocess
 
-alacritty_path = "~/.config/alacritty"
 kitty_path = "~/.config/kitty"
 starship_path = "~/.config/starship"
 tmux_path = "~/.config/tmux"
@@ -20,13 +19,11 @@ ran_from_cmd_line = False
 # The order in which apps are changed
 apps = [
     "macos",
-    "alacritty",
     "kitty",
     "starship",
     "tmux",
     "neovim",
 ]
-
 
 def app_macos(mode):
     """
@@ -51,28 +48,6 @@ def app_macos(mode):
 
     with open(os.path.expanduser(path_to_file), "w") as config_file:
         config_file.write(contents)
-
-
-def app_alacritty(mode):
-    """
-    Change the Alacritty terminal
-    """
-    alacritty_config = alacritty_path + "/alacritty.yml"
-
-    # Safely open the config file
-    with open(os.path.expanduser(alacritty_config), "r") as config_file:
-        contents = config_file.read()
-
-    # Begin changing the modes
-    if mode == "dark":
-        contents = contents.replace("colors: *light", "colors: *dark")
-
-    if mode == "light":
-        contents = contents.replace("colors: *dark", "colors: *light")
-
-    with open(os.path.expanduser(alacritty_config), "w") as config_file:
-        return config_file.write(contents)
-
 
 def app_kitty(mode):
     """

@@ -8,8 +8,6 @@
 
 - link:
     # Config directory
-    ~/.config/alacritty: .config/alacritty
-    ~/.config/efm-langserver: .config/efm-langserver
     ~/.config/hammerspoon: .config/hammerspoon
     ~/.config/karabiner: .config/karabiner
     ~/.config/kitty: .config/kitty
@@ -38,7 +36,6 @@
     ~/.gitignore_global: .config/git/.gitignore_global
     ~/.mackup: .config/mackup/.mackup
     ~/.mackup.cfg: .config/mackup/.mackup.cfg
-    ~/.nix: .config/nix
     ~/.profile: .config/bash/.profile
     ~/.ssh: .config/ssh
     ~/.vimrc: .config/vim/.vimrc

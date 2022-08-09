@@ -148,7 +148,6 @@ namespace :install do
 
     # Install packages
     run %( cargo install cargo-update )
-    run %( cargo install stylua )
   end
 
   desc 'Install true color support for Tmux and Alacritty'
