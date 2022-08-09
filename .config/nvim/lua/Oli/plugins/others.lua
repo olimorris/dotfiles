@@ -494,7 +494,7 @@ M.todo_comments = function()
   todo.setup({
     signs = false,
     keywords = {
-      FIX = { icon = " ", color = "error" }, -- Custom fix icon
+      FIX = { icon = " " }, -- Custom fix icon
     },
   })
 end
