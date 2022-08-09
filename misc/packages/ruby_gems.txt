@@ -14,6 +14,7 @@ ansi
 appraisal
 arel
 ast
+backport
 base64
 benchmark
 bigdecimal
@@ -38,6 +39,7 @@ diff-lcs
 digest
 docile
 drb
+e2mmap
 english
 erb
 error_highlight
@@ -62,8 +64,11 @@ io-nonblock
 io-wait
 ipaddr
 irb
+jaro_winkler
 jbuilder
 json
+kramdown
+kramdown-parser-gfm
 logger
 loofah
 mail
@@ -125,6 +130,7 @@ regexp_parser
 reline
 resolv
 resolv-replace
+reverse_markdown
 rexml
 rinda
 rspec
@@ -150,6 +156,7 @@ simplecov
 simplecov-html
 simplecov_json_formatter
 singleton
+solargraph
 sprockets
 sprockets-rails
 sqlite3
@@ -174,11 +181,13 @@ uri
 weakref
 web-console
 webdrivers
+webrick
 websocket
 websocket-driver
 websocket-extensions
 with_model
 xpath
 yaml
+yard
 zeitwerk
 zlib

@@ -1,8 +1,5 @@
-eslint_d
-eslint
 fixjson
 jest
 jsonlint
 neovim
 npm
-prettier
