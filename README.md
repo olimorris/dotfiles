@@ -1,11 +1,14 @@
-# Oli's Dotfiles
+<p align="center">
+<img src="https://user-images.githubusercontent.com/9512444/182719099-42c62c9e-47c7-43f3-9bfb-65f59004852a.png" alt="Neovim">
+</p>
 
-[![build](https://github.com/olimorris/dotfiles/actions/workflows/build.yml/badge.svg)](https://github.com/olimorris/dotfiles/actions/workflows/build.yml)
+<h1 align="center">Oli's Dotfiles</h1>
+
+<p align="center">
+<a href="https://github.com/olimorris/dotfiles/actions/workflows/ci.yml"><img src="https://img.shields.io/github/workflow/status/olimorris/dotfiles/build?label=build&style=for-the-badge"></a>
+</p>
 
 My macOS dotfiles. Installation instructions are my own.
-
-<img src="https://user-images.githubusercontent.com/9512444/182719099-42c62c9e-47c7-43f3-9bfb-65f59004852a.png" alt="Neovim">
-
 ## :computer: Setting up a new Mac
 
 * Download and install Tresorit and sync the `.dotfiles` Tresor to `/Users/Oli` (wait for a full sync to take place!)
