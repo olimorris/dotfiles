@@ -117,18 +117,6 @@ M.setup = function()
       LuaSnipChoiceNode = { fg = "${yellow}" },
       LuaSnipInsertNode = { fg = "${yellow}" },
 
-      -- Nvim navic
-      NavicIconsClass = { fg = "${purple}" },
-      NavicIconsFunction = { fg = "${blue}" },
-      NavicIconsVariable = { fg = "${orange}" },
-      NavicIconsConstant = { fg = "${orange}" },
-      NavicIconsBoolean = { fg = "${orange}" },
-      NavicIconsString = { fg = "${green}" },
-      NavicIconsObject = { fg = "${purple}" },
-      NavicIconsProperty = { fg = "${fg}" },
-      NavicText = { fg = "${gray}", style = "italic" },
-      NavicSeparator = { fg = "${gray}" },
-
       -- Minimap
       MapBase = { fg = "${gray}" },
       MapCursor = { fg = "${purple}", bg = "${cursorline}" },
