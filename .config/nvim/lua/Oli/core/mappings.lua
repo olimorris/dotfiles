@@ -201,9 +201,9 @@ M.plugin_keymaps = function()
       "gcc",
       function(visual_selection)
         if visual_selection then
-          require("Comment.api").locked.toggle_linewise_op(vim.fn.visualmode())
+          require("Comment.api").toggle.linewise(vim.fn.visualmode())
         else
-          require("Comment.api").locked.toggle_current_linewise()
+          require("Comment.api").toggle.linewise.current()
         end
       end,
       description = "Comment toggle",
