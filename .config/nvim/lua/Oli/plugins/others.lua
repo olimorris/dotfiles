@@ -465,19 +465,6 @@ M.undotree = function()
   vim.g.undotree_SetFocusWhenToggle = 1
 end
 
-M.visual_multi = function()
-  vim.g.VM_silent_exit = 1
-  vim.g.VM_show_warnings = 0
-  vim.g.VM_set_statusline = 0
-  vim.g.VM_highlight_matches = "" -- Empty string defaults to 'Search' highlight group
-  vim.g.VM_quit_after_leaving_insert_mode = 1 -- Don't have to press <esc> twice
-
-  vim.g.VM_Mono_hl = "DiffText" -- The highlight in cursor mode
-  vim.g.VM_Extend_hl = "IncSearch" -- In extend mode, the selections
-  vim.g.VM_Cursor_hl = "Visual" -- In extend mode, the cursors
-  vim.g.VM_Insert_hl = "DiffAdd" -- In insert mode, the virtual cursors
-end
-
 M.yabs = function()
   local ok, yabs = om.safe_require("yabs")
   if not ok then
