@@ -5,10 +5,13 @@
 <h1 align="center">Oli's Dotfiles</h1>
 
 <p align="center">
-<a href="https://github.com/olimorris/dotfiles/actions/workflows/ci.yml"><img src="https://img.shields.io/github/workflow/status/olimorris/dotfiles/build?label=build&style=for-the-badge"></a>
+<a href="https://github.com/olimorris/dotfiles/actions/workflows/build.yml"><img src="https://img.shields.io/github/workflow/status/olimorris/dotfiles/build?label=build&style=for-the-badge"></a>
 </p>
 
-My macOS dotfiles. Installation instructions are my own.
+<p align="center">
+My macOS dotfiles. Installation instructions are my own
+</p>
+
 ## :computer: Setting up a new Mac
 
 * Download and install Tresorit and sync the `.dotfiles` Tresor to `/Users/Oli` (wait for a full sync to take place!)

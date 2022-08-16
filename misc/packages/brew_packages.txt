@@ -16,6 +16,7 @@ git
 git-flow-avh
 gnupg
 go
+gobject-introspection
 httpie
 lazygit
 librsync
