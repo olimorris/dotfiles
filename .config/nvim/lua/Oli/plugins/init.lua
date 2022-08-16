@@ -393,7 +393,7 @@ return packer.startup({
         "antoinemadec/FixCursorHold.nvim",
       },
       config = function()
-        require(config_namespace .. ".plugins.others").neotest()
+        require(config_namespace .. ".plugins.neotest").setup()
       end,
     })
     use({
