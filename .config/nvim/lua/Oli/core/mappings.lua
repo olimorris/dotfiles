@@ -259,8 +259,7 @@ M.plugin_keymaps = function()
       function()
         local _, dap = om.safe_require("dap")
         dap.disconnect()
-        dap.close()
-        dap.close()
+        require("dapui").close()
       end,
       description = "Debug: Stop",
     },

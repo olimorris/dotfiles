@@ -80,7 +80,26 @@ local function ui_setup(dap)
     return
   end
 
-  dapui.setup()
+  dapui.setup({
+    layouts = {
+      {
+        elements = {
+          "scopes",
+          "breakpoints",
+          "stacks",
+        },
+        size = 35,
+        position = "left",
+      },
+      {
+        elements = {
+          "repl",
+        },
+        size = 0.30,
+        position = "bottom",
+      },
+    },
+  })
   dap.listeners.after.event_initialized["dapui_config"] = dapui.open
   dap.listeners.before.event_terminated["dapui_config"] = dapui.close
   dap.listeners.before.event_exited["dapui_config"] = dapui.close
