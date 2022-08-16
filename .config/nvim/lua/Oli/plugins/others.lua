@@ -101,33 +101,6 @@ M.coverage = function()
   })
 end
 
-M.dap = function()
-  local ok, dap = om.safe_require("dap")
-  if not ok then
-    return
-  end
-
-  dap.set_log_level("TRACE")
-
-  vim.fn.sign_define("DapBreakpoint", {
-    text = "",
-    texthl = "DebugBreakpoint",
-    linehl = "",
-    numhl = "DebugBreakpoint",
-  })
-  vim.fn.sign_define("DapStopped", {
-    text = "",
-    texthl = "DebugHighlight",
-    linehl = "",
-    numhl = "DebugHighlight",
-  })
-
-  local ok, ruby = om.safe_require("dap-ruby")
-  if ok then
-    ruby.setup()
-  end
-end
-
 M.dressing = function()
   local ok, dressing = om.safe_require("dressing")
   if not ok then

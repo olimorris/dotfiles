@@ -408,18 +408,11 @@ return packer.startup({
     use({
       "mfussenegger/nvim-dap", -- Debug Adapter Protocol for Neovim
       requires = {
-        {
-          "suketa/nvim-dap-ruby", -- Ruby rdbg config
-        },
-        {
-          "theHamsta/nvim-dap-virtual-text", -- help to find variable definitions in debug mode
-          config = function()
-            require("nvim-dap-virtual-text").setup()
-          end,
-        },
+        "theHamsta/nvim-dap-virtual-text", -- help to find variable definitions in debug mode
+        "rcarriga/nvim-dap-ui", -- Nice UI for nvim-dap
       },
       config = function()
-        require(config_namespace .. ".plugins.others").dap()
+        require(config_namespace .. ".plugins.dap").setup()
       end,
     })
     ---------------------------------------------------------------------------- }}}
