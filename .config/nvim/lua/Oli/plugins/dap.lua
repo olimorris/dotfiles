@@ -32,13 +32,21 @@ end
 ---@return nil
 local function ruby_setup(dap)
   dap.adapters.ruby = function(callback, config)
+    local script
+
+    if config.current_line then
+      script = config.script .. ":" .. vim.fn.line(".")
+    else
+      script = config.script
+    end
+
     callback({
       type = "server",
       host = "127.0.0.1",
       port = "${port}",
       executable = {
         command = "bundle",
-        args = { "exec", "rdbg", "--open", "--port", "${port}", "-c", "--", config.command, config.script },
+        args = { "exec", "rdbg", "--open", "--port", "${port}", "-c", "--", config.command, script },
       },
     })
   end
@@ -46,20 +54,20 @@ local function ruby_setup(dap)
   dap.configurations.ruby = {
     {
       type = "ruby",
-      name = "debug current file",
-      request = "attach",
-      localfs = true,
-      command = "ruby",
-      script = "${file}",
-    },
-    {
-      type = "ruby",
-      name = "run rspec current_file:current_line",
+      name = "debug rspec current_line",
       request = "attach",
       localfs = true,
       command = "rspec",
       script = "${file}",
       current_line = true,
+    },
+    {
+      type = "ruby",
+      name = "debug current file",
+      request = "attach",
+      localfs = true,
+      command = "ruby",
+      script = "${file}",
     },
   }
 end
