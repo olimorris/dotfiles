@@ -397,6 +397,13 @@ return packer.startup({
       end,
     })
     use({
+      "stevearc/overseer.nvim", -- Task runner and job management
+      -- INFO: Overseer lazy loads itself
+      config = function()
+        require(config_namespace .. ".plugins.others").overseer()
+      end,
+    })
+    use({
       "andythigpen/nvim-coverage", -- Display test coverage information
       module = "coverage",
       config = function()

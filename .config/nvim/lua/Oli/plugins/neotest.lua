@@ -12,6 +12,9 @@ function M.setup()
       require("neotest-rspec"),
       require("neotest-phpunit"),
     },
+    consumers = {
+      overseer = require("neotest.consumers.overseer"),
+    },
     diagnostic = false,
     icons = {
       expanded = "",

@@ -264,6 +264,15 @@ M.nvim_surround = function()
   surround.setup()
 end
 
+M.overseer = function ()
+  local ok, overseer = om.safe_require("overseer")
+  if not ok then
+    return
+  end
+
+  return overseer.setup()
+end
+
 M.persisted = function()
   local ok, persisted = om.safe_require("persisted")
   if not ok then
