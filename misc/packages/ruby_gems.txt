@@ -69,6 +69,7 @@ jbuilder
 json
 kramdown
 kramdown-parser-gfm
+language_server-protocol
 logger
 loofah
 mail
@@ -106,6 +107,7 @@ parser
 pathname
 pg
 pp
+prettier_print
 prettyprint
 pstore
 psych
@@ -143,6 +145,7 @@ rspec_junit_formatter
 rspec_neovim_formatter
 rubocop
 rubocop-ast
+ruby-lsp
 ruby-progressbar
 ruby2_keywords
 ruby_dep
@@ -157,12 +160,14 @@ simplecov-html
 simplecov_json_formatter
 singleton
 solargraph
+sorbet-runtime
 sprockets
 sprockets-rails
 sqlite3
 stimulus-rails
 stringio
 strscan
+syntax_tree
 syslog
 tempfile
 thor
