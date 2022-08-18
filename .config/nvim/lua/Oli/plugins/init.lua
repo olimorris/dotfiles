@@ -407,6 +407,7 @@ return packer.startup({
     ----------------------------------DEBUGGING--------------------------------- {{{
     use({
       "mfussenegger/nvim-dap", -- Debug Adapter Protocol for Neovim
+      module = "dap",
       requires = {
         "theHamsta/nvim-dap-virtual-text", -- help to find variable definitions in debug mode
         "rcarriga/nvim-dap-ui", -- Nice UI for nvim-dap
