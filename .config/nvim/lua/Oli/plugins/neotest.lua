@@ -15,7 +15,9 @@ function M.setup()
     consumers = {
       overseer = require("neotest.consumers.overseer"),
     },
-    diagnostic = false,
+    diagnostic = {
+      enabled = false
+    },
     icons = {
       expanded = "",
       child_prefix = "",
