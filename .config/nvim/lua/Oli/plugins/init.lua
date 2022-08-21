@@ -140,7 +140,8 @@ return packer.startup({
       end,
     })
     use({
-      "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
+      "B4mbus/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
+      after = "onedarkpro",
       config = function()
         require(config_namespace .. ".plugins.others").todo_comments()
       end,

@@ -154,6 +154,10 @@ M.setup = function()
       TelescopeMatching = { fg = "${blue}" },
       TelescopeNormal = { bg = "${telescope_results}" },
       TelescopeSelection = { bg = "${telescope_prompt}" },
+
+      -- Todo Comments:
+      TodoTest = { fg = "${purple}" },
+      TodoPerf = { fg = "${purple}" },
     },
   })
   vim.cmd("colorscheme onedarkpro")

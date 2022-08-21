@@ -440,6 +440,11 @@ M.todo_comments = function()
     signs = false,
     keywords = {
       FIX = { icon = " " }, -- Custom fix icon
+      PERF = { color = "perf" },
+    },
+    colors = {
+      perf = { "TodoTest" },
+      test = { "TodoTest" },
     },
   })
 end
