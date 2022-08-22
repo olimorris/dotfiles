@@ -21,6 +21,7 @@ launchcontrol
 ledger-live
 little-snitch
 lunar
+marta
 microsoft-teams
 monitorcontrol
 moom
