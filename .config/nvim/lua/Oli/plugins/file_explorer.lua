@@ -32,9 +32,8 @@ M.config = function()
         hide_gitignored = false,
       },
     },
-    popup_border_style = "single",
     window = {
-      position = "float",
+      width = 30,
     },
   })
 end

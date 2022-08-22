@@ -8,11 +8,7 @@ function M.setup()
 
   local spacer = " "
   local separator = ""
-  local colors = vim.g.onedarkpro_colors
-
-  if not colors then
-    return
-  end
+  local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_theme)
 
   bufferline.setup({
     show_if_buffers_are_at_least = 1,
