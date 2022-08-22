@@ -53,7 +53,7 @@ M.setup = function()
         telescope_results = "#eeeeee",
       },
     },
-    filetype_hlgroups = {
+    ft_highlights = {
       lua = {
         Hlargs = { fg = "${red}", style = "italic" },
       },
@@ -75,7 +75,7 @@ M.setup = function()
         TSType = { fg = "${red}" },
       },
     },
-    hlgroups = {
+    highlights = {
       ModeMsg = { link = "LineNr" }, -- Make command line text darker
       StatusLine = { bg = "NONE", fg = "NONE" },
 
