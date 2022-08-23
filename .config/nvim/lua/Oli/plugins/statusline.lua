@@ -50,58 +50,40 @@ local function using_session()
   return (vim.g.persisting ~= nil)
 end
 
--- Determine if there is enough space in the window to display components
-local function there_is_width()
-  return vim.api.nvim_win_get_width(0) > 80
-end
-
-local function async_run()
-  if vim.g.async_status == "running" then
-    local spinners = {
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-    }
-    local ms = vim.loop.hrtime() / 1000000
-    local frame = math.floor(ms / 60) % #spinners
-    return spinners[frame + 1] .. " "
-  end
-  if vim.g.async_status == "fail" then
-    return " "
-  end
-  if vim.g.async_status == "success" then
-    return " "
-  end
-  return nil
-end
-
 local function mask_plugin()
   return om.find_pattern_match(M.filetypes_to_mask, vim.bo.filetype)
+end
+
+local function overseer()
+  local ok, overseer = om.safe_require("overseer")
+  if not ok then
+    return
+  end
+
+  local tasks = require("overseer.task_list")
+
+  if #tasks.list_tasks() == 0 then
+    return false
+  end
+
+  local util = require("overseer.util")
+  local STATUS = require("overseer.constants").STATUS
+
+  local symbols = {
+    [STATUS.FAILURE] = " ",
+    [STATUS.CANCELED] = " ",
+    [STATUS.SUCCESS] = " ",
+    [STATUS.RUNNING] = "省",
+  }
+
+  local tasks_by_status = util.tbl_group_by(tasks.list_tasks({ unique = true }), "status")
+
+  for _, status in ipairs(STATUS.values) do
+    local status_tasks = tasks_by_status[status]
+    if symbols[status] and status_tasks then
+      return status, symbols[status]
+    end
+  end
 end
 ---------------------------------------------------------------------------- }}}
 ---------------------------------COMPONENTS--------------------------------- {{{
@@ -392,136 +374,160 @@ function M.setup()
   ------------------------------RIGHT COMPONENTS------------------------------ {{{
   M.components.active[2] = {
     --------------------------------ASYNC TESTING------------------------------- {{{
-      {
-        provider = function()
-          return async_run()
-        end,
-        enabled = function()
-          return async_run() ~= nil
-        end,
+    {
+      provider = function()
+        local _, icon = overseer()
+        return icon
+      end,
+      enabled = function()
+        local status, _ = overseer()
+        return status ~= false
+      end,
+      hl = function()
+        local status, _ = overseer()
+
+        if status == "FAILURE" then
+          return {
+            fg = colors.red,
+            bg = "NONE",
+          }
+        elseif status == "SUCCESS" then
+          return {
+            fg = colors.green,
+            bg = "NONE",
+          }
+        elseif status == "RUNNING" then
+          return {
+            fg = colors.yellow,
+            bg = "NONE",
+          }
+        else
+          return {
+            fg = colors.gray,
+            bg = "NONE",
+          }
+        end
+      end,
+      left_sep = {
+        str = " ",
         hl = function()
           return default_hl()
         end,
-        left_sep = {
-          str = " ",
-          hl = function()
-            return default_hl()
-          end,
-        },
-        right_sep = {
-          str = "",
-          hl = function()
-            return default_hl()
-          end,
-        },
       },
-      ---------------------------------------------------------------------------- }}}
-      ----------------------------------FILETYPE---------------------------------- {{{
-      {
-        provider = function()
-          local filename = vim.api.nvim_buf_get_name(0)
-          local extension = vim.fn.fnamemodify(filename, ":e")
-          local filetype = vim.bo.filetype
+      right_sep = {
+        str = "",
+        hl = function()
+          return default_hl()
+        end,
+      },
+    },
+    ---------------------------------------------------------------------------- }}}
+    ----------------------------------FILETYPE---------------------------------- {{{
+    {
+      provider = function()
+        local filename = vim.api.nvim_buf_get_name(0)
+        local extension = vim.fn.fnamemodify(filename, ":e")
+        local filetype = vim.bo.filetype
 
-          local icon = om.get_icon(filename, extension, {})
-          return " " .. icon.str .. " " .. filetype .. " "
-        end,
-        enabled = function()
-          return not mask_plugin()
-        end,
+        local icon = om.get_icon(filename, extension, {})
+        return " " .. icon.str .. " " .. filetype .. " "
+      end,
+      enabled = function()
+        return not mask_plugin()
+      end,
+      hl = function()
+        return block().body
+      end,
+      left_sep = {
+        str = "slant_left",
         hl = function()
-          return block().body
+          return block().sep_right
         end,
-        left_sep = {
-          str = "slant_left",
-          hl = function()
-            return block().sep_right
-          end,
-        },
-        right_sep = {
-          str = "slant_left",
-          hl = function()
-            return block().sep_left
-          end,
-        },
       },
-      ---------------------------------------------------------------------------- }}}
-      -----------------------------------SESSION---------------------------------- {{{
-      {
-        provider = function()
-          if vim.g.persisting then
-            return "   "
-          elseif vim.g.persisting == false then
-            return "   "
-          end
-        end,
-        enabled = function()
-          return using_session()
-        end,
+      right_sep = {
+        str = "slant_left",
         hl = function()
-          return block().body
+          return block().sep_left
         end,
-        left_sep = {
-          str = "slant_left",
-          hl = function()
-            return block().sep_right
-          end,
-        },
-        right_sep = {
-          str = "slant_left",
-          hl = function()
-            return block().sep_left
-          end,
-        },
       },
-      ---------------------------------------------------------------------------- }}}
-      ---------------------------------LINE COLUMN-------------------------------- {{{
-      {
-        provider = function()
-          return " " .. line_col() .. " "
+    },
+    ---------------------------------------------------------------------------- }}}
+    -----------------------------------SESSION---------------------------------- {{{
+    {
+      provider = function()
+        if vim.g.persisting then
+          return "   "
+        elseif vim.g.persisting == false then
+          return "   "
+        end
+      end,
+      enabled = function()
+        return using_session()
+      end,
+      hl = function()
+        return block().body
+      end,
+      left_sep = {
+        str = "slant_left",
+        hl = function()
+          return block().sep_right
         end,
+      },
+      right_sep = {
+        str = "slant_left",
+        hl = function()
+          return block().sep_left
+        end,
+      },
+    },
+    ---------------------------------------------------------------------------- }}}
+    ---------------------------------LINE COLUMN-------------------------------- {{{
+    {
+      provider = function()
+        return " " .. line_col() .. " "
+      end,
+      hl = function()
+        return inverse_block().body
+      end,
+      left_sep = {
+        str = "slant_left",
+        hl = function()
+          return inverse_block().sep_right
+        end,
+      },
+      right_sep = {
+        str = "slant_left",
+        hl = function()
+          return inverse_block().sep_left
+        end,
+      },
+    },
+    ---------------------------------------------------------------------------- }}}
+    -------------------------------LINE PERCENTAGE------------------------------ {{{
+    {
+      provider = function()
+        local lines, percent = line_percentage()
+
+        return " " .. percent .. "%%/" .. lines
+      end,
+      hl = function()
+        return inverse_block().body
+      end,
+      left_sep = {
+        str = "slant_left",
+        hl = function()
+          return inverse_block().sep_right
+        end,
+      },
+      right_sep = {
+        str = " ",
         hl = function()
           return inverse_block().body
         end,
-        left_sep = {
-          str = "slant_left",
-          hl = function()
-            return inverse_block().sep_right
-          end,
-        },
-        right_sep = {
-          str = "slant_left",
-          hl = function()
-            return inverse_block().sep_left
-          end,
-        },
       },
-      ---------------------------------------------------------------------------- }}}
-      -------------------------------LINE PERCENTAGE------------------------------ {{{
-      {
-        provider = function()
-          local lines, percent = line_percentage()
-
-          return " " .. percent .. "%%/" .. lines
-        end,
-        hl = function()
-          return inverse_block().body
-        end,
-        left_sep = {
-          str = "slant_left",
-          hl = function()
-            return inverse_block().sep_right
-          end,
-        },
-        right_sep = {
-          str = " ",
-          hl = function()
-            return inverse_block().body
-          end,
-        },
-      },
-      ---------------------------------------------------------------------------- }}}
-    }
+    },
+    ---------------------------------------------------------------------------- }}}
+  }
   ---------------------------------------------------------------------------- }}}
   ------------------------------WINBAR COMPONENTS----------------------------- {{{
   local navic_ok, navic = om.safe_require("nvim-navic")
