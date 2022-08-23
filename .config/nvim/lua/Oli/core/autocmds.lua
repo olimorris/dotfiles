@@ -75,7 +75,7 @@ function M.default_autocmds()
       {
         "ColorScheme",
         function()
-          return require(config_namespace .. ".plugins.bufferline").setup()
+          require(config_namespace .. ".plugins.bufferline").setup()
         end,
         opts = { pattern = "*" },
       },

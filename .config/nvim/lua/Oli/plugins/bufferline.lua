@@ -30,7 +30,7 @@ function M.setup()
           return colors.gray
         end
       end,
-      bg = "NONE",
+      bg = colors.bg,
       style = function(buffer)
         return buffer.is_focused and "bold"
       end,

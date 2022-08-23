@@ -1,3 +1,4 @@
+---@diagnostic disable: need-check-nil
 local M = {}
 
 M.setup = function()
