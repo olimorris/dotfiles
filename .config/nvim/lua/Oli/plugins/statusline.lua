@@ -171,7 +171,7 @@ function M.setup()
   M.components.inactive = { { { provider = "", hl = InactiveStatusHL } } }
   ---------------------------------------------------------------------------- }}}
   ------------------------------CUSTOM COMPONENTS----------------------------- {{{
-  function line_percentage()
+  local function line_percentage()
     local curr_line = vim.api.nvim_win_get_cursor(0)[1]
     local lines = vim.api.nvim_buf_line_count(0)
     local percent = string.format("%s", 100)
@@ -182,7 +182,7 @@ function M.setup()
 
     return lines, percent
   end
-  function line_col()
+  local function line_col()
     local row = vim.api.nvim_win_get_cursor(0)[1]
     local col = vim.api.nvim_win_get_cursor(0)[2]
 
