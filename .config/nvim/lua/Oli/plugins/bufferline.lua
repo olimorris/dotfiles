@@ -42,6 +42,11 @@ function M.setup()
           }
         end,
       },
+      custom_filter = function(buf_number, buf_numbers)
+        if vim.bo[buf_number].filetype ~= "dap-repl" then
+          return true
+        end
+      end,
     },
     highlights = {
       background = {
@@ -108,6 +113,10 @@ function M.setup()
         bg = colors.statusline_bg,
         bold = true,
         italic = false,
+      },
+      separator_selected = {
+        bg = colors.red,
+        fg = colors.blue
       },
       tab_selected = {
         fg = colors.fg,
