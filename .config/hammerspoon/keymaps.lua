@@ -11,7 +11,7 @@ local apps = {
   b = "Safari", -- Browser
   c = { "Code", "Visual Studio Code" },
   e = "Microsoft Excel",
-  f = "Marta",
+  f = "Finder",
   -- g = "Tower", -- Git client
   -- h - Reserved
   -- i = "Slack", -- IM
