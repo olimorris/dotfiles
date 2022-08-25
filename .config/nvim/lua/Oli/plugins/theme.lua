@@ -9,7 +9,14 @@ M.setup = function()
 
   onedarkpro.setup({
     plugins = {
+      barbar = false,
+      lsp_saga = false,
+      marks = false,
       polygot = false,
+      startify = false,
+      trouble = false,
+      vim_ultest = false,
+      which_key = false
     },
     styles = {
       comments = "italic",
@@ -59,9 +66,9 @@ M.setup = function()
         Hlargs = { fg = "${red}", style = "italic" },
       },
       yaml = { TSField = { fg = "${red}" } },
-      -- python = {
-      --   TSFunction = { fg = "${blue}", style = "bold" },
-      -- },
+      python = {
+        TSFunction = { fg = "${blue}", style = "bold" },
+      },
       ruby = {
         Hlargs = { fg = "${red}" },
         TSFunction = { fg = "${blue}", style = "bold" },
@@ -77,9 +84,9 @@ M.setup = function()
       },
     },
     highlights = {
-      ModeMsg = { link = "LineNr" }, -- Make command line text darker
-      StatusLine = { bg = "NONE", fg = "NONE" },
       BufferlineOffset = { fg = "${purple}", style = "bold" },
+      ModeMsg = { link = "LineNr" }, -- Make command line text lighter
+      StatusLine = { bg = "NONE", fg = "NONE" },
 
       -- Highlight brackets with a custom color
       TSPunctBracket = { fg = "${brackets}" },
