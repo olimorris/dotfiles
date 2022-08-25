@@ -34,9 +34,9 @@ M.setup = function()
 
         ghost_text = "#555961",
 
-        statusline_bg = "#2e323b", -- gray
-
         bufferline_text_focus = "#949aa2",
+
+        statusline_bg = "#2e323b", -- gray
 
         telescope_prompt = "#2e323a",
         telescope_results = "#21252d",
@@ -59,9 +59,9 @@ M.setup = function()
         Hlargs = { fg = "${red}", style = "italic" },
       },
       yaml = { TSField = { fg = "${red}" } },
-      python = {
-        TSFunction = { fg = "${blue}", style = "bold" },
-      },
+      -- python = {
+      --   TSFunction = { fg = "${blue}", style = "bold" },
+      -- },
       ruby = {
         Hlargs = { fg = "${red}" },
         TSFunction = { fg = "${blue}", style = "bold" },
@@ -79,6 +79,7 @@ M.setup = function()
     highlights = {
       ModeMsg = { link = "LineNr" }, -- Make command line text darker
       StatusLine = { bg = "NONE", fg = "NONE" },
+      BufferlineOffset = { fg = "${purple}", style = "bold" },
 
       -- Highlight brackets with a custom color
       TSPunctBracket = { fg = "${brackets}" },

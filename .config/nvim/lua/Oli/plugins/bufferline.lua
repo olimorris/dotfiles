@@ -1,134 +1,143 @@
 local M = {}
 
 function M.setup()
-  local ok, bufferline = om.safe_require("cokeline")
+  local ok, bufferline = om.safe_require("bufferline")
   if not ok then
     return
   end
 
-  local spacer = " "
-  local separator = ""
   local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_theme)
 
   bufferline.setup({
-    show_if_buffers_are_at_least = 1,
-
-    buffers = {
-      new_buffers_position = "last",
-      filter_visible = function(buffer)
-        return buffer.type ~= "terminal" and buffer.type ~= "quickfix"
+    options = {
+      numbers = function(opts)
+        return string.format("%s:", opts.ordinal)
       end,
-    },
-
-    rendering = { max_buffer_width = 25 },
-
-    default_hl = {
-      fg = function(buffer)
-        if buffer.is_focused then
-          return colors.bufferline_text_focus
-        else
-          return colors.gray
-        end
-      end,
-      bg = colors.bg,
-      style = function(buffer)
-        return buffer.is_focused and "bold"
-      end,
-    },
-
-    components = {
-      -- Vim logo
-      {
-        text = function(buffer)
-          if buffer.index == 1 then
-            return "   "
-          else
-            return ""
-          end
-        end,
-        fg = colors.vim,
-      },
-      {
-        text = separator,
-        fg = function(buffer)
-          return (buffer.is_focused and colors.statusline_bg or colors.bg)
-        end,
-      },
-      -- Buffer index
-      {
-        text = function(buffer)
-          return buffer.index ~= 1 and spacer or " "
-        end,
-        bg = function(buffer)
-          return buffer.is_focused and colors.statusline_bg
-        end,
-      },
-      {
-        text = function(buffer)
-          return buffer.index .. ": "
-        end,
-        fg = function(buffer)
-          return buffer.is_focused and colors.purple
-        end,
-        bg = function(buffer)
-          return buffer.is_focused and colors.statusline_bg
-        end,
-        style = "italic",
-      },
-      -- Buffer unique name
-      {
-        text = function(buffer)
-          return buffer.unique_prefix
-        end,
-        bg = function(buffer)
-          return buffer.is_focused and colors.statusline_bg
-        end,
-        fg = function(buffer)
-          return buffer.is_focused and colors.purple or colors.gray
-        end,
-        style = "italic",
-      },
-      -- Buffer name
-      {
-        text = function(buffer)
-          return buffer.filename .. " "
-        end,
-        bg = function(buffer)
-          return buffer.is_focused and colors.statusline_bg
-        end,
-      },
-      -- Buffer modified
-      {
-        text = function(buffer)
-          return buffer.is_modified and "●" or ""
-        end,
-        truncation = { priority = 1 },
-        bg = function(buffer)
-          return buffer.is_focused and colors.statusline_bg
-        end,
-        fg = function(buffer)
-          return buffer.is_focused and colors.red
-        end,
-      },
-      {
-        text = separator,
-        fg = colors.bg,
-        bg = function(buffer)
-          return buffer.is_focused and colors.statusline_bg
-        end,
-      },
-      { text = spacer },
-    },
-
-    sidebar = {
-      filetype = "neo-tree",
-      components = {
+      tab_size = 15,
+      left_trunc_marker = "",
+      right_trunc_marker = "",
+      indicator = "",
+      show_buffer_icons = false,
+      show_buffer_close_icons = false,
+      show_close_icon = false,
+      separator_style = "thin",
+      offsets = {
         {
-          text = "  File Explorer",
-          fg = colors.yellow,
-          bg = "NONE",
-          style = "bold",
+          filetype = "neo-tree",
+          text = "Neo Tree",
+          highlight = "BufferlineOffset",
+          text_align = "center",
         },
+        {
+          filetype = "aerial",
+          text = "Aerial",
+          highlight = "BufferlineOffset",
+          text_align = "center",
+        },
+      },
+      custom_areas = {
+        left = function()
+          return {
+            { text = "    ", fg = colors.vim },
+          }
+        end,
+      },
+    },
+    highlights = {
+      background = {
+        bg = colors.bg,
+      },
+      buffer = {
+        fg = colors.gray,
+      },
+      duplicate = {
+        fg = colors.gray,
+        bg = colors.bg,
+        italic = true,
+      },
+      fill = {
+        bg = colors.bg,
+      },
+      modified = {
+        fg = colors.gray,
+        bg = colors.bg,
+      },
+      numbers = {
+        fg = colors.gray,
+        bg = colors.bg,
+        italic = true,
+      },
+      pick = {
+        fg = colors.purple,
+        bg = colors.bg,
+      },
+      separator = {
+        fg = colors.bg,
+        bg = colors.bg,
+      },
+      tab = {
+        fg = colors.gray,
+        bg = colors.bg,
+      },
+      buffer_selected = {
+        fg = colors.bufferline_text_focus,
+        bg = colors.statusline_bg,
+        bold = true,
+        italic = false,
+      },
+      duplicate_selected = {
+        fg = colors.purple,
+        bg = colors.statusline_bg,
+        italic = true,
+      },
+      indicator_selected = {
+        bg = colors.statusline_bg,
+      },
+      modified_selected = {
+        fg = colors.red,
+        bg = colors.statusline_bg,
+      },
+      numbers_selected = {
+        fg = colors.purple,
+        bg = colors.statusline_bg,
+        bold = false,
+        italic = true,
+      },
+      pick_selected = {
+        fg = colors.gray,
+        bg = colors.statusline_bg,
+        bold = true,
+        italic = false,
+      },
+      tab_selected = {
+        fg = colors.fg,
+        bg = colors.statusline_bg,
+        bold = true,
+      },
+      buffer_visible = {
+        fg = colors.gray,
+        bg = colors.statusline_bg,
+        bold = true,
+        italic = false,
+      },
+      duplicate_visible = {
+        bg = colors.statusline_bg,
+        italic = true,
+      },
+      indicator_visible = {
+        bg = colors.statusline_bg,
+      },
+      modified_visible = {
+        fg = colors.gray,
+        bg = colors.statusline_bg,
+      },
+      numbers_visible = {
+        fg = colors.gray,
+        bg = colors.statusline_bg,
+        italic = true,
+      },
+      separator_visible = {
+        bg = colors.statusline_bg,
       },
     },
   })

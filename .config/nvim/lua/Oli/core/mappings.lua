@@ -175,26 +175,16 @@ M.plugin_keymaps = function()
     { "<C-c>", "<cmd>Bdelete<CR>", description = "Close Buffer" },
 
     -- Bufferline
-    { "<Tab>", "<Plug>(cokeline-focus-next)", description = "Next buffer", opts = { noremap = false } },
-    { "<S-Tab>", "<Plug>(cokeline-focus-prev)", description = "Previous buffer", opts = { noremap = false } },
-    { "<LocalLeader>1", "<Plug>(cokeline-focus-1)", description = "Buffer focus on 1" },
-    { "<LocalLeader>2", "<Plug>(cokeline-focus-2)", description = "Buffer focus on 2" },
-    { "<LocalLeader>3", "<Plug>(cokeline-focus-3)", description = "Buffer focus on 3" },
-    { "<LocalLeader>4", "<Plug>(cokeline-focus-4)", description = "Buffer focus on 4" },
-    { "<LocalLeader>5", "<Plug>(cokeline-focus-5)", description = "Buffer focus on 5" },
-    { "<LocalLeader>6", "<Plug>(cokeline-focus-6)", description = "Buffer focus on 6" },
-    { "<LocalLeader>7", "<Plug>(cokeline-focus-7)", description = "Buffer focus on 7" },
-    { "<LocalLeader>8", "<Plug>(cokeline-focus-8)", description = "Buffer focus on 8" },
-    { "<LocalLeader>9", "<Plug>(cokeline-focus-9)", description = "Buffer focus on 9" },
-    { "<Leader>1", "<Plug>(cokeline-switch-1)", description = "Buffer switch to 1" },
-    { "<Leader>2", "<Plug>(cokeline-switch-2)", description = "Buffer switch to 2" },
-    { "<Leader>3", "<Plug>(cokeline-switch-3)", description = "Buffer switch to 3" },
-    { "<Leader>4", "<Plug>(cokeline-switch-4)", description = "Buffer switch to 4" },
-    { "<Leader>5", "<Plug>(cokeline-switch-5)", description = "Buffer switch to 5" },
-    { "<Leader>6", "<Plug>(cokeline-switch-6)", description = "Buffer switch to 6" },
-    { "<Leader>7", "<Plug>(cokeline-switch-7)", description = "Buffer switch to 7" },
-    { "<Leader>8", "<Plug>(cokeline-switch-8)", description = "Buffer switch to 8" },
-    { "<Leader>9", "<Plug>(cokeline-switch-9)", description = "Buffer switch to 9" },
+    { "<Tab>", "<Cmd>BufferLineCycleNext<CR>", description = "Next buffer", opts = { noremap = false } },
+    { "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", description = "Previous buffer", opts = { noremap = false } },
+    { "<LocalLeader>1", "<cmd>lua require(\"bufferline\").go_to_buffer(1, true)<CR>", description = "Buffer go to 1" },
+    { "<LocalLeader>2", "<cmd>lua require(\"bufferline\").go_to_buffer(2, true)<CR>", description = "Buffer go to 2" },
+    { "<LocalLeader>3", "<cmd>lua require(\"bufferline\").go_to_buffer(3, true)<CR>", description = "Buffer go to 3" },
+    { "<LocalLeader>4", "<cmd>lua require(\"bufferline\").go_to_buffer(4, true)<CR>", description = "Buffer go to 4" },
+    { "<LocalLeader>5", "<cmd>lua require(\"bufferline\").go_to_buffer(5, true)<CR>", description = "Buffer go to 5" },
+    { "<LocalLeader>5", "<cmd>lua require(\"bufferline\").go_to_buffer(5, true)<CR>", description = "Buffer go to 5" },
+    { "<Leader>[", "<cmd>BufferLineMovePrev<CR>", description = "Buffer move left" },
+    { "<Leader>]", "<cmd>BufferLineMoveNext<CR>", description = "Buffer move right" },
 
     -- Comments
     {
@@ -667,7 +657,7 @@ M.lsp_keymaps = function(client, bufnr)
       "<LocalLeader>lf",
       function()
         vim.b.format_changedtick = vim.b.changedtick
-        vim.lsp.buf.format({ async = true })
+        vim.lsp.buf.format()
       end,
       description = "LSP: Format",
       opts = { buffer = bufnr },

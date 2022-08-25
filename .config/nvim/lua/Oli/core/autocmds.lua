@@ -69,7 +69,7 @@ function M.default_autocmds()
   }
 
   -- Reload bufferline when the theme has been changed
-  if om.safe_require("cokeline", { silent = true }) then
+  if om.safe_require("bufferline", { silent = true }) then
     table.insert(autocmds, {
       name = "RefreshBufferlineColors",
       {

@@ -55,7 +55,7 @@ function M.setup()
     dashboard.section.footer,
   }
 
-  dashboard.opts.opts.noautocmd = true
+  dashboard.config.opts.noautocmd = true
 
   alpha.setup(dashboard.opts)
 end

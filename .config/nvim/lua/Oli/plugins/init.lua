@@ -54,7 +54,7 @@ return packer.startup({
       end,
     })
     use({
-      "noib3/cokeline.nvim", -- Bufferline
+      "akinsho/bufferline.nvim", -- Bufferline
       after = "onedarkpro",
       config = function()
         require(config_namespace .. ".plugins.bufferline").setup()
