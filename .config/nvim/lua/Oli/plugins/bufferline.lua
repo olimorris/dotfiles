@@ -13,9 +13,8 @@ function M.setup()
       numbers = function(opts)
         return string.format("%s:", opts.ordinal)
       end,
+      max_name_length = 13,
       tab_size = 15,
-      left_trunc_marker = "",
-      right_trunc_marker = "",
       indicator = "",
       show_buffer_icons = false,
       show_buffer_close_icons = false,
