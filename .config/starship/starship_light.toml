@@ -1,14 +1,18 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
+right_format = "$cmd_duration"
+
 [character]
 success_symbol = "[➜](bold #1da912)" #green
 error_symbol = "[➜](bold #e05661)" #red
 
 [cmd_duration]
+format = "[ $duration]($style)"
 style = "bold" #black
 
 [directory]
+read_only = " "
 style = "bold #9a77cf" #purple
 
 [docker_context]
