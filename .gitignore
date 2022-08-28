@@ -8,7 +8,6 @@
 !.config/alacritty/**/*
 !.config/bash/**/*
 !.config/composer/composer.json
-!.config/efm-langserver/**/*
 !.config/git/**/*
 !.config/hammerspoon/**/*
 !.config/karabiner/karabiner.json
