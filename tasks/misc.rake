@@ -144,7 +144,7 @@ namespace :install do
     section 'Installing Rust, Cargo and packages'
 
     # Install Rust and Cargo
-    run %( curl https://sh.rustup.rs -sSf | sh)
+    run %( curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh )
 
     # Install packages
     run %( cargo install cargo-update )
