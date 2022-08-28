@@ -150,6 +150,16 @@ namespace :install do
     run %( cargo install cargo-update )
   end
 
+  desc 'Install Fish'
+  task :fish do
+    section 'Installing Fish and plugins'
+
+    run %( curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher )
+    run %( fisher list | fisher install )
+    run %( echo $(where fish) | sudo tee -a /etc/shells )
+    run %( chsh -s $(where fish) )
+  end
+
   desc 'Install true color support for Tmux and Alacritty'
   task :tmux_color do
     section 'Installing Tmux and Alacritty colors'
@@ -257,6 +267,13 @@ namespace :update do
     section 'Updating Cargo packages'
 
     run %( cargo install-update -a )
+  end
+
+  desc 'Update Fish'
+  task :fish do
+    section 'Updating Fish plugins'
+
+    run %( fisher update )
   end
 
   desc 'Update Tmux plugins'

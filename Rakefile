@@ -47,6 +47,7 @@ task :install do
   Rake::Task['install:npm'].invoke
   Rake::Task['install:gems'].invoke
   Rake::Task['install:cargo'].invoke
+  Rake::Task['install:fish'].invoke
   # Rake::Task['install:tmux_color'].invoke
   Rake::Task['install:tmux'].invoke
   Rake::Task['install:launchagents'].invoke
@@ -69,6 +70,7 @@ task :update do
   Rake::Task['update:npm'].invoke
   Rake::Task['update:gems'].invoke
   Rake::Task['update:cargo'].invoke
+  Rake::Task['update:fish'].invoke
   Rake::Task['update:tmux'].invoke
   Rake::Task['update:rails'].invoke
   Rake::Task['update:servers'].invoke

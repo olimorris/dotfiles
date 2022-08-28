@@ -8,6 +8,7 @@
 !.config/alacritty/**/*
 !.config/bash/**/*
 !.config/composer/composer.json
+!.config/fish/*
 !.config/git/**/*
 !.config/hammerspoon/**/*
 !.config/karabiner/karabiner.json
@@ -57,6 +58,10 @@
 
 # Config
 .config/nvim/plugin
+
+# Fish
+.config/fish/env
+.config/fish/fish_variables
 
 # Tmux
 .config/tmux/plugins

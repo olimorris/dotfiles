@@ -55,7 +55,7 @@ vim.opt.scrolloff = 5 -- Set the cursor 5 lines down instead of directly at the 
 	@credit: wincent
 ]]
 vim.opt.shada = "!,'0,f0,<50,s10,h"
-vim.opt.shell = "/opt/homebrew/bin/zsh" -- Use zsh as the default shell
+vim.opt.shell = "/opt/homebrew/bin/fish"
 vim.opt.shiftround = true -- Round indent
 vim.opt.shortmess = {
   A = true, -- ignore annoying swap file messages

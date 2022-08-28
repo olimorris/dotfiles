@@ -8,6 +8,7 @@
 
 - link:
     # Config directory
+    ~/.config/fish: .config/fish
     ~/.config/hammerspoon: .config/hammerspoon
     ~/.config/karabiner: .config/karabiner
     ~/.config/kitty: .config/kitty
@@ -25,6 +26,7 @@
     ~/.zprofile: .config/zsh/.zprofile
     ~/.zshrc: .config/zsh/.zshrc
     ~/.local/share/zsh/bookmarks: .config/zsh/bookmarks
+    ~/.tofish: .config/fish/.tofish
 
     # Others
     ~/.applescript: .config/applescript
