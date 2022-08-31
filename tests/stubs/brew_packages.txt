@@ -2,4 +2,4 @@ asdf
 mackup
 mas
 tmux
-zsh
+fish
