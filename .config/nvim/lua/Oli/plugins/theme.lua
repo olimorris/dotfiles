@@ -16,7 +16,7 @@ M.setup = function()
       startify = false,
       trouble = false,
       vim_ultest = false,
-      which_key = false
+      which_key = false,
     },
     styles = {
       comments = "italic",
@@ -77,16 +77,22 @@ M.setup = function()
         TSSymbol = { fg = "${cyan}" },
       },
       scss = {
-        TSFunction = { fg = "${cyan}" },
+        -- TSFunction = { fg = "${cyan}" },
         TSProperty = { fg = "${orange}" },
         TSPunctDelimiter = { fg = "${orange}" },
         TSType = { fg = "${red}" },
       },
     },
+    -- ft_highlights_force = true,
     highlights = {
       BufferlineOffset = { fg = "${purple}", style = "bold" },
       ModeMsg = { link = "LineNr" }, -- Make command line text lighter
       StatusLine = { bg = "NONE", fg = "NONE" },
+
+      -- ["@function.ruby"] = { fg = "${blue}", style = "bold" },
+      -- ["@variable.ruby"] = { fg = "${blue}", style = "bold" },
+      -- ["@parameter.ruby"] = { fg = "${red}", style = "italic"},
+      -- ["@text.title.markdown"] = { style = "bold,italic" },
 
       -- Highlight brackets with a custom color
       TSPunctBracket = { fg = "${brackets}" },

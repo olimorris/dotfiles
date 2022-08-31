@@ -19,7 +19,7 @@
 
     # Dotfiles
     ~/.aliases: .config/zsh/.aliases
-    ~/.env: .config/zsh/.env
+    ~/.env: .config/fish/.env
     ~/.functions: .config/zsh/.functions
     ~/.tool-versions: .tool-versions
     ~/.zshenv: .config/zsh/.zshenv
