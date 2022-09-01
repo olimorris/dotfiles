@@ -9,7 +9,6 @@
 !.config/bash/**/*
 !.config/composer/composer.json
 !.config/fish/*
-!.config/fish/conf.d/update_theme.fish
 !.config/git/**/*
 !.config/hammerspoon/**/*
 !.config/karabiner/karabiner.json
