@@ -19,11 +19,11 @@ ran_from_cmd_line = False
 # The order in which apps are changed
 apps = [
     "macos",
-    "fish",
     "kitty",
     "starship",
     "tmux",
     "neovim",
+    "fish",
 ]
 
 def app_macos(mode):
@@ -49,10 +49,6 @@ def app_macos(mode):
 
     with open(os.path.expanduser(path_to_file), "w") as config_file:
         config_file.write(contents)
-
-def app_fish(mode):
-    fish_cmd = 'fish -c "set --universal macOS_Theme ' + mode + '"'
-    os.system(fish_cmd)
 
 def app_kitty(mode):
     """
@@ -137,7 +133,7 @@ def app_tmux(mode):
             os.path.expanduser(tmux_path + "/tmux.conf"),
         ]
     )
-    return os.system("exec zsh")
+    # return os.system("exec zsh")
 
 
 def app_neovim(mode):
@@ -182,6 +178,8 @@ def app_neovim(mode):
 
     return
 
+def app_fish(mode):
+    return subprocess.run(["/opt/homebrew/bin/fish"])
 
 def run_apps(mode=None):
     """
