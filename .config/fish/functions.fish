@@ -12,10 +12,10 @@ function mkd -d "Create a directory and set CWD"
 end
 
 function load_env_vars -d "Load variables in a .env file"
-	for i in (cat $argv)
-		set arr (echo $i |tr = \n)
-  		set -gx $arr[1] $arr[2]
-	end
+    for i in (cat $argv)
+        set arr (echo $i |tr = \n)
+        set -gx $arr[1] $arr[2]
+    end
 end
 
 function now -d "Print the current date and time"
@@ -23,15 +23,15 @@ function now -d "Print the current date and time"
 end
 
 function nv -d "Launch Neovim"
-    if count $argv > /dev/null
+    if count $argv >/dev/null
         nvim $argv
     else
         nvim
     end
 end
 
-function o -d "Open"
-    if count $argv > /dev/null
+function o -d Open
+    if count $argv >/dev/null
         open $argv
     else
         open .
@@ -47,8 +47,8 @@ function italic -d "Test if italic text is working"
 end
 
 function col -d "Test if color is working"
-	echo -e 'Should be a smooth gradient:'
-	awk 'BEGIN{
+    echo -e 'Should be a smooth gradient:'
+    awk 'BEGIN{
         s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
         for (colnum = 0; colnum<77; colnum++) {
             r = 255-(colnum*255/76);

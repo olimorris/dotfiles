@@ -18,12 +18,12 @@ alias dcsp='docker-compose -f docker-compose.prod.yml stop'
 
 # Dotfiles
 alias dot='dotfile_tasks'
-alias ed='nvim ~/.dotfiles'
-alias up='cd ~/.dotfiles && rake sync'
-alias backup='cd ~/.dotfiles && rake backup'
-alias clean='ruby ~/.dotfiles/commands/clean_up.rb'
-alias icons='python ~/.dotfiles/commands/seticons.py'
-alias cleanup='ruby ~/.dotfiles/commands/clean_up.rb ~/Downloads'
+alias ed='nvim $HOME/.dotfiles'
+alias up='cd $HOME/.dotfiles && rake sync'
+alias backup='cd $HOME/.dotfiles && rake backup'
+alias clean='ruby $HOME/.dotfiles/commands/clean_up.rb'
+alias icons='python $HOME/.dotfiles/commands/seticons.py'
+alias cleanup='ruby $HOME/.dotfiles/commands/clean_up.rb $HOME/Downloads'
 
 # Fish
 alias fi='fisher install'
@@ -68,16 +68,16 @@ alias essh='nvim $HOME/.ssh/config'
 alias chmodall='sudo chmod -R 0777'
 alias copyssh='pbcopy < $HOME/.ssh/$1'
 alias rk='pgrep kitty | xargs kill -SIGUSR1'
-alias dotbot='cd ~/.dotfiles && ./dotbot_install'
-alias dotup='cd ~/.dotfiles && git submodule update --remote dotbot'
-alias mssh='ruby ~/.dotfiles/commands/ssh.rb'
-alias sep='ruby ~/.dotfiles/commands/make_separator.rb'
+alias dotbot='cd $HOME/.dotfiles && ./dotbot_install'
+alias dotup='cd $HOME/.dotfiles && git submodule update --remote dotbot'
+alias mssh='ruby $HOME/.dotfiles/commands/ssh.rb'
+alias sep='ruby $HOME/.dotfiles/commands/make_separator.rb'
 alias deploy="ssh DigitalOcean 'bash -s' < deploy.sh"
 
 # Neovim / Vim
 alias vi='nvim'
 alias vim='/opt/homebrew/bin/vim'
-alias nvu='cd ~/.dotfiles && rake update:neovim && prevd'
+alias nvu='cd $HOME/.dotfiles && rake update:neovim && prevd'
 
 # PHP
 alias art='php artisan'
@@ -95,12 +95,12 @@ alias cor='vendor/bin/codecept run'
 alias clearlogs='sudo echo -n -f >'
 alias pc='clear && vendor/bin/phpunit'
 alias tf='vendor/bin/phpunit --filter='
-alias phplogs='sudo tail -f /usr/local/var/log/* /usr/local/var/log/nginx/* ~/.valet/Log/* /usr/local/opt/php71/var/log/*'
+alias phplogs='sudo tail -f /usr/local/var/log/* /usr/local/var/log/nginx/* $HOME/.valet/Log/* /usr/local/opt/php71/var/log/*'
 
 # Python
 alias jup='jupyter notebook'
-alias pipb='pip freeze > ~/.dotfiles/PIP.txt'
-alias pipi='pip install -r ~/.dotfiles/PIP.txt'
+alias pipb='pip freeze > $HOME/.dotfiles/PIP.txt'
+alias pipi='pip install -r $HOME/.dotfiles/PIP.txt'
 alias jupr="jupyter notebook --NotebookApp.allow_origin='https://colab.research.google.com' --port=9090 --no-browser"
 
 # Rails
@@ -129,33 +129,32 @@ alias rprod='tail -f log/production.log'
 
 # Ruby
 alias rt='rake test'
-alias sb='~/.local/share/nvim/mason/packages/solargraph/bin/solargraph bundle'
+alias sb='$HOME/.local/share/nvim/mason/packages/solargraph/bin/solargraph bundle'
 alias ug='gem update --system && gem update'
 
 # Shell
 alias c='clear'
 alias tags='ctags -R'
-alias ea='nvim ~/.config/aliases.fish'
-alias et='nvim ~/config/tmux/tmux.conf'
-alias src='source ~/.config/fish/config.fish && fish_logo'
+alias ea='nvim $HOME/.config/fish/aliases.fish'
+alias et='nvim $HOME/.config/tmux/tmux.conf'
+alias src='exec fish && source $HOME/.config/fish/config.fish && fish_logo'
 alias reloaddns='dscacheutil -flushcache && sudo killall -HUP mDNSResponder'
 
 # Shell navigation
 alias ..='cd ..'
 alias bk='cd -'
-alias home='cd ~'
+alias home='cd $HOME'
 alias ...='cd ../..'
-alias desk='cd ~/Desktop'
+alias desk='cd $HOME/Desktop'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
 # Tmux
-alias ta='tmux attach -t'               # Attach to an existing Tmux session - Specify a name
 alias tsa='tmux-sendall'                # Send a command to all windows and panes that don't have a process running
 alias tks='tmux kill-server'            # Kill everything
 alias tl='tmux list-sessions'           # List all of the open tmux sessions
 alias tn='tmux new-session -s'          # Create a new tmux session - Specify a name
 alias tk='tmux kill-session -a'         # Kill all of the OTHER tmux sessions
 alias t='tmux attach || tmux new-session'   # Attaches tmux to the last session; creates a new session if none exists.
-alias tpi='~/.tmux/plugins/tpm/bin/install_plugins' # Installs Tmux plugins
-alias tpu='~/.tmux/plugins/tpm/bin/update_plugins all' # Updates all Tmux plugins
+alias tpi='$HOME/.config/tmux/plugins/tpm/bin/install_plugins' # Installs Tmux plugins
+alias tpu='$HOME/.config/tmux/plugins/tpm/bin/update_plugins all' # Updates all Tmux plugins
