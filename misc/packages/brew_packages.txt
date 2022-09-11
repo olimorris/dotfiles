@@ -51,6 +51,7 @@ tmux
 tree-sitter
 universal-ctags
 vim
+vivid
 watchman
 wget
 yarn
