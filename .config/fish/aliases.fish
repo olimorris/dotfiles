@@ -137,7 +137,7 @@ alias c='clear'
 alias tags='ctags -R'
 alias ea='nvim $HOME/.config/fish/aliases.fish'
 alias et='nvim $HOME/.config/tmux/tmux.conf'
-alias src='exec fish && source $HOME/.config/fish/config.fish && fish_logo'
+alias src='source $HOME/.config/fish/config.fish && fish_logo'
 alias reloaddns='dscacheutil -flushcache && sudo killall -HUP mDNSResponder'
 
 # Shell navigation

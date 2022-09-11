@@ -24,4 +24,4 @@ else if [ "$macOS_Theme" = dark ]
     set FZF_DEFAULT_OPTS $FZF_DEFAULT_OPTS --color prompt:'#e5c07b',spinner:'#61afef'
 end
 
-set fzf_fd_opts --hidden --no-ignore --exclude=.git --exclude=Library
+set -g fzf_fd_opts --hidden --no-ignore --exclude=.git --exclude=Library
