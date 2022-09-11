@@ -10,9 +10,9 @@ if [[ $# -ne 0 || "$1" = "--help" ]] ; then
     input_command="${@:1}"
 
     for _pane in $(tmux list-panes -s -t ${input_session} -F '#{window_index}.#{pane_index}'); do
-        # only run the command in bash or zsh panes
+        # only run the command in fish or bash panes
         _current_command=$(tmux display-message -p -t ${input_session}:${_pane} '#{pane_current_command}')
-        if [ ${_current_command} = zsh ] || [ ${_current_command} = bash ] ; then
+        if [ ${_current_command} = fish ] || [ ${_current_command} = bash ] ; then
             tmux send-keys -t ${_pane} "${input_command}" Enter
         fi
     done
