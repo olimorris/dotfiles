@@ -140,7 +140,7 @@ return packer.startup({
       end,
     })
     use({
-      "B4mbus/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
+      "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
       after = "onedarkpro",
       config = function()
         require(config_namespace .. ".plugins.others").todo_comments()
@@ -359,12 +359,6 @@ return packer.startup({
         },
         {
           "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
-        },
-        {
-          "m-demare/hlargs.nvim", -- Highlight argument definitions
-          config = function()
-            require(config_namespace .. ".plugins.others").hlargs()
-          end,
         },
         {
           "abecodes/tabout.nvim", -- Tab out from parenthesis, quotes, brackets...
