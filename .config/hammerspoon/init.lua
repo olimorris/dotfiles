@@ -30,3 +30,4 @@ config_watcher:start()
 ------------------------------------ MODULES -----------------------------------
 require("keymaps")
 require("zoom-killer")
+require("apple-music-spotify-redirect")
