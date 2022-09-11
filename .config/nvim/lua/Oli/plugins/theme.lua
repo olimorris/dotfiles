@@ -62,20 +62,17 @@ M.setup = function()
       },
     },
     ft_highlights = {
-      lua = {
-        Hlargs = { fg = "${red}", style = "italic" },
-      },
       yaml = { TSField = { fg = "${red}" } },
       python = {
         TSFunction = { fg = "${blue}", style = "bold" },
       },
-      ruby = {
-        Hlargs = { fg = "${red}" },
-        TSFunction = { fg = "${blue}", style = "bold" },
-        TSInclude = { fg = "${blue}", style = "italic" },
-        TSParameter = { fg = "${fg}", style = "italic" },
-        TSSymbol = { fg = "${cyan}" },
-      },
+      -- ruby = {
+      --   Hlargs = { fg = "${red}" },
+      --   TSFunction = { fg = "${blue}", style = "bold" },
+      --   TSInclude = { fg = "${blue}", style = "italic" },
+      --   TSParameter = { fg = "${fg}", style = "italic" },
+      --   TSSymbol = { fg = "${cyan}" },
+      -- },
       scss = {
         -- TSFunction = { fg = "${cyan}" },
         TSProperty = { fg = "${orange}" },
@@ -89,10 +86,12 @@ M.setup = function()
       ModeMsg = { link = "LineNr" }, -- Make command line text lighter
       StatusLine = { bg = "NONE", fg = "NONE" },
 
-      -- ["@function.ruby"] = { fg = "${blue}", style = "bold" },
-      -- ["@variable.ruby"] = { fg = "${blue}", style = "bold" },
-      -- ["@parameter.ruby"] = { fg = "${red}", style = "italic"},
-      -- ["@text.title.markdown"] = { style = "bold,italic" },
+      -- Ruby
+      ["@function.ruby"] = { fg = "${blue}", style = "bold" },
+      ["@function.call.ruby"] = { fg = "${blue}", style = "bold" },
+      ["@include.ruby"] = { fg = "${blue}", style = "italic" },
+      ["@parameter.ruby"] = { fg = "${fg}", style = "italic" },
+      ["@symbol.ruby"] = { fg = "${cyan}" },
 
       -- Highlight brackets with a custom color
       TSPunctBracket = { fg = "${brackets}" },
