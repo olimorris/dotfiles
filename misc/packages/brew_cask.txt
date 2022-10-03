@@ -9,9 +9,11 @@ daedalus-mainnet
 diffmerge
 fantastical
 font-dejavu-sans-mono-for-powerline
+fontforge
 geekbench
 github
 google-chrome
+grammarly
 hammerspoon
 imageoptim
 karabiner-elements

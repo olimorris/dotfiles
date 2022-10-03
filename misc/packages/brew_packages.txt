@@ -10,6 +10,7 @@ docker
 fd
 fish
 flux
+fontforge
 fortune
 fzf
 gh
@@ -19,11 +20,10 @@ gnupg
 go
 gobject-introspection
 httpie
+jpeg
 lazygit
 librsync
-libspiro
 libtermkey
-libuninameslist
 libvterm
 little-cms2
 lolcat
@@ -38,7 +38,6 @@ neofetch
 ninja
 node
 openssl@3
-pango
 php-cs-fixer
 reattach-to-user-namespace
 ripgrep
