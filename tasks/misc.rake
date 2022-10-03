@@ -231,8 +231,16 @@ namespace :update do
     end
   end
 
+  desc "Update Neovim plugins"
+  task :neovim_plugins do
+    section 'Updating Neovim plugins'
+
+    run %( nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' )
+  end
+
+
   desc 'Update Vim plugins'
-  task :vim do
+  task :vim_plugins do
     section 'Updating Vim plugins'
 
     run %( vim +PlugUpdate +qall ) unless testing?

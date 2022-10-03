@@ -41,7 +41,7 @@ task :install do
   Rake::Task['install:fonts'].invoke
   Rake::Task['install:macos'].invoke
   Rake::Task['install:servers'].invoke
-  Rake::Task['install:neovim'].invoke
+  # Rake::Task['install:neovim'].invoke
   Rake::Task['install:vim'].invoke
   Rake::Task['install:pip'].invoke
   Rake::Task['install:npm'].invoke
@@ -64,8 +64,8 @@ task :update do
   Rake::Task['update:brew'].invoke
   Rake::Task['update:zsh_plugins'].invoke
   Rake::Task['update:dotbot'].invoke
-  Rake::Task['update:neovim'].invoke
-  Rake::Task['update:vim'].invoke
+  # Rake::Task['update:neovim'].invoke
+  Rake::Task['update:vim_plugins'].invoke
   Rake::Task['update:pip'].invoke
   Rake::Task['update:npm'].invoke
   Rake::Task['update:gems'].invoke
