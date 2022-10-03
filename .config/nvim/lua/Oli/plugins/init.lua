@@ -134,12 +134,6 @@ return packer.startup({
       end,
     })
     use({
-      "stevearc/qf_helper.nvim", -- Improves the quickfix and location list windows
-      config = function()
-        require(config_namespace .. ".plugins.others").qf_helper()
-      end,
-    })
-    use({
       "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
       after = "onedarkpro",
       config = function()
@@ -463,12 +457,6 @@ return packer.startup({
       "ahmedkhalf/project.nvim", -- Automatically set the cwd to the project root
       config = function()
         require(config_namespace .. ".plugins.others").project_nvim()
-      end,
-    })
-    use({
-      "stevearc/stickybuf.nvim", -- Ensure buffers are not opened in certain filetypes
-      config = function()
-        require(config_namespace .. ".plugins.others").stickybuf()
       end,
     })
     use({

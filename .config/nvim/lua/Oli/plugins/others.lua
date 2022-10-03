@@ -279,6 +279,7 @@ M.persisted = function()
   persisted.setup({
     save_dir = Sessiondir .. "/",
     use_git_branch = true,
+    silent = true,
     before_save = function()
       -- Clear out Minimap before saving the session
       -- With Minimap open it stops the session restoring to the last cursor position
@@ -325,24 +326,6 @@ M.refactoring = function()
   require("telescope").load_extension("refactoring")
 end
 
-M.qf_helper = function()
-  local ok, qf_helper = om.safe_require("qf_helper")
-  if not ok then
-    return
-  end
-
-  qf_helper.setup({
-    quickfix = {
-      max_height = 10, -- Max qf height when using open() or toggle()
-      min_height = 5, -- Min qf height when using open() or toggle()
-    },
-    loclist = { -- The same options, but for the loclist
-      max_height = 10,
-      min_height = 5,
-    },
-  })
-end
-
 M.scrollbar = function()
   local ok, scrollbar = om.safe_require("scrollbar")
   if not ok then
@@ -379,6 +362,11 @@ M.search = function()
   end
 
   search.setup({
+    popup = {
+      win_options = {
+        winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
+      },
+    },
     hooks = {
       before_mount = function(input)
         pcall(vim.cmd, "MinimapClose")
