@@ -14,12 +14,12 @@ local apps = {
   f = "Finder",
   -- g = "Tower", -- Git client
   -- h - Reserved
-  -- i = "Slack", -- IM
   -- j - Reserved
   -- k - Reserved
   -- l - Reserved
   m = "HEY", -- Mail
-  n = "Notion", -- Notes
+  n = "Bear", -- Notes
+  o = "Notion", -- Life OS
   p = "1Password",
   r = "Reeder",
   t = "kitty", -- Terminal
