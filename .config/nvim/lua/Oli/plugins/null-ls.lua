@@ -11,14 +11,13 @@ local sources = {
 
   -- Diagnostics
   b.diagnostics.eslint_d,
-  b.diagnostics.jsonlint,
 
   -- Formatting
   b.formatting.fish_indent,
   b.formatting.fixjson,
   b.formatting.phpcsfixer,
   b.formatting.prettier.with({
-    filetypes = { "css", "dockerfile", "html", "javascript", "markdown", "vue", "yaml" },
+    filetypes = { "css", "dockerfile", "html", "javascript", "json", "markdown", "vue", "yaml" },
   }),
   b.formatting.rubocop,
   b.formatting.shfmt.with({

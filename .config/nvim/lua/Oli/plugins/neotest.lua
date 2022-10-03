@@ -16,8 +16,9 @@ function M.setup()
       overseer = require("neotest.consumers.overseer"),
     },
     diagnostic = {
-      enabled = false
+      enabled = false,
     },
+    log_level = 1,
     icons = {
       expanded = "",
       child_prefix = "",
@@ -30,6 +31,7 @@ function M.setup()
       running = "",
       failed = "",
       unknown = "",
+      skipped = "",
     },
     floating = {
       border = "single",

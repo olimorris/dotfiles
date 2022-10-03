@@ -182,6 +182,7 @@ function M.setup()
 
     return lines, percent
   end
+
   local function line_col()
     local row = vim.api.nvim_win_get_cursor(0)[1]
     local col = vim.api.nvim_win_get_cursor(0)[2]
@@ -260,6 +261,10 @@ function M.setup()
 
         return " " .. file .. " "
       end,
+      enabled = function()
+        return vim.api.nvim_win_get_width(0) > 80
+      end,
+
       hl = function()
         return block().body
       end,
@@ -433,7 +438,7 @@ function M.setup()
         return " " .. icon.str .. " " .. filetype .. " "
       end,
       enabled = function()
-        return not mask_plugin()
+        return not mask_plugin() and vim.api.nvim_win_get_width(0) > 80
       end,
       hl = function()
         return block().body
@@ -485,6 +490,9 @@ function M.setup()
     {
       provider = function()
         return " " .. line_col() .. " "
+      end,
+      enabled = function()
+        return vim.api.nvim_win_get_width(0) > 80
       end,
       hl = function()
         return inverse_block().body
