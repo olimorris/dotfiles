@@ -8,12 +8,14 @@ M.setup = function()
   end
 
   onedarkpro.setup({
+    caching = true,
     plugins = {
       barbar = false,
       lsp_saga = false,
       marks = false,
       polygot = false,
       startify = false,
+      telescope = false,
       trouble = false,
       vim_ultest = false,
       which_key = false,
