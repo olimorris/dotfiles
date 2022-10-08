@@ -402,32 +402,6 @@ M.plugin_keymaps = function()
       description = "Refactoring: Cleanup",
     },
 
-    -- Search
-    {
-      "//",
-      function(visual_selection)
-        if visual_selection then
-          require("searchbox").match_all({ visual_mode = true })
-        else
-          require("searchbox").match_all()
-        end
-      end,
-      description = "Search",
-      mode = { "n", "x" },
-    },
-    {
-      "<LocalLeader>r",
-      function(visual_selection)
-        if visual_selection then
-          vim.cmd(":'<,'>SearchBoxReplace visual_mode=true")
-        else
-          vim.cmd(":SearchBoxReplace")
-        end
-      end,
-      description = "Search and replace",
-      mode = { "n", "x" },
-    },
-
     -- Telescope
     { "fd", h.lazy_required_fn("telescope.builtin", "diagnostics", { bufnr = 0 }), description = "Find diagnostics" },
     {
@@ -652,7 +626,7 @@ M.lsp_keymaps = function(client, bufnr)
       "<LocalLeader>lf",
       function()
         vim.b.format_changedtick = vim.b.changedtick
-        vim.lsp.buf.format()
+        vim.lsp.buf.format({ aync = true })
       end,
       description = "LSP: Format",
       opts = { buffer = bufnr },

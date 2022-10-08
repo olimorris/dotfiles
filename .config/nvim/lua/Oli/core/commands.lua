@@ -156,6 +156,28 @@ function M.plugin_commands()
       end,
       description = "Open test output",
     },
+    -- OnedarkPro
+    {
+      "OneDarkProCache",
+      function()
+        return require("onedarkpro").cache()
+      end,
+      description = "Cache the theme",
+    },
+    {
+      "OneDarkProClean",
+      function()
+        return require("onedarkpro").clean()
+      end,
+      description = "Clean the theme cache",
+    },
+    {
+      "OneDarkProColors",
+      function()
+        return require("onedarkpro.utils.colorizer").show()
+      end,
+      description = "Show the theme's colors",
+    },
     -- Packer
     {
       "PackerCompile",

@@ -68,20 +68,6 @@ function M.default_autocmds()
     -- },
   }
 
-  -- Generate a Onedarkpro cache on theme change
-  if om.safe_require("onedarkpro", { silent = true }) then
-    table.insert(autocmds, {
-      name = "AutoGenerateCache",
-      {
-        "ColorScheme",
-        function()
-          require(config_namespace .. ".plugins.theme").setup()
-          vim.cmd("OnedarkproCache")
-        end,
-      },
-    })
-  end
-  --
   -- Reload bufferline when the theme has been changed
   if om.safe_require("bufferline", { silent = true }) then
     table.insert(autocmds, {
