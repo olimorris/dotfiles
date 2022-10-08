@@ -141,14 +141,6 @@ M.harpoon = function()
   })
 end
 
-M.headlines = function()
-  local ok, headlines = om.safe_require("headlines")
-  if not ok then
-    return
-  end
-
-  headlines.setup()
-end
 
 M.hop = function()
   local ok, hop = om.safe_require("hop")
@@ -355,25 +347,6 @@ M.scrollbar = function()
   end
 end
 
-M.search = function()
-  local ok, search = om.safe_require("searchbox")
-  if not ok then
-    return
-  end
-
-  search.setup({
-    popup = {
-      win_options = {
-        winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
-      },
-    },
-    hooks = {
-      before_mount = function(input)
-        pcall(vim.cmd, "MinimapClose")
-      end,
-    },
-  })
-end
 
 M.stickybuf = function()
   local ok, stickybuf = om.safe_require("stickybuf")

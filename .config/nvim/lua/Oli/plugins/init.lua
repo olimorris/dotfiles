@@ -96,13 +96,6 @@ return packer.startup({
       end,
     })
     use({
-      "lukas-reineke/headlines.nvim", -- Highlight headlines and code blocks in Markdown
-      ft = "markdown",
-      config = function()
-        require(config_namespace .. ".plugins.others").headlines()
-      end,
-    })
-    use({
       "wfxr/minimap.vim", -- Display a minimap
       cmd = { "MinimapToggle", "Minimap", "MinimapRefresh" },
       config = function()
@@ -228,15 +221,6 @@ return packer.startup({
       cmd = "UndotreeToggle",
       config = function()
         require(config_namespace .. ".plugins.others").undotree()
-      end,
-    })
-    use({
-      "VonHeikemen/searchbox.nvim", -- Search box in the top right corner
-      requires = {
-        { "MunifTanjim/nui.nvim" },
-      },
-      config = function()
-        require(config_namespace .. ".plugins.others").search()
       end,
     })
     use({
