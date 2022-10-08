@@ -8,7 +8,7 @@ M.setup = function()
   end
 
   onedarkpro.setup({
-    caching = true,
+    -- caching = true,
     plugins = {
       barbar = false,
       lsp_saga = false,
@@ -63,41 +63,16 @@ M.setup = function()
         telescope_results = "#eeeeee",
       },
     },
-    ft_highlights = {
-      yaml = { TSField = { fg = "${red}" } },
-      python = {
-        TSFunction = { fg = "${blue}", style = "bold" },
-      },
-      -- ruby = {
-      --   Hlargs = { fg = "${red}" },
-      --   TSFunction = { fg = "${blue}", style = "bold" },
-      --   TSInclude = { fg = "${blue}", style = "italic" },
-      --   TSParameter = { fg = "${fg}", style = "italic" },
-      --   TSSymbol = { fg = "${cyan}" },
-      -- },
-      scss = {
-        -- TSFunction = { fg = "${cyan}" },
-        TSProperty = { fg = "${orange}" },
-        TSPunctDelimiter = { fg = "${orange}" },
-        TSType = { fg = "${red}" },
-      },
-    },
-    -- ft_highlights_force = true,
     highlights = {
       BufferlineOffset = { fg = "${purple}", style = "bold" },
       ModeMsg = { link = "LineNr" }, -- Make command line text lighter
       StatusLine = { bg = "NONE", fg = "NONE" },
 
-      -- Ruby
-      ["@function.ruby"] = { fg = "${blue}", style = "bold" },
-      ["@function.call.ruby"] = { fg = "${blue}", style = "bold" },
-      ["@include.ruby"] = { fg = "${blue}", style = "italic" },
-      ["@parameter.ruby"] = { fg = "${fg}", style = "italic" },
-      ["@symbol.ruby"] = { fg = "${cyan}" },
+      ["@text.uri.markdown"] = { fg = "${purple}" },
 
       -- Highlight brackets with a custom color
-      TSPunctBracket = { fg = "${brackets}" },
-      TSPunctSpecial = { fg = "${brackets}" },
+      -- TSPunctBracket = { fg = "${brackets}" },
+      -- TSPunctSpecial = { fg = "${brackets}" },
 
       -- Aerial plugin
       AerialClassIcon = { fg = "${purple}" },
