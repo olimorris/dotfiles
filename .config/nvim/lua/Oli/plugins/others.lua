@@ -141,7 +141,6 @@ M.harpoon = function()
   })
 end
 
-
 M.hop = function()
   local ok, hop = om.safe_require("hop")
   if not ok then
@@ -272,6 +271,12 @@ M.persisted = function()
     save_dir = Sessiondir .. "/",
     use_git_branch = true,
     silent = true,
+    should_autosave = function()
+      if vim.bo.filetype == "alpha" then
+        return false
+      end
+      return true
+    end,
     before_save = function()
       -- Clear out Minimap before saving the session
       -- With Minimap open it stops the session restoring to the last cursor position
