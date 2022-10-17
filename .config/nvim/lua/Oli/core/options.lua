@@ -4,7 +4,6 @@ Homedir = os.getenv("HOME")
 Sessiondir = vim.fn.stdpath("data") .. "/sessions"
 --------------------------------------------------------------------------- }}}
 -------------------------------GLOBAL OPTIONS------------------------------- {{{
-vim.g.did_load_filetypes = 0 -- Do not use built in filetype.vim as we use filetype.nvim instead
 vim.g.neoterm_autoinsert = 0 -- Do not start terminal in insert mode
 vim.g.neoterm_autoscroll = 1 -- Autoscroll the terminal
 vim.g.loaded_perl_provider = 0 -- Do not load Perl
@@ -23,7 +22,7 @@ vim.bo.shiftwidth = 4 -- Size of an indent
 vim.bo.smartindent = true -- Insert indents automatically
 vim.bo.softtabstop = 4 -- Number of spaces tabs count for
 vim.bo.tabstop = 4 -- Number of spaces in a tab
-vim.bo.wrapmargin = 1
+-- vim.bo.wrapmargin = 1
 --------------------------------------------------------------------------- }}}
 ---------------------------------VIM OPTIONS-------------------------------- {{{
 vim.o.background = "dark"
