@@ -8,6 +8,7 @@ M.setup = function()
   end
 
   onedarkpro.setup({
+    log_level = "debug",
     -- caching = true,
     plugins = {
       barbar = false,
@@ -22,14 +23,17 @@ M.setup = function()
     },
     styles = {
       comments = "italic",
+      conditionals = "italic",
+      operators = "italic",
       keywords = "italic",
       virtual_text = "italic,underline",
     },
     options = {
-      bold = true,
-      italic = true,
-      underline = true,
-      undercurl = true,
+      -- bold = true,
+      -- italic = true,
+      -- underline = true,
+      -- undercurl = true,
+
       cursorline = true,
       -- terminal_colors = true,
       -- transparency = true,
@@ -64,17 +68,25 @@ M.setup = function()
       },
     },
     highlights = {
+      -- Editor
       BufferlineOffset = { fg = "${purple}", style = "bold" },
+      CursorLineNR = {
+        bg = "${cursorline}",
+        fg = "${purple}",
+        style = "bold",
+      },
+      DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
+      MatchParen = { fg = "${cyan}", style = "underline" },
       ModeMsg = { link = "LineNr" }, -- Make command line text lighter
+      Search = { bg = "${selection}", fg = "${yellow}", style = "underline" },
       StatusLine = { bg = "NONE", fg = "NONE" },
-
-      ["@text.uri.markdown"] = { fg = "${purple}" },
 
       -- Highlight brackets with a custom color
       -- TSPunctBracket = { fg = "${brackets}" },
       -- TSPunctSpecial = { fg = "${brackets}" },
 
       -- Aerial plugin
+      AerialClass = { fg = "${purple}", style = "bold,italic" },
       AerialClassIcon = { fg = "${purple}" },
       AerialConstructorIcon = { fg = "${yellow}" },
       AerialEnumIcon = { fg = "${blue}" },
@@ -98,7 +110,20 @@ M.setup = function()
       AlphaFooter = { fg = "${gray}", style = "italic" },
 
       -- Cmp
+      CmpItemAbbrMatch = { fg = "${blue}", style = "bold" },
+      CmpItemAbbrMatchFuzzy = { fg = "${blue}", style = "underline" },
       GhostText = { fg = "${ghost_text}" },
+
+      -- Copilot
+      CopilotSuggestion = { fg = "${gray}", style = "italic" },
+
+      -- DAP
+      DebugBreakpointLine = { fg = "${red}", style = "underline" },
+      DebugHighlightLine = { fg = "${purple}", style = "italic" },
+      NvimDapVirtualText = { fg = "${cyan}", style = "italic" },
+
+      -- DAP UI
+      DapUIBreakpointsCurrentLine = { fg = "${yellow}", style = "bold" },
 
       -- Fidget plugin
       FidgetTitle = { fg = "${purple}" },
@@ -112,6 +137,18 @@ M.setup = function()
       MapBase = { fg = "${gray}" },
       MapCursor = { fg = "${purple}", bg = "${cursorline}" },
       -- MapRange = { fg = "${fg}" },
+
+      -- Navic
+      NavicText = { fg = "${gray}", style = "italic" },
+
+      -- Neotest
+      NeotestAdapterName = { fg = "${purple}", style = "bold" },
+      NeotestFocused = { style = "bold" },
+      NeotestNamespace = { fg = "${blue}", style = "bold" },
+
+      -- Neotree
+      NeoTreeRootName = { fg = "${purple}", style = "bold" },
+      NeoTreeFileNameOpened = { fg = "${purple}", style = "italic" },
 
       -- Telescope
       TelescopeBorder = {
