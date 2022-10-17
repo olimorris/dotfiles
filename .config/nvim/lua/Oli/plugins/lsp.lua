@@ -29,12 +29,12 @@ om.lsp.servers = {
 vim.diagnostic.config({
   severity_sort = true,
   signs = true,
-  underline = false, -- Do not underline code
+  underline = false,
   update_in_insert = false,
   virtual_text = false,
   -- virtual_text = {
-  -- 	prefix = "",
-  -- 	spacing = 0,
+  --   prefix = "",
+  --   spacing = 0,
   -- },
 })
 local max_width = math.max(math.floor(vim.o.columns * 0.7), 100)
@@ -114,7 +114,7 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 local nvim_lsp_ok, cmp_nvim_lsp = om.safe_require("cmp_nvim_lsp")
 if nvim_lsp_ok then
-  capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+  capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 end
 
 mason.setup({
