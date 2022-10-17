@@ -287,12 +287,6 @@ return packer.startup({
       requires = {
         { "neovim/nvim-lspconfig" }, -- Use Neovims native LSP config
         { "kosayoda/nvim-lightbulb" }, -- VSCode style lightbulb if there is a code action available
-        {
-          "j-hui/fidget.nvim", -- LSP progress notifications
-          config = function()
-            require(config_namespace .. ".plugins.others").fidget()
-          end,
-        },
       },
       config = function()
         require(config_namespace .. ".plugins.lsp")

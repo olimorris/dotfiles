@@ -113,23 +113,6 @@ M.dressing = function()
   })
 end
 
-M.fidget = function()
-  local ok, fidget = om.safe_require("fidget")
-  if not ok then
-    return
-  end
-
-  fidget.setup({
-    text = {
-      spinner = "line",
-      done = "",
-    },
-    window = {
-      blend = 0,
-    },
-  })
-end
-
 M.harpoon = function()
   local ok, harpoon = om.safe_require("harpoon")
   if not ok then
