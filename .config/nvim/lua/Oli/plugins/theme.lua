@@ -8,7 +8,7 @@ M.setup = function()
   end
 
   onedarkpro.setup({
-    log_level = "debug",
+    -- log_level = "debug",
     -- caching = true,
     plugins = {
       barbar = false,
@@ -29,11 +29,6 @@ M.setup = function()
       virtual_text = "italic,underline",
     },
     options = {
-      -- bold = true,
-      -- italic = true,
-      -- underline = true,
-      -- undercurl = true,
-
       cursorline = true,
       -- terminal_colors = true,
       -- transparency = true,
