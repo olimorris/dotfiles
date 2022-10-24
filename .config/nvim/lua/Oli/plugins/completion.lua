@@ -11,6 +11,7 @@ local icons = {
   Method = "",
   Function = "",
   Constructor = "⌘",
+  Copilot = "",
   Field = "ﰠ",
   Variable = "",
   Class = "ﴯ",
@@ -34,12 +35,11 @@ local icons = {
   TypeParameter = "",
 }
 
-cmp.setup({
+local cmp_config = {
   completion = {
     completeopt = "menu,menuone,noinsert",
-    keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
-    keyword_length = 1,
   },
+  preselect = cmp.PreselectMode.None,
   experimental = {
     ghost_text = false,
     native_menu = false,
@@ -59,20 +59,18 @@ cmp.setup({
     end,
   },
   mapping = require(config_namespace .. ".core.mappings").completion_keymaps(),
-  sources = { -- Ordered by priority
-    { name = "luasnip", max_item_count = 5 },
-    { name = "nvim_lsp", max_item_count = 5 },
-    {
-      name = "buffer",
-      max_item_count = 5,
-      option = { -- Use all open buffers
-        get_bufnrs = function()
-          return vim.api.nvim_list_bufs()
-        end,
-      },
-    },
-    { name = "nvim_lua" },
-    { name = "path" },
+}
+
+cmp.setup(vim.tbl_deep_extend("force", cmp_config, {
+  sources = {
+    { name = "luasnip", priority = 100 },
+    { name = "nvim_lsp", priority = 90 },
+    { name = "nvim_lsp_signature_help" },
+    { name = "nvim_lua", priority = 90 },
+    { name = "copilot", priority = 80 },
+    { name = "path", priority = 5 },
   },
-  preselect = cmp.PreselectMode.None,
-})
+}))
+
+cmp.setup.cmdline(":", vim.tbl_deep_extend("force", cmp_config, { sources = { { name = "cmdline" } } }))
+cmp.setup.cmdline("/", vim.tbl_deep_extend("force", cmp_config, { sources = { { name = "buffer" } } }))

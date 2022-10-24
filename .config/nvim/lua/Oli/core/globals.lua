@@ -7,9 +7,7 @@ _G.om = {
 ---check if a certain feature/version/commit exists in nvim
 ---@param feature string
 ---@return boolean
-function om.has(feature)
-  return vim.fn.has(feature) > 0
-end
+function om.has(feature) return vim.fn.has(feature) > 0 end
 
 om.nightly = om.has("nvim-0.8")
 
@@ -41,34 +39,23 @@ end
 ---@param tbl table
 ---@param value string
 ---@return boolean
-function om.contains(tbl, value)
-  return tbl[value] ~= nil
-end
+function om.contains(tbl, value) return tbl[value] ~= nil end
 
 ---Pretty print a table
 ---@param tbl table
 ---@return string
-function om.print_table(tbl)
-  require("pl.pretty").dump(tbl)
-end
+function om.print_table(tbl) require("pl.pretty").dump(tbl) end
 
 ---Reload lua modules
----@param path string
----@param recursive string
-function om.reload(path, recursive)
-  if recursive then
-    for key, value in pairs(package.loaded) do
-      if key ~= "_G" and value and vim.fn.match(key, path) ~= -1 then
-        if string.match(key, "legendary") ~= "legendary" then
-          package.loaded[key] = nil
-          require(key)
-        end
-      end
-    end
-  else
-    package.loaded[path] = nil
-    require(path)
+function om.reload(quiet)
+  local reload_module = require("plenary.reload").reload_module
+
+  for _, module in ipairs(vim.g.core_modules) do
+    reload_module(module, false)
   end
+
+  local reloaded, _ = pcall(dofile, vim.fn.expand("$MYVIMRC"))
+  if reloaded and not quiet then vim.notify("Reloaded Neovim configuration!") end
 end
 
 ---Use Neovim native UI select
@@ -76,23 +63,17 @@ end
 ---@param choices table
 ---@param callback function
 ---@return function
-function om.select(prompt, choices, callback)
-  vim.ui.select(choices, { prompt = prompt }, callback)
-end
+function om.select(prompt, choices, callback) vim.ui.select(choices, { prompt = prompt }, callback) end
 
 function om.get_icon(filename, extension, opts)
   local ok, devicons = om.safe_require("nvim-web-devicons")
-  if not ok then
-    vim.notify("nvim-web-devicons not installed")
-  end
+  if not ok then vim.notify("nvim-web-devicons not installed") end
 
   local icon_str, icon_color = devicons.get_icon_color(filename, extension, { default = true })
 
   local icon = { str = icon_str }
 
-  if opts.colored_icon ~= false then
-    icon.hl = { fg = icon_color }
-  end
+  if opts.colored_icon ~= false then icon.hl = { fg = icon_color } end
 
   return icon
 end
@@ -102,9 +83,7 @@ end
 ---@param val string
 ---@return boolean
 function om.find_pattern_match(tbl, val)
-  return tbl and next(vim.tbl_filter(function(pattern)
-    return val:match(pattern)
-  end, tbl))
+  return tbl and next(vim.tbl_filter(function(pattern) return val:match(pattern) end, tbl))
 end
 
 ---Run a process asynchronously
@@ -112,9 +91,7 @@ end
 ---@return nil
 --- Inspiration from: https://phelipetls.github.io/posts/async-make-in-nvim-with-lua/
 function om.async_run(process)
-  if not process.command then
-    return
-  end
+  if not process.command then return end
 
   local lines = { "OUTPUT:" }
   local winnr = vim.fn.win_getid()
@@ -125,14 +102,10 @@ function om.async_run(process)
     local cmd = process.command
 
     -- Join any arguments to the end of the command
-    if process.args then
-      cmd = cmd .. " " .. process.args
-    end
+    if process.args then cmd = cmd .. " " .. process.args end
 
     -- Execute the BEFORE callback before starting the job
-    if process.callbacks and process.callbacks.before then
-      process.callbacks.before()
-    end
+    if process.callbacks and process.callbacks.before then process.callbacks.before() end
 
     vim.g.async_status = "running"
 
@@ -141,9 +114,7 @@ function om.async_run(process)
 
   local function on_event(_, data, event)
     if event == "stdout" or event == "stderr" then
-      if data then
-        vim.list_extend(lines, data)
-      end
+      if data then vim.list_extend(lines, data) end
     end
 
     local ok, efm = pcall(vim.api.nvim_buf_get_option, bufnr, "errorformat")
@@ -161,9 +132,7 @@ function om.async_run(process)
       end
 
       -- Execute the AFTER callback now the job has completed
-      if process.callbacks and process.callbacks.after then
-        process.callbacks.after()
-      end
+      if process.callbacks and process.callbacks.after then process.callbacks.after() end
 
       -- As we're populating the QF window, send the autocommand
       vim.api.nvim_command("doautocmd QuickFixCmdPost")

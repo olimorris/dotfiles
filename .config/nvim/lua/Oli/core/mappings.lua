@@ -203,28 +203,36 @@ M.plugin_keymaps = function()
     -- Copilot
     {
       "<C-a>",
-      "copilot#Accept()",
-      description = "Copilot: Accept suggestion",
+      function()
+        require("copilot.suggestion").accept()
+      end,
+      description = "Copilot: Accept",
       mode = { "i" },
-      opts = { script = true, expr = true, silent = true },
+      opts = { silent = true },
     },
     {
       "<M-]>",
-      "<Plug>(copilot-next)",
+      function()
+        require("copilot.suggestion").next()
+      end,
       description = "Copilot: Next",
       mode = { "i" },
       opts = { silent = true },
     },
     {
       "<M-[>",
-      "<Plug>(copilot-previous)",
+      function()
+        require("copilot.suggestion").previous()
+      end,
       description = "Copilot: Previous",
       mode = { "i" },
       opts = { silent = true },
     },
     {
       "<C-\\>",
-      "<Cmd>vertical Copilot panel<CR>",
+      function()
+        require("copilot.panel").open()
+      end,
       description = "Copilot: Panel",
       mode = { "n", "i" },
     },
@@ -514,6 +522,9 @@ M.completion_keymaps = function()
   local _, luasnip = om.safe_require("luasnip")
 
   local has_words_before = function()
+    if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+      return false
+    end
     local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
   end
@@ -532,6 +543,7 @@ M.completion_keymaps = function()
     end, {
       "i",
       "s",
+      "c",
     }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -544,11 +556,22 @@ M.completion_keymaps = function()
     end, {
       "i",
       "s",
+      "c",
     }),
-    ["<C-e>"] = cmp.mapping.close(),
+    ["<C-e>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.mapping.close()()
+      else
+        fallback()
+      end
+    end, {
+      "i",
+      "c",
+    }),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<CR>"] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
       select = true, -- hitting <CR> when nothing is selected, does nothing
     }),
   }

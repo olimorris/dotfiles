@@ -1,7 +1,5 @@
 local ok, gitsigns = om.safe_require("gitsigns")
-if not ok then
-  return
-end
+if not ok then return end
 
 gitsigns.setup({
   keymaps = {}, -- Do not use the default mappings

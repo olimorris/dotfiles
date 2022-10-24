@@ -1,12 +1,11 @@
-local M = {}
+local ok, dap = om.safe_require("dap")
+if not ok then return end
 
 ---Show the nice virtual text when debugging
 ---@return nil|function
 local function virtual_text_setup()
   local ok, virtual_text = om.safe_require("nvim-dap-virtual-text")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   return virtual_text.setup()
 end
@@ -76,9 +75,7 @@ end
 ---@return nil
 local function ui_setup(dap)
   local ok, dapui = om.safe_require("dapui")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   dapui.setup({
     layouts = {
@@ -105,20 +102,9 @@ local function ui_setup(dap)
   dap.listeners.before.event_exited["dapui_config"] = dapui.close
 end
 
----Setup the DAP plugin
----@return nil
-function M.setup()
-  local ok, dap = om.safe_require("dap")
-  if not ok then
-    return
-  end
+dap.set_log_level("TRACE")
 
-  dap.set_log_level("TRACE")
-
-  virtual_text_setup()
-  signs_setup()
-  ruby_setup(dap)
-  ui_setup(dap)
-end
-
-return M
+virtual_text_setup()
+signs_setup()
+ruby_setup(dap)
+ui_setup(dap)

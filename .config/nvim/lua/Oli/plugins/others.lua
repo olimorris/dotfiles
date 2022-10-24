@@ -74,14 +74,19 @@ M.comment = function()
 end
 
 M.copilot = function()
-  vim.g.copilot_no_tab_map = true
+  local ok, copilot = om.safe_require("copilot")
+  if not ok then
+    return
+  end
 
-  vim.g.copilot_filetypes = {
-    ["*"] = true,
-    TelescopePrompt = false,
-    TelescopeResults = false,
-    ["neo-tree-popup"] = false,
-  }
+  require("copilot").setup({
+    panel = {
+      auto_refresh = true,
+    },
+    suggestion = {
+       auto_trigger = true, -- Suggest as we start typing
+    }
+  })
 end
 
 M.coverage = function()

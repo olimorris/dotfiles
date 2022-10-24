@@ -1,7 +1,5 @@
 local present, packer = pcall(require, config_namespace .. ".plugins.packer")
-if not present then
-  return false
-end
+if not present then return false end
 
 return packer.startup({
   function(use, use_rocks)
@@ -32,16 +30,12 @@ return packer.startup({
       --"olimorris/onedarkpro.nvim",
       "~/Code/Projects/onedarkpro.nvim", -- My onedarkpro theme
       as = "onedarkpro",
-      config = function()
-        require(config_namespace .. ".plugins.theme").setup()
-      end,
+      config = function() require(config_namespace .. ".plugins.theme") end,
     })
     use({
       "goolord/alpha-nvim", -- Dashboard for Neovim
       after = "onedarkpro",
-      config = function()
-        require(config_namespace .. ".plugins.dashboard").setup()
-      end,
+      config = function() require(config_namespace .. ".plugins.dashboard") end,
     })
     use({
       "feline-nvim/feline.nvim", -- Statusline
@@ -49,16 +43,12 @@ return packer.startup({
       requires = {
         { "kyazdani42/nvim-web-devicons" }, -- Web icons for various plugins
       },
-      config = function()
-        require(config_namespace .. ".plugins.statusline").setup()
-      end,
+      config = function() require(config_namespace .. ".plugins.statusline").setup() end,
     })
     use({
       "akinsho/bufferline.nvim", -- Bufferline
       after = "onedarkpro",
-      config = function()
-        require(config_namespace .. ".plugins.bufferline").setup()
-      end,
+      config = function() require(config_namespace .. ".plugins.bufferline") end,
     })
     use({
       "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
@@ -66,9 +56,7 @@ return packer.startup({
     })
     use({
       "lewis6991/gitsigns.nvim", -- Git signs in the sign column
-      config = function()
-        require(config_namespace .. ".plugins.gitsigns")
-      end,
+      config = function() require(config_namespace .. ".plugins.gitsigns") end,
     })
     use({
       "nvim-neo-tree/neo-tree.nvim",
@@ -78,35 +66,25 @@ return packer.startup({
         { "kyazdani42/nvim-web-devicons" },
         { "MunifTanjim/nui.nvim" },
       },
-      config = function()
-        require(config_namespace .. ".plugins.file_explorer").config()
-      end,
+      config = function() require(config_namespace .. ".plugins.file_explorer") end,
     })
     use({
       "stevearc/dressing.nvim", -- Utilises Neovim 0.6's new UI hooks to manage inputs, selects etc
-      config = function()
-        require(config_namespace .. ".plugins.others").dressing()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").dressing() end,
     })
     use({
       "norcalli/nvim-colorizer.lua", -- Highlight hex and rgb colors within Neovim
       cmd = { "Colorizer*" },
-      config = function()
-        require(config_namespace .. ".plugins.others").colorizer()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").colorizer() end,
     })
     use({
       "wfxr/minimap.vim", -- Display a minimap
       cmd = { "MinimapToggle", "Minimap", "MinimapRefresh" },
-      config = function()
-        require(config_namespace .. ".plugins.others").minimap()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").minimap() end,
     })
     use({
       "lukas-reineke/indent-blankline.nvim", -- Show indentation lines
-      config = function()
-        require(config_namespace .. ".plugins.others").indentline()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").indentline() end,
     })
     use({
       "petertriho/nvim-scrollbar", -- A scrollbar for the current window
@@ -117,36 +95,26 @@ return packer.startup({
         },
         {
           "declancm/cinnamon.nvim", -- Smooth scrolling
-          config = function()
-            require(config_namespace .. ".plugins.others").cinnamon()
-          end,
+          config = function() require(config_namespace .. ".plugins.others").cinnamon() end,
         },
       },
-      config = function()
-        require(config_namespace .. ".plugins.others").scrollbar()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").scrollbar() end,
     })
     use({
       "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
       after = "onedarkpro",
-      config = function()
-        require(config_namespace .. ".plugins.others").todo_comments()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").todo_comments() end,
     })
     use({
       "SmiteshP/nvim-navic", -- Winbar component showing current code context
       requires = "neovim/nvim-lspconfig",
-      config = function()
-        require(config_namespace .. ".plugins.others").nvim_navic()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").nvim_navic() end,
     })
     ---------------------------------------------------------------------------- }}}
     -------------------------------EDITOR FEATURES------------------------------ {{{
     use({
       "williamboman/mason.nvim", -- Easily install and manage LSP servers, DAP servers, linters, and formatters
-      config = function()
-        require(config_namespace .. ".plugins.others").mason()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").mason() end,
     })
     use({
       -- "olimorris/persisted.nvim", -- Session management
@@ -163,17 +131,13 @@ return packer.startup({
         {
           "nvim-telescope/telescope-project.nvim", -- Switch between projects
           after = "telescope.nvim",
-          config = function()
-            require("telescope").load_extension("project")
-          end,
+          config = function() require("telescope").load_extension("project") end,
         },
         {
           "nvim-telescope/telescope-fzf-native.nvim", -- Use fzf within Telescope
           run = "make",
           after = "telescope.nvim",
-          config = function()
-            require("telescope").load_extension("fzf")
-          end,
+          config = function() require("telescope").load_extension("fzf") end,
         },
         {
           "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
@@ -181,9 +145,7 @@ return packer.startup({
           requires = {
             { "tami5/sqlite.lua" },
           },
-          config = function()
-            require("telescope").load_extension("frecency")
-          end,
+          config = function() require("telescope").load_extension("frecency") end,
         },
         {
           "nvim-telescope/telescope-smart-history.nvim", -- Show project dependant history
@@ -191,9 +153,7 @@ return packer.startup({
           requires = {
             { "tami5/sqlite.lua" },
           },
-          config = function()
-            require("telescope").load_extension("smart_history")
-          end,
+          config = function() require("telescope").load_extension("smart_history") end,
         },
         {
           "ThePrimeagen/harpoon", -- Mark buffers for faster navigation
@@ -212,34 +172,24 @@ return packer.startup({
           end,
         },
       },
-      config = function()
-        require(config_namespace .. ".plugins.telescope")
-      end,
+      config = function() require(config_namespace .. ".plugins.telescope") end,
     })
     use({
       "mbbill/undotree", -- Visually see your undos
       cmd = "UndotreeToggle",
-      config = function()
-        require(config_namespace .. ".plugins.others").undotree()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").undotree() end,
     })
     use({
       "phaazon/hop.nvim", -- Speedily navigate anywhere in a buffer
-      config = function()
-        require(config_namespace .. ".plugins.others").hop()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").hop() end,
     })
     use({
       "akinsho/nvim-toggleterm.lua", -- Easily toggle and position the terminal
-      config = function()
-        require(config_namespace .. ".plugins.others").toggleterm()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").toggleterm() end,
     })
     use({
       "mrjones2014/legendary.nvim", -- A legend for all keymaps, commands and autocmds
-      config = function()
-        require(config_namespace .. ".plugins.legendary").setup()
-      end,
+      config = function() require(config_namespace .. ".plugins.legendary") end,
     })
     use({
       "fedepujol/move.nvim", -- Move lines and blocks
@@ -248,6 +198,7 @@ return packer.startup({
     ---------------------------------COMPLETION--------------------------------- {{{
     use({
       "hrsh7th/nvim-cmp", -- Code completion menu
+      event = { "InsertEnter" },
       requires = {
         {
           "L3MON4D3/LuaSnip", -- Code snippets
@@ -257,9 +208,7 @@ return packer.startup({
             },
             {
               "danymat/neogen", -- Generate annotations for functions
-              config = function()
-                require(config_namespace .. ".plugins.others").neogen()
-              end,
+              config = function() require(config_namespace .. ".plugins.others").neogen() end,
             },
           },
           config = function()
@@ -269,14 +218,18 @@ return packer.startup({
         },
         -- cmp sources --
         { "saadparwaiz1/cmp_luasnip" },
+        { "hrsh7th/cmp-buffer" },
         { "hrsh7th/cmp-nvim-lua" },
         { "hrsh7th/cmp-nvim-lsp" },
-        { "hrsh7th/cmp-buffer" },
+        { "hrsh7th/cmp-nvim-lsp-signature-help" },
+        {
+          "zbirenbaum/copilot-cmp",
+          config = function() require("copilot_cmp").setup() end,
+        },
         { "hrsh7th/cmp-path" },
+        { "hrsh7th/cmp-cmdline" },
       },
-      config = function()
-        require(config_namespace .. ".plugins.completion")
-      end,
+      config = function() require(config_namespace .. ".plugins.completion") end,
     })
     ---------------------------------------------------------------------------- }}}
     -----------------------------------CODING----------------------------------- {{{
@@ -288,22 +241,16 @@ return packer.startup({
         { "neovim/nvim-lspconfig" }, -- Use Neovims native LSP config
         { "kosayoda/nvim-lightbulb" }, -- VSCode style lightbulb if there is a code action available
       },
-      config = function()
-        require(config_namespace .. ".plugins.lsp")
-      end,
+      config = function() require(config_namespace .. ".plugins.lsp") end,
     })
     use({
       "jose-elias-alvarez/null-ls.nvim", -- General language server for linting, formatting etc
       after = "mason-lspconfig.nvim",
-      config = function()
-        require(config_namespace .. ".plugins.null-ls")
-      end,
+      config = function() require(config_namespace .. ".plugins.null-ls") end,
     })
     use({
       "andrewferrier/textobj-diagnostic.nvim",
-      config = function()
-        require(config_namespace .. ".plugins.others").textobj_diagnostic()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").textobj_diagnostic() end,
     })
     ---------------------------------------------------------------------------- }}}
     ---------------------------------TREESITTER--------------------------------- {{{
@@ -316,9 +263,7 @@ return packer.startup({
         },
         {
           "windwp/nvim-autopairs", -- Autopair plugin
-          config = function()
-            require(config_namespace .. ".plugins.others").nvim_autopairs()
-          end,
+          config = function() require(config_namespace .. ".plugins.others").nvim_autopairs() end,
         },
         {
           "JoosepAlviste/nvim-ts-context-commentstring", -- Smart commenting in multi language files - Enabled in Treesitter file
@@ -335,14 +280,10 @@ return packer.startup({
         {
           "abecodes/tabout.nvim", -- Tab out from parenthesis, quotes, brackets...
           after = "nvim-cmp",
-          config = function()
-            require(config_namespace .. ".plugins.others").tabout()
-          end,
+          config = function() require(config_namespace .. ".plugins.others").tabout() end,
         },
       },
-      config = function()
-        require(config_namespace .. ".plugins.treesitter")
-      end,
+      config = function() require(config_namespace .. ".plugins.treesitter") end,
     })
     use({
       "nvim-treesitter/playground", -- View Treesitter definitions
@@ -359,23 +300,17 @@ return packer.startup({
         "nvim-neotest/neotest-python",
         "antoinemadec/FixCursorHold.nvim",
       },
-      config = function()
-        require(config_namespace .. ".plugins.neotest").setup()
-      end,
+      config = function() require(config_namespace .. ".plugins.neotest") end,
     })
     use({
       "stevearc/overseer.nvim", -- Task runner and job management
       -- INFO: Overseer lazy loads itself
-      config = function()
-        require(config_namespace .. ".plugins.others").overseer()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").overseer() end,
     })
     use({
       "andythigpen/nvim-coverage", -- Display test coverage information
       module = "coverage",
-      config = function()
-        require(config_namespace .. ".plugins.others").coverage()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").coverage() end,
     })
     ---------------------------------------------------------------------------- }}}
     ----------------------------------DEBUGGING--------------------------------- {{{
@@ -386,9 +321,7 @@ return packer.startup({
         "theHamsta/nvim-dap-virtual-text", -- help to find variable definitions in debug mode
         "rcarriga/nvim-dap-ui", -- Nice UI for nvim-dap
       },
-      config = function()
-        require(config_namespace .. ".plugins.dap").setup()
-      end,
+      config = function() require(config_namespace .. ".plugins.dap") end,
     })
     ---------------------------------------------------------------------------- }}}
     -----------------------------------OTHERS----------------------------------- {{{
@@ -399,49 +332,38 @@ return packer.startup({
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" },
       },
-      config = function()
-        require(config_namespace .. ".plugins.others").refactoring()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").refactoring() end,
     })
     use({
-      "github/copilot.vim", -- AI programming
+      "zbirenbaum/copilot.lua", -- AI programming
+      event = "VimEnter",
       config = function()
-        require(config_namespace .. ".plugins.others").copilot()
+        vim.defer_fn(function() require(config_namespace .. ".plugins.others").copilot() end, 100)
       end,
     })
     use({
       "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
-      config = function()
-        require(config_namespace .. ".plugins.others").nvim_surround()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").nvim_surround() end,
     })
     use({
       "numToStr/Comment.nvim", -- Comment out lines with gcc
-      config = function()
-        require(config_namespace .. ".plugins.others").comment()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").comment() end,
     })
     use({
       "pianocomposer321/yabs.nvim", -- Build and run your code
       module = "yabs",
-      config = function()
-        require(config_namespace .. ".plugins.others").yabs()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").yabs() end,
     })
     ---------------------------------------------------------------------------- }}}
     ---------------------------------------------------------------------------- }}}
     ------------------------------------MISC------------------------------------ {{{
     use({
       "ahmedkhalf/project.nvim", -- Automatically set the cwd to the project root
-      config = function()
-        require(config_namespace .. ".plugins.others").project_nvim()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").project_nvim() end,
     })
     use({
       "nathom/tmux.nvim", -- Navigate Tmux panes inside of neovim
-      cond = function()
-        return os.getenv("TMUX")
-      end,
+      cond = function() return os.getenv("TMUX") end,
     })
     use({
       "dstein64/vim-startuptime", -- Profile your Neovim startup time
@@ -453,9 +375,7 @@ return packer.startup({
     })
     ---------------------------------------------------------------------------- }}}
     ------------------------------PACKER BOOTSTRAP------------------------------ {{{
-    if PACKER_BOOTSTRAP then
-      require("packer").sync()
-    end
+    if PACKER_BOOTSTRAP then require("packer").sync() end
     ---------------------------------------------------------------------------- }}}
   end,
 })
