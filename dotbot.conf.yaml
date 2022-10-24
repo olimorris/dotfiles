@@ -19,14 +19,8 @@
     ~/.config/vivid: .config/vivid
 
     # Dotfiles
-    ~/.aliases: .config/zsh/.aliases
     ~/.env: .config/fish/.env
-    ~/.functions: .config/zsh/.functions
     ~/.tool-versions: .tool-versions
-    ~/.zshenv: .config/zsh/.zshenv
-    ~/.zprofile: .config/zsh/.zprofile
-    ~/.zshrc: .config/zsh/.zshrc
-    ~/.local/share/zsh/bookmarks: .config/zsh/bookmarks
     ~/.tofish: .config/fish/.tofish
 
     # Others

@@ -14,8 +14,8 @@ My macOS dotfiles. Installation instructions are my own
 
 ## :computer: Setting up a new Mac
 
-* Download and install Tresorit and sync the `.dotfiles` Tresor to `/Users/Oli` (wait for a full sync to take place!)
 * Ensure you're signed into iCloud and the App Store
+* Download the `~/Code` and `~/dotfiles` folders in iCloud Drive
 * Open up a terminal and run:
 ```bash
 cd ~/.dotfiles && rake install

@@ -14,6 +14,16 @@ end
 
 namespace :install do
   desc 'Install dotfiles'
+
+  task :symlinks do
+    section 'Creating symlinks'
+
+    unless testing?
+      run %( ln -s ~/Library/Mobile\ Documents/com~apple~CloudDocs/Code/ ~/Code )
+      run %( ln -s ~/Library/Mobile\ Documents/com~apple~CloudDocs/Dotfiles/ ~/.dotfiles )
+    end
+  end
+
   task :mackup do
     section 'Installing Mackup'
 
