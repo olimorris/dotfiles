@@ -1,8 +1,6 @@
 local ok, bufferline = om.safe_require("bufferline")
 if not ok then return end
 
-local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_theme)
-
 bufferline.setup({
   options = {
     numbers = function(opts) return string.format("%s:", opts.ordinal) end,
@@ -21,6 +19,12 @@ bufferline.setup({
         text_align = "center",
       },
       {
+        filetype = "neotest-summary",
+        text = "Neo Test",
+        highlight = "BufferlineOffset",
+        text_align = "center",
+      },
+      {
         filetype = "aerial",
         text = "Aerial",
         highlight = "BufferlineOffset",
@@ -30,7 +34,7 @@ bufferline.setup({
     custom_areas = {
       left = function()
         return {
-          { text = "    ", fg = colors.vim },
+          { text = "    ", fg = om.get_highlight("BufferlineVim").fg },
         }
       end,
     },
@@ -40,103 +44,220 @@ bufferline.setup({
   },
   highlights = {
     background = {
-      bg = colors.bg,
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineNormal",
+      },
     },
     buffer = {
-      fg = colors.gray,
+      fg = {
+        attribute = "fg",
+        highlight = "BufferlineNormal",
+      },
     },
     duplicate = {
-      fg = colors.gray,
-      bg = colors.bg,
+      fg = {
+        attribute = "fg",
+        highlight = "BufferlineNormal",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineNormal",
+      },
       italic = true,
     },
     fill = {
-      bg = colors.bg,
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineNormal",
+      },
     },
     modified = {
-      fg = colors.gray,
-      bg = colors.bg,
+      fg = {
+        attribute = "fg",
+        highlight = "BufferlineNormal",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineNormal",
+      },
     },
     numbers = {
-      fg = colors.gray,
-      bg = colors.bg,
+      fg = {
+        attribute = "fg",
+        highlight = "BufferlineNormal",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineNormal",
+      },
       italic = true,
     },
     pick = {
-      fg = colors.purple,
-      bg = colors.bg,
+      fg = {
+        attribute = "fg",
+        highlight = "BufferlineSelected",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineNormal",
+      },
     },
     separator = {
-      fg = colors.bg,
-      bg = colors.bg,
+      fg = {
+        attribute = "bg",
+        highlight = "BufferlineNormal",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineNormal",
+      },
     },
     tab = {
-      fg = colors.gray,
-      bg = colors.bg,
+      fg = {
+        attribute = "fg",
+        highlight = "BufferlineNormal",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineNormal",
+      },
     },
     buffer_selected = {
-      fg = colors.bufferline_text_focus,
-      bg = colors.statusline_bg,
+      fg = {
+        attribute = "fg",
+        highlight = "Normal",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineSelected",
+      },
       bold = true,
       italic = false,
     },
     duplicate_selected = {
-      fg = colors.purple,
-      bg = colors.statusline_bg,
+      fg = {
+        attribute = "fg",
+        highlight = "BufferlineSelected",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineSelected",
+      },
       italic = true,
     },
     indicator_selected = {
-      bg = colors.statusline_bg,
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineSelected",
+      },
     },
     modified_selected = {
-      fg = colors.red,
-      bg = colors.statusline_bg,
+      fg = {
+        attribute = "fg",
+        highlight = "DiagnosticError",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineSelected",
+      },
     },
     numbers_selected = {
-      fg = colors.purple,
-      bg = colors.statusline_bg,
+      fg = {
+        attribute = "fg",
+        highlight = "BufferlineSelected",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineSelected",
+      },
       bold = false,
       italic = true,
     },
     pick_selected = {
-      fg = colors.gray,
-      bg = colors.statusline_bg,
+      fg = {
+        attribute = "fg",
+        highlight = "BufferlineNormal",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineSelected",
+      },
       bold = true,
       italic = false,
     },
     separator_selected = {
-      bg = colors.red,
-      fg = colors.blue,
+      fg = {
+        attribute = "fg",
+        highlight = "DiagnosticInfo",
+      },
+      bg = {
+        attribute = "fg",
+        highlight = "DiagnosticError",
+      },
     },
     tab_selected = {
-      fg = colors.fg,
-      bg = colors.statusline_bg,
+      fg = {
+        attribute = "fg",
+        highlight = "Normal",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineSelected",
+      },
       bold = true,
     },
     buffer_visible = {
-      fg = colors.gray,
-      bg = colors.statusline_bg,
+      fg = {
+        attribute = "fg",
+        highlight = "BufferlineNormal",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineSelected",
+      },
       bold = true,
       italic = false,
     },
     duplicate_visible = {
-      bg = colors.statusline_bg,
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineSelected",
+      },
       italic = true,
     },
     indicator_visible = {
-      bg = colors.statusline_bg,
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineSelected",
+      },
     },
     modified_visible = {
-      fg = colors.gray,
-      bg = colors.statusline_bg,
+      fg = {
+        attribute = "fg",
+        highlight = "BufferlineNormal",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineSelected",
+      },
     },
     numbers_visible = {
-      fg = colors.gray,
-      bg = colors.statusline_bg,
+      fg = {
+        attribute = "fg",
+        highlight = "BufferlineNormal",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineSelected",
+      },
       italic = true,
     },
     separator_visible = {
-      bg = colors.statusline_bg,
+      bg = {
+        attribute = "bg",
+        highlight = "BufferlineSelected",
+      },
     },
   },
 })

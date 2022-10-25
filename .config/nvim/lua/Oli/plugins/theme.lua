@@ -1,7 +1,8 @@
-local ok, onedarkpro = pcall(require, "onedarkpro")
+local ok, onedarkpro = om.safe_require("onedarkpro")
 if not ok then return end
 
 onedarkpro.setup({
+  -- caching = true,
   -- log_level = "debug",
   plugins = {
     barbar = false,
@@ -36,8 +37,6 @@ onedarkpro.setup({
 
       ghost_text = "#555961",
 
-      bufferline_text_focus = "#949aa2",
-
       statusline_bg = "#2e323b", -- gray
 
       telescope_prompt = "#2e323a",
@@ -59,7 +58,6 @@ onedarkpro.setup({
     },
   },
   highlights = {
-    BufferlineOffset = { fg = "${purple}", style = "bold" },
     CursorLineNR = { bg = "${cursorline}", fg = "${purple}", style = "bold" },
     DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
     MatchParen = { fg = "${cyan}", style = "underline" },
@@ -91,6 +89,12 @@ onedarkpro.setup({
     },
     AlphaFooter = { fg = "${gray}", style = "italic" },
 
+    -- Bufferline
+    BufferlineVim = { fg = "${vim}" },
+    BufferlineNormal = { bg = "${bg}", fg = "${gray}" },
+    BufferlineSelected = { bg = "${statusline_bg}", fg = "${purple}" },
+    BufferlineOffset = { fg = "${purple}", style = "bold" },
+
     -- Cmp
     CmpItemAbbrMatch = { fg = "${blue}", style = "bold" },
     CmpItemAbbrMatchFuzzy = { fg = "${blue}", style = "underline" },
@@ -118,7 +122,7 @@ onedarkpro.setup({
     -- MapRange = { fg = "${fg}" },
 
     -- Navic
-    NavicText = { fg = "${gray}", style = "italic" },
+    NavicText = { fg = "${gray}" },
 
     -- Neotest
     NeotestAdapterName = { fg = "${purple}", style = "bold" },
