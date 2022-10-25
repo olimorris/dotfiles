@@ -21,9 +21,7 @@ local filetypes_to_exclude = {
 
 M.aerial = function()
   local ok, aerial = om.safe_require("aerial")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   aerial.setup({
     backends = {
@@ -39,18 +37,14 @@ end
 
 M.cinnamon = function()
   local ok, cinnamon = om.safe_require("cinnamon")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   cinnamon.setup()
 end
 
 M.colorizer = function()
   local ok, colorizer = om.safe_require("colorizer")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   colorizer.setup({
     "css",
@@ -64,9 +58,7 @@ end
 
 M.comment = function()
   local ok, comment = om.safe_require("Comment")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   comment.setup({
     padding = true, -- Add a space to commented line
@@ -75,25 +67,21 @@ end
 
 M.copilot = function()
   local ok, copilot = om.safe_require("copilot")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   require("copilot").setup({
     panel = {
       auto_refresh = true,
     },
     suggestion = {
-       auto_trigger = true, -- Suggest as we start typing
-    }
+      auto_trigger = true, -- Suggest as we start typing
+    },
   })
 end
 
 M.coverage = function()
   local ok, coverage = om.safe_require("coverage")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
 
@@ -108,9 +96,7 @@ end
 
 M.dressing = function()
   local ok, dressing = om.safe_require("dressing")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   dressing.setup({
     input = { default_prompt = "> ", winblend = 0 },
@@ -120,9 +106,7 @@ end
 
 M.harpoon = function()
   local ok, harpoon = om.safe_require("harpoon")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   harpoon.setup({
     global_settings = { save_on_toggle = true, mark_branch = true },
@@ -131,9 +115,7 @@ end
 
 M.hop = function()
   local ok, hop = om.safe_require("hop")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   -- remove h,j,k,l from hop's list of keys
   hop.setup({ keys = "etovxqpdygfbzcisuran" })
@@ -141,9 +123,7 @@ end
 
 M.indentline = function()
   local ok, indentline = om.safe_require("indent_blankline")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   indentline.setup({
     use_treesitter = true,
@@ -157,9 +137,7 @@ end
 
 M.mason = function()
   local ok, mason = om.safe_require("mason")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   mason.setup({
     log_level = vim.log.levels.DEBUG,
@@ -185,9 +163,7 @@ end
 
 M.neogen = function()
   local ok, neogen = om.safe_require("neogen")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   neogen.setup({
     snippet_engine = "luasnip",
@@ -196,9 +172,7 @@ end
 
 M.nvim_autopairs = function()
   local ok, autopairs = om.safe_require("nvim-autopairs")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   autopairs.setup({
     close_triple_quotes = true,
@@ -211,9 +185,6 @@ end
 
 M.nvim_navic = function()
   local ok, navic = om.safe_require("nvim-navic")
-  if not ok then
-    return
-  end
 
   -- Silence errors
   vim.g.navic_silence = true
@@ -225,18 +196,14 @@ end
 
 M.nvim_surround = function()
   local ok, surround = om.safe_require("nvim-surround")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   surround.setup()
 end
 
 M.overseer = function()
   local ok, overseer = om.safe_require("overseer")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   return overseer.setup({
     component_aliases = {
@@ -251,18 +218,15 @@ end
 
 M.persisted = function()
   local ok, persisted = om.safe_require("persisted")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   persisted.setup({
     save_dir = Sessiondir .. "/",
+    branch_separator = "@@",
     use_git_branch = true,
     silent = true,
     should_autosave = function()
-      if vim.bo.filetype == "alpha" then
-        return false
-      end
+      if vim.bo.filetype == "alpha" then return false end
       return true
     end,
     before_save = function()
@@ -281,9 +245,7 @@ end
 
 M.project_nvim = function()
   local ok, project = om.safe_require("project_nvim")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   project.setup({
     detection_methods = { "lsp", "pattern" }, -- Use the native LSP an the pattern method to detect directory
@@ -303,9 +265,7 @@ end
 
 M.refactoring = function()
   local ok, refactoring = om.safe_require("refactoring")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   refactoring.setup({})
   require("telescope").load_extension("refactoring")
@@ -313,9 +273,7 @@ end
 
 M.scrollbar = function()
   local ok, scrollbar = om.safe_require("scrollbar")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
 
@@ -335,26 +293,19 @@ M.scrollbar = function()
   })
 
   local ok, hlslens = om.safe_require("hlslens")
-  if ok then
-    require("scrollbar.handlers.search").setup()
-  end
+  if ok then require("scrollbar.handlers.search").setup() end
 end
-
 
 M.stickybuf = function()
   local ok, stickybuf = om.safe_require("stickybuf")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   stickybuf.setup()
 end
 
 M.tabout = function()
   local ok, tabout = om.safe_require("tabout")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   tabout.setup({
     tabkey = "<Tab>", -- key to trigger tabout, set to an empty string to disable
@@ -365,18 +316,14 @@ end
 
 M.textobj_diagnostic = function()
   local ok, textobj = om.safe_require("textobj-diagnostic")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   textobj.setup({ create_default_keymaps = false })
 end
 
 M.todo_comments = function()
   local ok, todo = om.safe_require("todo-comments")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   todo.setup({
     signs = false,
@@ -393,17 +340,13 @@ end
 
 M.toggleterm = function()
   local ok, toggleterm = om.safe_require("toggleterm")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   toggleterm.setup({
     direction = "float",
     float_opts = {
       border = "single",
-      height = function()
-        return math.floor(0.9 * vim.fn.winheight("%"))
-      end,
+      height = function() return math.floor(0.9 * vim.fn.winheight("%")) end,
       -- width = function()
       --   return math.floor(0.9 * vim.fn.winwidth("%"))
       -- end,
@@ -432,9 +375,7 @@ end
 
 M.yabs = function()
   local ok, yabs = om.safe_require("yabs")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   yabs:setup({
     languages = {
