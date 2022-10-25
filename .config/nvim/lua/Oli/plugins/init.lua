@@ -29,8 +29,8 @@ return packer.startup({
     use({
       --"olimorris/onedarkpro.nvim",
       "~/Code/Projects/onedarkpro.nvim", -- My onedarkpro theme
-      as = "onedarkpro",
       config = function() require(config_namespace .. ".plugins.theme") end,
+      as = "onedarkpro",
     })
     use({
       "goolord/alpha-nvim", -- Dashboard for Neovim
@@ -106,9 +106,17 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.others").todo_comments() end,
     })
     use({
-      "SmiteshP/nvim-navic", -- Winbar component showing current code context
-      requires = "neovim/nvim-lspconfig",
-      config = function() require(config_namespace .. ".plugins.others").nvim_navic() end,
+      "utilyre/barbecue.nvim", -- VS Code like path in winbar
+      after = "onedarkpro",
+      requires = {
+        { "neovim/nvim-lspconfig" },
+        {
+          "SmiteshP/nvim-navic", -- Winbar component showing current code context
+          config = function() require(config_namespace .. ".plugins.others").nvim_navic() end,
+        },
+        { "kyazdani42/nvim-web-devicons" },
+      },
+      config = function() require(config_namespace .. ".plugins.others").barbecue() end,
     })
     ---------------------------------------------------------------------------- }}}
     -------------------------------EDITOR FEATURES------------------------------ {{{

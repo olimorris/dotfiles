@@ -35,6 +35,17 @@ M.aerial = function()
   })
 end
 
+M.barbecue = function()
+  local ok, bbq = om.safe_require("barbecue")
+  if not ok then return end
+
+  bbq.setup({
+    symbols = {
+      separator = "",
+    },
+  })
+end
+
 M.cinnamon = function()
   local ok, cinnamon = om.safe_require("cinnamon")
   if not ok then return end
@@ -185,12 +196,11 @@ end
 
 M.nvim_navic = function()
   local ok, navic = om.safe_require("nvim-navic")
-
-  -- Silence errors
-  vim.g.navic_silence = true
+  if not ok then return end
 
   navic.setup({
     highlight = true,
+    separator = "  ",
   })
 end
 
