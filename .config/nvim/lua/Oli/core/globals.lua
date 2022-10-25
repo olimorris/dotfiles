@@ -9,7 +9,7 @@ _G.om = {
 ---@return boolean
 function om.has(feature) return vim.fn.has(feature) > 0 end
 
-om.nightly = om.has("nvim-0.8")
+om.nightly = om.has("nvim-0.9")
 
 ---Source a lua or vimscript file
 ---@param path string path relative to the nvim directory
@@ -43,14 +43,44 @@ function om.contains(tbl, value) return tbl[value] ~= nil end
 
 ---Pretty print a table
 ---@param tbl table
----@return string
-function om.print_table(tbl) require("pl.pretty").dump(tbl) end
+---@return table
+function om.print_table(tbl) return require("pl.pretty").dump(tbl) end
+
+---Get values for a given highlight group
+---@param name string
+---@return table
+function om.get_highlight(name)
+  local hl = vim.api.nvim_get_hl_by_name(name, vim.o.termguicolors)
+  if vim.o.termguicolors then
+    hl.fg = hl.foreground
+    hl.bg = hl.background
+    hl.sp = hl.special
+    hl.foreground = nil
+    hl.background = nil
+    hl.special = nil
+  else
+    hl.ctermfg = hl.foreground
+    hl.ctermbg = hl.background
+    hl.foreground = nil
+    hl.background = nil
+    hl.special = nil
+  end
+  return hl
+end
 
 ---Reload lua modules
 function om.reload(quiet)
   local reload_module = require("plenary.reload").reload_module
 
-  for _, module in ipairs(vim.g.core_modules) do
+  for _, module in ipairs({
+    config_namespace .. ".core.options",
+    config_namespace .. ".core.functions",
+    config_namespace .. ".core.mappings",
+    config_namespace .. ".core.commands",
+    config_namespace .. ".plugins.bufferline",
+    config_namespace .. ".plugins.theme",
+    "bufferline",
+  }) do
     reload_module(module, false)
   end
 

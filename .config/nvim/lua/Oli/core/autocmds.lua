@@ -68,34 +68,6 @@ function M.default_autocmds()
     -- },
   }
 
-  -- Reload bufferline when the theme has been changed
-  if om.safe_require("bufferline", { silent = true }) then
-    table.insert(autocmds, {
-      name = "RefreshBufferlineColors",
-      {
-        "ColorScheme",
-        function()
-          require(config_namespace .. ".plugins.bufferline")
-        end,
-        opts = { pattern = "*" },
-      },
-    })
-  end
-
-  -- Reload statusline when the theme has been changed
-  if om.safe_require("feline", { silent = true }) then
-    table.insert(autocmds, {
-      name = "RefreshStatuslineColors",
-      {
-        "ColorScheme",
-        function()
-          require(config_namespace .. ".plugins.statusline").setup()
-        end,
-        opts = { pattern = "*" },
-      },
-    })
-  end
-
   -- Highlight text when yanked
   table.insert(autocmds, {
     name = "YankHighlight",
@@ -164,9 +136,7 @@ function M.lsp_autocmds(client, bufnr)
     end
     table.insert(autocmds, {
       { "CursorHold", "CursorHoldI" },
-      function()
-        lightbulb.update_lightbulb()
-      end,
+      function() lightbulb.update_lightbulb() end,
       opts = { buffer = bufnr },
     })
   end
@@ -183,6 +153,22 @@ function M.plugin_autocmds()
         "FileType",
         ":setlocal showtabline=0",
         opts = { pattern = "alpha" },
+      },
+    },
+    -- {
+    --   name = "RefreshBufferlineColors",
+    --   {
+    --     "ColorScheme",
+    --     function() require(config_namespace .. ".plugins.bufferline") end,
+    --     opts = { pattern = "*" },
+    --   },
+    -- },
+    {
+      name = "RefreshStatuslineColors",
+      {
+        "ColorScheme",
+        function() require(config_namespace .. ".plugins.statusline").setup() end,
+        opts = { pattern = "*" },
       },
     },
   }

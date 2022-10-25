@@ -60,9 +60,7 @@ end
 
 vim.api.nvim_create_user_command("PackerRollback", function()
   om.select("Rollback to snapshot", om.GetSnapshots(), function(choice)
-    if choice == nil then
-      return
-    end
+    if choice == nil then return end
 
     require("packer").rollback(snapshot_path .. "/" .. choice)
     vim.notify("Rollback to: " .. choice)
@@ -77,12 +75,8 @@ function om.FormatWithRuboCop()
     command = "rubocop",
     args = "--auto-correct-all --display-time " .. filepath,
     callbacks = {
-      before = function()
-        vim.cmd("silent! w")
-      end,
-      after = function()
-        vim.cmd("silent! e %")
-      end,
+      before = function() vim.cmd("silent! w") end,
+      after = function() vim.cmd("silent! e %") end,
     },
   })
 end
@@ -93,9 +87,7 @@ function om.EditSnippet()
   local snippets = { "lua", "ruby", "python", "global", "package" }
 
   om.select("Snippet to edit", snippets, function(choice)
-    if choice == nil then
-      return
-    end
+    if choice == nil then return end
     vim.cmd(":edit " .. path .. "/" .. choice .. ".json")
   end)
 end
@@ -105,9 +97,7 @@ function om.RunTestSuiteAsync()
   om.async_run({
     command = vim.g["test#" .. vim.bo.filetype .. "#asyncrun"],
     callbacks = {
-      before = function()
-        vim.cmd("silent! w")
-      end,
+      before = function() vim.cmd("silent! w") end,
     },
   })
 end
@@ -123,9 +113,7 @@ end
 --------------------------------------------------------------------------- }}}
 --------------------------------TOGGLE THEME-------------------------------- {{{
 function om.ToggleTheme(mode)
-  if vim.o.background == mode then
-    return
-  end
+  if vim.o.background == mode then return end
 
   if vim.o.background == "dark" then
     vim.o.background = "light"
