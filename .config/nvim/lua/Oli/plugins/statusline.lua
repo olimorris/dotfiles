@@ -1,572 +1,435 @@
-local ok, feline = om.safe_require("feline")
-if not ok then
-  return
-end
----------------------------------PROPERTIES--------------------------------- {{{
+local ok, heirline = om.safe_require("heirline")
+if not ok then return end
+
 local M = {}
 
-M.filetypes_to_mask = {
+local utils = require("heirline.utils")
+local conditions = require("heirline.conditions")
+
+local Align = { provider = "%=" }
+local Space = { provider = " " }
+
+-- Filetypes where certain elements of the statusline will not be shown
+local filetypes = {
   "^aerial$",
   "^neo--tree$",
+  "^neotest--summary$",
   "^neo--tree--popup$",
   "^NvimTree$",
   "^toggleterm$",
 }
 
-M.force_inactive = {
-  filetypes = {
-    "^alpha$",
-    "^frecency$",
-    "^packer$",
-    "^TelescopePrompt$",
-    "^undotree$",
-  },
+-- Filetypes which force the statusline to be inactive
+local force_inactive_filetypes = {
+  "^alpha$",
+  "^frecency$",
+  "^packer$",
+  "^TelescopePrompt$",
+  "^undotree$",
 }
 
-M.disable = {
-  filetypes = {
-    "^alpha$",
-    "^dap-repl$",
-    "^dapui_scopes$",
-    "^dapui_stacks$",
-    "^dapui_breakpoints$",
-    "^dapui_watches$",
-    "^DressingInput$",
-    "^DressingSelect$",
-    "^floaterm$",
-    "^minimap$",
-    "^qfs$",
-    "^tsplayground$",
-  },
-}
----------------------------------------------------------------------------- }}}
------------------------------------HELPERS---------------------------------- {{{
-local lsp = require("feline.providers.lsp")
-local git = require("feline.providers.git")
-local vi_mode_utils = require("feline.providers.vi_mode")
+---Return the current vim mode
+---@return table
+local function vim_mode()
+  return {
+    init = function(self)
+      self.mode = vim.fn.mode(1)
+      self.mode_color = self.mode_colors[self.mode:sub(1, 1)]
 
--- Determine if we're using a session file
-local function using_session()
-  return (vim.g.persisting ~= nil)
+      if not self.once then
+        vim.api.nvim_create_autocmd("ModeChanged", {
+          pattern = "*:*o",
+          command = "redrawstatus",
+        })
+        self.once = true
+      end
+    end,
+    static = {
+      mode_names = {
+        n = "NORMAL",
+        no = "NORMAL",
+        nov = "NORMAL",
+        noV = "NORMAL",
+        ["no\22"] = "NORMAL",
+        niI = "NORMAL",
+        niR = "NORMAL",
+        niV = "NORMAL",
+        nt = "NORMAL",
+        v = "VISUAL",
+        vs = "VISUAL",
+        V = "VISUAL",
+        Vs = "VISUAL",
+        ["\22"] = "VISUAL",
+        ["\22s"] = "VISUAL",
+        s = "SELECT",
+        S = "SELECT",
+        ["\19"] = "SELECT",
+        i = "INSERT",
+        ic = "INSERT",
+        ix = "INSERT",
+        R = "REPLACE",
+        Rc = "REPLACE",
+        Rx = "REPLACE",
+        Rv = "REPLACE",
+        Rvc = "REPLACE",
+        Rvx = "REPLACE",
+        c = "COMMAND",
+        cv = "Ex",
+        r = "...",
+        rm = "M",
+        ["r?"] = "?",
+        ["!"] = "!",
+        t = "TERM",
+      },
+      mode_colors = {
+        n = "purple",
+        i = "green",
+        v = "orange",
+        V = "orange",
+        ["\22"] = "orange",
+        c = "orange",
+        s = "orange",
+        S = "orange",
+        ["\19"] = "orange",
+        r = "green",
+        R = "green",
+        ["!"] = "red",
+        t = "red",
+      },
+    },
+    {
+      provider = function(self) return " %2(" .. self.mode_names[self.mode] .. "%) " end,
+      hl = function(self) return { fg = "bg", bg = self.mode_color } end,
+      update = {
+        "ModeChanged",
+      },
+    },
+    {
+      provider = "",
+      hl = function(self) return { fg = self.mode_color, bg = "bg" } end,
+    },
+  }
 end
 
-local function mask_plugin()
-  return om.find_pattern_match(M.filetypes_to_mask, vim.bo.filetype)
+---Return the current git branch in the cwd
+---@return table
+local function git_branch()
+  return {
+    condition = conditions.is_git_repo,
+    init = function(self)
+      self.status_dict = vim.b.gitsigns_status_dict
+      self.bg_color = utils.get_highlight("Heirline").bg
+    end,
+    {
+      condition = function()
+        return not conditions.buffer_matches({
+          filetype = filetypes,
+        })
+      end,
+      {
+        provider = "",
+        hl = function(self) return { fg = "bg", bg = self.bg_color } end,
+      },
+      {
+        provider = function(self) return "  " .. self.status_dict.head .. " " end,
+        hl = function(self) return { fg = "gray", bg = self.bg_color } end,
+      },
+      {
+        provider = "",
+        hl = function(self) return { fg = self.bg_color, bg = "bg" } end,
+      },
+    },
+  }
+end
+
+---Return the filename of the current buffer
+---@return table
+local function current_buffer()
+  return {
+    init = function(self)
+      self.filename = vim.api.nvim_buf_get_name(0)
+      self.bg_color = utils.get_highlight("Heirline").bg
+    end,
+    condition = function()
+      return not conditions.buffer_matches({
+        filetype = filetypes,
+      })
+    end,
+    {
+      provider = "",
+      hl = function(self) return { fg = "bg", bg = self.bg_color } end,
+    },
+    {
+      provider = function(self) return " " .. vim.fn.fnamemodify(self.filename, ":t") .. " " end,
+      hl = function(self) return { fg = "gray", bg = self.bg_color } end,
+      {
+        condition = function() return vim.bo.modified end,
+        provider = "[+] ",
+        hl = { fg = "gray" },
+      },
+      {
+        condition = function() return not vim.bo.modifiable or vim.bo.readonly end,
+        provider = " ",
+        hl = { fg = "gray" },
+      },
+    },
+    {
+      provider = "",
+      hl = function(self) return { fg = self.bg_color, bg = "bg" } end,
+    },
+  }
+end
+
+---Return the diagnostics from the LSP servers
+---@return table
+local function diagnostics()
+  return {
+    condition = conditions.has_diagnostics,
+    init = function(self)
+      self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+      self.warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+      self.hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
+      self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
+    end,
+    static = {
+      error_icon = vim.fn.sign_getdefined("DiagnosticSignError")[1].text,
+      warn_icon = vim.fn.sign_getdefined("DiagnosticSignWarn")[1].text,
+      info_icon = vim.fn.sign_getdefined("DiagnosticSignInfo")[1].text,
+      hint_icon = vim.fn.sign_getdefined("DiagnosticSignHint")[1].text,
+    },
+    update = { "DiagnosticChanged", "BufEnter" },
+    -- Errors
+    {
+      condition = function(self) return self.errors > 0 end,
+      hl = { fg = "bg", bg = utils.get_highlight("DiagnosticError").fg },
+      {
+        {
+          provider = "",
+        },
+        {
+          provider = function(self) return self.error_icon .. self.errors end,
+        },
+        {
+          provider = "",
+          hl = { bg = "bg", fg = utils.get_highlight("DiagnosticError").fg },
+        },
+      },
+    },
+    -- Warnings
+    {
+      condition = function(self) return self.warnings > 0 end,
+      hl = { fg = "bg", bg = utils.get_highlight("DiagnosticWarn").fg },
+      {
+        {
+          provider = "",
+        },
+        {
+          provider = function(self) return self.warn_icon .. self.warnings end,
+        },
+        {
+          provider = "",
+          hl = { bg = "bg", fg = utils.get_highlight("DiagnosticWarn").fg },
+        },
+      },
+    },
+    -- Hints
+    {
+      condition = function(self) return self.hints > 0 end,
+      hl = { fg = "gray", bg = "bg" },
+      {
+        {
+          provider = function(self)
+            local spacer = (self.errors > 0 or self.warnings > 0) and " " or ""
+            return spacer .. self.hint_icon .. self.hints
+          end,
+        },
+      },
+    },
+    -- Info
+    {
+      condition = function(self) return self.info > 0 end,
+      hl = { fg = "gray", bg = "bg" },
+      {
+        {
+          provider = function(self)
+            local spacer = (self.errors > 0 or self.warnings > 0 or self.hints) and " " or ""
+            return spacer .. self.info_icon .. self.info
+          end,
+        },
+      },
+    },
+  }
+end
+
+---Return the current line number as a % of total lines and the total lines in the file
+---@return table
+local function ruler()
+  return {
+    {
+      provider = "",
+      hl = function(self) return { fg = "gray", bg = "bg" } end,
+    },
+    {
+      -- %L = number of lines in the buffer
+      -- %P = percentage through file of displayed window
+      provider = " %P% /%2L ",
+      hl = function(self) return { fg = "bg", bg = "gray" } end,
+    },
+  }
+end
+
+---Return the status of the current session
+---@return table
+local function session()
+  return {
+    condition = function(self) return (vim.g.persisting ~= nil) end,
+    on_click = {
+      callback = function() return require("persisted").toggle() end,
+      name = "Toggle session",
+    },
+    {
+      condition = function()
+        return not conditions.buffer_matches({
+          filetype = filetypes,
+        })
+      end,
+      {
+        provider = "",
+        hl = function(self) return { fg = utils.get_highlight("Heirline").bg, bg = "bg" } end,
+      },
+      {
+        provider = function(self)
+          if vim.g.persisting then
+            return "   "
+          elseif vim.g.persisting == false then
+            return "   "
+          end
+        end,
+        hl = function(self) return { fg = "gray", bg = utils.get_highlight("Heirline").bg } end,
+      },
+      {
+        provider = "",
+        hl = function(self) return { bg = utils.get_highlight("Heirline").bg, fg = "bg" } end,
+      },
+    },
+  }
 end
 
 local function overseer()
-  local ok, overseer = om.safe_require("overseer")
-  if not ok then
-    return
-  end
-
-  local tasks = require("overseer.task_list")
-
-  if #tasks.list_tasks() == 0 then
-    return false
-  end
-
-  local util = require("overseer.util")
-  local STATUS = require("overseer.constants").STATUS
-
-  local symbols = {
-    [STATUS.FAILURE] = " ",
-    [STATUS.CANCELED] = " ",
-    [STATUS.SUCCESS] = " ",
-    [STATUS.RUNNING] = "省",
-  }
-
-  local tasks_by_status = util.tbl_group_by(tasks.list_tasks({ unique = true }), "status")
-
-  for _, status in ipairs(STATUS.values) do
-    local status_tasks = tasks_by_status[status]
-    if symbols[status] and status_tasks then
-      return status, symbols[status]
-    end
-  end
-end
----------------------------------------------------------------------------- }}}
----------------------------------COMPONENTS--------------------------------- {{{
-M.components = { active = {}, inactive = {} }
-M.winbar_components = { active = {}, inactive = {} }
-------------------------------------SETUP----------------------------------- {{{
-function M.setup()
-  local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_theme)
-
-  if not colors then
-    return
-  end
-
-  M.vi_mode_colors = {
-    NORMAL = colors.purple,
-    OP = colors.purple,
-    INSERT = colors.green,
-    VISUAL = colors.orange,
-    LINES = colors.orange,
-    BLOCK = colors.orange,
-    REPLACE = colors.green,
-    ["V-REPLACE"] = colors.green,
-    ENTER = colors.cyan,
-    MORE = colors.cyan,
-    SELECT = colors.orange,
-    COMMAND = colors.purple,
-    SHELL = colors.purple,
-    TERM = colors.purple,
-    NONE = colors.yellow,
-  }
-
-  local InactiveStatusHL = {
-    fg = colors.statusline_bg,
-    bg = "NONE",
-    style = "underline",
-  }
-
-  local function default_hl()
-    return {
-      fg = colors.gray,
-      bg = "NONE",
-    }
-  end
-
-  local function block(bg, fg)
-    if not bg then
-      bg = colors.statusline_bg
-    end
-    if not fg then
-      fg = colors.gray
-    end
-    return {
-      body = {
-        fg = fg,
-        bg = bg,
+  return {
+    condition = function()
+      ok, _ = om.safe_require("overseer")
+      if ok then return true end
+    end,
+    init = function(self)
+      self.overseer = require("overseer")
+      self.tasks = self.overseer.task_list
+      self.STATUS = self.overseer.constants.STATUS
+    end,
+    static = {
+      symbols = {
+        ["FAILURE"] = "  ",
+        ["CANCELED"] = "  ",
+        ["SUCCESS"] = "  ",
+        ["RUNNING"] = " 省",
       },
-      sep_left = {
-        fg = colors.bg,
-        bg = bg,
+      colors = {
+        ["FAILURE"] = "red",
+        ["CANCELED"] = "gray",
+        ["SUCCESS"] = "green",
+        ["RUNNING"] = "yellow",
       },
-      sep_right = {
-        fg = bg,
-        bg = colors.bg,
-      },
-    }
-  end
-
-  local function inverse_block()
-    return {
-      body = {
-        fg = colors.bg,
-        bg = colors.gray,
-      },
-      sep_left = {
-        fg = colors.bg,
-        bg = colors.gray,
-      },
-      sep_right = {
-        fg = colors.gray,
-        bg = colors.bg,
-      },
-    }
-  end
-
-  M.components.inactive = { { { provider = "", hl = InactiveStatusHL } } }
-  ---------------------------------------------------------------------------- }}}
-  ------------------------------CUSTOM COMPONENTS----------------------------- {{{
-  local function line_percentage()
-    local curr_line = vim.api.nvim_win_get_cursor(0)[1]
-    local lines = vim.api.nvim_buf_line_count(0)
-    local percent = string.format("%s", 100)
-
-    if curr_line ~= lines then
-      percent = string.format("%s", math.ceil(curr_line / lines * 99))
-    end
-
-    return lines, percent
-  end
-
-  local function line_col()
-    local row = vim.api.nvim_win_get_cursor(0)[1]
-    local col = vim.api.nvim_win_get_cursor(0)[2]
-
-    return row .. ":" .. col
-  end
-  ---------------------------------------------------------------------------- }}}
-  -------------------------------LEFT COMPONENTS------------------------------ {{{
-  M.components.active[1] = {
-    ------------------------------------MODE------------------------------------ {{{
+    },
     {
-      provider = function()
-        return require("feline.providers.vi_mode").get_vim_mode() .. " "
-      end,
-      icon = "",
-      hl = function()
+      condition = function(self) return #self.tasks.list_tasks() > 0 end,
+      {
+        provider = function(self)
+          local tasks_by_status = self.overseer.util.tbl_group_by(self.tasks.list_tasks({ unique = true }), "status")
+
+          for _, status in ipairs(self.STATUS.values) do
+            local status_tasks = tasks_by_status[status]
+            if self.symbols[status] and status_tasks then
+              self.color = self.colors[status]
+              return self.symbols[status]
+            end
+          end
+        end,
+        hl = function(self) return { fg = self.color } end,
+      },
+    },
+  }
+end
+
+--- Return information on the current buffers filetype
+---@return table
+local function filetype()
+  return {
+    init = function(self)
+      self.filename = vim.api.nvim_buf_get_name(0)
+      local extension = vim.fn.fnamemodify(self.filename, ":e")
+      self.icon, self.icon_color =
+        require("nvim-web-devicons").get_icon_color(self.filename, extension, { default = true })
+    end,
+    condition = function()
+      return not conditions.buffer_matches({
+        filetype = filetypes,
+      })
+    end,
+    {
+      provider = "",
+      hl = function(self) return { fg = utils.get_highlight("Heirline").bg, bg = "bg" } end,
+    },
+    {
+      provider = function(self) return " " .. self.icon end,
+      hl = function(self) return { fg = "gray", bg = utils.get_highlight("Heirline").bg } end,
+    },
+    {
+      provider = function() return " " .. string.lower(vim.bo.filetype) .. " " end,
+      hl = function(self)
         return {
-          fg = colors.bg,
-          bg = vi_mode_utils.get_mode_color(),
+          fg = "gray",
+          bg = utils.get_highlight("Heirline").bg,
         }
       end,
-      left_sep = {
-        str = "vertical_bar_thin",
-        hl = function()
-          return {
-            fg = vi_mode_utils.get_mode_color(),
-            bg = vi_mode_utils.get_mode_color(),
-          }
-        end,
-      },
-      right_sep = {
-        str = "slant_right",
-        hl = function()
-          return {
-            fg = vi_mode_utils.get_mode_color(),
-            bg = colors.bg,
-          }
-        end,
-      },
     },
-    ---------------------------------------------------------------------------- }}}
-    -------------------------------------GIT------------------------------------ {{{
     {
-      provider = function()
-        return "  " .. require("feline.providers.git").git_branch() .. " "
-      end,
-      truncate_hide = true,
-      enabled = function()
-        return git.git_info_exists()
-      end,
-      hl = function()
-        return block().body
-      end,
-      left_sep = {
-        str = "slant_right",
-        hl = function()
-          return block().sep_left
-        end,
-      },
-      right_sep = {
-        str = "slant_right",
-        hl = function()
-          return block().sep_right
-        end,
-      },
+      provider = "",
+      hl = function(self) return { bg = utils.get_highlight("Heirline").bg, fg = "bg" } end,
     },
-    ---------------------------------------------------------------------------- }}}
-    ----------------------------------FILE INFO--------------------------------- {{{
-    {
-      provider = function()
-        local file = require("feline.providers.file").file_info({ icon = "" }, { type = "short" })
-
-        if mask_plugin() then
-          file = vim.bo.filetype
-        end
-
-        return " " .. file .. " "
-      end,
-      enabled = function()
-        return vim.api.nvim_win_get_width(0) > 80
-      end,
-
-      hl = function()
-        return block().body
-      end,
-      left_sep = {
-        str = "slant_right",
-        hl = function()
-          return block().sep_left
-        end,
-      },
-      right_sep = {
-        str = "slant_right",
-        hl = function()
-          return block().sep_right
-        end,
-      },
-    },
-    ---------------------------------------------------------------------------- }}}
-    ---------------------------------LSP ERRORS--------------------------------- {{{
-    {
-      provider = "diagnostic_errors",
-      icon = " ",
-      hl = function()
-        return block(colors.red, colors.bg).body
-      end,
-      left_sep = {
-        str = "slant_right",
-        hl = function()
-          return block(colors.red, colors.bg).sep_left
-        end,
-      },
-      right_sep = {
-        str = "slant_right",
-        hl = function()
-          return block(colors.red).sep_right
-        end,
-      },
-    },
-    ---------------------------------------------------------------------------- }}}
-    --------------------------------LSP WARNINGS-------------------------------- {{{
-    {
-      provider = "diagnostic_warnings",
-      icon = " ",
-      hl = function()
-        return block(colors.yellow, colors.bg).body
-      end,
-      left_sep = {
-        str = "slant_right",
-        hl = function()
-          return block(colors.yellow).sep_left
-        end,
-      },
-      right_sep = {
-        str = "slant_right",
-        hl = function()
-          return block(colors.yellow).sep_right
-        end,
-      },
-    },
-    ---------------------------------------------------------------------------- }}}
-    ----------------------------------LSP HINTS--------------------------------- {{{
-    {
-      provider = "diagnostic_hints",
-      icon = " ",
-      hl = function()
-        return default_hl()
-      end,
-      left_sep = {
-        str = " ",
-        hl = function()
-          return default_hl()
-        end,
-      },
-      right_sep = {
-        str = " ",
-        hl = function()
-          return default_hl()
-        end,
-      },
-    },
-    ---------------------------------------------------------------------------- }}}
-    ----------------------------------LSP INFO---------------------------------- {{{
-    {
-      provider = "diagnostic_info",
-      icon = " ",
-      hl = function()
-        return default_hl()
-      end,
-      left_sep = {
-        str = " ",
-        hl = function()
-          return default_hl()
-        end,
-      },
-      right_sep = {
-        str = " ",
-        hl = function()
-          return default_hl()
-        end,
-      },
-    },
-    ---------------------------------------------------------------------------- }}}
-    -----------------------------------FILLER----------------------------------- {{{
-    -- Fill in the section between the left and the right components
-    {
-      hl = function()
-        return default_hl()
-      end,
-    },
-    ---------------------------------------------------------------------------- }}}
   }
-  ---------------------------------------------------------------------------- }}}
-  ------------------------------RIGHT COMPONENTS------------------------------ {{{
-  M.components.active[2] = {
-    --------------------------------ASYNC TESTING------------------------------- {{{
-    {
-      provider = function()
-        local _, icon = overseer()
-        return icon
-      end,
-      enabled = function()
-        local status, _ = overseer()
-        return status ~= false
-      end,
-      hl = function()
-        local status, _ = overseer()
-
-        if status == "FAILURE" then
-          return {
-            fg = colors.red,
-            bg = "NONE",
-          }
-        elseif status == "SUCCESS" then
-          return {
-            fg = colors.green,
-            bg = "NONE",
-          }
-        elseif status == "RUNNING" then
-          return {
-            fg = colors.yellow,
-            bg = "NONE",
-          }
-        else
-          return {
-            fg = colors.gray,
-            bg = "NONE",
-          }
-        end
-      end,
-      left_sep = {
-        str = " ",
-        hl = function()
-          return default_hl()
-        end,
-      },
-      right_sep = {
-        str = "",
-        hl = function()
-          return default_hl()
-        end,
-      },
-    },
-    ---------------------------------------------------------------------------- }}}
-    ----------------------------------FILETYPE---------------------------------- {{{
-    {
-      provider = function()
-        local filename = vim.api.nvim_buf_get_name(0)
-        local extension = vim.fn.fnamemodify(filename, ":e")
-        local filetype = vim.bo.filetype
-
-        local icon = om.get_icon(filename, extension, {})
-        return " " .. icon.str .. " " .. filetype .. " "
-      end,
-      enabled = function()
-        return not mask_plugin() and vim.api.nvim_win_get_width(0) > 80
-      end,
-      hl = function()
-        return block().body
-      end,
-      left_sep = {
-        str = "slant_left",
-        hl = function()
-          return block().sep_right
-        end,
-      },
-      right_sep = {
-        str = "slant_left",
-        hl = function()
-          return block().sep_left
-        end,
-      },
-    },
-    ---------------------------------------------------------------------------- }}}
-    -----------------------------------SESSION---------------------------------- {{{
-    {
-      provider = function()
-        if vim.g.persisting then
-          return "   "
-        elseif vim.g.persisting == false then
-          return "   "
-        end
-      end,
-      enabled = function()
-        return using_session()
-      end,
-      hl = function()
-        return block().body
-      end,
-      left_sep = {
-        str = "slant_left",
-        hl = function()
-          return block().sep_right
-        end,
-      },
-      right_sep = {
-        str = "slant_left",
-        hl = function()
-          return block().sep_left
-        end,
-      },
-    },
-    ---------------------------------------------------------------------------- }}}
-    ---------------------------------LINE COLUMN-------------------------------- {{{
-    {
-      provider = function()
-        return " " .. line_col() .. " "
-      end,
-      enabled = function()
-        return vim.api.nvim_win_get_width(0) > 80
-      end,
-      hl = function()
-        return inverse_block().body
-      end,
-      left_sep = {
-        str = "slant_left",
-        hl = function()
-          return inverse_block().sep_right
-        end,
-      },
-      right_sep = {
-        str = "slant_left",
-        hl = function()
-          return inverse_block().sep_left
-        end,
-      },
-    },
-    ---------------------------------------------------------------------------- }}}
-    -------------------------------LINE PERCENTAGE------------------------------ {{{
-    {
-      provider = function()
-        local lines, percent = line_percentage()
-
-        return " " .. percent .. "%%/" .. lines
-      end,
-      hl = function()
-        return inverse_block().body
-      end,
-      left_sep = {
-        str = "slant_left",
-        hl = function()
-          return inverse_block().sep_right
-        end,
-      },
-      right_sep = {
-        str = " ",
-        hl = function()
-          return inverse_block().body
-        end,
-      },
-    },
-    ---------------------------------------------------------------------------- }}}
-  }
-  ---------------------------------------------------------------------------- }}}
-  ------------------------------WINBAR COMPONENTS----------------------------- {{{
-  local navic_ok, navic = om.safe_require("nvim-navic")
-  if navic_ok then
-    M.winbar_components.active[1] = {
-      {
-        provider = function()
-          return navic.get_location()
-        end,
-        enabled = function()
-          return navic.is_available()
-        end,
-        hl = function()
-          return default_hl()
-        end,
-      },
-    }
-  end
-  ---------------------------------------------------------------------------- }}}
-  -------------------------------FINALISE SETUP------------------------------- {{{
-  feline.setup({
-    colors = { fg = "NONE", bg = "NONE" },
-    vi_mode_colors = M.vi_mode_colors,
-    components = M.components,
-    disable = M.disable,
-    force_inactive = M.force_inactive,
-  })
-
-  feline.winbar.setup({
-    components = M.winbar_components,
-  })
 end
----------------------------------------------------------------------------- }}}
+
+---The statusline component
+---@return table
+local function statusline()
+  return {
+    condition = function()
+      return not conditions.buffer_matches({
+        filetype = force_inactive_filetypes,
+      })
+    end,
+
+    -- Left
+    vim_mode(),
+    git_branch(),
+    current_buffer(),
+    diagnostics(),
+
+    -- Right
+    Align,
+    overseer(),
+    filetype(),
+    session(),
+    ruler(),
+  }
+end
+
+---Set the statusline
+---@return table
+function M.setup()
+  require("heirline").load_colors(vim.g.onedarkpro_colors)
+
+  return heirline.setup(statusline())
+end
+
 return M

@@ -38,7 +38,7 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.dashboard") end,
     })
     use({
-      "feline-nvim/feline.nvim", -- Statusline
+      "rebelot/heirline.nvim", -- Statusline
       after = "onedarkpro",
       requires = {
         { "kyazdani42/nvim-web-devicons" }, -- Web icons for various plugins
@@ -308,7 +308,7 @@ return packer.startup({
         "nvim-neotest/neotest-python",
         "antoinemadec/FixCursorHold.nvim",
       },
-      config = function() require(config_namespace .. ".plugins.neotest") end,
+      config = function() require(config_namespace .. ".plugins.neotest").setup() end,
     })
     use({
       "stevearc/overseer.nvim", -- Task runner and job management

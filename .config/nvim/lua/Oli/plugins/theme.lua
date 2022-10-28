@@ -108,9 +108,8 @@ onedarkpro.setup({
     -- DAP UI
     DapUIBreakpointsCurrentLine = { fg = "${yellow}", style = "bold" },
 
-    -- Fidget plugin
-    FidgetTitle = { fg = "${purple}" },
-    FidgetTask = { fg = "${gray}" },
+    -- Heirline
+    Heirline = { bg = "${statusline_bg}" },
 
     -- Luasnip
     LuaSnipChoiceNode = { fg = "${yellow}" },
@@ -122,7 +121,7 @@ onedarkpro.setup({
     -- MapRange = { fg = "${fg}" },
 
     -- Navic
-    NavicText = { fg = "${gray}" },
+    NavicText = { fg = "${gray}", style = "italic" },
 
     -- Neotest
     NeotestAdapterName = { fg = "${purple}", style = "bold" },
