@@ -88,16 +88,16 @@ vim.lsp.handlers["textDocument/formatting"] = function(err, result, client)
 end
 ---------------------------------------------------------------------------- }}}
 ----------------------------------ON ATTACH--------------------------------- {{{
-local symbols, aerial = om.safe_require("aerial", { silent = true })
+-- local symbols, aerial = om.safe_require("aerial", { silent = true })
 local maps, legendary = om.safe_require("legendary", { silent = true })
 local nav, navic = om.safe_require("nvim-navic", { silent = true })
 
 function om.lsp.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  if symbols then
-    pcall(aerial.on_attach, client, bufnr)
-  end
+  -- if symbols then
+  --   pcall(aerial.on_attach, client, bufnr)
+  -- end
 
   if maps then
     legendary.bind_keymaps(require(config_namespace .. ".core.mappings").lsp_keymaps(client, bufnr))
