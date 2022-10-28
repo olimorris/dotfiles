@@ -26,12 +26,14 @@ M.aerial = function()
   aerial.setup({
     backends = {
       -- default to preferring LSP backend
-      ["_"] = { "lsp", "treesitter", "markdown" },
+      ["_"] = { "treesitter", "lsp", "markdown" },
       ruby = { "treesitter" },
     },
     close_on_select = true,
-    default_direction = "prefer_right",
-    min_width = 30,
+    layout = {
+      min_width = 30,
+      default_direction = "prefer_right",
+    },
   })
 end
 
