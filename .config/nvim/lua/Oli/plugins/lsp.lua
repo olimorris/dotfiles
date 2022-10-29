@@ -1,11 +1,8 @@
 ------------------------------------SETUP----------------------------------- {{{
 local ok, mason = om.safe_require("mason-lspconfig")
-if not ok then
-  return
-end
+if not ok then return end
 om.lsp = {}
----------------------------------------------------------------------------- }}}
------------------------------------SERVERS---------------------------------- {{{
+--
 -- The servers to automatically install using LSPI
 om.lsp.servers = {
   "bashls",
@@ -18,6 +15,7 @@ om.lsp.servers = {
   "pyright",
   "solargraph",
   -- "sorbet",
+  -- "ruby_ls",
   "sumneko_lua",
   "tailwindcss",
   "tsserver",
@@ -68,9 +66,7 @@ vim.lsp.handlers["textDocument/formatting"] = function(err, result, client)
     return
   end
 
-  if result == nil then
-    return
-  end
+  if result == nil then return end
 
   if
     vim.api.nvim_buf_get_var(client.bufnr, "format_changedtick")
@@ -92,6 +88,10 @@ end
 local maps, legendary = om.safe_require("legendary", { silent = true })
 local nav, navic = om.safe_require("nvim-navic", { silent = true })
 
+if maps then
+    legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_basic_commands())
+end
+
 function om.lsp.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
@@ -105,17 +105,13 @@ function om.lsp.on_attach(client, bufnr)
     legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_commands(client, bufnr))
   end
 
-  if nav and client.server_capabilities.documentSymbolProvider then
-    pcall(navic.attach, client, bufnr)
-  end
+  if nav and client.server_capabilities.documentSymbolProvider then pcall(navic.attach, client, bufnr) end
 end
 ---------------------------------------------------------------------------- }}}
 --------------------------------SETUP SERVERS------------------------------- {{{
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 local nvim_lsp_ok, cmp_nvim_lsp = om.safe_require("cmp_nvim_lsp")
-if nvim_lsp_ok then
-  capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
-end
+if nvim_lsp_ok then capabilities = cmp_nvim_lsp.default_capabilities(capabilities) end
 
 mason.setup({
   ensure_installed = om.lsp.servers,

@@ -347,7 +347,7 @@ M.plugin_keymaps = function()
     },
 
     -- Telescope
-    { "fd", h.lazy_required_fn("telescope.builtin", "diagnostics", { bufnr = 0 }), description = "Find diagnostics" },
+    { "fd", h.lazy_required_fn("telescope.builtin", "diagnostics", { bufnr = 0 }), description = "Find LSP diagnostics" },
     {
       "ff",
       h.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
