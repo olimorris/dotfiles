@@ -84,10 +84,10 @@ local function vim_mode()
       mode_colors = {
         n = "purple",
         i = "green",
-        v = "orange",
-        V = "orange",
-        ["\22"] = "orange",
-        c = "orange",
+        v = "yellow",
+        V = "yellow",
+        ["\22"] = "yellow",
+        c = "yellow",
         s = "orange",
         S = "orange",
         ["\19"] = "orange",
@@ -191,12 +191,6 @@ local function diagnostics()
       self.hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
       self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
     end,
-    static = {
-      error_icon = vim.fn.sign_getdefined("DiagnosticSignError")[1].text,
-      warn_icon = vim.fn.sign_getdefined("DiagnosticSignWarn")[1].text,
-      info_icon = vim.fn.sign_getdefined("DiagnosticSignInfo")[1].text,
-      hint_icon = vim.fn.sign_getdefined("DiagnosticSignHint")[1].text,
-    },
     update = { "DiagnosticChanged", "BufEnter" },
     -- Errors
     {
@@ -207,7 +201,7 @@ local function diagnostics()
           provider = "",
         },
         {
-          provider = function(self) return self.error_icon .. self.errors end,
+          provider = function(self) return vim.fn.sign_getdefined("DiagnosticSignError")[1].text .. self.errors end,
         },
         {
           provider = "",
@@ -224,7 +218,7 @@ local function diagnostics()
           provider = "",
         },
         {
-          provider = function(self) return self.warn_icon .. self.warnings end,
+          provider = function(self) return vim.fn.sign_getdefined("DiagnosticSignWarn")[1].text .. self.warnings end,
         },
         {
           provider = "",
@@ -240,7 +234,7 @@ local function diagnostics()
         {
           provider = function(self)
             local spacer = (self.errors > 0 or self.warnings > 0) and " " or ""
-            return spacer .. self.hint_icon .. self.hints
+            return spacer .. vim.fn.sign_getdefined("DiagnosticSignHint")[1].text .. self.hints
           end,
         },
       },
@@ -253,7 +247,7 @@ local function diagnostics()
         {
           provider = function(self)
             local spacer = (self.errors > 0 or self.warnings > 0 or self.hints) and " " or ""
-            return spacer .. self.info_icon .. self.info
+            return spacer .. vim.fn.sign_getdefined("DiagnosticSignInfo")[1].text .. self.info
           end,
         },
       },
@@ -274,6 +268,52 @@ local function ruler()
       -- %P = percentage through file of displayed window
       provider = " %P% /%2L ",
       hl = function(self) return { fg = "bg", bg = "gray" } end,
+    },
+  }
+end
+
+local function search_results()
+  return {
+    condition = function(self)
+      local lines = vim.api.nvim_buf_line_count(0)
+      if lines > 50000 then return end
+
+      local query = vim.fn.getreg("/")
+      if query == "" then return end
+
+      if query:find("@") then return end
+
+      local search_count = vim.fn.searchcount({ recompute = 1, maxcount = -1 })
+      local active = false
+      if vim.v.hlsearch and vim.v.hlsearch == 1 and search_count.total > 0 then active = true end
+      if not active then return end
+
+      query = query:gsub([[^\V]], "")
+      query = query:gsub([[\<]], ""):gsub([[\>]], "")
+
+      self.query = query
+      self.count = search_count
+      return true
+    end,
+    {
+      provider = "",
+      hl = function() return { fg = utils.get_highlight("Substitute").bg, bg = "bg" } end,
+    },
+    {
+      provider = function(self)
+        return table.concat({
+          " ",
+          self.count.current,
+          "/",
+          self.count.total,
+          " ",
+        })
+      end,
+      hl = function() return { bg = utils.get_highlight("Substitute").bg, fg = "bg" } end,
+    },
+    {
+      provider = "",
+      hl = function() return { bg = utils.get_highlight("Substitute").bg, fg = "bg" } end,
     },
   }
 end
@@ -420,6 +460,7 @@ local function statusline()
     overseer(),
     filetype(),
     session(),
+    search_results(),
     ruler(),
   }
 end
