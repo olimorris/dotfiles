@@ -12,7 +12,7 @@ if not vim.g.legendary then
   })
 
   legendary.bind_keymaps(require(config_namespace .. ".core.mappings").plugin_keymaps())
-  legendary.bind_keymaps(require(config_namespace .. ".core.commands").plugin_commands())
+  legendary.bind_commands(require(config_namespace .. ".core.commands").plugin_commands())
   legendary.bind_autocmds(require(config_namespace .. ".core.autocmds").plugin_autocmds())
 end
 

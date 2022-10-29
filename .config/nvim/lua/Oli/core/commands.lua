@@ -70,18 +70,12 @@ function M.plugin_commands()
   return {
     -- Alpha
     {
-      "Dashboard",
-      function()
-        vim.cmd([[Alpha]])
-      end,
+      ":Alpha",
       description = "Show the Alpha dashboard",
     },
     -- Colorizer
     {
-      "Color Toggle",
-      function()
-        vim.cmd([[ColorizerToggle]])
-      end,
+      ":ColorizerToggle",
       description = "Colorizer toggle",
     },
     -- Coverage
@@ -124,65 +118,34 @@ function M.plugin_commands()
 
     -- Mason
     {
-      ":Mason<CR>",
+      ":Mason",
       description = "Open Mason",
     },
     {
-      ":MasonUninstallAll<CR>",
+      ":MasonUninstallAll",
       description = "Uninstall all Mason packages",
-    },
-    {
-      "LspInstallAll",
-      function()
-        for _, name in pairs(om.lsp.servers) do
-          vim.cmd("LspInstall " .. name)
-        end
-      end,
-      description = "Install LSP servers",
-    },
-    {
-      "LspUninstall",
-      function()
-        vim.cmd("LspUninstallAll")
-      end,
-      description = "Uninstall LSP servers",
     },
     -- neogen
     {
-      "Neogen",
-      function()
-        require("neogen").generate()
-      end,
+      ":Neogen",
       description = "Generate annotation",
     },
     -- Neotest
     {
-      "NeotestOutput",
-      function()
-        return require("neotest").output.open()
-      end,
+      ":NeotestOutput",
       description = "Open test output",
     },
     -- OnedarkPro
     {
-      "OneDarkProCache",
-      function()
-        return require("onedarkpro").cache()
-      end,
+      ":OnedarkproCache",
       description = "Cache the theme",
     },
     {
-      "OneDarkProClean",
-      function()
-        return require("onedarkpro").clean()
-      end,
+      ":OnedarkproClean",
       description = "Clean the theme cache",
     },
     {
-      "OneDarkProColors",
-      function()
-        return require("onedarkpro.utils.colorizer").show()
-      end,
+      ":OnedarkproColors",
       description = "Show the theme's colors",
     },
     -- Packer
@@ -249,45 +212,29 @@ function M.plugin_commands()
     },
     -- Persisted
     {
-      "SessionSave",
-      function()
-        require("persisted").save()
-      end,
+      ":SessionSave",
       description = "Session: Save",
     },
     {
-      "SessionStart",
-      function()
-        require("persisted").start()
-      end,
+      ":SessionStart",
       description = "Session: Start",
     },
     {
-      "SessionStop",
-      function()
-        require("persisted").stop()
-      end,
+      ":SessionStop",
       description = "Session: Stop",
     },
     {
-      "SessionDelete",
-      function()
-        require("persisted").delete()
-      end,
+      ":SessionDelete",
       description = "Session: Delete",
     },
     -- Startup time
     {
-      "Startup Time",
-      function()
-        vim.cmd([[StartupTime]])
-      end,
+      ":StartupTime",
       description = "Profile Neovim's startup time",
     },
     -- Treesitter
     {
-      "Treesitter Playground",
-      ":TSPlayground<CR>",
+      ":TSPlayground",
       description = "Treesitter Playground",
     },
   }
@@ -297,17 +244,30 @@ end
 function M.lsp_commands(client, bufnr)
   local commands = {
     {
-      "LspRestart",
+      "LspInstallAll",
+      function()
+        for _, name in pairs(om.lsp.servers) do
+          vim.cmd("LspInstall " .. name)
+        end
+      end,
+      description = "Install LSP servers",
+    },
+    {
+      ":LspUninstallAll",
+      description = "Uninstall LSP servers",
+    },
+    {
+      ":LspRestart",
       description = "Restart any attached LSP clients",
       opts = { buffer = bufnr },
     },
     {
-      "LspStart",
+      ":LspStart",
       description = "Start the LSP client manually",
       opts = { buffer = bufnr },
     },
     {
-      "LspInfo",
+      ":LspInfo",
       description = "Show attached LSP clients",
       opts = { buffer = bufnr },
     },

@@ -262,77 +262,12 @@ M.plugin_keymaps = function()
       description = "Debug: Stop",
     },
 
-    -- Harpoon
-    {
-      "<LocalLeader>a",
-      '<cmd>lua require("harpoon.mark").add_file()<CR>',
-      description = "Harpoon: Add file",
-    },
-    { "<LocalLeader>b", "<cmd>Telescope harpoon marks<CR>", description = "Harpoon: List marks" },
-    {
-      "<LocalLeader>hn",
-      '<cmd>lua require("harpoon.ui"},.nav_next()<CR>',
-      description = "Harpoon: Next mark",
-    },
-    {
-      "<LocalLeader>hp",
-      '<cmd>lua require("harpoon.ui").nav_prev()<CR>',
-      description = "Harpoon: Previous mark",
-    },
-    {
-      "<LocalLeader>h1",
-      '<cmd>lua require("harpoon.ui").nav_file(1)<CR>',
-      description = "Harpoon: Go to 1",
-    },
-    {
-      "<LocalLeader>h2",
-      '<cmd>lua require("harpoon.ui").nav_file(2)<CR>',
-      description = "Harpoon: Go to 2",
-    },
-    {
-      "<LocalLeader>h3",
-      '<cmd>lua require("harpoon.ui").nav_file(3)<CR>',
-      description = "Harpoon: Go to 3",
-    },
-    {
-      "<LocalLeader>h4",
-      '<cmd>lua require("harpoon.ui").nav_file(4)<CR>',
-      description = "Harpoon: Go to 4",
-    },
-    {
-      "<LocalLeader>h5",
-      '<cmd>lua require("harpoon.ui").nav_file(5)<CR>',
-      description = "Harpoon: Go to 5",
-    },
-
-    --hlslens
-    {
-      "n",
-      [[<cmd>execute('normal! ' . v:count1 . 'n')<CR><cmd>lua require('hlslens').start()<CR>]],
-      description = "Next result",
-    },
-    {
-      "N",
-      [[<cmd>execute('normal! ' . v:count1 . 'N')<CR><cmd>lua require('hlslens').start()<CR>]],
-      description = "Previous result",
-    },
-
     -- Hop
     { "s", "<cmd>lua require'hop'.hint_char1()<CR>", description = "Hop", mode = { "n", "o" } },
 
     -- File Explorer
     { "\\", "<cmd>Neotree toggle<CR>", description = "Neotree: Toggle" },
     { "<C-z>", "<cmd>Neotree reveal %:p<CR>", description = "Neotree: Find File" },
-
-    -- Minimap
-    {
-      "<LocalLeader>m",
-      function()
-        vim.cmd("MinimapToggle")
-        vim.cmd("MinimapRefresh")
-      end,
-      description = "Minimap toggle",
-    },
 
     -- Move.nvim
     {
@@ -359,6 +294,7 @@ M.plugin_keymaps = function()
     -- Neotest
     { "<LocalLeader>t", '<cmd>lua require("neotest").run.run()<CR>', description = "Test nearest" },
     { "<LocalLeader>tf", '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>', description = "Test file" },
+    { "<LocalLeader>tl", '<cmd>lua require("neotest").run.run_last()<CR>', description = "Run last test" },
     {
       "<LocalLeader>ts",
       function()
