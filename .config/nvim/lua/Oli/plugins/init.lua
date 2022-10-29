@@ -78,11 +78,6 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.others").colorizer() end,
     })
     use({
-      "wfxr/minimap.vim", -- Display a minimap
-      cmd = { "MinimapToggle", "Minimap", "MinimapRefresh" },
-      config = function() require(config_namespace .. ".plugins.others").minimap() end,
-    })
-    use({
       "lukas-reineke/indent-blankline.nvim", -- Show indentation lines
       config = function() require(config_namespace .. ".plugins.others").indentline() end,
     })
@@ -90,9 +85,6 @@ return packer.startup({
       "petertriho/nvim-scrollbar", -- A scrollbar for the current window
       after = "onedarkpro",
       requires = {
-        {
-          "kevinhwang91/nvim-hlslens", -- Highlight searches
-        },
         {
           "declancm/cinnamon.nvim", -- Smooth scrolling
           config = function() require(config_namespace .. ".plugins.others").cinnamon() end,
@@ -136,17 +128,17 @@ return packer.startup({
     use({
       "nvim-telescope/telescope.nvim", -- Awesome fuzzy finder for everything
       requires = {
-        {
-          "nvim-telescope/telescope-project.nvim", -- Switch between projects
-          after = "telescope.nvim",
-          config = function() require("telescope").load_extension("project") end,
-        },
-        {
-          "nvim-telescope/telescope-fzf-native.nvim", -- Use fzf within Telescope
-          run = "make",
-          after = "telescope.nvim",
-          config = function() require("telescope").load_extension("fzf") end,
-        },
+        -- {
+        --   "nvim-telescope/telescope-project.nvim", -- Switch between projects
+        --   after = "telescope.nvim",
+        --   config = function() require("telescope").load_extension("project") end,
+        -- },
+        -- {
+        --   "nvim-telescope/telescope-fzf-native.nvim", -- Use fzf within Telescope
+        --   run = "make",
+        --   after = "telescope.nvim",
+        --   config = function() require("telescope").load_extension("fzf") end,
+        -- },
         {
           "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
           after = "telescope.nvim",
@@ -155,22 +147,22 @@ return packer.startup({
           },
           config = function() require("telescope").load_extension("frecency") end,
         },
-        {
-          "nvim-telescope/telescope-smart-history.nvim", -- Show project dependant history
-          after = "telescope.nvim",
-          requires = {
-            { "tami5/sqlite.lua" },
-          },
-          config = function() require("telescope").load_extension("smart_history") end,
-        },
-        {
-          "ThePrimeagen/harpoon", -- Mark buffers for faster navigation
-          after = "telescope.nvim",
-          config = function()
-            require(config_namespace .. ".plugins.others").harpoon()
-            require("telescope").load_extension("harpoon")
-          end,
-        },
+        -- {
+        --   "nvim-telescope/telescope-smart-history.nvim", -- Show project dependant history
+        --   after = "telescope.nvim",
+        --   requires = {
+        --     { "tami5/sqlite.lua" },
+        --   },
+        --   config = function() require("telescope").load_extension("smart_history") end,
+        -- },
+        -- {
+        --   "ThePrimeagen/harpoon", -- Mark buffers for faster navigation
+        --   after = "telescope.nvim",
+        --   config = function()
+        --     require(config_namespace .. ".plugins.others").harpoon()
+        --     require("telescope").load_extension("harpoon")
+        --   end,
+        -- },
         {
           "stevearc/aerial.nvim", -- Toggled list of classes, methods etc in current file
           after = "telescope.nvim",

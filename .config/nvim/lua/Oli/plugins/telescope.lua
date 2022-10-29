@@ -51,12 +51,6 @@ telescope.setup({
     grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
     qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
 
-    -- Telescope smart history
-    history = {
-      path = '~/.local/share/nvim/databases/telescope_history.sqlite3',
-      limit = 100,
-    },
-
     -- Mappings
     mappings = {
       i = {
@@ -79,20 +73,20 @@ telescope.setup({
         "*/node_modules/*",
         "*/vendor/*",
       },
-      workspaces = {
-        ["nvim"] = os.getenv("HOME_DIR") .. ".config/nvim",
-        ["dots"] = os.getenv("HOME_DIR") .. ".dotfiles",
-        ["project"] = os.getenv("PROJECT_DIR"),
-        ["project2"] = os.getenv("OTHER_PROJECT_DIR"),
-      },
+      -- workspaces = {
+      --   ["nvim"] = os.getenv("HOME_DIR") .. ".config/nvim",
+      --   ["dots"] = os.getenv("HOME_DIR") .. ".dotfiles",
+      --   ["project"] = os.getenv("PROJECT_DIR"),
+      --   ["project2"] = os.getenv("OTHER_PROJECT_DIR"),
+      -- },
     },
-    fzf = {
-      fuzzy = true, -- false will only do exact matching
-      override_generic_sorter = false, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-      -- the default case_mode is "smart_case"
-    },
+    -- fzf = {
+    --   fuzzy = true, -- false will only do exact matching
+    --   override_generic_sorter = false, -- override the generic sorter
+    --   override_file_sorter = true, -- override the file sorter
+    --   case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+    --   -- the default case_mode is "smart_case"
+    -- },
     project = { base_dirs = { { path = os.getenv("PROJECTS_DIR") } } },
   },
 })

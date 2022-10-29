@@ -303,9 +303,6 @@ M.scrollbar = function()
       Misc = { color = colors.purple },
     },
   })
-
-  local ok, hlslens = om.safe_require("hlslens")
-  if ok then require("scrollbar.handlers.search").setup() end
 end
 
 M.stickybuf = function()
