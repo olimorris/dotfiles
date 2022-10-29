@@ -133,12 +133,11 @@ return packer.startup({
         --   after = "telescope.nvim",
         --   config = function() require("telescope").load_extension("project") end,
         -- },
-        -- {
-        --   "nvim-telescope/telescope-fzf-native.nvim", -- Use fzf within Telescope
-        --   run = "make",
-        --   after = "telescope.nvim",
-        --   config = function() require("telescope").load_extension("fzf") end,
-        -- },
+        {
+          "nvim-telescope/telescope-fzf-native.nvim", -- Use fzf within Telescope
+          run = "make",
+          config = function() require("telescope").load_extension("fzf") end,
+        },
         {
           "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
           after = "telescope.nvim",
