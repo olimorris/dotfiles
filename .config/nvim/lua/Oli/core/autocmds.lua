@@ -13,6 +13,14 @@ function M.default_autocmds()
       },
     },
     {
+      name = "MarkdownOptions",
+      {
+        "FileType",
+        ":setlocal wrap linebreak",
+        opts = { pattern = "markdown" },
+      },
+    },
+    {
       name = "QuickfixFormatting",
       {
         { "BufEnter", "WinEnter" },
@@ -143,6 +151,7 @@ function M.lsp_autocmds(client, bufnr)
 
   return autocmds
 end
+
 ---------------------------------------------------------------------------- }}}
 -----------------------------------PLUGINS---------------------------------- {{{
 function M.plugin_autocmds()
@@ -161,7 +170,7 @@ function M.plugin_autocmds()
         "User",
         ":setlocal wrap",
         opts = { pattern = "TelescopePreviewerLoaded" },
-      }
+      },
     },
     -- {
     --   name = "RefreshBufferlineColors",
@@ -182,5 +191,6 @@ function M.plugin_autocmds()
   }
   return autocmds
 end
+
 ---------------------------------------------------------------------------- }}}
 return M
