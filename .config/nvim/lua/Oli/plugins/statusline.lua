@@ -12,6 +12,7 @@ local Space = { provider = " " }
 -- Filetypes where certain elements of the statusline will not be shown
 local filetypes = {
   "^aerial$",
+  "^dressinginput$",
   "^neo--tree$",
   "^neotest--summary$",
   "^neo--tree--popup$",
@@ -146,14 +147,14 @@ end
 ---@return table
 local function current_buffer()
   return {
-    init = function(self)
-      self.filename = vim.api.nvim_buf_get_name(0)
-      self.bg_color = utils.get_highlight("Heirline").bg
-    end,
     condition = function()
       return not conditions.buffer_matches({
         filetype = filetypes,
       })
+    end,
+    init = function(self)
+      self.filename = vim.api.nvim_buf_get_name(0)
+      self.bg_color = utils.get_highlight("Heirline").bg
     end,
     {
       provider = "",
@@ -162,6 +163,10 @@ local function current_buffer()
     {
       provider = function(self) return " " .. vim.fn.fnamemodify(self.filename, ":t") .. " " end,
       hl = function(self) return { fg = "gray", bg = self.bg_color } end,
+      on_click = {
+        callback = function() vim.cmd("normal ff") end,
+        name = "find_files",
+      },
       {
         condition = function() return vim.bo.modified end,
         provider = "[+] ",
@@ -192,9 +197,7 @@ local function diagnostics()
       self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
     end,
     on_click = {
-      callback = function()
-        vim.cmd("normal fd")
-      end,
+      callback = function() vim.cmd("normal fd") end,
       name = "heirline_diagnostics",
     },
     update = { "DiagnosticChanged", "BufEnter" },
@@ -348,6 +351,10 @@ local function session()
           end
         end,
         hl = function(self) return { fg = "gray", bg = utils.get_highlight("Heirline").bg } end,
+        on_click = {
+          callback = function() vim.cmd("SessionToggle") end,
+          name = "toggle_session",
+        },
       },
       {
         provider = "",
@@ -397,6 +404,10 @@ local function overseer()
           end
         end,
         hl = function(self) return { fg = self.color } end,
+        on_click = {
+          callback = function() require("neotest").run.run_last() end,
+          name = "run_last_test",
+        },
       },
     },
   }
@@ -433,6 +444,10 @@ local function filetype()
           bg = utils.get_highlight("Heirline").bg,
         }
       end,
+      on_click = {
+        callback = function() om.ChangeFiletype() end,
+        name = "change_ft",
+      },
     },
     {
       provider = "",
