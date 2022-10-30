@@ -13,7 +13,6 @@ end
 if vim.fn.filereadable(os.getenv("HOME_DIR") .. ".asdf/shims/python") then
   vim.g.python3_host_prog = os.getenv("HOME_DIR") .. ".asdf/shims/python"
 end
-
 --------------------------------------------------------------------------- }}}
 -------------------------------BUFFER OPTIONS------------------------------- {{{
 vim.bo.autoindent = true
@@ -25,7 +24,7 @@ vim.bo.tabstop = 4 -- Number of spaces in a tab
 -- vim.bo.wrapmargin = 1
 --------------------------------------------------------------------------- }}}
 ---------------------------------VIM OPTIONS-------------------------------- {{{
-vim.o.background = "light"
+vim.o.background = "dark"
 vim.opt.cmdheight = 0 -- Hide the command bar
 vim.opt.clipboard = { "unnamedplus" } -- Use the system clipboard
 vim.opt.completeopt = { "menuone", "noselect" } -- Completion opions for code completion
@@ -50,8 +49,8 @@ vim.opt.mouse = "a" -- Use the mouse in all modes
 vim.o.sessionoptions = "buffers,curdir,folds,globals,tabpages,winpos,winsize" -- Session options to store in the session
 vim.opt.scrolloff = 5 -- Set the cursor 5 lines down instead of directly at the top of the file
 --[[
-	NOTE: don't store marks as they are currently broken in Neovim!
-	@credit: wincent
+  NOTE: don't store marks as they are currently broken in Neovim!
+  @credit: wincent
 ]]
 vim.opt.shada = "!,'0,f0,<50,s10,h"
 vim.opt.shell = "/opt/homebrew/bin/fish"
