@@ -1,9 +1,9 @@
 ------------------------------------SETUP----------------------------------- {{{
 local ok, mason = om.safe_require("mason-lspconfig")
 if not ok then return end
+
 om.lsp = {}
---
--- The servers to automatically install using LSPI
+
 om.lsp.servers = {
   "bashls",
   "cssls",
@@ -57,56 +57,25 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
   max_width = max_width,
   max_height = max_height,
 })
-
--- Format on save, asynchronously and save the file
--- https://github.com/mrjones2014/dotfiles/blob/e6786500fc3b17d1d26a4e6ca93b33e5305798b1/.config/nvim/lua/lsp/init.lua#L4
-vim.lsp.handlers["textDocument/formatting"] = function(err, result, client)
-  if err ~= nil then
-    vim.api.nvim_err_write(err)
-    return
-  end
-
-  if result == nil then return end
-
-  if
-    vim.api.nvim_buf_get_var(client.bufnr, "format_changedtick")
-    == vim.api.nvim_buf_get_var(client.bufnr, "changedtick")
-  then
-    local view = vim.fn.winsaveview()
-    vim.lsp.util.apply_text_edits(result, client.bufnr, "utf-16")
-    vim.fn.winrestview(view)
-    if client.bufnr == vim.api.nvim_get_current_buf() then
-      vim.b.format_saving = true
-      vim.cmd("update")
-      vim.b.format_saving = false
-    end
-  end
-end
 ---------------------------------------------------------------------------- }}}
 ----------------------------------ON ATTACH--------------------------------- {{{
--- local symbols, aerial = om.safe_require("aerial", { silent = true })
 local maps, legendary = om.safe_require("legendary", { silent = true })
 local nav, navic = om.safe_require("nvim-navic", { silent = true })
 
-if maps then
-    legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_basic_commands())
-end
+if maps then legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_commands()) end
 
 function om.lsp.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  -- if symbols then
-  --   pcall(aerial.on_attach, client, bufnr)
-  -- end
-
   if maps then
     legendary.bind_keymaps(require(config_namespace .. ".core.mappings").lsp_keymaps(client, bufnr))
     legendary.bind_autocmds(require(config_namespace .. ".core.autocmds").lsp_autocmds(client, bufnr))
-    legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_commands(client, bufnr))
+    legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_client_commands(client, bufnr))
   end
 
   if nav and client.server_capabilities.documentSymbolProvider then pcall(navic.attach, client, bufnr) end
 end
+
 ---------------------------------------------------------------------------- }}}
 --------------------------------SETUP SERVERS------------------------------- {{{
 local capabilities = vim.lsp.protocol.make_client_capabilities()

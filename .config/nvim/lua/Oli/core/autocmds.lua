@@ -155,6 +155,14 @@ function M.plugin_autocmds()
         opts = { pattern = "alpha" },
       },
     },
+    {
+      name = "Telescope",
+      {
+        "User",
+        ":setlocal wrap",
+        opts = { pattern = "TelescopePreviewerLoaded" },
+      }
+    },
     -- {
     --   name = "RefreshBufferlineColors",
     --   {

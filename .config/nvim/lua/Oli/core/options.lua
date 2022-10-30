@@ -25,7 +25,7 @@ vim.bo.tabstop = 4 -- Number of spaces in a tab
 -- vim.bo.wrapmargin = 1
 --------------------------------------------------------------------------- }}}
 ---------------------------------VIM OPTIONS-------------------------------- {{{
-vim.o.background = "dark"
+vim.o.background = "light"
 vim.opt.cmdheight = 0 -- Hide the command bar
 vim.opt.clipboard = { "unnamedplus" } -- Use the system clipboard
 vim.opt.completeopt = { "menuone", "noselect" } -- Completion opions for code completion

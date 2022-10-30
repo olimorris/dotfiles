@@ -60,12 +60,14 @@ M.colorizer = function()
   if not ok then return end
 
   colorizer.setup({
-    "css",
-    eruby = { mode = "foreground" },
-    html = { mode = "foreground" },
-    "lua",
-    "javascript",
-    "vue",
+    filetypes = {
+      "css",
+      eruby = { mode = "foreground" },
+      html = { mode = "foreground" },
+      "lua",
+      "javascript",
+      "vue",
+    },
   })
 end
 
@@ -240,11 +242,6 @@ M.persisted = function()
     should_autosave = function()
       if vim.bo.filetype == "alpha" then return false end
       return true
-    end,
-    before_save = function()
-      -- Clear out Minimap before saving the session
-      -- With Minimap open it stops the session restoring to the last cursor position
-      pcall(vim.cmd, "bw minimap")
     end,
     telescope = {
       before_source = function()

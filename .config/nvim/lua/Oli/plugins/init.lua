@@ -69,11 +69,7 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.file_explorer") end,
     })
     use({
-      "stevearc/dressing.nvim", -- Utilises Neovim 0.6's new UI hooks to manage inputs, selects etc
-      config = function() require(config_namespace .. ".plugins.others").dressing() end,
-    })
-    use({
-      "norcalli/nvim-colorizer.lua", -- Highlight hex and rgb colors within Neovim
+      "NvChad/nvim-colorizer.lua", -- Highlight hex and rgb colors within Neovim
       cmd = { "Colorizer*" },
       config = function() require(config_namespace .. ".plugins.others").colorizer() end,
     })
@@ -188,6 +184,12 @@ return packer.startup({
     })
     use({
       "mrjones2014/legendary.nvim", -- A legend for all keymaps, commands and autocmds
+      requires = {
+        {
+          "stevearc/dressing.nvim", -- Utilises Neovim 0.6's new UI hooks to manage inputs, selects etc
+          config = function() require(config_namespace .. ".plugins.others").dressing() end,
+        },
+      },
       config = function() require(config_namespace .. ".plugins.legendary") end,
     })
     use({

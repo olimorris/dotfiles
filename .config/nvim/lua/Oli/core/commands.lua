@@ -4,51 +4,37 @@ function M.default_commands()
   return {
     {
       "LineNumbers",
-      function()
-        om.ToggleLineNumbers()
-      end,
+      function() om.ToggleLineNumbers() end,
       description = "Toggle line numbers",
     },
     {
       "CopyMessage",
-      function()
-        vim.cmd([[let @+ = execute('messages')]])
-      end,
+      function() vim.cmd([[let @+ = execute('messages')]]) end,
       description = "Copy message output",
     },
     {
       "Reload",
-      function()
-        om.reload()
-      end,
+      function() om.reload() end,
       description = "Reload Neovim config",
     },
     {
       "Sessions",
-      function()
-        vim.cmd([[Telescope persisted]])
-      end,
+      function() vim.cmd([[Telescope persisted]]) end,
       description = "Session: List",
     },
     {
       "Snippets",
-      function()
-        om.EditSnippet()
-      end,
+      function() om.EditSnippet() end,
       description = "Edit Snippets",
     },
     {
       "TestAll",
-      function()
-        om.RunTestSuiteAsync()
-      end,
+      function() om.RunTestSuiteAsync() end,
       description = "Test all",
     },
     {
       "Theme",
-      function()
-        om.ToggleTheme()
-      end,
+      function() om.ToggleTheme() end,
       description = "Toggle theme",
     },
     {
@@ -56,14 +42,20 @@ function M.default_commands()
       function()
         local uuid = vim.fn.system("uuidgen"):gsub("\n", ""):lower()
         local line = vim.fn.getline(".")
-        vim.schedule(function()
-          vim.fn.setline(".", vim.fn.strpart(line, 0, vim.fn.col(".")) .. uuid .. vim.fn.strpart(line, vim.fn.col(".")))
-        end)
+        vim.schedule(
+          function()
+            vim.fn.setline(
+              ".",
+              vim.fn.strpart(line, 0, vim.fn.col(".")) .. uuid .. vim.fn.strpart(line, vim.fn.col("."))
+            )
+          end
+        )
       end,
       description = "Generate a UUID and insert it into the buffer",
     },
   }
 end
+
 ---------------------------------------------------------------------------- }}}
 -----------------------------------PLUGINS---------------------------------- {{{
 function M.plugin_commands()
@@ -81,38 +73,28 @@ function M.plugin_commands()
     -- Coverage
     {
       "Coverage Toggle",
-      function()
-        require("coverage").toggle()
-      end,
+      function() require("coverage").toggle() end,
       description = "Coverage: Toggle",
     },
     {
       "Coverage Load",
-      function()
-        require("coverage").load(true)
-      end,
+      function() require("coverage").load(true) end,
       description = "Coverage: Load",
     },
     {
       "Coverage Clear",
-      function()
-        require("coverage").clear()
-      end,
+      function() require("coverage").clear() end,
       description = "Coverage: Clear",
     },
     {
       "Coverage Summary",
-      function()
-        require("coverage").summary()
-      end,
+      function() require("coverage").summary() end,
       description = "Coverage: Summary",
     },
     -- Lazygit
     {
       "Lazygit",
-      function()
-        om.Lazygit():toggle()
-      end,
+      function() om.Lazygit():toggle() end,
       description = "Lazygit",
     },
 
@@ -167,9 +149,7 @@ function M.plugin_commands()
     },
     {
       "PackerSync",
-      function()
-        om.PackerSync()
-      end,
+      function() om.PackerSync() end,
       description = "Packer: Sync",
     },
     {
@@ -193,9 +173,7 @@ function M.plugin_commands()
       "PackerSnapshotDelete",
       function()
         om.select("Delete snapshot", om.GetSnapshots(), function(choice)
-          if choice == nil then
-            return
-          end
+          if choice == nil then return end
           require(config_namespace .. ".plugins")
           require("packer.snapshot").delete(om.path_to_snapshots .. choice)
         end)
@@ -239,9 +217,10 @@ function M.plugin_commands()
     },
   }
 end
+
 ---------------------------------------------------------------------------- }}}
 -------------------------------------LSP------------------------------------ {{{
-function M.lsp_basic_commands()
+function M.lsp_commands()
   local commands = {
     {
       "LspInstallAll",
@@ -258,9 +237,7 @@ function M.lsp_basic_commands()
     },
     {
       "LspLog",
-      function()
-        vim.cmd("edit " .. vim.lsp.get_log_path())
-      end,
+      function() vim.cmd("edit " .. vim.lsp.get_log_path()) end,
       description = "Show LSP logs",
     },
   }
@@ -268,7 +245,7 @@ function M.lsp_basic_commands()
   return commands
 end
 
-function M.lsp_commands(client, bufnr)
+function M.lsp_client_commands(client, bufnr)
   local commands = {
     {
       ":LspRestart",
@@ -287,19 +264,8 @@ function M.lsp_commands(client, bufnr)
     },
   }
 
-  if client.name == "null-ls" or client.name == "solargraph" then
-    table.insert(commands, {
-      "LspFormat",
-      function()
-        vim.b.format_changedtick = vim.b.changedtick
-        vim.lsp.buf.format({ async = true })
-      end,
-      description = "Format the current document with LSP",
-      opts = { buffer = bufnr },
-    })
-  end
-
   return commands
 end
+
 ---------------------------------------------------------------------------- }}}
 return M

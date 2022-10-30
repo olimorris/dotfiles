@@ -203,36 +203,28 @@ M.plugin_keymaps = function()
     -- Copilot
     {
       "<C-a>",
-      function()
-        require("copilot.suggestion").accept()
-      end,
+      function() require("copilot.suggestion").accept() end,
       description = "Copilot: Accept",
       mode = { "i" },
       opts = { silent = true },
     },
     {
       "<M-]>",
-      function()
-        require("copilot.suggestion").next()
-      end,
+      function() require("copilot.suggestion").next() end,
       description = "Copilot: Next",
       mode = { "i" },
       opts = { silent = true },
     },
     {
       "<M-[>",
-      function()
-        require("copilot.suggestion").previous()
-      end,
+      function() require("copilot.suggestion").previous() end,
       description = "Copilot: Previous",
       mode = { "i" },
       opts = { silent = true },
     },
     {
       "<C-\\>",
-      function()
-        require("copilot.panel").open()
-      end,
+      function() require("copilot.panel").open() end,
       description = "Copilot: Panel",
       mode = { "n", "i" },
     },
@@ -313,17 +305,13 @@ M.plugin_keymaps = function()
     -- Refactoring.nvim
     {
       "<LocalLeader>re",
-      function()
-        require("telescope").extensions.refactoring.refactors()
-      end,
+      function() require("telescope").extensions.refactoring.refactors() end,
       description = "Refactoring",
       mode = { "n", "v", "x" },
     },
     {
       "<LocalLeader>rd",
-      function()
-        require("refactoring").debug.printf({ below = false })
-      end,
+      function() require("refactoring").debug.printf({ below = false }) end,
       description = "Refactoring: Printf",
     },
     {
@@ -340,14 +328,25 @@ M.plugin_keymaps = function()
     },
     {
       "<LocalLeader>rc",
-      function()
-        require("refactoring").debug.cleanup()
-      end,
+      function() require("refactoring").debug.cleanup() end,
       description = "Refactoring: Cleanup",
     },
 
     -- Telescope
-    { "fd", h.lazy_required_fn("telescope.builtin", "diagnostics", { bufnr = 0 }), description = "Find LSP diagnostics" },
+    {
+      "fd",
+      h.lazy_required_fn("telescope.builtin", "diagnostics", {
+        layout_strategy = "vertical",
+        layout_config = {
+          vertical = {
+            results_height = 0.5,
+            prompt_position = "top",
+          },
+        },
+        bufnr = 0,
+      }),
+      description = "Find LSP diagnostics",
+    },
     {
       "ff",
       h.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
@@ -458,9 +457,7 @@ M.completion_keymaps = function()
   local _, luasnip = om.safe_require("luasnip")
 
   local has_words_before = function()
-    if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
-      return false
-    end
+    if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
     local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
   end
@@ -540,7 +537,6 @@ M.lsp_keymaps = function(client, bufnr)
         description = "LSP: Peek definition",
         opts = { buffer = bufnr },
       },
-      { "F", vim.lsp.buf.code_action, description = "LSP: Show code actions", opts = { buffer = bufnr } },
       {
         "[",
         vim.diagnostic.goto_prev,
@@ -551,6 +547,13 @@ M.lsp_keymaps = function(client, bufnr)
     }
   end
 
+  if client.supports_method("textDocument/codeAction") then
+    table.insert(
+      maps,
+      { "F", vim.lsp.buf.code_action, description = "LSP: Show code actions", opts = { buffer = bufnr } }
+    )
+  end
+
   if client.name ~= "null-ls" and client.server_capabilities.implementation then
     table.insert(maps, {
       "gi",
@@ -559,18 +562,21 @@ M.lsp_keymaps = function(client, bufnr)
       opts = { buffer = bufnr },
     })
   end
+
   if client.name ~= "null-ls" and client.server_capabilities.type_definition then
     table.insert(
       maps,
       { "gt", vim.lsp.buf.type_definition, description = "LSP: Go to type definition", opts = { buffer = bufnr } }
     )
   end
+
   if client.name ~= "null-ls" and client.supports_method("textDocument/rename") then
     table.insert(
       maps,
       { "<leader>rn", vim.lsp.buf.rename, description = "LSP: Rename symbol", opts = { buffer = bufnr } }
     )
   end
+
   if client.name ~= "null-ls" and client.supports_method("textDocument/signatureHelp") then
     table.insert(
       maps,
@@ -578,28 +584,14 @@ M.lsp_keymaps = function(client, bufnr)
     )
   end
 
-  local lsps_that_can_format = { ["null-ls"] = true }
-
-  if om.contains(lsps_that_can_format, client.name) and client.server_capabilities.documentFormattingProvider then
+  if client.supports_method("textDocument/formatting") then
     table.insert(maps, {
       "<LocalLeader>lf",
-      function()
-        vim.b.format_changedtick = vim.b.changedtick
-        vim.lsp.buf.format({ aync = true })
-      end,
-      description = "LSP: Format",
+      function() vim.lsp.buf.format({ async = true }) end,
+      description = "LSP: Format with " .. client.name,
       opts = { buffer = bufnr },
     })
-  else
-    client.server_capabilities.documentFormattingProvider = false
   end
-
-  -- Trouble.nvim
-  table.insert(maps, {
-    "T",
-    "<cmd>TroubleToggle<CR>",
-    description = "LSP: Trouble",
-  })
 
   return maps
 end

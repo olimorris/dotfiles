@@ -1,7 +1,5 @@
 local ok, telescope = om.safe_require("telescope")
-if not ok then
-  return
-end
+if not ok then return end
 
 telescope.setup({
   defaults = {
@@ -16,14 +14,12 @@ telescope.setup({
     layout_strategy = "horizontal",
     layout_config = {
       horizontal = {
+        preview_width = 0.6,
         prompt_position = "top",
-        preview_width = 0.55,
-        results_width = 0.8,
       },
-      vertical = { mirror = false },
-      width = 0.87,
-      height = 0.80,
-      preview_cutoff = 50,
+      width = 0.9,
+      height = 0.8,
+      preview_cutoff = 50
     },
 
     -- Searching

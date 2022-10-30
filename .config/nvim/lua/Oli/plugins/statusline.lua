@@ -84,13 +84,13 @@ local function vim_mode()
       mode_colors = {
         n = "purple",
         i = "green",
-        v = "yellow",
-        V = "yellow",
-        ["\22"] = "yellow",
-        c = "yellow",
-        s = "orange",
-        S = "orange",
-        ["\19"] = "orange",
+        v = "orange",
+        V = "orange",
+        ["\22"] = "orange",
+        c = "orange",
+        s = "yello",
+        S = "yello",
+        ["\19"] = "yello",
         r = "green",
         R = "green",
         ["!"] = "red",
@@ -191,6 +191,12 @@ local function diagnostics()
       self.hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
       self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
     end,
+    on_click = {
+      callback = function()
+        vim.cmd("normal fd")
+      end,
+      name = "heirline_diagnostics",
+    },
     update = { "DiagnosticChanged", "BufEnter" },
     -- Errors
     {
@@ -323,10 +329,6 @@ end
 local function session()
   return {
     condition = function(self) return (vim.g.persisting ~= nil) end,
-    on_click = {
-      callback = function() return require("persisted").toggle() end,
-      name = "Toggle session",
-    },
     {
       condition = function()
         return not conditions.buffer_matches({
