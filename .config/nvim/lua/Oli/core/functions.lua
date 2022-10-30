@@ -1,3 +1,11 @@
+-------------------------------CHANGE FILETYPE------------------------------ {{{
+function om.ChangeFiletype()
+  vim.ui.input({ prompt = "Change filetype to: " }, function(new_ft)
+    if new_ft ~= nil then vim.bo.filetype = new_ft end
+  end)
+end
+
+--------------------------------------------------------------------------- }}}
 -----------------------------------LAZYGIT---------------------------------- {{{
 function om.Lazygit()
   local Terminal = require("toggleterm.terminal").Terminal
@@ -27,6 +35,7 @@ function om.Lazygit()
     end,
   })
 end
+
 --------------------------------------------------------------------------- }}}
 -----------------------------------PACKER----------------------------------- {{{
 -- Maintain a custom command for Packer Syncing. This is useful for when we
@@ -80,6 +89,7 @@ function om.FormatWithRuboCop()
     },
   })
 end
+
 --------------------------------------------------------------------------- }}}
 ----------------------------------SNIPPETS---------------------------------- {{{
 function om.EditSnippet()
@@ -91,16 +101,7 @@ function om.EditSnippet()
     vim.cmd(":edit " .. path .. "/" .. choice .. ".json")
   end)
 end
---------------------------------------------------------------------------- }}}
----------------------------------TEST ASYNC--------------------------------- {{{
-function om.RunTestSuiteAsync()
-  om.async_run({
-    command = vim.g["test#" .. vim.bo.filetype .. "#asyncrun"],
-    callbacks = {
-      before = function() vim.cmd("silent! w") end,
-    },
-  })
-end
+
 --------------------------------------------------------------------------- }}}
 -----------------------------TOGGLE LINE NUMBERS---------------------------- {{{
 function om.ToggleLineNumbers()
@@ -110,6 +111,7 @@ function om.ToggleLineNumbers()
     vim.wo.relativenumber = true
   end
 end
+
 --------------------------------------------------------------------------- }}}
 --------------------------------TOGGLE THEME-------------------------------- {{{
 function om.ToggleTheme(mode)
@@ -121,4 +123,5 @@ function om.ToggleTheme(mode)
     vim.o.background = "dark"
   end
 end
+
 --------------------------------------------------------------------------- }}}
