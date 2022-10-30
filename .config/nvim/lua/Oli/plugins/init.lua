@@ -231,27 +231,25 @@ return packer.startup({
     ---------------------------------------------------------------------------- }}}
     -----------------------------------CODING----------------------------------- {{{
     -------------------------------------LSP------------------------------------ {{{
-        use({
+    use({
       "williamboman/mason.nvim", -- Easily install and manage LSP servers, DAP servers, linters, and formatters
       requires = {
-        "williamboman/mason-lspconfig.nvim",
-        "nvim-lspconfig",
+        "williamboman/mason-lspconfig.nvim", -- Install LSP servers from within Neovim
+        "neovim/nvim-lspconfig", -- Use Neovim's native LSP config
         "kosayoda/nvim-lightbulb", -- VSCode style lightbulb if there is a code action available
       },
-      config = function() require(config_namespace .. ".plugins.others").mason() end,
+      config = function()
+        require(config_namespace .. ".plugins.others").mason()
+        require(config_namespace .. ".plugins.lsp")
+      end,
     })
-
     use({
-      "williamboman/mason-lspconfig.nvim", -- Install LSP servers from within Neovim
-      after = "mason.nvim",
+      "jayp0521/mason-null-ls.nvim", -- Automatically install null-ls servers
       requires = {
-        { "neovim/nvim-lspconfig" }, -- Use Neovims native LSP config
+        "williamboman/mason.nvim",
+        "jose-elias-alvarez/null-ls.nvim", -- General purpose LSP server for running linters, formatters, etc
       },
-      config = function() require(config_namespace .. ".plugins.lsp") end,
-    })
-    use({
-      "jose-elias-alvarez/null-ls.nvim", -- General language server for linting, formatting etc
-      after = "mason-lspconfig.nvim",
+      after = "mason.nvim",
       config = function() require(config_namespace .. ".plugins.null-ls") end,
     })
     use({

@@ -71,6 +71,11 @@ end
 ---@param client table
 ---@param bufnr number
 local function setup_mappings(client, bufnr)
+  -- Disable formatting with other LSPs because we're handling formatting via null-ls
+  if client.name ~= 'null-ls' then
+    client.server_capabilities.documentFormattingProvider = false
+  end
+
   local ok, legendary = om.safe_require("legendary", { silent = true })
   if ok then
     legendary.bind_keymaps(require(config_namespace .. ".core.mappings").lsp_keymaps(client, bufnr))
@@ -89,7 +94,7 @@ end
 ---Function to call when attaching to an LSP server
 ---@param client table
 ---@param bufnr number
-local function on_attach(client, bufnr)
+function om.lsp.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
   setup_plugins(client, bufnr)
   setup_mappings(client, bufnr)
@@ -109,7 +114,7 @@ mason.setup_handlers({
   function(server_name)
     require("lspconfig")[server_name].setup({
       capabilities = capabilities,
-      on_attach = on_attach,
+      on_attach = om.lsp.on_attach,
     })
   end,
 })
