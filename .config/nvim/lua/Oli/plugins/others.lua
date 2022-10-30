@@ -114,7 +114,7 @@ M.dressing = function()
   if not ok then return end
 
   dressing.setup({
-    input = { default_prompt = "> ", winblend = 0 },
+    input = { default_prompt = "> ", relative = "editor", winblend = 0, prefer_width = 50, prompt_align = "center" },
     select = { backend = "telescope" },
   })
 end
