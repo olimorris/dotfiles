@@ -1,4 +1,4 @@
-------------------------------------SETUP----------------------------------- {{{
+------------------------------------INIT------------------------------------ {{{
 local ok, mason = om.safe_require("mason-lspconfig")
 if not ok then return end
 
@@ -58,24 +58,42 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
   max_height = max_height,
 })
 ---------------------------------------------------------------------------- }}}
-----------------------------------ON ATTACH--------------------------------- {{{
-local maps, legendary = om.safe_require("legendary", { silent = true })
-local nav, navic = om.safe_require("nvim-navic", { silent = true })
+----------------------------------LSP SETUP--------------------------------- {{{
+---Setup the plugins that require the LSP client
+---@param client table
+---@param bufnr number
+local function setup_plugins(client, bufnr)
+  local ok, navic = om.safe_require("nvim-navic", { silent = true })
+  if ok and client.server_capabilities.documentSymbolProvider then pcall(navic.attach, client, bufnr) end
+end
 
-if maps then legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_commands()) end
-
-function om.lsp.on_attach(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  if maps then
+---Setup the mappings that require the LSP client
+---@param client table
+---@param bufnr number
+local function setup_mappings(client, bufnr)
+  local ok, legendary = om.safe_require("legendary", { silent = true })
+  if ok then
     legendary.bind_keymaps(require(config_namespace .. ".core.mappings").lsp_keymaps(client, bufnr))
     legendary.bind_autocmds(require(config_namespace .. ".core.autocmds").lsp_autocmds(client, bufnr))
     legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_client_commands(client, bufnr))
-  end
 
-  if nav and client.server_capabilities.documentSymbolProvider then pcall(navic.attach, client, bufnr) end
+    if not vim.g.legendary_loaded then
+      -- Do not load lsp commands twice
+      legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_commands())
+    end
+
+    vim.g.legendary_loaded = true
+  end
 end
 
+---Function to call when attaching to an LSP server
+---@param client table
+---@param bufnr number
+local function on_attach(client, bufnr)
+  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  setup_plugins(client, bufnr)
+  setup_mappings(client, bufnr)
+end
 ---------------------------------------------------------------------------- }}}
 --------------------------------SETUP SERVERS------------------------------- {{{
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -91,7 +109,7 @@ mason.setup_handlers({
   function(server_name)
     require("lspconfig")[server_name].setup({
       capabilities = capabilities,
-      on_attach = om.lsp.on_attach,
+      on_attach = on_attach,
     })
   end,
 })

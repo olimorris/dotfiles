@@ -345,7 +345,7 @@ M.plugin_keymaps = function()
         },
         bufnr = 0,
       }),
-      description = "Find LSP diagnostics",
+      description = "LSP: Find diagnostics",
     },
     {
       "ff",

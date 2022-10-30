@@ -229,16 +229,16 @@ function M.lsp_commands()
           vim.cmd("LspInstall " .. name)
         end
       end,
-      description = "Install LSP servers",
+      description = "LSP: Install all servers",
     },
     {
       ":LspUninstallAll",
-      description = "Uninstall LSP servers",
+      description = "LSP: Uninstall all servers",
     },
     {
       "LspLog",
       function() vim.cmd("edit " .. vim.lsp.get_log_path()) end,
-      description = "Show LSP logs",
+      description = "LSP: Show logs",
     },
   }
 
@@ -249,17 +249,17 @@ function M.lsp_client_commands(client, bufnr)
   local commands = {
     {
       ":LspRestart",
-      description = "Restart any attached LSP clients",
+      description = "LSP: Restart any attached clients",
       opts = { buffer = bufnr },
     },
     {
       ":LspStart",
-      description = "Start the LSP client manually",
+      description = "LSP: Start the client manually",
       opts = { buffer = bufnr },
     },
     {
       ":LspInfo",
-      description = "Show attached LSP clients",
+      description = "LSP: Show attached clients",
       opts = { buffer = bufnr },
     },
   }
