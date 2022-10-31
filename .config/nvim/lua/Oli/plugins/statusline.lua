@@ -12,7 +12,6 @@ local Space = { provider = " " }
 -- Filetypes where certain elements of the statusline will not be shown
 local filetypes = {
   "^aerial$",
-  "^dressinginput$",
   "^neo--tree$",
   "^neotest--summary$",
   "^neo--tree--popup$",
@@ -23,6 +22,7 @@ local filetypes = {
 -- Filetypes which force the statusline to be inactive
 local force_inactive_filetypes = {
   "^alpha$",
+  "^DressingInput$",
   "^frecency$",
   "^packer$",
   "^TelescopePrompt$",
@@ -169,7 +169,7 @@ local function current_buffer()
       },
       {
         condition = function() return vim.bo.modified end,
-        provider = "[+] ",
+        provider = " ",
         hl = { fg = "gray" },
       },
       {
@@ -458,8 +458,7 @@ end
 
 ---The statusline component
 ---@return table
-local function statusline()
-  return {
+local Statusline = {
     condition = function()
       return not conditions.buffer_matches({
         filetype = force_inactive_filetypes,
@@ -480,14 +479,15 @@ local function statusline()
     search_results(),
     ruler(),
   }
-end
 
 ---Set the statusline
----@return table
 function M.setup()
   require("heirline").load_colors(vim.g.onedarkpro_colors)
 
-  return heirline.setup(statusline())
+  heirline.setup(Statusline, nil, require("Oli.plugins.bufferline"))
+
+  vim.o.showtabline = 2
+  vim.cmd([[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])
 end
 
 return M
