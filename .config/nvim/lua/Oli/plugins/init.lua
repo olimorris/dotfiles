@@ -45,11 +45,11 @@ return packer.startup({
       },
       config = function() require(config_namespace .. ".plugins.statusline").setup() end,
     })
-    use({
-      "akinsho/bufferline.nvim", -- Bufferline
-      after = "onedarkpro",
-      config = function() require(config_namespace .. ".plugins.bufferline") end,
-    })
+    -- use({
+    --   "akinsho/bufferline.nvim", -- Bufferline
+    --   after = "onedarkpro",
+    --   config = function() require(config_namespace .. ".plugins.bufferline") end,
+    -- })
     use({
       "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
       cmd = { "Bdelete", "Bwipeout" },

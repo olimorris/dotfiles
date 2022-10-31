@@ -174,18 +174,6 @@ M.plugin_keymaps = function()
     -- bufdelete.nvim
     { "<C-c>", "<cmd>Bdelete<CR>", description = "Close Buffer" },
 
-    -- Bufferline
-    { "<Tab>", "<Cmd>BufferLineCycleNext<CR>", description = "Next buffer", opts = { noremap = false } },
-    { "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", description = "Previous buffer", opts = { noremap = false } },
-    { "<LocalLeader>1", '<cmd>lua require("bufferline").go_to_buffer(1, true)<CR>', description = "Buffer go to 1" },
-    { "<LocalLeader>2", '<cmd>lua require("bufferline").go_to_buffer(2, true)<CR>', description = "Buffer go to 2" },
-    { "<LocalLeader>3", '<cmd>lua require("bufferline").go_to_buffer(3, true)<CR>', description = "Buffer go to 3" },
-    { "<LocalLeader>4", '<cmd>lua require("bufferline").go_to_buffer(4, true)<CR>', description = "Buffer go to 4" },
-    { "<LocalLeader>5", '<cmd>lua require("bufferline").go_to_buffer(5, true)<CR>', description = "Buffer go to 5" },
-    { "<LocalLeader>5", '<cmd>lua require("bufferline").go_to_buffer(5, true)<CR>', description = "Buffer go to 5" },
-    { "<Leader>[", "<cmd>BufferLineMovePrev<CR>", description = "Buffer move left" },
-    { "<Leader>]", "<cmd>BufferLineMoveNext<CR>", description = "Buffer move right" },
-
     -- Comments
     {
       "gcc",
@@ -253,6 +241,10 @@ M.plugin_keymaps = function()
       end,
       description = "Debug: Stop",
     },
+
+    -- Heirline
+    { "<Tab>", "<Cmd>bnext<CR>", description = "Next buffer", opts = { noremap = false } },
+    { "<S-Tab>", "<Cmd>bprev<CR>", description = "Previous buffer", opts = { noremap = false } },
 
     -- Hop
     { "s", "<cmd>lua require'hop'.hint_char1()<CR>", description = "Hop", mode = { "n", "o" } },
