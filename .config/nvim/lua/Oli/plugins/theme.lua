@@ -37,6 +37,7 @@ onedarkpro.setup({
 
       ghost_text = "#555961",
 
+      buffer_color = "#939aa3",
       statusline_bg = "#2e323b", -- gray
 
       telescope_prompt = "#2e323a",
@@ -51,6 +52,7 @@ onedarkpro.setup({
 
       ghost_text = "#c3c3c3",
 
+      buffer_color = "#6a6a6a",
       statusline_bg = "#f0f0f0", -- gray
 
       telescope_prompt = "#f5f5f5",
@@ -110,6 +112,7 @@ onedarkpro.setup({
 
     -- Heirline
     Heirline = { bg = "${statusline_bg}" },
+    HeirlineBufferline = { fg = "${buffer_color}" },
 
     -- Luasnip
     LuaSnipChoiceNode = { fg = "${yellow}" },

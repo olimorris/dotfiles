@@ -257,18 +257,8 @@ M.project_nvim = function()
   if not ok then return end
 
   project.setup({
-    detection_methods = { "lsp", "pattern" }, -- Use the native LSP an the pattern method to detect directory
-    ignore_lsp = { "efm" },
-    patterns = {
-      ".git",
-      "_darcs",
-      ".hg",
-      ".bzr",
-      ".svn",
-      "Makefile",
-      "package.json",
-      "Gemfile",
-    },
+    ignore_lsp = { "efm", "null-ls" },
+    patterns = { "Gemfile" },
   })
 end
 

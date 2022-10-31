@@ -8,6 +8,11 @@ function M.default_commands()
       description = "Toggle line numbers",
     },
     {
+      "ChangeFiletype",
+      function() om.ChangeFiletype() end,
+      description = "Change filetype of current buffer",
+    },
+    {
       "CopyMessage",
       function() vim.cmd([[let @+ = execute('messages')]]) end,
       description = "Copy message output",
