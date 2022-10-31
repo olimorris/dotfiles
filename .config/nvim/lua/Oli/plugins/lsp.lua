@@ -81,13 +81,6 @@ local function setup_mappings(client, bufnr)
     legendary.bind_keymaps(require(config_namespace .. ".core.mappings").lsp_keymaps(client, bufnr))
     legendary.bind_autocmds(require(config_namespace .. ".core.autocmds").lsp_autocmds(client, bufnr))
     legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_client_commands(client, bufnr))
-
-    if not vim.g.legendary_loaded then
-      -- Do not load lsp commands twice
-      legendary.bind_commands(require(config_namespace .. ".core.commands").lsp_commands())
-    end
-
-    vim.g.legendary_loaded = true
   end
 end
 

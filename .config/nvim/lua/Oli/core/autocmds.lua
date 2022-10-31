@@ -92,56 +92,32 @@ end
 -------------------------------------LSP------------------------------------ {{{
 function M.lsp_autocmds(client, bufnr)
   local autocmds = {}
-  if client.name ~= "null-ls" then
-    autocmds = {
+
+  autocmds = {
+    {
+      name = "LspOnAttachAutocmds",
+      clear = false,
       {
-        name = "LspOnAttachAutocmds",
-        clear = true,
-        {
-          { "CursorHold", "CursorHoldI" },
-          ":silent! lua vim.lsp.buf.document_highlight()",
-          opts = { buffer = bufnr },
-        },
-        {
-          "CursorMoved",
-          ":silent! lua vim.lsp.buf.clear_references()",
-          opts = { buffer = bufnr },
-        },
+        { "CursorHold", "CursorHoldI" },
+        ":silent! lua vim.lsp.buf.document_highlight()",
+        opts = { buffer = bufnr },
       },
-    }
-  end
+      {
+        "CursorMoved",
+        ":silent! lua vim.lsp.buf.clear_references()",
+        opts = { buffer = bufnr },
+      },
+    },
+  }
 
-  if client.name ~= "null-ls" and client.server_capabilities.code_lens then
-    table.insert(autocmds, {
-      { "BufEnter", "CursorHold", "CursorHoldI" },
-      ":silent! lua vim.lsp.codelens.refresh()",
-      opts = { buffer = bufnr },
+  local ok, lightbulb = om.safe_require("nvim-lightbulb")
+  if ok then
+    lightbulb.setup({
+      ignore = { "null-ls" },
+      autocmd = { enabled = true },
+      sign = { enabled = false },
+      float = { enabled = true },
     })
-  end
-
-  -- if client.name == "null-ls" then
-  --   table.insert(autocmds, {
-  --     { "BufWritePost" },
-  --     function()
-  --       vim.b.format_changedtick = vim.b.changedtick
-  --       vim.lsp.buf.formatting()
-  --     end,
-  --     opts = { buffer = bufnr },
-  --   })
-  -- end
-
-  if client.name ~= "null-ls" then
-    local ok, lightbulb = om.safe_require("nvim-lightbulb")
-    if ok then
-      lightbulb.setup({
-        sign = {
-          enabled = false,
-        },
-        float = {
-          enabled = true,
-        },
-      })
-    end
     table.insert(autocmds, {
       { "CursorHold", "CursorHoldI" },
       function() lightbulb.update_lightbulb() end,

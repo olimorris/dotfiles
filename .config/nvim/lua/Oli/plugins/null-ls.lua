@@ -44,7 +44,7 @@ null_ls.setup({
     null_ls.builtins.formatting.shfmt.with({
       filetypes = { "sh", "zsh" },
     }),
-    null_ls.builtins.formatting.stylua,
+  null_ls.builtins.formatting.stylua,
   },
   on_attach = om.lsp.on_attach, -- Use the same on_attach function as the LSP client
   update_on_insert = true,
