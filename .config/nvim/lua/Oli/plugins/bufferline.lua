@@ -4,17 +4,27 @@ if not ok then return end
 local utils = require("heirline.utils")
 local conditions = require("heirline.conditions")
 
+local function trim_filename(filename, char_limit, truncate)
+  local length = string.len(filename)
+  truncate = truncate or " ..."
+
+  if length > char_limit then
+    filename = string.sub(filename, 1, char_limit) .. truncate
+  end
+
+  return filename
+end
+
 local TablineBufnr = {
   provider = function(self) return tostring(self.bufnr) .. ": " end,
   hl = function(self) return { fg = self.is_active and "purple" or "gray", italic = self.is_active } end,
 }
 
--- we redefine the filename component, as we probably only want the tail and not the relative path
 local TablineFileName = {
   provider = function(self)
     -- self.filename will be defined later, just keep looking at the example!
     local filename = self.filename
-    filename = filename == "" and "[No Name]" or vim.fn.fnamemodify(filename, ":t")
+    filename = filename == "" and "[No Name]" or trim_filename(vim.fn.fnamemodify(filename, ":t"), 10)
     return filename
   end,
   hl = function(self)
@@ -26,9 +36,6 @@ local TablineFileName = {
   end,
 }
 
--- this looks exactly like the FileFlags component that we saw in
--- #crash-course-part-ii-filename-and-friends, but we are indexing the bufnr explicitly
--- also, we are adding a nice icon for terminal buffers.
 local TablineFileFlags = {
   {
     condition = function(self) return vim.api.nvim_buf_get_option(self.bufnr, "modified") end,
@@ -51,7 +58,6 @@ local TablineFileFlags = {
   },
 }
 
--- Here the filename block finally comes together
 local TablineFileNameBlock = {
   init = function(self) self.filename = vim.api.nvim_buf_get_name(self.bufnr) end,
   hl = { bg = "bg" },
@@ -71,14 +77,11 @@ local TablineFileNameBlock = {
   TablineFileFlags,
 }
 
--- The final touch!
 local TablineBufferBlock = utils.surround({ "  ", "   " }, function(self) end, { TablineFileNameBlock })
 
--- and here we go
 local BufferLine = utils.make_buflist(
   TablineBufferBlock,
-  { provider = "", hl = { fg = "gray" } }, -- left truncation, optional (defaults to "<")
-  { provider = "", hl = { fg = "gray" } } -- right trunctation, also optional (defaults to ...... yep, ">")
-  -- by the way, open a lot of buffers and try clicking them ;)
+  { provider = "", hl = { fg = "gray" } },
+  { provider = "", hl = { fg = "gray" } }
 )
 return BufferLine
