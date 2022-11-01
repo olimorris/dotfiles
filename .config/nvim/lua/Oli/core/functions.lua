@@ -4,7 +4,13 @@ function om.ChangeFiletype()
     if new_ft ~= nil then vim.bo.filetype = new_ft end
   end)
 end
-
+--------------------------------------------------------------------------- }}}
+-------------------------------MOVE TO BUFFER------------------------------- {{{
+function om.MoveToBuffer()
+  vim.ui.input({ prompt = "Move to buffer number: " }, function(bufnr)
+    if bufnr ~= nil then pcall(vim.cmd, "b " .. bufnr) end
+  end)
+end
 --------------------------------------------------------------------------- }}}
 -----------------------------------LAZYGIT---------------------------------- {{{
 function om.Lazygit()
@@ -75,21 +81,6 @@ vim.api.nvim_create_user_command("PackerRollback", function()
     vim.notify("Rollback to: " .. choice)
   end)
 end, {})
---------------------------------------------------------------------------- }}}
------------------------------RUBOCOP FORMATTING----------------------------- {{{
-function om.FormatWithRuboCop()
-  -- Runs unsafe options on the code base!
-  local filepath = vim.fn.expand("%:p")
-  om.async_run({
-    command = "rubocop",
-    args = "--auto-correct-all --display-time " .. filepath,
-    callbacks = {
-      before = function() vim.cmd("silent! w") end,
-      after = function() vim.cmd("silent! e %") end,
-    },
-  })
-end
-
 --------------------------------------------------------------------------- }}}
 ----------------------------------SNIPPETS---------------------------------- {{{
 function om.EditSnippet()
