@@ -1,7 +1,37 @@
 local M = {}
 ------------------------------DEFAULT COMMANDS------------------------------ {{{
 function M.default_autocmds()
+  local function reload()
+    om.invalidate(config_namespace .. ".plugins", true)
+    require("packer").compile()
+  end
+
   local autocmds = {
+    -- {
+    --   name = "ReloadConfig",
+    --   clear = true,
+    --   {
+    --     "BufWritePost",
+    --     function() reload() end,
+    --     opts = {
+    --       pattern = { "*/" .. config_namespace .. "/plugins/*.lua" },
+    --     },
+    --   },
+    --   {
+    --     "User",
+    --     function() reload() end,
+    --     opts = {
+    --       pattern = "VimrcReloaded",
+    --     },
+    --   },
+    --   {
+    --     "User",
+    --     function() vim.notify("Compilation finished", "info") end,
+    --     opts = {
+    --       pattern = "PackerCompileDone",
+    --     },
+    --   },
+    -- },
     {
       name = "FiletypeIndentation",
       {

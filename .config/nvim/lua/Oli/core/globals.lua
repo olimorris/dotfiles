@@ -68,32 +68,28 @@ function om.get_highlight(name)
   return hl
 end
 
----Reload lua modules
-function om.reload(quiet)
-  local reload_module = require("plenary.reload").reload_module
-
-  for _, module in ipairs({
-    config_namespace .. ".core.options",
-    config_namespace .. ".core.functions",
-    config_namespace .. ".core.mappings",
-    config_namespace .. ".core.commands",
-    config_namespace .. ".plugins.bufferline",
-    config_namespace .. ".plugins.theme",
-    "bufferline",
-  }) do
-    reload_module(module, false)
+---Invalidate lua modules
+---@param path string
+---@param recursive boolean
+function om.invalidate(path, recursive)
+  if recursive then
+    for key, value in pairs(package.loaded) do
+      if key ~= '_G' and value and vim.fn.match(key, path) ~= -1 then
+        package.loaded[key] = nil
+        require(key)
+      end
+    end
+  else
+    package.loaded[path] = nil
+    require(path)
   end
-
-  local reloaded, _ = pcall(dofile, vim.fn.expand("$MYVIMRC"))
-  if reloaded and not quiet then vim.notify("Reloaded Neovim configuration!") end
 end
-
 ---Use Neovim native UI select
 ---@param prompt string
 ---@param choices table
 ---@param callback function
 ---@return function
-function om.select(prompt, choices, callback) vim.ui.select(choices, { prompt = prompt }, callback) end
+function om.select(prompt, choices, callback) return vim.ui.select(choices, { prompt = prompt }, callback) end
 
 function om.get_icon(filename, extension, opts)
   local ok, devicons = om.safe_require("nvim-web-devicons")

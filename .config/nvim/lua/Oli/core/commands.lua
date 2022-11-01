@@ -18,11 +18,6 @@ function M.default_commands()
       description = "Copy message output",
     },
     {
-      "Reload",
-      function() om.reload() end,
-      description = "Reload Neovim config",
-    },
-    {
       "Sessions",
       function() vim.cmd([[Telescope persisted]]) end,
       description = "Session: List",

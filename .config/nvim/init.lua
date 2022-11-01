@@ -1,16 +1,21 @@
 local ok, impatient = pcall(require, "impatient")
 if ok then impatient.enable_profile() end
 
+-- Reload functions to enable hot-reloading...sort of
+-- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/init.lua
+local ok, reload = pcall(require, "plenary.reload")
+RELOAD = ok and reload.reload_module or function(...) return ... end
+function R(name)
+  RELOAD(name)
+  return require(name)
+end
+
 -- We namespace the config so that when we reload our modules more easily
 -- Ref: https://www.reddit.com/r/neovim/comments/puuskh/comment/he5vnqc
 _G.config_namespace = "Oli"
 
-for _, module in ipairs({
-  config_namespace .. ".core.globals",
-  config_namespace .. ".core.options",
-  config_namespace .. ".core.functions",
-  config_namespace .. ".plugins",
-}) do
-  local ok, err = pcall(require, module)
-  if not ok then vim.api.nvim_err_writeln("Failed to load " .. module .. "\n\n" .. err) end
-end
+-- Load the configuration
+R(config_namespace .. ".core.globals")
+R(config_namespace .. ".core.options")
+R(config_namespace .. ".core.functions")
+R(config_namespace .. ".plugins")
