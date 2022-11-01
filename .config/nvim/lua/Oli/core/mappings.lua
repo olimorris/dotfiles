@@ -26,6 +26,8 @@ M.default_keymaps = function()
     -- Replace selected text without yanking it
     { "p", '"_dP', description = "without ", mode = { "v" } },
 
+    { "<LocalLeader>b", "<cmd>lua om.MoveToBuffer()<CR>", description = "Move to a specific buffer number" },
+
     { "<Leader>qa", "<cmd>qall<CR>", description = "Quit Neovim" },
     { "<C-s>", "<cmd>silent! write<CR>", description = "Save buffer", mode = { "n", "i" } },
     { "<C-n>", "<cmd>enew<CR>", description = "New buffer" },
@@ -556,12 +558,12 @@ M.lsp_keymaps = function(client, bufnr)
     { "]", vim.diagnostic.goto_next, description = "LSP: Go to next diagnostic item", opts = { buffer = bufnr } },
   }
 
-    table.insert(mappings, {
-      "<LocalLeader>f",
-      function() vim.lsp.buf.format({ async = true }) end,
-      description = "LSP: Format document",
-      opts = { buffer = bufnr },
-    })
+  table.insert(mappings, {
+    "<LocalLeader>f",
+    function() vim.lsp.buf.format({ async = true }) end,
+    description = "LSP: Format document",
+    opts = { buffer = bufnr },
+  })
 
   return mappings
 end

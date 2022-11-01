@@ -52,7 +52,6 @@ return packer.startup({
     -- })
     use({
       "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
-      cmd = { "Bdelete", "Bwipeout" },
     })
     use({
       "lewis6991/gitsigns.nvim", -- Git signs in the sign column
