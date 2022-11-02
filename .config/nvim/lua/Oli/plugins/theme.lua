@@ -110,6 +110,10 @@ onedarkpro.setup({
     -- DAP UI
     DapUIBreakpointsCurrentLine = { fg = "${yellow}", style = "bold" },
 
+    -- Fidget
+    FidgetTask = { fg = "${gray}" },
+    FidgetTitle = { fg = "${purple}", style = "italic" },
+
     -- Heirline
     Heirline = { bg = "${statusline_bg}" },
     HeirlineBufferline = { fg = "${buffer_color}" },

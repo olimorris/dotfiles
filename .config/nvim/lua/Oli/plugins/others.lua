@@ -84,7 +84,7 @@ M.copilot = function()
   local ok, copilot = om.safe_require("copilot")
   if not ok then return end
 
-  require("copilot").setup({
+  copilot.setup({
     panel = {
       auto_refresh = true,
     },
@@ -116,6 +116,23 @@ M.dressing = function()
   dressing.setup({
     input = { default_prompt = "> ", relative = "editor", winblend = 0, prefer_width = 50, prompt_align = "center" },
     select = { backend = "telescope" },
+  })
+end
+
+M.fidget = function()
+  local ok, fidget = om.safe_require("fidget")
+  if not ok then
+    return
+  end
+
+  fidget.setup({
+    text = {
+      spinner = "line",
+      done = "",
+    },
+    window = {
+      blend = 0,
+    },
   })
 end
 
