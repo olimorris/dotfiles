@@ -160,7 +160,7 @@ end
 -----------------------------------PLUGINS---------------------------------- {{{
 -----------------------------------GENERAL---------------------------------- {{{
 M.plugin_keymaps = function()
-  local h = require("legendary.helpers")
+  local h = require("legendary.toolbox")
   return {
     -- Legendary
     {
@@ -516,7 +516,7 @@ M.lsp_keymaps = function(client, bufnr)
     return {}
   end
 
-  local h = require("legendary.helpers")
+  local h = require("legendary.toolbox")
 
   local mappings = {
     { "gd", vim.lsp.buf.definition, description = "LSP: Go to definition", opts = { buffer = bufnr } },

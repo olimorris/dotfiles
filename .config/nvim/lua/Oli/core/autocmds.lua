@@ -6,7 +6,7 @@ function M.default_autocmds()
     require("packer").compile()
   end
 
-  local autocmds = {
+  return {
     -- {
     --   name = "ReloadConfig",
     --   clear = true,
@@ -71,21 +71,23 @@ function M.default_autocmds()
       },
     },
     {
-      name = "Terminal mappings",
-      { "TermOpen" },
-      function()
-        if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
-          local opts = { silent = false, buffer = 0 }
-          vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
-          vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
-        end
-      end,
-      opts = {
-        pattern = "term://*",
+      name = "ChangeMappingsInTerminal",
+      {
+        "TermOpen",
+        function()
+          if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
+            local opts = { silent = false, buffer = 0 }
+            vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+            vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
+          end
+        end,
+        opts = {
+          pattern = "term://*",
+        },
       },
     },
     {
-      name = "Remove whitespace on save",
+      name = "RemoveWhitespaceOnSave",
       {
         { "BufWritePre" },
         [[%s/\s\+$//e]],
@@ -104,18 +106,16 @@ function M.default_autocmds()
     --     },
     --   },
     -- },
-  }
-
-  -- Highlight text when yanked
-  table.insert(autocmds, {
-    name = "YankHighlight",
+    -- Highlight text when yanked
     {
-      "TextYankPost",
-      vim.highlight.on_yank,
-      opts = { pattern = "*" },
+      name = "HighlightYankedText",
+      {
+        "TextYankPost",
+        vim.highlight.on_yank,
+        opts = { pattern = "*" },
+      },
     },
-  })
-  return autocmds
+  }
 end
 
 ---------------------------------------------------------------------------- }}}
