@@ -8,11 +8,21 @@ local function trim_filename(filename, char_limit, truncate)
   local length = string.len(filename)
   truncate = truncate or " ..."
 
-  if length > char_limit then
-    filename = string.sub(filename, 1, char_limit) .. truncate
-  end
+  if length > char_limit then filename = string.sub(filename, 1, char_limit) .. truncate end
 
   return filename
+end
+
+local function format_filename(filename, char_limit)
+  if string.len(filename) >= char_limit then return trim_filename(filename, char_limit, "") end
+
+  local diff = char_limit - string.len(filename)
+
+  -- If divisible by 2, add spaces to both sides
+  if (diff % 2) == 0 then return string.rep(" ", diff / 2) .. filename .. string.rep(" ", diff / 2) end
+
+  -- If not, add uneven space to both sides
+  return string.rep(" ", diff / 2) .. filename .. string.rep(" ", diff / 2) .. " "
 end
 
 local TablineBufnr = {
@@ -24,7 +34,7 @@ local TablineFileName = {
   provider = function(self)
     -- self.filename will be defined later, just keep looking at the example!
     local filename = self.filename
-    filename = filename == "" and "[No Name]" or trim_filename(vim.fn.fnamemodify(filename, ":t"), 10)
+    filename = filename == "" and "[No Name]" or format_filename(vim.fn.fnamemodify(filename, ":t"), 15)
     return filename
   end,
   hl = function(self)
@@ -77,11 +87,11 @@ local TablineFileNameBlock = {
   TablineFileFlags,
 }
 
-local TablineBufferBlock = utils.surround({ "  ", "   " }, function(self) end, { TablineFileNameBlock })
+local TablineBufferBlock = utils.surround({ " ", " " }, function(self) end, { TablineFileNameBlock })
 
 local BufferLine = utils.make_buflist(
   TablineBufferBlock,
-  { provider = "", hl = { fg = "gray" } },
-  { provider = "", hl = { fg = "gray" } }
+  { provider = " ", hl = { fg = "gray" } },
+  { provider = " ", hl = { fg = "gray" } }
 )
 return BufferLine
