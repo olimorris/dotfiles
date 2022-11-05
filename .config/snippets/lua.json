@@ -1,18 +1,20 @@
 {
-	"Print table": {
-		"prefix": [
-			"pt"
-		],
-		"body": [
-			"om.print_table($0)"
-		]
-	},
-	"Print table (safe)": {
-		"prefix": [
-			"pp"
-		],
-		"body": [
-			"require('pl.pretty').dump($0)"
-		]
-	}
+  "Print table": {
+    "prefix": ["pt"],
+    "body": ["om.print_table($0)"]
+  },
+  "Print table (safe)": {
+    "prefix": ["pp"],
+    "body": ["require('pl.pretty').dump($0)"]
+  },
+  "Packer use": {
+    "prefix": ["us"],
+    "body": [
+      "use({",
+      "\t\"$0\",",
+      "\tafter = \"$1\",",
+      "\tconfig = function() require(config_namespace .. \".plugins.others\").$2() end,",
+      "})"
+    ]
+  }
 }
