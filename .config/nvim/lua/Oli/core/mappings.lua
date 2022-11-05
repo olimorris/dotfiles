@@ -179,8 +179,8 @@ M.plugin_keymaps = function()
     -- Comments
     {
       "gcc",
-      function(visual_selection)
-        if visual_selection then
+      function()
+        if require('legendary.toolbox').is_visual_mode() then
           require("Comment.api").toggle.linewise(vim.fn.visualmode())
         else
           require("Comment.api").toggle.linewise.current()
@@ -310,8 +310,8 @@ M.plugin_keymaps = function()
     },
     {
       "<LocalLeader>rv",
-      function(visual_selection)
-        if visual_selection then
+      function()
+        if require('legendary.toolbox').is_visual_mode() then
           require("refactoring").debug.print_var({})
         else
           require("refactoring").debug.print_var({ normal = true })
