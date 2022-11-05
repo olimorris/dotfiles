@@ -57,13 +57,13 @@ M.default_keymaps = function()
     { ">", ">gv", description = "Indent", mode = { "v" } },
 
     { "<Esc>", "<cmd>:noh<CR>", description = "Clear searches" },
-    -- {
-    --   "<LocalLeader>f",
-    --   ":s/{search}/{replace}/g",
-    --   description = "Search and replace",
-    --   mode = { "n", "v" },
-    --   opts = { silent = false },
-    -- },
+    {
+      "<Leader>f",
+      ":s/{search}/{replace}/g",
+      description = "Search and replace",
+      mode = { "n", "v" },
+      opts = { silent = false },
+    },
     { "B", "^", description = "Beginning of a line" },
     { "E", "$", description = "End of a line" },
     { "<CR>", "o<Esc>", description = "Insert blank line below" },
@@ -160,7 +160,7 @@ end
 -----------------------------------PLUGINS---------------------------------- {{{
 -----------------------------------GENERAL---------------------------------- {{{
 M.plugin_keymaps = function()
-  local h = require("legendary.toolbox")
+  local t = require("legendary.toolbox")
   return {
     -- Legendary
     {
@@ -329,7 +329,7 @@ M.plugin_keymaps = function()
     -- Telescope
     {
       "fd",
-      h.lazy_required_fn("telescope.builtin", "diagnostics", {
+      t.lazy_required_fn("telescope.builtin", "diagnostics", {
         layout_strategy = "vertical",
         layout_config = {
           vertical = {
@@ -343,24 +343,24 @@ M.plugin_keymaps = function()
     },
     {
       "ff",
-      h.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
+      t.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
       description = "Find files",
     },
-    { "fb", h.lazy_required_fn("telescope.builtin", "buffers"), description = "Find open buffers" },
+    { "fb", t.lazy_required_fn("telescope.builtin", "buffers"), description = "Find open buffers" },
     { "fp", "<cmd>Telescope project display_type=full<CR>", description = "Find projects" },
     {
       "<C-f>",
-      h.lazy_required_fn("telescope.builtin", "current_buffer_fuzzy_find"),
+      t.lazy_required_fn("telescope.builtin", "current_buffer_fuzzy_find"),
       description = "Find in buffers",
     },
     {
       "<C-g>",
-      h.lazy_required_fn("telescope.builtin", "live_grep", { path_display = { "shorten" }, grep_open_files = true }),
+      t.lazy_required_fn("telescope.builtin", "live_grep", { path_display = { "shorten" }, grep_open_files = true }),
       description = "Find in open files",
     },
     {
       "<Leader>g",
-      h.lazy_required_fn("telescope.builtin", "live_grep", { path_display = { "smart" } }),
+      t.lazy_required_fn("telescope.builtin", "live_grep", { path_display = { "smart" } }),
       description = "Find in pwd",
     },
     {
@@ -506,7 +506,7 @@ end
 ---------------------------------------------------------------------------- }}}
 -------------------------------------LSP------------------------------------ {{{
 M.lsp_keymaps = function(client, bufnr)
-  -- Do not load LSP keymaps twice to the buffer
+  -- Do not load LSP keymaps twice
   if
     #vim.tbl_filter(
       function(keymap) return (keymap.desc or ""):lower() == "lsp: find references" end,
@@ -516,13 +516,13 @@ M.lsp_keymaps = function(client, bufnr)
     return {}
   end
 
-  local h = require("legendary.toolbox")
+  local t = require("legendary.toolbox")
 
   local mappings = {
     { "gd", vim.lsp.buf.definition, description = "LSP: Go to definition", opts = { buffer = bufnr } },
     {
       "gr",
-      h.lazy_required_fn("telescope.builtin", "lsp_references"),
+      t.lazy_required_fn("telescope.builtin", "lsp_references"),
       description = "LSP: Find references",
       opts = { buffer = bufnr },
     },
@@ -535,7 +535,7 @@ M.lsp_keymaps = function(client, bufnr)
     { "H", vim.lsp.buf.hover, description = "LSP: Show hover information", opts = { buffer = bufnr } },
     {
       "<LocalLeader>p",
-      h.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer"),
+      t.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer"),
       description = "LSP: Peek definition",
       opts = { buffer = bufnr },
     },

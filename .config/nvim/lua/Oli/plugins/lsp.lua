@@ -79,7 +79,7 @@ local function setup_mappings(client, bufnr)
   local ok, legendary = om.safe_require("legendary", { silent = true })
   if ok then
     legendary.keymaps(require(config_namespace .. ".core.mappings").lsp_keymaps(client, bufnr))
-    -- legendary.bind_autocmds(require(config_namespace .. ".core.autocmds").lsp_autocmds(client, bufnr))
+    legendary.autocmds(require(config_namespace .. ".core.autocmds").lsp_autocmds(client, bufnr))
     legendary.commands(require(config_namespace .. ".core.commands").lsp_client_commands(client, bufnr))
   end
 end
