@@ -122,6 +122,10 @@ local GitBranch = {
         filetype = filetypes,
       })
     end,
+    on_click = {
+      callback = function() om.ListBranches() end,
+      name = "list_git_branches",
+    },
     {
       provider = "",
       hl = function(self) return { fg = "bg", bg = self.bg_color } end,
@@ -254,6 +258,11 @@ local LspDiagnostics = {
 
 ---Return the current line number as a % of total lines and the total lines in the file
 local Ruler = {
+  condition = function()
+    return not conditions.buffer_matches({
+      filetype = filetypes,
+    })
+  end,
   {
     provider = "",
     hl = function(self) return { fg = "gray", bg = "bg" } end,
@@ -344,94 +353,92 @@ local Session = {
   },
 }
 
-local Overseer =
+local Overseer = {
+  condition = function()
+    ok, _ = om.safe_require("overseer")
+    if ok then return true end
+  end,
+  init = function(self)
+    self.overseer = require("overseer")
+    self.tasks = self.overseer.task_list
+    self.STATUS = self.overseer.constants.STATUS
+  end,
+  static = {
+    symbols = {
+      ["FAILURE"] = "  ",
+      ["CANCELED"] = "  ",
+      ["SUCCESS"] = "  ",
+      ["RUNNING"] = " 省",
+    },
+    colors = {
+      ["FAILURE"] = "red",
+      ["CANCELED"] = "gray",
+      ["SUCCESS"] = "green",
+      ["RUNNING"] = "yellow",
+    },
+  },
   {
-    condition = function()
-      ok, _ = om.safe_require("overseer")
-      if ok then return true end
-    end,
-    init = function(self)
-      self.overseer = require("overseer")
-      self.tasks = self.overseer.task_list
-      self.STATUS = self.overseer.constants.STATUS
-    end,
-    static = {
-      symbols = {
-        ["FAILURE"] = "  ",
-        ["CANCELED"] = "  ",
-        ["SUCCESS"] = "  ",
-        ["RUNNING"] = " 省",
-      },
-      colors = {
-        ["FAILURE"] = "red",
-        ["CANCELED"] = "gray",
-        ["SUCCESS"] = "green",
-        ["RUNNING"] = "yellow",
-      },
-    },
+    condition = function(self) return #self.tasks.list_tasks() > 0 end,
     {
-      condition = function(self) return #self.tasks.list_tasks() > 0 end,
-      {
-        provider = function(self)
-          local tasks_by_status = self.overseer.util.tbl_group_by(self.tasks.list_tasks({ unique = true }), "status")
+      provider = function(self)
+        local tasks_by_status = self.overseer.util.tbl_group_by(self.tasks.list_tasks({ unique = true }), "status")
 
-          for _, status in ipairs(self.STATUS.values) do
-            local status_tasks = tasks_by_status[status]
-            if self.symbols[status] and status_tasks then
-              self.color = self.colors[status]
-              return self.symbols[status]
-            end
+        for _, status in ipairs(self.STATUS.values) do
+          local status_tasks = tasks_by_status[status]
+          if self.symbols[status] and status_tasks then
+            self.color = self.colors[status]
+            return self.symbols[status]
           end
-        end,
-        hl = function(self) return { fg = self.color } end,
-        on_click = {
-          callback = function() require("neotest").run.run_last() end,
-          name = "run_last_test",
-        },
+        end
+      end,
+      hl = function(self) return { fg = self.color } end,
+      on_click = {
+        callback = function() require("neotest").run.run_last() end,
+        name = "run_last_test",
       },
     },
-  }
+  },
+}
 
 --- Return information on the current buffers filetype
-local FileType =
+local FileType = {
+  init = function(self)
+    self.filename = vim.api.nvim_buf_get_name(0)
+    local extension = vim.fn.fnamemodify(self.filename, ":e")
+    self.icon, self.icon_color =
+      require("nvim-web-devicons").get_icon_color(self.filename, extension, { default = true })
+  end,
+  condition = function()
+    return not conditions.buffer_matches({
+      filetype = filetypes,
+    })
+  end,
+  on_click = {
+    callback = function() om.ChangeFiletype() end,
+    name = "change_ft",
+  },
   {
-    init = function(self)
-      self.filename = vim.api.nvim_buf_get_name(0)
-      local extension = vim.fn.fnamemodify(self.filename, ":e")
-      self.icon, self.icon_color =
-        require("nvim-web-devicons").get_icon_color(self.filename, extension, { default = true })
+    provider = "",
+    hl = function(self) return { fg = utils.get_highlight("Heirline").bg, bg = "bg" } end,
+  },
+  {
+    provider = function(self) return " " .. self.icon end,
+    hl = function(self) return { fg = "gray", bg = utils.get_highlight("Heirline").bg } end,
+  },
+  {
+    provider = function() return " " .. string.lower(vim.bo.filetype) .. " " end,
+    hl = function(self)
+      return {
+        fg = "gray",
+        bg = utils.get_highlight("Heirline").bg,
+      }
     end,
-    condition = function()
-      return not conditions.buffer_matches({
-        filetype = filetypes,
-      })
-    end,
-    {
-      provider = "",
-      hl = function(self) return { fg = utils.get_highlight("Heirline").bg, bg = "bg" } end,
-    },
-    {
-      provider = function(self) return " " .. self.icon end,
-      hl = function(self) return { fg = "gray", bg = utils.get_highlight("Heirline").bg } end,
-    },
-    {
-      provider = function() return " " .. string.lower(vim.bo.filetype) .. " " end,
-      hl = function(self)
-        return {
-          fg = "gray",
-          bg = utils.get_highlight("Heirline").bg,
-        }
-      end,
-      on_click = {
-        callback = function() om.ChangeFiletype() end,
-        name = "change_ft",
-      },
-    },
-    {
-      provider = "",
-      hl = function(self) return { bg = utils.get_highlight("Heirline").bg, fg = "bg" } end,
-    },
-  }
+  },
+  {
+    provider = "",
+    hl = function(self) return { bg = utils.get_highlight("Heirline").bg, fg = "bg" } end,
+  },
+}
 
 ---The statusline component
 local Statusline = {
@@ -453,7 +460,7 @@ local Statusline = {
   FileType,
   Session,
   SearchResults,
-  Ruler
+  Ruler,
 }
 
 ---Set the statusline

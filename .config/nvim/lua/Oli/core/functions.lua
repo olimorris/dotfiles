@@ -5,6 +5,19 @@ function om.ChangeFiletype()
   end)
 end
 --------------------------------------------------------------------------- }}}
+--------------------------------GIT BRANCHES-------------------------------- {{{
+function om.ListBranches()
+  local branches = vim.fn.systemlist([[git branch 2>/dev/null]])
+
+  vim.ui.select(branches, {
+    prompt = "Git branches",
+  }, function(choice)
+    if choice == nil then return end
+    local git_cmd = string.format("git checkout %s", choice)
+    vim.fn.systemlist(git_cmd)
+  end)
+end
+--------------------------------------------------------------------------- }}}
 -------------------------------MOVE TO BUFFER------------------------------- {{{
 function om.MoveToBuffer()
   vim.ui.input({ prompt = "Move to buffer number: " }, function(bufnr)
