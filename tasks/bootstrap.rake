@@ -24,6 +24,12 @@ namespace :install do
     end
   end
 
+  task :xcode do
+    section 'Installing XCode'
+
+    run %( xcode-select --install )
+  end
+
   task :mackup do
     section 'Installing Mackup'
 
@@ -53,6 +59,7 @@ end
 
 namespace :uninstall do
   desc 'Uninstall dotfiles'
+
   task :mackup do
     section 'Using Mackup to put configs back'
 
@@ -63,6 +70,7 @@ namespace :uninstall do
       run %( mackup uninstall )
     end
   end
+
   task :dotbot do
     section 'Uninstall Dotbot and restoring dotfiles'
 

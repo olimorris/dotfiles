@@ -44,12 +44,6 @@ namespace :install do
     end
   end
 
-  desc 'Install XCode'
-  task :xcode do
-    section 'Installing XCode'
-
-    run %( xcode-select --install )
-  end
 
   desc 'Install macOS Configurations'
   task :macos do

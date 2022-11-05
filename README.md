@@ -15,10 +15,10 @@ My macOS dotfiles. Installation instructions are my own
 ## :computer: Setting up a new Mac
 
 * Ensure you're signed into iCloud and the App Store
-* Download the `~/Code` and `~/dotfiles` folders in iCloud Drive
+* Download the `~/Code` and `~/Dotfiles` folders in iCloud Drive
 * Open up a terminal and run:
 ```bash
-cd ~/.dotfiles && rake install
+cd ~/Library/Mobile Documents/com~apple~CloudDocs/Dotfiles && rake install
 ```
 * Install Aqueux for your beautiful wallpaper transitions
 * Ensure that `~/.dotfiles` is linked to your GitHub repo
@@ -35,11 +35,9 @@ cd ~/.dotfiles && rake install
 ## :page_facing_up: Things to note
 
 * Your plugins will automatically install when you run [Neovim](https://github.com/neovim/neovim) for the first time
-* Sync your Code Tresor to `~/Code`
 
 ### Syncing to GitHub
 
-* This is required as you disable the backing up of `.git` folders in Tresorit
 * If your `rakefile` has run as intended, `~/.dotfiles` should be synced to GitHub
 * Run `git status` to confirm this is the case. You will see the working tree changes (if any)
 
