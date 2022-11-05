@@ -121,9 +121,7 @@ end
 
 M.fidget = function()
   local ok, fidget = om.safe_require("fidget")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   fidget.setup({
     text = {
@@ -132,6 +130,11 @@ M.fidget = function()
     },
     window = {
       blend = 0,
+    },
+    sources = {
+      ["null-ls"] = {
+        ignore = true, -- Ignore annoying code action prompts
+      },
     },
   })
 end
@@ -222,6 +225,34 @@ M.nvim_navic = function()
   navic.setup({
     highlight = true,
     separator = "  ",
+    icons = {
+      File = " ",
+      Module = " ",
+      Namespace = " ",
+      Package = " ",
+      Class = " ",
+      Method = " ",
+      Property = " ",
+      Field = " ",
+      Constructor = " ",
+      Enum = " ",
+      Interface = " ",
+      Function = " ",
+      Variable = " ",
+      Constant = " ",
+      String = " ",
+      Number = " ",
+      Boolean = " ",
+      Array = " ",
+      Object = " ",
+      Key = " ",
+      Null = " ",
+      EnumMember = " ",
+      Struct = " ",
+      Event = " ",
+      Operator = " ",
+      TypeParameter = " ",
+    },
   })
 end
 
