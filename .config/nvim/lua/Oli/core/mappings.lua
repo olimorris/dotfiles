@@ -108,15 +108,15 @@ M.default_keymaps = function()
     {
       "cq",
       {
-        n = { [[:\<C-u>call v:lua.om.mappings.setup_mc()<CR>*``qz]] },
-        x = { [[":\<C-u>call v:lua.om.mappings.setup_mc()<CR>gv" . g:mc . "``qz"]], opts = { expr = true } },
+        n = { [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>*``qz]] },
+        x = { [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . g:mc . "``qz"]], opts = { expr = true } },
       },
       description = "Multiple cursors: Macros",
     },
     {
       "cQ",
       {
-        n = { [[:\<C-u>call v:lua.om.mappings.setup_mc()<CR>#``qz]] },
+        n = { [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>#``qz]] },
         x = {
           [[":\<C-u>call v:lua.as.mappings.setup_CR()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
           opts = { expr = true },
@@ -129,7 +129,7 @@ M.default_keymaps = function()
   -- Functions for multiple cursors
   vim.g.mc = vim.api.nvim_replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]], true, true, true)
 
-  function om.mappings.setup_mc()
+  function SetupMultipleCursors()
     vim.keymap.set(
       "n",
       "<Enter>",

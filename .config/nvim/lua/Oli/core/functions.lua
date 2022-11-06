@@ -87,7 +87,7 @@ function om.GetSnapshots()
 end
 
 vim.api.nvim_create_user_command("PackerRollback", function()
-  om.select("Rollback to snapshot", om.GetSnapshots(), function(choice)
+  vim.ui.select(om.GetSnapshots(), { prompt = "Rollback to snapshot" }, function(choice)
     if choice == nil then return end
 
     require("packer").rollback(snapshot_path .. "/" .. choice)
@@ -100,7 +100,7 @@ function om.EditSnippet()
   local path = Homedir .. "/.config/snippets"
   local snippets = { "lua", "ruby", "python", "global", "package" }
 
-  om.select("Snippet to edit", snippets, function(choice)
+  vim.ui.select(snippets, { prompt = "Snippet to edit" }, function(choice)
     if choice == nil then return end
     vim.cmd(":edit " .. path .. "/" .. choice .. ".json")
   end)

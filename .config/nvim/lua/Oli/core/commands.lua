@@ -172,7 +172,7 @@ function M.plugin_commands()
     {
       "PackerSnapshotDelete",
       function()
-        om.select("Delete snapshot", om.GetSnapshots(), function(choice)
+        vim.ui.select(om.GetSnapshots(), { prompt = "Delete snapshot" }, function(choice)
           if choice == nil then return end
           require(config_namespace .. ".plugins")
           require("packer.snapshot").delete(om.path_to_snapshots .. choice)
