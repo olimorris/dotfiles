@@ -467,7 +467,7 @@ local Statusline = {
 function M.setup()
   require("heirline").load_colors(vim.g.onedarkpro_colors)
 
-  heirline.setup(Statusline, nil, require("Oli.plugins.bufferline"))
+  heirline.setup(Statusline, nil, require(config_namespace .. ".plugins.bufferline"))
 
   vim.o.showtabline = 2
   vim.cmd([[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])

@@ -14,15 +14,8 @@ local function trim_filename(filename, char_limit, truncate)
 end
 
 local function format_filename(filename, char_limit)
-  if string.len(filename) >= char_limit then return trim_filename(filename, char_limit, "") end
-
-  local diff = char_limit - string.len(filename)
-
-  -- If divisible by 2, add spaces to both sides
-  if (diff % 2) == 0 then return string.rep(" ", diff / 2) .. filename .. string.rep(" ", diff / 2) end
-
-  -- If not, add uneven space to both sides
-  return string.rep(" ", diff / 2) .. filename .. string.rep(" ", diff / 2) .. " "
+    local pad = math.ceil((char_limit - #filename) / 2)
+    return string.rep(" ", pad) .. filename .. string.rep(" ", pad)
 end
 
 local TablineBufnr = {
@@ -94,4 +87,38 @@ local BufferLine = utils.make_buflist(
   { provider = " ", hl = { fg = "gray" } },
   { provider = " ", hl = { fg = "gray" } }
 )
-return BufferLine
+
+local BufferLineOffset = {
+  condition = function(self)
+    local win = vim.api.nvim_tabpage_list_wins(0)[1]
+    local bufnr = vim.api.nvim_win_get_buf(win)
+    self.winid = win
+
+    if vim.bo[bufnr].filetype == "neo-tree" then
+      self.title = "NeoTree"
+      return true
+    end
+  end,
+
+  provider = function(self)
+    local title = self.title
+    local width = vim.api.nvim_win_get_width(self.winid)
+    local pad = math.ceil((width - #title) / 2)
+    return string.rep(" ", pad) .. title .. string.rep(" ", pad)
+  end,
+
+  hl = function(self)
+    if vim.api.nvim_get_current_win() == self.winid then
+      return { fg = "purple", bold = true }
+    else
+      return "Tabline"
+    end
+  end,
+}
+
+local VimLogo = {
+  provider = function(self) return "    " end,
+  hl = { fg = "vim" },
+}
+
+return { BufferLineOffset, VimLogo, BufferLine, require(config_namespace .. ".plugins.tabline") }
