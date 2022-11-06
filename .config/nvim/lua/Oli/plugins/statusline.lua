@@ -400,6 +400,19 @@ local Overseer = {
   },
 }
 
+local Dap = {
+  condition = function()
+    local session = require("dap").session()
+    return session ~= nil
+  end,
+  provider = function() return "  " end,
+  on_click = {
+    callback = function() require("dap").continue() end,
+    name = "dap_continue",
+  },
+  hl = { fg = "red" },
+}
+
 --- Return information on the current buffers filetype
 local FileType = {
   init = function(self)
@@ -457,6 +470,7 @@ local Statusline = {
   -- Right
   Align,
   Overseer,
+  Dap,
   FileType,
   Session,
   SearchResults,
