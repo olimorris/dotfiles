@@ -16,7 +16,7 @@ local Tabpage = {
 }
 
 local TabpageClose = {
-  provider = "%999X  %X",
+  provider = "%999X  %X",
   hl = { fg = "grey" },
 }
 
