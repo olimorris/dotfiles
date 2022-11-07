@@ -126,20 +126,24 @@ local GitBranch = {
         filetype = filetypes,
       })
     end,
-    on_click = {
-      callback = function() om.GitTrackRemote() end,
-      name = "git_refresh_ahead_behind",
-    },
     {
       provider = "",
       hl = function(self) return { fg = "bg", bg = self.bg_color } end,
     },
     {
       provider = function(self) return "  " .. self.status_dict.head .. " " end,
+      on_click = {
+        callback = function() om.ListBranches() end,
+        name = "git_change_branch",
+      },
       hl = function(self) return { fg = "gray", bg = self.bg_color } end,
     },
     {
       condition = function() return (_G.GitStatus ~= nil and (_G.GitStatus.ahead ~= 0 or _G.GitStatus.behind ~= 0)) end,
+      on_click = {
+        callback = function() om.GitTrackRemote() end,
+        name = "git_refresh_ahead_behind",
+      },
       {
         provider = function() return _G.GitStatus.ahead .. " " end,
         hl = function(self) return { fg = _G.GitStatus.ahead == 0 and "gray" or "green", bg = self.bg_color } end,
