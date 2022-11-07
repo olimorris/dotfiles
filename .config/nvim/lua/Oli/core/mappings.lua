@@ -2,24 +2,23 @@ local M = {}
 local silent = { noremap = true, silent = true }
 ------------------------------------NOTES----------------------------------- {{{
 --[[
-        Some notes on how I structure my key mappings within Neovim
+  Some notes on how I structure my key mappings within Neovim
 
-        * All key mappings from across my configuration live in this file
-        * The general structue of my mappings are:
-        	1) Ctrl - Used for your most frequent and easy to remember mappings
-        	2) Local Leader - Used for commands related to filetype/buffer options
-        	3) Leader - Used for commands that are global or span Neovim
-
-        * I use legendary.nvim to set all of my mapping and display them in a
-        floating window
+  * All key mappings from across my configuration live in this file
+  * The general structure of my mappings are:
+          1) Ctrl - Used for your most frequent and easy to remember mappings
+          2) Local Leader - Used for commands related to window or filetype/buffer options
+          3) Leader - Used for commands that are global or span Neovim
+  * I use legendary.nvim to set all of my mapping and display them in a
+  floating window
 ]]
 ---------------------------------------------------------------------------- }}}
------------------------------------LEADERS---------------------------------- {{{
+---------------------------------LEADER KEYS-------------------------------- {{{
 vim.g.mapleader = " " -- space is the leader!
 vim.g.maplocalleader = ","
 ---------------------------------------------------------------------------- }}}
------------------------------------DEFAULTS--------------------------------- {{{
-M.default_keymaps = function()
+--------------------------------BASE KEYMAPS-------------------------------- {{{
+M.base_keymaps = function()
   local maps = {
     { "jk", "<esc>", description = "Escape in insert mode", mode = { "i" } },
 
@@ -157,7 +156,7 @@ M.default_keymaps = function()
   return maps
 end
 ---------------------------------------------------------------------------- }}}
------------------------------------PLUGINS---------------------------------- {{{
+-------------------------------PLUGIN KEYMAPS------------------------------- {{{
 -----------------------------------GENERAL---------------------------------- {{{
 M.plugin_keymaps = function()
   local t = require("legendary.toolbox")
@@ -180,7 +179,7 @@ M.plugin_keymaps = function()
     {
       "gcc",
       function()
-        if require('legendary.toolbox').is_visual_mode() then
+        if require("legendary.toolbox").is_visual_mode() then
           require("Comment.api").toggle.linewise(vim.fn.visualmode())
         else
           require("Comment.api").toggle.linewise.current()
@@ -311,7 +310,7 @@ M.plugin_keymaps = function()
     {
       "<LocalLeader>rv",
       function()
-        if require('legendary.toolbox').is_visual_mode() then
+        if require("legendary.toolbox").is_visual_mode() then
           require("refactoring").debug.print_var({})
         else
           require("refactoring").debug.print_var({ normal = true })

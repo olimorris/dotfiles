@@ -18,7 +18,7 @@ function om.ListBranches()
   end)
 end
 --------------------------------------------------------------------------- }}}
-------------------------------GIT REMOTE SYNC------------------------------- {{{
+-------------------------------GIT REMOTE SYNC------------------------------ {{{
 function om.GitRemoteSync()
   if not _G.GitStatus then _G.GitStatus = { ahead = 0, behind = 0 } end
 

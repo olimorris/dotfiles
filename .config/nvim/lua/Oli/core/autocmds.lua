@@ -1,6 +1,6 @@
 local M = {}
-------------------------------DEFAULT COMMANDS------------------------------ {{{
-function M.default_autocmds()
+--------------------------------BASE AUTOCMDS------------------------------- {{{
+function M.base_autocmds()
   return {
     {
       name = "GitTrackRemoteBranch",
@@ -101,7 +101,7 @@ function M.default_autocmds()
 end
 
 ---------------------------------------------------------------------------- }}}
--------------------------------------LSP------------------------------------ {{{
+--------------------------------LSP AUTOCMDS-------------------------------- {{{
 function M.lsp_autocmds(client, bufnr)
   local autocmds = {}
 
@@ -141,7 +141,7 @@ function M.lsp_autocmds(client, bufnr)
 end
 
 ---------------------------------------------------------------------------- }}}
------------------------------------PLUGINS---------------------------------- {{{
+-------------------------------PLUGIN AUTOCMDS------------------------------ {{{
 function M.plugin_autocmds()
   local autocmds = {
     {

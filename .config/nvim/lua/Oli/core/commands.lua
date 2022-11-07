@@ -1,6 +1,6 @@
 local M = {}
------------------------------------DEFAULT---------------------------------- {{{
-function M.default_commands()
+--------------------------------BASE COMMANDS------------------------------- {{{
+function M.base_commands()
   return {
     {
       "LineNumbers",
@@ -57,7 +57,56 @@ function M.default_commands()
 end
 
 ---------------------------------------------------------------------------- }}}
------------------------------------PLUGINS---------------------------------- {{{
+--------------------------------LSP COMMANDS-------------------------------- {{{
+function M.lsp_commands()
+  local commands = {
+    {
+      "LspInstallAll",
+      function()
+        for _, name in pairs(om.lsp.servers) do
+          vim.cmd("LspInstall " .. name)
+        end
+      end,
+      description = "LSP: Install all servers",
+    },
+    {
+      ":LspUninstallAll",
+      description = "LSP: Uninstall all servers",
+    },
+    {
+      "LspLog",
+      function() vim.cmd("edit " .. vim.lsp.get_log_path()) end,
+      description = "LSP: Show logs",
+    },
+  }
+
+  return commands
+end
+
+function M.lsp_client_commands(client, bufnr)
+  local commands = {
+    {
+      ":LspRestart",
+      description = "LSP: Restart any attached clients",
+      opts = { buffer = bufnr },
+    },
+    {
+      ":LspStart",
+      description = "LSP: Start the client manually",
+      opts = { buffer = bufnr },
+    },
+    {
+      ":LspInfo",
+      description = "LSP: Show attached clients",
+      opts = { buffer = bufnr },
+    },
+  }
+
+  return commands
+end
+
+---------------------------------------------------------------------------- }}}
+-------------------------------PLUGIN COMMANDS------------------------------ {{{
 function M.plugin_commands()
   return {
     -- Alpha
@@ -91,13 +140,23 @@ function M.plugin_commands()
       function() require("coverage").summary() end,
       description = "Coverage: Summary",
     },
+    -- Git
+    {
+      "GitBranchList",
+      function() om.ListBranches() end,
+      description = "List the Git branches in this repo",
+    },
+    {
+      "GitRemoteSync",
+      function() om.GitRemoteSync() end,
+      description = "Git sync remote repo",
+    },
     -- Lazygit
     {
       "Lazygit",
       function() om.Lazygit():toggle() end,
       description = "Lazygit",
     },
-
     -- Mason
     {
       ":Mason",
@@ -216,55 +275,6 @@ function M.plugin_commands()
       description = "Treesitter Playground",
     },
   }
-end
-
----------------------------------------------------------------------------- }}}
--------------------------------------LSP------------------------------------ {{{
-function M.lsp_commands()
-  local commands = {
-    {
-      "LspInstallAll",
-      function()
-        for _, name in pairs(om.lsp.servers) do
-          vim.cmd("LspInstall " .. name)
-        end
-      end,
-      description = "LSP: Install all servers",
-    },
-    {
-      ":LspUninstallAll",
-      description = "LSP: Uninstall all servers",
-    },
-    {
-      "LspLog",
-      function() vim.cmd("edit " .. vim.lsp.get_log_path()) end,
-      description = "LSP: Show logs",
-    },
-  }
-
-  return commands
-end
-
-function M.lsp_client_commands(client, bufnr)
-  local commands = {
-    {
-      ":LspRestart",
-      description = "LSP: Restart any attached clients",
-      opts = { buffer = bufnr },
-    },
-    {
-      ":LspStart",
-      description = "LSP: Start the client manually",
-      opts = { buffer = bufnr },
-    },
-    {
-      ":LspInfo",
-      description = "LSP: Show attached clients",
-      opts = { buffer = bufnr },
-    },
-  }
-
-  return commands
 end
 
 ---------------------------------------------------------------------------- }}}

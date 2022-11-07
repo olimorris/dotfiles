@@ -4,9 +4,9 @@ if not ok then return end
 legendary.setup({
   include_builtin = false,
   select_prompt = "Legendary",
-  keymaps = require(config_namespace .. ".core.mappings").default_keymaps(),
-  autocmds = require(config_namespace .. ".core.autocmds").default_autocmds(),
-  commands = require(config_namespace .. ".core.commands").default_commands(),
+  keymaps = require(config_namespace .. ".core.mappings").base_keymaps(),
+  autocmds = require(config_namespace .. ".core.autocmds").base_autocmds(),
+  commands = require(config_namespace .. ".core.commands").base_commands(),
   auto_register_which_key = false,
 })
 
