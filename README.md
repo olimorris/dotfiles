@@ -20,8 +20,8 @@ My macOS dotfiles. Installation instructions are my own
 ```bash
 cd ~/Library/Mobile Documents/com~apple~CloudDocs/Dotfiles && rake install
 ```
-* Install Aqueux for your beautiful wallpaper transitions
 * Ensure that `~/.dotfiles` is linked to your GitHub repo
+* Ensure that individual `~/Code` repos are also linked to GitHub
 
 ## :wrench: What actually happens
 
