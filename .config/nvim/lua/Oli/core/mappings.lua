@@ -17,7 +17,7 @@ local silent = { noremap = true, silent = true }
 vim.g.mapleader = " " -- space is the leader!
 vim.g.maplocalleader = ","
 ---------------------------------------------------------------------------- }}}
---------------------------------BASE KEYMAPS-------------------------------- {{{
+--------------------------------BASE MAPPINGS------------------------------- {{{
 M.base_keymaps = function()
   local maps = {
     { "jk", "<esc>", description = "Escape in insert mode", mode = { "i" } },
@@ -156,7 +156,7 @@ M.base_keymaps = function()
   return maps
 end
 ---------------------------------------------------------------------------- }}}
--------------------------------PLUGIN KEYMAPS------------------------------- {{{
+-------------------------------PLUGIN MAPPINGS------------------------------ {{{
 -----------------------------------GENERAL---------------------------------- {{{
 M.plugin_keymaps = function()
   local t = require("legendary.toolbox")

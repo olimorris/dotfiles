@@ -40,7 +40,7 @@ function om.GitRemoteSync()
       on_exit = function(job, _)
         local res = job:result()[1]
         if type(res) ~= "string" then
-          _G.GitStatus = { ahead = 0, behind = 0 }
+          _G.GitStatus = { ahead = 0, behind = 0, status = "error" }
           return
         end
         local _, ahead, behind = pcall(string.match, res, "(%d+)%s*(%d+)")
