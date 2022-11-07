@@ -116,10 +116,7 @@ local VimMode = {
 ---Return the current git branch in the cwd
 local GitBranch = {
   condition = conditions.is_git_repo,
-  init = function(self)
-    self.status_dict = vim.b.gitsigns_status_dict
-    self.bg_color = utils.get_highlight("Heirline").bg
-  end,
+  init = function(self) self.status_dict = vim.b.gitsigns_status_dict end,
   {
     condition = function()
       return not conditions.buffer_matches({
@@ -128,7 +125,7 @@ local GitBranch = {
     end,
     {
       provider = "",
-      hl = function(self) return { fg = "bg", bg = self.bg_color } end,
+      hl = { fg = "bg", bg = "statusline_bg" },
     },
     {
       provider = function(self) return "  " .. self.status_dict.head .. " " end,
@@ -136,7 +133,7 @@ local GitBranch = {
         callback = function() om.ListBranches() end,
         name = "git_change_branch",
       },
-      hl = function(self) return { fg = "gray", bg = self.bg_color } end,
+      hl = { fg = "gray", bg = "statusline_bg" },
     },
     {
       condition = function() return (_G.GitStatus ~= nil and (_G.GitStatus.ahead ~= 0 or _G.GitStatus.behind ~= 0)) end,
@@ -144,18 +141,22 @@ local GitBranch = {
         callback = function() om.GitRemoteSync() end,
         name = "git_refresh_ahead_behind",
       },
+      -- {
+      --   provider = "  ",
+      --   hl = { fg = "gray", bg = "statusline_bg" } ,
+      -- },
       {
         provider = function() return _G.GitStatus.ahead .. " " end,
-        hl = function(self) return { fg = _G.GitStatus.ahead == 0 and "gray" or "green", bg = self.bg_color } end,
+        hl = function() return { fg = _G.GitStatus.ahead == 0 and "gray" or "green", bg = "statusline_bg" } end,
       },
       {
         provider = function() return _G.GitStatus.behind .. "" end,
-        hl = function(self) return { fg = _G.GitStatus.behind == 0 and "gray" or "red", bg = self.bg_color } end,
+        hl = function() return { fg = _G.GitStatus.behind == 0 and "gray" or "red", bg = "statusline_bg" } end,
       },
     },
     {
       provider = "",
-      hl = function(self) return { fg = self.bg_color, bg = "bg" } end,
+      hl = { fg = "statusline_bg", bg = "bg" },
     },
   },
 }
@@ -167,17 +168,14 @@ local CurrentBuffer = {
       filetype = filetypes,
     })
   end,
-  init = function(self)
-    self.filename = vim.api.nvim_buf_get_name(0)
-    self.bg_color = utils.get_highlight("Heirline").bg
-  end,
+  init = function(self) self.filename = vim.api.nvim_buf_get_name(0) end,
   {
     provider = "",
-    hl = function(self) return { fg = "bg", bg = self.bg_color } end,
+    hl = { fg = "bg", bg = "statusline_bg" },
   },
   {
     provider = function(self) return " " .. vim.fn.fnamemodify(self.filename, ":t") .. " " end,
-    hl = function(self) return { fg = "gray", bg = self.bg_color } end,
+    hl = { fg = "gray", bg = "statusline_bg" },
     on_click = {
       callback = function() vim.cmd("normal ff") end,
       name = "find_files",
@@ -195,7 +193,7 @@ local CurrentBuffer = {
   },
   {
     provider = "",
-    hl = function(self) return { fg = self.bg_color, bg = "bg" } end,
+    hl = { fg = "statusline_bg", bg = "bg" },
   },
 }
 
@@ -284,13 +282,13 @@ local Ruler = {
   end,
   {
     provider = "",
-    hl = function(self) return { fg = "gray", bg = "bg" } end,
+    hl = { fg = "gray", bg = "bg" },
   },
   {
     -- %L = number of lines in the buffer
     -- %P = percentage through file of displayed window
     provider = " %P% /%2L ",
-    hl = function(self) return { fg = "bg", bg = "gray" } end,
+    hl = { fg = "bg", bg = "gray" },
     on_click = {
       callback = function()
         local line = vim.api.nvim_win_get_cursor(0)[1]
@@ -362,7 +360,7 @@ local Session = {
     end,
     {
       provider = "",
-      hl = function(self) return { fg = utils.get_highlight("Heirline").bg, bg = "bg" } end,
+      hl = { fg = "statusline_bg", bg = "bg" },
     },
     {
       provider = function(self)
@@ -372,7 +370,7 @@ local Session = {
           return "   "
         end
       end,
-      hl = function(self) return { fg = "gray", bg = utils.get_highlight("Heirline").bg } end,
+      hl = { fg = "gray", bg = "statusline_bg" },
       on_click = {
         callback = function() vim.cmd("SessionToggle") end,
         name = "toggle_session",
@@ -380,7 +378,7 @@ local Session = {
     },
     {
       provider = "",
-      hl = function(self) return { bg = utils.get_highlight("Heirline").bg, fg = "bg" } end,
+      hl = { bg = "statusline_bg", fg = "bg" },
     },
   },
 }
@@ -464,24 +462,22 @@ local FileType = {
   },
   {
     provider = "",
-    hl = function(self) return { fg = utils.get_highlight("Heirline").bg, bg = "bg" } end,
+    hl = { fg = "statusline_bg", bg = "bg" },
   },
   {
     provider = function(self) return " " .. self.icon end,
-    hl = function(self) return { fg = "gray", bg = utils.get_highlight("Heirline").bg } end,
+    hl = { fg = "gray", bg = "statusline_bg" },
   },
   {
     provider = function() return " " .. string.lower(vim.bo.filetype) .. " " end,
-    hl = function(self)
-      return {
-        fg = "gray",
-        bg = utils.get_highlight("Heirline").bg,
-      }
-    end,
+    hl = {
+      fg = "gray",
+      bg = "statusline_bg",
+    },
   },
   {
     provider = "",
-    hl = function(self) return { bg = utils.get_highlight("Heirline").bg, fg = "bg" } end,
+    hl = { bg = "statusline_bg", fg = "bg" },
   },
 }
 
