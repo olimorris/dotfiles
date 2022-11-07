@@ -6,7 +6,7 @@ function M.default_autocmds()
       name = "GitTrackRemoteBranch",
       {
         { "VimEnter", "TermLeave" },
-        function() om.GitTrackRemote() end,
+        function() om.GitRemoteSync() end,
         opts = {
           pattern = { "*" },
         },

@@ -141,7 +141,7 @@ local GitBranch = {
     {
       condition = function() return (_G.GitStatus ~= nil and (_G.GitStatus.ahead ~= 0 or _G.GitStatus.behind ~= 0)) end,
       on_click = {
-        callback = function() om.GitTrackRemote() end,
+        callback = function() om.GitRemoteSync() end,
         name = "git_refresh_ahead_behind",
       },
       {

@@ -18,8 +18,8 @@ function om.ListBranches()
   end)
 end
 --------------------------------------------------------------------------- }}}
-------------------------------GIT TRACK REMOTE------------------------------ {{{
-function om.GitTrackRemote()
+------------------------------GIT REMOTE SYNC------------------------------- {{{
+function om.GitRemoteSync()
   if not _G.GitStatus then _G.GitStatus = { ahead = 0, behind = 0 } end
 
   local Job = require("plenary.job")
