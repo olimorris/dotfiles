@@ -23,6 +23,14 @@ function om.GitTrackRemote()
   if not _G.GitStatus then _G.GitStatus = { ahead = 0, behind = 0 } end
 
   local Job = require("plenary.job")
+
+  -- Fetch the remote repository first
+  Job:new({
+    command = "git",
+    args = { "fetch" },
+  }):start()
+
+  -- Then compare local to upstream
   Job:new({
     command = "git",
     args = { "rev-list", "--left-right", "--count", "HEAD...@{upstream}" },
