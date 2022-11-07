@@ -99,6 +99,10 @@ local VimMode = {
   {
     provider = function(self) return " %2(" .. self.mode_names[self.mode] .. "%) " end,
     hl = function(self) return { fg = "bg", bg = self.mode_color } end,
+    on_click = {
+      callback = function() vim.cmd("Alpha") end,
+      name = "heirline_mode",
+    },
     update = {
       "ModeChanged",
     },
@@ -123,8 +127,8 @@ local GitBranch = {
       })
     end,
     on_click = {
-      callback = function() om.ListBranches() end,
-      name = "list_git_branches",
+      callback = function() om.GitTrackRemote() end,
+      name = "git_refresh_ahead_behind",
     },
     {
       provider = "",
@@ -133,6 +137,17 @@ local GitBranch = {
     {
       provider = function(self) return "  " .. self.status_dict.head .. " " end,
       hl = function(self) return { fg = "gray", bg = self.bg_color } end,
+    },
+    {
+      condition = function() return (_G.GitStatus ~= nil and (_G.GitStatus.ahead ~= 0 or _G.GitStatus.behind ~= 0)) end,
+      {
+        provider = function() return _G.GitStatus.ahead .. " " end,
+        hl = function(self) return { fg = _G.GitStatus.ahead == 0 and "gray" or "green", bg = self.bg_color } end,
+      },
+      {
+        provider = function() return _G.GitStatus.behind .. "" end,
+        hl = function(self) return { fg = _G.GitStatus.behind == 0 and "gray" or "red", bg = self.bg_color } end,
+      },
     },
     {
       provider = "",

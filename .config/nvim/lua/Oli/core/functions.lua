@@ -18,6 +18,29 @@ function om.ListBranches()
   end)
 end
 --------------------------------------------------------------------------- }}}
+------------------------------GIT TRACK REMOTE------------------------------ {{{
+function om.GitTrackRemote()
+  if not _G.GitStatus then _G.GitStatus = { ahead = 0, behind = 0 } end
+
+  local Job = require("plenary.job")
+  Job:new({
+    command = "git",
+    args = { "rev-list", "--left-right", "--count", "HEAD...@{upstream}" },
+    on_exit = function(job, _)
+      local res = job:result()[1]
+      if type(res) ~= "string" then
+        _G.GitStatus = { ahead = 0, behind = 0 }
+        return
+      end
+      local ok, ahead, behind = pcall(string.match, res, "(%d+)%s*(%d+)")
+      if not ok then
+        ahead, behind = 0, 0
+      end
+      _G.GitStatus = { ahead = tonumber(ahead), behind = tonumber(behind) }
+    end,
+  }):start()
+end
+--------------------------------------------------------------------------- }}}
 -------------------------------MOVE TO BUFFER------------------------------- {{{
 function om.MoveToBuffer()
   vim.ui.input({ prompt = "Move to buffer number: " }, function(bufnr)

@@ -1,39 +1,19 @@
 local M = {}
 ------------------------------DEFAULT COMMANDS------------------------------ {{{
 function M.default_autocmds()
-  local function reload()
-    om.invalidate(config_namespace .. ".plugins", true)
-    require("packer").compile()
-  end
-
   return {
-    -- {
-    --   name = "ReloadConfig",
-    --   clear = true,
-    --   {
-    --     "BufWritePost",
-    --     function() reload() end,
-    --     opts = {
-    --       pattern = { "*/" .. config_namespace .. "/plugins/*.lua" },
-    --     },
-    --   },
-    --   {
-    --     "User",
-    --     function() reload() end,
-    --     opts = {
-    --       pattern = "VimrcReloaded",
-    --     },
-    --   },
-    --   {
-    --     "User",
-    --     function() vim.notify("Compilation finished", "info") end,
-    --     opts = {
-    --       pattern = "PackerCompileDone",
-    --     },
-    --   },
-    -- },
     {
-      name = "FiletypeIndentation",
+      name = "GitTrackRemoteBranch",
+      {
+        { "VimEnter", "TermLeave" },
+        function() om.GitTrackRemote() end,
+        opts = {
+          pattern = { "*" },
+        },
+      },
+    },
+    {
+      name = "FiletypeOptions",
       {
         "FileType",
         ":setlocal shiftwidth=2 tabstop=2",
@@ -41,13 +21,15 @@ function M.default_autocmds()
           pattern = { "css", "eruby", "html", "lua", "javascript", "json", "ruby", "vue" },
         },
       },
-    },
-    {
-      name = "MarkdownOptions",
       {
         "FileType",
         ":setlocal wrap linebreak",
         opts = { pattern = "markdown" },
+      },
+      {
+        "FileType",
+        ":setlocal showtabline=0",
+        opts = { pattern = "alpha" },
       },
     },
     {
@@ -111,7 +93,7 @@ function M.default_autocmds()
       name = "HighlightYankedText",
       {
         "TextYankPost",
-        vim.highlight.on_yank,
+        function() vim.highlight.on_yank() end,
         opts = { pattern = "*" },
       },
     },
@@ -163,14 +145,6 @@ end
 function M.plugin_autocmds()
   local autocmds = {
     {
-      name = "AlphaDashboard",
-      {
-        "FileType",
-        ":setlocal showtabline=0",
-        opts = { pattern = "alpha" },
-      },
-    },
-    {
       name = "Telescope",
       {
         "User",
@@ -178,14 +152,6 @@ function M.plugin_autocmds()
         opts = { pattern = "TelescopePreviewerLoaded" },
       },
     },
-    -- {
-    --   name = "RefreshBufferlineColors",
-    --   {
-    --     "ColorScheme",
-    --     function() require(config_namespace .. ".plugins.bufferline") end,
-    --     opts = { pattern = "*" },
-    --   },
-    -- },
     {
       name = "RefreshStatuslineColors",
       {
