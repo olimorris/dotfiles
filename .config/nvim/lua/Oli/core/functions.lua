@@ -8,13 +8,22 @@ end
 --------------------------------GIT BRANCHES-------------------------------- {{{
 function om.ListBranches()
   local branches = vim.fn.systemlist([[git branch 2>/dev/null]])
+  local new_branch_prompt = "Create new branch"
+  table.insert(branches, 1, new_branch_prompt)
 
   vim.ui.select(branches, {
     prompt = "Git branches",
   }, function(choice)
     if choice == nil then return end
-    local git_cmd = string.format("git checkout %s", choice)
-    vim.fn.systemlist(git_cmd)
+
+    if choice == new_branch_prompt then
+      local new_branch = ""
+      vim.ui.input({ prompt = "New branch name:" }, function(branch)
+        if branch ~= nil then vim.fn.systemlist("git checkout -b " .. branch) end
+      end)
+    else
+      vim.fn.systemlist("git checkout " .. choice)
+    end
   end)
 end
 --------------------------------------------------------------------------- }}}
