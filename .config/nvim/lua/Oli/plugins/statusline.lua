@@ -141,10 +141,11 @@ local GitBranch = {
         callback = function() om.GitRemoteSync() end,
         name = "git_refresh_ahead_behind",
       },
-      -- {
-      --   provider = "  ",
-      --   hl = { fg = "gray", bg = "statusline_bg" } ,
-      -- },
+      {
+        condition = function() return _G.GitStatus.status == "pending" end,
+        provider = "  ",
+        hl = { fg = "gray", bg = "statusline_bg" },
+      },
       {
         provider = function() return _G.GitStatus.ahead .. " " end,
         hl = function() return { fg = _G.GitStatus.ahead == 0 and "gray" or "green", bg = "statusline_bg" } end,

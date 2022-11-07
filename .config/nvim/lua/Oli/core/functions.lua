@@ -20,33 +20,37 @@ end
 --------------------------------------------------------------------------- }}}
 -------------------------------GIT REMOTE SYNC------------------------------ {{{
 function om.GitRemoteSync()
-  if not _G.GitStatus then _G.GitStatus = { ahead = 0, behind = 0 } end
+  if not _G.GitStatus then _G.GitStatus = { ahead = 0, behind = 0, status = nil } end
 
-  local Job = require("plenary.job")
+  local function update_git_status()
+    local Job = require("plenary.job")
 
-  -- Fetch the remote repository first
-  Job:new({
-    command = "git",
-    args = { "fetch" },
-  }):start()
+    _G.GitStatus.status = "pending"
 
-  -- Then compare local to upstream
-  Job:new({
-    command = "git",
-    args = { "rev-list", "--left-right", "--count", "HEAD...@{upstream}" },
-    on_exit = function(job, _)
-      local res = job:result()[1]
-      if type(res) ~= "string" then
-        _G.GitStatus = { ahead = 0, behind = 0 }
-        return
-      end
-      local ok, ahead, behind = pcall(string.match, res, "(%d+)%s*(%d+)")
-      if not ok then
-        ahead, behind = 0, 0
-      end
-      _G.GitStatus = { ahead = tonumber(ahead), behind = tonumber(behind) }
-    end,
-  }):start()
+    -- Fetch the remote repository first
+    Job:new({
+      command = "git",
+      args = { "fetch" },
+    }):start()
+
+    -- Then compare local to upstream
+    Job:new({
+      command = "git",
+      args = { "rev-list", "--left-right", "--count", "HEAD...@{upstream}" },
+      on_exit = function(job, _)
+        local res = job:result()[1]
+        if type(res) ~= "string" then
+          _G.GitStatus = { ahead = 0, behind = 0 }
+          return
+        end
+        local _, ahead, behind = pcall(string.match, res, "(%d+)%s*(%d+)")
+
+        _G.GitStatus = { ahead = tonumber(ahead), behind = tonumber(behind), status = "done" }
+      end,
+    }):start()
+  end
+
+  vim.schedule_wrap(update_git_status())
 end
 --------------------------------------------------------------------------- }}}
 -------------------------------MOVE TO BUFFER------------------------------- {{{
