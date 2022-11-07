@@ -4,18 +4,32 @@ if not ok then return end
 local utils = require("heirline.utils")
 local conditions = require("heirline.conditions")
 
+---Trim a filename
+---@param filename string
+---@param char_limit number
+---@param truncate? string
+---@return string
 local function trim_filename(filename, char_limit, truncate)
-  local length = string.len(filename)
-  truncate = truncate or " ..."
+  truncate = truncate or " "
 
-  if length > char_limit then filename = string.sub(filename, 1, char_limit) .. truncate end
+  -- Ensure that with the truncation icon, we don't go over the char limit
+  if (#filename + #truncate) > char_limit then
+    char_limit = char_limit - #truncate
+  end
+
+  if #filename > char_limit then filename = string.sub(filename, 1, char_limit) .. truncate end
 
   return filename
 end
 
+---Format a filename
+---@param filename string
+---@param char_limit? number
+---@return string
 local function format_filename(filename, char_limit)
-    local pad = math.ceil((char_limit - #filename) / 2)
-    return string.rep(" ", pad) .. filename .. string.rep(" ", pad)
+  char_limit = char_limit or 18
+  local pad = math.ceil((char_limit - #filename) / 2)
+  return string.rep(" ", pad) .. trim_filename(filename, char_limit) .. string.rep(" ", pad)
 end
 
 local TablineBufnr = {
@@ -25,9 +39,8 @@ local TablineBufnr = {
 
 local TablineFileName = {
   provider = function(self)
-    -- self.filename will be defined later, just keep looking at the example!
     local filename = self.filename
-    filename = filename == "" and "[No Name]" or format_filename(vim.fn.fnamemodify(filename, ":t"), 15)
+    filename = filename == "" and "[No Name]" or format_filename(vim.fn.fnamemodify(filename, ":t"))
     return filename
   end,
   hl = function(self)
