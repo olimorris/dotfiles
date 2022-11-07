@@ -272,6 +272,19 @@ local Ruler = {
     -- %P = percentage through file of displayed window
     provider = " %P% /%2L ",
     hl = function(self) return { fg = "bg", bg = "gray" } end,
+    on_click = {
+      callback = function()
+        local line = vim.api.nvim_win_get_cursor(0)[1]
+        local total_lines = vim.api.nvim_buf_line_count(0)
+
+        if math.floor((line / total_lines)) > 0.5 then
+          vim.cmd("normal! gg")
+        else
+          vim.cmd("normal! G")
+        end
+      end,
+      name = "heirline_ruler",
+    },
   },
 }
 
