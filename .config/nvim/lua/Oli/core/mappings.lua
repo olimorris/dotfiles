@@ -178,15 +178,11 @@ M.plugin_keymaps = function()
     -- Comments
     {
       "gcc",
-      function()
-        if require("legendary.toolbox").is_visual_mode() then
-          require("Comment.api").toggle.linewise(vim.fn.visualmode())
-        else
-          require("Comment.api").toggle.linewise.current()
-        end
-      end,
+      {
+        n = function() require("Comment.api").toggle.linewise.current() end,
+        x = function() require("Comment.api").toggle.linewise(vim.fn.visualmode()) end,
+      },
       description = "Comment toggle",
-      mode = { "n", "x" },
     },
 
     -- Copilot
@@ -309,13 +305,10 @@ M.plugin_keymaps = function()
     },
     {
       "<LocalLeader>rv",
-      function()
-        if require("legendary.toolbox").is_visual_mode() then
-          require("refactoring").debug.print_var({})
-        else
-          require("refactoring").debug.print_var({ normal = true })
-        end
-      end,
+      {
+        n = function() require("refactoring").debug.print_var({ normal = true }) end,
+        x = function() require("refactoring").debug.print_var({}) end,
+      },
       description = "Refactoring: Print_Var",
       mode = { "n", "v" },
     },
