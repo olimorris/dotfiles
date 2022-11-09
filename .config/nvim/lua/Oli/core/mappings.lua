@@ -160,13 +160,13 @@ end
 -----------------------------------GENERAL---------------------------------- {{{
 M.plugin_keymaps = function()
   local t = require("legendary.toolbox")
+
   return {
     -- Legendary
     {
       "<C-p>",
       require("legendary").find,
       description = "Search keybinds and commands",
-      mode = { "n", "i", "x", "v" },
     },
 
     -- Aerial

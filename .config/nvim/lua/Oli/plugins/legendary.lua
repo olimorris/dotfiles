@@ -7,7 +7,9 @@ legendary.setup({
   keymaps = require(config_namespace .. ".core.mappings").base_keymaps(),
   autocmds = require(config_namespace .. ".core.autocmds").base_autocmds(),
   commands = require(config_namespace .. ".core.commands").base_commands(),
-  auto_register_which_key = false,
+  which_key = {
+    auto_register = false,
+  },
 })
 
 legendary.keymaps(require(config_namespace .. ".core.mappings").plugin_keymaps())
