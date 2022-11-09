@@ -45,6 +45,9 @@ M.barbecue = function()
     symbols = {
       separator = "",
     },
+    modifiers = {
+      dirname = ":~:.:s?.config/nvim/lua?Neovim?",
+    },
   })
 end
 
@@ -60,7 +63,7 @@ M.code_window = function()
   if not ok then return end
 
   code_window.setup({
-    window_border = "none"
+    window_border = "none",
   })
 end
 
