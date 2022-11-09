@@ -121,22 +121,22 @@ function M.plugin_commands()
     },
     -- Coverage
     {
-      "Coverage Toggle",
+      "Coverage",
       function() require("coverage").toggle() end,
       description = "Coverage: Toggle",
     },
     {
-      "Coverage Load",
+      "CoverageLoad",
       function() require("coverage").load(true) end,
       description = "Coverage: Load",
     },
     {
-      "Coverage Clear",
+      "CoverageClear",
       function() require("coverage").clear() end,
       description = "Coverage: Clear",
     },
     {
-      "Coverage Summary",
+      "CoverageSummary",
       function() require("coverage").summary() end,
       description = "Coverage: Summary",
     },
@@ -276,6 +276,5 @@ function M.plugin_commands()
     },
   }
 end
-
 ---------------------------------------------------------------------------- }}}
 return M
