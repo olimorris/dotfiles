@@ -45,11 +45,6 @@ return packer.startup({
       },
       config = function() require(config_namespace .. ".plugins.statusline").setup() end,
     })
-    -- use({
-    --   "akinsho/bufferline.nvim", -- Bufferline
-    --   after = "onedarkpro",
-    --   config = function() require(config_namespace .. ".plugins.bufferline") end,
-    -- })
     use({
       "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
     })
@@ -59,7 +54,6 @@ return packer.startup({
     })
     use({
       "nvim-neo-tree/neo-tree.nvim",
-      branch = "v2.x",
       requires = {
         { "nvim-lua/plenary.nvim" },
         { "kyazdani42/nvim-web-devicons" },
