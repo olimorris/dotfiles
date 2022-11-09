@@ -55,6 +55,15 @@ M.cinnamon = function()
   cinnamon.setup()
 end
 
+M.code_window = function()
+  local ok, code_window = om.safe_require("codewindow")
+  if not ok then return end
+
+  code_window.setup({
+    window_border = "none"
+  })
+end
+
 M.colorizer = function()
   local ok, colorizer = om.safe_require("colorizer")
   if not ok then return end

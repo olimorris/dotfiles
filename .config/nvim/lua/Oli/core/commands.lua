@@ -114,6 +114,14 @@ function M.plugin_commands()
       ":Alpha",
       description = "Show the Alpha dashboard",
     },
+    -- Code Window
+    {
+      "Codewindow",
+      function()
+        require("codewindow").toggle_minimap()
+      end,
+      description = "Toggle Code Window",
+    },
     -- Colorizer
     {
       ":ColorizerToggle",

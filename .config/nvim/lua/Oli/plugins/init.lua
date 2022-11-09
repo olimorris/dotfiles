@@ -99,6 +99,11 @@ return packer.startup({
       },
       config = function() require(config_namespace .. ".plugins.others").barbecue() end,
     })
+    use({
+      "gorbit99/codewindow.nvim",
+      module = "codewindow",
+      config = function() require(config_namespace .. ".plugins.others").code_window() end,
+    })
     ---------------------------------------------------------------------------- }}}
     -------------------------------EDITOR FEATURES------------------------------ {{{
     use({
