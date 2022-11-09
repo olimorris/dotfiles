@@ -32,7 +32,7 @@ M.aerial = function()
     close_on_select = true,
     layout = {
       min_width = 30,
-      default_direction = "prefer_right",
+      default_direction = "prefer_left",
     },
   })
 end

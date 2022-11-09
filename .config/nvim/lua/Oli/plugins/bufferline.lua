@@ -110,6 +110,9 @@ local BufferLineOffset = {
     if vim.bo[bufnr].filetype == "neo-tree" then
       self.title = "NeoTree"
       return true
+    elseif vim.bo[bufnr].filetype == "aerial" then
+      self.title = "Aerial"
+      return true
     end
   end,
 
