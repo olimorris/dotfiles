@@ -17,13 +17,13 @@ local function button(sc, txt, keybind, keybind_opts)
 end
 
 dashboard.section.buttons.val = {
-  button("l", "   Load session", ':lua require("persisted").load()<CR>'),
-  button("n", "   New file", ":ene <BAR> startinsert <CR>"),
-  button("b", "   Bookmarks", ":Telescope harpoon marks<CR>"),
-  button("r", "   Recently used files", ":Telescope frecency<CR>"),
-  button("f", "   Find file", ":Telescope find_files hidden=true path_display=smart<CR>"),
-  button("u", "   Update plugins", ":lua om.PackerSync()<CR>"), -- Packer sync
-  button("q", "   Quit Neovim", ":qa!<CR>"),
+  button("l", "   Load session", '<cmd>lua require("persisted").load()<CR>'),
+  button("n", "   New file", "<cmd>ene <BAR> startinsert <CR>"),
+  -- button("b", "   Bookmarks", "<cmd>Telescope harpoon marks<CR>"),
+  button("r", "   Recently used files", "<cmd>Telescope frecency<CR>"),
+  button("f", "   Find file", "<cmd>Telescope find_files hidden=true path_display=smart<CR>"),
+  button("u", "   Update plugins", "<cmd>lua om.PackerSync()<CR>"), -- Packer sync
+  button("q", "   Quit Neovim", "<cmd>qa!<CR>"),
 }
 dashboard.section.buttons.opts = {
   spacing = 0,
