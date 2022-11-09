@@ -1,7 +1,7 @@
-PIP_FILE = File.expand_path('../misc/packages/python_pip.txt', __dir__)
-NPM_FILE = File.expand_path('../misc/packages/npm_packages.txt', __dir__)
-GEMS_FILE = File.expand_path('../misc/packages/ruby_gems.txt', __dir__)
-FONT_PATH = File.expand_path('/Users/Oli/.dotfiles/misc/ui/fonts')
+PIP_FILE = File.expand_path('~/.dotfiles/misc/packages/python_pip.txt', __dir__)
+NPM_FILE = File.expand_path('~/.dotfiles/misc/packages/npm_packages.txt', __dir__)
+GEMS_FILE = File.expand_path('~/.dotfiles/misc/packages/ruby_gems.txt', __dir__)
+FONT_PATH = File.expand_path('~/.dotfiles/misc/ui/fonts')
 
 namespace :backup do
   desc 'Backup PIP files'
