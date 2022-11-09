@@ -178,7 +178,6 @@ return packer.startup({
     })
     use({
       "mrjones2014/legendary.nvim", -- A legend for all keymaps, commands and autocmds
-      branch = "v2-dev",
       requires = {
         {
           "stevearc/dressing.nvim", -- Utilises Neovim 0.6's new UI hooks to manage inputs, selects etc

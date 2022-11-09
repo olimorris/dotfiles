@@ -59,7 +59,7 @@ end
 ---------------------------------------------------------------------------- }}}
 --------------------------------LSP COMMANDS-------------------------------- {{{
 function M.lsp_commands()
-  local commands = {
+  return {
     {
       "LspInstallAll",
       function()
@@ -79,12 +79,10 @@ function M.lsp_commands()
       description = "LSP: Show logs",
     },
   }
-
-  return commands
 end
 
 function M.lsp_client_commands(client, bufnr)
-  local commands = {
+  return {
     {
       ":LspRestart",
       description = "LSP: Restart any attached clients",
@@ -101,10 +99,7 @@ function M.lsp_client_commands(client, bufnr)
       opts = { buffer = bufnr },
     },
   }
-
-  return commands
 end
-
 ---------------------------------------------------------------------------- }}}
 -------------------------------PLUGIN COMMANDS------------------------------ {{{
 function M.plugin_commands()

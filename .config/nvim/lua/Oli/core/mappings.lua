@@ -19,7 +19,7 @@ vim.g.maplocalleader = ","
 ---------------------------------------------------------------------------- }}}
 --------------------------------BASE MAPPINGS------------------------------- {{{
 M.base_keymaps = function()
-  local maps = {
+  local mappings = {
     { "jk", "<esc>", description = "Escape in insert mode", mode = { "i" } },
 
     -- Replace selected text without yanking it
@@ -153,7 +153,7 @@ M.base_keymaps = function()
   --   { noremap = true, expr = true }
   -- )
 
-  return maps
+  return mappings
 end
 ---------------------------------------------------------------------------- }}}
 -------------------------------PLUGIN MAPPINGS------------------------------ {{{
