@@ -10,9 +10,6 @@ return packer.startup({
       opt = "true",
     })
     use({
-      "nathom/filetype.nvim", -- Replace default filetype.vim which is slower
-    })
-    use({
       "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
     })
     use({
