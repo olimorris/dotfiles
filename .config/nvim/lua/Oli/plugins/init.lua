@@ -341,9 +341,9 @@ return packer.startup({
     })
     use({
       "zbirenbaum/copilot.lua", -- AI programming
-      event = "VimEnter",
+      event = "InsertEnter",
       config = function()
-        vim.defer_fn(function() require(config_namespace .. ".plugins.others").copilot() end, 100)
+        vim.schedule(function() require(config_namespace .. ".plugins.others").copilot() end)
       end,
     })
     use({
