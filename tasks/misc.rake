@@ -44,7 +44,6 @@ namespace :install do
     end
   end
 
-
   desc 'Install macOS Configurations'
   task :macos do
     section 'Installing macOS Configurations'
@@ -225,19 +224,25 @@ namespace :update do
     end
   end
 
-  desc "Update Neovim plugins"
+  desc 'Update Neovim plugins'
   task :neovim_plugins do
     section 'Updating Neovim plugins'
 
     run %( nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' )
   end
 
-
   desc 'Update Vim plugins'
   task :vim_plugins do
     section 'Updating Vim plugins'
 
     run %( vim +PlugUpdate +qall ) unless testing?
+  end
+
+  desc 'Update Rust'
+  task :rust do
+    section 'Updating Rust'
+
+    run %( rustup update )
   end
 
   desc 'Update PIP files'
