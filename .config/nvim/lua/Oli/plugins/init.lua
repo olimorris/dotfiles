@@ -68,15 +68,9 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.others").indentline() end,
     })
     use({
-      "petertriho/nvim-scrollbar", -- A scrollbar for the current window
+      "lewis6991/satellite.nvim", -- A scrollbar for the current window
       after = "onedarkpro",
-      requires = {
-        {
-          "declancm/cinnamon.nvim", -- Smooth scrolling
-          config = function() require(config_namespace .. ".plugins.others").cinnamon() end,
-        },
-      },
-      config = function() require(config_namespace .. ".plugins.others").scrollbar() end,
+      config = function() require(config_namespace .. ".plugins.others").satellite() end,
     })
     use({
       "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase

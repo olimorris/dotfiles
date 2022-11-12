@@ -51,13 +51,6 @@ M.barbecue = function()
   })
 end
 
-M.cinnamon = function()
-  local ok, cinnamon = om.safe_require("cinnamon")
-  if not ok then return end
-
-  cinnamon.setup()
-end
-
 M.code_window = function()
   local ok, code_window = om.safe_require("codewindow")
   if not ok then return end
@@ -330,26 +323,11 @@ M.refactoring = function()
   require("telescope").load_extension("refactoring")
 end
 
-M.scrollbar = function()
-  local ok, scrollbar = om.safe_require("scrollbar")
+M.satellite = function()
+  local ok, satellite = om.safe_require("satellite")
   if not ok then return end
 
-  local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
-
-  scrollbar.setup({
-    max_lines = 500,
-    handle = {
-      color = colors.scrollbar,
-    },
-    marks = {
-      Search = { color = colors.orange },
-      Error = { color = colors.red },
-      Warn = { color = colors.yellow },
-      Info = { color = colors.blue },
-      Hint = { color = colors.cyan },
-      Misc = { color = colors.purple },
-    },
-  })
+  satellite.setup()
 end
 
 M.stickybuf = function()
