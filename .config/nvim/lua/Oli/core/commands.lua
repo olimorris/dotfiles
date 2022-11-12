@@ -267,6 +267,19 @@ function M.plugin_commands()
       ":SessionDelete",
       description = "Session: Delete",
     },
+    -- Satellite
+    {
+      ":SatelliteEnable",
+      description = "Enable satellite scrollbar"
+    },
+    {
+      ":SatelliteDisable",
+      description = "Disable satellite scrollbar"
+    },
+    {
+      ":SatelliteRefresh",
+      description = "Refresh satellite scrollbar"
+    },
     -- Startup time
     {
       ":StartupTime",
