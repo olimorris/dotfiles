@@ -4,6 +4,69 @@ if not ok then return end
 local utils = require("heirline.utils")
 local conditions = require("heirline.conditions")
 
+local buffers = {}
+
+---Get the names of all current listed buffers
+---@return table
+local function get_current_filenames()
+  local listed_buffers = vim.tbl_filter(
+    function(bufnr) return vim.bo[bufnr].buflisted and vim.api.nvim_buf_is_loaded(bufnr) end,
+    vim.api.nvim_list_bufs()
+  )
+
+  return vim.tbl_map(vim.api.nvim_buf_get_name, listed_buffers)
+end
+
+---Get unique name for the current buffer
+---@param filename string
+---@param shorten boolean
+---@return string
+local function get_unique_filename(filename, shorten)
+  local filenames = vim.tbl_filter(
+    function(filename_other) return filename_other ~= filename end,
+    get_current_filenames()
+  )
+
+  if shorten then
+    filename = vim.fn.pathshorten(filename)
+    filenames = vim.tbl_map(vim.fn.pathshorten, filenames)
+  end
+
+  -- Reverse filenames in order to compare their names
+  filename = string.reverse(filename)
+  filenames = vim.tbl_map(string.reverse, filenames)
+
+  local index
+
+  -- For every other filename, compare it with the name of the current file char-by-char to
+  -- find the minimum index `i` where the i-th character is different for the two filenames
+  -- After doing it for every filename, get the maximum value of `i`
+  if next(filenames) then
+    index = math.max(table.unpack(vim.tbl_map(function(filename_other)
+      for i = 1, #filename do
+        -- Compare i-th character of both names until they aren't equal
+        if filename:sub(i, i) ~= filename_other:sub(i, i) then return i end
+      end
+      return 1
+    end, filenames)))
+  else
+    index = 1
+  end
+
+  -- Iterate backwards (since filename is reversed) until a "/" is found
+  -- in order to show a valid file path
+  while index <= #filename do
+    if filename:sub(index, index) == "/" then
+      index = index - 1
+      break
+    end
+
+    index = index + 1
+  end
+
+  return string.reverse(string.sub(filename, 1, index))
+end
+
 ---Trim a filename
 ---@param filename string
 ---@param char_limit number
@@ -13,9 +76,7 @@ local function trim_filename(filename, char_limit, truncate)
   truncate = truncate or " "
 
   -- Ensure that with the truncation icon, we don't go over the char limit
-  if (#filename + #truncate) > char_limit then
-    char_limit = char_limit - #truncate
-  end
+  if (#filename + #truncate) > char_limit then char_limit = char_limit - #truncate end
 
   if #filename > char_limit then filename = string.sub(filename, 1, char_limit) .. truncate end
 
@@ -27,6 +88,8 @@ end
 ---@param char_limit? number
 ---@return string
 local function format_filename(filename, char_limit)
+  filename = get_unique_filename(filename, false)
+
   char_limit = char_limit or 18
   local pad = math.ceil((char_limit - #filename) / 2)
   return string.rep(" ", pad) .. trim_filename(filename, char_limit) .. string.rep(" ", pad)
@@ -40,7 +103,7 @@ local TablineBufnr = {
 local TablineFileName = {
   provider = function(self)
     local filename = self.filename
-    filename = filename == "" and "[No Name]" or format_filename(vim.fn.fnamemodify(filename, ":t"))
+    filename = filename == "" and "[No Name]" or format_filename(filename)
     return filename
   end,
   hl = function(self)
