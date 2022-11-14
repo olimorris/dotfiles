@@ -65,7 +65,6 @@ onedarkpro.setup({
     MatchParen = { fg = "${cyan}", style = "underline" },
     ModeMsg = { link = "LineNr" }, -- Make command line text lighter
     Search = { bg = "${selection}", fg = "${yellow}", style = "underline" },
-    StatusLine = { bg = "NONE", fg = "NONE" },
 
     -- Aerial plugin
     AerialClass = { fg = "${purple}", style = "bold,italic" },
