@@ -318,6 +318,14 @@ M.plugin_keymaps = function()
       description = "Refactoring: Cleanup",
     },
 
+    -- SSR
+    {
+      "<LocalLeader>sr",
+      function() require("ssr").open() end,
+      description = "Structured search and replace",
+      mode = { "n", "x" },
+    },
+
     -- Telescope
     {
       "fd",

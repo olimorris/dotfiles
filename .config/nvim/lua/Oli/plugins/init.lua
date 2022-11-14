@@ -107,6 +107,11 @@ return packer.startup({
       end,
     })
     use({
+      "cshuaimin/ssr.nvim", -- Advanced search and replace using Treesitter
+      module = "ssr",
+      config = function() require(config_namespace .. ".plugins.others").ssr() end,
+    })
+    use({
       "nvim-telescope/telescope.nvim", -- Awesome fuzzy finder for everything
       requires = {
         -- {

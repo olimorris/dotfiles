@@ -330,6 +330,17 @@ M.satellite = function()
   satellite.setup()
 end
 
+M.ssr = function()
+  local ok, ssr = om.safe_require("ssr")
+  if not ok then return end
+
+  ssr.setup({
+    keymaps = {
+      replace_all = "<LocalLeader><CR>"
+    }
+  })
+end
+
 M.stickybuf = function()
   local ok, stickybuf = om.safe_require("stickybuf")
   if not ok then return end
