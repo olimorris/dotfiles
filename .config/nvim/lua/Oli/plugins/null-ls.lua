@@ -16,6 +16,7 @@ mason_null_ls.setup({
     "stylua",
   },
   automatic_installation = true,
+  automatic_setup = false
 })
 
 null_ls.setup({
@@ -27,6 +28,7 @@ null_ls.setup({
     -- Formatting
     null_ls.builtins.formatting.fish_indent,
     null_ls.builtins.formatting.fixjson,
+    null_ls.builtins.formatting.google_java_format,
     null_ls.builtins.formatting.phpcsfixer,
     null_ls.builtins.formatting.prettier.with({
       filetypes = {

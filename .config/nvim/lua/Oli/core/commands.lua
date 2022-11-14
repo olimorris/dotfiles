@@ -78,6 +78,10 @@ function M.lsp_commands()
       function() vim.cmd("edit " .. vim.lsp.get_log_path()) end,
       description = "LSP: Show logs",
     },
+    {
+      ":NullLsInstall",
+      description = "null-ls: Install plugins",
+    }
   }
 end
 
