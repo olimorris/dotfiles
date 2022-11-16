@@ -37,9 +37,7 @@ function M.base_commands()
     },
     {
       "FindAndReplaceUndo",
-      function(opts)
-        vim.api.nvim_command("silent cdo undo")
-      end,
+      function(opts) vim.api.nvim_command("silent cdo undo") end,
       description = "Undo Find and Replace (global)",
     },
     {

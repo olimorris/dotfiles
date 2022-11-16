@@ -62,7 +62,7 @@ onedarkpro.setup({
   highlights = {
     CursorLineNR = { bg = "${cursorline}", fg = "${purple}", style = "bold" },
     DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
-    MatchParen = { fg = "${cyan}", style = "underline" },
+    MatchParen = { fg = "${cyan}" },
     ModeMsg = { link = "LineNr" }, -- Make command line text lighter
     Search = { bg = "${selection}", fg = "${yellow}", style = "underline" },
     TabLine = { fg = "${gray}", bg = "${bg}" },

@@ -43,7 +43,7 @@ telescope.setup({
       },
       width = 0.9,
       height = 0.8,
-      preview_cutoff = 50
+      preview_cutoff = 50,
     },
 
     -- Searching
@@ -104,12 +104,10 @@ telescope.setup({
       -- },
     },
     fzf = {
-      fuzzy = true, -- false will only do exact matching
-      override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-      -- the default case_mode is "smart_case"
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = "smart_case",
     },
-    project = { base_dirs = { { path = os.getenv("PROJECTS_DIR") } } },
   },
 })

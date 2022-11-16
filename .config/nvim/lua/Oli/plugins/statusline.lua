@@ -143,16 +143,16 @@ local GitBranch = {
       },
       {
         condition = function() return _G.GitStatus.status == "pending" end,
-        provider = "  ",
+        provider = " ",
         hl = { fg = "gray", bg = "statusline_bg" },
-      },
-      {
-        provider = function() return _G.GitStatus.ahead .. " " end,
-        hl = function() return { fg = _G.GitStatus.ahead == 0 and "gray" or "green", bg = "statusline_bg" } end,
       },
       {
         provider = function() return _G.GitStatus.behind .. "" end,
         hl = function() return { fg = _G.GitStatus.behind == 0 and "gray" or "red", bg = "statusline_bg" } end,
+      },
+      {
+        provider = function() return _G.GitStatus.ahead .. " " end,
+        hl = function() return { fg = _G.GitStatus.ahead == 0 and "gray" or "green", bg = "statusline_bg" } end,
       },
     },
     {

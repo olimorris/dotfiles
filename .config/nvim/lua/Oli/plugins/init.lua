@@ -26,8 +26,8 @@ return packer.startup({
     use({
       --"olimorris/onedarkpro.nvim",
       "~/Code/Projects/onedarkpro.nvim", -- My onedarkpro theme
-      config = function() require(config_namespace .. ".plugins.theme") end,
       as = "onedarkpro",
+      config = function() require(config_namespace .. ".plugins.theme") end,
     })
     use({
       "goolord/alpha-nvim", -- Dashboard for Neovim
@@ -118,11 +118,6 @@ return packer.startup({
     use({
       "nvim-telescope/telescope.nvim", -- Awesome fuzzy finder for everything
       requires = {
-        -- {
-        --   "nvim-telescope/telescope-project.nvim", -- Switch between projects
-        --   after = "telescope.nvim",
-        --   config = function() require("telescope").load_extension("project") end,
-        -- },
         {
           "nvim-telescope/telescope-fzf-native.nvim", -- Use fzf within Telescope
           run = "make",
@@ -189,6 +184,7 @@ return packer.startup({
       "fedepujol/move.nvim", -- Move lines and blocks
     })
     ---------------------------------------------------------------------------- }}}
+    -----------------------------------CODING----------------------------------- {{{
     ---------------------------------COMPLETION--------------------------------- {{{
     use({
       "hrsh7th/nvim-cmp", -- Code completion menu
@@ -226,7 +222,6 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.completion") end,
     })
     ---------------------------------------------------------------------------- }}}
-    -----------------------------------CODING----------------------------------- {{{
     -------------------------------------LSP------------------------------------ {{{
     use({
       "williamboman/mason.nvim", -- Easily install and manage LSP servers, DAP servers, linters, and formatters
