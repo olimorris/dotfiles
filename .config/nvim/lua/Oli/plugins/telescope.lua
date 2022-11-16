@@ -74,14 +74,17 @@ telescope.setup({
     -- Mappings
     mappings = {
       i = {
-        ["<ESC>"] = require("telescope.actions").close,
         ["<C-e>"] = custom_actions.multi_select,
         ["<C-j>"] = require("telescope.actions").move_selection_next,
+        ["<C-d>"] = require("telescope.actions").preview_scrolling_down,
+        ["<C-f>"] = require("telescope.actions").preview_scrolling_up,
         ["<C-k>"] = require("telescope.actions").move_selection_previous,
         ["<C-q>"] = require("telescope.actions").send_to_qflist,
       },
       n = {
-        ["<ESC>"] = require("telescope.actions").close
+        ["q"] = require("telescope.actions").close,
+        ["<C-n>"] = require("telescope.actions").move_selection_next,
+        ["<C-p>"] = require("telescope.actions").move_selection_previous,
       },
     },
   },
