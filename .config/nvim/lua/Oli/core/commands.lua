@@ -41,11 +41,6 @@ function M.base_commands()
       description = "Undo Find and Replace (global)",
     },
     {
-      "Sessions",
-      function() vim.cmd([[Telescope persisted]]) end,
-      description = "Session: List",
-    },
-    {
       "Snippets",
       function() om.EditSnippet() end,
       description = "Edit Snippets",
@@ -141,6 +136,15 @@ function M.plugin_commands()
     {
       ":ColorizerToggle",
       description = "Colorizer toggle",
+    },
+    -- Comment.nvim
+    {
+      ":Comment",
+      {
+        n = "gcc",
+        v = "gc",
+      },
+      description = "Toggle comment",
     },
     -- Coverage
     {
@@ -271,6 +275,12 @@ function M.plugin_commands()
       description = "Packer: Rollback Snapshot",
     },
     -- Persisted
+    {
+      ":Sessions",
+      function() vim.cmd([[Telescope persisted]]) end,
+      description = "Session: List",
+    },
+
     {
       ":SessionSave",
       description = "Session: Save",

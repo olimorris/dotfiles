@@ -173,16 +173,6 @@ M.plugin_keymaps = function()
     -- bufdelete.nvim
     { "<C-c>", "<cmd>Bdelete<CR>", description = "Close Buffer" },
 
-    -- Comments
-    {
-      "gcc",
-      {
-        n = function() require("Comment.api").toggle.linewise.current() end,
-        x = function() require("Comment.api").toggle.linewise(vim.fn.visualmode()) end,
-      },
-      description = "Comment toggle",
-    },
-
     -- Copilot
     {
       "<C-a>",
@@ -345,6 +335,7 @@ M.plugin_keymaps = function()
       description = "Find files",
     },
     { "fb", t.lazy_required_fn("telescope.builtin", "buffers"), description = "Find open buffers" },
+    { "fp", "<cmd>Telescope projects<CR>", description = "Find projects" },
     {
       "<C-f>",
       t.lazy_required_fn("telescope.builtin", "current_buffer_fuzzy_find"),
