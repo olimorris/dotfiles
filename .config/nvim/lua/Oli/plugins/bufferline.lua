@@ -97,7 +97,7 @@ end
 
 local TablineBufnr = {
   provider = function(self) return tostring(self.bufnr) .. ": " end,
-  hl = function(self) return { fg = self.is_active and "purple" or "gray", italic = self.is_active } end,
+  hl = function(self) return { fg = self.is_active and "purple" or "gray", italic = true } end,
 }
 
 local TablineFileName = {
