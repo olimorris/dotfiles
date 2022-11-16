@@ -22,9 +22,6 @@ M.base_keymaps = function()
   local mappings = {
     { "jk", "<esc>", description = "Escape in insert mode", mode = { "i" } },
 
-    -- Replace selected text without yanking it
-    { "p", '"_dP', description = "without ", mode = { "v" } },
-
     { "<LocalLeader>b", "<cmd>lua om.MoveToBuffer()<CR>", description = "Move to a specific buffer number" },
 
     { "<Leader>qa", "<cmd>qall<CR>", description = "Quit Neovim" },
@@ -57,9 +54,9 @@ M.base_keymaps = function()
 
     { "<Esc>", "<cmd>:noh<CR>", description = "Clear searches" },
     {
-      "<Leader>f",
+      "<LocalLeader>f",
       ":s/{search}/{replace}/g",
-      description = "Search and replace",
+      description = "Find and Replace (buffer)",
       mode = { "n", "v" },
       opts = { silent = false },
     },
@@ -167,6 +164,7 @@ M.plugin_keymaps = function()
       "<C-p>",
       require("legendary").find,
       description = "Search keybinds and commands",
+      mode = { "n", "v", "i" },
     },
 
     -- Aerial
@@ -322,7 +320,7 @@ M.plugin_keymaps = function()
     {
       "<LocalLeader>sr",
       function() require("ssr").open() end,
-      description = "Structured search and replace",
+      description = "Structured Search and Replace",
       mode = { "n", "x" },
     },
 
@@ -347,7 +345,6 @@ M.plugin_keymaps = function()
       description = "Find files",
     },
     { "fb", t.lazy_required_fn("telescope.builtin", "buffers"), description = "Find open buffers" },
-    { "fp", "<cmd>Telescope project display_type=full<CR>", description = "Find projects" },
     {
       "<C-f>",
       t.lazy_required_fn("telescope.builtin", "current_buffer_fuzzy_find"),
@@ -539,7 +536,7 @@ M.lsp_keymaps = function(client, bufnr)
       description = "LSP: Peek definition",
       opts = { buffer = bufnr },
     },
-    { "F", vim.lsp.buf.code_action, description = "LSP: Show code actions", opts = { buffer = bufnr } },
+    { "ga", vim.lsp.buf.code_action, description = "LSP: Show code actions", opts = { buffer = bufnr } },
     {
       "gi",
       vim.lsp.buf.implementation,
@@ -559,7 +556,7 @@ M.lsp_keymaps = function(client, bufnr)
   }
 
   table.insert(mappings, {
-    "<LocalLeader>f",
+    "F",
     function() vim.lsp.buf.format({ async = true }) end,
     description = "LSP: Format document",
     opts = { buffer = bufnr },

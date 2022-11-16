@@ -336,7 +336,7 @@ M.ssr = function()
 
   ssr.setup({
     keymaps = {
-      replace_all = "<LocalLeader><CR>"
+      replace_all = "<C-CR>"
     }
   })
 end
