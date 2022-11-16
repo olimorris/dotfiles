@@ -18,6 +18,31 @@ function M.base_commands()
       description = "Copy message output",
     },
     {
+      ":copen",
+      description = "Open quickfix window",
+    },
+    {
+      ":cclose",
+      description = "Close quickfix window",
+    },
+    {
+      "FindAndReplace",
+      function(opts)
+        vim.api.nvim_command(string.format("silent cdo s/%s/%s", opts.fargs[1], opts.fargs[2]))
+        vim.api.nvim_command("silent cfdo update")
+      end,
+      description = "Find and Replace (global)",
+      unfinished = true,
+      opts = { nargs = "*" },
+    },
+    {
+      "FindAndReplaceUndo",
+      function(opts)
+        vim.api.nvim_command("silent cdo undo")
+      end,
+      description = "Undo Find and Replace (global)",
+    },
+    {
       "Sessions",
       function() vim.cmd([[Telescope persisted]]) end,
       description = "Session: List",
@@ -26,11 +51,6 @@ function M.base_commands()
       "Snippets",
       function() om.EditSnippet() end,
       description = "Edit Snippets",
-    },
-    {
-      "TestAll",
-      function() om.RunTestSuiteAsync() end,
-      description = "Test all",
     },
     {
       "Theme",
@@ -81,7 +101,7 @@ function M.lsp_commands()
     {
       ":NullLsInstall",
       description = "null-ls: Install plugins",
-    }
+    },
   }
 end
 
@@ -116,9 +136,7 @@ function M.plugin_commands()
     -- Code Window
     {
       "Codewindow",
-      function()
-        require("codewindow").toggle_minimap()
-      end,
+      function() require("codewindow").toggle_minimap() end,
       description = "Toggle Code Window",
     },
     -- Colorizer
@@ -274,15 +292,15 @@ function M.plugin_commands()
     -- Satellite
     {
       ":SatelliteEnable",
-      description = "Enable satellite scrollbar"
+      description = "Enable satellite scrollbar",
     },
     {
       ":SatelliteDisable",
-      description = "Disable satellite scrollbar"
+      description = "Disable satellite scrollbar",
     },
     {
       ":SatelliteRefresh",
-      description = "Refresh satellite scrollbar"
+      description = "Refresh satellite scrollbar",
     },
     -- Startup time
     {

@@ -1,6 +1,30 @@
 local ok, telescope = om.safe_require("telescope")
 if not ok then return end
 
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
+local custom_actions = {}
+
+function custom_actions.multi_select(prompt_bufnr)
+  local function get_table_size(t)
+    local count = 0
+    for _ in pairs(t) do
+      count = count + 1
+    end
+    return count
+  end
+
+  local picker = action_state.get_current_picker(prompt_bufnr)
+  local num_selections = get_table_size(picker:get_multi_selection())
+
+  if num_selections > 1 then
+    actions.send_selected_to_qflist(prompt_bufnr)
+    actions.open_qflist()
+  else
+    actions.file_edit(prompt_bufnr)
+  end
+end
+
 telescope.setup({
   defaults = {
     -- Appearance
@@ -51,11 +75,14 @@ telescope.setup({
     mappings = {
       i = {
         ["<ESC>"] = require("telescope.actions").close,
+        ["<C-e>"] = custom_actions.multi_select,
         ["<C-j>"] = require("telescope.actions").move_selection_next,
         ["<C-k>"] = require("telescope.actions").move_selection_previous,
         ["<C-q>"] = require("telescope.actions").send_to_qflist,
       },
-      n = { ["<ESC>"] = require("telescope.actions").close },
+      n = {
+        ["<ESC>"] = require("telescope.actions").close
+      },
     },
   },
 

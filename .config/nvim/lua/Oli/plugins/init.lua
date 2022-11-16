@@ -91,6 +91,10 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.others").barbecue() end,
     })
     use({
+      "stevearc/dressing.nvim", -- Utilises Neovim 0.6's new UI hooks to manage inputs, selects etc
+      config = function() require(config_namespace .. ".plugins.others").dressing() end,
+    })
+    use({
       "gorbit99/codewindow.nvim",
       module = "codewindow",
       config = function() require(config_namespace .. ".plugins.others").code_window() end,
@@ -160,6 +164,10 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.telescope") end,
     })
     use({
+      "kevinhwang91/nvim-bqf", -- Better quickfix window,
+      ft = "qf",
+    })
+    use({
       "mbbill/undotree", -- Visually see your undos
       cmd = "UndotreeToggle",
       config = function() require(config_namespace .. ".plugins.others").undotree() end,
@@ -174,12 +182,7 @@ return packer.startup({
     })
     use({
       "mrjones2014/legendary.nvim", -- A legend for all keymaps, commands and autocmds
-      requires = {
-        {
-          "stevearc/dressing.nvim", -- Utilises Neovim 0.6's new UI hooks to manage inputs, selects etc
-          config = function() require(config_namespace .. ".plugins.others").dressing() end,
-        },
-      },
+      after = "dressing.nvim",
       config = function() require(config_namespace .. ".plugins.legendary") end,
     })
     use({
