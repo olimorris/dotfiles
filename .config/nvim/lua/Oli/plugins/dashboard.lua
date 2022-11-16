@@ -5,7 +5,7 @@ require("alpha.term")
 local dashboard = require("alpha.themes.dashboard")
 
 -- Terminal header
-dashboard.section.terminal.command = "cat | lolcat --seed=27 " .. os.getenv("HOME") .. "/.config/nvim/static/neovim.cat"
+dashboard.section.terminal.command = "cat | lolcat --seed=24 " .. os.getenv("HOME") .. "/.config/nvim/static/neovim.cat"
 dashboard.section.terminal.width = 69
 dashboard.section.terminal.height = 8
 
@@ -19,9 +19,9 @@ end
 dashboard.section.buttons.val = {
   button("l", "   Load session", '<cmd>lua require("persisted").load()<CR>'),
   button("n", "   New file", "<cmd>ene <BAR> startinsert <CR>"),
-  -- button("b", "   Bookmarks", "<cmd>Telescope harpoon marks<CR>"),
-  button("r", "   Recently used files", "<cmd>Telescope frecency<CR>"),
+  button("r", "   Recent files", "<cmd>Telescope frecency<CR>"),
   button("f", "   Find file", "<cmd>Telescope find_files hidden=true path_display=smart<CR>"),
+  button("p", "   Projects", "<cmd>Telescope projects<CR>"),
   button("u", "   Update plugins", "<cmd>lua om.PackerSync()<CR>"), -- Packer sync
   button("q", "   Quit Neovim", "<cmd>qa!<CR>"),
 }

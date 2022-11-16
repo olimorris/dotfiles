@@ -361,7 +361,10 @@ return packer.startup({
     ------------------------------------MISC------------------------------------ {{{
     use({
       "ahmedkhalf/project.nvim", -- Automatically set the cwd to the project root
-      config = function() require(config_namespace .. ".plugins.others").project_nvim() end,
+      config = function()
+        require(config_namespace .. ".plugins.others").project_nvim()
+        require("telescope").load_extension("projects")
+      end,
     })
     use({
       "nathom/tmux.nvim", -- Navigate Tmux panes inside of neovim
