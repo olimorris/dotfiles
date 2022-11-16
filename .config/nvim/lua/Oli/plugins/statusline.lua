@@ -482,6 +482,33 @@ local FileType = {
   },
 }
 
+--- Return information on the current file's encoding
+local FileEncoding = {
+  condition = function()
+    return not conditions.buffer_matches({
+      filetype = filetypes,
+    })
+  end,
+  {
+    provider = "",
+    hl = { fg = "statusline_bg", bg = "bg" },
+  },
+  {
+    provider = function()
+      local enc = (vim.bo.fenc ~= "" and vim.bo.fenc) or vim.o.enc -- :h 'enc'
+      return " " .. enc .. " "
+    end,
+    hl = {
+      fg = "gray",
+      bg = "statusline_bg",
+    },
+  },
+  {
+    provider = "",
+    hl = { bg = "statusline_bg", fg = "bg" },
+  },
+}
+
 ---The statusline component
 local Statusline = {
   condition = function()
@@ -501,6 +528,7 @@ local Statusline = {
   Overseer,
   Dap,
   FileType,
+  FileEncoding,
   Session,
   SearchResults,
   Ruler,
