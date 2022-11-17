@@ -83,7 +83,7 @@ function M.lsp_commands()
       description = "LSP: Install all servers",
     },
     {
-      ":LspUninstallAll",
+      "LspUninstallAll",
       description = "LSP: Uninstall all servers",
     },
     {
@@ -92,7 +92,7 @@ function M.lsp_commands()
       description = "LSP: Show logs",
     },
     {
-      ":NullLsInstall",
+      "NullLsInstall",
       description = "null-ls: Install plugins",
     },
   }
@@ -101,17 +101,17 @@ end
 function M.lsp_client_commands(client, bufnr)
   return {
     {
-      ":LspRestart",
+      "LspRestart",
       description = "LSP: Restart any attached clients",
       opts = { buffer = bufnr },
     },
     {
-      ":LspStart",
+      "LspStart",
       description = "LSP: Start the client manually",
       opts = { buffer = bufnr },
     },
     {
-      ":LspInfo",
+      "LspInfo",
       description = "LSP: Show attached clients",
       opts = { buffer = bufnr },
     },
