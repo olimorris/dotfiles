@@ -236,7 +236,7 @@ M.plugin_keymaps = function()
 
     -- File Explorer
     { "\\", "<cmd>Neotree toggle<CR>", description = "Neotree: Toggle" },
-    { "<C-z>", "<cmd>Neotree reveal %:p<CR>", description = "Neotree: Find File" },
+    { "<C-z>", "<cmd>Neotree reveal=true toggle<CR>", description = "Neotree: Reveal File" },
 
     -- Move.nvim
     {
