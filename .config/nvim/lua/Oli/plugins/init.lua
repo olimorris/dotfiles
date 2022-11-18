@@ -5,22 +5,12 @@ return packer.startup({
   function(use, use_rocks)
     ----------------------------------AUTOLOAD---------------------------------- {{{
     use_rocks("penlight")
-    use({
-      "wbthomason/packer.nvim",
-      opt = "true",
-    })
-    use({
-      "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
-    })
-    use({
-      "nvim-lua/plenary.nvim", -- Required dependency for many plugins. Super useful Lua functions
-    })
-    use({
-      "antoinemadec/FixCursorHold.nvim", -- Fix neovim CursorHold and CursorHoldI autocmd events performance bug
-    })
-    use({
-      "lewis6991/impatient.nvim", -- Speeds up load times
-    })
+    use({ "wbthomason/packer.nvim", opt = "true" })
+    use("tpope/vim-sleuth") -- Automatically detects which indents should be used in the current buffer
+    use("nvim-lua/plenary.nvim") -- Required dependency for many plugins. Super useful Lua functions
+    use("antoinemadec/FixCursorHold.nvim") -- Fix neovim CursorHold and CursorHoldI autocmd events performance bug
+    use("lewis6991/impatient.nvim") -- Speeds up load times
+    use("kyazdani42/nvim-web-devicons") -- Web icons for various plugins
     ---------------------------------------------------------------------------- }}}
     ---------------------------------APPEARANCE--------------------------------- {{{
     use({
@@ -37,9 +27,6 @@ return packer.startup({
     use({
       "rebelot/heirline.nvim", -- Statusline
       after = "onedarkpro",
-      requires = {
-        { "kyazdani42/nvim-web-devicons" }, -- Web icons for various plugins
-      },
       config = function() require(config_namespace .. ".plugins.statusline").setup() end,
     })
     use({
@@ -53,7 +40,6 @@ return packer.startup({
       "nvim-neo-tree/neo-tree.nvim",
       requires = {
         { "nvim-lua/plenary.nvim" },
-        { "kyazdani42/nvim-web-devicons" },
         { "MunifTanjim/nui.nvim" },
       },
       config = function() require(config_namespace .. ".plugins.file_explorer") end,
@@ -86,7 +72,6 @@ return packer.startup({
           "SmiteshP/nvim-navic", -- Winbar component showing current code context
           config = function() require(config_namespace .. ".plugins.others").nvim_navic() end,
         },
-        { "kyazdani42/nvim-web-devicons" },
       },
       config = function() require(config_namespace .. ".plugins.others").barbecue() end,
     })
@@ -177,6 +162,7 @@ return packer.startup({
     })
     use({
       "mrjones2014/legendary.nvim", -- A legend for all keymaps, commands and autocmds
+      -- branch = "mrj/218/custom-sorting",
       after = "dressing.nvim",
       config = function() require(config_namespace .. ".plugins.legendary") end,
     })
