@@ -137,22 +137,26 @@ local GitBranch = {
     },
     {
       condition = function() return (_G.GitStatus ~= nil and (_G.GitStatus.ahead ~= 0 or _G.GitStatus.behind ~= 0)) end,
-      on_click = {
-        callback = function() om.GitRemoteSync() end,
-        name = "git_refresh_ahead_behind",
-      },
       {
         condition = function() return _G.GitStatus.status == "pending" end,
         provider = " ",
         hl = { fg = "gray", bg = "statusline_bg" },
       },
       {
-        provider = function() return _G.GitStatus.behind .. "" end,
+        provider = function() return _G.GitStatus.behind .. " " end,
         hl = function() return { fg = _G.GitStatus.behind == 0 and "gray" or "red", bg = "statusline_bg" } end,
+        on_click = {
+          callback = function() if _G.GitStatus.behind > 0 then om.GitPull() end end,
+          name = "git_pull",
+        },
       },
       {
         provider = function() return _G.GitStatus.ahead .. " " end,
         hl = function() return { fg = _G.GitStatus.ahead == 0 and "gray" or "green", bg = "statusline_bg" } end,
+        on_click = {
+          callback = function() if _G.GitStatus.ahead > 0 then om.GitPush() end end,
+          name = "git_push",
+        },
       },
     },
     {

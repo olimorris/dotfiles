@@ -62,6 +62,29 @@ function om.GitRemoteSync()
   vim.schedule_wrap(update_git_status())
 end
 --------------------------------------------------------------------------- }}}
+--------------------------------GIT PUSH/PULL------------------------------- {{{
+local function GitPushPull(action, tense)
+  local branch = vim.fn.systemlist("git rev-parse --abbrev-ref HEAD")[1]
+
+  vim.ui.select({ "Yes", "No" }, {
+    prompt = action:gsub("^%l", string.upper) .. " commits " .. tense .. " origin/" .. branch .. "?",
+    telescope = require("telescope.themes").get_dropdown(),
+  }, function(choice)
+    if choice == "Yes" then
+      local Job = require("plenary.job")
+
+      Job:new({
+        command = "git",
+        args = { action },
+        on_exit = function() om.GitRemoteSync() end,
+      }):start()
+    end
+  end)
+end
+
+function om.GitPull() GitPushPull("pull", "from") end
+function om.GitPush() GitPushPull("push", "to") end
+--------------------------------------------------------------------------- }}}
 -------------------------------MOVE TO BUFFER------------------------------- {{{
 function om.MoveToBuffer()
   vim.ui.input({ prompt = "Move to buffer number: " }, function(bufnr)

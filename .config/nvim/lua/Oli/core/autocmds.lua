@@ -5,8 +5,20 @@ function M.base_autocmds()
     {
       name = "GitTrackRemoteBranch",
       {
-        { "VimEnter", "TermLeave" },
+        { "TermLeave" },
         function() om.GitRemoteSync() end,
+        opts = {
+          pattern = { "*" },
+        },
+      },
+      {
+        { "VimEnter" },
+        function()
+          local timer = vim.loop.new_timer()
+          timer:start(0, 120000, function()
+            om.GitRemoteSync()
+          end)
+        end,
         opts = {
           pattern = { "*" },
         },
