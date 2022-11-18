@@ -120,7 +120,6 @@ function om.Lazygit()
     end,
   })
 end
-
 --------------------------------------------------------------------------- }}}
 -----------------------------------PACKER----------------------------------- {{{
 -- Maintain a custom command for Packer Syncing. This is useful for when we
@@ -171,7 +170,6 @@ function om.EditSnippet()
     vim.cmd(":edit " .. path .. "/" .. choice .. ".json")
   end)
 end
-
 --------------------------------------------------------------------------- }}}
 -----------------------------TOGGLE LINE NUMBERS---------------------------- {{{
 function om.ToggleLineNumbers()
@@ -181,7 +179,6 @@ function om.ToggleLineNumbers()
     vim.wo.relativenumber = true
   end
 end
-
 --------------------------------------------------------------------------- }}}
 --------------------------------TOGGLE THEME-------------------------------- {{{
 function om.ToggleTheme(mode)
@@ -193,5 +190,4 @@ function om.ToggleTheme(mode)
     vim.o.background = "dark"
   end
 end
-
 --------------------------------------------------------------------------- }}}
