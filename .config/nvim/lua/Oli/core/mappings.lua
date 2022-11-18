@@ -238,6 +238,9 @@ M.plugin_keymaps = function()
     { "\\", "<cmd>Neotree toggle<CR>", description = "Neotree: Toggle" },
     { "<C-z>", "<cmd>Neotree reveal=true toggle<CR>", description = "Neotree: Reveal File" },
 
+    -- Lazygit
+    { "<LocalLeader>g", "<cmd>Lazygit<CR>", description = "Lazygit" },
+
     -- Move.nvim
     {
       "<A-j>",
