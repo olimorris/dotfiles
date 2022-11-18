@@ -67,8 +67,7 @@ local function GitPushPull(action, tense)
   local branch = vim.fn.systemlist("git rev-parse --abbrev-ref HEAD")[1]
 
   vim.ui.select({ "Yes", "No" }, {
-    prompt = action:gsub("^%l", string.upper) .. " commits " .. tense .. " origin/" .. branch .. "?",
-    telescope = require("telescope.themes").get_dropdown(),
+    prompt = action:gsub("^%l", string.upper) .. " commits to/from " .. "'origin/" .. branch .. "'?",
   }, function(choice)
     if choice == "Yes" then
       local Job = require("plenary.job")
