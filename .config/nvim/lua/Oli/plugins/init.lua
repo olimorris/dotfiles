@@ -10,7 +10,6 @@ return packer.startup({
     use("nvim-lua/plenary.nvim") -- Required dependency for many plugins. Super useful Lua functions
     use("antoinemadec/FixCursorHold.nvim") -- Fix neovim CursorHold and CursorHoldI autocmd events performance bug
     use("lewis6991/impatient.nvim") -- Speeds up load times
-    use("kyazdani42/nvim-web-devicons") -- Web icons for various plugins
     ---------------------------------------------------------------------------- }}}
     ---------------------------------APPEARANCE--------------------------------- {{{
     use({
@@ -20,6 +19,11 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.theme") end,
     })
     use({
+      "mrjones2014/legendary.nvim", -- A legend for all keymaps, commands and autocmds
+      after = "dressing.nvim",
+      config = function() require(config_namespace .. ".plugins.legendary") end,
+    })
+    use({
       "goolord/alpha-nvim", -- Dashboard for Neovim
       after = "onedarkpro",
       config = function() require(config_namespace .. ".plugins.dashboard") end,
@@ -27,6 +31,7 @@ return packer.startup({
     use({
       "rebelot/heirline.nvim", -- Statusline
       after = "onedarkpro",
+      requires = { "kyazdani42/nvim-web-devicons" },
       config = function() require(config_namespace .. ".plugins.statusline").setup() end,
     })
     use({
@@ -40,6 +45,7 @@ return packer.startup({
       "nvim-neo-tree/neo-tree.nvim",
       requires = {
         { "nvim-lua/plenary.nvim" },
+        { "kyazdani42/nvim-web-devicons" },
         { "MunifTanjim/nui.nvim" },
       },
       config = function() require(config_namespace .. ".plugins.file_explorer") end,
@@ -84,22 +90,6 @@ return packer.startup({
       module = "codewindow",
       config = function() require(config_namespace .. ".plugins.others").code_window() end,
     })
-    ---------------------------------------------------------------------------- }}}
-    -------------------------------EDITOR FEATURES------------------------------ {{{
-    use({
-      -- "olimorris/persisted.nvim", -- Session management
-      "~/Code/Projects/persisted.nvim",
-      module = "persisted",
-      config = function()
-        require(config_namespace .. ".plugins.others").persisted()
-        require("telescope").load_extension("persisted")
-      end,
-    })
-    use({
-      "cshuaimin/ssr.nvim", -- Advanced search and replace using Treesitter
-      module = "ssr",
-      config = function() require(config_namespace .. ".plugins.others").ssr() end,
-    })
     use({
       "nvim-telescope/telescope.nvim", -- Awesome fuzzy finder for everything
       requires = {
@@ -116,22 +106,6 @@ return packer.startup({
           },
           config = function() require("telescope").load_extension("frecency") end,
         },
-        -- {
-        --   "nvim-telescope/telescope-smart-history.nvim", -- Show project dependant history
-        --   after = "telescope.nvim",
-        --   requires = {
-        --     { "tami5/sqlite.lua" },
-        --   },
-        --   config = function() require("telescope").load_extension("smart_history") end,
-        -- },
-        -- {
-        --   "ThePrimeagen/harpoon", -- Mark buffers for faster navigation
-        --   after = "telescope.nvim",
-        --   config = function()
-        --     require(config_namespace .. ".plugins.others").harpoon()
-        --     require("telescope").load_extension("harpoon")
-        --   end,
-        -- },
         {
           "stevearc/aerial.nvim", -- Toggled list of classes, methods etc in current file
           after = "telescope.nvim",
@@ -143,28 +117,25 @@ return packer.startup({
       },
       config = function() require(config_namespace .. ".plugins.telescope") end,
     })
-    use({
-      "kevinhwang91/nvim-bqf", -- Better quickfix window,
-      ft = "qf",
-    })
-    use({
-      "mbbill/undotree", -- Visually see your undos
-      cmd = "UndotreeToggle",
-      config = function() require(config_namespace .. ".plugins.others").undotree() end,
-    })
+    ---------------------------------------------------------------------------- }}}
+    --------------------------------EDITING TEXT-------------------------------- {{{
     use({
       "phaazon/hop.nvim", -- Speedily navigate anywhere in a buffer
       config = function() require(config_namespace .. ".plugins.others").hop() end,
     })
     use({
-      "akinsho/nvim-toggleterm.lua", -- Easily toggle and position the terminal
-      config = function() require(config_namespace .. ".plugins.others").toggleterm() end,
+      "cshuaimin/ssr.nvim", -- Advanced search and replace using Treesitter
+      module = "ssr",
+      config = function() require(config_namespace .. ".plugins.others").ssr() end,
     })
     use({
-      "mrjones2014/legendary.nvim", -- A legend for all keymaps, commands and autocmds
-      -- branch = "mrj/218/custom-sorting",
-      after = "dressing.nvim",
-      config = function() require(config_namespace .. ".plugins.legendary") end,
+      "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
+      config = function() require(config_namespace .. ".plugins.others").nvim_surround() end,
+    })
+    use({
+      "numToStr/Comment.nvim", -- Comment out lines with gcc
+      after = "nvim-treesitter",
+      config = function() require(config_namespace .. ".plugins.others").comment() end,
     })
     use({
       "fedepujol/move.nvim", -- Move lines and blocks
@@ -329,28 +300,37 @@ return packer.startup({
         vim.schedule(function() require(config_namespace .. ".plugins.others").copilot() end)
       end,
     })
-    use({
-      "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
-      config = function() require(config_namespace .. ".plugins.others").nvim_surround() end,
-    })
-    use({
-      "numToStr/Comment.nvim", -- Comment out lines with gcc
-      config = function() require(config_namespace .. ".plugins.others").comment() end,
-    })
-    use({
-      "pianocomposer321/yabs.nvim", -- Build and run your code
-      module = "yabs",
-      config = function() require(config_namespace .. ".plugins.others").yabs() end,
-    })
     ---------------------------------------------------------------------------- }}}
     ---------------------------------------------------------------------------- }}}
     ------------------------------------MISC------------------------------------ {{{
+    use({
+      -- "olimorris/persisted.nvim", -- Session management
+      "~/Code/Projects/persisted.nvim",
+      module = "persisted",
+      config = function()
+        require(config_namespace .. ".plugins.others").persisted()
+        require("telescope").load_extension("persisted")
+      end,
+    })
     use({
       "ahmedkhalf/project.nvim", -- Automatically set the cwd to the project root
       config = function()
         require(config_namespace .. ".plugins.others").project_nvim()
         require("telescope").load_extension("projects")
       end,
+    })
+    use({
+      "akinsho/nvim-toggleterm.lua", -- Easily toggle and position the terminal
+      config = function() require(config_namespace .. ".plugins.others").toggleterm() end,
+    })
+    use({
+      "kevinhwang91/nvim-bqf", -- Better quickfix window,
+      ft = "qf",
+    })
+    use({
+      "mbbill/undotree", -- Visually see your undos
+      cmd = "UndotreeToggle",
+      config = function() require(config_namespace .. ".plugins.others").undotree() end,
     })
     use({
       "nathom/tmux.nvim", -- Navigate Tmux panes inside of neovim
