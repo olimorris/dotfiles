@@ -1,9 +1,10 @@
 local ok, onedarkpro = om.safe_require("onedarkpro")
 if not ok then return end
 
+-- vim.g.onedarkpro_log_level = "debug"
+
 onedarkpro.setup({
   -- caching = true,
-  -- log_level = "debug",
   plugins = {
     barbar = false,
     lsp_saga = false,
