@@ -25,6 +25,10 @@ style = "bold #98c379"  #green
 [git_status]
 style = "bold #4c4f55" #gray
 
+[java]
+symbol = " "
+style = "bold #61afef" #blue
+
 [nix_shell]
 symbol = " "
 style = "bold #61afef" #blue
