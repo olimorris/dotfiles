@@ -47,6 +47,7 @@
 !tests/**/*
 
 # others files
+!.asdfrc
 !.tool-versions
 !.config/.color_mode
 !NEOVIM_USAGE.md
