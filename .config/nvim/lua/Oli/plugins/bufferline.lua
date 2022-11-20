@@ -103,7 +103,7 @@ local TablineBufnr = {
 local TablineFileName = {
   provider = function(self)
     local filename = self.filename
-    filename = filename == "" and "[No Name]" or format_filename(filename)
+    filename = filename == "" and "[No Name]" or format_filename(vim.fn.fnamemodify(filename, ":t:r"), 15)
     return filename
   end,
   hl = function(self)

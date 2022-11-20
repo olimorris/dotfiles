@@ -9,6 +9,23 @@ local conditions = require("heirline.conditions")
 local Align = { provider = "%=" }
 local Space = { provider = " " }
 
+local LeftSlantStart = {
+  provider = "",
+  hl = { fg = "bg", bg = "statusline_bg" },
+}
+local LeftSlantEnd = {
+  provider = "",
+  hl = { fg = "statusline_bg", bg = "bg" },
+}
+local RightSlantStart = {
+  provider = "",
+  hl = { fg = "statusline_bg", bg = "bg" },
+}
+local RightSlantEnd = {
+  provider = "",
+  hl = { fg = "bg", bg = "statusline_bg" },
+}
+
 -- Filetypes where certain elements of the statusline will not be shown
 local filetypes = {
   "^aerial$",
@@ -123,10 +140,7 @@ local GitBranch = {
         filetype = filetypes,
       })
     end,
-    {
-      provider = "",
-      hl = { fg = "bg", bg = "statusline_bg" },
-    },
+    LeftSlantStart,
     {
       provider = function(self) return "  " .. self.status_dict.head .. " " end,
       on_click = {
@@ -146,7 +160,9 @@ local GitBranch = {
         provider = function() return _G.GitStatus.behind .. " " end,
         hl = function() return { fg = _G.GitStatus.behind == 0 and "gray" or "red", bg = "statusline_bg" } end,
         on_click = {
-          callback = function() if _G.GitStatus.behind > 0 then om.GitPull() end end,
+          callback = function()
+            if _G.GitStatus.behind > 0 then om.GitPull() end
+          end,
           name = "git_pull",
         },
       },
@@ -154,53 +170,49 @@ local GitBranch = {
         provider = function() return _G.GitStatus.ahead .. " " end,
         hl = function() return { fg = _G.GitStatus.ahead == 0 and "gray" or "green", bg = "statusline_bg" } end,
         on_click = {
-          callback = function() if _G.GitStatus.ahead > 0 then om.GitPush() end end,
+          callback = function()
+            if _G.GitStatus.ahead > 0 then om.GitPush() end
+          end,
           name = "git_push",
         },
       },
     },
-    {
-      provider = "",
-      hl = { fg = "statusline_bg", bg = "bg" },
-    },
+    LeftSlantEnd,
   },
 }
 
 ---Return the filename of the current buffer
-local CurrentBuffer = {
-  condition = function()
-    return not conditions.buffer_matches({
-      filetype = filetypes,
-    })
-  end,
+local FileBlock = {
   init = function(self) self.filename = vim.api.nvim_buf_get_name(0) end,
+}
+
+local FileName = {
+  provider = function(self)
+    local filename = vim.fn.fnamemodify(self.filename, ":t")
+    if filename == "" then return "[No Name]" end
+    return " " .. filename .. " "
+  end,
+  on_click = {
+    callback = function() vim.cmd("normal ff") end,
+    name = "find_files",
+  },
+  hl = { fg = "gray", bg = "statusline_bg" },
+}
+
+local FileFlags = {
   {
-    provider = "",
-    hl = { fg = "bg", bg = "statusline_bg" },
+    condition = function() return vim.bo.modified end,
+    provider = " ",
+    hl = { fg = "gray" },
   },
   {
-    provider = function(self) return " " .. vim.fn.fnamemodify(self.filename, ":t") .. " " end,
-    hl = { fg = "gray", bg = "statusline_bg" },
-    on_click = {
-      callback = function() vim.cmd("normal ff") end,
-      name = "find_files",
-    },
-    {
-      condition = function() return vim.bo.modified end,
-      provider = " ",
-      hl = { fg = "gray" },
-    },
-    {
-      condition = function() return not vim.bo.modifiable or vim.bo.readonly end,
-      provider = " ",
-      hl = { fg = "gray" },
-    },
-  },
-  {
-    provider = "",
-    hl = { fg = "statusline_bg", bg = "bg" },
+    condition = function() return not vim.bo.modifiable or vim.bo.readonly end,
+    provider = " ",
+    hl = { fg = "gray" },
   },
 }
+
+local FileNameBlock = utils.insert(FileBlock, LeftSlantStart, utils.insert(FileName, FileFlags), LeftSlantEnd)
 
 ---Return the LspDiagnostics from the LSP servers
 local LspDiagnostics = {
@@ -363,10 +375,7 @@ local Session = {
         filetype = filetypes,
       })
     end,
-    {
-      provider = "",
-      hl = { fg = "statusline_bg", bg = "bg" },
-    },
+    RightSlantStart,
     {
       provider = function(self)
         if vim.g.persisting then
@@ -381,10 +390,7 @@ local Session = {
         name = "toggle_session",
       },
     },
-    {
-      provider = "",
-      hl = { bg = "statusline_bg", fg = "bg" },
-    },
+    RightSlantEnd,
   },
 }
 
@@ -449,42 +455,31 @@ local Dap = {
 }
 
 --- Return information on the current buffers filetype
-local FileType = {
+local FileIcon = {
   init = function(self)
-    self.filename = vim.api.nvim_buf_get_name(0)
-    local extension = vim.fn.fnamemodify(self.filename, ":e")
-    self.icon, self.icon_color =
-      require("nvim-web-devicons").get_icon_color(self.filename, extension, { default = true })
+    local filename = self.filename
+    local extension = vim.fn.fnamemodify(filename, ":e")
+    self.icon, self.icon_color = require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
   end,
+  provider = function(self) return self.icon and (" " .. self.icon .. " ") end,
+  hl = { fg = "gray", bg = "statusline_bg" },
+}
+
+local FileType = {
   condition = function()
     return not conditions.buffer_matches({
       filetype = filetypes,
     })
   end,
+  provider = function() return string.lower(vim.bo.filetype) .. " " end,
   on_click = {
     callback = function() om.ChangeFiletype() end,
     name = "change_ft",
   },
-  {
-    provider = "",
-    hl = { fg = "statusline_bg", bg = "bg" },
-  },
-  {
-    provider = function(self) return " " .. self.icon end,
-    hl = { fg = "gray", bg = "statusline_bg" },
-  },
-  {
-    provider = function() return " " .. string.lower(vim.bo.filetype) .. " " end,
-    hl = {
-      fg = "gray",
-      bg = "statusline_bg",
-    },
-  },
-  {
-    provider = "",
-    hl = { bg = "statusline_bg", fg = "bg" },
-  },
+  hl = { fg = "gray", bg = "statusline_bg" },
 }
+
+FileType = utils.insert(FileBlock, RightSlantStart, FileIcon, FileType, RightSlantEnd)
 
 --- Return information on the current file's encoding
 local FileEncoding = {
@@ -493,10 +488,7 @@ local FileEncoding = {
       filetype = filetypes,
     })
   end,
-  {
-    provider = "",
-    hl = { fg = "statusline_bg", bg = "bg" },
-  },
+  RightSlantStart,
   {
     provider = function()
       local enc = (vim.bo.fenc ~= "" and vim.bo.fenc) or vim.o.enc -- :h 'enc'
@@ -507,10 +499,7 @@ local FileEncoding = {
       bg = "statusline_bg",
     },
   },
-  {
-    provider = "",
-    hl = { bg = "statusline_bg", fg = "bg" },
-  },
+  RightSlantEnd,
 }
 
 ---The statusline component
@@ -524,7 +513,7 @@ local Statusline = {
   -- Left
   VimMode,
   GitBranch,
-  CurrentBuffer,
+  FileNameBlock,
   LspDiagnostics,
 
   -- Right
