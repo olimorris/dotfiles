@@ -230,6 +230,23 @@ M.plugin_keymaps = function()
     -- Heirline
     { "<Tab>", "<Cmd>bnext<CR>", description = "Next buffer", opts = { noremap = false } },
     { "<S-Tab>", "<Cmd>bprev<CR>", description = "Previous buffer", opts = { noremap = false } },
+    {
+      "bp",
+      function()
+        local tabline = require("heirline").tabline
+        local buflist = tabline._buflist[1]
+        buflist._picker_labels = {}
+        buflist._show_picker = true
+        vim.cmd.redrawtabline()
+        local char = vim.fn.getcharstr()
+        local bufnr = buflist._picker_labels[char]
+        if bufnr then vim.api.nvim_win_set_buf(0, bufnr) end
+        buflist._show_picker = false
+        vim.cmd.redrawtabline()
+      end,
+      description = "Navigate to buffer",
+      opts = { noremap = false },
+    },
 
     -- Hop
     { "s", "<cmd>lua require'hop'.hint_char1()<CR>", description = "Hop", mode = { "n", "o" } },
