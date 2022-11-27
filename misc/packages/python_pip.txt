@@ -17,6 +17,6 @@ pynvim==0.4.3
 pyparsing==3.0.9
 pytest==7.2.0
 PyYAML==6.0
-termcolor==2.1.0
+termcolor==2.1.1
 tomli==2.0.1
 yamllint==1.28.0
