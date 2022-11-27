@@ -184,6 +184,11 @@ local GitBranch = {
 ---Return the filename of the current buffer
 local FileBlock = {
   init = function(self) self.filename = vim.api.nvim_buf_get_name(0) end,
+  condition = function()
+    return not conditions.buffer_matches({
+      filetype = filetypes,
+    })
+  end,
 }
 
 local FileName = {
@@ -462,15 +467,14 @@ local FileIcon = {
     self.icon, self.icon_color = require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
   end,
   provider = function(self) return self.icon and (" " .. self.icon .. " ") end,
+  on_click = {
+    callback = function() om.ChangeFiletype() end,
+    name = "change_ft",
+  },
   hl = { fg = "gray", bg = "statusline_bg" },
 }
 
 local FileType = {
-  condition = function()
-    return not conditions.buffer_matches({
-      filetype = filetypes,
-    })
-  end,
   provider = function() return string.lower(vim.bo.filetype) .. " " end,
   on_click = {
     callback = function() om.ChangeFiletype() end,
@@ -529,7 +533,7 @@ local Statusline = {
 
 ---Set the statusline
 function M.setup()
-  require("heirline").load_colors(vim.g.onedarkpro_colors)
+  require("heirline").load_colors(require("onedarkpro").get_colors())
 
   heirline.setup(Statusline, nil, require(config_namespace .. ".plugins.bufferline"))
 
