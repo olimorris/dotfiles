@@ -62,7 +62,7 @@ return packer.startup({
     use({
       "lewis6991/satellite.nvim", -- A scrollbar for the current window
       after = "onedarkpro",
-      config = function() require(config_namespace .. ".plugins.others").satellite() end,
+      config = function() require(config_namespace .. ".plugins.others").scrollbar() end,
     })
     use({
       "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase

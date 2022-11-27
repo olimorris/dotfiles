@@ -44,6 +44,7 @@ M.barbecue = function()
   bbq.setup({
     symbols = {
       separator = "",
+      ellipsis = "",
     },
     modifiers = {
       dirname = ":~:.:s?.config/nvim/lua?Neovim?",
@@ -323,11 +324,18 @@ M.refactoring = function()
   require("telescope").load_extension("refactoring")
 end
 
-M.satellite = function()
+M.scrollbar = function()
   local ok, satellite = om.safe_require("satellite")
   if not ok then return end
 
-  satellite.setup()
+  satellite.setup({
+    width = 2,
+    winblend = 0,
+    excluded_filetypes = {
+      "aerial",
+      "neo-tree",
+    },
+  })
 end
 
 M.ssr = function()
@@ -336,8 +344,8 @@ M.ssr = function()
 
   ssr.setup({
     keymaps = {
-      replace_all = "<C-CR>"
-    }
+      replace_all = "<C-CR>",
+    },
   })
 end
 
