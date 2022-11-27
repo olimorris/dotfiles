@@ -4,7 +4,6 @@ if not ok then return end
 -- vim.g.onedarkpro_log_level = "debug"
 
 onedarkpro.setup({
-  -- caching = true,
   plugins = {
     barbar = false,
     lsp_saga = false,
@@ -24,11 +23,10 @@ onedarkpro.setup({
   },
   options = {
     cursorline = true,
-    -- terminal_colors = true,
     -- transparency = true,
   },
   colors = {
-    onedark = {
+    dark = {
       comment = "#5c6370", -- Revert back to original comment colors
 
       vim = "#81b766", -- green
@@ -44,7 +42,7 @@ onedarkpro.setup({
       telescope_prompt = "#2e323a",
       telescope_results = "#21252d",
     },
-    onelight = {
+    light = {
       comment = "#bebebe", -- Revert back to original comment colors
 
       vim = "#029632", -- green
@@ -61,7 +59,7 @@ onedarkpro.setup({
     },
   },
   highlights = {
-    CursorLineNR = { bg = "${cursorline}", fg = "${purple}", style = "bold" },
+    CursorLineNr = { bg = "${cursorline}", fg = "${purple}", style = "bold" },
     DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
     MatchParen = { fg = "${cyan}" },
     ModeMsg = { link = "LineNr" }, -- Make command line text lighter
@@ -93,6 +91,9 @@ onedarkpro.setup({
     },
     AlphaFooter = { fg = "${gray}", style = "italic" },
 
+    --Barbecue
+    BarbecueEllipsis = { fg = "${gray}" },
+
     -- Bufferline
     BufferlineVim = { fg = "${vim}" },
     BufferlineNormal = { bg = "${bg}", fg = "${gray}" },
@@ -123,11 +124,6 @@ onedarkpro.setup({
     -- Luasnip
     LuaSnipChoiceNode = { fg = "${yellow}" },
     LuaSnipInsertNode = { fg = "${yellow}" },
-
-    -- Minimap
-    MapBase = { fg = "${gray}" },
-    MapCursor = { fg = "${purple}", bg = "${cursorline}" },
-    -- MapRange = { fg = "${fg}" },
 
     -- Navic
     NavicText = { fg = "${gray}", style = "italic" },
@@ -180,4 +176,8 @@ onedarkpro.setup({
   },
 })
 
-vim.cmd("colorscheme onedarkpro")
+if vim.o.background == "light" then
+  vim.cmd([[colorscheme onelight]])
+else
+  vim.cmd([[colorscheme onedark]])
+end
