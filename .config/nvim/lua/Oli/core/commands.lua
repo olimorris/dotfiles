@@ -126,6 +126,11 @@ function M.plugin_commands()
       ":Alpha",
       description = "Show the Alpha dashboard",
     },
+    -- Barbecue
+    {
+      ":Barbecue toggle",
+      description = "Toggle Barbecue's winbar",
+    },
     -- Code Window
     {
       "Codewindow",

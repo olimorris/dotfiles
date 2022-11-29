@@ -64,7 +64,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 ---@param bufnr number
 local function setup_plugins(client, bufnr)
   local ok, navic = om.safe_require("nvim-navic", { silent = true })
-  if ok and client.server_capabilities.documentSymbolProvider then pcall(navic.attach, client, bufnr) end
+  if ok and client.server_capabilities.documentSymbolProvider then navic.attach(client, bufnr) end
 end
 
 ---Setup the mappings that require the LSP client

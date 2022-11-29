@@ -42,6 +42,7 @@ M.barbecue = function()
   if not ok then return end
 
   bbq.setup({
+    exclude_filetypes = { "toggleterm", "Glance" },
     symbols = {
       separator = "",
       ellipsis = "",
@@ -142,6 +143,30 @@ M.fidget = function()
         ignore = true, -- Ignore annoying code action prompts
       },
     },
+  })
+end
+
+M.glance = function()
+  local ok, glance = om.safe_require("glance")
+  if not ok then return end
+
+  glance.setup({
+    hooks = {
+      before_open = function(results, open, jump, method)
+        --BUG: Barbecue causes Neovim to crash!
+        vim.cmd([[Barbecue hide]])
+        open(results)
+      end
+    },
+    theme = {
+      enable = false
+    },
+    indent_lines = {
+      enable = false
+    },
+    winbar = {
+      enable = false
+    }
   })
 end
 

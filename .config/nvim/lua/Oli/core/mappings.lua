@@ -527,12 +527,39 @@ M.lsp_keymaps = function(client, bufnr)
   local t = require("legendary.toolbox")
 
   local mappings = {
-    { "gd", vim.lsp.buf.definition, description = "LSP: Go to definition", opts = { buffer = bufnr } },
+    -- { "gd", vim.lsp.buf.definition, description = "LSP: Go to definition", opts = { buffer = bufnr } },
+    -- {
+    --   "gr",
+    --   t.lazy_required_fn("telescope.builtin", "lsp_references"),
+    --   description = "LSP: Find references",
+    --   opts = { buffer = bufnr },
+    -- },
+    -- {
+    --   "gi",
+    --   vim.lsp.buf.implementation,
+    --   description = "LSP: Go to implementation",
+    --   opts = { buffer = bufnr },
+    -- },
+    -- { "gt", vim.lsp.buf.type_definition, description = "LSP: Go to type definition", opts = { buffer = bufnr } },
+    {
+      "gi",
+      "<cmd>Glance implementations<CR>",
+      description = "LSP: Go to implementation",
+    },
+    {
+      "gt",
+      "<cmd>Glance type_definitions<CR>",
+      description = "LSP: Go to type definition",
+    },
+    {
+      "gd",
+      "<cmd>Glance definitions<CR>",
+      description = "LSP: Go to definition",
+    },
     {
       "gr",
-      t.lazy_required_fn("telescope.builtin", "lsp_references"),
+      "<cmd>Glance references<CR>",
       description = "LSP: Find references",
-      opts = { buffer = bufnr },
     },
     {
       "L",
@@ -548,13 +575,6 @@ M.lsp_keymaps = function(client, bufnr)
       opts = { buffer = bufnr },
     },
     { "ga", vim.lsp.buf.code_action, description = "LSP: Show code actions", opts = { buffer = bufnr } },
-    {
-      "gi",
-      vim.lsp.buf.implementation,
-      description = "LSP: Go to implementation",
-      opts = { buffer = bufnr },
-    },
-    { "gt", vim.lsp.buf.type_definition, description = "LSP: Go to type definition", opts = { buffer = bufnr } },
     { "gs", vim.lsp.buf.signature_help, description = "LSP: Show signature help", opts = { buffer = bufnr } },
     { "<leader>rn", vim.lsp.buf.rename, description = "LSP: Rename symbol", opts = { buffer = bufnr } },
     {
