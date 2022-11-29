@@ -1,6 +1,8 @@
 local ok, onedarkpro = om.safe_require("onedarkpro")
 if not ok then return end
 
+local color = require("onedarkpro.lib.color")
+
 -- vim.g.onedarkpro_log_level = "debug"
 
 onedarkpro.setup({
@@ -27,35 +29,29 @@ onedarkpro.setup({
   },
   colors = {
     dark = {
-      comment = "#5c6370", -- Revert back to original comment colors
-
       vim = "#81b766", -- green
+      comment = "#5c6370", -- Revert back to original comment colors
       brackets = "#abb2bf", -- fg / gray
       cursorline = "#2e323b",
       indentline = "#3c414d",
-
-      ghost_text = "#555961",
-
       buffer_color = "#939aa3",
       statusline_bg = "#2e323b", -- gray
-
       telescope_prompt = "#2e323a",
       telescope_results = "#21252d",
+      copilot = color.darken("#5c6370", 0.85),
+      breadcrumbs = color.darken("#5c6370", 0.75),
     },
     light = {
-      comment = "#bebebe", -- Revert back to original comment colors
-
       vim = "#029632", -- green
+      comment = "#bebebe", -- Revert back to original comment colors
       brackets = "#e05661", -- red
       scrollbar = "#eeeeee",
-
-      ghost_text = "#c3c3c3",
-
       buffer_color = "#6a6a6a",
       statusline_bg = "#f0f0f0", -- gray
-
       telescope_prompt = "#f5f5f5",
       telescope_results = "#eeeeee",
+      copilot = color.lighten("#bebebe", 0.7),
+      breadcrumbs = color.lighten("#bebebe", 0.6),
     },
   },
   highlights = {
@@ -92,7 +88,12 @@ onedarkpro.setup({
     AlphaFooter = { fg = "${gray}", style = "italic" },
 
     --Barbecue
-    BarbecueEllipsis = { fg = "${gray}" },
+    BarbecueModified = { fg = "${red}" },
+    BarbecueEllipsis = { fg = "${breadcrumbs}", style = "italic" },
+    BarbecueSeparator = { fg = "${breadcrumbs}", style = "italic" },
+    BarbecueDirname = { fg = "${breadcrumbs}", style = "italic" },
+    BarbecueBasename = { fg = "${breadcrumbs}", style = "italic" },
+    BarbecueContext = { fg = "${breadcrumbs}", style = "italic" },
 
     -- Bufferline
     BufferlineVim = { fg = "${vim}" },
@@ -103,7 +104,9 @@ onedarkpro.setup({
     -- Cmp
     CmpItemAbbrMatch = { fg = "${blue}", style = "bold" },
     CmpItemAbbrMatchFuzzy = { fg = "${blue}", style = "underline" },
-    GhostText = { fg = "${ghost_text}" },
+
+    -- Copilot
+    CopilotSuggestion = { fg = "${copilot}", style = "italic" },
 
     -- DAP
     DebugBreakpointLine = { fg = "${red}", style = "underline" },
