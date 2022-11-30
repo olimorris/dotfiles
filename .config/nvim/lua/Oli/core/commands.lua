@@ -133,7 +133,7 @@ function M.plugin_commands()
     },
     -- Code Window
     {
-      "Codewindow",
+      ":Codewindow",
       function() require("codewindow").toggle_minimap() end,
       description = "Toggle Code Window",
     },
