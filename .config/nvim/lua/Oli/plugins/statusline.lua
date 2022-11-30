@@ -29,6 +29,7 @@ local RightSlantEnd = {
 -- Filetypes where certain elements of the statusline will not be shown
 local filetypes = {
   "^aerial$",
+  "^Glance$",
   "^neo--tree$",
   "^neotest--summary$",
   "^neo--tree--popup$",

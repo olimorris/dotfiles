@@ -153,20 +153,32 @@ M.glance = function()
   glance.setup({
     hooks = {
       before_open = function(results, open, jump, method)
-        --BUG: Barbecue causes Neovim to crash!
         vim.cmd([[Barbecue hide]])
+        vim.wo.colorcolumn = nil
+        vim.wo.relativenumber = false
+
         open(results)
-      end
+      end,
+      after_close = function()
+        vim.wo.colorcolumn = "80,120"
+        vim.wo.relativenumber = true
+        vim.cmd([[Barbecue show]])
+      end,
     },
-    theme = {
-      enable = false
+    preview_win_opts = { -- Configure preview window options
+      cursorline = true,
+      number = true,
+      wrap = true,
     },
     indent_lines = {
-      enable = false
+      enable = false,
+    },
+    theme = {
+      enable = false,
     },
     winbar = {
-      enable = false
-    }
+      enable = false,
+    },
   })
 end
 
