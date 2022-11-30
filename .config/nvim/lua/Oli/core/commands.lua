@@ -172,6 +172,19 @@ function M.plugin_commands()
       function() require("coverage").summary() end,
       description = "Coverage: Summary",
     },
+    -- FS
+    {
+      ":FSToggle",
+      {
+        n = "<cmd>FSToggle<CR>",
+        v = ":'<,'>FSToggle<CR>",
+      },
+      description = "FS: Toggle flow state",
+    },
+    {
+      ":FSRead",
+      description = "FS: Read file",
+    },
     -- Git
     {
       "GitBranchList",
