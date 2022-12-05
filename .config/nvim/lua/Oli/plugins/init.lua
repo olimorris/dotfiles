@@ -205,11 +205,6 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.null-ls") end,
     })
     use({
-      "andrewferrier/textobj-diagnostic.nvim", -- Easier movement between diagnostics
-      after = "mason.nvim",
-      config = function() require(config_namespace .. ".plugins.others").textobj_diagnostic() end,
-    })
-    use({
       "j-hui/fidget.nvim", -- Display LSP status messages in a floating window
       after = "mason.nvim",
       config = function() require(config_namespace .. ".plugins.others").fidget() end,
