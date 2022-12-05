@@ -121,7 +121,13 @@ M.dressing = function()
   if not ok then return end
 
   dressing.setup({
-    input = { default_prompt = "> ", relative = "editor", winblend = 0, prefer_width = 50, prompt_align = "center" },
+    input = {
+      default_prompt = "> ",
+      relative = "editor",
+      prefer_width = 50,
+      prompt_align = "center",
+      win_options = { winblend = 0 },
+    },
     select = { backend = "telescope" },
   })
 end
@@ -410,6 +416,9 @@ M.todo_comments = function()
 
   todo.setup({
     signs = false,
+    highlight = {
+      keyword = "bg",
+    },
     keywords = {
       FIX = { icon = " " }, -- Custom fix icon
       PERF = { color = "perf" },
