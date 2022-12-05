@@ -1,6 +1,6 @@
 local M = {}
---------------------------------BASE AUTOCMDS------------------------------- {{{
-function M.base_autocmds()
+------------------------------DEFAULT AUTOCMDS------------------------------ {{{
+function M.default_autocmds()
   return {
     {
       name = "GitTrackRemoteBranch",
@@ -107,9 +107,24 @@ function M.base_autocmds()
         opts = { pattern = "*" },
       },
     },
+    {
+      name = "Telescope",
+      {
+        "User",
+        ":setlocal wrap",
+        opts = { pattern = "TelescopePreviewerLoaded" },
+      },
+    },
+    {
+      name = "ColorschemeAutocmds",
+      {
+        "ColorScheme",
+        function() require(config_namespace .. ".plugins.statusline").setup() end,
+        opts = { pattern = "*" },
+      },
+    },
   }
 end
-
 ---------------------------------------------------------------------------- }}}
 --------------------------------LSP AUTOCMDS-------------------------------- {{{
 function M.lsp_autocmds(client, bufnr)
@@ -147,30 +162,6 @@ function M.lsp_autocmds(client, bufnr)
     })
   end
 
-  return autocmds
-end
-
----------------------------------------------------------------------------- }}}
--------------------------------PLUGIN AUTOCMDS------------------------------ {{{
-function M.plugin_autocmds()
-  local autocmds = {
-    {
-      name = "Telescope",
-      {
-        "User",
-        ":setlocal wrap",
-        opts = { pattern = "TelescopePreviewerLoaded" },
-      },
-    },
-    {
-      name = "RefreshStatuslineColors",
-      {
-        "ColorScheme",
-        function() require(config_namespace .. ".plugins.statusline").setup() end,
-        opts = { pattern = "*" },
-      },
-    },
-  }
   return autocmds
 end
 

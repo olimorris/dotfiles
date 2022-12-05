@@ -1,7 +1,8 @@
 local M = {}
---------------------------------BASE COMMANDS------------------------------- {{{
-function M.base_commands()
+------------------------------DEFAULT COMMANDS------------------------------ {{{
+function M.default_commands()
   return {
+    -- Custom
     {
       "LineNumbers",
       function() om.ToggleLineNumbers() end,
@@ -66,61 +67,9 @@ function M.base_commands()
       end,
       description = "Generate a UUID and insert it into the buffer",
     },
-  }
-end
 
----------------------------------------------------------------------------- }}}
---------------------------------LSP COMMANDS-------------------------------- {{{
-function M.lsp_commands()
-  return {
-    {
-      "LspInstallAll",
-      function()
-        for _, name in pairs(om.lsp.servers) do
-          vim.cmd("LspInstall " .. name)
-        end
-      end,
-      description = "LSP: Install all servers",
-    },
-    {
-      "LspUninstallAll",
-      description = "LSP: Uninstall all servers",
-    },
-    {
-      "LspLog",
-      function() vim.cmd("edit " .. vim.lsp.get_log_path()) end,
-      description = "LSP: Show logs",
-    },
-    {
-      "NullLsInstall",
-      description = "null-ls: Install plugins",
-    },
-  }
-end
+    -- Plugins
 
-function M.lsp_client_commands(client, bufnr)
-  return {
-    {
-      "LspRestart",
-      description = "LSP: Restart any attached clients",
-      opts = { buffer = bufnr },
-    },
-    {
-      "LspStart",
-      description = "LSP: Start the client manually",
-      opts = { buffer = bufnr },
-    },
-    {
-      "LspInfo",
-      description = "LSP: Show attached clients",
-      opts = { buffer = bufnr },
-    },
-  }
-end
----------------------------------------------------------------------------- }}}
--------------------------------PLUGIN COMMANDS------------------------------ {{{
-function M.plugin_commands()
-  return {
     -- Alpha
     {
       ":Alpha",
@@ -150,6 +99,12 @@ function M.plugin_commands()
         v = "gc",
       },
       description = "Toggle comment",
+    },
+    -- Copilot
+    {
+      ":CopilotToggle",
+      function() require("copilot.suggestion").toggle_auto_trigger() end,
+      description = "Toggle Copilot for buffer",
     },
     -- Coverage
     {
@@ -338,6 +293,61 @@ function M.plugin_commands()
       ":TSPlayground",
       description = "Treesitter Playground",
     },
+  }
+end
+---------------------------------------------------------------------------- }}}
+--------------------------------LSP COMMANDS-------------------------------- {{{
+function M.lsp_commands(client, bufnr)
+  -- Only need to set these once!
+  if vim.g.lsp_commands then return {} end
+
+  local commands = {
+    {
+      ":Format",
+      function() vim.lsp.buf.formatting_sync(nil, 1000) end,
+      description = "Format buffer",
+    },
+    {
+      ":LspRestart",
+      description = "Restart any attached clients",
+    },
+    {
+      ":LspStart",
+      description = "Start the client manually",
+    },
+    {
+      ":LspInfo",
+      description = "Show attached clients",
+    },
+    {
+      "LspInstallAll",
+      function()
+        for _, name in pairs(om.lsp.servers) do
+          vim.cmd("LspInstall " .. name)
+        end
+      end,
+      description = "Install all servers",
+    },
+    {
+      "LspUninstallAll",
+      description = "Uninstall all servers",
+    },
+    {
+      "LspLog",
+      function() vim.cmd("edit " .. vim.lsp.get_log_path()) end,
+      description = "Show logs",
+    },
+    {
+      "NullLsInstall",
+      description = "null-ls: Install plugins",
+    },
+  }
+
+  vim.g.lsp_commands = true
+
+  return {
+    itemgroup = "LSP",
+    commands = commands,
   }
 end
 ---------------------------------------------------------------------------- }}}

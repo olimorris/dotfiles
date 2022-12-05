@@ -2,11 +2,11 @@ local M = {}
 local silent = { noremap = true, silent = true }
 ------------------------------------NOTES----------------------------------- {{{
 --[[
-  Some notes on how I structure my key mappings within Neovim
+  Some notes on how I structure my keymaps within Neovim
 
-  * All key mappings from across my configuration live in this file
-  * The general structure of my mappings are:
-          1) Ctrl - Used for your most frequent and easy to remember mappings
+  * All keymaps from across my configuration live in this file
+  * The general structure of my keymaps are:
+          1) Ctrl - Used for your most frequent and easy to remember keymaps
           2) Local Leader - Used for commands related to window or filetype/buffer options
           3) Leader - Used for commands that are global or span Neovim
   * I use legendary.nvim to set all of my mapping and display them in a
@@ -17,148 +17,11 @@ local silent = { noremap = true, silent = true }
 vim.g.mapleader = " " -- space is the leader!
 vim.g.maplocalleader = ","
 ---------------------------------------------------------------------------- }}}
---------------------------------BASE MAPPINGS------------------------------- {{{
-M.base_keymaps = function()
-  local mappings = {
-    { "jk", "<esc>", description = "Escape in insert mode", mode = { "i" } },
-
-    { "<LocalLeader>b", "<cmd>lua om.MoveToBuffer()<CR>", description = "Move to a specific buffer number" },
-
-    { "<Leader>qa", "<cmd>qall<CR>", description = "Quit Neovim" },
-    { "<C-s>", "<cmd>silent! write<CR>", description = "Save buffer", mode = { "n", "i" } },
-    { "<C-n>", "<cmd>enew<CR>", description = "New buffer" },
-    { "<C-y>", "<cmd>%y+<CR>", description = "Copy buffer" },
-
-    { "<LocalLeader>,", "<cmd>norm A,<CR>", description = "Append comma" },
-    { "<LocalLeader>;", "<cmd>norm A;<CR>", description = "Append semicolon" },
-
-    { "<LocalLeader>(", { n = [[ciw(<c-r>")<esc>]], v = [[c(<c-r>")<esc>]] }, description = "Wrap in brackets ()" },
-    {
-      "<LocalLeader>{",
-      { n = [[ciw{<c-r>"}<esc>]], v = [[c{<c-r>"}<esc>]] },
-      description = "Wrap in curly braces {}",
-    },
-    { '<LocalLeader>"', { n = [[ciw"<c-r>""<esc>]], v = [[c"<c-r>""<esc>]] }, description = "Wrap in quotes" },
-
-    {
-      "<LocalLeader>[",
-      [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
-      description = "Replace cursor words in buffer",
-    },
-    { "<LocalLeader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], description = "Replace cursor words in line" },
-
-    { "<LocalLeader>U", "gUiw`", description = "Capitalize word" },
-
-    { "<", "<gv", description = "Outdent", mode = { "v" } },
-    { ">", ">gv", description = "Indent", mode = { "v" } },
-
-    { "<Esc>", "<cmd>:noh<CR>", description = "Clear searches" },
-    {
-      "<LocalLeader>f",
-      ":s/{search}/{replace}/g",
-      description = "Find and Replace (buffer)",
-      mode = { "n", "v" },
-      opts = { silent = false },
-    },
-    { "B", "^", description = "Beginning of a line" },
-    { "E", "$", description = "End of a line" },
-    { "<CR>", "o<Esc>", description = "Insert blank line below" },
-    { "<S-CR>", "O<Esc>", description = "Insert blank line above" },
-
-    { "<S-w>", ":set winbar=<CR>", description = "Hide WinBar" },
-
-    { "<LocalLeader>sv", "<C-w>v", description = "Split: Vertical" },
-    { "<LocalLeader>sh", "<C-w>h", description = "Split: Horizontal" },
-    { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
-    { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
-
-    -- Multiple Cursors
-    -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
-    -- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
-
-    -- 1. Position the cursor anywhere in the word you wish to change;
-    -- 2. Or, visually make a selection;
-    -- 3. Hit cn, type the new word, then go back to Normal mode;
-    -- 4. Hit `.` n-1 times, where n is the number of replacements.
-    {
-      "cn",
-      {
-        n = { "*``cgn" },
-        x = { [[g:mc . "``cgn"]], opts = { expr = true } },
-      },
-      description = "Multiple cursors",
-    },
-    {
-      "cN",
-      {
-        n = { "*``cgN" },
-        x = { [[g:mc . "``cgN"]], opts = { expr = true } },
-      },
-      description = "Multiple cursors (backwards)",
-    },
-
-    -- 1. Position the cursor over a word; alternatively, make a selection.
-    -- 2. Hit cq to start recording the macro.
-    -- 3. Once you are done with the macro, go back to normal mode.
-    -- 4. Hit Enter to repeat the macro over search matches.
-    {
-      "cq",
-      {
-        n = { [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>*``qz]] },
-        x = { [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . g:mc . "``qz"]], opts = { expr = true } },
-      },
-      description = "Multiple cursors: Macros",
-    },
-    {
-      "cQ",
-      {
-        n = { [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>#``qz]] },
-        x = {
-          [[":\<C-u>call v:lua.as.mappings.setup_CR()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
-          opts = { expr = true },
-        },
-      },
-      description = "Multiple cursors: Macros (backwards)",
-    },
-  }
-
-  -- Functions for multiple cursors
-  vim.g.mc = vim.api.nvim_replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]], true, true, true)
-
-  function SetupMultipleCursors()
-    vim.keymap.set(
-      "n",
-      "<Enter>",
-      [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]],
-      { remap = true, silent = true }
-    )
-  end
-
-  -- Movement
-  -- Automatically save movements larger than 5 lines to the jumplist
-  -- Use Ctrl-o/Ctrl-i to navigate backwards and forwards through the jumplist
-  -- vim.api.nvim_set_keymap(
-  --   "n",
-  --   "j",
-  --   "v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'j' : 'gj'",
-  --   { noremap = true, expr = true }
-  -- )
-  -- vim.api.nvim_set_keymap(
-  --   "n",
-  --   "k",
-  --   "v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'k' : 'gk'",
-  --   { noremap = true, expr = true }
-  -- )
-
-  return mappings
-end
----------------------------------------------------------------------------- }}}
--------------------------------PLUGIN MAPPINGS------------------------------ {{{
------------------------------------GENERAL---------------------------------- {{{
-M.plugin_keymaps = function()
+-------------------------------DEFAULT KEYMAPS------------------------------ {{{
+M.default_keymaps = function()
   local t = require("legendary.toolbox")
 
-  return {
+  local keymaps = {
     -- Legendary
     {
       "<C-p>",
@@ -201,7 +64,6 @@ M.plugin_keymaps = function()
       description = "Copilot: Panel",
       mode = { "n", "i" },
     },
-
     -- Dap
     {
       "<F1>",
@@ -336,73 +198,42 @@ M.plugin_keymaps = function()
 
     -- Telescope
     {
-      "fd",
-      t.lazy_required_fn("telescope.builtin", "diagnostics", {
-        layout_strategy = "vertical",
-        layout_config = {
-          vertical = {
-            results_height = 0.5,
-            prompt_position = "top",
-          },
+      itemgroup = "Telescope",
+      description = "Gaze deeply into unknown regions using the power of the moon",
+      icon = "",
+      keymaps = {
+        {
+          "ff",
+          t.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
+          description = "Find files",
         },
-        bufnr = 0,
-      }),
-      description = "LSP: Find diagnostics",
-    },
-    {
-      "ff",
-      t.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
-      description = "Find files",
-    },
-    { "fb", t.lazy_required_fn("telescope.builtin", "buffers"), description = "Find open buffers" },
-    { "fp", "<cmd>Telescope projects<CR>", description = "Find projects" },
-    {
-      "<C-f>",
-      t.lazy_required_fn("telescope.builtin", "current_buffer_fuzzy_find"),
-      description = "Find in buffers",
-    },
-    {
-      "<C-g>",
-      t.lazy_required_fn("telescope.builtin", "live_grep", { path_display = { "shorten" }, grep_open_files = true }),
-      description = "Find in open files",
-    },
-    {
-      "<Leader>g",
-      t.lazy_required_fn("telescope.builtin", "live_grep", { path_display = { "smart" } }),
-      description = "Find in pwd",
-    },
-    {
-      "<Leader><Leader>",
-      "<cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
-      description = "Find recent files",
-    },
-
-    -- Textobj diagnostics
-    {
-      "]d",
-      function()
-        require("textobj-diagnostic").next_diag_inclusive({
-          severity = {
-            min = vim.diagnostic.severity.WARN,
-            max = vim.diagnostic.severity.ERROR,
-          },
-        })
-      end,
-      description = "Select next diagnostic",
-      mode = { "x", "o" },
-    },
-    {
-      "[d",
-      function()
-        require("textobj-diagnostic").prev_diag({
-          severity = {
-            min = vim.diagnostic.severity.WARN,
-            max = vim.diagnostic.severity.ERROR,
-          },
-        })
-      end,
-      description = "Select previous diagnostic",
-      mode = { "x", "o" },
+        { "fb", t.lazy_required_fn("telescope.builtin", "buffers"), description = "Find open buffers" },
+        { "fp", "<cmd>Telescope projects<CR>", description = "Find projects" },
+        {
+          "<C-f>",
+          t.lazy_required_fn("telescope.builtin", "current_buffer_fuzzy_find"),
+          description = "Find in buffers",
+        },
+        {
+          "<C-g>",
+          t.lazy_required_fn(
+            "telescope.builtin",
+            "live_grep",
+            { path_display = { "shorten" }, grep_open_files = true }
+          ),
+          description = "Find in open files",
+        },
+        {
+          "<Leader>g",
+          t.lazy_required_fn("telescope.builtin", "live_grep", { path_display = { "smart" } }),
+          description = "Find in pwd",
+        },
+        {
+          "<Leader><Leader>",
+          "<cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
+          description = "Find recent files",
+        },
+      },
     },
 
     -- Todo comments
@@ -450,7 +281,123 @@ M.plugin_keymaps = function()
       "<cmd>lua require('yabs'):run_default_task()<CR>",
       description = "Build file",
     },
+
+    -- Buffers
+    { "<LocalLeader>b", "<cmd>lua om.MoveToBuffer()<CR>", description = "Move to a specific buffer number" },
+    { "<C-s>", "<cmd>silent! write<CR>", description = "Save buffer", mode = { "n", "i" } },
+    { "<C-n>", "<cmd>enew<CR>", description = "New buffer" },
+    { "<C-y>", "<cmd>%y+<CR>", description = "Copy buffer" },
+
+    -- Editing words
+    { "<LocalLeader>,", "<cmd>norm A,<CR>", description = "Append comma" },
+    { "<LocalLeader>;", "<cmd>norm A;<CR>", description = "Append semicolon" },
+
+    { "<LocalLeader>(", { n = [[ciw(<c-r>")<esc>]], v = [[c(<c-r>")<esc>]] }, description = "Wrap in brackets ()" },
+    {
+      "<LocalLeader>{",
+      { n = [[ciw{<c-r>"}<esc>]], v = [[c{<c-r>"}<esc>]] },
+      description = "Wrap in curly braces {}",
+    },
+    { '<LocalLeader>"', { n = [[ciw"<c-r>""<esc>]], v = [[c"<c-r>""<esc>]] }, description = "Wrap in quotes" },
+
+    {
+      "<LocalLeader>[",
+      [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
+      description = "Replace cursor words in buffer",
+    },
+    { "<LocalLeader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], description = "Replace cursor words in line" },
+
+    { "<LocalLeader>U", "gUiw`", description = "Capitalize word" },
+
+    { "<", "<gv", description = "Outdent", mode = { "v" } },
+    { ">", ">gv", description = "Indent", mode = { "v" } },
+
+    { "<Esc>", "<cmd>:noh<CR>", description = "Clear searches" },
+    {
+      "<LocalLeader>f",
+      ":s/{search}/{replace}/g",
+      description = "Find and Replace (buffer)",
+      mode = { "n", "v" },
+      opts = { silent = false },
+    },
+
+    -- Working with lines
+    { "B", "^", description = "Beginning of a line" },
+    { "E", "$", description = "End of a line" },
+    { "<CR>", "o<Esc>", description = "Insert blank line below" },
+    { "<S-CR>", "O<Esc>", description = "Insert blank line above" },
+
+    { "<S-w>", ":set winbar=<CR>", description = "Hide WinBar" },
+
+    -- Splits
+    { "<LocalLeader>sv", "<C-w>v", description = "Split: Vertical" },
+    { "<LocalLeader>sh", "<C-w>h", description = "Split: Horizontal" },
+    { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
+    { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
+
+    -- Multiple Cursors
+    -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
+    -- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
+
+    -- 1. Position the cursor anywhere in the word you wish to change;
+    -- 2. Or, visually make a selection;
+    -- 3. Hit cn, type the new word, then go back to Normal mode;
+    -- 4. Hit `.` n-1 times, where n is the number of replacements.
+    {
+      "cn",
+      {
+        n = { "*``cgn" },
+        x = { [[g:mc . "``cgn"]], opts = { expr = true } },
+      },
+      description = "Multiple cursors",
+    },
+    {
+      "cN",
+      {
+        n = { "*``cgN" },
+        x = { [[g:mc . "``cgN"]], opts = { expr = true } },
+      },
+      description = "Multiple cursors (backwards)",
+    },
+
+    -- 1. Position the cursor over a word; alternatively, make a selection.
+    -- 2. Hit cq to start recording the macro.
+    -- 3. Once you are done with the macro, go back to normal mode.
+    -- 4. Hit Enter to repeat the macro over search matches.
+    {
+      "cq",
+      {
+        n = { [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>*``qz]] },
+        x = { [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . g:mc . "``qz"]], opts = { expr = true } },
+      },
+      description = "Multiple cursors: Macros",
+    },
+    {
+      "cQ",
+      {
+        n = { [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>#``qz]] },
+        x = {
+          [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
+          opts = { expr = true },
+        },
+      },
+      description = "Multiple cursors: Macros (backwards)",
+    },
   }
+
+  -- Functions for multiple cursors
+  vim.g.mc = vim.api.nvim_replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]], true, true, true)
+
+  function SetupMultipleCursors()
+    vim.keymap.set(
+      "n",
+      "<Enter>",
+      [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]],
+      { remap = true, silent = true }
+    )
+  end
+
+  return keymaps
 end
 ---------------------------------------------------------------------------- }}}
 ---------------------------------COMPLETION--------------------------------- {{{
@@ -517,7 +464,7 @@ M.lsp_keymaps = function(client, bufnr)
   -- Do not load LSP keymaps twice
   if
     #vim.tbl_filter(
-      function(keymap) return (keymap.desc or ""):lower() == "lsp: find references" end,
+      function(keymap) return (keymap.desc or ""):lower() == "rename symbol" end,
       vim.api.nvim_buf_get_keymap(bufnr, "n")
     ) > 0
   then
@@ -526,75 +473,75 @@ M.lsp_keymaps = function(client, bufnr)
 
   local t = require("legendary.toolbox")
 
-  local mappings = {
-    -- { "gd", vim.lsp.buf.definition, description = "LSP: Go to definition", opts = { buffer = bufnr } },
-    -- {
-    --   "gr",
-    --   t.lazy_required_fn("telescope.builtin", "lsp_references"),
-    --   description = "LSP: Find references",
-    --   opts = { buffer = bufnr },
-    -- },
-    -- {
-    --   "gi",
-    --   vim.lsp.buf.implementation,
-    --   description = "LSP: Go to implementation",
-    --   opts = { buffer = bufnr },
-    -- },
-    -- { "gt", vim.lsp.buf.type_definition, description = "LSP: Go to type definition", opts = { buffer = bufnr } },
+  local keymaps = {
+    {
+      "fd",
+      t.lazy_required_fn("telescope.builtin", "diagnostics", {
+        layout_strategy = "vertical",
+        layout_config = {
+          vertical = {
+            results_height = 0.5,
+            prompt_position = "top",
+          },
+        },
+        bufnr = 0,
+      }),
+      description = "Find diagnostics",
+    },
     {
       "gi",
       "<cmd>Glance implementations<CR>",
-      description = "LSP: Go to implementation",
+      description = "Go to implementation",
     },
     {
       "gt",
       "<cmd>Glance type_definitions<CR>",
-      description = "LSP: Go to type definition",
+      description = "Go to type definition",
     },
     {
       "gd",
       "<cmd>Glance definitions<CR>",
-      description = "LSP: Go to definition",
+      description = "Go to definition",
     },
     {
       "gr",
       "<cmd>Glance references<CR>",
-      description = "LSP: Find references",
+      description = "Find references",
     },
     {
       "L",
       "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
-      description = "LSP: Line diagnostics",
+      description = "Line diagnostics",
       opts = { buffer = bufnr },
     },
-    { "H", vim.lsp.buf.hover, description = "LSP: Show hover information", opts = { buffer = bufnr } },
+    { "H", vim.lsp.buf.hover, description = "Show hover information", opts = { buffer = bufnr } },
     {
       "<LocalLeader>p",
       t.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer"),
-      description = "LSP: Peek definition",
+      description = "Peek definition",
       opts = { buffer = bufnr },
     },
-    { "ga", vim.lsp.buf.code_action, description = "LSP: Show code actions", opts = { buffer = bufnr } },
-    { "gs", vim.lsp.buf.signature_help, description = "LSP: Show signature help", opts = { buffer = bufnr } },
-    { "<leader>rn", vim.lsp.buf.rename, description = "LSP: Rename symbol", opts = { buffer = bufnr } },
+    { "ga", vim.lsp.buf.code_action, description = "Show code actions", opts = { buffer = bufnr } },
+    { "gs", vim.lsp.buf.signature_help, description = "Show signature help", opts = { buffer = bufnr } },
+    { "<leader>rn", vim.lsp.buf.rename, description = "Rename symbol", opts = { buffer = bufnr } },
+
     {
       "[",
       vim.diagnostic.goto_prev,
-      description = "LSP: Go to previous diagnostic item",
+      description = "Go to previous diagnostic item",
       opts = { buffer = bufnr },
     },
-    { "]", vim.diagnostic.goto_next, description = "LSP: Go to next diagnostic item", opts = { buffer = bufnr } },
+    { "]", vim.diagnostic.goto_next, description = "Go to next diagnostic item", opts = { buffer = bufnr } },
   }
 
-  table.insert(mappings, {
+  table.insert(keymaps, {
     "F",
     function() vim.lsp.buf.format({ async = true }) end,
-    description = "LSP: Format document",
+    description = "Format document",
     opts = { buffer = bufnr },
   })
 
-  return mappings
+  return { itemgroup = "LSP", icon = "", description = "LSP related functionality", keymaps = keymaps }
 end
----------------------------------------------------------------------------- }}}
 ---------------------------------------------------------------------------- }}}
 return M

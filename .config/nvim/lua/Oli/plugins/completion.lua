@@ -58,7 +58,7 @@ local cmp_config = {
       luasnip.lsp_expand(args.body)
     end,
   },
-  mapping = require(config_namespace .. ".core.mappings").completion_keymaps(),
+  mapping = require(config_namespace .. ".core.keymaps").completion_keymaps(),
 }
 
 cmp.setup(vim.tbl_deep_extend("force", cmp_config, {
