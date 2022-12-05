@@ -4,8 +4,8 @@ if not ok then return end
 local color = require("onedarkpro.lib.color")
 
 -- vim.g.onedarkpro_log_level = "debug"
-
 onedarkpro.setup({
+  cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
   plugins = {
     barbar = false,
     lsp_saga = false,
