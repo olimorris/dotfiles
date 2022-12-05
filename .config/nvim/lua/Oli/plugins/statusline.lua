@@ -237,7 +237,7 @@ local LspDiagnostics = {
   -- Errors
   {
     condition = function(self) return self.errors > 0 end,
-    hl = { fg = "bg", bg = utils.get_highlight("DiagnosticError").fg },
+    hl = { fg = "bg", bg = "red" },
     {
       {
         provider = "",
@@ -247,14 +247,14 @@ local LspDiagnostics = {
       },
       {
         provider = "",
-        hl = { bg = "bg", fg = utils.get_highlight("DiagnosticError").fg },
+        hl = { bg = "bg", fg = "red" },
       },
     },
   },
   -- Warnings
   {
     condition = function(self) return self.warnings > 0 end,
-    hl = { fg = "bg", bg = utils.get_highlight("DiagnosticWarn").fg },
+    hl = { fg = "bg", bg = "yellow" },
     {
       {
         provider = "",
@@ -264,7 +264,7 @@ local LspDiagnostics = {
       },
       {
         provider = "",
-        hl = { bg = "bg", fg = utils.get_highlight("DiagnosticWarn").fg },
+        hl = { bg = "bg", fg = "yellow" },
       },
     },
   },
