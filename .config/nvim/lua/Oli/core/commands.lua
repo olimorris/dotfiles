@@ -304,7 +304,7 @@ function M.lsp_commands(client, bufnr)
   local commands = {
     {
       ":Format",
-      function() vim.lsp.buf.formatting_sync(nil, 1000) end,
+      function() vim.lsp.buf.format(nil, 1000) end,
       description = "Format buffer",
     },
     {
