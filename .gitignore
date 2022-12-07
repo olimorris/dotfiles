@@ -6,6 +6,7 @@
 
 # Config
 !.config/alacritty/**/*
+!.config/asdf/**/*
 !.config/bash/**/*
 !.config/composer/composer.json
 !.config/fish/*
@@ -47,10 +48,8 @@
 !tests/**/*
 
 # others files
-!.asdfrc
 !.tool-versions
 !.config/.color_mode
-!NEOVIM_USAGE.md
 !Rakefile
 !README.md
 !stylua.toml
