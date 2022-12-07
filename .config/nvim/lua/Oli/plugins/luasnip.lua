@@ -2,15 +2,13 @@ local M = {}
 
 function M.setup()
   local ok, luasnip = om.safe_require("luasnip")
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   local types = require("luasnip.util.types")
 
   luasnip.config.set_config({
     history = true,
-    updateevents = 'TextChanged,TextChangedI',
+    updateevents = "TextChanged,TextChangedI",
     region_check_events = "CursorMoved,CursorHold,InsertEnter",
     delete_check_events = "InsertLeave",
     ext_opts = {
@@ -37,9 +35,6 @@ function M.setup()
   require("luasnip.loaders.from_vscode").lazy_load()
 end
 
-function M.snippets()
-  return nil
-end
+function M.snippets() return nil end
 
 return M
-

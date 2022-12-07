@@ -25,7 +25,6 @@ M.aerial = function()
 
   aerial.setup({
     backends = {
-      -- default to preferring LSP backend
       ["_"] = { "treesitter", "lsp", "markdown" },
       ruby = { "treesitter" },
     },
@@ -128,7 +127,22 @@ M.dressing = function()
       prompt_align = "center",
       win_options = { winblend = 0 },
     },
-    select = { backend = "telescope" },
+    select = {
+      get_config = function(opts)
+        opts = opts or {}
+        local config = {
+          telescope = {
+            layout_config = {
+              width = 0.8,
+            },
+          },
+        }
+        if opts.kind == "legendary.nvim" then
+          config.telescope.sorter = require("telescope.sorters").fuzzy_with_index_bias({})
+        end
+        return config
+      end,
+    },
   })
 end
 

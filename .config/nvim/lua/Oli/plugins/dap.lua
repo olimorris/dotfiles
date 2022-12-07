@@ -28,6 +28,7 @@ local function signs_setup()
 end
 
 ---Custom Ruby debugging config
+---@param dap table
 ---@return nil
 local function ruby_setup(dap)
   dap.adapters.ruby = function(callback, config)
@@ -72,6 +73,7 @@ local function ruby_setup(dap)
 end
 
 ---Slick UI which is automatically triggered when debugging
+---@param dap table
 ---@return nil
 local function ui_setup(dap)
   local ok, dapui = om.safe_require("dapui")

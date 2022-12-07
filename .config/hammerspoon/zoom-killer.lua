@@ -6,7 +6,7 @@ local function kill_zoom(app_name, event_type, app)
       or event_type == hs.application.watcher.terminated
       or event_type == hs.application.watcher.deactivated
     )
-    and app_name == 'zoom.us'
+    and app_name == "zoom.us"
     and #app:allWindows() == 0
   then
     -- make Zoom kill itself when I leave a meeting

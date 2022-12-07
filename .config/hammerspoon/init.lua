@@ -1,8 +1,6 @@
 --------------------------------- RELOAD CONFIG --------------------------------
 local hyper = { "cmd", "alt", "ctrl", "shift" }
-local notify = function()
-  hs.notify.new({ title = "Hammerspoon", informativeText = "Config loaded" }):send()
-end
+local notify = function() hs.notify.new({ title = "Hammerspoon", informativeText = "Config loaded" }):send() end
 
 -- Use 0 to reload the configuration
 hs.hotkey.bind(hyper, "0", function()
@@ -13,9 +11,7 @@ end)
 local function reload_config(files)
   local doReload = false
   for _, file in pairs(files) do
-    if file:sub(-4) == ".lua" then
-      doReload = true
-    end
+    if file:sub(-4) == ".lua" then doReload = true end
   end
   if doReload then
     notify()

@@ -537,9 +537,7 @@ function M.setup()
   require("heirline").load_colors(require("onedarkpro").get_colors())
 
   local ok, _ = pcall(heirline.setup, Statusline, nil, require(config_namespace .. ".plugins.bufferline"))
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   vim.o.showtabline = 2
   vim.cmd([[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])

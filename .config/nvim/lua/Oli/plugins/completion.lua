@@ -54,9 +54,7 @@ local cmp_config = {
     end,
   },
   snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
+    expand = function(args) luasnip.lsp_expand(args.body) end,
   },
   mapping = require(config_namespace .. ".core.keymaps").completion_keymaps(),
 }

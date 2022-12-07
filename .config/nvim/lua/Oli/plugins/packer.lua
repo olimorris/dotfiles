@@ -15,15 +15,11 @@ end
 ---------------------------------------------------------------------------- }}}
 ---------------------------------PACKER INIT-------------------------------- {{{
 local present, packer = pcall(require, "packer")
-if not present then
-  return
-end
+if not present then return end
 
 packer.init({
   display = {
-    open_fn = function()
-      return require("packer.util").float({ border = "single" })
-    end,
+    open_fn = function() return require("packer.util").float({ border = "single" }) end,
     prompt_border = "single",
   },
   git = {

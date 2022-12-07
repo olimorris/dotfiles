@@ -72,9 +72,7 @@ end
 ---@param bufnr number
 local function setup_mappings(client, bufnr)
   -- Disable formatting with other LSPs because we're handling formatting via null-ls
-  if client.name ~= 'null-ls' then
-    client.server_capabilities.documentFormattingProvider = false
-  end
+  if client.name ~= "null-ls" then client.server_capabilities.documentFormattingProvider = false end
 
   local ok, legendary = om.safe_require("legendary", { silent = true })
   if ok then
