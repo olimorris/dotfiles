@@ -26,32 +26,31 @@ onedarkpro.setup({
   options = {
     cursorline = true,
     -- transparency = true,
+    -- highlight_inactive_windows = true,
   },
   colors = {
     dark = {
       vim = "#81b766", -- green
       comment = "#5c6370", -- Revert back to original comment colors
-      brackets = "#abb2bf", -- fg / gray
       cursorline = "#2e323b",
       indentline = "#3c414d",
       buffer_color = "#939aa3",
       statusline_bg = "#2e323b", -- gray
       telescope_prompt = "#2e323a",
       telescope_results = "#21252d",
-      copilot = color.darken("#5c6370", 0.85),
-      breadcrumbs = color.darken("#5c6370", 0.75),
+      copilot = color.darken(onedarkpro.get_colors("onedark").gray, 0.85),
+      breadcrumbs = color.darken(onedarkpro.get_colors("onedark").gray, 0.85),
     },
     light = {
       vim = "#029632", -- green
       comment = "#bebebe", -- Revert back to original comment colors
-      brackets = "#e05661", -- red
       scrollbar = "#eeeeee",
       buffer_color = "#6a6a6a",
       statusline_bg = "#f0f0f0", -- gray
       telescope_prompt = "#f5f5f5",
       telescope_results = "#eeeeee",
-      copilot = color.lighten("#bebebe", 0.7),
-      breadcrumbs = color.lighten("#bebebe", 0.6),
+      copilot = color.lighten(onedarkpro.get_colors("onelight").gray, 0.7),
+      breadcrumbs = color.lighten(onedarkpro.get_colors("onelight").gray, 0.6),
     },
   },
   highlights = {
@@ -173,7 +172,7 @@ onedarkpro.setup({
     TelescopeNormal = { bg = "${telescope_results}" },
     TelescopeSelection = { bg = "${telescope_prompt}" },
 
-    -- Todo Comments:
+    -- Todo Comments
     TodoTest = { fg = "${purple}" },
     TodoPerf = { fg = "${purple}" },
   },
