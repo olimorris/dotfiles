@@ -19,7 +19,8 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.theme") end,
     })
     use({
-      "mrjones2014/legendary.nvim", -- A legend for all keymaps, commands and autocmds
+      "mrjones2014/legendary.nvim", -- A command palette for keymaps, commands and autocmds
+      requires = "kkharji/sqlite.lua",
       after = "dressing.nvim",
       config = function() require(config_namespace .. ".plugins.legendary") end,
     })
@@ -91,7 +92,7 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.others").code_window() end,
     })
     use({
-      "nullchilly/fsread.nvim" -- Flow state reading in Neovim
+      "nullchilly/fsread.nvim", -- Flow state reading in Neovim
     })
     use({
       "nvim-telescope/telescope.nvim", -- Awesome fuzzy finder for everything
@@ -105,7 +106,7 @@ return packer.startup({
           "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
           after = "telescope.nvim",
           requires = {
-            { "tami5/sqlite.lua" },
+            { "kkharji/sqlite.lua" },
           },
           config = function() require("telescope").load_extension("frecency") end,
         },
@@ -298,6 +299,7 @@ return packer.startup({
     })
     use({
       "zbirenbaum/copilot.lua", -- AI programming
+      branch = "feat-suggestion-accept-partial",
       event = "InsertEnter",
       config = function()
         vim.schedule(function() require(config_namespace .. ".plugins.others").copilot() end)
