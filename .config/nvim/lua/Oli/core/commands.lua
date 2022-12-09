@@ -27,19 +27,26 @@ function M.default_commands()
       description = "Close quickfix window",
     },
     {
-      "FindAndReplace",
-      function(opts)
-        vim.api.nvim_command(string.format("silent cdo s/%s/%s", opts.fargs[1], opts.fargs[2]))
-        vim.api.nvim_command("silent cfdo update")
-      end,
-      description = "Find and Replace (global)",
-      unfinished = true,
-      opts = { nargs = "*" },
-    },
-    {
-      "FindAndReplaceUndo",
-      function(opts) vim.api.nvim_command("silent cdo undo") end,
-      description = "Undo Find and Replace (global)",
+      itemgroup = "Find and Replace (Global)",
+      icon = "",
+      description = "Find and replace across the project",
+      commands = {
+        {
+          "FindAndReplace",
+          function(opts)
+            vim.api.nvim_command(string.format("silent cdo s/%s/%s", opts.fargs[1], opts.fargs[2]))
+            vim.api.nvim_command("silent cfdo update")
+          end,
+          description = "Find and Replace (after quickfix)",
+          unfinished = true,
+          opts = { nargs = "*" },
+        },
+        {
+          "FindAndReplaceUndo",
+          function(opts) vim.api.nvim_command("silent cdo undo") end,
+          description = "Undo Find and Replace",
+        },
+      },
     },
     {
       "Snippets",
@@ -102,30 +109,44 @@ function M.default_commands()
     },
     -- Copilot
     {
-      ":CopilotToggle",
-      function() require("copilot.suggestion").toggle_auto_trigger() end,
-      description = "Toggle Copilot for buffer",
+      itemgroup = "Copilot",
+      commands = {
+        {
+          ":CopilotToggle",
+          function() require("copilot.suggestion").toggle_auto_trigger() end,
+          description = "Toggle on/off for buffer",
+        },
+      },
     },
     -- Coverage
     {
-      "Coverage",
-      function() require("coverage").toggle() end,
-      description = "Coverage: Toggle",
-    },
-    {
-      "CoverageLoad",
-      function() require("coverage").load(true) end,
-      description = "Coverage: Load",
-    },
-    {
-      "CoverageClear",
-      function() require("coverage").clear() end,
-      description = "Coverage: Clear",
-    },
-    {
-      "CoverageSummary",
-      function() require("coverage").summary() end,
-      description = "Coverage: Summary",
+      itemgroup = "Testing",
+      commands = {
+        {
+          ":NeotestOutput",
+          description = "Neotest: Open test output",
+        },
+        {
+          "Coverage",
+          function() require("coverage").toggle() end,
+          description = "Coverage: Toggle",
+        },
+        {
+          "CoverageLoad",
+          function() require("coverage").load(true) end,
+          description = "Coverage: Load",
+        },
+        {
+          "CoverageClear",
+          function() require("coverage").clear() end,
+          description = "Coverage: Clear",
+        },
+        {
+          "CoverageSummary",
+          function() require("coverage").summary() end,
+          description = "Coverage: Summary",
+        },
+      },
     },
     -- FS
     {
@@ -155,7 +176,7 @@ function M.default_commands()
     {
       "Lazygit",
       function() om.Lazygit():toggle() end,
-      description = "Lazygit",
+      description = "Git terminal",
     },
     -- Mason
     {
@@ -170,11 +191,6 @@ function M.default_commands()
     {
       ":Neogen",
       description = "Generate annotation",
-    },
-    -- Neotest
-    {
-      ":NeotestOutput",
-      description = "Open test output",
     },
     -- OnedarkPro
     {
@@ -191,85 +207,97 @@ function M.default_commands()
     },
     -- Packer
     {
-      "PackerCompile",
-      function()
-        require(config_namespace .. ".plugins.packer")
-        require("packer").compile()
-      end,
-      description = "Packer: Compile",
-    },
-    {
-      "PackerClean",
-      function()
-        require(config_namespace .. ".plugins.packer")
-        require("packer").clean()
-      end,
-      description = "Packer: Clean",
-    },
-    {
-      "PackerSync",
-      function() om.PackerSync() end,
-      description = "Packer: Sync",
-    },
-    {
-      "PackerStatus",
-      function()
-        require(config_namespace .. ".plugins.packer")
-        require("packer").status()
-      end,
-      description = "Packer: Status",
-    },
-    {
-      "PackerSnapshot",
-      function()
-        local snapshot = os.date("!%Y-%m-%d %H_%M_%S")
-        require(config_namespace .. ".plugins")
-        require("packer").snapshot(snapshot)
-      end,
-      description = "Packer: Create Snapshot",
-    },
-    {
-      "PackerSnapshotDelete",
-      function()
-        vim.ui.select(om.GetSnapshots(), { prompt = "Delete snapshot" }, function(choice)
-          if choice == nil then return end
-          require(config_namespace .. ".plugins")
-          require("packer.snapshot").delete(om.path_to_snapshots .. choice)
-        end)
-      end,
-      description = "Packer: Delete Snapshot",
-    },
-    {
-      "PackerRollback",
-      function()
-        require(config_namespace .. ".plugins")
-        vim.cmd("PackerRollback")
-      end,
-      description = "Packer: Rollback Snapshot",
+      itemgroup = "Packer",
+      icon = "",
+      description = "Packer commands",
+      commands = {
+        {
+          "PackerCompile",
+          function()
+            require(config_namespace .. ".plugins.packer")
+            require("packer").compile()
+          end,
+          description = "Compile",
+        },
+        {
+          "PackerClean",
+          function()
+            require(config_namespace .. ".plugins.packer")
+            require("packer").clean()
+          end,
+          description = "Clean",
+        },
+        {
+          "PackerSync",
+          function() om.PackerSync() end,
+          description = "Sync",
+        },
+        {
+          "PackerStatus",
+          function()
+            require(config_namespace .. ".plugins.packer")
+            require("packer").status()
+          end,
+          description = "Status",
+        },
+        {
+          "PackerSnapshot",
+          function()
+            local snapshot = os.date("!%Y-%m-%d %H_%M_%S")
+            require(config_namespace .. ".plugins")
+            require("packer").snapshot(snapshot)
+          end,
+          description = "Create Snapshot",
+        },
+        {
+          "PackerSnapshotDelete",
+          function()
+            vim.ui.select(om.GetSnapshots(), { prompt = "Delete snapshot" }, function(choice)
+              if choice == nil then return end
+              require(config_namespace .. ".plugins")
+              require("packer.snapshot").delete(om.path_to_snapshots .. choice)
+            end)
+          end,
+          description = "Delete Snapshot",
+        },
+        {
+          "PackerRollback",
+          function()
+            require(config_namespace .. ".plugins")
+            vim.cmd("PackerRollback")
+          end,
+          description = "Rollback Snapshot",
+        },
+      },
     },
     -- Persisted
     {
-      ":Sessions",
-      function() vim.cmd([[Telescope persisted]]) end,
-      description = "Session: List",
+      itemgroup = "Persisted",
+      commands = {
+        {
+          ":Sessions",
+          function() vim.cmd([[Telescope persisted]]) end,
+          description = "List sessions",
+        },
+        {
+          ":SessionSave",
+          description = "Save the session",
+        },
+        {
+          ":SessionStart",
+          description = "Start a session",
+        },
+        {
+          ":SessionStop",
+          description = "Stop the current session",
+        },
+        {
+          ":SessionDelete",
+          description = "Delete the current session",
+        },
+      },
     },
 
-    {
-      ":SessionSave",
-      description = "Session: Save",
-    },
-    {
-      ":SessionStart",
-      description = "Session: Start",
-    },
-    {
-      ":SessionStop",
-      description = "Session: Stop",
-    },
-    {
-      ":SessionDelete",
-      description = "Session: Delete",
-    },
     -- Satellite
     {
       ":SatelliteEnable",
