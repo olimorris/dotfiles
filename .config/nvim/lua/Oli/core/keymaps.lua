@@ -18,8 +18,176 @@ vim.g.maplocalleader = ","
 -------------------------------DEFAULT KEYMAPS------------------------------ {{{
 M.default_keymaps = function()
   local t = require("legendary.toolbox")
-
   local keymaps = {
+    ----------------------------NEOVIM FUNCTIONALITY---------------------------- {{{
+    -- Buffers
+    { "<C-c>", "<cmd>Bdelete<CR>", hide = true, description = "Close Buffer" }, -- bufdelete.nvim
+    { "<Tab>", "<cmd>bnext<CR>", hide = true, description = "Next buffer", opts = { noremap = false } }, -- Heirline.nvim
+    { "<S-Tab>", "<cmd>bprev<CR>", hide = true, description = "Previous buffer", opts = { noremap = false } }, -- Heirline.nvim
+    {
+      "bp",
+      function()
+        local tabline = require("heirline").tabline
+        local buflist = tabline._buflist[1]
+        buflist._picker_labels = {}
+        buflist._show_picker = true
+        vim.cmd.redrawtabline()
+        local char = vim.fn.getcharstr()
+        local bufnr = buflist._picker_labels[char]
+        if bufnr then vim.api.nvim_win_set_buf(0, bufnr) end
+        buflist._show_picker = false
+        vim.cmd.redrawtabline()
+      end,
+      hide = true,
+      description = "Navigate to buffer",
+      opts = { noremap = false },
+    },
+    {
+      "<LocalLeader>b",
+      "<cmd>lua om.MoveToBuffer()<CR>",
+      hide = true,
+      description = "Move to a specific buffer number",
+    },
+    { "<C-n>", "<cmd>enew<CR>", hide = true, description = "New buffer" },
+    { "<C-y>", "<cmd>%y+<CR>", hide = true, description = "Copy buffer" },
+    { "<C-s>", "<cmd>silent! write<CR>", hide = true, description = "Save buffer", mode = { "n", "i" } },
+
+    -- Editing words
+    { ",,", "<cmd>norm A,<CR>", hide = true, description = "Append comma" },
+    { ";;", "<cmd>norm A;<CR>", hide = true, description = "Append semicolon" },
+
+    {
+      itemgroup = "Wrap text",
+      icon = "",
+      description = "Wrapping text functionality",
+      keymaps = {
+        {
+          "<LocalLeader>(",
+          { n = [[ciw(<c-r>")<esc>]], v = [[c(<c-r>")<esc>]] },
+          description = "Wrap text in brackets ()",
+        },
+        {
+          "<LocalLeader>[",
+          { n = [[ciw[<c-r>"]<esc>]], v = [[c[<c-r>"]<esc>]] },
+          description = "Wrap text in square braces []",
+        },
+        {
+          "<LocalLeader>{",
+          { n = [[ciw{<c-r>"}<esc>]], v = [[c{<c-r>"}<esc>]] },
+          description = "Wrap text in curly braces {}",
+        },
+        {
+          '<LocalLeader>"',
+          { n = [[ciw"<c-r>""<esc>]], v = [[c"<c-r>""<esc>]] },
+          description = 'Wrap text in quotes ""',
+        },
+      },
+    },
+
+    {
+      itemgroup = "Find and Replace",
+      icon = "",
+      description = "Find and replace within the buffer",
+      keymaps = {
+        {
+          -- SSR plugin
+          "<LocalLeader>fs",
+          function() require("ssr").open() end,
+          description = "Structured Find and Replace",
+          mode = { "n", "x" },
+        },
+        {
+          "<LocalLeader>fw",
+          [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
+          description = "Replace cursor words in buffer",
+        },
+        { "<LocalLeader>fl", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], description = "Replace cursor words in line" },
+        -- {
+        --   "<LocalLeader>f",
+        --   ":s/{search}/{replace}/g",
+        --   description = "Find and Replace (buffer)",
+        --   mode = { "n", "v" },
+        --   opts = { silent = false },
+        -- },
+      },
+    },
+
+    -- Working with lines
+    { "B", "^", hide = true, description = "Beginning of a line", mode = { "n", "v" } },
+    { "E", "$", hide = true, description = "End of a line", mode = { "n", "v" } },
+    { "<CR>", "o<Esc>", hide = true, description = "Insert blank line below" },
+    { "<S-CR>", "O<Esc>", hide = true, description = "Insert blank line above" },
+
+    -- Splits
+    { "<LocalLeader>sv", "<C-w>v", description = "Split: Vertical" },
+    { "<LocalLeader>sh", "<C-w>h", description = "Split: Horizontal" },
+    { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
+    { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
+
+    -- Misc
+    { "<Esc>", "<cmd>:noh<CR>", description = "Clear searches" },
+    { "<S-w>", ":set winbar=<CR>", description = "Hide WinBar" },
+    { "<LocalLeader>U", "gUiw`", description = "Capitalize word" },
+    { ">", ">gv", hide = true, description = "Indent", mode = { "v" } },
+    { "<", "<gv", hide = true, description = "Outdent", mode = { "v" } },
+
+    -- Multiple Cursors
+    -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
+    -- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
+
+    -- 1. Position the cursor anywhere in the word you wish to change;
+    -- 2. Or, visually make a selection;
+    -- 3. Hit cn, type the new word, then go back to Normal mode;
+    -- 4. Hit `.` n-1 times, where n is the number of replacements.
+    {
+      itemgroup = "Multiple Cursors",
+      icon = "",
+      description = "Working with multiple cursors",
+      keymaps = {
+        {
+          "cn",
+          {
+            n = { "*``cgn" },
+            x = { [[g:mc . "``cgn"]], opts = { expr = true } },
+          },
+          description = "Inititiate",
+        },
+        {
+          "cN",
+          {
+            n = { "*``cgN" },
+            x = { [[g:mc . "``cgN"]], opts = { expr = true } },
+          },
+          description = "Inititiate (in backwards direction)",
+        },
+
+        -- 1. Position the cursor over a word; alternatively, make a selection.
+        -- 2. Hit cq to start recording the macro.
+        -- 3. Once you are done with the macro, go back to normal mode.
+        -- 4. Hit Enter to repeat the macro over search matches.
+        {
+          "cq",
+          {
+            n = { [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>*``qz]] },
+            x = { [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . g:mc . "``qz"]], opts = { expr = true } },
+          },
+          description = "Inititiate with macros",
+        },
+        {
+          "cQ",
+          {
+            n = { [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>#``qz]] },
+            x = {
+              [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
+              opts = { expr = true },
+            },
+          },
+          description = "Inititiate with macros (in backwards direction)",
+        },
+      },
+    },
+    ---------------------------------------------------------------------------- }}}
+    -----------------------------------PLUGINS---------------------------------- {{{
     -- Legendary
     {
       "<C-p>",
@@ -100,29 +268,6 @@ M.default_keymaps = function()
       },
     },
 
-    -- Buffers
-    { "<C-c>", "<cmd>Bdelete<CR>", hide = true, description = "Close Buffer" }, -- bufdelete.nvim
-    { "<Tab>", "<cmd>bnext<CR>", hide = true, description = "Next buffer", opts = { noremap = false } }, -- Heirline.nvim
-    { "<S-Tab>", "<cmd>bprev<CR>", hide = true, description = "Previous buffer", opts = { noremap = false } }, -- Heirline.nvim
-    {
-      "bp",
-      function()
-        local tabline = require("heirline").tabline
-        local buflist = tabline._buflist[1]
-        buflist._picker_labels = {}
-        buflist._show_picker = true
-        vim.cmd.redrawtabline()
-        local char = vim.fn.getcharstr()
-        local bufnr = buflist._picker_labels[char]
-        if bufnr then vim.api.nvim_win_set_buf(0, bufnr) end
-        buflist._show_picker = false
-        vim.cmd.redrawtabline()
-      end,
-      hide = true,
-      description = "Navigate to buffer",
-      opts = { noremap = false },
-    },
-
     -- Hop
     { "s", "<cmd>lua require'hop'.hint_char1()<CR>", hide = true, description = "Hop", mode = { "n", "o" } },
 
@@ -130,12 +275,39 @@ M.default_keymaps = function()
     { "\\", "<cmd>Neotree toggle<CR>", hide = true, description = "Neotree: Toggle" },
     { "<C-z>", "<cmd>Neotree reveal=true toggle<CR>", hide = true, description = "Neotree: Reveal File" },
 
+    -- Move.nvim
+    {
+      "<A-j>",
+      { n = ":MoveLine(1)<CR>", x = ":MoveBlock(1)<CR>" },
+      hide = true,
+      description = "Move text down",
+    },
+    {
+      "<A-k>",
+      { n = ":MoveLine(-1)<CR>", x = ":MoveBlock(-1)<CR>" },
+      hide = true,
+      description = "Move text up",
+    },
+    {
+      "<A-h>",
+      { n = ":MoveHChar(-1)<CR>", x = ":MoveHBlock(-1)<CR>" },
+      hide = true,
+      description = "Move text left",
+    },
+    {
+      "<A-l>",
+      { n = ":MoveHChar(1)<CR>", x = ":MoveHBlock(1)<CR>" },
+      hide = true,
+      description = "Move text right",
+    },
+
     -- Neotest
     {
       itemgroup = "Testing",
       icon = "省",
       description = "Testing functionality",
       keymaps = {
+        -- Neotest plugin
         { "<LocalLeader>t", '<cmd>lua require("neotest").run.run()<CR>', description = "Neotest: Test nearest" },
         {
           "<LocalLeader>tf",
@@ -245,10 +417,10 @@ M.default_keymaps = function()
       },
     },
 
-    -- Todo comments
+    -- Todo comments plugin
     { "<Leader>c", "<cmd>TodoTelescope<CR>", description = "Todo comments" },
 
-    -- Toggleterm
+    -- Toggleterm plugin
     { "<C-x>", "<cmd>ToggleTerm<CR>", description = "Toggleterm", mode = { "n", "t" } },
 
     -- Treesitter Unit
@@ -259,7 +431,7 @@ M.default_keymaps = function()
     -- vim.api.nvim_set_keymap("o", "iu", '<cmd><c-u>lua require"treesitter-unit".select()<CR>', silent)
     -- vim.api.nvim_set_keymap("o", "au", '<cmd><c-u>lua require"treesitter-unit".select(true)<CR>', silent)
 
-    -- Tmux
+    -- Tmux plugin
     {
       "<C-k>",
       "<cmd>lua require('tmux').move_up()<CR>",
@@ -281,188 +453,17 @@ M.default_keymaps = function()
       description = "Tmux: Move right",
     },
 
-    -- Undotree
+    -- Undotree plugin
     { "<LocalLeader>u", "<cmd>UndotreeToggle<CR>", description = "Undotree toggle" },
 
-    -- Yabs
+    -- Yabs plugin
     {
       "<LocalLeader>d",
       "<cmd>lua require('yabs'):run_default_task()<CR>",
       description = "Build file",
     },
-
-    -- Buffers
-    {
-      "<LocalLeader>b",
-      "<cmd>lua om.MoveToBuffer()<CR>",
-      hide = true,
-      description = "Move to a specific buffer number",
-    },
-    { "<C-s>", "<cmd>silent! write<CR>", hide = true, description = "Save buffer", mode = { "n", "i" } },
-    { "<C-n>", "<cmd>enew<CR>", hide = true, description = "New buffer" },
-    { "<C-y>", "<cmd>%y+<CR>", hide = true, description = "Copy buffer" },
-
-    -- Editing words
-    { "<LocalLeader>,", "<cmd>norm A,<CR>", hide = true, description = "Append comma" },
-    { "<LocalLeader>;", "<cmd>norm A;<CR>", hide = true, description = "Append semicolon" },
-
-    {
-      itemgroup = "Wrap text",
-      icon = "",
-      description = "Wrapping text functionality",
-      keymaps = {
-        {
-          "<LocalLeader>(",
-          { n = [[ciw(<c-r>")<esc>]], v = [[c(<c-r>")<esc>]] },
-          description = "Wrap text in brackets ()",
-        },
-        {
-          "<LocalLeader>[",
-          { n = [[ciw[<c-r>"]<esc>]], v = [[c[<c-r>"]<esc>]] },
-          description = "Wrap text in square braces []",
-        },
-        {
-          "<LocalLeader>{",
-          { n = [[ciw{<c-r>"}<esc>]], v = [[c{<c-r>"}<esc>]] },
-          description = "Wrap text in curly braces {}",
-        },
-        {
-          '<LocalLeader>"',
-          { n = [[ciw"<c-r>""<esc>]], v = [[c"<c-r>""<esc>]] },
-          description = 'Wrap text in quotes ""',
-        },
-      },
-    },
-
-    {
-      itemgroup = "Find and Replace",
-      icon = "",
-      description = "Find and replace within the buffer",
-      keymaps = {
-        -- SSR
-        {
-          "<LocalLeader>fs",
-          function() require("ssr").open() end,
-          description = "Structured Find and Replace",
-          mode = { "n", "x" },
-        },
-        {
-          "<LocalLeader>fw",
-          [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
-          description = "Replace cursor words in buffer",
-        },
-        { "<LocalLeader>fl", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], description = "Replace cursor words in line" },
-        -- {
-        --   "<LocalLeader>f",
-        --   ":s/{search}/{replace}/g",
-        --   description = "Find and Replace (buffer)",
-        --   mode = { "n", "v" },
-        --   opts = { silent = false },
-        -- },
-      },
-    },
-
-    -- Working with lines
-    -- Move.nvim
-    {
-      "<A-j>",
-      { n = ":MoveLine(1)<CR>", x = ":MoveBlock(1)<CR>" },
-      hide = true,
-      description = "Move text down",
-    },
-    {
-      "<A-k>",
-      { n = ":MoveLine(-1)<CR>", x = ":MoveBlock(-1)<CR>" },
-      hide = true,
-      description = "Move text up",
-    },
-    {
-      "<A-h>",
-      { n = ":MoveHChar(-1)<CR>", x = ":MoveHBlock(-1)<CR>" },
-      hide = true,
-      description = "Move text left",
-    },
-    {
-      "<A-l>",
-      { n = ":MoveHChar(1)<CR>", x = ":MoveHBlock(1)<CR>" },
-      hide = true,
-      description = "Move text right",
-    },
-    { "B", "^", hide = true, description = "Beginning of a line", mode = { "n", "v" } },
-    { "E", "$", hide = true, description = "End of a line", mode = { "n", "v" } },
-    { "<CR>", "o<Esc>", hide = true, description = "Insert blank line below" },
-    { "<S-CR>", "O<Esc>", hide = true, description = "Insert blank line above" },
-
-    -- Splits
-    { "<LocalLeader>sv", "<C-w>v", description = "Split: Vertical" },
-    { "<LocalLeader>sh", "<C-w>h", description = "Split: Horizontal" },
-    { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
-    { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
-
-    -- Multiple Cursors
-    -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
-    -- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
-
-    -- 1. Position the cursor anywhere in the word you wish to change;
-    -- 2. Or, visually make a selection;
-    -- 3. Hit cn, type the new word, then go back to Normal mode;
-    -- 4. Hit `.` n-1 times, where n is the number of replacements.
-    {
-      itemgroup = "Multiple Cursors",
-      icon = "",
-      description = "Working with multiple cursors",
-      keymaps = {
-        {
-          "cn",
-          {
-            n = { "*``cgn" },
-            x = { [[g:mc . "``cgn"]], opts = { expr = true } },
-          },
-          description = "Inititiate",
-        },
-        {
-          "cN",
-          {
-            n = { "*``cgN" },
-            x = { [[g:mc . "``cgN"]], opts = { expr = true } },
-          },
-          description = "Inititiate (in backwards direction)",
-        },
-
-        -- 1. Position the cursor over a word; alternatively, make a selection.
-        -- 2. Hit cq to start recording the macro.
-        -- 3. Once you are done with the macro, go back to normal mode.
-        -- 4. Hit Enter to repeat the macro over search matches.
-        {
-          "cq",
-          {
-            n = { [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>*``qz]] },
-            x = { [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . g:mc . "``qz"]], opts = { expr = true } },
-          },
-          description = "Inititiate with macros",
-        },
-        {
-          "cQ",
-          {
-            n = { [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>#``qz]] },
-            x = {
-              [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
-              opts = { expr = true },
-            },
-          },
-          description = "Inititiate with macros (in backwards direction)",
-        },
-      },
-    },
-
-    -- Misc
-    { "<Esc>", "<cmd>:noh<CR>", description = "Clear searches" },
-    { "<S-w>", ":set winbar=<CR>", description = "Hide WinBar" },
-    { "<LocalLeader>U", "gUiw`", description = "Capitalize word" },
-    { ">", ">gv", hide = true, description = "Indent", mode = { "v" } },
-    { "<", "<gv", hide = true, description = "Outdent", mode = { "v" } },
+    ---------------------------------------------------------------------------- }}}
   }
-
   -- Functions for multiple cursors
   vim.g.mc = vim.api.nvim_replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]], true, true, true)
 

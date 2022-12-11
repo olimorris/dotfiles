@@ -4,17 +4,17 @@ function M.default_commands()
   return {
     -- Custom
     {
-      "LineNumbers",
+      ":LineNumbers",
       function() om.ToggleLineNumbers() end,
       description = "Toggle line numbers",
     },
     {
-      "ChangeFiletype",
+      ":ChangeFiletype",
       function() om.ChangeFiletype() end,
       description = "Change filetype of current buffer",
     },
     {
-      "CopyMessage",
+      ":CopyMessage",
       function() vim.cmd([[let @+ = execute('messages')]]) end,
       description = "Copy message output",
     },
@@ -49,17 +49,17 @@ function M.default_commands()
       },
     },
     {
-      "Snippets",
+      ":Snippets",
       function() om.EditSnippet() end,
       description = "Edit Snippets",
     },
     {
-      "Theme",
+      ":Theme",
       function() om.ToggleTheme() end,
       description = "Toggle theme",
     },
     {
-      "Uuid",
+      ":Uuid",
       function()
         local uuid = vim.fn.system("uuidgen"):gsub("\n", ""):lower()
         local line = vim.fn.getline(".")
