@@ -3,7 +3,6 @@ if not ok then return end
 
 local color = require("onedarkpro.lib.color")
 
--- vim.g.onedarkpro_log_level = "debug"
 onedarkpro.setup({
   cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
   plugins = {
@@ -61,6 +60,9 @@ onedarkpro.setup({
     Search = { bg = "${selection}", fg = "${yellow}", style = "underline" },
     TabLine = { fg = "${gray}", bg = "${bg}" },
     TabLineSel = { fg = "${bg}", bg = "${purple}" },
+
+    -- Treesitter plugin
+    ["@text.todo.checked"] = { fg = "${bg}", bg = "${purple}"},
 
     -- Aerial plugin
     AerialClass = { fg = "${purple}", style = "bold,italic" },
