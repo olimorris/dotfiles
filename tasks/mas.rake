@@ -1,4 +1,4 @@
-MAS_FILE = File.expand_path('../../misc/packages/app_store.txt', __FILE__)
+MAS_FILE = File.expand_path('../misc/packages/app_store.txt', __dir__).gsub(/ /, '\ ')
 
 namespace :backup do
   desc 'Backup App Store'
@@ -10,15 +10,15 @@ namespace :backup do
 end
 
 namespace :install do
-    desc 'Install mas'
-    task :mas do
-      section 'Installing macOS App Store apps'
+  desc 'Install mas'
+  task :mas do
+    section 'Installing macOS App Store apps'
 
-        mas_applications.each do |application|
-          run %( mas install #{application} )
-        end
+    mas_applications.each do |application|
+      run %( mas install #{application} )
     end
   end
+end
 
 def mas_applications
   File.readlines(MAS_FILE).map(&:split).map(&:first)
