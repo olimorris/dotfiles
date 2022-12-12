@@ -1,20 +1,26 @@
-BREW_TAPS_FILE = File.expand_path('~/.dotfiles/misc/packages/brew_taps.txt', __FILE__)
-BREW_PACKAGES_FILE = File.expand_path('~/.dotfiles/misc/packages/brew_packages.txt', __FILE__)
-BREW_CASK_PACKAGES_FILE = File.expand_path('~/.dotfiles/misc/packages/brew_cask.txt', __FILE__)
+prefix = if testing?
+           '../../'
+         else
+           '~/.dotfiles/'
+         end
+
+BREW_TAPS_FILE = File.expand_path("#{prefix}misc/packages/brew_taps.txt", __dir__)
+BREW_PACKAGES_FILE = File.expand_path("#{prefix}misc/packages/brew_packages.txt", __dir__)
+BREW_CASK_PACKAGES_FILE = File.expand_path("#{prefix}misc/packages/brew_cask.txt", __dir__)
 
 # HEAD_ONLY_FORMULAS = %w( neovim )
-HEAD_ONLY_FORMULAS = ""
+HEAD_ONLY_FORMULAS = ''
 
 namespace :backup do
   desc 'Backup Homebrew'
   task :brew do
     section 'Backing up Homebrew'
 
-      run %( brew update )
-      run %( brew upgrade )
-      Rake::Task['backup:brew_packages'].invoke
-      Rake::Task['backup:brew_cask_packages'].invoke
-      Rake::Task['backup:brew_taps'].invoke
+    run %( brew update )
+    run %( brew upgrade )
+    Rake::Task['backup:brew_packages'].invoke
+    Rake::Task['backup:brew_cask_packages'].invoke
+    Rake::Task['backup:brew_taps'].invoke
   end
 
   desc 'Backup Brew Packages'
@@ -34,17 +40,17 @@ namespace :backup do
 end
 
 namespace :install do
-  desc "Install Homebrew"
+  desc 'Install Homebrew'
   task :brew do
-    section "Installing Homebrew"
+    section 'Installing Homebrew'
 
     run %( /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\" )
 
-    puts "~> Updating brew directory permissions"
+    puts '~> Updating brew directory permissions'
     run %( sudo chown -R $(whoami) /usr/local/ )
     run %( sudo chown -R $(whoami) /opt/homebrew/ )
 
-    puts "~> Installing brew taps"
+    puts '~> Installing brew taps'
     brew_taps.each do |tap|
       run %( brew tap #{tap} )
     end
@@ -52,9 +58,9 @@ namespace :install do
     run %( brew analytics off )
   end
 
-  desc "Install Brew Packages"
+  desc 'Install Brew Packages'
   task :brew_packages do
-    section "Installing Brew Packages"
+    section 'Installing Brew Packages'
 
     brew_packages.each do |package|
       if HEAD_ONLY_FORMULAS.include?(package)
@@ -65,20 +71,20 @@ namespace :install do
     end
   end
 
-  desc "Install Brew Cask Packages"
+  desc 'Install Brew Cask Packages'
   task :brew_cask_packages do
-    section "Installing Brew Cask Packages"
+    section 'Installing Brew Cask Packages'
 
-      brew_cask_packages.each do |package|
-        run %( brew install --force --appdir="/Applications" --fontdir="/Library/Fonts" #{package} )
-      end
+    brew_cask_packages.each do |package|
+      run %( brew install --force --appdir="/Applications" --fontdir="/Library/Fonts" #{package} )
+    end
   end
 
-  desc "Clean up Brew"
+  desc 'Clean up Brew'
   task :brew_clean_up do
-    section "Cleaning up Brew"
+    section 'Cleaning up Brew'
 
-      run %( brew cleanup )
+    run %( brew cleanup )
   end
 end
 
@@ -87,8 +93,8 @@ namespace :update do
   task :brew do
     section 'Updating Homebrew'
 
-      run %( brew update )
-      run %( brew upgrade )
+    run %( brew update )
+    run %( brew upgrade )
   end
 end
 
