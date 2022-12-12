@@ -16,6 +16,7 @@ fzf
 gh
 git
 git-flow-avh
+glow
 gnupg
 go
 gobject-introspection

@@ -35,7 +35,6 @@ pixelsnap
 postman
 raycast
 screenflow
-shadow
 signal
 sketch
 slack
