@@ -1,4 +1,4 @@
-prefix = if testing?
+prefix = if ENV['TEST_ENV']
            '../../'
          else
            '~/.dotfiles/'
