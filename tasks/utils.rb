@@ -24,11 +24,11 @@ def run(cmd)
 end
 
 def testable?(filename)
-  return ! SKIP_TESTS_FOR.include?(filename)
+  !SKIP_TESTS_FOR.include?(filename)
 end
 
 def testing?
-  return ENV['TEST_ENV']
+  ENV['TEST_ENV']
 end
 
 def find_replace(file_name, find, replace)
