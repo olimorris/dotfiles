@@ -1,12 +1,6 @@
-prefix = if testing?
-           '../../'
-         else
-           '~/.dotfiles/'
-         end
-
-BREW_TAPS_FILE = File.expand_path("#{prefix}misc/packages/brew_taps.txt", __dir__)
-BREW_PACKAGES_FILE = File.expand_path("#{prefix}misc/packages/brew_packages.txt", __dir__)
-BREW_CASK_PACKAGES_FILE = File.expand_path("#{prefix}misc/packages/brew_cask.txt", __dir__)
+BREW_TAPS_FILE = File.expand_path('../misc/packages/brew_taps.txt', __dir__).gsub(/ /, '\ ')
+BREW_PACKAGES_FILE = File.expand_path('../misc/packages/brew_packages.txt', __dir__).gsub(/ /, '\ ')
+BREW_CASK_PACKAGES_FILE = File.expand_path('../misc/packages/brew_cask.txt', __dir__).gsub(/ /, '\ ')
 
 # HEAD_ONLY_FORMULAS = %w( neovim )
 HEAD_ONLY_FORMULAS = ''
