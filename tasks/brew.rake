@@ -1,6 +1,6 @@
-BREW_TAPS_FILE = File.expand_path('../../misc/packages/brew_taps.txt', __FILE__)
-BREW_PACKAGES_FILE = File.expand_path('../../misc/packages/brew_packages.txt', __FILE__)
-BREW_CASK_PACKAGES_FILE = File.expand_path('../../misc/packages/brew_cask.txt', __FILE__)
+BREW_TAPS_FILE = File.expand_path('~/.dotfiles/misc/packages/brew_taps.txt', __FILE__)
+BREW_PACKAGES_FILE = File.expand_path('~/.dotfiles/misc/packages/brew_packages.txt', __FILE__)
+BREW_CASK_PACKAGES_FILE = File.expand_path('~/.dotfiles/misc/packages/brew_cask.txt', __FILE__)
 
 # HEAD_ONLY_FORMULAS = %w( neovim )
 HEAD_ONLY_FORMULAS = ""
@@ -16,12 +16,12 @@ namespace :backup do
       Rake::Task['backup:brew_cask_packages'].invoke
       Rake::Task['backup:brew_taps'].invoke
   end
-  
+
   desc 'Backup Brew Packages'
   task :brew_packages do
     run %( brew leaves > #{BREW_PACKAGES_FILE} )
   end
-  
+
   desc 'Backup Brew Cask Packages'
   task :brew_cask_packages do
     run %( brew list --cask > #{BREW_CASK_PACKAGES_FILE} )
