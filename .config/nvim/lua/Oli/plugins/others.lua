@@ -96,6 +96,10 @@ M.copilot = function()
     },
     suggestion = {
       auto_trigger = true, -- Suggest as we start typing
+      keymap = {
+        accept_word = "<C-l>",
+        accept_line = "<C-j>",
+      },
     },
   })
 end

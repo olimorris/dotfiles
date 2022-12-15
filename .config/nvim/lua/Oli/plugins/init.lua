@@ -299,7 +299,6 @@ return packer.startup({
     })
     use({
       "zbirenbaum/copilot.lua", -- AI programming
-      branch = "feat-suggestion-accept-partial",
       event = "InsertEnter",
       config = function()
         vim.schedule(function() require(config_namespace .. ".plugins.others").copilot() end)
