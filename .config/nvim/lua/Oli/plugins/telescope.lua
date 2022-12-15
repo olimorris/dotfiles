@@ -73,6 +73,7 @@ telescope.setup({
     -- Mappings
     mappings = {
       i = {
+        ["<esc>"] = require("telescope.actions").close,
         ["<C-e>"] = custom_actions.multi_select,
         ["<C-j>"] = require("telescope.actions").move_selection_next,
         ["<C-d>"] = require("telescope.actions").preview_scrolling_down,
@@ -102,7 +103,6 @@ telescope.setup({
       --   ["nvim"] = os.getenv("HOME_DIR") .. ".config/nvim",
       --   ["dots"] = os.getenv("HOME_DIR") .. ".dotfiles",
       --   ["project"] = os.getenv("PROJECT_DIR"),
-      --   ["project2"] = os.getenv("OTHER_PROJECT_DIR"),
       -- },
     },
     fzf = {
