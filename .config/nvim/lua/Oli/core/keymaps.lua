@@ -13,7 +13,7 @@ local silent = { noremap = true, silent = true }
 ---------------------------------------------------------------------------- }}}
 ---------------------------------LEADER KEYS-------------------------------- {{{
 vim.g.mapleader = " " -- space is the leader!
-vim.g.maplocalleader = ","
+vim.g.maplocalleader = "\\"
 ---------------------------------------------------------------------------- }}}
 -------------------------------DEFAULT KEYMAPS------------------------------ {{{
 M.default_keymaps = function()
@@ -25,7 +25,7 @@ M.default_keymaps = function()
     { "<Tab>", "<cmd>bnext<CR>", hide = true, description = "Next buffer", opts = { noremap = false } }, -- Heirline.nvim
     { "<S-Tab>", "<cmd>bprev<CR>", hide = true, description = "Previous buffer", opts = { noremap = false } }, -- Heirline.nvim
     {
-      "bp",
+      "<Leader>b",
       function()
         local tabline = require("heirline").tabline
         local buflist = tabline._buflist[1]
@@ -42,19 +42,12 @@ M.default_keymaps = function()
       description = "Navigate to buffer",
       opts = { noremap = false },
     },
-    {
-      "<LocalLeader>b",
-      "<cmd>lua om.MoveToBuffer()<CR>",
-      hide = true,
-      description = "Move to a specific buffer number",
-    },
-    { "<C-n>", "<cmd>enew<CR>", hide = true, description = "New buffer" },
     { "<C-y>", "<cmd>%y+<CR>", hide = true, description = "Copy buffer" },
     { "<C-s>", "<cmd>silent! write<CR>", hide = true, description = "Save buffer", mode = { "n", "i" } },
 
     -- Editing words
-    { ",,", "<cmd>norm A,<CR>", hide = true, description = "Append comma" },
-    { ";;", "<cmd>norm A;<CR>", hide = true, description = "Append semicolon" },
+    { "<LocalLeader>,", "<cmd>norm A,<CR>", hide = true, description = "Append comma" },
+    { "<LocalLeader>;", "<cmd>norm A;<CR>", hide = true, description = "Append semicolon" },
 
     {
       itemgroup = "Wrap text",
@@ -214,16 +207,16 @@ M.default_keymaps = function()
           opts = { silent = true },
         },
         {
-          "<M-]>",
-          function() require("copilot.suggestion").next() end,
-          description = "Next suggestion",
+          "<C-x>",
+          function() require("copilot.suggestion").dismiss() end,
+          description = "Dismiss suggestion",
           mode = { "i" },
           opts = { silent = true },
         },
         {
-          "<M-[>",
-          function() require("copilot.suggestion").previous() end,
-          description = "Previous suggestion",
+          "<C-n>",
+          function() require("copilot.suggestion").next() end,
+          description = "Next suggestion",
           mode = { "i" },
           opts = { silent = true },
         },
@@ -272,7 +265,7 @@ M.default_keymaps = function()
     { "s", "<cmd>lua require'hop'.hint_char1()<CR>", hide = true, description = "Hop", mode = { "n", "o" } },
 
     -- File Explorer
-    { "\\", "<cmd>Neotree toggle<CR>", hide = true, description = "Neotree: Toggle" },
+    { "<C-n>", "<cmd>Neotree toggle<CR>", hide = true, description = "Neotree: Toggle" },
     { "<C-z>", "<cmd>Neotree reveal=true toggle<CR>", hide = true, description = "Neotree: Reveal File" },
 
     -- Move.nvim
@@ -614,7 +607,7 @@ M.lsp_keymaps = function(client, bufnr)
   }
 
   table.insert(keymaps, {
-    "F",
+    "<Leader>f",
     function() vim.lsp.buf.format({ async = true }) end,
     description = "Format document",
     opts = { buffer = bufnr },
