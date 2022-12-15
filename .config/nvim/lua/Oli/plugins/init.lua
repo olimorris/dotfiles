@@ -304,6 +304,17 @@ return packer.startup({
         vim.schedule(function() require(config_namespace .. ".plugins.others").copilot() end)
       end,
     })
+    use({
+      "jackmort/chatgpt.nvim",
+      config = function()
+        require(config_namespace .. ".plugins.others").chatgpt()
+      end,
+      requires = {
+        "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim",
+      },
+    })
     ---------------------------------------------------------------------------- }}}
     ---------------------------------------------------------------------------- }}}
     ------------------------------------MISC------------------------------------ {{{

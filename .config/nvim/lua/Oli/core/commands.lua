@@ -87,6 +87,11 @@ function M.default_commands()
       ":Barbecue toggle",
       description = "Toggle Barbecue's winbar",
     },
+    -- Chat GPT3
+    {
+      ":ChatGPT",
+      description = "Open the Chat GPT window",
+    },
     -- Code Window
     {
       ":Codewindow",
