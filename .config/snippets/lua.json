@@ -8,7 +8,7 @@
     "body": ["require('pl.pretty').dump($0)"]
   },
   "Packer use": {
-    "prefix": ["us"],
+    "prefix": ["use"],
     "body": [
       "use({",
       "\t\"$0\",",
