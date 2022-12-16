@@ -193,6 +193,9 @@ M.default_keymaps = function()
     -- Aerial
     { "<C-t>", "<cmd>AerialToggle<CR>", hide = true, description = "Aerial" },
 
+    -- ChatGPT
+    { "<C-a>", "<cmd>ChatGPT<CR>", description = "Open ChatGPT" },
+
     -- Copilot
     {
       itemgroup = "Copilot",

@@ -52,19 +52,15 @@ M.barbecue = function()
   })
 end
 
-
 M.chatgpt = function()
   local ok, chatgpt = om.safe_require("chatgpt")
   if not ok then return end
 
   chatgpt.setup({
     welcome_message = "",
+    answer_sign = "",
+    question_sign = "",
     chat_input = {
-    prompt = "   ",
-    }
-  })
-end
-
 M.code_window = function()
   local ok, code_window = om.safe_require("codewindow")
   if not ok then return end

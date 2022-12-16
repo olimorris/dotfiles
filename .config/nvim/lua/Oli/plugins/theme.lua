@@ -102,6 +102,9 @@ onedarkpro.setup({
     BufferlineSelected = { bg = "${statusline_bg}", fg = "${purple}" },
     BufferlineOffset = { fg = "${purple}", style = "bold" },
 
+    -- ChatGPT
+    ChatGPTPrompt = { bg = "${float_bg}", fg = "${gray}" },
+
     -- Cmp
     CmpItemAbbrMatch = { fg = "${blue}", style = "bold" },
     CmpItemAbbrMatchFuzzy = { fg = "${blue}", style = "underline" },

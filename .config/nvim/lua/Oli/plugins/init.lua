@@ -306,9 +306,7 @@ return packer.startup({
     })
     use({
       "jackmort/chatgpt.nvim",
-      config = function()
-        require(config_namespace .. ".plugins.others").chatgpt()
-      end,
+      config = function() require(config_namespace .. ".plugins.others").chatgpt() end,
       requires = {
         "MunifTanjim/nui.nvim",
         "nvim-lua/plenary.nvim",
