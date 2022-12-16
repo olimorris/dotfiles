@@ -92,17 +92,6 @@ function M.default_commands()
       ":Barbecue toggle",
       description = "Toggle Barbecue's winbar",
     },
-    -- Chat GPT3
-    {
-      ":ChatGPT",
-      description = "Open the Chat GPT window",
-    },
-    -- Code Window
-    {
-      ":Codewindow",
-      function() require("codewindow").toggle_minimap() end,
-      description = "Toggle Code Window",
-    },
     -- Colorizer
     {
       ":ColorizerToggle",

@@ -87,11 +87,6 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.others").dressing() end,
     })
     use({
-      "gorbit99/codewindow.nvim", -- a VS Code like minimap
-      module = "codewindow",
-      config = function() require(config_namespace .. ".plugins.others").code_window() end,
-    })
-    use({
       "nullchilly/fsread.nvim", -- Flow state reading in Neovim
     })
     use({

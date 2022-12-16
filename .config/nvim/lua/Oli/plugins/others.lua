@@ -61,12 +61,11 @@ M.chatgpt = function()
     answer_sign = "",
     question_sign = "",
     chat_input = {
-M.code_window = function()
-  local ok, code_window = om.safe_require("codewindow")
-  if not ok then return end
-
-  code_window.setup({
-    window_border = "none",
+      prompt = "   ",
+      win_options = {
+        winhighlight = "Normal:ChatGPTPrompt",
+      }
+    },
   })
 end
 
