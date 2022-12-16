@@ -49,6 +49,11 @@ function M.default_commands()
       },
     },
     {
+      ":New",
+      ":enew",
+      description = "New buffer",
+    },
+    {
       ":Snippets",
       function() om.EditSnippet() end,
       description = "Edit Snippets",
