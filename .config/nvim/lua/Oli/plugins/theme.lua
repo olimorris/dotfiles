@@ -103,6 +103,7 @@ onedarkpro.setup({
     BufferlineOffset = { fg = "${purple}", style = "bold" },
 
     -- ChatGPT
+    ChatGPTWindow = { bg = "${float_bg}", fg = "${gray}" },
     ChatGPTPrompt = { bg = "${float_bg}", fg = "${gray}" },
 
     -- Cmp

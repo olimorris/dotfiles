@@ -60,10 +60,17 @@ M.chatgpt = function()
     welcome_message = "",
     answer_sign = "",
     question_sign = "",
+    chat_window = {
+      win_options = {
+        winblend = 0,
+        winhighlight = "Normal:ChatGPTWindow,FloatBorder:FloatBorder",
+      },
+    },
     chat_input = {
       prompt = "   ",
       win_options = {
-        winhighlight = "Normal:ChatGPTPrompt",
+        winblend = 0,
+        winhighlight = "Normal:ChatGPTPrompt,ChatGPTPrompt:FloatBorder",
       }
     },
   })
