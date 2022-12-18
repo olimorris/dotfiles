@@ -147,23 +147,7 @@ function M.lsp_autocmds(client, bufnr)
     },
   }
 
-  local ok, lightbulb = om.safe_require("nvim-lightbulb")
-  if ok then
-    lightbulb.setup({
-      ignore = { "null-ls" },
-      autocmd = { enabled = true },
-      sign = { enabled = false },
-      float = { enabled = true },
-    })
-    table.insert(autocmds, {
-      { "CursorHold", "CursorHoldI" },
-      function() lightbulb.update_lightbulb() end,
-      opts = { buffer = bufnr },
-    })
-  end
-
   return autocmds
 end
-
 ---------------------------------------------------------------------------- }}}
 return M

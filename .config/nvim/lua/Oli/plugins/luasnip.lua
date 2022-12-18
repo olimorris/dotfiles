@@ -35,6 +35,4 @@ function M.setup()
   require("luasnip.loaders.from_vscode").lazy_load()
 end
 
-function M.snippets() return nil end
-
 return M

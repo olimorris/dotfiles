@@ -477,61 +477,43 @@ end
 ---------------------------------------------------------------------------- }}}
 ---------------------------------COMPLETION--------------------------------- {{{
 M.completion_keymaps = function()
-  local _, cmp = om.safe_require("cmp")
-  local _, luasnip = om.safe_require("luasnip")
-
-  local has_words_before = function()
-    if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
-    local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-  end
-
-  return {
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback()
-      end
-    end, {
-      "i",
-      "s",
-      "c",
-    }),
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, {
-      "i",
-      "s",
-      "c",
-    }),
-    ["<C-e>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.mapping.close()()
-      else
-        fallback()
-      end
-    end, {
-      "i",
-      "c",
-    }),
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<CR>"] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true, -- hitting <CR> when nothing is selected, does nothing
-    }),
+  -- Don't bind these, just display them in legendary
+  local keymaps = {
+    {
+      "<Enter>",
+      description = "Confirms selection",
+    },
+    {
+      "<Up>",
+      description = "Navigate to previous item on the list",
+    },
+    {
+      "<Down>",
+      description = "Navigate to next item on the list",
+    },
+    {
+      "<Ctrl-e>",
+      description = "Toggle completion menu",
+    },
+    {
+      "<Ctrl-b>",
+      description = "Go to previous placeholder in snippet",
+    },
+    {
+      "<Ctrl-d>",
+      description = "Go to next placeholder in snippet",
+    },
+    {
+      "<Tab>",
+      description = "Enable completion when inside a word OR navigate to next item",
+    },
+    {
+      "<S-Tab>",
+      description = "Navigate to previous item",
+    },
   }
+
+  return { itemgroup = "Completion", icon = "", description = "Completion related functionality", keymaps = keymaps }
 end
 ---------------------------------------------------------------------------- }}}
 -------------------------------------LSP------------------------------------ {{{
@@ -550,7 +532,7 @@ M.lsp_keymaps = function(client, bufnr)
 
   local keymaps = {
     {
-      "fd",
+      "gf",
       t.lazy_required_fn("telescope.builtin", "diagnostics", {
         layout_strategy = "vertical",
         layout_config = {
@@ -584,12 +566,12 @@ M.lsp_keymaps = function(client, bufnr)
       description = "Find references",
     },
     {
-      "L",
+      "gl",
       "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
       description = "Line diagnostics",
       opts = { buffer = bufnr },
     },
-    { "H", vim.lsp.buf.hover, description = "Show hover information", opts = { buffer = bufnr } },
+    { "K", vim.lsp.buf.hover, description = "Show hover information", opts = { buffer = bufnr } },
     {
       "<LocalLeader>p",
       t.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer"),
@@ -598,7 +580,7 @@ M.lsp_keymaps = function(client, bufnr)
     },
     { "ga", vim.lsp.buf.code_action, description = "Show code actions", opts = { buffer = bufnr } },
     { "gs", vim.lsp.buf.signature_help, description = "Show signature help", opts = { buffer = bufnr } },
-    { "<leader>rn", vim.lsp.buf.rename, description = "Rename symbol", opts = { buffer = bufnr } },
+    { "<LocalLeader>rn", vim.lsp.buf.rename, description = "Rename symbol", opts = { buffer = bufnr } },
 
     {
       "[",
@@ -613,6 +595,7 @@ M.lsp_keymaps = function(client, bufnr)
     "<Leader>f",
     function() vim.lsp.buf.format({ async = true }) end,
     description = "Format document",
+    mode = { "n", "v" },
     opts = { buffer = bufnr },
   })
 

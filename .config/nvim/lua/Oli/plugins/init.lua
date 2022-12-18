@@ -141,55 +141,39 @@ return packer.startup({
     })
     ---------------------------------------------------------------------------- }}}
     -----------------------------------CODING----------------------------------- {{{
-    ---------------------------------COMPLETION--------------------------------- {{{
+    -----------------------------LSP AND COMPLETION----------------------------- {{{
     use({
-      "hrsh7th/nvim-cmp", -- Code completion menu
-      event = { "InsertEnter" },
+      "VonHeikemen/lsp-zero.nvim",
       requires = {
-        {
-          "L3MON4D3/LuaSnip", -- Code snippets
-          requires = {
-            {
-              "rafamadriz/friendly-snippets", -- Collection of code snippets across many languages
-            },
-            {
-              "danymat/neogen", -- Generate annotations for functions
-              config = function() require(config_namespace .. ".plugins.others").neogen() end,
-            },
-          },
-          config = function()
-            require(config_namespace .. ".plugins.luasnip").setup()
-            require(config_namespace .. ".plugins.luasnip").snippets()
-          end,
-        },
-        -- cmp sources --
-        { "saadparwaiz1/cmp_luasnip" },
+        -- LSP Support
+        { "neovim/nvim-lspconfig" },
+        { "williamboman/mason.nvim" },
+        { "williamboman/mason-lspconfig.nvim" },
+
+        -- Autocompletion
+        { "hrsh7th/nvim-cmp" },
         { "hrsh7th/cmp-buffer" },
-        { "hrsh7th/cmp-nvim-lua" },
-        { "hrsh7th/cmp-nvim-lsp" },
-        { "hrsh7th/cmp-nvim-lsp-signature-help" },
-        {
-          "zbirenbaum/copilot-cmp",
-          config = function() require("copilot_cmp").setup() end,
-        },
         { "hrsh7th/cmp-path" },
         { "hrsh7th/cmp-cmdline" },
+        { "saadparwaiz1/cmp_luasnip" },
+        { "hrsh7th/cmp-nvim-lsp" },
+        { "hrsh7th/cmp-nvim-lsp-signature-help" },
+        { "hrsh7th/cmp-nvim-lua" },
+        {
+          "zbirenbaum/copilot-cmp",
+          after = { "copilot.lua" },
+          config = function() require("copilot_cmp").setup() end,
+        },
+        { "onsails/lspkind.nvim" },
+
+        -- Snippets
+        {
+          "L3MON4D3/LuaSnip",
+          config = function() require(config_namespace .. ".plugins.luasnip").setup() end,
+        },
+        { "rafamadriz/friendly-snippets" },
       },
-      config = function() require(config_namespace .. ".plugins.completion") end,
-    })
-    ---------------------------------------------------------------------------- }}}
-    -------------------------------------LSP------------------------------------ {{{
-    use({
-      "williamboman/mason.nvim", -- Easily install and manage LSP servers, DAP servers, linters, and formatters
-      requires = {
-        "williamboman/mason-lspconfig.nvim", -- Install LSP servers from within Neovim
-        "neovim/nvim-lspconfig", -- Use Neovim's native LSP config
-        "kosayoda/nvim-lightbulb", -- VSCode style lightbulb if there is a code action available
-      },
-      config = function()
-        require(config_namespace .. ".plugins.others").mason()
-        require(config_namespace .. ".plugins.lsp")
-      end,
+      config = function() require(config_namespace .. ".plugins.lsp_zero") end,
     })
     use({
       "jayp0521/mason-null-ls.nvim", -- Automatically install null-ls servers
