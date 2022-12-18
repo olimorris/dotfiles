@@ -19,7 +19,7 @@ end
 dashboard.section.buttons.val = {
   button("l", "   Load session", '<cmd>lua require("persisted").load()<CR>'),
   button("n", "   New file", "<cmd>ene <BAR> startinsert <CR>"),
-  button("r", "   Recent files", "<cmd>Telescope frecency<CR>"),
+  button("r", "   Recent files", "<cmd>Telescope frecency workspace=CWD<CR>"),
   button("f", "   Find file", "<cmd>Telescope find_files hidden=true path_display=smart<CR>"),
   button("p", "   Projects", "<cmd>Telescope projects<CR>"),
   button("u", "   Update plugins", "<cmd>lua om.PackerSync()<CR>"), -- Packer sync

@@ -407,7 +407,7 @@ M.default_keymaps = function()
         },
         {
           "<Leader><Leader>",
-          "<cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
+          "<cmd>lua require('telescope').extensions.frecency.frecency({ workspace = 'CWD' })<CR>",
           description = "Find recent files",
         },
       },
