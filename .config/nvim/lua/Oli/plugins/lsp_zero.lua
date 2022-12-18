@@ -73,8 +73,26 @@ local cmp_config = lsp.defaults.cmp_config({
 })
 
 cmp.setup(cmp_config)
-cmp.setup.cmdline(":", vim.tbl_deep_extend("force", cmp_config, { sources = { { name = "cmdline" } } }))
-cmp.setup.cmdline("/", vim.tbl_deep_extend("force", cmp_config, { sources = { { name = "buffer" } } }))
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = "path" },
+  }, {
+    {
+      name = "cmdline",
+      option = {
+        ignore_cmds = { "Man", "!" },
+      },
+    },
+  }),
+})
+cmp.setup.cmdline("/", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = "buffer" },
+  },
+})
+
 
 if legendary_installed then legendary.keymaps(require(config_namespace .. ".core.keymaps").completion_keymaps()) end
 ---------------------------------------------------------------------------- }}}
