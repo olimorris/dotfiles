@@ -189,11 +189,6 @@ return packer.startup({
       after = "mason.nvim",
       config = function() require(config_namespace .. ".plugins.others").fidget() end,
     })
-    use({
-      "DNLHC/glance.nvim", -- Preview LSP messages in a floating window
-      after = { "mason.nvim", "onedarkpro" },
-      config = function() require(config_namespace .. ".plugins.others").glance() end,
-    })
     ---------------------------------------------------------------------------- }}}
     ---------------------------------TREESITTER--------------------------------- {{{
     use({

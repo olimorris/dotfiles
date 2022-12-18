@@ -33,16 +33,21 @@ telescope.setup({
     selection_caret = "  ",
     color_devicons = true,
     path_display = { "smart" },
+    dynamic_preview_title = true,
 
     sorting_strategy = "ascending",
     layout_strategy = "horizontal",
     layout_config = {
       horizontal = {
-        preview_width = 0.6,
+        preview_width = 0.55,
         prompt_position = "top",
+        width = 0.9,
       },
-      width = 0.9,
-      preview_cutoff = 50,
+      center = {
+        anchor =  "N",
+        width  = 0.9,
+        preview_cutoff = 10,
+      }
     },
 
     -- Searching
@@ -65,10 +70,6 @@ telescope.setup({
       "dotbot",
     },
     file_sorter = require("telescope.sorters").get_fuzzy_file,
-    generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
-    file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-    grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-    qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
 
     -- Mappings
     mappings = {

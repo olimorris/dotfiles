@@ -545,25 +545,16 @@ M.lsp_keymaps = function(client, bufnr)
       }),
       description = "Find diagnostics",
     },
-    {
-      "gi",
-      "<cmd>Glance implementations<CR>",
-      description = "Go to implementation",
-    },
-    {
-      "gt",
-      "<cmd>Glance type_definitions<CR>",
-      description = "Go to type definition",
-    },
-    {
-      "gd",
-      "<cmd>Glance definitions<CR>",
-      description = "Go to definition",
-    },
+    { "gd", vim.lsp.buf.definition, description = "Go to definition", opts = { buffer = bufnr } },
+    { "gi", vim.lsp.buf.implementation, description = "Go to implementation", opts = { buffer = bufnr } },
+    { "gt", vim.lsp.buf.type_definition, description = "Go to type definition", opts = { buffer = bufnr } },
     {
       "gr",
-      "<cmd>Glance references<CR>",
+      t.lazy_required_fn("telescope.builtin", "lsp_references", {
+        layout_strategy = "center",
+      }),
       description = "Find references",
+      opts = { buffer = bufnr },
     },
     {
       "gl",
@@ -593,9 +584,9 @@ M.lsp_keymaps = function(client, bufnr)
 
   table.insert(keymaps, {
     "<Leader>f",
-    function() vim.lsp.buf.format({ async = true }) end,
+    ":LspZeroFormat<CR>",
     description = "Format document",
-    mode = { "n", "v" },
+    mode = { "n", "i", "v" },
     opts = { buffer = bufnr },
   })
 
