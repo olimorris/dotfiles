@@ -62,7 +62,7 @@ onedarkpro.setup({
     TabLineSel = { fg = "${bg}", bg = "${purple}" },
 
     -- Treesitter plugin
-    ["@text.todo.checked"] = { fg = "${bg}", bg = "${purple}"},
+    ["@text.todo.checked"] = { fg = "${bg}", bg = "${purple}" },
 
     -- Aerial plugin
     AerialClass = { fg = "${purple}", style = "bold,italic" },
