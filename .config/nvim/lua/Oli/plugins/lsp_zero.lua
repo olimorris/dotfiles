@@ -3,6 +3,17 @@ local legendary_installed, legendary = om.safe_require("legendary", { silent = t
 if not ok or not legendary_installed then return end
 -------------------------------------LSP------------------------------------ {{{
 lsp.preset("lsp-compe")
+
+lsp.set_preferences({
+  set_lsp_keymaps = false,
+  sign_icons = {
+    error = " ",
+    warn = " ",
+    hint = " ",
+    info = " ",
+  },
+})
+
 lsp.ensure_installed({
   "bashls",
   "cssls",
@@ -19,16 +30,6 @@ lsp.ensure_installed({
   "yamlls",
 })
 
-lsp.set_preferences({
-  set_lsp_keymaps = false,
-  sign_icons = {
-    error = " ",
-    warn = " ",
-    hint = " ",
-    info = " ",
-  },
-})
-
 lsp.nvim_workspace()
 
 lsp.on_attach(function(client, bufnr)
@@ -41,7 +42,6 @@ end)
 
 lsp.setup()
 
--- Comes after setup
 vim.diagnostic.config({
   severity_sort = true,
   signs = true,
@@ -73,6 +73,7 @@ local cmp_config = lsp.defaults.cmp_config({
 })
 
 cmp.setup(cmp_config)
+
 cmp.setup.cmdline(":", {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
@@ -86,13 +87,13 @@ cmp.setup.cmdline(":", {
     },
   }),
 })
+
 cmp.setup.cmdline("/", {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
     { name = "buffer" },
   },
 })
-
 
 if legendary_installed then legendary.keymaps(require(config_namespace .. ".core.keymaps").completion_keymaps()) end
 ---------------------------------------------------------------------------- }}}
