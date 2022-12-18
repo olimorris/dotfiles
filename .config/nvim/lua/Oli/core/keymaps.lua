@@ -380,17 +380,17 @@ M.default_keymaps = function()
       icon = "",
       keymaps = {
         {
-          "ff",
+          "<C-f>",
           t.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
           description = "Find files",
         },
-        { "fb", t.lazy_required_fn("telescope.builtin", "buffers"), description = "Find open buffers" },
-        { "fp", "<cmd>Telescope projects<CR>", description = "Find projects" },
-        {
-          "<C-f>",
-          t.lazy_required_fn("telescope.builtin", "current_buffer_fuzzy_find"),
-          description = "Find in buffers",
-        },
+        -- { "fb", t.lazy_required_fn("telescope.builtin", "buffers"), description = "Find open buffers" },
+        -- { "fp", "<cmd>Telescope projects<CR>", description = "Find projects" },
+        -- {
+        --   "<C-f>",
+        --   t.lazy_required_fn("telescope.builtin", "current_buffer_fuzzy_find"),
+        --   description = "Find in buffers",
+        -- },
         {
           "<C-g>",
           t.lazy_required_fn(
