@@ -2,9 +2,8 @@ local ok, lsp = om.safe_require("lsp-zero")
 local legendary_installed, legendary = om.safe_require("legendary", { silent = true })
 if not ok or not legendary_installed then return end
 -------------------------------------LSP------------------------------------ {{{
-om.lsp = {}
-
-om.lsp.servers = {
+lsp.preset("lsp-compe")
+lsp.ensure_installed({
   "bashls",
   "cssls",
   "dockerls",
@@ -18,10 +17,7 @@ om.lsp.servers = {
   "tsserver",
   "vuels",
   "yamlls",
-}
-
-lsp.preset("lsp-compe")
-lsp.ensure_installed(om.lsp.servers)
+})
 
 lsp.set_preferences({
   set_lsp_keymaps = false,
