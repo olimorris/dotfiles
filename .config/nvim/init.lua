@@ -18,4 +18,4 @@ _G.config_namespace = "Oli"
 R(config_namespace .. ".core.globals")
 R(config_namespace .. ".core.options")
 R(config_namespace .. ".core.functions")
-R(config_namespace .. ".plugins")
+-- R(config_namespace .. ".plugins")
