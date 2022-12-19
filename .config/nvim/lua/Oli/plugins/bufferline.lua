@@ -6,6 +6,8 @@ local conditions = require("heirline.conditions")
 
 local buffers = {}
 
+table.unpack = table.unpack or unpack -- 5.1 compatibility
+
 ---Get the names of all current listed buffers
 ---@return table
 local function get_current_filenames()
