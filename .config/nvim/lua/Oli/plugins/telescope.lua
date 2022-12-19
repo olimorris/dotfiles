@@ -44,10 +44,17 @@ telescope.setup({
         width = 0.9,
       },
       center = {
-        anchor =  "N",
-        width  = 0.9,
+        anchor = "N",
+        width = 0.9,
         preview_cutoff = 10,
-      }
+      },
+      vertical = {
+        height = 0.9,
+        preview_height = 0.4,
+        width = 0.9,
+        preview_cutoff = 10,
+        prompt_position = "top",
+      },
     },
 
     -- Searching
