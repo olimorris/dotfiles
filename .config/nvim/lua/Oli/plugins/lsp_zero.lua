@@ -63,11 +63,10 @@ local cmp_config = lsp.defaults.cmp_config({
     format = function(...) return require("lspkind").cmp_format({ mode = "symbol_text" })(...) end,
   },
   sources = {
-    { name = "luasnip" },
-    { name = "nvim_lsp" },
-    { name = "nvim_lsp_signature_help" },
+    -- path, buffer and luasnip are already setup
+    { name = "nvim_lsp", keyword_length = 3, max_item_count = 5 },
     { name = "nvim_lua" },
-    { name = "path" },
+    { name = "nvim_lsp_signature_help" },
   },
 })
 
