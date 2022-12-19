@@ -1,7 +1,9 @@
 local ok, onedarkpro = om.safe_require("onedarkpro")
 if not ok then return end
 
-local color = require("onedarkpro.lib.color")
+local Color = require("onedarkpro.lib.color")
+local dark_colors = onedarkpro.get_colors("onedark")
+local light_colors = onedarkpro.get_colors("onelight")
 
 onedarkpro.setup({
   cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
@@ -35,10 +37,11 @@ onedarkpro.setup({
       indentline = "#3c414d",
       buffer_color = "#939aa3",
       statusline_bg = "#2e323b", -- gray
-      telescope_prompt = "#2e323a",
-      telescope_results = "#21252d",
-      copilot = color.darken(onedarkpro.get_colors("onedark").gray, 0.85),
-      breadcrumbs = color.darken(onedarkpro.get_colors("onedark").gray, 0.85),
+      telescope_prompt = Color.from_hex(dark_colors.bg):darker(2):to_css(),
+      telescope_results = Color.from_hex(dark_colors.bg):darker(4):to_css(),
+      telescope_preview = Color.from_hex(dark_colors.bg):darker(6):to_css(),
+      copilot = Color.from_hex(dark_colors.gray):darker(8):to_css(),
+      breadcrumbs = Color.from_hex(dark_colors.gray):darker(10):to_css(),
     },
     light = {
       vim = "#029632", -- green
@@ -46,10 +49,11 @@ onedarkpro.setup({
       scrollbar = "#eeeeee",
       buffer_color = "#6a6a6a",
       statusline_bg = "#f0f0f0", -- gray
-      telescope_prompt = "#f5f5f5",
-      telescope_results = "#eeeeee",
-      copilot = color.lighten(onedarkpro.get_colors("onelight").gray, 0.7),
-      breadcrumbs = color.lighten(onedarkpro.get_colors("onelight").gray, 0.6),
+      telescope_prompt = Color.from_hex(light_colors.bg):darker(2):to_css(),
+      telescope_results = Color.from_hex(light_colors.bg):darker(5):to_css(),
+      telescope_preview = Color.from_hex(light_colors.bg):darker(7):to_css(),
+      copilot = Color.from_hex(light_colors.gray):lighter(8):to_css(),
+      breadcrumbs = Color.from_hex(light_colors.gray):lighter(10):to_css(),
     },
   },
   highlights = {
@@ -177,6 +181,9 @@ onedarkpro.setup({
     TelescopeMatching = { fg = "${blue}" },
     TelescopeNormal = { bg = "${telescope_results}" },
     TelescopeSelection = { bg = "${telescope_prompt}" },
+
+    TelescopePreviewNormal = { bg = "${telescope_preview}" },
+    TelescopePreviewBorder = { fg = "${telescope_preview}", bg = "${telescope_preview}" },
 
     -- Todo Comments
     TodoTest = { fg = "${purple}" },

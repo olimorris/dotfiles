@@ -22,7 +22,7 @@ dashboard.section.buttons.val = {
   button("r", "   Recent files", "<cmd>Telescope frecency workspace=CWD<CR>"),
   button("f", "   Find file", "<cmd>Telescope find_files hidden=true path_display=smart<CR>"),
   button("p", "   Projects", "<cmd>Telescope projects<CR>"),
-  button("u", "   Update plugins", "<cmd>lua om.PackerSync()<CR>"), -- Packer sync
+  button("u", "   Update plugins", "<cmd>lua om.PackerSync()<CR>"),
   button("q", "   Quit Neovim", "<cmd>qa!<CR>"),
 }
 dashboard.section.buttons.opts = {
