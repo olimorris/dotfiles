@@ -24,7 +24,7 @@ vim.bo.tabstop = 4 -- Number of spaces in a tab
 -- vim.bo.wrapmargin = 1
 --------------------------------------------------------------------------- }}}
 ---------------------------------VIM OPTIONS-------------------------------- {{{
-vim.o.background = "dark"
+vim.opt.background = "dark"
 vim.opt.cmdheight = 0 -- Hide the command bar
 vim.opt.clipboard = { "unnamedplus" } -- Use the system clipboard
 vim.opt.completeopt = { "menuone", "noselect" } -- Completion opions for code completion
@@ -46,7 +46,7 @@ vim.opt.ignorecase = true -- Ignore case
 vim.opt.laststatus = 3 -- Use global statusline
 vim.opt.modelines = 1 -- Only use folding settings for this file
 vim.opt.mouse = "a" -- Use the mouse in all modes
-vim.o.sessionoptions = "buffers,curdir,folds,globals,tabpages,winpos,winsize" -- Session options to store in the session
+vim.opt.sessionoptions = "buffers,curdir,folds,globals,tabpages,winpos,winsize" -- Session options to store in the session
 vim.opt.scrolloff = 5 -- Set the cursor 5 lines down instead of directly at the top of the file
 --[[
   NOTE: don't store marks as they are currently broken in Neovim!
@@ -69,7 +69,7 @@ vim.opt.sidescrolloff = 8 -- The minimal number of columns to keep to the left a
 vim.opt.smartcase = true -- Don't ignore case with capitals
 vim.opt.splitbelow = true -- Put new windows below current
 vim.opt.splitright = true -- Put new windows right of current
-vim.o.termguicolors = true -- True color support
+vim.opt.termguicolors = true -- True color support
 vim.opt.textwidth = 120 -- Total allowed width on the screen
 vim.opt.timeout = true -- This option and 'timeoutlen' determine the behavior when part of a mapped key sequence has been received. This is on by default but being explicit!
 vim.opt.timeoutlen = 500 -- Time in milliseconds to wait for a mapped sequence to complete.
