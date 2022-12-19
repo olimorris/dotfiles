@@ -534,13 +534,7 @@ M.lsp_keymaps = function(client, bufnr)
     {
       "gf",
       t.lazy_required_fn("telescope.builtin", "diagnostics", {
-        layout_strategy = "vertical",
-        layout_config = {
-          vertical = {
-            results_height = 0.5,
-            prompt_position = "top",
-          },
-        },
+        layout_strategy = "center",
         bufnr = 0,
       }),
       description = "Find diagnostics",
@@ -586,7 +580,7 @@ M.lsp_keymaps = function(client, bufnr)
     "<Leader>f",
     ":LspZeroFormat<CR>",
     description = "Format document",
-    mode = { "n", "i", "v" },
+    mode = { "n", "v" },
     opts = { buffer = bufnr },
   })
 
