@@ -63,12 +63,11 @@ local cmp_config = lsp.defaults.cmp_config({
     format = function(...) return require("lspkind").cmp_format({ mode = "symbol_text" })(...) end,
   },
   sources = {
-    { name = "luasnip", priority = 100 },
-    { name = "nvim_lsp", priority = 90 },
+    { name = "luasnip" },
+    { name = "nvim_lsp" },
     { name = "nvim_lsp_signature_help" },
-    { name = "nvim_lua", priority = 90 },
-    { name = "copilot", priority = 80 },
-    { name = "path", priority = 5 },
+    { name = "nvim_lua" },
+    { name = "path" },
   },
 })
 

@@ -159,11 +159,6 @@ return packer.startup({
         { "hrsh7th/cmp-nvim-lsp" },
         { "hrsh7th/cmp-nvim-lsp-signature-help" },
         { "hrsh7th/cmp-nvim-lua" },
-        {
-          "zbirenbaum/copilot-cmp",
-          after = { "copilot.lua" },
-          config = function() require("copilot_cmp").setup() end,
-        },
         { "onsails/lspkind.nvim" },
 
         -- Snippets
@@ -281,6 +276,7 @@ return packer.startup({
     use({
       "jackmort/chatgpt.nvim",
       config = function() require(config_namespace .. ".plugins.others").chatgpt() end,
+      cmd = { "ChatGPT" },
       requires = {
         "MunifTanjim/nui.nvim",
         "nvim-lua/plenary.nvim",
