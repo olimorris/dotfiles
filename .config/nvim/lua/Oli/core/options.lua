@@ -13,6 +13,13 @@ end
 if vim.fn.filereadable(os.getenv("HOME_DIR") .. ".asdf/shims/python") then
   vim.g.python3_host_prog = os.getenv("HOME_DIR") .. ".asdf/shims/python"
 end
+
+---Netrw
+---Source: https://gist.github.com/VonHeikemen/fa6f7c7f114bc36326cda2c964cb52c7
+vim.g.netrw_banner = 0 -- Do not show the banner
+vim.g.netrw_localcopydircmd = "cp -r" -- A better copy command
+vim.g.netrw_keepdir = 0 -- Keep the current directory and the browsing directory synced
+vim.g.netrw_winsize = 30 -- Width of the netrw window
 --------------------------------------------------------------------------- }}}
 -------------------------------BUFFER OPTIONS------------------------------- {{{
 vim.bo.autoindent = true
@@ -100,29 +107,4 @@ vim.wo.number = true -- Set the absolute number
 vim.wo.relativenumber = true -- Set the relative number
 vim.wo.signcolumn = "yes" -- Show information next to the line numbers
 vim.wo.wrap = false -- Do not display text over multiple lines
----------------------------------------------------------------------------- }}}
---------------------------DISABLE BUILT IN PLUGINS-------------------------- {{{
-local disabled_plugins = {
-  "2html_plugin",
-  "getscript",
-  "getscriptPlugin",
-  "gzip",
-  "logipat",
-  "netrw",
-  "netrwPlugin",
-  "netrwSettings",
-  "netrwFileHandlers",
-  "matchit",
-  "tar",
-  "tarPlugin",
-  "rrhelper",
-  "spellfile_plugin",
-  "vimball",
-  "vimballPlugin",
-  "zip",
-  "zipPlugin",
-}
-for _, plugin in pairs(disabled_plugins) do
-  vim.g["loaded_" .. plugin] = 1
-end
 ---------------------------------------------------------------------------- }}}

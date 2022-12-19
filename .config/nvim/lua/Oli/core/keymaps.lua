@@ -45,6 +45,10 @@ M.default_keymaps = function()
     { "<C-y>", "<cmd>%y+<CR>", hide = true, description = "Copy buffer" },
     { "<C-s>", "<cmd>silent! write<CR>", hide = true, description = "Save buffer", mode = { "n", "i" } },
 
+    -- Netrw
+    { "<C-n>", "<cmd>silent Lexplore<CR>", description = "Open Netrw in cwd" },
+    { "<C-z>", "<cmd>silent Lexplore %:p:h<CR>", description = "Open Netrw in dir of current file" },
+
     -- Editing words
     { "<LocalLeader>,", "<cmd>norm A,<CR>", hide = true, description = "Append comma" },
     { "<LocalLeader>;", "<cmd>norm A;<CR>", hide = true, description = "Append semicolon" },
@@ -266,10 +270,6 @@ M.default_keymaps = function()
 
     -- Hop
     { "s", "<cmd>lua require'hop'.hint_char1()<CR>", hide = true, description = "Hop", mode = { "n", "o" } },
-
-    -- File Explorer
-    { "<C-n>", "<cmd>Neotree toggle<CR>", hide = true, description = "Neotree: Toggle" },
-    { "<C-z>", "<cmd>Neotree reveal=true toggle<CR>", hide = true, description = "Neotree: Reveal File" },
 
     -- Move.nvim
     {

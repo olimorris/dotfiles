@@ -43,15 +43,6 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.gitsigns") end,
     })
     use({
-      "nvim-neo-tree/neo-tree.nvim",
-      requires = {
-        { "nvim-lua/plenary.nvim" },
-        { "kyazdani42/nvim-web-devicons" },
-        { "MunifTanjim/nui.nvim" },
-      },
-      config = function() require(config_namespace .. ".plugins.file_explorer") end,
-    })
-    use({
       "NvChad/nvim-colorizer.lua", -- Highlight hex and rgb colors within Neovim
       cmd = { "Colorizer*" },
       config = function() require(config_namespace .. ".plugins.others").colorizer() end,

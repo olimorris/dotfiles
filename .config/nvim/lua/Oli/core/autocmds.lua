@@ -123,8 +123,35 @@ function M.default_autocmds()
         opts = { pattern = "*" },
       },
     },
+    {
+      name = "netrw_mappings",
+      {
+        "Filetype",
+        function()
+          -- Source: https://gist.github.com/VonHeikemen/fa6f7c7f114bc36326cda2c964cb52c7
+          vim.api.nvim_exec([[
+            " Go to file and close Netrw window
+            nmap <buffer> L <CR>:Lexplore<CR>
+            " Go back in history
+            nmap <buffer> H u
+            " Go up a directory
+            nmap <buffer> h -^
+            " Go down a directory / open file
+            nmap <buffer> l <CR>
+            " Toggle dotfiles
+            nmap <buffer> . gh
+            " Create a file
+            nmap <buffer> ff %:w<CR>:buffer #<CR>
+            " Rename a file
+            nmap <buffer> fe R
+          ]], true)
+        end,
+        opts = { pattern = "netrw" },
+      },
+    },
   }
 end
+
 ---------------------------------------------------------------------------- }}}
 --------------------------------LSP AUTOCMDS-------------------------------- {{{
 function M.lsp_autocmds(client, bufnr)
@@ -149,5 +176,6 @@ function M.lsp_autocmds(client, bufnr)
 
   return autocmds
 end
+
 ---------------------------------------------------------------------------- }}}
 return M
