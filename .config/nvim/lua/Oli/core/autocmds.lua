@@ -130,6 +130,9 @@ function M.default_autocmds()
         function()
           -- Source: https://gist.github.com/VonHeikemen/fa6f7c7f114bc36326cda2c964cb52c7
           vim.api.nvim_exec([[
+            " Stop netrw from opening a new window when opening a file
+            setlocal bufhidden=wipe
+
             " Go to file and close Netrw window
             nmap <buffer> L <CR>:Lexplore<CR>
             " Go back in history
@@ -141,7 +144,7 @@ function M.default_autocmds()
             " Toggle dotfiles
             nmap <buffer> . gh
             " Create a file
-            nmap <buffer> ff %:w<CR>:buffer #<CR>
+            nmap <buffer> A %:w<CR>:buffer #<CR>
             " Rename a file
             nmap <buffer> fe R
           ]], true)
