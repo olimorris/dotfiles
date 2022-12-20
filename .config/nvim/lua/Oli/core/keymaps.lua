@@ -465,7 +465,7 @@ M.default_keymaps = function()
     },
 
     -- Undotree plugin
-    { "<LocalLeader>u", "<cmd>UndotreeToggle<CR>", description = "Undotree toggle" },
+    { "<LocalLeader>u", "<cmd>Telescope undo<CR>", description = "Telescope undo" },
 
     -- Yabs plugin
     {
@@ -500,11 +500,11 @@ M.completion_keymaps = function()
     },
     {
       "<Up>",
-      description = "Navigate to previous item on the list",
+      description = "Go to previous item on the list",
     },
     {
       "<Down>",
-      description = "Navigate to next item on the list",
+      description = "Go to next item on the list",
     },
     {
       "<Ctrl-e>",
@@ -520,11 +520,11 @@ M.completion_keymaps = function()
     },
     {
       "<Tab>",
-      description = "Enable completion when inside a word OR navigate to next item",
+      description = "Enable completion when inside a word OR go to next item",
     },
     {
       "<S-Tab>",
-      description = "Navigate to previous item",
+      description = "Go to previous item",
     },
   }
 

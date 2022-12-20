@@ -91,6 +91,13 @@ return packer.startup({
           config = function() require("telescope").load_extension("harpoon") end,
         },
         {
+          "debugloop/telescope-undo.nvim",
+          requires = { "nvim-telescope/telescope.nvim" },
+          config = function()
+            require("telescope").load_extension("undo")
+          end,
+        },
+        {
           "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
           after = "telescope.nvim",
           requires = {
@@ -302,11 +309,6 @@ return packer.startup({
     use({
       "kevinhwang91/nvim-bqf", -- Better quickfix window,
       ft = "qf",
-    })
-    use({
-      "mbbill/undotree", -- Visually see your undos
-      cmd = "UndotreeToggle",
-      config = function() require(config_namespace .. ".plugins.others").undotree() end,
     })
     use({
       "nathom/tmux.nvim", -- Navigate Tmux panes inside of neovim

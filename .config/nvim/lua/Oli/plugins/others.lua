@@ -490,14 +490,6 @@ M.toggleterm = function()
   })
 end
 
-M.undotree = function()
-  vim.g.undotree_SplitWidth = 35
-  vim.g.undotree_DiffpanelHeight = 7
-  vim.g.undotree_WindowLayout = 2 -- Tree on the left, diff on the bottom
-  vim.g.undotree_TreeNodeShape = "◉"
-  vim.g.undotree_SetFocusWhenToggle = 1
-end
-
 M.yabs = function()
   local ok, yabs = om.safe_require("yabs")
   if not ok then return end
