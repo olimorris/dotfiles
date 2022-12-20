@@ -147,19 +147,6 @@ function M.default_commands()
         },
       },
     },
-    -- FS
-    {
-      ":FSToggle",
-      {
-        n = "<cmd>FSToggle<CR>",
-        v = ":'<,'>FSToggle<CR>",
-      },
-      description = "FS: Toggle flow state",
-    },
-    {
-      ":FSRead",
-      description = "FS: Read file",
-    },
     -- Git
     {
       "GitBranchList",

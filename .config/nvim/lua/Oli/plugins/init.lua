@@ -78,9 +78,6 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.others").dressing() end,
     })
     use({
-      "nullchilly/fsread.nvim", -- Flow state reading in Neovim
-    })
-    use({
       "nvim-telescope/telescope.nvim", -- Awesome fuzzy finder for everything
       requires = {
         {
