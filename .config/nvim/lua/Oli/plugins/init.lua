@@ -86,6 +86,11 @@ return packer.startup({
           config = function() require("telescope").load_extension("fzf") end,
         },
         {
+          "ThePrimeagen/harpoon", -- Navigate between marked files
+          after = "telescope.nvim",
+          config = function() require("telescope").load_extension("harpoon") end,
+        },
+        {
           "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
           after = "telescope.nvim",
           requires = {

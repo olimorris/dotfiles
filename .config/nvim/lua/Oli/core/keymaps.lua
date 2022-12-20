@@ -268,6 +268,21 @@ M.default_keymaps = function()
       },
     },
 
+    -- Harpoon
+    {
+      itemgroup = "Harpoon",
+      icon = "異",
+      description = "Harpoon functionality",
+      keymaps = {
+        { "<C-e>", "<cmd>Telescope harpoon marks<CR>", description = "Show marks" },
+        { "<Leader>a", "<cmd>lua require('harpoon.mark').add_file()<CR>", description = "Add file" },
+        { "<Leader>1", "<cmd>lua require('harpoon.ui').nav_file(1) <CR>", description = "Go to file 1" },
+        { "<Leader>2", "<cmd>lua require('harpoon.ui').nav_file(2) <CR>", description = "Go to file 2" },
+        { "<Leader>3", "<cmd>lua require('harpoon.ui').nav_file(3) <CR>", description = "Go to file 3" },
+        { "<Leader>4", "<cmd>lua require('harpoon.ui').nav_file(4) <CR>", description = "Go to file 4" },
+      }
+    },
+
     -- Hop
     { "s", "<cmd>lua require'hop'.hint_char1()<CR>", hide = true, description = "Hop", mode = { "n", "o" } },
 
