@@ -400,20 +400,6 @@ M.refactoring = function()
   require("telescope").load_extension("refactoring")
 end
 
-M.scrollbar = function()
-  local ok, satellite = om.safe_require("satellite")
-  if not ok then return end
-
-  satellite.setup({
-    width = 2,
-    winblend = 0,
-    excluded_filetypes = {
-      "aerial",
-      "neo-tree",
-    },
-  })
-end
-
 M.ssr = function()
   local ok, ssr = om.safe_require("ssr")
   if not ok then return end
