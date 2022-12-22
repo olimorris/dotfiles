@@ -9,11 +9,9 @@ local silent = { noremap = true, silent = true }
         2) Local Leader - Used for commands related to window or filetype/buffer options
         3) Leader - Used for commands that are global or span Neovim
     * I use legendary.nvim to set all of my mapping and display them in a floating window
+
+  N.B. Leader keys are set in the options.lua file. This is so that lazy.nvim doesn't corrupt mappings
 ]]
----------------------------------------------------------------------------- }}}
----------------------------------LEADER KEYS-------------------------------- {{{
-vim.g.mapleader = " " -- space is the leader!
-vim.g.maplocalleader = "\\"
 ---------------------------------------------------------------------------- }}}
 -------------------------------DEFAULT KEYMAPS------------------------------ {{{
 M.default_keymaps = function()
@@ -280,7 +278,7 @@ M.default_keymaps = function()
         { "<Leader>2", "<cmd>lua require('harpoon.ui').nav_file(2) <CR>", description = "Go to file 2" },
         { "<Leader>3", "<cmd>lua require('harpoon.ui').nav_file(3) <CR>", description = "Go to file 3" },
         { "<Leader>4", "<cmd>lua require('harpoon.ui').nav_file(4) <CR>", description = "Go to file 4" },
-      }
+      },
     },
 
     -- Hop
@@ -429,7 +427,7 @@ M.default_keymaps = function()
     },
 
     -- Todo comments plugin
-    { "<Leader>c", "<cmd>TodoTelescope<CR>", description = "Todo comments" },
+    { "<Leader>t", "<cmd>TodoTelescope<CR>", description = "Todo comments" },
 
     -- Toggleterm plugin
     { "<C-x>", "<cmd>ToggleTerm<CR>", description = "Toggleterm", mode = { "n", "t" } },

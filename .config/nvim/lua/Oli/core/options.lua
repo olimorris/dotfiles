@@ -4,6 +4,9 @@ Homedir = os.getenv("HOME")
 Sessiondir = vim.fn.stdpath("data") .. "/sessions"
 --------------------------------------------------------------------------- }}}
 -------------------------------GLOBAL OPTIONS------------------------------- {{{
+vim.g.mapleader = " " -- space is the leader!
+vim.g.maplocalleader = "\\"
+
 vim.g.neoterm_autoinsert = 0 -- Do not start terminal in insert mode
 vim.g.neoterm_autoscroll = 1 -- Autoscroll the terminal
 vim.g.loaded_perl_provider = 0 -- Do not load Perl
