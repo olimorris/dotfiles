@@ -1,10 +1,6 @@
 local ok, onedarkpro = om.safe_require("onedarkpro")
 if not ok then return end
 
-local Color = require("onedarkpro.lib.color")
-local dark_colors = onedarkpro.get_colors("onedark")
-local light_colors = onedarkpro.get_colors("onelight")
-
 onedarkpro.setup({
   cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
   plugins = {
@@ -37,11 +33,11 @@ onedarkpro.setup({
       indentline = "#3c414d",
       buffer_color = "#939aa3",
       statusline_bg = "#2e323b", -- gray
-      telescope_prompt = Color.from_hex(dark_colors.bg):darker(2):to_css(),
-      telescope_results = Color.from_hex(dark_colors.bg):darker(4):to_css(),
-      telescope_preview = Color.from_hex(dark_colors.bg):darker(6):to_css(),
-      copilot = Color.from_hex(dark_colors.gray):darker(8):to_css(),
-      breadcrumbs = Color.from_hex(dark_colors.gray):darker(10):to_css(),
+      telescope_prompt = "require('onedarkpro.helpers').darken('onedark', 'bg', 1)",
+      telescope_results = "require('onedarkpro.helpers').darken('onedark', 'bg', 4)",
+      telescope_preview = "require('onedarkpro.helpers').darken('onedark', 'bg', 6)",
+      copilot = "require('onedarkpro.helpers').darken('onedark', 'gray', 8)",
+      breadcrumbs = "require('onedarkpro.helpers').darken('onedark', 'gray', 10)",
     },
     light = {
       vim = "#029632", -- green
@@ -49,11 +45,11 @@ onedarkpro.setup({
       scrollbar = "#eeeeee",
       buffer_color = "#6a6a6a",
       statusline_bg = "#f0f0f0", -- gray
-      telescope_prompt = Color.from_hex(light_colors.bg):darker(2):to_css(),
-      telescope_results = Color.from_hex(light_colors.bg):darker(5):to_css(),
-      telescope_preview = Color.from_hex(light_colors.bg):darker(7):to_css(),
-      copilot = Color.from_hex(light_colors.gray):lighter(8):to_css(),
-      breadcrumbs = Color.from_hex(light_colors.gray):lighter(10):to_css(),
+      telescope_prompt = "require('onedarkpro.helpers').darken('onelight', 'bg', 2)",
+      telescope_results = "require('onedarkpro.helpers').darken('onelight', 'bg', 5)",
+      telescope_preview = "require('onedarkpro.helpers').darken('onelight', 'bg', 7)",
+      copilot = "require('onedarkpro.helpers').lighten('onelight', 'gray', 8)",
+      breadcrumbs = "require('onedarkpro.helpers').lighten('onelight', 'gray', 8)",
     },
   },
   highlights = {
@@ -136,9 +132,6 @@ onedarkpro.setup({
     -- Luasnip
     LuaSnipChoiceNode = { fg = "${yellow}" },
     LuaSnipInsertNode = { fg = "${yellow}" },
-
-    -- Navic
-    NavicText = { fg = "${gray}", style = "italic" },
 
     -- Neotest
     NeotestAdapterName = { fg = "${purple}", style = "bold" },
