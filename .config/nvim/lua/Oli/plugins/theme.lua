@@ -29,6 +29,8 @@ onedarkpro.setup({
     dark = {
       vim = "#81b766", -- green
       comment = "#5c6370", -- Revert back to original comment colors
+      cmp_menu = "require('onedarkpro.helpers').darken('onedark', 'bg', 5)",
+      cmp_cursorline = "require('onedarkpro.helpers').darken('onedark', 'bg', 8)",
       cursorline = "#2e323b",
       indentline = "#3c414d",
       buffer_color = "#939aa3",
@@ -41,6 +43,8 @@ onedarkpro.setup({
     },
     light = {
       vim = "#029632", -- green
+      cmp_menu = "require('onedarkpro.helpers').darken('onelight', 'bg', 4)",
+      cmp_cursorline = "require('onedarkpro.helpers').darken('onelight', 'bg', 8)",
       comment = "#bebebe", -- Revert back to original comment colors
       scrollbar = "#eeeeee",
       buffer_color = "#6a6a6a",
@@ -55,6 +59,8 @@ onedarkpro.setup({
   highlights = {
     CursorLineNr = { bg = "${cursorline}", fg = "${purple}", style = "bold" },
     DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
+    CmpMenu = { bg = "${cmp_menu}" },
+    CmpCursorLine = { bg = "${cmp_cursorline}" },
     MatchParen = { fg = "${cyan}" },
     ModeMsg = { link = "LineNr" }, -- Make command line text lighter
     Search = { bg = "${selection}", fg = "${yellow}", style = "underline" },

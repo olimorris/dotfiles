@@ -62,6 +62,12 @@ local cmp_config = lsp.defaults.cmp_config({
   formatting = {
     format = function(...) return require("lspkind").cmp_format({ mode = "symbol_text" })(...) end,
   },
+  window = {
+    bordered = {
+      border = "none",
+      winhighlight = "Normal:CmpMenu,FloatBorder:CmpMenu,CursorLine:CmpCursorLine,Search:None",
+    },
+  },
   sources = {
     { name = "luasnip", priority = 100, keyword_length = 2, max_item_count = 8 },
     { name = "nvim_lsp", priority = 90, keyword_length = 3, max_item_count = 8 },
