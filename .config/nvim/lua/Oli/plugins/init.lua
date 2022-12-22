@@ -142,6 +142,11 @@ return packer.startup({
       config = function() require(config_namespace .. ".plugins.others").nvim_surround() end,
     })
     use({
+      "danymat/neogen",
+      after = "nvim-treesitter",
+      config = function() require(config_namespace .. ".plugins.others").neogen() end,
+    })
+    use({
       "numToStr/Comment.nvim", -- Comment out lines with gcc
       after = "nvim-treesitter",
       config = function() require(config_namespace .. ".plugins.others").comment() end,
