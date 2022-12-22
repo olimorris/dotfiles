@@ -41,7 +41,7 @@ M.barbecue = function()
   if not ok then return end
 
   bbq.setup({
-    exclude_filetypes = { "toggleterm", "Glance" },
+    exclude_filetypes = { "netrw", "toggleterm" },
     symbols = {
       separator = "",
       ellipsis = "",

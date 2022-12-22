@@ -98,9 +98,7 @@ return packer.startup({
         {
           "debugloop/telescope-undo.nvim",
           requires = { "nvim-telescope/telescope.nvim" },
-          config = function()
-            require("telescope").load_extension("undo")
-          end,
+          config = function() require("telescope").load_extension("undo") end,
         },
         {
           "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
