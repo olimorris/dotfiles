@@ -4,6 +4,7 @@ function om.ChangeFiletype()
     if new_ft ~= nil then vim.bo.filetype = new_ft end
   end)
 end
+
 --------------------------------------------------------------------------- }}}
 --------------------------------GIT BRANCHES-------------------------------- {{{
 function om.ListBranches()
@@ -26,6 +27,7 @@ function om.ListBranches()
     end
   end)
 end
+
 --------------------------------------------------------------------------- }}}
 -------------------------------GIT REMOTE SYNC------------------------------ {{{
 function om.GitRemoteSync()
@@ -61,6 +63,7 @@ function om.GitRemoteSync()
 
   vim.schedule_wrap(update_git_status())
 end
+
 --------------------------------------------------------------------------- }}}
 --------------------------------GIT PUSH/PULL------------------------------- {{{
 local function GitPushPull(action, tense)
@@ -82,7 +85,9 @@ local function GitPushPull(action, tense)
 end
 
 function om.GitPull() GitPushPull("pull", "from") end
+
 function om.GitPush() GitPushPull("push", "to") end
+
 --------------------------------------------------------------------------- }}}
 -------------------------------MOVE TO BUFFER------------------------------- {{{
 function om.MoveToBuffer()
@@ -90,6 +95,7 @@ function om.MoveToBuffer()
     if bufnr ~= nil then pcall(vim.cmd, "b " .. bufnr) end
   end)
 end
+
 --------------------------------------------------------------------------- }}}
 -----------------------------------LAZYGIT---------------------------------- {{{
 function om.Lazygit()
@@ -120,45 +126,7 @@ function om.Lazygit()
     end,
   })
 end
---------------------------------------------------------------------------- }}}
------------------------------------PACKER----------------------------------- {{{
--- Maintain a custom command for Packer Syncing. This is useful for when we
--- have a fresh Neovim install and can't call on Legendary.nvim to run
--- custom commands.
-local snapshot_path = vim.fn.stdpath("cache") .. "/packer.nvim"
 
-vim.api.nvim_create_user_command("PackerInstall", function()
-  require(config_namespace .. ".plugins")
-  require("packer").sync()
-end, {})
-
-function om.PackerSync()
-  local snapshot = os.date("!%Y-%m-%d %H_%M_%S")
-  require(config_namespace .. ".plugins")
-  require("packer").snapshot(snapshot .. "_sync")
-  require("packer").sync()
-  require("packer").compile()
-end
-
--- Return a list of Packer snapshots
-function om.GetSnapshots()
-  local snapshots = vim.fn.glob(snapshot_path .. "/*", true, true)
-
-  for i, _ in ipairs(snapshots) do
-    snapshots[i] = snapshots[i]:gsub(snapshot_path .. "/", "")
-  end
-
-  return snapshots
-end
-
-vim.api.nvim_create_user_command("PackerRollback", function()
-  vim.ui.select(om.GetSnapshots(), { prompt = "Rollback to snapshot" }, function(choice)
-    if choice == nil then return end
-
-    require("packer").rollback(snapshot_path .. "/" .. choice)
-    vim.notify("Rollback to: " .. choice)
-  end)
-end, {})
 --------------------------------------------------------------------------- }}}
 ----------------------------------SNIPPETS---------------------------------- {{{
 function om.EditSnippet()
@@ -170,6 +138,7 @@ function om.EditSnippet()
     vim.cmd(":edit " .. path .. "/" .. choice .. ".json")
   end)
 end
+
 --------------------------------------------------------------------------- }}}
 -----------------------------TOGGLE LINE NUMBERS---------------------------- {{{
 function om.ToggleLineNumbers()
@@ -179,6 +148,7 @@ function om.ToggleLineNumbers()
     vim.wo.relativenumber = true
   end
 end
+
 --------------------------------------------------------------------------- }}}
 --------------------------------TOGGLE THEME-------------------------------- {{{
 function om.ToggleTheme(mode)
@@ -186,8 +156,11 @@ function om.ToggleTheme(mode)
 
   if vim.o.background == "dark" then
     vim.cmd([[colorscheme onelight]])
+    require(config_namespace .. ".plugins.statusline").setup()
   else
     vim.cmd([[colorscheme onedark]])
+    require(config_namespace .. ".plugins.statusline").setup()
   end
 end
+
 --------------------------------------------------------------------------- }}}

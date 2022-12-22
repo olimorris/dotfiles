@@ -88,16 +88,6 @@ function M.default_autocmds()
         },
       },
     },
-    --   {
-    --     { "User" },
-    --     function()
-    --       vim.notify("Packer compile complete", nil, { title = "Packer" })
-    --     end,
-    --     opts = {
-    --       pattern = { "PackerCompileDone" },
-    --     },
-    --   },
-    -- },
     -- Highlight text when yanked
     {
       name = "HighlightYankedText",
@@ -113,14 +103,6 @@ function M.default_autocmds()
         "User",
         ":setlocal wrap",
         opts = { pattern = "TelescopePreviewerLoaded" },
-      },
-    },
-    {
-      name = "ColorschemeAutocmds",
-      {
-        "ColorScheme",
-        function() require(config_namespace .. ".plugins.statusline").setup() end,
-        opts = { pattern = "*" },
       },
     },
   }

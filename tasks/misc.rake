@@ -226,9 +226,9 @@ namespace :update do
 
   desc 'Update Neovim plugins'
   task :neovim_plugins do
-    section 'Updating Neovim plugins'
-
-    run %( nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' )
+    # section 'Updating Neovim plugins'
+    #
+    # run %( nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' )
   end
 
   desc 'Update Vim plugins'

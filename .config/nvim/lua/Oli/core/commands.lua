@@ -191,68 +191,27 @@ function M.default_commands()
       ":OnedarkproColors",
       description = "Show the theme's colors",
     },
-    -- Packer
+    -- Lazy.nvim
     {
-      itemgroup = "Packer",
+      itemgroup = "Lazy.nvim",
       icon = "",
-      description = "Packer commands",
+      description = "Commands for the Lazy package manager",
       commands = {
         {
-          "PackerCompile",
-          function()
-            require(config_namespace .. ".plugins.packer")
-            require("packer").compile()
-          end,
-          description = "Compile",
+          ":Lazy sync",
+          description = "Install, clean and update",
         },
         {
-          "PackerClean",
-          function()
-            require(config_namespace .. ".plugins.packer")
-            require("packer").clean()
-          end,
+          ":Lazy clean",
           description = "Clean",
         },
         {
-          "PackerSync",
-          function() om.PackerSync() end,
-          description = "Sync",
+          ":Lazy restore",
+          description = "Restores plugins to the state in the lockfile",
         },
         {
-          "PackerStatus",
-          function()
-            require(config_namespace .. ".plugins.packer")
-            require("packer").status()
-          end,
-          description = "Status",
-        },
-        {
-          "PackerSnapshot",
-          function()
-            local snapshot = os.date("!%Y-%m-%d %H_%M_%S")
-            require(config_namespace .. ".plugins")
-            require("packer").snapshot(snapshot)
-          end,
-          description = "Create Snapshot",
-        },
-        {
-          "PackerSnapshotDelete",
-          function()
-            vim.ui.select(om.GetSnapshots(), { prompt = "Delete snapshot" }, function(choice)
-              if choice == nil then return end
-              require(config_namespace .. ".plugins")
-              require("packer.snapshot").delete(om.path_to_snapshots .. choice)
-            end)
-          end,
-          description = "Delete Snapshot",
-        },
-        {
-          "PackerRollback",
-          function()
-            require(config_namespace .. ".plugins")
-            vim.cmd("PackerRollback")
-          end,
-          description = "Rollback Snapshot",
+          ":Lazy profile",
+          description = "Profile",
         },
       },
     },
@@ -309,6 +268,7 @@ function M.default_commands()
     },
   }
 end
+
 ---------------------------------------------------------------------------- }}}
 --------------------------------LSP COMMANDS-------------------------------- {{{
 function M.lsp_commands(client, bufnr)
@@ -364,5 +324,6 @@ function M.lsp_commands(client, bufnr)
     commands = commands,
   }
 end
+
 ---------------------------------------------------------------------------- }}}
 return M

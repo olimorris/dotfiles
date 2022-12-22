@@ -7,14 +7,4 @@
     "prefix": ["pp"],
     "body": ["require('pl.pretty').dump($0)"]
   },
-  "Packer use": {
-    "prefix": ["use"],
-    "body": [
-      "use({",
-      "\t\"$0\",",
-      "\tafter = \"$1\",",
-      "\tconfig = function() require(config_namespace .. \".plugins.others\").$2() end,",
-      "})"
-    ]
-  }
 }

@@ -1,6 +1,3 @@
-local ok, impatient = pcall(require, "impatient")
-if ok then impatient.enable_profile() end
-
 -- Reload functions to enable hot-reloading...sort of
 -- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/init.lua
 local ok, reload = pcall(require, "plenary.reload")
@@ -18,4 +15,4 @@ _G.config_namespace = "Oli"
 R(config_namespace .. ".core.globals")
 R(config_namespace .. ".core.options")
 R(config_namespace .. ".core.functions")
--- R(config_namespace .. ".plugins")
+R(config_namespace .. ".plugins")

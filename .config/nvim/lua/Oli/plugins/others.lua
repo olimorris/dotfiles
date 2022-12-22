@@ -8,7 +8,6 @@ local filetypes_to_exclude = {
   "dashboard",
   "neo-tree",
   "NvimTree",
-  "packer",
   "lspinfo",
   "Startify",
   "TelescopePrompt",
