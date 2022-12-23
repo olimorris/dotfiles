@@ -48,6 +48,7 @@ lazy.setup({
   },
   {
     "mrjones2014/legendary.nvim", -- A command palette for keymaps, commands and autocmds
+    lazy = true,
     dependencies = "kkharji/sqlite.lua",
     config = function() require(config_namespace .. ".plugins.legendary") end,
   },
@@ -105,14 +106,13 @@ lazy.setup({
     "j-hui/fidget.nvim", -- Display LSP status messages in a floating window
     config = function() require(config_namespace .. ".plugins.others").fidget() end,
   },
-
   {
     "stevearc/dressing.nvim", -- Utilises Neovim 0.6's new UI hooks to manage inputs, selects etc
     config = function() require(config_namespace .. ".plugins.others").dressing() end,
   },
   ---------------------------------------------------------------------------- }}}
   --------------------------------WRITING CODE-------------------------------- {{{
-  { "tpope/vim-sleuth" }, -- Automatically detects which indents should be used in the current buffer
+  "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
   {
     "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
     config = function() require(config_namespace .. ".plugins.others").nvim_surround() end,
@@ -125,9 +125,7 @@ lazy.setup({
     "numToStr/Comment.nvim", -- Comment out lines with gcc
     config = function() require(config_namespace .. ".plugins.others").comment() end,
   },
-  {
-    "fedepujol/move.nvim", -- Move lines and blocks
-  },
+  "fedepujol/move.nvim", -- Move lines and blocks
   {
     "ThePrimeagen/refactoring.nvim", -- Refactor code like Martin Fowler
     dependencies = {
@@ -271,10 +269,12 @@ lazy.setup({
       "nvim-neotest/neotest-python",
       "antoinemadec/FixCursorHold.nvim",
     },
+    lazy = true,
     config = function() require(config_namespace .. ".plugins.neotest").setup() end,
   },
   {
     "stevearc/overseer.nvim", -- Task runner and job management
+    lazy = true,
     config = function() require(config_namespace .. ".plugins.others").overseer() end,
   },
   {
