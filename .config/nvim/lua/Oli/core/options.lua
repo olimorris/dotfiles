@@ -104,28 +104,3 @@ vim.wo.relativenumber = true -- Set the relative number
 vim.wo.signcolumn = "yes" -- Show information next to the line numbers
 vim.wo.wrap = false -- Do not display text over multiple lines
 ---------------------------------------------------------------------------- }}}
---------------------------DISABLE BUILT IN PLUGINS-------------------------- {{{
- local disabled_plugins = {
-   "2html_plugin",
-   "getscript",
-   "getscriptPlugin",
-   "gzip",
-   "logipat",
-   "netrw",
-   "netrwPlugin",
-   "netrwSettings",
-   "netrwFileHandlers",
-   "matchit",
-   "tar",
-   "tarPlugin",
-   "rrhelper",
-   "spellfile_plugin",
-   "vimball",
-   "vimballPlugin",
-   "zip",
-   "zipPlugin",
- }
- for _, plugin in pairs(disabled_plugins) do
-   vim.g["loaded_" .. plugin] = 1
- end
- ---------------------------------------------------------------------------- }}}
