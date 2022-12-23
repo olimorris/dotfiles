@@ -463,18 +463,14 @@ local Dap = {
 -- Show plugin updates available from lazy.nvim
 local Lazy = {
   condition = require("lazy.status").has_updates,
-  RightSlantStart,
   {
-    provider = function()
-      return "  " .. require("lazy.status").updates() .. " "
-    end,
+    provider = function() return "  " .. require("lazy.status").updates() .. " " end,
   },
-  RightSlantEnd,
   on_click = {
     callback = function() require("lazy").update() end,
     name = "update_plugins",
   },
-  hl = { fg = "green", bg = "statusline_bg" },
+  hl = { fg = "gray" },
 }
 
 --- Return information on the current buffers filetype
