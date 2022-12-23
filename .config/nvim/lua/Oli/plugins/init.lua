@@ -73,7 +73,7 @@ lazy.setup({
   {
     "utilyre/barbecue.nvim", -- VS Code like path in winbar
     dependencies = {
-      { "neovim/nvim-lspconfig" },
+      "neovim/nvim-lspconfig",
       {
         "SmiteshP/nvim-navic", -- Winbar component showing current code context
         config = function() require(config_namespace .. ".plugins.others").nvim_navic() end,
@@ -111,8 +111,8 @@ lazy.setup({
   {
     "ThePrimeagen/refactoring.nvim", -- Refactor code like Martin Fowler
     dependencies = {
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-treesitter/nvim-treesitter" },
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
     },
     config = function() require(config_namespace .. ".plugins.others").refactoring() end,
   },
@@ -155,7 +155,7 @@ lazy.setup({
       {
         "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
         dependencies = {
-          { "kkharji/sqlite.lua" },
+          "kkharji/sqlite.lua",
         },
         config = function() require("telescope").load_extension("frecency") end,
       },
@@ -184,27 +184,27 @@ lazy.setup({
     "VonHeikemen/lsp-zero.nvim",
     dependencies = {
       -- LSP Support
-      { "neovim/nvim-lspconfig" },
-      { "williamboman/mason.nvim" },
-      { "williamboman/mason-lspconfig.nvim" },
+      "neovim/nvim-lspconfig",
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
 
       -- Autocompletion
-      { "hrsh7th/nvim-cmp" },
-      { "hrsh7th/cmp-buffer" },
-      { "hrsh7th/cmp-path" },
-      { "hrsh7th/cmp-cmdline" },
-      { "saadparwaiz1/cmp_luasnip" },
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-nvim-lsp-signature-help" },
-      { "hrsh7th/cmp-nvim-lua" },
-      { "onsails/lspkind.nvim" },
+      "hrsh7th/nvim-cmp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-nvim-lua",
+      "onsails/lspkind.nvim",
 
       -- Snippets
       {
         "L3MON4D3/LuaSnip",
         config = function() require(config_namespace .. ".plugins.luasnip").setup() end,
       },
-      { "rafamadriz/friendly-snippets" },
+      "rafamadriz/friendly-snippets",
     },
     config = function() require(config_namespace .. ".plugins.lsp_zero") end,
   },
@@ -222,24 +222,12 @@ lazy.setup({
     "nvim-treesitter/nvim-treesitter", -- Smarter code understanding like syntax Highlight and navigation
     build = ":TSUpdate",
     dependencies = {
-      {
-        "windwp/nvim-ts-autotag", -- Autoclose and autorename HTML and Vue tags
-      },
+      "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
+      "JoosepAlviste/nvim-ts-context-commentstring", -- Smart commenting in multi language files - Enabled in Treesitter file
+      "windwp/nvim-ts-autotag", -- Autoclose and autorename HTML and Vue tags
       {
         "windwp/nvim-autopairs", -- Autopair plugin
         config = function() require(config_namespace .. ".plugins.others").nvim_autopairs() end,
-      },
-      {
-        "JoosepAlviste/nvim-ts-context-commentstring", -- Smart commenting in multi language files - Enabled in Treesitter file
-      },
-      {
-        "David-Kunz/treesitter-unit", -- Better selection of Treesitter code
-      },
-      {
-        "RRethy/nvim-treesitter-endwise", -- add "end" in Ruby and other languages
-      },
-      {
-        "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
       },
       {
         "abecodes/tabout.nvim", -- Tab out from parenthesis, quotes, brackets...

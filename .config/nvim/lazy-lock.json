@@ -51,7 +51,6 @@
   "nvim-surround": { "branch": "main", "commit": "f0077c3726d243eeaabd2ec280216e8c3ca7da9f" },
   "nvim-toggleterm.lua": { "branch": "main", "commit": "b02a1674bd0010d7982b056fd3df4f717ff8a57a" },
   "nvim-treesitter": { "branch": "master", "commit": "895d4a1202f36df561ba032c93b9deb72e1edee8" },
-  "nvim-treesitter-endwise": { "branch": "master", "commit": "0cf4601c330cf724769a2394df555a57d5fd3f34" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "a2e436d88d1880da6678049316e4c45135901866" },
   "nvim-ts-autotag": { "branch": "main", "commit": "fdefe46c6807441460f11f11a167a2baf8e4534b" },
   "nvim-ts-context-commentstring": { "branch": "main", "commit": "32d9627123321db65a4f158b72b757bcaef1a3f4" },
@@ -70,7 +69,6 @@
   "telescope.nvim": { "branch": "master", "commit": "e960efa60e97df58e089b00270f09d60f27202c8" },
   "tmux.nvim": { "branch": "main", "commit": "1eb600284ceb977710a26b7e4f7ce22c73c7afae" },
   "todo-comments.nvim": { "branch": "main", "commit": "c1760010f46992165995aaa52ca967f473a2e8e6" },
-  "treesitter-unit": { "branch": "main", "commit": "89968a1f8c72427691088e6d09d26a52c2ddc6f4" },
   "vim-sleuth": { "branch": "master", "commit": "8332f123a63c739c870c96907d987cc3ff719d24" },
   "vim-startuptime": { "branch": "master", "commit": "cb4c112b9e0f224236ee4eab6bf5153406b3f88b" }
 }
