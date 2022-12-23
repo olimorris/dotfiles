@@ -12,6 +12,11 @@ local opts = {
   install = {
     colorscheme = { "onedark" },
   },
+  ui = {
+    icons = {
+      plugin = "",
+    },
+  },
   performance = {
     rtp = {
       disabled_plugins = {

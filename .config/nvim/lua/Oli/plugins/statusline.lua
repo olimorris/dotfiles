@@ -40,8 +40,9 @@ local filetypes = {
 local force_inactive_filetypes = {
   "^alpha$",
   "^DressingInput$",
-  "^netrw$",
   "^frecency$",
+  "^lazy$",
+  "^netrw$",
   "^TelescopePrompt$",
   "^undotree$",
 }
@@ -464,7 +465,9 @@ local Lazy = {
   condition = require("lazy.status").has_updates,
   RightSlantStart,
   {
-    provider = function() return "  " .. require("lazy.status").updates .. " " end,
+    provider = function()
+      return "  " .. require("lazy.status").updates() .. " "
+    end,
   },
   RightSlantEnd,
   on_click = {
