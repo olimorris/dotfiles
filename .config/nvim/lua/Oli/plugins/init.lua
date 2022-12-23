@@ -8,6 +8,7 @@ local opts = {
   checker = {
     enabled = true,
     notify = false,
+    frequency = 900,
   },
   install = {
     colorscheme = { "onedark" },
