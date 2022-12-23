@@ -14,16 +14,15 @@ local opts = {
   },
 }
 ---------------------------------------------------------------------------- }}}
-----------------------------------AUTOLOAD---------------------------------- {{{
+--------------------------------PREREQUISITES------------------------------- {{{
 lazy.setup({
-  { "tpope/vim-sleuth" }, -- Automatically detects which indents should be used in the current buffer
   { "nvim-lua/plenary.nvim" }, -- Required dependency for many plugins. Super useful Lua functions
   { "antoinemadec/FixCursorHold.nvim" }, -- Fix neovim CursorHold and CursorHoldI autocmd events performance bug
   ---------------------------------------------------------------------------- }}}
-  ---------------------------------APPEARANCE--------------------------------- {{{
+  -------------------------------------UI------------------------------------- {{{
   {
     --"olimorris/onedarkpro.nvim",
-    dir = "~/Code/Projects/onedarkpro.nvim", -- My onedarkpro theme
+    dir = "~/Code/Projects/onedarkpro.nvim",
     name = "onedarkpro",
     config = function() require(config_namespace .. ".plugins.theme") end,
   },
@@ -37,12 +36,13 @@ lazy.setup({
     config = function() require(config_namespace .. ".plugins.dashboard") end,
   },
   {
-    "rebelot/heirline.nvim", -- Statusline
-    dependencies = { "kyazdani42/nvim-web-devicons", "onedarkpro" },
+    "rebelot/heirline.nvim", -- Statusline and bufferline
+    dependencies = {
+      "onedarkpro",
+      "kyazdani42/nvim-web-devicons",
+      "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
+    },
     config = function() require(config_namespace .. ".plugins.statusline").setup() end,
-  },
-  {
-    "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
   },
   {
     "lewis6991/gitsigns.nvim", -- Git signs in the sign column
@@ -82,9 +82,59 @@ lazy.setup({
     config = function() require(config_namespace .. ".plugins.others").barbecue() end,
   },
   {
+    "j-hui/fidget.nvim", -- Display LSP status messages in a floating window
+    config = function() require(config_namespace .. ".plugins.others").fidget() end,
+  },
+
+  {
     "stevearc/dressing.nvim", -- Utilises Neovim 0.6's new UI hooks to manage inputs, selects etc
     config = function() require(config_namespace .. ".plugins.others").dressing() end,
   },
+  ---------------------------------------------------------------------------- }}}
+  --------------------------------WRITING CODE-------------------------------- {{{
+  { "tpope/vim-sleuth" }, -- Automatically detects which indents should be used in the current buffer
+  {
+    "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
+    config = function() require(config_namespace .. ".plugins.others").nvim_surround() end,
+  },
+  {
+    "danymat/neogen", -- Annotation generator
+    config = function() require(config_namespace .. ".plugins.others").neogen() end,
+  },
+  {
+    "numToStr/Comment.nvim", -- Comment out lines with gcc
+    config = function() require(config_namespace .. ".plugins.others").comment() end,
+  },
+  {
+    "fedepujol/move.nvim", -- Move lines and blocks
+  },
+  {
+    "ThePrimeagen/refactoring.nvim", -- Refactor code like Martin Fowler
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-treesitter/nvim-treesitter" },
+    },
+    config = function() require(config_namespace .. ".plugins.others").refactoring() end,
+  },
+  {
+    "zbirenbaum/copilot.lua", -- AI programming
+    event = "InsertEnter",
+    config = function()
+      vim.schedule(function() require(config_namespace .. ".plugins.others").copilot() end)
+    end,
+  },
+  {
+    "jackmort/chatgpt.nvim", -- AI programming
+    config = function() require(config_namespace .. ".plugins.others").chatgpt() end,
+    cmd = "ChatGPT",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+  },
+  ---------------------------------------------------------------------------- }}}
+  ----------------------------------SEARCHING--------------------------------- {{{
   {
     "nvim-telescope/telescope.nvim", -- Awesome fuzzy finder for everything
     dependencies = {
@@ -98,7 +148,7 @@ lazy.setup({
         config = function() require("telescope").load_extension("harpoon") end,
       },
       {
-        "debugloop/telescope-undo.nvim",
+        "debugloop/telescope-undo.nvim", -- Visualise undotree
         dependencies = { "nvim-telescope/telescope.nvim" },
         config = function() require("telescope").load_extension("undo") end,
       },
@@ -119,8 +169,6 @@ lazy.setup({
     },
     config = function() require(config_namespace .. ".plugins.telescope") end,
   },
-  ---------------------------------------------------------------------------- }}}
-  --------------------------------EDITING TEXT-------------------------------- {{{
   {
     "phaazon/hop.nvim", -- Speedily navigate anywhere in a buffer
     config = function() require(config_namespace .. ".plugins.others").hop() end,
@@ -130,23 +178,7 @@ lazy.setup({
     lazy = true,
     config = function() require(config_namespace .. ".plugins.others").ssr() end,
   },
-  {
-    "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
-    config = function() require(config_namespace .. ".plugins.others").nvim_surround() end,
-  },
-  {
-    "danymat/neogen",
-    config = function() require(config_namespace .. ".plugins.others").neogen() end,
-  },
-  {
-    "numToStr/Comment.nvim", -- Comment out lines with gcc
-    config = function() require(config_namespace .. ".plugins.others").comment() end,
-  },
-  {
-    "fedepujol/move.nvim", -- Move lines and blocks
-  },
   ---------------------------------------------------------------------------- }}}
-  -----------------------------------CODING----------------------------------- {{{
   -----------------------------LSP AND COMPLETION----------------------------- {{{
   {
     "VonHeikemen/lsp-zero.nvim",
@@ -184,12 +216,8 @@ lazy.setup({
     },
     config = function() require(config_namespace .. ".plugins.null-ls") end,
   },
-  {
-    "j-hui/fidget.nvim", -- Display LSP status messages in a floating window
-    config = function() require(config_namespace .. ".plugins.others").fidget() end,
-  },
   ---------------------------------------------------------------------------- }}}
-  ---------------------------------TREESITTER--------------------------------- {{{
+  -----------------------------------SYNTAX----------------------------------- {{{
   {
     "nvim-treesitter/nvim-treesitter", -- Smarter code understanding like syntax Highlight and navigation
     build = ":TSUpdate",
@@ -225,7 +253,7 @@ lazy.setup({
     cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
   },
   ---------------------------------------------------------------------------- }}}
-  -----------------------------------TESTING---------------------------------- {{{
+  ----------------------------TESTING AND DEBUGGING--------------------------- {{{
   {
     "nvim-neotest/neotest",
     dependencies = {
@@ -239,7 +267,6 @@ lazy.setup({
   },
   {
     "stevearc/overseer.nvim", -- Task runner and job management
-    -- INFO: Overseer lazy loads itself
     config = function() require(config_namespace .. ".plugins.others").overseer() end,
   },
   {
@@ -247,8 +274,6 @@ lazy.setup({
     lazy = true,
     config = function() require(config_namespace .. ".plugins.others").coverage() end,
   },
-  ---------------------------------------------------------------------------- }}}
-  ----------------------------------DEBUGGING--------------------------------- {{{
   {
     "mfussenegger/nvim-dap", -- Debug Adapter Protocol for Neovim
     lazy = true,
@@ -259,35 +284,7 @@ lazy.setup({
     config = function() require(config_namespace .. ".plugins.dap") end,
   },
   ---------------------------------------------------------------------------- }}}
-  -----------------------------------OTHERS----------------------------------- {{{
-  {
-    "ThePrimeagen/refactoring.nvim",
-    dependencies = {
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-treesitter/nvim-treesitter" },
-    },
-    config = function() require(config_namespace .. ".plugins.others").refactoring() end,
-  },
-  {
-    "zbirenbaum/copilot.lua", -- AI programming
-    event = "InsertEnter",
-    config = function()
-      vim.schedule(function() require(config_namespace .. ".plugins.others").copilot() end)
-    end,
-  },
-  {
-    "jackmort/chatgpt.nvim",
-    config = function() require(config_namespace .. ".plugins.others").chatgpt() end,
-    cmd = "ChatGPT",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-  },
-  ---------------------------------------------------------------------------- }}}
-  ---------------------------------------------------------------------------- }}}
-  ------------------------------------MISC------------------------------------ {{{
+  ------------------------------NEOVIM UTILITIES------------------------------ {{{
   {
     -- "olimorris/persisted.nvim", -- Session management
     dir = "~/Code/Projects/persisted.nvim",
