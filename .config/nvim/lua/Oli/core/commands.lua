@@ -198,6 +198,10 @@ function M.default_commands()
       description = "Commands for the Lazy package manager",
       commands = {
         {
+          ":Lazy",
+          description = "Open Lazy",
+        },
+        {
           ":Lazy sync",
           description = "Install, clean and update",
         },
@@ -212,6 +216,10 @@ function M.default_commands()
         {
           ":Lazy profile",
           description = "Profile",
+        },
+        {
+          ":Lazy log",
+          description = "Log",
         },
       },
     },
