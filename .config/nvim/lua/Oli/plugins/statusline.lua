@@ -199,7 +199,7 @@ local FileName = {
     return " " .. filename .. " "
   end,
   on_click = {
-    callback = function() vim.cmd("normal ff") end,
+    callback = function() vim.cmd("Telescope find_files") end,
     name = "find_files",
   },
   hl = { fg = "gray", bg = "statusline_bg" },
@@ -230,7 +230,7 @@ local LspDiagnostics = {
     self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
   end,
   on_click = {
-    callback = function() vim.cmd("normal fd") end,
+    callback = function() vim.cmd("normal gf") end,
     name = "heirline_diagnostics",
   },
   update = { "DiagnosticChanged", "BufEnter" },
@@ -463,9 +463,8 @@ local Dap = {
 -- Show plugin updates available from lazy.nvim
 local Lazy = {
   condition = require("lazy.status").has_updates,
-  {
-    provider = function() return "  " .. require("lazy.status").updates() .. " " end,
-  },
+  update = { "User", pattern = "LazyRender" },
+  provider = function() return "  " .. require("lazy.status").updates() .. " " end,
   on_click = {
     callback = function() require("lazy").update() end,
     name = "update_plugins",
@@ -538,7 +537,7 @@ local Statusline = {
   Align,
   Overseer,
   Dap,
-  Lazy,
+  -- Lazy,
   FileType,
   FileEncoding,
   Session,
