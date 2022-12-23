@@ -42,7 +42,6 @@ local force_inactive_filetypes = {
   "^DressingInput$",
   "^netrw$",
   "^frecency$",
-  "^packer$",
   "^TelescopePrompt$",
   "^undotree$",
 }
@@ -460,6 +459,21 @@ local Dap = {
   hl = { fg = "red" },
 }
 
+-- Show plugin updates available from lazy.nvim
+local Lazy = {
+  condition = require("lazy.status").has_updates,
+  RightSlantStart,
+  {
+    provider = function() return "  " .. require("lazy.status").updates .. " " end,
+  },
+  RightSlantEnd,
+  on_click = {
+    callback = function() require("lazy").update() end,
+    name = "update_plugins",
+  },
+  hl = { fg = "green", bg = "statusline_bg" },
+}
+
 --- Return information on the current buffers filetype
 local FileIcon = {
   init = function(self)
@@ -525,6 +539,7 @@ local Statusline = {
   Align,
   Overseer,
   Dap,
+  Lazy,
   FileType,
   FileEncoding,
   Session,
@@ -534,7 +549,7 @@ local Statusline = {
 
 ---Set the statusline
 function M.setup()
-  require("heirline").load_colors(require("onedarkpro").get_colors())
+  heirline.load_colors(require("onedarkpro").get_colors())
 
   local ok, _ = pcall(heirline.setup, Statusline, nil, require(config_namespace .. ".plugins.bufferline"))
   if not ok then return end
