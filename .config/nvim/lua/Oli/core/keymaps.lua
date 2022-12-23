@@ -189,7 +189,7 @@ M.default_keymaps = function()
       require("legendary").find,
       hide = true,
       description = "Open Legendary",
-      mode = { "n", "v", "i" },
+      mode = { "n", "v" },
     },
 
     -- Aerial
@@ -274,10 +274,11 @@ M.default_keymaps = function()
       keymaps = {
         { "<C-e>", "<cmd>Telescope harpoon marks<CR>", description = "Show marks" },
         { "<Leader>a", "<cmd>lua require('harpoon.mark').add_file()<CR>", description = "Add file" },
-        { "<Leader>1", "<cmd>lua require('harpoon.ui').nav_file(1) <CR>", description = "Go to file 1" },
-        { "<Leader>2", "<cmd>lua require('harpoon.ui').nav_file(2) <CR>", description = "Go to file 2" },
-        { "<Leader>3", "<cmd>lua require('harpoon.ui').nav_file(3) <CR>", description = "Go to file 3" },
-        { "<Leader>4", "<cmd>lua require('harpoon.ui').nav_file(4) <CR>", description = "Go to file 4" },
+        { "<Leader>1", "<cmd>lua require('harpoon.ui').nav_file(1)<CR>", description = "Go to file 1" },
+        { "<Leader>2", "<cmd>lua require('harpoon.ui').nav_file(2)<CR>", description = "Go to file 2" },
+        { "<Leader>3", "<cmd>lua require('harpoon.ui').nav_file(3)<CR>", description = "Go to file 3" },
+        { "<Leader>4", "<cmd>lua require('harpoon.ui').nav_file(4)<CR>", description = "Go to file 4" },
+        { "<Leader>5", "<cmd>lua require('harpoon.ui').nav_file(5)<CR>", description = "Go to file 5" },
       },
     },
 
@@ -509,11 +510,11 @@ M.completion_keymaps = function()
       description = "Toggle completion menu",
     },
     {
-      "<Ctrl-b>",
+      "<Ctrl-h>",
       description = "Go to previous placeholder in snippet",
     },
     {
-      "<Ctrl-d>",
+      "<Ctrl-l>",
       description = "Go to next placeholder in snippet",
     },
     {
