@@ -58,6 +58,7 @@ vim.diagnostic.config({
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 local cmp = require("cmp")
+local luasnip = require("luasnip")
 local cmp_config = lsp.defaults.cmp_config({
   formatting = {
     format = function(...) return require("lspkind").cmp_format({ mode = "symbol_text" })(...) end,
@@ -67,6 +68,25 @@ local cmp_config = lsp.defaults.cmp_config({
       border = "none",
       winhighlight = "Normal:CmpMenu,FloatBorder:CmpMenu,CursorLine:CmpCursorLine,Search:None",
     },
+  },
+  mapping = {
+    -- go to next placeholder in the snippet
+    ["<C-l>"] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(1) then
+        luasnip.jump(1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
+    -- go to previous placeholder in the snippet
+    ["<C-h>"] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
   },
   sources = {
     { name = "luasnip", priority = 100, keyword_length = 2, max_item_count = 8 },
