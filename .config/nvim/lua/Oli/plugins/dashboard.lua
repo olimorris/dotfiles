@@ -31,7 +31,7 @@ dashboard.section.buttons.opts = {
 
 -- Footer
 local function footer()
-  local total_plugins = 0
+  local total_plugins = require("lazy").stats().count
   local version = vim.version()
   local nvim_version_info = "  Neovim v" .. version.major .. "." .. version.minor .. "." .. version.patch
 
