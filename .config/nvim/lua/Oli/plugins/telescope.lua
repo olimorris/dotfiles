@@ -119,5 +119,12 @@ telescope.setup({
       override_file_sorter = true,
       case_mode = "smart_case",
     },
+    undo = {
+      mappings = {
+        ["<CR>"] = require("telescope-undo.actions").restore,
+        ["<C-a>"] = require("telescope-undo.actions").yank_additions,
+        ["<C-d>"] = require("telescope-undo.actions").yank_deletions,
+      },
+    },
   },
 })
