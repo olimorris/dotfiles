@@ -394,7 +394,7 @@ M.default_keymaps = function()
       icon = "",
       keymaps = {
         {
-          "<C-f>",
+          "<Leader>f",
           t.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
           description = "Find files",
         },
