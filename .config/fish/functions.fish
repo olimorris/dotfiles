@@ -42,6 +42,10 @@ function ta -d "Attach to previous Tmux session"
     tmux new-session -t $argv
 end
 
+function tn -d "Create a new Tmux session"
+    tmux new -s (pwd | sed 's/.*\///g')
+end
+
 function italic -d "Test if italic text is working"
     echo -e "\e[3mThis text should be in italics\e[23m"
 end
