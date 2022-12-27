@@ -463,7 +463,7 @@ local Dap = {
 -- Show plugin updates available from lazy.nvim
 local Lazy = {
   condition = require("lazy.status").has_updates,
-  update = { "User", pattern = "LazyRender" },
+  update = { "User", pattern = "LazyUpdate" },
   provider = function() return "  " .. require("lazy.status").updates() .. " " end,
   on_click = {
     callback = function() require("lazy").update() end,
@@ -537,7 +537,7 @@ local Statusline = {
   Align,
   Overseer,
   Dap,
-  -- Lazy,
+  Lazy,
   FileType,
   FileEncoding,
   Session,
