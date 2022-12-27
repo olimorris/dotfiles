@@ -17,7 +17,7 @@ function search
 		sort -rnk1 |			# sort by score
 		uniq |				# remove any duplicates
 		awk '{print $2}' |		# only show the path
-		fzf --no-sort
+		fzf --height=100% --no-border
 end
 
 if test (count $argv) -eq 1
