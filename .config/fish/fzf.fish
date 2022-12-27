@@ -1,5 +1,5 @@
 set -x FZF_DEFAULT_OPTS
-set -a FZF_DEFAULT_OPTS --height=80%
+set -a FZF_DEFAULT_OPTS --height=70%
 set -a FZF_DEFAULT_OPTS --multi
 set -a FZF_DEFAULT_OPTS --border
 set -a FZF_DEFAULT_OPTS --preview-window=:hidden

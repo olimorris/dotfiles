@@ -42,14 +42,6 @@ function ta -d "Attach to previous Tmux session"
     tmux new-session -t $argv
 end
 
-function tn -d "Create a new Tmux session (or attach to one) based on the current directory"
-    set selected (pwd | sed 's/.*\///g')
-    # Replace a '.' in any file names with an underscore This matches the tmux-
-    # sessionizer bin script
-    set selected_name $(basename "$selected" | tr . _)
-    tmux new -s $selected_name
-end
-
 function italic -d "Test if italic text is working"
     echo -e "\e[3mThis text should be in italics\e[23m"
 end
