@@ -3,10 +3,10 @@ local M = {
   dependencies = {
     "ThePrimeagen/harpoon", -- Navigate between marked files
     "debugloop/telescope-undo.nvim", -- Visualise undotree
-    -- {
-    --   "nvim-telescope/telescope-fzf-native.nvim", -- Use fzf within Telescope
-    --   build = "make",
-    -- },
+    {
+      "nvim-telescope/telescope-fzf-native.nvim", -- Use fzf within Telescope
+      build = "make",
+    },
     {
       "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
       dependencies = {
@@ -41,7 +41,8 @@ function M.config()
     end
   end
 
-  require("telescope").setup({
+  local telescope = require("telescope")
+  telescope.setup({
     defaults = {
       -- Appearance
       entry_prefix = "  ",
@@ -146,11 +147,11 @@ function M.config()
   })
 
   -- Extensions
-  -- require("telescope").load_extension("fzf")
-  require("telescope").load_extension("undo")
-  require("telescope").load_extension("harpoon")
-  require("telescope").load_extension("frecency")
-  require("telescope").load_extension("refactoring")
+  telescope.load_extension("fzf")
+  telescope.load_extension("undo")
+  telescope.load_extension("harpoon")
+  telescope.load_extension("frecency")
+  telescope.load_extension("refactoring")
 end
 
 return M
