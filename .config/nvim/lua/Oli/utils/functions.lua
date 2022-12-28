@@ -84,9 +84,15 @@ local function GitPushPull(action, tense)
   end)
 end
 
-function om.GitPull() GitPushPull("pull", "from") end
+function om.GitPull()
+  GitPushPull("pull", "from")
+  vim.cmd([[do User GitStatusChanged]])
+end
 
-function om.GitPush() GitPushPull("push", "to") end
+function om.GitPush()
+  GitPushPull("push", "to")
+  vim.cmd([[do User GitStatusChanged]])
+end
 
 --------------------------------------------------------------------------- }}}
 -------------------------------MOVE TO BUFFER------------------------------- {{{
@@ -95,7 +101,6 @@ function om.MoveToBuffer()
     if bufnr ~= nil then pcall(vim.cmd, "b " .. bufnr) end
   end)
 end
-
 --------------------------------------------------------------------------- }}}
 -----------------------------------LAZYGIT---------------------------------- {{{
 function om.Lazygit()
