@@ -5,6 +5,21 @@ local M = {
 }
 
 function M.config()
+  require("legendary").commands({
+    {
+      ":OnedarkproCache",
+      description = "Cache the theme",
+    },
+    {
+      ":OnedarkproClean",
+      description = "Clean the theme cache",
+    },
+    {
+      ":OnedarkproColors",
+      description = "Show the theme's colors",
+    },
+  })
+
   require("onedarkpro").setup({
     cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
     plugins = {

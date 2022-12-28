@@ -60,6 +60,13 @@ function M.config()
   dashboard.config.opts.noautocmd = true
 
   alpha.setup(dashboard.opts)
+
+  require("legendary").commands({
+    {
+      ":Alpha",
+      description = "Show the Alpha dashboard",
+    },
+  })
 end
 
 return M

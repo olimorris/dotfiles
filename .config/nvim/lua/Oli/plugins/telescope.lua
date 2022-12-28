@@ -1,8 +1,35 @@
 local M = {
   "nvim-telescope/telescope.nvim", -- Awesome fuzzy finder for everything
   dependencies = {
-    "ThePrimeagen/harpoon", -- Navigate between marked files
-    "debugloop/telescope-undo.nvim", -- Visualise undotree
+    {
+      "ThePrimeagen/harpoon", -- Navigate between marked files
+      config = function()
+        require("legendary").keymaps({
+          {
+            itemgroup = "Harpoon",
+            icon = "異",
+            description = "Harpoon functionality",
+            keymaps = {
+              { "<C-e>", "<cmd>Telescope harpoon marks<CR>", description = "Show marks" },
+              { "<Leader>a", "<cmd>lua require('harpoon.mark').add_file()<CR>", description = "Add file" },
+              { "<Leader>1", "<cmd>lua require('harpoon.ui').nav_file(1)<CR>", description = "Go to file 1" },
+              { "<Leader>2", "<cmd>lua require('harpoon.ui').nav_file(2)<CR>", description = "Go to file 2" },
+              { "<Leader>3", "<cmd>lua require('harpoon.ui').nav_file(3)<CR>", description = "Go to file 3" },
+              { "<Leader>4", "<cmd>lua require('harpoon.ui').nav_file(4)<CR>", description = "Go to file 4" },
+              { "<Leader>5", "<cmd>lua require('harpoon.ui').nav_file(5)<CR>", description = "Go to file 5" },
+            },
+          },
+        })
+      end,
+    },
+    {
+      "debugloop/telescope-undo.nvim", -- Visualise undotree
+      config = function()
+        require("legendary").keymaps({
+          { "<LocalLeader>u", "<cmd>Telescope undo<CR>", description = "Telescope undo" },
+        })
+      end,
+    },
     {
       "nvim-telescope/telescope-fzf-native.nvim", -- Use fzf within Telescope
       build = "make",
@@ -152,6 +179,42 @@ function M.config()
   telescope.load_extension("harpoon")
   telescope.load_extension("frecency")
   telescope.load_extension("refactoring")
+
+  -- Keymaps
+  local t = require("legendary.toolbox")
+  require("legendary").keymaps({
+    {
+      itemgroup = "Telescope",
+      description = "Gaze deeply into unknown regions using the power of the moon",
+      icon = "",
+      keymaps = {
+        {
+          "<C-f>",
+          t.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
+          description = "Find files",
+        },
+        {
+          "<C-g>",
+          t.lazy_required_fn(
+            "telescope.builtin",
+            "live_grep",
+            { path_display = { "shorten" }, grep_open_files = true }
+          ),
+          description = "Find in open files",
+        },
+        {
+          "<Leader>g",
+          t.lazy_required_fn("telescope.builtin", "live_grep", { path_display = { "smart" } }),
+          description = "Find in pwd",
+        },
+        {
+          "<Leader><Leader>",
+          "<cmd>lua require('telescope').extensions.frecency.frecency({ workspace = 'CWD' })<CR>",
+          description = "Find recent files",
+        },
+      },
+    },
+  })
 end
 
 return M

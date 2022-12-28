@@ -16,6 +16,10 @@ function M.config()
       default_direction = "prefer_left",
     },
   })
+
+  require("legendary").keymaps({
+    { "<C-t>", "<cmd>AerialToggle<CR>", hide = true, description = "Aerial" },
+  })
 end
 
 return M

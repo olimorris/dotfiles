@@ -6,15 +6,27 @@ local M = {
 }
 
 function M.config()
-  require("legendary").setup({
+  local legendary = require("legendary")
+
+  legendary.setup({
     select_prompt = "Legendary",
     include_builtin = false,
     include_legendary_cmds = false,
     which_key = { auto_register = false },
 
-    keymaps = require(config_namespace .. ".keymaps").default_keymaps(),
-    autocmds = require(config_namespace .. ".autocmds").default_autocmds(),
-    commands = require(config_namespace .. ".commands").default_commands(),
+    keymaps = require(config_namespace .. ".keymaps"),
+    autocmds = require(config_namespace .. ".autocmds"),
+    commands = require(config_namespace .. ".commands"),
+  })
+
+  legendary.keymaps({
+    {
+      "<C-p>",
+      require("legendary").find,
+      hide = true,
+      description = "Open Legendary",
+      mode = { "n", "v" },
+    },
   })
 end
 

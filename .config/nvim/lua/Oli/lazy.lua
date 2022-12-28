@@ -43,3 +43,40 @@ lazy.setup(config_namespace .. ".plugins", {
     },
   },
 })
+
+local ok, legendary = om.safe_require("legendary")
+if not ok then return end
+
+legendary.commands({
+  {
+    itemgroup = "Lazy.nvim",
+    icon = "",
+    description = "Commands for the Lazy package manager",
+    commands = {
+      {
+        ":Lazy",
+        description = "Open Lazy",
+      },
+      {
+        ":Lazy sync",
+        description = "Install, clean and update",
+      },
+      {
+        ":Lazy clean",
+        description = "Clean",
+      },
+      {
+        ":Lazy restore",
+        description = "Restores plugins to the state in the lockfile",
+      },
+      {
+        ":Lazy profile",
+        description = "Profile",
+      },
+      {
+        ":Lazy log",
+        description = "Log",
+      },
+    },
+  },
+})

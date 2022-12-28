@@ -27,6 +27,10 @@ function M.config()
       },
     },
   })
+
+  require("legendary").keymaps({
+    { "<C-a>", "<cmd>ChatGPT<CR>", description = "Open ChatGPT" },
+  })
 end
 
 return M

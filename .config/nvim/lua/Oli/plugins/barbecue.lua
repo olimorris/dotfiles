@@ -17,6 +17,13 @@ function M.config()
       dirname = ":~:.:s?.config/nvim/lua?Neovim?",
     },
   })
+
+  require("legendary").commands({
+    {
+      ":Barbecue toggle",
+      description = "Toggle Barbecue's winbar",
+    },
+  })
 end
 
 return M
