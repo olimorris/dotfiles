@@ -249,10 +249,14 @@ namespace :update do
   task :pip do
     section 'Updating PIP files'
 
-    run %( pip3 install --upgrade pip )
-    run %( pip3 freeze \> #{PIP_FILE} )
-    find_replace(PIP_FILE, '==', '>=')
-    run %( pip3 install -r #{PIP_FILE} --upgrade )
+    begin
+      run %( pip3 install --upgrade pip )
+      run %( pip3 freeze \> #{PIP_FILE} )
+      find_replace(PIP_FILE, '==', '>=')
+      run %( pip3 install -r #{PIP_FILE} --upgrade )
+    rescue StandardError
+      puts 'PIP update failed'
+    end
   end
 
   desc 'Update NPM packages'
