@@ -190,7 +190,7 @@ local function bufferline()
     {
       condition = function(self)
         return not vim.api.nvim_buf_get_option(self.bufnr, "modifiable")
-            or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
+          or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
       end,
       provider = function(self)
         if vim.api.nvim_buf_get_option(self.bufnr, "buftype") == "terminal" then
