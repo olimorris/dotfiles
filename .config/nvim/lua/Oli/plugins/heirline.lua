@@ -7,10 +7,10 @@ local M = {
   },
 }
 
+---The tabline for the bufferline
+---@return table
 local function tabline()
-  local ok, heirline = om.safe_require("heirline")
-  if not ok then return end
-
+  local heirline = require("heirline")
   local utils = require("heirline.utils")
   local conditions = require("heirline.conditions")
 
@@ -41,9 +41,10 @@ local function tabline()
   return TabPages
 end
 
+---The bufferline
+---@return table
 local function bufferline()
   local heirline = require("heirline")
-
   local utils = require("heirline.utils")
   local conditions = require("heirline.conditions")
 
@@ -270,7 +271,9 @@ local function bufferline()
   return { BufferLineOffset, VimLogo, BufferLine, tabline() }
 end
 
-function M.config()
+---The statusline
+---@return table
+local function statusline()
   local utils = require("heirline.utils")
   local conditions = require("heirline.conditions")
 
@@ -789,7 +792,7 @@ function M.config()
   }
 
   ---The statusline component
-  local Statusline = {
+  return {
     condition = function()
       return not conditions.buffer_matches({
         filetype = force_inactive_filetypes,
@@ -813,15 +816,23 @@ function M.config()
     SearchResults,
     Ruler,
   }
+end
 
+---Load the bufferline, tabline and statusline. Extracting this to a seperate
+---function allows us to call it from autocmds and preserve colors
+function M.load()
   local heirline = require("heirline")
-  heirline.load_colors(require("onedarkpro").get_colors())
 
-  local ok, _ = pcall(heirline.setup, Statusline, nil, bufferline())
-  if not ok then return end
+  heirline.load_colors(require("onedarkpro").get_colors())
+  heirline.setup(statusline(), nil, bufferline())
 
   vim.o.showtabline = 2
   vim.cmd([[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])
+end
+
+---Used by Lazy to load the statusline
+function M.config()
+  M.load()
 end
 
 return M
