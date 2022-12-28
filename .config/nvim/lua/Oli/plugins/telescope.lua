@@ -1,130 +1,156 @@
-local ok, telescope = om.safe_require("telescope")
-if not ok then return end
+local M = {
+  "nvim-telescope/telescope.nvim", -- Awesome fuzzy finder for everything
+  dependencies = {
+    "ThePrimeagen/harpoon", -- Navigate between marked files
+    "debugloop/telescope-undo.nvim", -- Visualise undotree
+    -- {
+    --   "nvim-telescope/telescope-fzf-native.nvim", -- Use fzf within Telescope
+    --   build = "make",
+    -- },
+    {
+      "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
+      dependencies = {
+        "kkharji/sqlite.lua",
+      },
+    },
+  },
+}
 
-local actions = require("telescope.actions")
-local action_state = require("telescope.actions.state")
-local custom_actions = {}
+function M.config()
+  local actions = require("telescope.actions")
+  local action_state = require("telescope.actions.state")
+  local custom_actions = {}
 
-function custom_actions.multi_select(prompt_bufnr)
-  local function get_table_size(t)
-    local count = 0
-    for _ in pairs(t) do
-      count = count + 1
+  function custom_actions.multi_select(prompt_bufnr)
+    local function get_table_size(t)
+      local count = 0
+      for _ in pairs(t) do
+        count = count + 1
+      end
+      return count
     end
-    return count
+
+    local picker = action_state.get_current_picker(prompt_bufnr)
+    local num_selections = get_table_size(picker:get_multi_selection())
+
+    if num_selections > 1 then
+      actions.send_selected_to_qflist(prompt_bufnr)
+      actions.open_qflist()
+    else
+      actions.file_edit(prompt_bufnr)
+    end
   end
 
-  local picker = action_state.get_current_picker(prompt_bufnr)
-  local num_selections = get_table_size(picker:get_multi_selection())
+  require("telescope").setup({
+    defaults = {
+      -- Appearance
+      entry_prefix = "  ",
+      prompt_prefix = "   ",
+      selection_caret = "  ",
+      color_devicons = true,
+      path_display = { "smart" },
+      dynamic_preview_title = true,
 
-  if num_selections > 1 then
-    actions.send_selected_to_qflist(prompt_bufnr)
-    actions.open_qflist()
-  else
-    actions.file_edit(prompt_bufnr)
-  end
+      sorting_strategy = "ascending",
+      layout_strategy = "horizontal",
+      layout_config = {
+        horizontal = {
+          preview_width = 0.55,
+          prompt_position = "top",
+          width = 0.9,
+        },
+        center = {
+          anchor = "N",
+          width = 0.9,
+          preview_cutoff = 10,
+        },
+        vertical = {
+          height = 0.9,
+          preview_height = 0.3,
+          width = 0.9,
+          preview_cutoff = 10,
+          prompt_position = "top",
+        },
+      },
+
+      -- Searching
+      set_env = { COLORTERM = "truecolor" },
+      file_ignore_patterns = {
+        ".git/",
+        "%.csv",
+        "%.jpg",
+        "%.jpeg",
+        "%.png",
+        "%.svg",
+        "%.otf",
+        "%.ttf",
+        "%.lock",
+        "__pycache__",
+        "%.sqlite3",
+        "%.ipynb",
+        "vendor",
+        "node_modules",
+        "dotbot",
+      },
+      file_sorter = require("telescope.sorters").get_fuzzy_file,
+
+      -- Mappings
+      mappings = {
+        i = {
+          ["<esc>"] = require("telescope.actions").close,
+          ["<C-e>"] = custom_actions.multi_select,
+          ["<C-j>"] = require("telescope.actions").move_selection_next,
+          ["<C-d>"] = require("telescope.actions").preview_scrolling_down,
+          ["<C-f>"] = require("telescope.actions").preview_scrolling_up,
+          ["<C-k>"] = require("telescope.actions").move_selection_previous,
+          ["<C-q>"] = require("telescope.actions").send_to_qflist,
+        },
+        n = {
+          ["q"] = require("telescope.actions").close,
+          ["<C-n>"] = require("telescope.actions").move_selection_next,
+          ["<C-p>"] = require("telescope.actions").move_selection_previous,
+        },
+      },
+    },
+
+    extensions = {
+      frecency = {
+        show_scores = false,
+        show_unindexed = true,
+        ignore_patterns = {
+          "*.git/*",
+          "*/tmp/*",
+          "*/node_modules/*",
+          "*/vendor/*",
+        },
+        -- workspaces = {
+        --   ["nvim"] = os.getenv("HOME_DIR") .. ".config/nvim",
+        --   ["dots"] = os.getenv("HOME_DIR") .. ".dotfiles",
+        --   ["project"] = os.getenv("PROJECT_DIR"),
+        -- },
+      },
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = "smart_case",
+      },
+      undo = {
+        mappings = {
+          ["<CR>"] = require("telescope-undo.actions").restore,
+          ["<C-a>"] = require("telescope-undo.actions").yank_additions,
+          ["<C-d>"] = require("telescope-undo.actions").yank_deletions,
+        },
+      },
+    },
+  })
+
+  -- Extensions
+  -- require("telescope").load_extension("fzf")
+  require("telescope").load_extension("undo")
+  require("telescope").load_extension("harpoon")
+  require("telescope").load_extension("frecency")
+  require("telescope").load_extension("refactoring")
 end
 
-telescope.setup({
-  defaults = {
-    -- Appearance
-    entry_prefix = "  ",
-    prompt_prefix = "   ",
-    selection_caret = "  ",
-    color_devicons = true,
-    path_display = { "smart" },
-    dynamic_preview_title = true,
-
-    sorting_strategy = "ascending",
-    layout_strategy = "horizontal",
-    layout_config = {
-      horizontal = {
-        preview_width = 0.55,
-        prompt_position = "top",
-        width = 0.9,
-      },
-      center = {
-        anchor = "N",
-        width = 0.9,
-        preview_cutoff = 10,
-      },
-      vertical = {
-        height = 0.9,
-        preview_height = 0.3,
-        width = 0.9,
-        preview_cutoff = 10,
-        prompt_position = "top",
-      },
-    },
-
-    -- Searching
-    set_env = { COLORTERM = "truecolor" },
-    file_ignore_patterns = {
-      ".git/",
-      "%.csv",
-      "%.jpg",
-      "%.jpeg",
-      "%.png",
-      "%.svg",
-      "%.otf",
-      "%.ttf",
-      "%.lock",
-      "__pycache__",
-      "%.sqlite3",
-      "%.ipynb",
-      "vendor",
-      "node_modules",
-      "dotbot",
-    },
-    file_sorter = require("telescope.sorters").get_fuzzy_file,
-
-    -- Mappings
-    mappings = {
-      i = {
-        ["<esc>"] = require("telescope.actions").close,
-        ["<C-e>"] = custom_actions.multi_select,
-        ["<C-j>"] = require("telescope.actions").move_selection_next,
-        ["<C-d>"] = require("telescope.actions").preview_scrolling_down,
-        ["<C-f>"] = require("telescope.actions").preview_scrolling_up,
-        ["<C-k>"] = require("telescope.actions").move_selection_previous,
-        ["<C-q>"] = require("telescope.actions").send_to_qflist,
-      },
-      n = {
-        ["q"] = require("telescope.actions").close,
-        ["<C-n>"] = require("telescope.actions").move_selection_next,
-        ["<C-p>"] = require("telescope.actions").move_selection_previous,
-      },
-    },
-  },
-
-  extensions = {
-    frecency = {
-      show_scores = false,
-      show_unindexed = true,
-      ignore_patterns = {
-        "*.git/*",
-        "*/tmp/*",
-        "*/node_modules/*",
-        "*/vendor/*",
-      },
-      -- workspaces = {
-      --   ["nvim"] = os.getenv("HOME_DIR") .. ".config/nvim",
-      --   ["dots"] = os.getenv("HOME_DIR") .. ".dotfiles",
-      --   ["project"] = os.getenv("PROJECT_DIR"),
-      -- },
-    },
-    fzf = {
-      fuzzy = true,
-      override_generic_sorter = true,
-      override_file_sorter = true,
-      case_mode = "smart_case",
-    },
-    undo = {
-      mappings = {
-        ["<CR>"] = require("telescope-undo.actions").restore,
-        ["<C-a>"] = require("telescope-undo.actions").yank_additions,
-        ["<C-d>"] = require("telescope-undo.actions").yank_deletions,
-      },
-    },
-  },
-})
+return M

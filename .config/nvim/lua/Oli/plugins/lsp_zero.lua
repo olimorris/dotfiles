@@ -1,125 +1,151 @@
-local ok, lsp = om.safe_require("lsp-zero")
-local legendary_installed, legendary = om.safe_require("legendary", { silent = true })
-if not ok or not legendary_installed then return end
--------------------------------------LSP------------------------------------ {{{
-lsp.preset("lsp-compe")
+local M = {
+  "VonHeikemen/lsp-zero.nvim",
+  dependencies = {
+    -- LSP Support
+    "neovim/nvim-lspconfig",
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
 
-lsp.set_preferences({
-  set_lsp_keymaps = false,
-  sign_icons = {
-    error = " ",
-    warn = " ",
-    hint = " ",
-    info = " ",
+    -- Autocompletion
+    "hrsh7th/nvim-cmp",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-cmdline",
+    "saadparwaiz1/cmp_luasnip",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-nvim-lsp-signature-help",
+    "hrsh7th/cmp-nvim-lua",
+    "onsails/lspkind.nvim",
+
+    -- Snippets
+    "L3MON4D3/LuaSnip",
+    "rafamadriz/friendly-snippets",
   },
-})
+}
 
-lsp.ensure_installed({
-  "bashls",
-  "cssls",
-  "dockerls",
-  "html",
-  "intelephense",
-  "jsonls",
-  "pyright",
-  "solargraph",
-  "sumneko_lua",
-  "tailwindcss",
-  "tsserver",
-  "vuels",
-  "yamlls",
-})
+function M.config()
+  local legendary_installed, legendary = pcall(require, "legendary")
 
-lsp.nvim_workspace()
+  local lsp = require("lsp-zero")
 
-lsp.on_attach(function(client, bufnr)
-  if legendary_installed then
-    legendary.keymaps(require(config_namespace .. ".core.keymaps").lsp_keymaps(client, bufnr))
-    legendary.autocmds(require(config_namespace .. ".core.autocmds").lsp_autocmds(client, bufnr))
-    legendary.commands(require(config_namespace .. ".core.commands").lsp_commands(client, bufnr))
-  end
-end)
+  lsp.preset("lsp-compe")
 
-lsp.setup()
-
-vim.diagnostic.config({
-  severity_sort = true,
-  signs = true,
-  underline = false,
-  update_in_insert = false,
-  virtual_text = false,
-  -- virtual_text = {
-  --   prefix = "",
-  --   spacing = 0,
-  -- },
-})
----------------------------------------------------------------------------- }}}
----------------------------------COMPLETION--------------------------------- {{{
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
-
-local cmp = require("cmp")
-local luasnip = require("luasnip")
-local cmp_config = lsp.defaults.cmp_config({
-  formatting = {
-    format = function(...) return require("lspkind").cmp_format({ mode = "symbol_text" })(...) end,
-  },
-  window = {
-    bordered = {
-      border = "none",
-      winhighlight = "Normal:CmpMenu,FloatBorder:CmpMenu,CursorLine:CmpCursorLine,Search:None",
+  lsp.set_preferences({
+    set_lsp_keymaps = false,
+    sign_icons = {
+      error = " ",
+      warn = " ",
+      hint = " ",
+      info = " ",
     },
-  },
-  mapping = {
-    -- go to next placeholder in the snippet
-    ["<C-l>"] = cmp.mapping(function(fallback)
-      if luasnip.jumpable(1) then
-        luasnip.jump(1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
+  })
 
-    -- go to previous placeholder in the snippet
-    ["<C-h>"] = cmp.mapping(function(fallback)
-      if luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-  },
-  sources = {
-    { name = "luasnip", priority = 100, keyword_length = 2, max_item_count = 8 },
-    { name = "nvim_lsp", priority = 90, keyword_length = 3, max_item_count = 8 },
-    { name = "path", priority = 20 },
-    { name = "buffer", priority = 10, keyword_length = 3, max_item_count = 8 },
-    { name = "nvim_lua" },
-    { name = "nvim_lsp_signature_help" },
-  },
-})
+  lsp.ensure_installed({
+    "bashls",
+    "cssls",
+    "dockerls",
+    "html",
+    "intelephense",
+    "jsonls",
+    "pyright",
+    "solargraph",
+    "sumneko_lua",
+    "tailwindcss",
+    "tsserver",
+    "vuels",
+    "yamlls",
+  })
 
-cmp.setup(cmp_config)
+  lsp.nvim_workspace()
 
-cmp.setup.cmdline(":", {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = "path" },
-  }, {
-    {
-      name = "cmdline",
-      option = {
-        ignore_cmds = { "Man", "!" },
+  lsp.on_attach(function(client, bufnr)
+    if legendary_installed then
+      legendary.keymaps(require(config_namespace .. ".keymaps").lsp_keymaps(client, bufnr))
+      legendary.autocmds(require(config_namespace .. ".autocmds").lsp_autocmds(client, bufnr))
+      legendary.commands(require(config_namespace .. ".commands").lsp_commands(client, bufnr))
+    end
+  end)
+
+  lsp.setup()
+
+  vim.diagnostic.config({
+    severity_sort = true,
+    signs = true,
+    underline = false,
+    update_in_insert = false,
+    virtual_text = false,
+    -- virtual_text = {
+    --   prefix = "",
+    --   spacing = 0,
+    -- },
+  })
+  vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
+  local cmp = require("cmp")
+  local luasnip = require("luasnip")
+  local cmp_config = lsp.defaults.cmp_config({
+    formatting = {
+      format = function(...) return require("lspkind").cmp_format({ mode = "symbol_text" })(...) end,
+    },
+    window = {
+      bordered = {
+        border = "none",
+        winhighlight = "Normal:CmpMenu,FloatBorder:CmpMenu,CursorLine:CmpCursorLine,Search:None",
       },
     },
-  }),
-})
+    mapping = {
+      -- go to next placeholder in the snippet
+      ["<C-l>"] = cmp.mapping(function(fallback)
+        if luasnip.jumpable(1) then
+          luasnip.jump(1)
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
 
-cmp.setup.cmdline("/", {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = "buffer" },
-  },
-})
+      -- go to previous placeholder in the snippet
+      ["<C-h>"] = cmp.mapping(function(fallback)
+        if luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+    },
+    sources = {
+      { name = "luasnip", priority = 100, keyword_length = 2, max_item_count = 8 },
+      { name = "nvim_lsp", priority = 90, keyword_length = 3, max_item_count = 8 },
+      { name = "path", priority = 20 },
+      { name = "buffer", priority = 10, keyword_length = 3, max_item_count = 8 },
+      { name = "nvim_lua" },
+      { name = "nvim_lsp_signature_help" },
+    },
+  })
 
-if legendary_installed then legendary.keymaps(require(config_namespace .. ".core.keymaps").completion_keymaps()) end
----------------------------------------------------------------------------- }}}
+  cmp.setup(cmp_config)
+
+  cmp.setup.cmdline(":", {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = "path" },
+    }, {
+      {
+        name = "cmdline",
+        option = {
+          ignore_cmds = { "Man", "!" },
+        },
+      },
+    }),
+  })
+
+  cmp.setup.cmdline("/", {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = "buffer" },
+    },
+  })
+
+  if legendary_installed then legendary.keymaps(require(config_namespace .. ".keymaps").completion_keymaps()) end
+end
+
+return M

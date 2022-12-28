@@ -1,12 +1,11 @@
-local M = {}
+local M = {
+  "L3MON4D3/LuaSnip"
+}
 
-function M.setup()
-  local ok, luasnip = om.safe_require("luasnip")
-  if not ok then return end
-
+function M.config()
   local types = require("luasnip.util.types")
 
-  luasnip.config.set_config({
+  require("luasnip").config.set_config({
     history = true,
     updateevents = "TextChanged,TextChangedI",
     region_check_events = "CursorMoved,CursorHold,InsertEnter",

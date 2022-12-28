@@ -156,10 +156,10 @@ function om.ToggleTheme(mode)
 
   if vim.o.background == "dark" then
     vim.cmd([[colorscheme onelight]])
-    require(config_namespace .. ".plugins.statusline").setup()
+    require(config_namespace .. ".plugins.statusline").config()
   else
     vim.cmd([[colorscheme onedark]])
-    require(config_namespace .. ".plugins.statusline").setup()
+    require(config_namespace .. ".plugins.statusline").config()
   end
 end
 
