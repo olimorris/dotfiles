@@ -34,7 +34,6 @@ neofetch
 neovim
 ninja
 node
-openssl@3
 php-cs-fixer
 reattach-to-user-namespace
 ripgrep
@@ -50,4 +49,5 @@ vivid
 watchman
 wget
 yarn
+zoxide
 zsh-completions
