@@ -48,31 +48,31 @@ function M.config()
       dark = {
         vim = "#81b766", -- green
         comment = "#5c6370", -- Revert back to original comment colors
-        cmp_menu = "require('onedarkpro.helpers').darken('onedark', 'bg', 5)",
-        cmp_cursorline = "require('onedarkpro.helpers').darken('onedark', 'bg', 8)",
+        cmp_menu = "require('onedarkpro.helpers').darken('bg', 5, 'onedark')",
+        cmp_cursorline = "require('onedarkpro.helpers').darken('bg', 8, 'onedark')",
         cursorline = "#2e323b",
         indentline = "#3c414d",
         buffer_color = "#939aa3",
         statusline_bg = "#2e323b", -- gray
-        telescope_prompt = "require('onedarkpro.helpers').darken('onedark', 'bg', 1)",
-        telescope_results = "require('onedarkpro.helpers').darken('onedark', 'bg', 4)",
-        telescope_preview = "require('onedarkpro.helpers').darken('onedark', 'bg', 6)",
-        copilot = "require('onedarkpro.helpers').darken('onedark', 'gray', 8)",
-        breadcrumbs = "require('onedarkpro.helpers').darken('onedark', 'gray', 10)",
+        telescope_prompt = "require('onedarkpro.helpers').darken('bg', 1, 'onedark')",
+        telescope_results = "require('onedarkpro.helpers').darken('bg', 4, 'onedark')",
+        telescope_preview = "require('onedarkpro.helpers').darken('bg', 6, 'onedark')",
+        copilot = "require('onedarkpro.helpers').darken('gray', 8, 'onedark')",
+        breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'onedark')",
       },
       light = {
         vim = "#029632", -- green
-        cmp_menu = "require('onedarkpro.helpers').darken('onelight', 'bg', 4)",
-        cmp_cursorline = "require('onedarkpro.helpers').darken('onelight', 'bg', 8)",
+        cmp_menu = "require('onedarkpro.helpers').darken('bg', 4, 'onelight')",
+        cmp_cursorline = "require('onedarkpro.helpers').darken('bg', 8, 'onelight')",
         comment = "#bebebe", -- Revert back to original comment colors
         scrollbar = "#eeeeee",
         buffer_color = "#6a6a6a",
         statusline_bg = "#f0f0f0", -- gray
-        telescope_prompt = "require('onedarkpro.helpers').darken('onelight', 'bg', 2)",
-        telescope_results = "require('onedarkpro.helpers').darken('onelight', 'bg', 5)",
-        telescope_preview = "require('onedarkpro.helpers').darken('onelight', 'bg', 7)",
-        copilot = "require('onedarkpro.helpers').lighten('onelight', 'gray', 8)",
-        breadcrumbs = "require('onedarkpro.helpers').lighten('onelight', 'gray', 8)",
+        telescope_prompt = "require('onedarkpro.helpers').darken('bg', 2, 'onelight')",
+        telescope_results = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
+        telescope_preview = "require('onedarkpro.helpers').darken('bg', 7, 'onelight')",
+        copilot = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
+        breadcrumbs = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
       },
     },
     highlights = {
