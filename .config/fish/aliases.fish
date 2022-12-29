@@ -154,7 +154,6 @@ alias tsa='tmux-sendall'                # Send a command to all windows and pane
 alias tks='tmux kill-server'            # Kill everything
 alias tl='tmux list-sessions'           # List all of the open tmux sessions
 alias ts='tmux choose-session'          # Choose a session to attach to
-# alias tn='tmux attach || tmux new -A -s default'          # Create a new tmux session or attach
 alias tk='tmux kill-session -t'         # Kill a named tmux session
 alias t='tmux attach || tmux new-session'   # Attaches tmux to the last session; creates a new session if none exists.
 alias tpi='$HOME/.config/tmux/plugins/tpm/bin/install_plugins' # Installs Tmux plugins
