@@ -1,14 +1,14 @@
 return {
-  {
-    name = "ColorSchemeChanges",
-    {
-      { "ColorScheme" },
-      function() require(config_namespace .. ".plugins.heirline").load() end,
-      opts = {
-        pattern = { "*" },
-      },
-    },
-  },
+  -- {
+  --   name = "ColorSchemeChanges",
+  --   {
+  --     { "ColorScheme" },
+  --     function() require(config_namespace .. ".plugins.heirline").load() end,
+  --     opts = {
+  --       pattern = { "*" },
+  --     },
+  --   },
+  -- },
   {
     name = "GitTrackRemoteBranch",
     {

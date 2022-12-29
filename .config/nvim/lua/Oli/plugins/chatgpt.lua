@@ -8,6 +8,12 @@ local M = {
   },
 }
 
+function M.init()
+  require("legendary").keymaps({
+    { "<C-a>", "<cmd>ChatGPT<CR>", description = "Open ChatGPT" },
+  })
+end
+
 function M.config()
   require("chatgpt").setup({
     welcome_message = "",
@@ -26,10 +32,6 @@ function M.config()
         winhighlight = "Normal:ChatGPTPrompt,ChatGPTPrompt:FloatBorder",
       },
     },
-  })
-
-  require("legendary").keymaps({
-    { "<C-a>", "<cmd>ChatGPT<CR>", description = "Open ChatGPT" },
   })
 end
 

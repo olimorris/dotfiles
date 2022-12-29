@@ -822,7 +822,7 @@ end
 function M.load()
   local heirline = require("heirline")
 
-  heirline.load_colors(require("onedarkpro").get_colors())
+  heirline.load_colors(require("onedarkpro.helpers").get_colors())
   heirline.setup(statusline(), nil, bufferline())
 
   vim.o.showtabline = 2

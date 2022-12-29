@@ -140,6 +140,7 @@ return {
   },
   {
     "ThePrimeagen/refactoring.nvim", -- Refactor code like Martin Fowler
+    lazy = true,
     init = function()
       require("legendary").keymaps({
         {
@@ -266,15 +267,17 @@ return {
   {
     "dstein64/vim-startuptime", -- Profile your Neovim startup time
     cmd = "StartupTime",
-    config = function()
-      vim.g.startuptime_tries = 15
-      vim.g.startuptime_exe_args = { "+let g:auto_session_enabled = 0" }
+    init = function()
       require("legendary").commands({
         {
           ":StartupTime",
           description = "Profile Neovim's startup time",
         },
       })
+    end,
+    config = function()
+      vim.g.startuptime_tries = 15
+      vim.g.startuptime_exe_args = { "+let g:auto_session_enabled = 0" }
     end,
   },
 }
