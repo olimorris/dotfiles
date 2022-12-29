@@ -2,11 +2,10 @@ set -x FZF_DEFAULT_OPTS
 set -a FZF_DEFAULT_OPTS --height=70%
 set -a FZF_DEFAULT_OPTS --multi
 set -a FZF_DEFAULT_OPTS --border
-set -a FZF_DEFAULT_OPTS --preview-window=:hidden
-set -a FZF_DEFAULT_OPTS --inline-info
+# set -a FZF_DEFAULT_OPTS --preview-window=:hidden
 set -a FZF_DEFAULT_OPTS --history=$HOME/.fzf_history
 set -a FZF_DEFAULT_OPTS --bind=ctrl-t:top
-set -a FZF_DEFAULT_OPTS --pointer='▶' --marker='✓'
+set -a FZF_DEFAULT_OPTS --marker='✓'
 
 if [ "$macOS_Theme" = light ]
     set FZF_DEFAULT_OPTS $FZF_DEFAULT_OPTS --color bg:'#fafafa',bg+:'#fafafa',fg:'#6a6a6a'
