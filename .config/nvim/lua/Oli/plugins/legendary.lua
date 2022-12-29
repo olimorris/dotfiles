@@ -1,6 +1,6 @@
 local M = {
   "mrjones2014/legendary.nvim", -- A command palette for keymaps, commands and autocmds
-  lazy = true,
+  lazy = false, -- Never lazy load this
   priority = 900,
   dependencies = "kkharji/sqlite.lua",
 }

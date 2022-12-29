@@ -2,6 +2,12 @@ local M = {
   "stevearc/aerial.nvim", -- Toggled list of classes, methods etc in current file
 }
 
+function M.init()
+  require("legendary").keymaps({
+    { "<C-t>", "<cmd>AerialToggle<CR>", description = "Aerial" },
+  })
+end
+
 function M.config()
   require("telescope").load_extension("aerial")
 
@@ -15,10 +21,6 @@ function M.config()
       min_width = 30,
       default_direction = "prefer_left",
     },
-  })
-
-  require("legendary").keymaps({
-    { "<C-t>", "<cmd>AerialToggle<CR>", hide = true, description = "Aerial" },
   })
 end
 

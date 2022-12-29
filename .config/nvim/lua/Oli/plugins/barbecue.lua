@@ -6,6 +6,15 @@ local M = {
   },
 }
 
+function M.init()
+  require("legendary").commands({
+    {
+      ":Barbecue toggle",
+      description = "Toggle Barbecue's winbar",
+    },
+  })
+end
+
 function M.config()
   require("barbecue").setup({
     exclude_filetypes = { "netrw", "toggleterm" },
@@ -15,13 +24,6 @@ function M.config()
     },
     modifiers = {
       dirname = ":~:.:s?.config/nvim/lua?Neovim?",
-    },
-  })
-
-  require("legendary").commands({
-    {
-      ":Barbecue toggle",
-      description = "Toggle Barbecue's winbar",
     },
   })
 end

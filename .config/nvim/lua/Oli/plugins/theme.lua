@@ -4,7 +4,7 @@ local M = {
   name = "onedarkpro",
 }
 
-function M.config()
+function M.init()
   require("legendary").commands({
     {
       ":OnedarkproCache",
@@ -19,8 +19,11 @@ function M.config()
       description = "Show the theme's colors",
     },
   })
+end
 
+function M.config()
   require("onedarkpro").setup({
+    caching = false,
     cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
     plugins = {
       barbar = false,
@@ -76,6 +79,7 @@ function M.config()
       },
     },
     highlights = {
+      -- ["@variable"] = { bg = "${blue}"},
       CursorLineNr = { bg = "${cursorline}", fg = "${purple}", style = "bold" },
       DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
       CmpMenu = { bg = "${cmp_menu}" },

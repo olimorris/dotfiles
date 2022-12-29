@@ -2,6 +2,15 @@ local M = {
   "goolord/alpha-nvim", -- Dashboard for Neovim
 }
 
+function M.init()
+  require("legendary").commands({
+    {
+      ":Alpha",
+      description = "Show the Alpha dashboard",
+    },
+  })
+end
+
 function M.config()
   local alpha = require("alpha")
 
@@ -10,8 +19,8 @@ function M.config()
 
   -- Terminal header
   dashboard.section.terminal.command = "cat | lolcat --seed=24 "
-    .. os.getenv("HOME")
-    .. "/.config/nvim/static/neovim.cat"
+      .. os.getenv("HOME")
+      .. "/.config/nvim/static/neovim.cat"
   dashboard.section.terminal.width = 69
   dashboard.section.terminal.height = 8
 
@@ -60,13 +69,6 @@ function M.config()
   dashboard.config.opts.noautocmd = true
 
   alpha.setup(dashboard.opts)
-
-  require("legendary").commands({
-    {
-      ":Alpha",
-      description = "Show the Alpha dashboard",
-    },
-  })
 end
 
 return M

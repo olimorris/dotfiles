@@ -3,20 +3,7 @@ local M = {
   event = "InsertEnter",
 }
 
-function M.config()
-  require("copilot").setup({
-    panel = {
-      auto_refresh = true,
-    },
-    suggestion = {
-      auto_trigger = true, -- Suggest as we start typing
-      keymap = {
-        accept_word = "<C-l>",
-        accept_line = "<C-j>",
-      },
-    },
-  })
-
+function M.init()
   require("legendary").keymaps({
     {
       itemgroup = "Copilot",
@@ -59,6 +46,21 @@ function M.config()
       ":CopilotToggle",
       function() require("copilot.suggestion").toggle_auto_trigger() end,
       description = "Toggle on/off for buffer",
+    },
+  })
+end
+
+function M.config()
+  require("copilot").setup({
+    panel = {
+      auto_refresh = true,
+    },
+    suggestion = {
+      auto_trigger = true, -- Suggest as we start typing
+      keymap = {
+        accept_word = "<C-l>",
+        accept_line = "<C-j>",
+      },
     },
   })
 end

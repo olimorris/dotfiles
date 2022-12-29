@@ -7,6 +7,41 @@ local M = {
   },
 }
 
+function M.init()
+  require("legendary").keymaps({
+    {
+      itemgroup = "Debug",
+      description = "Debugging functionality",
+      icon = "",
+      keymaps = {
+        {
+          "<F1>",
+          "<cmd>lua require('dap').toggle_breakpoint()<CR>",
+          description = "Set breakpoint",
+        },
+        { "<F2>", "<cmd>lua require('dap').continue()<CR>", description = "Continue" },
+        { "<F3>", "<cmd>lua require('dap').step_into()<CR>", description = "Step into" },
+        { "<F4>", "<cmd>lua require('dap').step_over()<CR>", description = "Step over" },
+        {
+          "<F5>",
+          "<cmd>lua require('dap').repl.toggle({height = 6})<CR>",
+          description = "Toggle REPL",
+        },
+        { "<F6>", "<cmd>lua require('dap').repl.run_last()<CR>", description = "Run last" },
+        {
+          "<F9>",
+          function()
+            local _, dap = om.safe_require("dap")
+            dap.disconnect()
+            require("dapui").close()
+          end,
+          description = "Stop",
+        },
+      },
+    },
+  })
+end
+
 function M.config()
   local dap = require("dap")
 
@@ -119,39 +154,6 @@ function M.config()
   signs_setup()
   ruby_setup(dap)
   ui_setup(dap)
-
-  require("legendary").keymaps({
-    {
-      itemgroup = "Debug",
-      description = "Debugging functionality",
-      icon = "",
-      keymaps = {
-        {
-          "<F1>",
-          "<cmd>lua require('dap').toggle_breakpoint()<CR>",
-          description = "Set breakpoint",
-        },
-        { "<F2>", "<cmd>lua require('dap').continue()<CR>", description = "Continue" },
-        { "<F3>", "<cmd>lua require('dap').step_into()<CR>", description = "Step into" },
-        { "<F4>", "<cmd>lua require('dap').step_over()<CR>", description = "Step over" },
-        {
-          "<F5>",
-          "<cmd>lua require('dap').repl.toggle({height = 6})<CR>",
-          description = "Toggle REPL",
-        },
-        { "<F6>", "<cmd>lua require('dap').repl.run_last()<CR>", description = "Run last" },
-        {
-          "<F9>",
-          function()
-            local _, dap = om.safe_require("dap")
-            dap.disconnect()
-            require("dapui").close()
-          end,
-          description = "Stop",
-        },
-      },
-    },
-  })
 end
 
 return M

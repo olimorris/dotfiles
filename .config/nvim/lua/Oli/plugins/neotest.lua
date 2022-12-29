@@ -10,6 +10,41 @@ local M = {
   },
 }
 
+function M.init()
+  require("legendary").keymaps({
+    {
+      itemgroup = "Neotest",
+      icon = "省",
+      description = "Testing functionality",
+      keymaps = {
+        -- Neotest plugin
+        { "<LocalLeader>t", '<cmd>lua require("neotest").run.run()<CR>', description = "Neotest: Test nearest" },
+        {
+          "<LocalLeader>tf",
+          '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>',
+          description = "Neotest: Test file",
+        },
+        {
+          "<LocalLeader>tl",
+          '<cmd>lua require("neotest").run.run_last()<CR>',
+          description = "Neotest: Run last test",
+        },
+        {
+          "<LocalLeader>ts",
+          function()
+            local neotest = require("neotest")
+            for _, adapter_id in ipairs(neotest.run.adapters()) do
+              neotest.run.run({ suite = true, adapter = adapter_id })
+            end
+          end,
+          description = "Neotest: Test suite",
+        },
+        { "`", '<cmd>lua require("neotest").summary.toggle()<CR>', description = "Neotest: Toggle test summary" },
+      },
+    },
+  })
+end
+
 function M.config()
   require("neotest").setup({
     adapters = {
@@ -53,39 +88,6 @@ function M.config()
         run = "r",
         short = "O",
         stop = "u",
-      },
-    },
-  })
-
-  require("legendary").keymaps({
-    {
-      itemgroup = "Testing",
-      icon = "省",
-      description = "Testing functionality",
-      keymaps = {
-        -- Neotest plugin
-        { "<LocalLeader>t", '<cmd>lua require("neotest").run.run()<CR>', description = "Neotest: Test nearest" },
-        {
-          "<LocalLeader>tf",
-          '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>',
-          description = "Neotest: Test file",
-        },
-        {
-          "<LocalLeader>tl",
-          '<cmd>lua require("neotest").run.run_last()<CR>',
-          description = "Neotest: Run last test",
-        },
-        {
-          "<LocalLeader>ts",
-          function()
-            local neotest = require("neotest")
-            for _, adapter_id in ipairs(neotest.run.adapters()) do
-              neotest.run.run({ suite = true, adapter = adapter_id })
-            end
-          end,
-          description = "Neotest: Test suite",
-        },
-        { "`", '<cmd>lua require("neotest").summary.toggle()<CR>', description = "Neotest: Toggle test summary" },
       },
     },
   })

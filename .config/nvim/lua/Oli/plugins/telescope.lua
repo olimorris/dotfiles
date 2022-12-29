@@ -43,6 +43,43 @@ local M = {
   },
 }
 
+function M.init()
+  local t = require("legendary.toolbox")
+  require("legendary").keymaps({
+    {
+      itemgroup = "Telescope",
+      description = "Gaze deeply into unknown regions using the power of the moon",
+      icon = "",
+      keymaps = {
+        {
+          "<C-f>",
+          t.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
+          description = "Find files",
+        },
+        {
+          "<C-g>",
+          t.lazy_required_fn(
+            "telescope.builtin",
+            "live_grep",
+            { path_display = { "shorten" }, grep_open_files = true }
+          ),
+          description = "Find in open files",
+        },
+        {
+          "<Leader>g",
+          t.lazy_required_fn("telescope.builtin", "live_grep", { path_display = { "smart" } }),
+          description = "Find in pwd",
+        },
+        {
+          "<Leader><Leader>",
+          "<cmd>lua require('telescope').extensions.frecency.frecency({ workspace = 'CWD' })<CR>",
+          description = "Find recent files",
+        },
+      },
+    },
+  })
+end
+
 function M.config()
   local actions = require("telescope.actions")
   local action_state = require("telescope.actions.state")
@@ -179,42 +216,6 @@ function M.config()
   telescope.load_extension("harpoon")
   telescope.load_extension("frecency")
   telescope.load_extension("refactoring")
-
-  -- Keymaps
-  local t = require("legendary.toolbox")
-  require("legendary").keymaps({
-    {
-      itemgroup = "Telescope",
-      description = "Gaze deeply into unknown regions using the power of the moon",
-      icon = "",
-      keymaps = {
-        {
-          "<C-f>",
-          t.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
-          description = "Find files",
-        },
-        {
-          "<C-g>",
-          t.lazy_required_fn(
-            "telescope.builtin",
-            "live_grep",
-            { path_display = { "shorten" }, grep_open_files = true }
-          ),
-          description = "Find in open files",
-        },
-        {
-          "<Leader>g",
-          t.lazy_required_fn("telescope.builtin", "live_grep", { path_display = { "smart" } }),
-          description = "Find in pwd",
-        },
-        {
-          "<Leader><Leader>",
-          "<cmd>lua require('telescope').extensions.frecency.frecency({ workspace = 'CWD' })<CR>",
-          description = "Find recent files",
-        },
-      },
-    },
-  })
 end
 
 return M

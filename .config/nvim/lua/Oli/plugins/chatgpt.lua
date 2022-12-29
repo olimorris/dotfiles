@@ -1,16 +1,38 @@
 local M = {
   "jackmort/chatgpt.nvim", -- AI programming
-  cmd = "ChatGPT",
   dependencies = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope.nvim",
   },
+  cmd = { "ChatGPT", "ChatGPTActAs", "ChatGPTEditWithInstructions" },
 }
 
 function M.init()
   require("legendary").keymaps({
-    { "<C-a>", "<cmd>ChatGPT<CR>", description = "Open ChatGPT" },
+    {
+      itemgroup = "ChatGPT",
+      icon = "ﮧ",
+      description = "Use ChatGPT to generate code",
+      keymaps = {
+        { "<C-a>", "<cmd>ChatGPT<CR>", description = "Ask a question..." },
+      },
+    },
+  })
+  require("legendary").commands({
+    {
+      itemgroup = "ChatGPT",
+      commands = {
+        {
+          ":ChatGPTActAs",
+          description = "Ask a question, acting as...",
+        },
+        {
+          ":ChatGPTEditWithInstructions",
+          description = "Open an interactive window",
+        }
+      },
+    },
   })
 end
 

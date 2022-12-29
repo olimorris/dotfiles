@@ -5,7 +5,15 @@ local M = {
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
   },
+  cmd = "Neotree",
 }
+
+function M.init()
+  require("legendary").keymaps({
+    { "<C-n>", "<cmd>Neotree toggle<CR>", hide = true, description = "Neotree: Toggle" },
+    { "<C-z>", "<cmd>Neotree reveal=true toggle<CR>", hide = true, description = "Neotree: Reveal File" },
+  })
+end
 
 function M.config()
   require("neo-tree").setup({
