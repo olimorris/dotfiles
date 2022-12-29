@@ -20,8 +20,12 @@ lazy.setup(config_namespace .. ".plugins", {
     notify = false,
     frequency = 900,
   },
+  change_detection = {
+    enabled = true,
+    notify = false,
+  },
   install = {
-    colorscheme = { "onedark" },
+    colorscheme = { "onedark", "onelight" },
   },
   ui = {
     icons = {
