@@ -1,10 +1,6 @@
 {
-  "Print table": {
-    "prefix": ["pt"],
-    "body": ["om.print_table($0)"]
-  },
   "Print table (safe)": {
     "prefix": ["pp"],
     "body": ["require('pl.pretty').dump($0)"]
-  },
+  }
 }
