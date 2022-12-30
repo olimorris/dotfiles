@@ -245,6 +245,13 @@ namespace :update do
     run %( rustup update )
   end
 
+  desc 'Update Cargo packages'
+  task :cargo do
+    section 'Updating Cargo packages'
+
+    run %( cargo install-update -a )
+  end
+
   desc 'Update PIP files'
   task :pip do
     section 'Updating PIP files'
@@ -271,13 +278,6 @@ namespace :update do
     section 'Updating Ruby Gems'
 
     run %( gem update --system && gem update )
-  end
-
-  desc 'Update Cargo packages'
-  task :cargo do
-    section 'Updating Cargo packages'
-
-    run %( cargo install-update -a )
   end
 
   desc 'Update Fish'

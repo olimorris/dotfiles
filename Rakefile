@@ -63,11 +63,13 @@ task :update do
   Rake::Task['update:brew'].invoke
   Rake::Task['update:dotbot'].invoke
   # Rake::Task['update:neovim'].invoke
+  # Rake::Task['update:neovim_plugins'].invoke
   Rake::Task['update:vim_plugins'].invoke
+  Rake::Task['update:rust'].invoke
+  Rake::Task['update:cargo'].invoke
   Rake::Task['update:pip'].invoke
   Rake::Task['update:npm'].invoke
   Rake::Task['update:gems'].invoke
-  Rake::Task['update:cargo'].invoke
   Rake::Task['update:fish'].invoke
   Rake::Task['update:tmux'].invoke
   Rake::Task['update:rails'].invoke
