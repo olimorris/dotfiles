@@ -89,13 +89,6 @@ return {
     description = "Find and replace within the buffer",
     keymaps = {
       {
-        -- SSR plugin
-        "<LocalLeader>fs",
-        function() require("ssr").open() end,
-        description = "Structured Find and Replace",
-        mode = { "n", "x" },
-      },
-      {
         "<LocalLeader>fw",
         [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
         description = "Replace cursor words in buffer",

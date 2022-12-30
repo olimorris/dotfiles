@@ -1,5 +1,6 @@
 return {
   "nvim-lua/plenary.nvim", -- Required dependency for many plugins. Super useful Lua functions
+  "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
   {
     "NvChad/nvim-colorizer.lua", -- Highlight hex and rgb colors within Neovim
     cmd = "ColorizerToggle",
@@ -35,6 +36,7 @@ return {
   },
   {
     "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
+    event = "BufEnter",
     init = function()
       require("legendary").keymaps({
         { "<Leader>t", "<cmd>TodoTelescope<CR>", description = "Todo comments" },
@@ -72,32 +74,31 @@ return {
       },
     },
   },
-  "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
   {
     "fedepujol/move.nvim", -- Move lines and blocks
     init = function()
       require("legendary").keymaps({
         {
           "<A-j>",
-          { n = ":MoveLine(1)<CR>", x = ":MoveBlock(1)<CR>" },
+          { n = "<cmd>MoveLine(1)<CR>", x = "<cmd>MoveBlock(1)<CR>" },
           hide = true,
           description = "Move text down",
         },
         {
           "<A-k>",
-          { n = ":MoveLine(-1)<CR>", x = ":MoveBlock(-1)<CR>" },
+          { n = "<cmd>MoveLine(-1)<CR>", x = "<cmd>MoveBlock(-1)<CR>" },
           hide = true,
           description = "Move text up",
         },
         {
           "<A-h>",
-          { n = ":MoveHChar(-1)<CR>", x = ":MoveHBlock(-1)<CR>" },
+          { n = "<cmd>MoveHChar(-1)<CR>", x = "<cmd>MoveHBlock(-1)<CR>" },
           hide = true,
           description = "Move text left",
         },
         {
           "<A-l>",
-          { n = ":MoveHChar(1)<CR>", x = ":MoveHBlock(1)<CR>" },
+          { n = "<cmd>MoveHChar(1)<CR>", x = "<cmd>MoveHBlock(1)<CR>" },
           hide = true,
           description = "Move text right",
         },
@@ -110,6 +111,7 @@ return {
   },
   {
     "danymat/neogen", -- Annotation generator
+    cmd = "Neogen",
     init = function()
       require("legendary").commands({
         {
@@ -124,6 +126,7 @@ return {
   },
   {
     "numToStr/Comment.nvim", -- Comment out lines with gcc
+    keys = { "gcc", "gc" },
     init = function()
       require("legendary").keymaps({
         {
@@ -181,6 +184,7 @@ return {
   },
   {
     "phaazon/hop.nvim", -- Speedily navigate anywhere in a buffer
+    keys = { "s", "S" },
     init = function()
       require("legendary").keymaps({
         { "s", "<cmd>lua require'hop'.hint_char1()<CR>", hide = true, description = "Hop", mode = { "n", "o" } },
@@ -191,6 +195,18 @@ return {
   {
     "cshuaimin/ssr.nvim", -- Advanced search and replace using Treesitter
     lazy = true,
+    init = function()
+      require("legendary").keymaps({
+        itemgroup = "Find and Replace",
+        keymaps = {
+          {
+            "<LocalLeader>sr",
+            function() require("ssr").open() end,
+            description = "Structured search and replace",
+          },
+        },
+      })
+    end,
     config = {
       keymaps = {
         replace_all = "<C-CR>",
@@ -224,13 +240,11 @@ return {
   },
   {
     "ahmedkhalf/project.nvim", -- Automatically set the cwd to the project root
-    config = function()
-      require("project_nvim").setup({
-        ignore_lsp = { "efm", "null-ls" },
-        patterns = { "Gemfile" },
-      })
-      require("telescope").load_extension("projects")
-    end,
+    name = "project_nvim",
+    config = {
+      ignore_lsp = { "efm", "null-ls" },
+      patterns = { "Gemfile" },
+    },
   },
   {
     "kevinhwang91/nvim-bqf", -- Better quickfix window,
@@ -239,7 +253,7 @@ return {
   {
     "nathom/tmux.nvim", -- Navigate Tmux panes inside of neovim
     enabled = function() return os.getenv("TMUX") end,
-    config = function()
+    init = function()
       require("legendary").keymaps({
         {
           "<C-k>",
