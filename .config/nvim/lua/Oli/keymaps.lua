@@ -118,7 +118,7 @@ return {
 
   -- Misc
   { "<Esc>", "<cmd>:noh<CR>", description = "Clear searches" },
-  { "<S-w>", ":set winbar=<CR>", description = "Hide WinBar" },
+  { "<S-w>", "<cmd>set winbar=<CR>", description = "Hide WinBar" },
   { "<LocalLeader>U", "gUiw`", description = "Capitalize word" },
   { ">", ">gv", hide = true, description = "Indent", mode = { "v" } },
   { "<", "<gv", hide = true, description = "Outdent", mode = { "v" } },
