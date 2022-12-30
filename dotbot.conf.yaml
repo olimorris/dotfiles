@@ -13,6 +13,7 @@
     ~/.config/karabiner: .config/karabiner
     ~/.config/kitty: .config/kitty
     ~/.config/nvim: .config/nvim
+    ~/.config/rclone: .config/rclone
     ~/.config/snippets: .config/snippets
     ~/.config/starship: .config/starship
     ~/.config/tmux: .config/tmux

@@ -17,6 +17,7 @@
 !.config/mackup/**/*
 !.config/nix/**/*
 !.config/nvim/**/*
+!.config/rclone/filter_list.txt
 !.config/snippets/**/*
 !.config/ssh/config
 !.config/starship/**/*

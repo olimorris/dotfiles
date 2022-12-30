@@ -1,0 +1,6 @@
+- Icon␍
+- .DS_Store
+- .git/
+- node_modules/
+- vendor/
+- tmp/
