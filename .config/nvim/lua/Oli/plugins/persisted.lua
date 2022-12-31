@@ -15,6 +15,7 @@ function M.init()
           "<Leader>s",
           '<cmd>lua require("persisted").toggle()<CR>',
           description = "Toggle a session",
+          opts = { silent = true },
         },
       },
     },
