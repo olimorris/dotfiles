@@ -34,6 +34,13 @@ namespace :backup do
 end
 
 namespace :install do
+  desc 'Install XCode'
+  task :xcode do
+    section 'Installing XCode'
+
+    run %( xcode-select --install )
+  end
+
   desc 'Install Homebrew'
   task :brew do
     section 'Installing Homebrew'

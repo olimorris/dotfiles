@@ -19,6 +19,7 @@ task :backup do
   Rake::Task['backup:brew'].invoke
   Rake::Task['backup:mas'].invoke
   Rake::Task['backup:mackup'].invoke
+  Rake::Task['backup:files'].invoke
   Rake::Task['backup:pip'].invoke
   Rake::Task['backup:npm'].invoke
   Rake::Task['backup:gems'].invoke
@@ -28,7 +29,6 @@ desc 'Install Everything'
 task :install do
   section 'Installing'
   Rake::Task['tests:setup'].invoke if testing?
-  Rake::Task['install:symlinks'].invoke
   Rake::Task['install:xcode'].invoke
   Rake::Task['install:brew'].invoke
   Rake::Task['install:brew_packages'].invoke
@@ -52,7 +52,6 @@ task :install do
   Rake::Task['install:launchagents'].invoke
   Rake::Task['install:rails'].invoke
   Rake::Task['install:chmod_dots'].invoke
-  Rake::Task['install:git'].invoke
   Rake::Task['install:hammerspoon'].invoke
 end
 

@@ -195,16 +195,6 @@ namespace :install do
     run %( chmod -R +x ~/.dotfiles/bin/ )
   end
 
-  desc 'Link dotfiles to the Git repository'
-  task :git do
-    section 'Linking dotfiles to the Git repository'
-
-    run %( cd ~/.dotfiles && git init )
-    run %( cd ~/.dotfiles && git remote add origin https://github.com/olimorris/dotfiles.git )
-    run %( cd ~/.dotfiles && git fetch origin )
-    run %( cd ~/.dotfiles && git reset origin/main )
-  end
-
   desc 'Change Hammerspoon directory'
   task :hammerspoon do
     section 'Changing Hammerspoon directory'
