@@ -4,3 +4,8 @@
 - node_modules/
 - vendor/
 - tmp/
+- .config/fish/.tofish/**
+- .config/fish/completions/**
+- .config/fish/functions/**
+- .config/tmux/plugins/**
+- .config/tmux/resurrect/**
