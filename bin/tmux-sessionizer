@@ -7,11 +7,12 @@
 # https://github.com/caarlos0/dotfiles.fish/blob/main/bin/tmux-sessionizer
 
 function search
-	find "$DOTFILES" "$PROJECTS_DIR" -maxdepth 1 |
+	find "$DOTFILES" "$CODE_DIR" -maxdepth 1 -type d |
 		while read p
 			zoxide query -l -s "$p"
+			zoxide query -l -s "$p/" # Needed for Code directories
 		end |
-		sed "s;$PROJECTS_DIR;;" |	# remove the projects prefix
+		sed "s;$CODE_DIR;;" |		# remove the projects prefix
 		sed "s;/Users/Oli;;" |		# remove the home prefix
 		grep "/" |			# only show directories
 		sort -rnk1 |			# sort by score
