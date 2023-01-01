@@ -13,11 +13,13 @@ namespace :backup do
 
   desc 'Backup files'
   task :files do
+    run %( /bin/date -u )
+
     section 'Using RCLONE to backup files to Koofr'
 
-    run %( rclone sync ~/Code koofr:Code --filter-from ~/.config/rclone/filter_list.txt )
-    run %( rclone sync ~/.dotfiles koofr:.dotfiles --filter-from ~/.config/rclone/filter_list.txt )
-    run %( rclone sync ~/Oli\'s\ Documents koofr:Oli\'s\ Documents --filter-from ~/.config/rclone/filter_list.txt )
+    run %( /opt/homebrew/bin/rclone sync ~/Code koofr:Code --filter-from ~/.config/rclone/filter_list.txt )
+    run %( /opt/homebrew/bin/rclone sync ~/.dotfiles koofr:.dotfiles --filter-from ~/.config/rclone/filter_list.txt )
+    run %( /opt/homebrew/bin/rclone sync ~/"Oli's Documents" koofr:"Oli's Documents" --filter-from ~/.config/rclone/filter_list.txt )
   end
 end
 

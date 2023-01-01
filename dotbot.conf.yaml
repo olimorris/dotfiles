@@ -19,6 +19,10 @@
     ~/.config/tmux: .config/tmux
     ~/.config/vivid: .config/vivid
 
+    # Launch Agents
+    ~/Library/LaunchAgents/oli.cloud-backup.plist: LaunchAgents/oli.cloud-backup.plist
+    ~/Library/LaunchAgents/oli.color-mode-notify.plist: LaunchAgents/oli.color-mode-notify.plist
+
     # Others
     ~/.applescript: .config/applescript
     ~/.asdfrc: .config/asdf/.asdfrc

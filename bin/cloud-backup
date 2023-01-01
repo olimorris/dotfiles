@@ -1,0 +1,3 @@
+#!/bin/sh
+
+cd /Users/Oli/.dotfiles && /Users/Oli/.asdf/shims/rake backup:files

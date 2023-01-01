@@ -176,6 +176,7 @@ namespace :install do
   task :launchagents do
     section 'Installing Launch Agents'
 
+    run %( launchctl load -w ~/Library/LaunchAgents/oli.cloud-backup.plist )
     run %( launchctl load -w ~/Library/LaunchAgents/oli.color-mode-notify.plist )
   end
 

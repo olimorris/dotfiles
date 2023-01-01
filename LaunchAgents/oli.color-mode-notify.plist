@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>oli.color-mode-notify</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Users/Oli/.dotfiles/bin/color-mode-notify</string>
+		<string>/Users/Oli/.dotfiles/bin/color-mode</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/Users/Oli/.color-mode-notify-stderr.log</string>
+	<key>StandardOutPath</key>
+	<string>/Users/Oli/.color-mode-notify-stdout.log</string>
+</dict>
+</plist>
