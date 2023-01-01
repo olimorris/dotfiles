@@ -1,5 +1,6 @@
 local M = {
   "utilyre/barbecue.nvim", -- VS Code like path in winbar
+  lazy = true,
   dependencies = {
     "neovim/nvim-lspconfig",
     "nvim_navic",
