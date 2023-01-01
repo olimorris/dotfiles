@@ -23,7 +23,6 @@ end
 
 function M.config()
   require("onedarkpro").setup({
-    caching = false,
     cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
     plugins = {
       barbar = false,
@@ -51,8 +50,6 @@ function M.config()
       dark = {
         vim = "#81b766", -- green
         comment = "#5c6370", -- Revert back to original comment colors
-        cmp_menu = "require('onedarkpro.helpers').darken('bg', 5, 'onedark')",
-        cmp_cursorline = "require('onedarkpro.helpers').darken('bg', 8, 'onedark')",
         cursorline = "#2e323b",
         indentline = "#3c414d",
         buffer_color = "#939aa3",
@@ -65,8 +62,6 @@ function M.config()
       },
       light = {
         vim = "#029632", -- green
-        cmp_menu = "require('onedarkpro.helpers').darken('bg', 4, 'onelight')",
-        cmp_cursorline = "require('onedarkpro.helpers').darken('bg', 8, 'onelight')",
         comment = "#bebebe", -- Revert back to original comment colors
         scrollbar = "#eeeeee",
         buffer_color = "#6a6a6a",
@@ -82,8 +77,6 @@ function M.config()
       -- ["@variable"] = { bg = "${blue}"},
       CursorLineNr = { bg = "${cursorline}", fg = "${purple}", style = "bold" },
       DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
-      CmpMenu = { bg = "${cmp_menu}" },
-      CmpCursorLine = { bg = "${cmp_cursorline}" },
       MatchParen = { fg = "${cyan}" },
       ModeMsg = { link = "LineNr" }, -- Make command line text lighter
       Search = { bg = "${selection}", fg = "${yellow}", style = "underline" },
