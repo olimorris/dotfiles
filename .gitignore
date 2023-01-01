@@ -26,7 +26,7 @@
 !.config/zsh/**/*
 
 # Dotbot
-!dotbot
+!dotbot/**/*
 !dotbot.conf.yaml
 !dotbot_install
 !dotbot_uninstall
@@ -41,7 +41,7 @@
 !minimal.vim
 !vim/**/*
 
-# others dirs
+# Other dirs
 !bin/**/*
 !commands/**/*
 !misc/packages/**/*
@@ -49,7 +49,7 @@
 !tests/**/*
 !LaunchAgents/**/*
 
-# others files
+# Other files
 !.tool-versions
 !.config/.color_mode
 !Rakefile
