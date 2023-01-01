@@ -1,14 +1,17 @@
 return {
-  -- {
-  --   name = "ColorSchemeChanges",
-  --   {
-  --     { "ColorScheme" },
-  --     function() require(config_namespace .. ".plugins.heirline").load() end,
-  --     opts = {
-  --       pattern = { "*" },
-  --     },
-  --   },
-  -- },
+  {
+    name = "ReturnToLastEditingPosition",
+    {
+      { "BufReadPost" },
+      function()
+        if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
+          vim.fn.setpos(".", vim.fn.getpos("'\""))
+          vim.api.nvim_feedkeys("zz", "n", true)
+          vim.cmd('silent! foldopen')
+        end
+      end,
+    },
+  },
   {
     name = "GitTrackRemoteBranch",
     {
