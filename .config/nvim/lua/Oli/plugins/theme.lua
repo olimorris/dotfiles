@@ -57,6 +57,7 @@ function M.config()
         telescope_prompt = "require('onedarkpro.helpers').darken('bg', 1, 'onedark')",
         telescope_results = "require('onedarkpro.helpers').darken('bg', 4, 'onedark')",
         telescope_preview = "require('onedarkpro.helpers').darken('bg', 6, 'onedark')",
+        telescope_selection = "require('onedarkpro.helpers').darken('bg', 8, 'onedark')",
         copilot = "require('onedarkpro.helpers').darken('gray', 8, 'onedark')",
         breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'onedark')",
       },
@@ -69,6 +70,7 @@ function M.config()
         telescope_prompt = "require('onedarkpro.helpers').darken('bg', 2, 'onelight')",
         telescope_results = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
         telescope_preview = "require('onedarkpro.helpers').darken('bg', 7, 'onelight')",
+        telescope_selection = "require('onedarkpro.helpers').darken('bg', 9, 'onelight')",
         copilot = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
         breadcrumbs = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
       },
@@ -195,7 +197,7 @@ function M.config()
 
       TelescopeMatching = { fg = "${blue}" },
       TelescopeNormal = { bg = "${telescope_results}" },
-      TelescopeSelection = { bg = "${telescope_prompt}" },
+      TelescopeSelection = { bg = "${telescope_selection}" },
 
       TelescopePreviewNormal = { bg = "${telescope_preview}" },
       TelescopePreviewBorder = { fg = "${telescope_preview}", bg = "${telescope_preview}" },
