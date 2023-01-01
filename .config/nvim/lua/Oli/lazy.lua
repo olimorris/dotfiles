@@ -15,6 +15,10 @@ local ok, lazy = om.safe_require("lazy")
 if not ok then return end
 
 lazy.setup(config_namespace .. ".plugins", {
+  dev = {
+    path = "~/Code/Neovim",
+    patterns = { "olimorris" },
+  },
   checker = {
     enabled = true,
     notify = false,

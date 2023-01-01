@@ -2,8 +2,8 @@ local M = {
   "nvim-neotest/neotest",
   lazy = true,
   dependencies = {
-    { dir = "~/Code/Projects/neotest-rspec" },
-    { dir = "~/Code/Projects/neotest-phpunit" },
+    "olimorris/neotest-rspec",
+    "olimorris/neotest-phpunit",
     "nvim-neotest/neotest-plenary",
     "nvim-neotest/neotest-python",
     "antoinemadec/FixCursorHold.nvim",

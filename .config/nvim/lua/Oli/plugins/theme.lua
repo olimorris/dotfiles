@@ -1,7 +1,6 @@
 local M = {
-  dir = "~/Code/Projects/onedarkpro.nvim",
+  "olimorris/onedarkpro.nvim",
   priority = 1000,
-  name = "onedarkpro",
 }
 
 function M.init()

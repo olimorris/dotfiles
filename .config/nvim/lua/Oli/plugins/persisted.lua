@@ -1,6 +1,5 @@
 local M = {
-  -- "olimorris/persisted.nvim", -- Session management
-  dir = "~/Code/Projects/persisted.nvim",
+  "olimorris/persisted.nvim", -- Session management
   lazy = true,
 }
 
