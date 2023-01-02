@@ -125,7 +125,6 @@ return {
   },
   {
     "numToStr/Comment.nvim", -- Comment out lines with gcc
-    keys = { "gcc", "gc" },
     init = function()
       require("legendary").keymaps({
         {
