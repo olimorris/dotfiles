@@ -1,5 +1,4 @@
 local M = {}
-local silent = { noremap = true, silent = true }
 
 --[[
   Some notes on how I structure my keymaps within Neovim:
@@ -49,7 +48,13 @@ return {
     opts = { noremap = false },
   },
   { "<C-y>", "<cmd>%y+<CR>", hide = true, description = "Copy buffer" },
-  { "<C-s>", "<cmd>silent! write<CR>", hide = true, description = "Save buffer", mode = { "n", "i" } },
+  {
+    "<C-s>",
+    "<cmd>silent! write<CR>",
+    hide = true,
+    description = "Save buffer",
+    mode = { "n", "i" },
+  },
 
   -- Editing words
   { "<LocalLeader>,", "<cmd>norm A,<CR>", hide = true, description = "Append comma" },
