@@ -148,7 +148,7 @@ function M.config()
         vim.api.nvim_buf_get_keymap(bufnr, "n")
       ) > 0
     then
-      return {}
+      return
     end
 
     local t = require("legendary.toolbox")
