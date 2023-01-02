@@ -5,19 +5,15 @@ local M = {
     "neovim/nvim-lspconfig",
     "nvim_navic",
   },
-}
-
-function M.init()
-  require("legendary").commands({
-    {
-      ":Barbecue toggle",
-      description = "Toggle Barbecue's winbar",
-    },
-  })
-end
-
-function M.config()
-  require("barbecue").setup({
+  init = function()
+    require("legendary").commands({
+      {
+        ":Barbecue toggle",
+        description = "Toggle Barbecue's winbar",
+      },
+    })
+  end,
+  config = {
     exclude_filetypes = { "netrw", "toggleterm" },
     symbols = {
       separator = "",
@@ -26,7 +22,7 @@ function M.config()
     modifiers = {
       dirname = ":~:.:s?.config/nvim/lua?Neovim?",
     },
-  })
-end
+  },
+}
 
 return M

@@ -1,9 +1,6 @@
 local M = {
   "lewis6991/gitsigns.nvim", -- Git signs in the sign column
-}
-
-function M.config()
-  require("gitsigns").setup({
+  config = {
     keymaps = {}, -- Do not use the default mappings
     signs = {
       add = { hl = "GitSignsAdd", text = "+" },
@@ -12,7 +9,7 @@ function M.config()
       topdelete = { hl = "GitSignsDelete", text = "-" },
       changedelete = { hl = "GitSignsChange", text = "-" },
     },
-  })
-end
+  },
+}
 
 return M

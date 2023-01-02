@@ -3,12 +3,18 @@ local M = {
   lazy = false, -- Never lazy load this
   priority = 900,
   dependencies = "kkharji/sqlite.lua",
-}
-
-function M.config()
-  local legendary = require("legendary")
-
-  legendary.setup({
+  init = function()
+    require("legendary").keymaps({
+      {
+        "<C-p>",
+        require("legendary").find,
+        hide = true,
+        description = "Open Legendary",
+        mode = { "n", "v" },
+      },
+    })
+  end,
+  config = {
     select_prompt = "Legendary",
     include_builtin = false,
     include_legendary_cmds = false,
@@ -17,17 +23,7 @@ function M.config()
     keymaps = require(config_namespace .. ".keymaps"),
     autocmds = require(config_namespace .. ".autocmds"),
     commands = require(config_namespace .. ".commands"),
-  })
-
-  legendary.keymaps({
-    {
-      "<C-p>",
-      require("legendary").find,
-      hide = true,
-      description = "Open Legendary",
-      mode = { "n", "v" },
-    },
-  })
-end
+  },
+}
 
 return M

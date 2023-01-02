@@ -1,10 +1,7 @@
 local M = {
   "SmiteshP/nvim-navic", -- Winbar component showing current code context
-  name = "nvim_navic"
-}
-
-function M.config()
-  require("nvim-navic").setup({
+  name = "nvim_navic",
+  config = {
     highlight = true,
     separator = "  ",
     icons = {
@@ -35,7 +32,7 @@ function M.config()
       Operator = " ",
       TypeParameter = " ",
     },
-  })
-end
+  },
+}
 
 return M

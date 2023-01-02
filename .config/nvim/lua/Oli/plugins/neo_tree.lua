@@ -6,17 +6,13 @@ local M = {
     "MunifTanjim/nui.nvim",
   },
   cmd = "Neotree",
-}
-
-function M.init()
-  require("legendary").keymaps({
-    { "<C-n>", "<cmd>Neotree toggle<CR>", hide = true, description = "Neotree: Toggle" },
-    { "<C-z>", "<cmd>Neotree reveal=true toggle<CR>", hide = true, description = "Neotree: Reveal File" },
-  })
-end
-
-function M.config()
-  require("neo-tree").setup({
+  init = function()
+    require("legendary").keymaps({
+      { "<C-n>", "<cmd>Neotree toggle<CR>", hide = true, description = "Neotree: Toggle" },
+      { "<C-z>", "<cmd>Neotree reveal=true toggle<CR>", hide = true, description = "Neotree: Reveal File" },
+    })
+  end,
+  config = {
     close_if_last_window = true,
     -- git_status_async = false,
     enable_git_status = true,
@@ -45,7 +41,7 @@ function M.config()
     window = {
       width = 30,
     },
-  })
-end
+  },
+}
 
 return M

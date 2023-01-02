@@ -1,16 +1,12 @@
 local M = {
   "akinsho/nvim-toggleterm.lua", -- Easily toggle and position the terminal
   cmd = "ToggleTerm",
-}
-
-function M.init()
-  require("legendary").keymaps({
-    { "<C-x>", "<cmd>ToggleTerm<CR>", description = "Toggleterm", mode = { "n", "t" } },
-  })
-end
-
-function M.config()
-  require("toggleterm").setup({
+  init = function()
+    require("legendary").keymaps({
+      { "<C-x>", "<cmd>ToggleTerm<CR>", description = "Toggleterm", mode = { "n", "t" } },
+    })
+  end,
+  config = {
     direction = "float",
     float_opts = {
       border = "single",
@@ -30,7 +26,7 @@ function M.config()
     hide_numbers = true,
     close_on_exit = true,
     start_in_insert = true,
-  })
-end
+  },
+}
 
 return M

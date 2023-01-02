@@ -1,9 +1,6 @@
 local M = {
   "stevearc/dressing.nvim", -- Utilises Neovim 0.6's new UI hooks to manage inputs, selects etc
-}
-
-function M.config()
-  require("dressing").setup({
+  config = {
     input = {
       default_prompt = "> ",
       relative = "editor",
@@ -27,7 +24,7 @@ function M.config()
         return config
       end,
     },
-  })
-end
+  },
+}
 
 return M
