@@ -200,10 +200,6 @@ function M.config()
 
       TelescopePreviewNormal = { bg = "${telescope_preview}" },
       TelescopePreviewBorder = { fg = "${telescope_preview}", bg = "${telescope_preview}" },
-
-      -- Todo Comments
-      TodoTest = { fg = "${purple}" },
-      TodoPerf = { fg = "${purple}" },
     },
   })
 

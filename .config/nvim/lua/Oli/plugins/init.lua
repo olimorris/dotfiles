@@ -49,11 +49,6 @@ return {
       },
       keywords = {
         FIX = { icon = " " }, -- Custom fix icon
-        PERF = { color = "perf" },
-      },
-      colors = {
-        perf = { "TodoTest" },
-        test = { "TodoTest" },
       },
     },
   },
