@@ -3,7 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>KeepAlive</key>
-	<false/>
+	<dict>
+		<key>NetworkState</key>
+		<true/>
+	</dict>
 	<key>Label</key>
 	<string>oli.cloud-backup</string>
 	<key>Program</key>
