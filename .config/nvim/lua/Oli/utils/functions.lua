@@ -101,6 +101,7 @@ function om.MoveToBuffer()
     if bufnr ~= nil then pcall(vim.cmd, "b " .. bufnr) end
   end)
 end
+
 --------------------------------------------------------------------------- }}}
 -----------------------------------LAZYGIT---------------------------------- {{{
 function om.Lazygit()

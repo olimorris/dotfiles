@@ -20,10 +20,10 @@ alias dcsp='docker-compose -f docker-compose.prod.yml stop'
 alias dot='dotfile_tasks'
 alias ed='nvim ~/.dotfiles'
 alias up='cd ~/.dotfiles && rake sync'
-alias bf='~/.dotfiles/bin/cloud-backup'
 alias backup='cd ~/.dotfiles && rake backup'
 alias clean='ruby ~/.dotfiles/commands/clean_up.rb'
 alias icons='python ~/.dotfiles/commands/seticons.py'
+alias bf='cd ~/.dotfiles && rake backup:files\[true\]'
 alias cleanup='ruby ~/.dotfiles/commands/clean_up.rb ~/Downloads'
 
 # Fish
