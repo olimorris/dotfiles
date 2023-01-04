@@ -12,14 +12,22 @@ namespace :backup do
   end
 
   desc 'Backup files'
-  task :files do
+  task :files, [:progress] do |_t, args|
     run %( /bin/date -u )
 
-    section 'Using RCLONE to backup files to Koofr'
+    section 'Using RCLONE to backup files'
 
-    run %( /opt/homebrew/bin/rclone sync ~/Code koofr:Code --filter-from ~/.config/rclone/filter_list.txt )
-    run %( /opt/homebrew/bin/rclone sync ~/.dotfiles koofr:.dotfiles --filter-from ~/.config/rclone/filter_list.txt )
-    run %( /opt/homebrew/bin/rclone sync ~/"Oli's Documents" koofr:"Oli's Documents" --filter-from ~/.config/rclone/filter_list.txt )
+    dirs = {
+      'Code' => 'Code',
+      '.dotfiles' => '.dotfiles',
+      "\"Oli's Documents\"" => "\"Oli's Documents\""
+    }
+
+    flag = '-P' if args[:progress]
+
+    dirs.each do |local, remote|
+      run %( /opt/homebrew/bin/rclone sync #{flag} ~/#{local} koofr:#{remote} --filter-from ~/.config/rclone/filter_list.txt )
+    end
   end
 end
 
@@ -57,18 +65,28 @@ namespace :install do
 
     run %( cd ~/.dotfiles && git init )
     run %( cd ~/.dotfiles && git remote add origin https://github.com/olimorris/dotfiles.git )
+    run %( cd ~/.dotfiles && git fetch origin )
+    run %( cd ~/.dotfiles && git reset origin/main )
 
     run %( cd ~/Code/Projects/onedarkpro.nvim && git init )
     run %( cd ~/Code/Projects/onedarkpro.nvim && git remote add origin https://github.com/olimorris/onedarkpro.nvim.git )
+    run %( cd ~/Code/Projects/onedarkpro.nvim && git fetch origin )
+    run %( cd ~/Code/Projects/onedarkpro.nvim && git reset origin/main )
 
     run %( cd ~/Code/Projects/persisted.nvim && git init )
     run %( cd ~/Code/Projects/persisted.nvim && git remote add origin https://github.com/olimorris/persisted.nvim.git )
+    run %( cd ~/Code/Projects/persisted.nvim && git fetch origin )
+    run %( cd ~/Code/Projects/persisted.nvim  && git reset origin/main )
 
     run %( cd ~/Code/Projects/neotest-rspec && git init )
     run %( cd ~/Code/Projects/neotest-rspec && git remote add origin https://github.com/olimorris/neotest-rspec.git )
+    run %( cd ~/Code/Projects/neotest-rspec && git fetch origin )
+    run %( cd ~/Code/Projects/neotest-rspec && git reset origin/main )
 
     run %( cd ~/Code/Projects/neotest-phpunit && git init )
     run %( cd ~/Code/Projects/neotest-phpunit && git remote add origin https://github.com/olimorris/neotest-phpunit.git )
+    run %( cd ~/Code/Projects/neotest-phpunit && git fetch origin )
+    run %( cd ~/Code/Projects/neotest-phpunit && git reset origin/main )
   end
 end
 
