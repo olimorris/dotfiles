@@ -1,9 +1,12 @@
 local M = {
   "nvim-telescope/telescope.nvim", -- Awesome fuzzy finder for everything
+  lazy = true,
+  cmd = "Telescope",
   dependencies = {
+    "nvim-lua/plenary.nvim",
     {
       "ThePrimeagen/harpoon", -- Navigate between marked files
-      config = function()
+      init = function()
         require("legendary").keymaps({
           {
             itemgroup = "Harpoon",
@@ -12,19 +15,28 @@ local M = {
             keymaps = {
               { "<C-e>", "<cmd>Telescope harpoon marks<CR>", description = "Show marks" },
               { "<Leader>a", "<cmd>lua require('harpoon.mark').add_file()<CR>", description = "Add file" },
-              { "<Leader>1", "<cmd>lua require('harpoon.ui').nav_file(1)<CR>", description = "Go to file 1" },
-              { "<Leader>2", "<cmd>lua require('harpoon.ui').nav_file(2)<CR>", description = "Go to file 2" },
-              { "<Leader>3", "<cmd>lua require('harpoon.ui').nav_file(3)<CR>", description = "Go to file 3" },
-              { "<Leader>4", "<cmd>lua require('harpoon.ui').nav_file(4)<CR>", description = "Go to file 4" },
-              { "<Leader>5", "<cmd>lua require('harpoon.ui').nav_file(5)<CR>", description = "Go to file 5" },
             },
           },
         })
+        for i = 1, 5 do
+          require("legendary").keymaps({
+            {
+              itemgroup = "Harpoon",
+              keymaps = {
+                {
+                  "<Leader>" .. i,
+                  "<cmd>lua require('harpoon.ui').nav_file(" .. i .. ")<CR>",
+                  description = "Go to file " .. i,
+                },
+              },
+            },
+          })
+        end
       end,
     },
     {
       "debugloop/telescope-undo.nvim", -- Visualise undotree
-      config = function()
+      init = function()
         require("legendary").keymaps({
           { "<LocalLeader>u", "<cmd>Telescope undo<CR>", description = "Telescope undo" },
         })
@@ -210,8 +222,10 @@ local M = {
     -- Extensions
     telescope.load_extension("fzf")
     telescope.load_extension("undo")
+    telescope.load_extension("aerial")
     telescope.load_extension("harpoon")
     telescope.load_extension("frecency")
+    telescope.load_extension("persisted")
     telescope.load_extension("refactoring")
   end,
 }

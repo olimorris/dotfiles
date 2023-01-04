@@ -125,6 +125,7 @@ return {
   },
   {
     "numToStr/Comment.nvim", -- Comment out lines with gcc
+    keys = { "gcc", { "gc", mode = "v" } },
     init = function()
       require("legendary").keymaps({
         {
@@ -202,16 +203,26 @@ return {
         },
         {
           "t",
-          function() return require("hop").hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true,
-            hint_offset = -1 }) end,
+          function()
+            return require("hop").hint_char1({
+              direction = directions.AFTER_CURSOR,
+              current_line_only = true,
+              hint_offset = -1,
+            })
+          end,
           hide = true,
           description = "Hop",
           mode = { "n", "o" },
         },
         {
           "T",
-          function() return require("hop").hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true,
-            hint_offset = 1 }) end,
+          function()
+            return require("hop").hint_char1({
+              direction = directions.BEFORE_CURSOR,
+              current_line_only = true,
+              hint_offset = 1,
+            })
+          end,
           hide = true,
           description = "Hop",
           mode = { "n", "o" },

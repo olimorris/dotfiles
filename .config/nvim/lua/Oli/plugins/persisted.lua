@@ -47,27 +47,22 @@ local M = {
       },
     })
   end,
-  config = function()
-    local persisted = require("persisted")
-    persisted.setup({
-      save_dir = Sessiondir .. "/",
-      branch_separator = "@@",
-      use_git_branch = true,
-      silent = true,
-      should_autosave = function()
-        if vim.bo.filetype == "alpha" then return false end
-        return true
+  config = {
+    save_dir = Sessiondir .. "/",
+    branch_separator = "@@",
+    use_git_branch = true,
+    silent = true,
+    should_autosave = function()
+      if vim.bo.filetype == "alpha" then return false end
+      return true
+    end,
+    telescope = {
+      before_source = function()
+        vim.api.nvim_input("<ESC>:%bd!<CR>")
+        require("persisted").stop()
       end,
-      telescope = {
-        before_source = function()
-          vim.api.nvim_input("<ESC>:%bd!<CR>")
-          persisted.stop()
-        end,
-      },
-    })
-
-    require("telescope").load_extension("persisted")
-  end,
+    },
+  },
 }
 
 return M

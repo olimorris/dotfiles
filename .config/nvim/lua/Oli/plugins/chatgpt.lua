@@ -33,35 +33,39 @@ local M = {
       },
     })
   end,
-  config = function()
-    require("chatgpt").setup({
-      welcome_message = "",
-      answer_sign = "",
-      question_sign = "",
-      chat_window = {
-        win_options = {
-          winblend = 0,
-          winhighlight = "Normal:ChatGPTWindow,FloatBorder:FloatBorder",
-        },
+  config = {
+    welcome_message = "",
+    answer_sign = "",
+    question_sign = "",
+    chat_layout = {
+      size = {
+        height = "85%",
+        width = "85%",
       },
-      chat_input = {
-        prompt = "   ",
-        win_options = {
-          winblend = 0,
-          winhighlight = "Normal:ChatGPTPrompt,ChatGPTPrompt:FloatBorder",
-        },
+    },
+    chat_window = {
+      win_options = {
+        winblend = 0,
+        winhighlight = "Normal:ChatGPTWindow,FloatBorder:FloatBorder",
       },
-      keymaps = {
-        close = { "<C-c>", "<Esc>" },
-        yank_last = "<C-y>",
-        scroll_up = "<C-k>",
-        scroll_down = "<C-j>",
-        toggle_settings = "<C-o>",
-        new_session = "<C-n>",
-        cycle_windows = "<Tab>",
+    },
+    chat_input = {
+      prompt = "   ",
+      win_options = {
+        winblend = 0,
+        winhighlight = "Normal:ChatGPTPrompt,ChatGPTPrompt:FloatBorder",
       },
-    })
-  end,
+    },
+    keymaps = {
+      close = { "<C-c>", "<Esc>" },
+      yank_last = "<C-y>",
+      scroll_up = "<C-k>",
+      scroll_down = "<C-j>",
+      toggle_settings = "<C-o>",
+      new_session = "<C-n>",
+      cycle_windows = "<Tab>",
+    },
+  },
 }
 
 return M

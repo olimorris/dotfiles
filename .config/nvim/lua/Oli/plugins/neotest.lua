@@ -2,11 +2,13 @@ local M = {
   "nvim-neotest/neotest",
   lazy = true,
   dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-treesitter/nvim-treesitter",
+    "antoinemadec/FixCursorHold.nvim",
+
+    "nvim-neotest/neotest-plenary",
     "olimorris/neotest-rspec",
     "olimorris/neotest-phpunit",
-    "nvim-neotest/neotest-plenary",
-    "nvim-neotest/neotest-python",
-    "antoinemadec/FixCursorHold.nvim",
   },
   init = function()
     require("legendary").keymaps({

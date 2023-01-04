@@ -7,6 +7,28 @@ local M = {
   },
 }
 
+-- Filetypes where certain elements of the statusline will not be shown
+local filetypes = {
+  "^aerial$",
+  "^neo--tree$",
+  "^neotest--summary$",
+  "^neo--tree--popup$",
+  "^NvimTree$",
+  "^toggleterm$",
+}
+
+-- Filetypes which force the statusline to be inactive
+local force_inactive_filetypes = {
+  "^alpha$",
+  "^chatgpt$",
+  "^DressingInput$",
+  "^frecency$",
+  "^lazy$",
+  "^netrw$",
+  "^TelescopePrompt$",
+  "^undotree$",
+}
+
 ---The tabline for the bufferline
 ---@return table
 local function tabline()
@@ -191,7 +213,7 @@ local function bufferline()
     {
       condition = function(self)
         return not vim.api.nvim_buf_get_option(self.bufnr, "modifiable")
-          or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
+            or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
       end,
       provider = function(self)
         if vim.api.nvim_buf_get_option(self.bufnr, "buftype") == "terminal" then
@@ -295,27 +317,6 @@ local function statusline()
   local RightSlantEnd = {
     provider = "",
     hl = { fg = "bg", bg = "statusline_bg" },
-  }
-
-  -- Filetypes where certain elements of the statusline will not be shown
-  local filetypes = {
-    "^aerial$",
-    "^neo--tree$",
-    "^neotest--summary$",
-    "^neo--tree--popup$",
-    "^NvimTree$",
-    "^toggleterm$",
-  }
-
-  -- Filetypes which force the statusline to be inactive
-  local force_inactive_filetypes = {
-    "^alpha$",
-    "^DressingInput$",
-    "^frecency$",
-    "^lazy$",
-    "^netrw$",
-    "^TelescopePrompt$",
-    "^undotree$",
   }
 
   ---Return the current vim mode
@@ -830,8 +831,6 @@ function M.load()
 end
 
 ---Used by Lazy to load the statusline
-function M.config()
-  M.load()
-end
+function M.config() M.load() end
 
 return M
