@@ -2,10 +2,7 @@ return {
   {
     "jose-elias-alvarez/null-ls.nvim", -- General purpose LSP server for running linters, formatters, etc
     dependencies = {
-      {
-        "jayp0521/mason-null-ls.nvim", -- Automatically install null-ls servers
-        commit = "ab5d99619de2263508abb7fb05ef3a0f24a8d73d",
-      },
+      "jayp0521/mason-null-ls.nvim", -- Automatically install null-ls servers
       "williamboman/mason.nvim",
     },
     config = function()
@@ -239,10 +236,11 @@ return {
       ---------------------------------------------------------------------------- }}}
       ----------------------------------MAPPINGS---------------------------------- {{{
       local function mappings(client, bufnr)
-        if #vim.tbl_filter(
-          function(keymap) return (keymap.desc or ""):lower() == "rename symbol" end,
-          vim.api.nvim_buf_get_keymap(bufnr, "n")
-        ) > 0
+        if
+          #vim.tbl_filter(
+            function(keymap) return (keymap.desc or ""):lower() == "rename symbol" end,
+            vim.api.nvim_buf_get_keymap(bufnr, "n")
+          ) > 0
         then
           return
         end
