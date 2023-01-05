@@ -34,6 +34,7 @@ local M = {
     })
   end,
   config = function()
+    vim.o.runtimepath = vim.o.runtimepath .. ",~/.dotfiles/.config/snippets"
     ---------------------------------LSP CONFIG--------------------------------- {{{
     local lsp = require("lsp-zero")
     lsp.preset("lsp-compe")
@@ -140,11 +141,10 @@ local M = {
     ---------------------------------------------------------------------------- }}}
     ----------------------------------MAPPINGS---------------------------------- {{{
     local function mappings(client, bufnr)
-      if
-        #vim.tbl_filter(
-          function(keymap) return (keymap.desc or ""):lower() == "rename symbol" end,
-          vim.api.nvim_buf_get_keymap(bufnr, "n")
-        ) > 0
+      if #vim.tbl_filter(
+        function(keymap) return (keymap.desc or ""):lower() == "rename symbol" end,
+        vim.api.nvim_buf_get_keymap(bufnr, "n")
+      ) > 0
       then
         return
       end
