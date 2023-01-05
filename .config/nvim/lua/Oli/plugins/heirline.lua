@@ -2,9 +2,37 @@ local M = {
   "rebelot/heirline.nvim",
   priority = 500,
   dependencies = {
+    {
+      "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
+      cmd = "Bdelete",
+    },
     "kyazdani42/nvim-web-devicons",
-    "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
   },
+  init = function()
+    require("legendary").keymaps({
+      { "<C-c>", "<cmd>Bdelete<CR>", hide = true, description = "Close Buffer" }, -- bufdelete.nvim
+      { "<Tab>", "<cmd>bnext<CR>", hide = true, description = "Next buffer", opts = { noremap = false } }, -- Heirline.nvim
+      { "<S-Tab>", "<cmd>bprev<CR>", hide = true, description = "Previous buffer", opts = { noremap = false } }, -- Heirline.nvim
+      {
+        "<Leader>b",
+        function()
+          local tabline = require("heirline").tabline
+          local buflist = tabline._buflist[1]
+          buflist._picker_labels = {}
+          buflist._show_picker = true
+          vim.cmd.redrawtabline()
+          local char = vim.fn.getcharstr()
+          local bufnr = buflist._picker_labels[char]
+          if bufnr then vim.api.nvim_win_set_buf(0, bufnr) end
+          buflist._show_picker = false
+          vim.cmd.redrawtabline()
+        end,
+        hide = true,
+        description = "Navigate to buffer",
+        opts = { noremap = false },
+      },
+    })
+  end,
 }
 
 -- Filetypes where certain elements of the statusline will not be shown
