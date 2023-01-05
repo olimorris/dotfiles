@@ -4,7 +4,6 @@ function om.ChangeFiletype()
     if new_ft ~= nil then vim.bo.filetype = new_ft end
   end)
 end
-
 --------------------------------------------------------------------------- }}}
 --------------------------------GIT BRANCHES-------------------------------- {{{
 function om.ListBranches()

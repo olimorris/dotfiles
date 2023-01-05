@@ -1,4 +1,7 @@
-return {
+local ok, legendary = pcall(require, "legendary")
+if not ok then return end
+
+return legendary.commands({
   {
     ":LineNumbers",
     function() om.ToggleLineNumbers() end,
@@ -55,6 +58,37 @@ return {
     description = "Git sync remote repo",
   },
   {
+    itemgroup = "Lazy.nvim",
+    icon = "",
+    description = "Commands for the Lazy package manager",
+    commands = {
+      {
+        ":Lazy",
+        description = "Open Lazy",
+      },
+      {
+        ":Lazy sync",
+        description = "Install, clean and update",
+      },
+      {
+        ":Lazy clean",
+        description = "Clean",
+      },
+      {
+        ":Lazy restore",
+        description = "Restores plugins to the state in the lockfile",
+      },
+      {
+        ":Lazy profile",
+        description = "Profile",
+      },
+      {
+        ":Lazy log",
+        description = "Log",
+      },
+    },
+  },
+  {
     "Lazygit",
     function() om.Lazygit():toggle() end,
     description = "Git terminal",
@@ -87,4 +121,4 @@ return {
     end,
     description = "Generate a UUID and insert it into the buffer",
   },
-}
+})

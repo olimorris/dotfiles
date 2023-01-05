@@ -1,5 +1,3 @@
-local M = {}
-
 --[[
   Some notes on how I structure my keymaps within Neovim:
     * All keymaps from across my configuration live in this file
@@ -11,6 +9,9 @@ local M = {}
 
   N.B. Leader keys are set in the options.lua file. This is so that lazy.nvim doesn't corrupt mappings
 ]]
+
+local ok, legendary = pcall(require, "legendary")
+if not ok then return end
 
 -- Functions for multiple cursors
 vim.g.mc = vim.api.nvim_replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]], true, true, true)
@@ -24,7 +25,7 @@ function SetupMultipleCursors()
   )
 end
 
-return {
+return legendary.keymaps({
   { "<C-y>", "<cmd>%y+<CR>", hide = true, description = "Copy buffer" },
   {
     "<C-s>",
@@ -161,4 +162,4 @@ return {
       },
     },
   },
-}
+})

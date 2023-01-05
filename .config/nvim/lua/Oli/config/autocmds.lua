@@ -1,4 +1,7 @@
-return {
+local ok, legendary = pcall(require, "legendary")
+if not ok then return end
+
+return legendary.autocmds({
   {
     name = "ColorSchemeChanges",
     {
@@ -17,7 +20,7 @@ return {
         if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
           vim.fn.setpos(".", vim.fn.getpos("'\""))
           vim.api.nvim_feedkeys("zz", "n", true)
-          vim.cmd('silent! foldopen')
+          vim.cmd("silent! foldopen")
         end
       end,
     },
@@ -125,4 +128,4 @@ return {
       opts = { pattern = "TelescopePreviewerLoaded" },
     },
   },
-}
+})
