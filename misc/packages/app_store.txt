@@ -1,4 +1,4 @@
-1018301773  AdBlock Pro                    (10.2.6)
+1502839586  Hand Mirror                    (2.4)
 462058435   Microsoft Excel                (16.68)
 1529448980  Reeder                         (5.3.6)
 462054704   Microsoft Word                 (16.68)
@@ -30,4 +30,4 @@
 897118787   Shazam                         (2.11.0)
 1091189122  Bear                           (1.9.6)
 430798174   HazeOver                       (1.9.3)
-1502839586  Hand Mirror                    (2.4)
+1018301773  AdBlock Pro                    (10.2.6)
