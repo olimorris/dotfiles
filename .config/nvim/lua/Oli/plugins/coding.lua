@@ -132,7 +132,7 @@ return {
     },
     {
       "zbirenbaum/copilot.lua", -- AI programming
-      event = "InsertEnter",
+      event = "VimEnter",
       init = function()
         require("legendary").keymaps({
           {
