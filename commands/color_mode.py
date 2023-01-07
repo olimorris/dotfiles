@@ -142,7 +142,7 @@ def app_neovim(mode):
     """
     from pynvim import attach
 
-    nvim_config = nvim_path + "/lua/Oli/options.lua"
+    nvim_config = nvim_path + "/lua/Oli/config/options.lua"
 
     # Open the neovim file
     with open(os.path.expanduser(nvim_config), "r") as config_file:
