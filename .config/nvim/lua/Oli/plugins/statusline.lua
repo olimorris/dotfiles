@@ -762,7 +762,11 @@ local function statusline()
 
   -- Show plugin updates available from lazy.nvim
   local Lazy = {
-    condition = require("lazy.status").has_updates,
+    condition = function()
+      return not conditions.buffer_matches({
+        filetype = filetypes,
+      }) and require("lazy.status").has_updates
+    end,
     update = { "User", pattern = "LazyUpdate" },
     provider = function() return "  " .. require("lazy.status").updates() .. " " end,
     on_click = {
