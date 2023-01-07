@@ -154,7 +154,7 @@ return {
         "pyright",
         "solargraph",
         "sumneko_lua",
-        "tailwindcss",
+        -- "tailwindcss", -- Disabled due to high node CPU usage
         "tsserver",
         "vuels",
         "yamlls",
