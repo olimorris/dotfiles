@@ -12,7 +12,7 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup({
-  spec = config_namespace .. ".plugins",
+  spec = { import = config_namespace .. ".plugins" },
   dev = {
     path = "~/Code/Neovim",
     patterns = { "olimorris" },

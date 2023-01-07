@@ -6,7 +6,7 @@ local M = {
       "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
       cmd = "Bdelete",
     },
-    "kyazdani42/nvim-web-devicons",
+    "nvim-tree/nvim-web-devicons",
   },
   init = function()
     require("legendary").keymaps({
