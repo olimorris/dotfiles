@@ -6,7 +6,7 @@ return legendary.autocmds({
     name = "ColorSchemeChanges",
     {
       "ColorScheme",
-      function() require(config_namespace .. ".plugins.heirline").load() end,
+      function() require(config_namespace .. ".plugins.statusline").load() end,
       opts = {
         pattern = { "*" },
       },
