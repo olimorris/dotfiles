@@ -33,7 +33,7 @@ task :install do
   Rake::Task['install:brew'].invoke
   Rake::Task['install:brew_packages'].invoke
   Rake::Task['install:brew_cask_packages'].invoke
-  Rake::Task['install:mas'].invoke
+  Rake::Task['install:mas'].invoke unless testing?
   Rake::Task['install:brew_clean_up'].invoke
   Rake::Task['install:mackup'].invoke
   Rake::Task['install:dotbot'].invoke
