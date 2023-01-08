@@ -149,8 +149,8 @@ namespace :install do
 
     run %( curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher )
     run %( fisher list | fisher install )
-    run %( echo $(where fish) | sudo tee -a /etc/shells )
-    run %( chsh -s $(where fish) )
+    run %( echo $(which fish) | sudo tee -a /etc/shells )
+    run %( chsh -s $(which fish) )
   end
 
   desc 'Install true color support for Tmux and Alacritty'
