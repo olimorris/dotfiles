@@ -136,21 +136,23 @@ namespace :install do
   task :cargo do
     section 'Installing Rust, Cargo and packages'
 
-    # Install Rust and Cargo
-    run %( curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh )
+    unless testing?
+      # Install Rust and Cargo
+      run %( curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh )
 
-    # Install packages
-    run %( cargo install cargo-update )
+      # Install packages
+      run %( cargo install cargo-update )
+    end
   end
 
   desc 'Install Fish'
   task :fish do
     section 'Installing Fish and plugins'
 
-    run %( curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher )
-    run %( fisher list | fisher install )
     run %( echo $(which fish) | sudo tee -a /etc/shells )
     run %( chsh -s $(which fish) )
+    run %( curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher )
+    run %( fisher list | fisher install )
   end
 
   desc 'Install true color support for Tmux and Alacritty'
