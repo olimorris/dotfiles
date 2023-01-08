@@ -4,7 +4,6 @@ local M = {
     "neovim/nvim-lspconfig",
     {
       "SmiteshP/nvim-navic", -- Winbar component showing current code context
-      name = "nvim_navic",
       config = {
         highlight = false,
         separator = "  ",
@@ -73,7 +72,6 @@ function M.load()
   })
 end
 
----Used by Lazy to load the statusline
 function M.config() M.load() end
 
 return M
