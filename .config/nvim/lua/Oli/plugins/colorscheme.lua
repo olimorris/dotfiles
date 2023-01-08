@@ -109,14 +109,6 @@ return {
           },
           AlphaFooter = { fg = "${gray}", style = "italic" },
 
-          --Barbecue
-          BarbecueModified = { fg = "${red}" },
-          BarbecueEllipsis = { fg = "${breadcrumbs}", style = "italic" },
-          BarbecueSeparator = { fg = "${breadcrumbs}", style = "italic" },
-          BarbecueDirname = { fg = "${breadcrumbs}", style = "italic" },
-          BarbecueBasename = { fg = "${breadcrumbs}", style = "italic" },
-          BarbecueContext = { fg = "${breadcrumbs}", style = "italic" },
-
           -- Bufferline
           BufferlineVim = { fg = "${vim}" },
           BufferlineNormal = { bg = "${bg}", fg = "${gray}" },

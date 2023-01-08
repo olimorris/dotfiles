@@ -1,68 +1,6 @@
 return {
   "nvim-tree/nvim-web-devicons",
   {
-    "utilyre/barbecue.nvim", -- VS Code like path in winbar
-    lazy = true,
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      "nvim_navic",
-    },
-    init = function()
-      require("legendary").commands({
-        {
-          ":Barbecue toggle",
-          description = "Toggle Barbecue's winbar",
-        },
-      })
-    end,
-    config = {
-      exclude_filetypes = { "netrw", "toggleterm" },
-      symbols = {
-        separator = "",
-        ellipsis = "",
-      },
-      modifiers = {
-        dirname = ":~:.:s?.config/nvim/lua?Neovim?",
-      },
-    },
-  },
-  {
-    "SmiteshP/nvim-navic", -- Winbar component showing current code context
-    name = "nvim_navic",
-    config = {
-      highlight = true,
-      separator = "  ",
-      icons = {
-        File = " ",
-        Module = " ",
-        Namespace = " ",
-        Package = " ",
-        Class = " ",
-        Method = " ",
-        Property = " ",
-        Field = " ",
-        Constructor = " ",
-        Enum = " ",
-        Interface = " ",
-        Function = " ",
-        Variable = " ",
-        Constant = " ",
-        String = " ",
-        Number = " ",
-        Boolean = " ",
-        Array = " ",
-        Object = " ",
-        Key = " ",
-        Null = " ",
-        EnumMember = " ",
-        Struct = " ",
-        Event = " ",
-        Operator = " ",
-        TypeParameter = " ",
-      },
-    },
-  },
-  {
     "j-hui/fidget.nvim", -- Display LSP status messages in a floating window
     config = {
       text = {
