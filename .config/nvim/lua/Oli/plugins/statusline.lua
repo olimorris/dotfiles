@@ -765,7 +765,7 @@ local function statusline()
     condition = function()
       return not conditions.buffer_matches({
         filetype = filetypes,
-      }) and require("lazy.status").has_updates
+      }) and require("lazy.status").has_updates()
     end,
     update = { "User", pattern = "LazyUpdate" },
     provider = function() return "  " .. require("lazy.status").updates() .. " " end,
