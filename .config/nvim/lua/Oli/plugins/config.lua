@@ -1,7 +1,6 @@
 local function load(name)
   local Util = require("lazy.core.util")
-  -- always load lazyvim, then user file
-  for _, mod in ipairs({ config_namespace .. ".config." .. name, "config." .. name }) do
+  for _, mod in ipairs({ config_namespace .. ".config." .. name, }) do
     Util.try(function()
       require(mod)
     end, {
@@ -27,8 +26,8 @@ vim.api.nvim_create_autocmd("User", {
   callback = function()
     load("autocmds")
     load("commands")
-    load("keymaps")
     load("functions")
+    load("keymaps")
   end,
 })
 
