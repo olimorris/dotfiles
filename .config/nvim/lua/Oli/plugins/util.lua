@@ -16,7 +16,7 @@ return {
         },
       })
     end,
-    config = {
+    opts = {
       select_prompt = "Legendary",
       include_builtin = false,
       include_legendary_cmds = false,
@@ -102,7 +102,7 @@ return {
         },
       })
     end,
-    config = {
+    opts = {
       save_dir = Sessiondir .. "/",
       branch_separator = "@@",
       use_git_branch = true,

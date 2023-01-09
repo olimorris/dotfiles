@@ -2,7 +2,7 @@ return {
   "nvim-tree/nvim-web-devicons",
   {
     "j-hui/fidget.nvim", -- Display LSP status messages in a floating window
-    config = {
+    opts = {
       text = {
         spinner = "line",
         done = "",
@@ -47,7 +47,7 @@ return {
   },
   {
     "lewis6991/gitsigns.nvim", -- Git signs in the sign column
-    config = {
+    opts = {
       keymaps = {}, -- Do not use the default mappings
       signs = {
         add = { hl = "GitSignsAdd", text = "+" },
@@ -69,7 +69,7 @@ return {
         },
       })
     end,
-    config = {
+    opts = {
       filetypes = {
         "css",
         eruby = { mode = "foreground" },
@@ -82,7 +82,7 @@ return {
   },
   {
     "lukas-reineke/indent-blankline.nvim", -- Show indentation lines
-    config = {
+    opts = {
       use_treesitter = true,
       show_first_indent_level = false,
       show_trailing_blankline_indent = false,

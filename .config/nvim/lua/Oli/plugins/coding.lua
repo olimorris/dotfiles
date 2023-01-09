@@ -173,13 +173,18 @@ return {
 
         require("legendary").commands({
           {
-            ":CopilotToggle",
-            function() require("copilot.suggestion").toggle_auto_trigger() end,
-            description = "Toggle on/off for buffer",
+            itemgroup = "Copilot",
+            commands = {
+              {
+                ":CopilotToggle",
+                function() require("copilot.suggestion").toggle_auto_trigger() end,
+                description = "Toggle on/off for buffer",
+              },
+            },
           },
         })
       end,
-      config = {
+      opts = {
         panel = {
           auto_refresh = true,
         },

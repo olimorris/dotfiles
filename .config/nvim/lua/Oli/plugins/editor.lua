@@ -13,7 +13,7 @@ return {
         { "<C-z>", "<cmd>Neotree reveal=true toggle<CR>", hide = true, description = "Neotree: Reveal File" },
       })
     end,
-    config = {
+    opts = {
       close_if_last_window = true,
       -- git_status_async = false,
       enable_git_status = true,
@@ -52,7 +52,7 @@ return {
         { "<C-t>", "<cmd>AerialToggle<CR>", description = "Aerial" },
       })
     end,
-    config = {
+    opts = {
       backends = {
         ["_"] = { "treesitter", "lsp", "markdown" },
         ruby = { "treesitter" },
@@ -143,7 +143,7 @@ return {
         },
       })
     end,
-    config = {
+    opts = {
       keymaps = {
         replace_all = "<C-CR>",
       },
@@ -157,7 +157,7 @@ return {
         { "<Leader>t", "<cmd>TodoTelescope<CR>", description = "Todo comments" },
       })
     end,
-    config = {
+    opts = {
       signs = false,
       highlight = {
         keyword = "bg",
@@ -205,7 +205,7 @@ return {
   {
     "ahmedkhalf/project.nvim", -- Automatically set the cwd to the project root
     name = "project_nvim",
-    config = {
+    opts = {
       ignore_lsp = { "efm", "null-ls" },
       patterns = { "Gemfile" },
     },
@@ -221,7 +221,7 @@ return {
         },
       })
     end,
-    config = {
+    opts = {
       snippet_engine = "luasnip",
     },
   },
