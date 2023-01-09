@@ -34,9 +34,11 @@ return {
           which_key = false,
         },
         styles = {
+          methods = "bold",
+          functions = "bold",
           comments = "italic",
+          parameters = "italic",
           conditionals = "italic",
-          keywords = "italic",
           virtual_text = "italic",
         },
         options = {
