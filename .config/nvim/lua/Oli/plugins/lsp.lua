@@ -91,7 +91,7 @@ return {
       require("legendary").keymaps({
         itemgroup = "Completion",
         icon = "",
-        description = "Completion related functionality",
+        description = "Completion related functionality...",
         keymaps = {
           {
             "<Enter>",

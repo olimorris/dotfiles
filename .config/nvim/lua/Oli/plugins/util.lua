@@ -61,7 +61,7 @@ return {
         {
           itemgroup = "Persisted",
           icon = "",
-          description = "Session management",
+          description = "Session management...",
           keymaps = {
             {
               "<Leader>s",

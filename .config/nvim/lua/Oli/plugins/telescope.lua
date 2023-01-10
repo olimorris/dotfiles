@@ -12,7 +12,7 @@ return {
             {
               itemgroup = "Harpoon",
               icon = "異",
-              description = "Harpoon functionality",
+              description = "Harpoon functionality...",
               keymaps = {
                 { "<C-e>", "<cmd>Telescope harpoon marks<CR>", description = "Show marks" },
                 { "<Leader>a", "<cmd>lua require('harpoon.mark').add_file()<CR>", description = "Add file" },

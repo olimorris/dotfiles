@@ -29,7 +29,7 @@ return {
         {
           itemgroup = "Refactoring",
           icon = "",
-          description = "Refactor code",
+          description = "Refactor code...",
           keymaps = {
             {
               "<LocalLeader>re",
@@ -75,7 +75,7 @@ return {
         {
           itemgroup = "ChatGPT",
           icon = "ﮧ",
-          description = "Use ChatGPT to generate code",
+          description = "Use ChatGPT to generate code...",
           keymaps = {
             { "<C-a>", "<cmd>ChatGPT<CR>", description = "Ask a question..." },
           },
@@ -138,7 +138,7 @@ return {
       require("legendary").keymaps({
         {
           itemgroup = "Copilot",
-          description = "AI programming",
+          description = "AI programming...",
           icon = "",
           keymaps = {
             {
@@ -209,7 +209,7 @@ return {
       require("legendary").keymaps({
         {
           itemgroup = "Debug",
-          description = "Debugging functionality",
+          description = "Debugging functionality...",
           icon = "",
           keymaps = {
             {
@@ -383,7 +383,7 @@ return {
         {
           itemgroup = "Neotest",
           icon = "省",
-          description = "Testing functionality",
+          description = "Testing functionality...",
           keymaps = {
             -- Neotest plugin
             { "<LocalLeader>t", '<cmd>lua require("neotest").run.run()<CR>', description = "Neotest: Test nearest" },

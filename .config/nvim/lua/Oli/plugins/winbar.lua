@@ -4,7 +4,7 @@ local M = {
     "neovim/nvim-lspconfig",
     {
       "SmiteshP/nvim-navic", -- Winbar component showing current code context
-      config = {
+      opts = {
         highlight = false,
         separator = "  ",
         icons = {

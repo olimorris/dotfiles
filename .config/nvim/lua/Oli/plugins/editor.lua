@@ -54,7 +54,7 @@ return {
     end,
     opts = {
       backends = {
-        ["_"] = { "treesitter", "lsp", "markdown" },
+        ["_"] = { "lsp", "treesitter", "markdown" },
         ruby = { "treesitter" },
       },
       close_on_select = true,
@@ -72,14 +72,18 @@ return {
       require("legendary").keymaps({
         {
           "f",
-          function() return require("hop").hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true }) end,
+          function()
+            return require("hop").hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+          end,
           hide = true,
           description = "Hop",
           mode = { "n", "o" },
         },
         {
           "F",
-          function() return require("hop").hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true }) end,
+          function()
+            return require("hop").hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+          end,
           hide = true,
           description = "Hop",
           mode = { "n", "o" },
