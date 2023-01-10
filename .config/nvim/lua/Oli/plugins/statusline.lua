@@ -856,7 +856,10 @@ function M.load()
   local heirline = require("heirline")
 
   heirline.load_colors(require("onedarkpro.helpers").get_colors())
-  heirline.setup(statusline(), nil, bufferline())
+  heirline.setup({
+    statusline = statusline(),
+    tabline = bufferline(),
+  })
 
   vim.o.showtabline = 2
   vim.cmd([[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])
