@@ -2,6 +2,7 @@ return {
   "nvim-lua/plenary.nvim", -- Required dependency for many plugins. Super useful Lua functions
   {
     "mrjones2014/legendary.nvim", -- A command palette for keymaps, commands and autocmds
+    branch = "mrj/256/additional-keymap-filters",
     lazy = false, -- Never lazy load this
     priority = 900,
     dependencies = "kkharji/sqlite.lua",

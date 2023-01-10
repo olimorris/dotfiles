@@ -1,46 +1,37 @@
 return {
   {
-    "nvim-neo-tree/neo-tree.nvim", -- File explorer
-    branch = "v2.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-    },
-    cmd = "Neotree",
+    "stevearc/oil.nvim",
     init = function()
       require("legendary").keymaps({
-        { "<C-n>", "<cmd>Neotree toggle<CR>", hide = true, description = "Neotree: Toggle" },
-        { "<C-z>", "<cmd>Neotree reveal=true toggle<CR>", hide = true, description = "Neotree: Reveal File" },
+        {
+          itemgroup = "Oil",
+          icon = "",
+          description = "Filetree functionality...",
+          keymaps = {
+            { "-", "<cmd>Oil --float .<CR>", description = "Open File Explorer" },
+            { "_", "<cmd>Oil --float<CR>", description = "Open File Explorer to current file" },
+            {
+              "<C-s>",
+              "<cmd>require('oil').save()<CR>",
+              description = "Save work tree changes",
+              opts = { filetype = "Oil" },
+            },
+          },
+        },
       })
     end,
     opts = {
-      close_if_last_window = true,
-      -- git_status_async = false,
-      enable_git_status = true,
-      enable_diagnostics = false,
-      default_component_configs = {
-        icon = {
-          folder_open = "",
-          folder_closed = "",
-          folder_empty = "ﰊ",
-          default = "*",
-        },
-        indent = {
-          with_markers = false,
-        },
-        modified = {
-          symbol = "[+]",
-          highlight = "NeoTreeModified",
-        },
+      keymaps = {
+        ["<C-c>"] = false,
+        ["<C-s>"] = false,
+        ["q"] = "actions.close",
+        [">"] = "actions.toggle_hidden",
       },
-      filesystem = {
-        filtered_items = {
-          hide_dotfiles = false,
-          hide_gitignored = false,
+      float = {
+        border = "single",
+        win_options = {
+          winblend = 0,
         },
-      },
-      window = {
-        width = 30,
       },
     },
   },
