@@ -94,6 +94,28 @@ return legendary.keymaps({
   { "<CR>", "o<Esc>", hide = true, description = "Insert blank line below" },
   { "<S-CR>", "O<Esc>", hide = true, description = "Insert blank line above" },
 
+  -- Moving lines
+  {
+    "<A-k>",
+    {
+      n = ":m .-2<CR>==",
+      v = ":m '<-2<CR>gv=gv",
+    },
+    hide = true,
+    description = "Move selection up",
+    opts = { silent = true },
+  },
+  {
+    "<A-j>",
+    hide = true,
+    {
+      n = ":m .+1<CR>==",
+      v = ":m '>+1<CR>gv=gv",
+    },
+    description = "Move selection down",
+    opts = { silent = true },
+  },
+
   -- Splits
   { "<LocalLeader>sv", "<C-w>v", description = "Split: Vertical" },
   { "<LocalLeader>sh", "<C-w>h", description = "Split: Horizontal" },
