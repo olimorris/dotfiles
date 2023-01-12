@@ -17,12 +17,15 @@ return {
         },
       })
     end,
-    opts = {
-      select_prompt = "Legendary",
-      include_builtin = false,
-      include_legendary_cmds = false,
-      which_key = { auto_register = false },
-    },
+    config = function()
+      require("legendary").setup({
+        select_prompt = "Legendary",
+        include_builtin = false,
+        include_legendary_cmds = false,
+        which_key = { auto_register = false },
+        autocmds = require(config_namespace .. ".config.autocmds"),
+      })
+    end,
   },
   {
     "akinsho/nvim-toggleterm.lua", -- Easily toggle and position the terminal
