@@ -46,7 +46,7 @@ function tn -d "Create a new Tmux session (or attach to one) based on the curren
     set selected (pwd | sed 's/.*\///g')
     # Replace a '.' in any file names with an underscore
     set selected_name $(basename "$selected" | tr . _)
-    tmux new -s $selected_name
+    tmux new -A -s $selected_name
 end
 
 function italic -d "Test if italic text is working"
