@@ -35,6 +35,7 @@ return {
       styles = {
         methods = "bold",
         functions = "bold",
+        keywords = "italic",
         comments = "italic",
         parameters = "italic",
         conditionals = "italic",
