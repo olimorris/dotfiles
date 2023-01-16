@@ -76,7 +76,8 @@ return {
         },
       },
       highlights = {
-        CursorLineNr = { bg = "${cursorline}", fg = "${purple}", style = "bold" },
+        CursorLine = { bg = "NONE" },
+        CursorLineNr = { fg = "${purple}", style = "bold" },
         DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
         MatchParen = { fg = "${cyan}" },
         ModeMsg = { link = "LineNr" }, -- Make command line text lighter
