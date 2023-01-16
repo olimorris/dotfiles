@@ -10,12 +10,12 @@ return {
           keymaps = {
             { "-", "<cmd>Oil --float .<CR>", description = "Open File Explorer" },
             { "_", "<cmd>Oil --float<CR>", description = "Open File Explorer to current file" },
-            {
-              "<C-s>",
-              "<cmd>require('oil').save()<CR>",
-              description = "Save work tree changes",
-              opts = { filetype = "Oil" },
-            },
+            -- {
+            --   "<C-s>",
+            --   "<cmd>require('oil').save()<CR>",
+            --   description = "Save work tree changes",
+            --   opts = { filetype = "Oil" },
+            -- },
           },
         },
       })
@@ -26,6 +26,9 @@ return {
         ["<C-s>"] = false,
         ["q"] = "actions.close",
         [">"] = "actions.toggle_hidden",
+      },
+      buf_options = {
+        buflisted = false,
       },
       float = {
         border = "single",
