@@ -22,8 +22,7 @@ My macOS dotfiles. Installation instructions are my own
 cd ~/.dotfiles && rake install
 ```
 
-- Ensure that `~/.dotfiles` is linked to your GitHub repo
-- Ensure that individual `~/Code` repos are also linked to GitHub
+- Grab a coffee. This will take a while
 
 ## :wrench: What actually happens
 
@@ -33,15 +32,6 @@ cd ~/.dotfiles && rake install
 - Your fonts will be installed
 - Your custom launch agents will be installed
 - Your development environments will be installed and configured
-
-## :page_facing_up: Things to note
-
-- Your plugins will automatically install when you run [Neovim](https://github.com/neovim/neovim) for the first time
-
-### Syncing to GitHub
-
-- If your `rakefile` has run as intended, `~/.dotfiles` should be synced to GitHub
-- Run `git status` to confirm this is the case. You will see the working tree changes (if any)
 
 ## :keyboard: Useful commands
 
