@@ -48,12 +48,9 @@ return {
       },
       colors = {
         dark = {
-          vim = "#81b766", -- green
-          comment = "#5c6370", -- Revert back to original comment colors
-          cursorline = "#2e323b",
-          indentline = "#3c414d",
-          buffer_color = "#939aa3",
           statusline_bg = "#2e323b", -- gray
+          statuscolumn_border = "#3c4047",
+          indentline = "#3c4047",
           telescope_prompt = "require('onedarkpro.helpers').darken('bg', 1, 'onedark')",
           telescope_results = "require('onedarkpro.helpers').darken('bg', 4, 'onedark')",
           telescope_preview = "require('onedarkpro.helpers').darken('bg', 6, 'onedark')",
@@ -62,11 +59,9 @@ return {
           breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'onedark')",
         },
         light = {
-          vim = "#029632", -- green
           comment = "#bebebe", -- Revert back to original comment colors
-          scrollbar = "#eeeeee",
-          buffer_color = "#6a6a6a",
           statusline_bg = "#f0f0f0", -- gray
+          statuscolumn_border = "require('onedarkpro.helpers').darken('bg', 3, 'onelight')",
           telescope_prompt = "require('onedarkpro.helpers').darken('bg', 2, 'onelight')",
           telescope_results = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
           telescope_preview = "require('onedarkpro.helpers').darken('bg', 7, 'onelight')",
@@ -77,11 +72,16 @@ return {
       },
       highlights = {
         CursorLine = { bg = "NONE" },
-        CursorLineNr = { fg = "${purple}", style = "bold" },
         DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
         MatchParen = { fg = "${cyan}" },
-        ModeMsg = { link = "LineNr" }, -- Make command line text lighter
+        ModeMsg = { fg = "${gray}" }, -- Make command line text lighter
         Search = { bg = "${selection}", fg = "${yellow}", style = "underline" },
+
+        FoldColumn = { bg = "${bg}" },
+        SignColumn = { bg = "${bg}" },
+        LineNr = { bg = "${bg}", fg = "${gray}" },
+        CursorLineNr = { bg = "${bg}", fg = "${purple}", style = "bold" },
+
         TabLine = { fg = "${gray}", bg = "${bg}" },
         TabLineSel = { fg = "${bg}", bg = "${purple}" },
 
@@ -100,20 +100,20 @@ return {
 
         -- Alpha (dashboard) plugin
         AlphaHeader = {
-          fg = (vim.o.background == "dark" and "${green}" or "${red}"),
+          fg = { dark = "${green}", light = "${red}" },
         },
         AlphaButtonText = {
           fg = "${blue}",
           style = "bold",
         },
         AlphaButtonShortcut = {
-          fg = (vim.o.background == "dark" and "${green}" or "${yellow}"),
-          style = "italic,bold",
+          fg = { dark = "${green}", light = "${yellow}" },
+          style = "italic",
         },
         AlphaFooter = { fg = "${gray}", style = "italic" },
 
         -- Bufferline
-        BufferlineVim = { fg = "${vim}" },
+        BufferlineVim = { fg = { dark = "#81b766", light = "#029632" } },
         BufferlineNormal = { bg = "${bg}", fg = "${gray}" },
         BufferlineSelected = { bg = "${statusline_bg}", fg = "${purple}" },
         BufferlineOffset = { fg = "${purple}", style = "bold" },
@@ -144,9 +144,14 @@ return {
         FidgetTask = { fg = "${gray}" },
         FidgetTitle = { fg = "${purple}", style = "italic" },
 
+        -- Gitsigns
+        GitSignsAdd = { fg = { dark = "#45966c", light = "#c5e6c7" } },
+        GitSignsChange = { fg = { dark = "#928b65", light = "#eadcb5" } },
+        GitSignsDelete = { fg = { dark = "#8e3c40", light = "#f9cfce" } },
+
         -- Heirline
         Heirline = { bg = "${statusline_bg}" },
-        HeirlineBufferline = { fg = "${buffer_color}" },
+        HeirlineBufferline = { fg = { dark = "#939aa3", light = "#6a6a6a" } },
 
         -- Luasnip
         LuaSnipChoiceNode = { fg = "${yellow}" },
