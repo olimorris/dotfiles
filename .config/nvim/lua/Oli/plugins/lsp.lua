@@ -160,6 +160,17 @@ return {
         "yamlls",
       })
 
+      lsp.set_server_config({
+        capabilities = {
+          textDocument = {
+            foldingRange = {
+              dynamicRegistration = false,
+              lineFoldingOnly = true,
+            },
+          },
+        },
+      })
+
       lsp.nvim_workspace()
 
       ----------------------------------AUTOCMDS---------------------------------- {{{
@@ -236,11 +247,10 @@ return {
       ---------------------------------------------------------------------------- }}}
       ----------------------------------MAPPINGS---------------------------------- {{{
       local function mappings(client, bufnr)
-        if
-          #vim.tbl_filter(
-            function(keymap) return (keymap.desc or ""):lower() == "rename symbol" end,
-            vim.api.nvim_buf_get_keymap(bufnr, "n")
-          ) > 0
+        if #vim.tbl_filter(
+          function(keymap) return (keymap.desc or ""):lower() == "rename symbol" end,
+          vim.api.nvim_buf_get_keymap(bufnr, "n")
+        ) > 0
         then
           return
         end
@@ -315,6 +325,7 @@ return {
       end)
 
       lsp.setup()
+      require("ufo").setup()
 
       vim.diagnostic.config({
         severity_sort = true,

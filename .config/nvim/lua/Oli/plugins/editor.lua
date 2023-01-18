@@ -1,5 +1,32 @@
 return {
   {
+    "kevinhwang91/nvim-ufo",
+    dependencies = "kevinhwang91/promise-async",
+    init = function()
+      require("legendary").keymaps({
+        {
+          itemgroup = "Folds",
+          icon = "",
+          description = "Folding functionality...",
+          keymaps = {
+            {
+              "zR",
+              function() require("ufo").openAllFolds() end,
+              description = "Open fold",
+              { noremap = true, silent = true },
+            },
+            {
+              "zM",
+              function() require("ufo").closeAllFolds() end,
+              description = "Close fold",
+              { noremap = true, silent = true },
+            },
+          },
+        },
+      })
+    end,
+  },
+  {
     "stevearc/oil.nvim",
     init = function()
       require("legendary").keymaps({

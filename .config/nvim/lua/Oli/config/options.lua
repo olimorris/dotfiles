@@ -34,17 +34,19 @@ vim.opt.completeopt = { "menuone", "noselect" } -- Completion opions for code co
 vim.opt.cursorlineopt = "screenline,number" -- Highlight the screen line of the cursor with CursorLine and the line number with CursorLineNr
 vim.opt.emoji = false -- Turn off emojis
 vim.opt.fillchars = {
-  horiz = "━",
-  horizup = "┻",
-  horizdown = "┳",
-  vert = "┃",
-  vertleft = "┫",
-  vertright = "┣",
-  verthoriz = "╋",
+  fold = " ",
+  foldopen = "",
+  foldclose = "",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
 }
-vim.opt.foldenable = true -- Enable folding
-vim.opt.foldlevel = 0 -- Fold by default
-vim.opt.foldmethod = "marker" -- Fold based on markers as opposed to indentation
+
+vim.o.foldcolumn = "1" -- Show the fold column
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+
 vim.opt.ignorecase = true -- Ignore case
 vim.opt.laststatus = 3 -- Use global statusline
 vim.opt.modelines = 1 -- Only use folding settings for this file
