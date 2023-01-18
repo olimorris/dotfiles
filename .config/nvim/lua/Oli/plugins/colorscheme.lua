@@ -71,7 +71,7 @@ return {
         },
       },
       highlights = {
-        CursorLine = { bg = "NONE" },
+        CursorLineNr = { bg = "${bg}", fg = "${purple}", style = "bold" },
         DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
         MatchParen = { fg = "${cyan}" },
         ModeMsg = { fg = "${gray}" }, -- Make command line text lighter
@@ -80,7 +80,6 @@ return {
         FoldColumn = { bg = "${bg}" },
         SignColumn = { bg = "${bg}" },
         LineNr = { bg = "${bg}", fg = "${gray}" },
-        CursorLineNr = { bg = "${bg}", fg = "${purple}", style = "bold" },
 
         TabLine = { fg = "${gray}", bg = "${bg}" },
         TabLineSel = { fg = "${bg}", bg = "${purple}" },

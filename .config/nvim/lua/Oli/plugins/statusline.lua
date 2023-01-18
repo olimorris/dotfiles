@@ -241,7 +241,7 @@ local function bufferline()
     {
       condition = function(self)
         return not vim.api.nvim_buf_get_option(self.bufnr, "modifiable")
-            or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
+          or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
       end,
       provider = function(self)
         if vim.api.nvim_buf_get_option(self.bufnr, "buftype") == "terminal" then
@@ -315,7 +315,7 @@ local function bufferline()
 
   local VimLogo = {
     provider = function(self) return "    " end,
-    hl = { fg = "vim" },
+    hl = "BufferlineVim",
   }
 
   return { BufferLineOffset, VimLogo, BufferLine, tabline() }
@@ -851,6 +851,7 @@ local function statusline()
 end
 
 local function statuscolumn()
+  local conditions = require("heirline.conditions")
   return {
     static = {
       click_args = function(self, minwid, clicks, button, mods)
@@ -866,30 +867,18 @@ local function statuscolumn()
         args.sign = self.signs[sign]
         vim.api.nvim_set_current_win(args.mousepos.winid)
         vim.api.nvim_win_set_cursor(0, { args.mousepos.line, 0 })
-        vim.pretty_print(args)
         return args
       end,
       handlers = {
         number = function(args)
-          if args.button == "m" then
+          if args.mods:find("c") then
             local dap_avail, dap = pcall(require, "dap")
-            if dap_avail then dap.toggle_breakpoint() end
+            if dap_avail then vim.schedule(dap.toggle_breakpoint()) end
           end
         end,
         fold = function(args)
           local lnum = args.mousepos.line
-
-          -- Only lines with a mark should be clickable
-          if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then return end
-
-          local state
-          if vim.fn.foldclosed(lnum) == -1 then
-            state = "close"
-          else
-            state = "open"
-          end
-
-          vim.cmd.execute("'" .. lnum .. "fold" .. state .. "'")
+          vim.cmd.execute("'" .. lnum .. "fold" .. (vim.fn.foldclosed(lnum) == -1 and "close" or "open") .. "'")
         end,
       },
     },
@@ -915,10 +904,11 @@ local function statuscolumn()
 
       -- diagnostic handlers
       local diagnostics = function(args)
-        if args.button == "l" then
-          vim.schedule(vim.diagnostic.open_float)
-        elseif args.button == "m" then
+        print("diagnostics")
+        if args.mods:find("c") then
           vim.schedule(vim.lsp.buf.code_action)
+        else
+          vim.schedule(vim.diagnostic.open_float(0, { border = 'single', source = 'always' }))
         end
       end
       for _, sign in ipairs({ "Error", "Hint", "Info", "Warn" }) do
@@ -936,8 +926,8 @@ local function statuscolumn()
         if not self.handlers[name] then self.handlers[name] = dap_breakpoint end
       end
     end,
-    condition = function() return vim.opt.number:get() or vim.opt.relativenumber:get() end,
     {
+      condition = function() return vim.opt.number:get() or vim.opt.relativenumber:get() end,
       provider = function()
         local str = "%="
         local num, relnum = vim.opt.number:get(), vim.opt.relativenumber:get()
@@ -948,7 +938,7 @@ local function statuscolumn()
         else
           str = str .. "%{v:relnum?v:relnum:v:lnum}"
         end
-        return str
+        return str .. " "
       end,
       on_click = {
         name = "line_click",
@@ -957,7 +947,6 @@ local function statuscolumn()
         end,
       },
     },
-    { provider = " " },
     {
       provider = "%s",
       on_click = {
@@ -970,28 +959,40 @@ local function statuscolumn()
     },
     {
       provider = function()
+        if vim.v.wrap then return "" end
+
         local lnum = vim.v.lnum
-        local icon = ""
+        local icon = " "
 
-        -- Line isn't in folding range
-        if vim.fn.foldlevel(lnum) <= 0 then return icon end
-
-        -- Not the first line of folding range
-        if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then return icon end
-
-        if vim.fn.foldclosed(lnum) == -1 then
-          icon = ""
-        else
-          icon = ""
+        if vim.fn.foldlevel(lnum) > vim.fn.foldlevel(lnum - 1) then
+          if vim.fn.foldclosed(lnum) == -1 then
+            icon = ""
+          else
+            icon = ""
+          end
         end
 
-        return icon .. " "
+        return icon
       end,
       on_click = {
         name = "fold_click",
         callback = function(self, ...)
           if self.handlers.fold then self.handlers.fold(self.click_args(self, ...)) end
         end,
+      },
+      hl = { fg = "comment" },
+    },
+
+    -- Border
+    {
+      condition = function()
+        return not conditions.buffer_matches({
+          filetype = force_inactive_filetypes,
+        })
+      end,
+      {
+        provider = "┃",
+        hl = { fg = "statuscolumn_border" },
       },
     },
   }
