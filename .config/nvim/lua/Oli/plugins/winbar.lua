@@ -61,7 +61,7 @@ function M.load()
       dirname = ":~:.:s?.config/nvim/lua?Neovim?",
     },
     theme = {
-      normal = { fg = colors.breadcrumbs, italic = true },
+      normal = { fg = colors.breadcrumbs, bg = colors.bg, italic = true },
       ellipsis = { fg = colors.breadcrumbs },
       separator = { fg = colors.breadcrumbs },
       modified = { fg = colors.red },
