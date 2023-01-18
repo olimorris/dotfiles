@@ -929,6 +929,8 @@ local function statuscolumn()
     {
       condition = function() return vim.opt.number:get() or vim.opt.relativenumber:get() end,
       provider = function()
+        if vim.v.virtnum ~= 0 then return "" end
+
         local str = "%="
         local num, relnum = vim.opt.number:get(), vim.opt.relativenumber:get()
         if num and not relnum then
@@ -959,7 +961,7 @@ local function statuscolumn()
     },
     {
       provider = function()
-        if vim.v.wrap then return "" end
+        if vim.v.virtnum ~= 0 then return "" end
 
         local lnum = vim.v.lnum
         local icon = " "
