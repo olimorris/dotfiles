@@ -1,11 +1,9 @@
--------------------------------CHANGE FILETYPE------------------------------ {{{
 function om.ChangeFiletype()
   vim.ui.input({ prompt = "Change filetype to: " }, function(new_ft)
     if new_ft ~= nil then vim.bo.filetype = new_ft end
   end)
 end
---------------------------------------------------------------------------- }}}
---------------------------------GIT BRANCHES-------------------------------- {{{
+
 function om.ListBranches()
   local branches = vim.fn.systemlist([[git branch 2>/dev/null]])
   local new_branch_prompt = "Create new branch"
@@ -27,8 +25,6 @@ function om.ListBranches()
   end)
 end
 
---------------------------------------------------------------------------- }}}
--------------------------------GIT REMOTE SYNC------------------------------ {{{
 function om.GitRemoteSync()
   if not _G.GitStatus then _G.GitStatus = { ahead = 0, behind = 0, status = nil } end
 
@@ -63,8 +59,6 @@ function om.GitRemoteSync()
   vim.schedule_wrap(update_git_status())
 end
 
---------------------------------------------------------------------------- }}}
---------------------------------GIT PUSH/PULL------------------------------- {{{
 local function GitPushPull(action, tense)
   local branch = vim.fn.systemlist("git rev-parse --abbrev-ref HEAD")[1]
 
@@ -93,16 +87,12 @@ function om.GitPush()
   vim.cmd([[do User GitStatusChanged]])
 end
 
---------------------------------------------------------------------------- }}}
--------------------------------MOVE TO BUFFER------------------------------- {{{
 function om.MoveToBuffer()
   vim.ui.input({ prompt = "Move to buffer number: " }, function(bufnr)
     if bufnr ~= nil then pcall(vim.cmd, "b " .. bufnr) end
   end)
 end
 
---------------------------------------------------------------------------- }}}
------------------------------------LAZYGIT---------------------------------- {{{
 function om.Lazygit()
   local Terminal = require("toggleterm.terminal").Terminal
   return Terminal:new({
@@ -132,8 +122,6 @@ function om.Lazygit()
   })
 end
 
---------------------------------------------------------------------------- }}}
-----------------------------------SNIPPETS---------------------------------- {{{
 function om.EditSnippet()
   local path = Homedir .. "/.config/snippets"
   local snippets = { "lua", "ruby", "python", "global", "package" }
@@ -144,8 +132,6 @@ function om.EditSnippet()
   end)
 end
 
---------------------------------------------------------------------------- }}}
------------------------------TOGGLE LINE NUMBERS---------------------------- {{{
 function om.ToggleLineNumbers()
   if vim.wo.relativenumber then
     vim.wo.relativenumber = false
@@ -154,8 +140,6 @@ function om.ToggleLineNumbers()
   end
 end
 
---------------------------------------------------------------------------- }}}
---------------------------------TOGGLE THEME-------------------------------- {{{
 function om.ToggleTheme(mode)
   if vim.o.background == mode then return end
 
@@ -165,5 +149,3 @@ function om.ToggleTheme(mode)
     vim.cmd([[colorscheme onedark]])
   end
 end
-
---------------------------------------------------------------------------- }}}

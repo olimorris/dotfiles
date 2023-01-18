@@ -130,7 +130,7 @@ return {
     end,
     config = function()
       vim.o.runtimepath = vim.o.runtimepath .. ",~/.dotfiles/.config/snippets"
-      ---------------------------------LSP CONFIG--------------------------------- {{{
+
       local lsp = require("lsp-zero")
       lsp.preset("lsp-compe")
 
@@ -173,7 +173,6 @@ return {
 
       lsp.nvim_workspace()
 
-      ----------------------------------AUTOCMDS---------------------------------- {{{
       local function autocmds(client, bufnr)
         require("legendary").autocmds({
           {
@@ -193,8 +192,6 @@ return {
         })
       end
 
-      ---------------------------------------------------------------------------- }}}
-      ----------------------------------COMMANDS---------------------------------- {{{
       local function commands(client, bufnr)
         -- Only need to set these once!
         if vim.g.lsp_commands then return {} end
@@ -244,8 +241,6 @@ return {
         vim.g.lsp_commands = true
       end
 
-      ---------------------------------------------------------------------------- }}}
-      ----------------------------------MAPPINGS---------------------------------- {{{
       local function mappings(client, bufnr)
         if #vim.tbl_filter(
           function(keymap) return (keymap.desc or ""):lower() == "rename symbol" end,
@@ -316,8 +311,6 @@ return {
         })
       end
 
-      ---------------------------------------------------------------------------- }}}
-
       lsp.on_attach(function(client, bufnr)
         autocmds(client, bufnr)
         commands(client, bufnr)
@@ -338,8 +331,7 @@ return {
         --   spacing = 0,
         -- },
       })
-      ---------------------------------------------------------------------------- }}}
-      ------------------------------COMPLETION CONFIG----------------------------- {{{
+
       vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
       local cmp = require("cmp")
@@ -405,7 +397,6 @@ return {
           { name = "buffer" },
         },
       })
-      ---------------------------------------------------------------------------- }}}
     end,
   },
 }

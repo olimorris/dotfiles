@@ -1,9 +1,10 @@
 -- Documentation: https://neovim.io/doc/user/options.html
-------------------------------GLOBAL VARIABLES------------------------------ {{{
+
+-- Global variables
 Homedir = os.getenv("HOME")
 Sessiondir = vim.fn.stdpath("data") .. "/sessions"
---------------------------------------------------------------------------- }}}
--------------------------------GLOBAL OPTIONS------------------------------- {{{
+
+-- Global options
 vim.g.mapleader = " " -- space is the leader!
 vim.g.maplocalleader = "\\"
 
@@ -16,8 +17,8 @@ end
 if vim.fn.filereadable(os.getenv("HOME_DIR") .. ".asdf/shims/python") then
   vim.g.python3_host_prog = os.getenv("HOME_DIR") .. ".asdf/shims/python"
 end
---------------------------------------------------------------------------- }}}
--------------------------------BUFFER OPTIONS------------------------------- {{{
+
+-- Buffer options
 vim.bo.autoindent = true
 vim.bo.expandtab = true -- Use spaces instead of tabs
 vim.bo.shiftwidth = 4 -- Size of an indent
@@ -25,8 +26,8 @@ vim.bo.smartindent = true -- Insert indents automatically
 vim.bo.softtabstop = 4 -- Number of spaces tabs count for
 vim.bo.tabstop = 4 -- Number of spaces in a tab
 -- vim.bo.wrapmargin = 1
---------------------------------------------------------------------------- }}}
----------------------------------VIM OPTIONS-------------------------------- {{{
+
+-- Vim options
 vim.opt.background = "dark"
 vim.opt.cmdheight = 0 -- Hide the command bar
 vim.opt.clipboard = { "unnamedplus" } -- Use the system clipboard
@@ -42,10 +43,10 @@ vim.opt.fillchars = {
   eob = " ",
 }
 
-vim.o.foldcolumn = "1" -- Show the fold column
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldlevelstart = 99
-vim.o.foldenable = true
+vim.opt.foldcolumn = "1" -- Show the fold column
+vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
 
 vim.opt.ignorecase = true -- Ignore case
 vim.opt.laststatus = 3 -- Use global statusline
@@ -94,8 +95,8 @@ vim.opt.directory = vim.fn.stdpath("data") .. "/swaps" -- Use Swap files
 vim.opt.undofile = true -- Maintain undo history between sessions
 vim.opt.undolevels = 1000 -- Ensure we can undo a lot!
 vim.opt.undodir = vim.fn.stdpath("data") .. "/undos" -- Set the undo directory
---------------------------------------------------------------------------- }}}
--------------------------------WINDOW OPTIONS------------------------------- {{{
+
+-- Window options
 vim.wo.colorcolumn = "80,120" -- Make a ruler at 80px and 120px
 vim.wo.list = true -- Show some invisible characters like tabs etc
 vim.wo.numberwidth = 2 -- Make the line number column thinner
@@ -105,4 +106,3 @@ vim.wo.number = true -- Set the absolute number
 vim.wo.relativenumber = true -- Set the relative number
 vim.wo.signcolumn = "yes" -- Show information next to the line numbers
 vim.wo.wrap = false -- Do not display text over multiple lines
----------------------------------------------------------------------------- }}}
