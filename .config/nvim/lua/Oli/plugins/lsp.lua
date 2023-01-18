@@ -242,10 +242,11 @@ return {
       end
 
       local function mappings(client, bufnr)
-        if #vim.tbl_filter(
-          function(keymap) return (keymap.desc or ""):lower() == "rename symbol" end,
-          vim.api.nvim_buf_get_keymap(bufnr, "n")
-        ) > 0
+        if
+          #vim.tbl_filter(
+            function(keymap) return (keymap.desc or ""):lower() == "rename symbol" end,
+            vim.api.nvim_buf_get_keymap(bufnr, "n")
+          ) > 0
         then
           return
         end
@@ -318,7 +319,9 @@ return {
       end)
 
       lsp.setup()
-      require("ufo").setup()
+
+      local ok, ufo = pcall(require, "ufo")
+      if ok then require("ufo").setup() end
 
       vim.diagnostic.config({
         severity_sort = true,
