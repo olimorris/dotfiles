@@ -1,66 +1,20 @@
 return {
   {
-    "jose-elias-alvarez/null-ls.nvim", -- General purpose LSP server for running linters, formatters, etc
-    dependencies = {
-      "jayp0521/mason-null-ls.nvim", -- Automatically install null-ls servers
-      "williamboman/mason.nvim",
-    },
-    config = function()
-      require("mason-null-ls").setup({
-        ensure_installed = {
-          "eslint_d",
-          "fish_indent",
-          "fixjson",
-          "phpcsfixer",
-          "prettier",
-          "rubocop",
-          "shfmt",
-          "stylua",
-        },
-        automatic_installation = true,
-        automatic_setup = false,
-      })
-
-      local null_ls = require("null-ls")
-      null_ls.setup({
-        debounce = 150,
-        sources = {
-          -- Code completion
-          null_ls.builtins.code_actions.eslint_d,
-
-          -- Formatting
-          null_ls.builtins.formatting.fish_indent,
-          null_ls.builtins.formatting.fixjson,
-          null_ls.builtins.formatting.google_java_format,
-          null_ls.builtins.formatting.phpcsfixer,
-          null_ls.builtins.formatting.prettier.with({
-            filetypes = {
-              "css",
-              "dockerfile",
-              "html",
-              "javascript",
-              "json",
-              "markdown",
-              "vue",
-              "yaml",
-            },
-          }),
-          null_ls.builtins.formatting.rubocop,
-          null_ls.builtins.formatting.shfmt.with({
-            filetypes = { "sh", "zsh" },
-          }),
-          null_ls.builtins.formatting.stylua,
-        },
-      })
-    end,
-  },
-  {
     "VonHeikemen/lsp-zero.nvim",
     dependencies = {
       -- LSP Support
       "neovim/nvim-lspconfig",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
+
+      -- Null-ls
+      {
+        "jose-elias-alvarez/null-ls.nvim", -- General purpose LSP server for running linters, formatters, etc
+        dependencies = {
+          "jayp0521/mason-null-ls.nvim", -- Automatically install null-ls servers
+          "williamboman/mason.nvim",
+        },
+      },
 
       -- Autocompletion
       "hrsh7th/nvim-cmp",
@@ -198,11 +152,6 @@ return {
 
         require("legendary").commands({
           {
-            ":Format",
-            function() vim.lsp.buf.format(nil, 1000) end,
-            description = "Format buffer",
-          },
-          {
             ":LspRestart",
             description = "Restart any attached clients",
           },
@@ -260,10 +209,9 @@ return {
           keymaps = {
             {
               "<Leader>f",
-              "<cmd>LspZeroFormat<CR>",
+              "<cmd>NullFormat<CR>",
               description = "Format document",
               mode = { "n", "v" },
-              opts = { buffer = bufnr },
             },
             {
               "gf",
@@ -320,9 +268,6 @@ return {
 
       lsp.setup()
 
-      local ok, ufo = pcall(require, "ufo")
-      if ok then require("ufo").setup() end
-
       vim.diagnostic.config({
         severity_sort = true,
         signs = true,
@@ -335,11 +280,88 @@ return {
         -- },
       })
 
-      vim.opt.completeopt = { "menu", "menuone", "noselect" }
+      -- Null-ls
+      local null_ls = require("null-ls")
+      local null_opts = lsp.build_options("null-ls", {})
 
+      null_ls.setup({
+        on_attach = function(client, bufnr)
+          null_opts.on_attach(client, bufnr)
+
+          require("legendary").commands({
+            {
+              ":NullFormat",
+              hide = true,
+              function()
+                vim.lsp.buf.format({
+                  id = client.id,
+                  timeout_ms = 5000,
+                  async = true,
+                })
+              end,
+              description = "null-ls: format buffer",
+            },
+          })
+        end,
+        debounce = 150,
+        sources = {
+          -- Code completion
+          null_ls.builtins.code_actions.eslint_d,
+
+          -- Formatting
+          null_ls.builtins.formatting.fish_indent,
+          null_ls.builtins.formatting.fixjson,
+          null_ls.builtins.formatting.google_java_format,
+          null_ls.builtins.formatting.phpcsfixer,
+          null_ls.builtins.formatting.prettier.with({
+            filetypes = {
+              "css",
+              "dockerfile",
+              "html",
+              "javascript",
+              "json",
+              "markdown",
+              "vue",
+              "yaml",
+            },
+          }),
+          null_ls.builtins.formatting.rubocop,
+          null_ls.builtins.formatting.shfmt.with({
+            filetypes = { "sh", "zsh" },
+          }),
+          null_ls.builtins.formatting.stylua,
+        },
+      })
+
+      require("mason-null-ls").setup({
+        ensure_installed = {
+          "eslint_d",
+          "fish_indent",
+          "fixjson",
+          "phpcsfixer",
+          "prettier",
+          "rubocop",
+          "shfmt",
+          "stylua",
+        },
+        automatic_installation = true,
+        automatic_setup = true,
+      })
+
+      -- Required when `automatic_setup` is true
+      require("mason-null-ls").setup_handlers()
+
+      -- Setup better folding
+      local ok, ufo = pcall(require, "ufo")
+      if ok then require("ufo").setup() end
+
+      --Setup completion
       local cmp = require("cmp")
       local luasnip = require("luasnip")
-      local cmp_config = lsp.defaults.cmp_config({
+
+      vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
+      cmp.setup(lsp.defaults.cmp_config({
         formatting = {
           format = function(...) return require("lspkind").cmp_format({ mode = "symbol_text" })(...) end,
         },
@@ -376,9 +398,7 @@ return {
           { name = "nvim_lua" },
           { name = "nvim_lsp_signature_help" },
         },
-      })
-
-      cmp.setup(cmp_config)
+      }))
 
       cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
