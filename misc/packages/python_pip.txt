@@ -15,7 +15,7 @@ psutil==5.9.4
 py==1.11.0
 pynvim==0.4.3
 pyparsing==3.0.9
-pytest==7.2.0
+pytest==7.2.1
 PyYAML==6.0
 termcolor==2.2.0
 tomli==2.0.1
