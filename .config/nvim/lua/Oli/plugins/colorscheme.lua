@@ -50,7 +50,6 @@ return {
         dark = {
           statusline_bg = "#2e323b", -- gray
           statuscolumn_border = "#3c4047",
-          indentline = "#3c4047",
           telescope_prompt = "require('onedarkpro.helpers').darken('bg', 1, 'onedark')",
           telescope_results = "require('onedarkpro.helpers').darken('bg', 4, 'onedark')",
           telescope_preview = "require('onedarkpro.helpers').darken('bg', 6, 'onedark')",
@@ -76,10 +75,6 @@ return {
         MatchParen = { fg = "${cyan}" },
         ModeMsg = { fg = "${gray}" }, -- Make command line text lighter
         Search = { bg = "${selection}", fg = "${yellow}", style = "underline" },
-
-        FoldColumn = { bg = "${bg}" },
-        SignColumn = { bg = "${bg}" },
-        LineNr = { bg = "${bg}", fg = "${gray}" },
 
         TabLine = { fg = "${gray}", bg = "${bg}" },
         TabLineSel = { fg = "${bg}", bg = "${purple}" },
@@ -142,11 +137,6 @@ return {
         -- Fidget
         FidgetTask = { fg = "${gray}" },
         FidgetTitle = { fg = "${purple}", style = "italic" },
-
-        -- Gitsigns
-        GitSignsAdd = { fg = { dark = "#45966c", light = "#c5e6c7" } },
-        GitSignsChange = { fg = { dark = "#928b65", light = "#eadcb5" } },
-        GitSignsDelete = { fg = { dark = "#8e3c40", light = "#f9cfce" } },
 
         -- Heirline
         Heirline = { bg = "${statusline_bg}" },
