@@ -212,9 +212,11 @@ return {
           },
           undo = {
             mappings = {
-              ["<CR>"] = require("telescope-undo.actions").restore,
-              ["<C-a>"] = require("telescope-undo.actions").yank_additions,
-              ["<C-d>"] = require("telescope-undo.actions").yank_deletions,
+              i = {
+                ["<CR>"] = require("telescope-undo.actions").restore,
+                ["<C-a>"] = require("telescope-undo.actions").yank_additions,
+                ["<C-d>"] = require("telescope-undo.actions").yank_deletions,
+              },
             },
           },
         },
