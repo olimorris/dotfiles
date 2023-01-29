@@ -4,10 +4,9 @@ import os
 import sys
 import subprocess
 
-kitty_path = "~/.config/kitty"
-starship_path = "~/.config/starship"
-tmux_path = "~/.config/tmux"
 nvim_path = "~/.config/nvim"
+tmux_path = "~/.config/tmux"
+starship_path = "~/.config/starship"
 
 # If we toggle dark mode via Alfred, we end up in a infinite loop. The dark-mode
 # binary changes the MacOS mode which in turn causes color-mode-notify to run
@@ -54,35 +53,12 @@ def app_kitty(mode):
     """
     Change the Kitty terminal
     """
-    kitty_file = kitty_path + "/kitty.conf"
-
-    # Open the Kitty config
-    with open(os.path.expanduser(kitty_file), "r") as config_file:
-        contents = config_file.read()
-
-    # Begin changing the modes
-    if mode == "dark":
-        contents = contents.replace("include ./onelight.conf", "include ./onedark.conf")
+    theme = "Onedark"
 
     if mode == "light":
-        contents = contents.replace("include ./onedark.conf", "include ./onelight.conf")
+        theme = "Onelight"
 
-    with open(os.path.expanduser(kitty_file), "w") as config_file:
-        config_file.write(contents)
-
-    # Reload the Kitty config
-    # Note: For Kitty 0.23.1, this breaks it
-    try:
-        pids = subprocess.run(["pgrep", "kitty"], stdout=subprocess.PIPE)
-        pids = pids.stdout.splitlines()
-        for pid in pids:
-            try:
-                subprocess.run(["kill", "-SIGUSR1", pid])
-            except:
-                continue
-    except IndexError:
-        pass
-
+    subprocess.run(["/opt/homebrew/bin/kitty", "+kitten", "themes", "--reload-in=all", theme])
 
 def app_starship(mode):
     """
@@ -215,5 +191,4 @@ if __name__ == "__main__":
             ran_from_cmd_line = True
         run_apps(sys.argv[1])
     except IndexError:
-
         run_apps()
