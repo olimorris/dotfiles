@@ -8,7 +8,7 @@ return {
       "ColorScheme",
       function()
         require(config_namespace .. ".plugins.winbar").load()
-        require(config_namespace .. ".plugins.statusline").load()
+        require(config_namespace .. ".plugins.heirline").load()
       end,
       opts = {
         pattern = { "*" },
