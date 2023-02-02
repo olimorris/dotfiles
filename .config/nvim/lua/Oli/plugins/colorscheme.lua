@@ -49,7 +49,8 @@ return {
       colors = {
         dark = {
           statusline_bg = "#2e323b", -- gray
-          statuscolumn_border = "#3c4047",
+          statuscolumn_border = "#4b5160", -- gray
+          ellipsis = "#808080", -- gray
           telescope_prompt = "require('onedarkpro.helpers').darken('bg', 1, 'onedark')",
           telescope_results = "require('onedarkpro.helpers').darken('bg', 4, 'onedark')",
           telescope_preview = "require('onedarkpro.helpers').darken('bg', 6, 'onedark')",
@@ -60,7 +61,8 @@ return {
         light = {
           comment = "#bebebe", -- Revert back to original comment colors
           statusline_bg = "#f0f0f0", -- gray
-          statuscolumn_border = "require('onedarkpro.helpers').darken('bg', 3, 'onelight')",
+          statuscolumn_border = "#e7e7e7", -- gray
+          ellipsis = "#808080", -- gray
           telescope_prompt = "require('onedarkpro.helpers').darken('bg', 2, 'onelight')",
           telescope_results = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
           telescope_preview = "require('onedarkpro.helpers').darken('bg', 7, 'onelight')",
@@ -127,7 +129,7 @@ return {
         CopilotSuggestion = { fg = "${copilot}", style = "italic" },
 
         -- DAP
-        DebugBreakpointLine = { fg = "${red}", style = "underline" },
+        DebugBreakpoint = { fg = "${red}", style = "bold" },
         DebugHighlightLine = { fg = "${purple}", style = "italic" },
         NvimDapVirtualText = { fg = "${cyan}", style = "italic" },
 
@@ -140,6 +142,7 @@ return {
 
         -- Heirline
         Heirline = { bg = "${statusline_bg}" },
+        HeirlineStatusColumn = { fg = "${statuscolumn_border}" },
         HeirlineBufferline = { fg = { dark = "#939aa3", light = "#6a6a6a" } },
 
         -- Luasnip
@@ -154,6 +157,9 @@ return {
         -- Neotree
         NeoTreeRootName = { fg = "${purple}", style = "bold" },
         NeoTreeFileNameOpened = { fg = "${purple}", style = "italic" },
+
+        -- Nvim UFO
+        UfoFoldedEllipsis = { fg = "${ellipsis}" },
 
         -- Telescope
         TelescopeBorder = {
