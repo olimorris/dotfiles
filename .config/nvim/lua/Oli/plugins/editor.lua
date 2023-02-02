@@ -27,7 +27,7 @@ return {
     end,
   },
   {
-    "stevearc/oil.nvim",
+    "stevearc/oil.nvim", -- File manager
     init = function()
       require("legendary").keymaps({
         {
@@ -57,6 +57,7 @@ return {
       buf_options = {
         buflisted = false,
       },
+      skip_confirm_for_simple_edits = true,
       float = {
         border = "single",
         win_options = {
