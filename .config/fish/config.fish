@@ -8,7 +8,6 @@ set -x HOMEBREW_NO_ANALYTICS 1
 set -x GOPATH "$HOME/Code/Go"
 set -x STARSHIP_CONFIG "$HOME/.config/starship/starship.toml"
 set -gx macOS_Theme (cat $HOME/.color_mode | string collect)
-set -x _ZO_DATA_DIR "$HOME/.local/share"
 
 set fish_color_param cyan
 set fish_pager_color_completion blue --bold
@@ -34,11 +33,16 @@ source $HOME/.config/fish/fzf.fish
 source $HOME/.config/fish/aliases.fish
 source $HOME/.config/fish/functions.fish
 
+if type -q zoxide
+    zoxide init fish | source
+    set -x _ZO_DATA_DIR "$HOME/.local/share/zoxide"
+    set -x _ZO_ECHO 1
+    set -x _ZO_RESOLVE_SYMLINKS 1
+end
+
 if status is-interactive
     load_env_vars ~/.env
     thefuck --alias | source
-    zoxide init fish | source
     starship init fish | source
     source /opt/homebrew/opt/asdf/libexec/asdf.fish
 end
-
