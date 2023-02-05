@@ -3,21 +3,6 @@ local M = {}
 local conditions = require("heirline.conditions")
 local gitsigns_avail, gitsigns = pcall(require, "gitsigns")
 
-local function get_signs(self, group)
-  local signs = vim.fn.sign_getplaced(vim.api.nvim_get_current_buf(), {
-    group = "*",
-    lnum = vim.v.lnum,
-  })
-
-  if #signs == 0 or signs[1].signs == nil then
-    self.sign = nil
-    self.has_sign = false
-    return
-  end
-
-  return vim.tbl_filter(function(sign) return vim.startswith(sign.group, group) end, signs[1].signs)
-end
-
 M.static = {
   click_args = function(self, minwid, clicks, button, mods)
     local args = {
@@ -35,29 +20,83 @@ M.static = {
 
     return args
   end,
-  handlers = {
-    line_number = function(args)
-      local dap_avail, dap = pcall(require, "dap")
-      if dap_avail then vim.schedule(dap.toggle_breakpoint) end
-    end,
-    diagnostics = function(args) vim.schedule(vim.diagnostic.open_float) end,
-    git_signs = function(args)
-      if gitsigns_avail then vim.schedule(gitsigns.preview_hunk) end
-    end,
-    fold = function(args)
-      local lnum = args.mousepos.line
-      if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then return end
-      vim.cmd.execute("'" .. lnum .. "fold" .. (vim.fn.foldclosed(lnum) == -1 and "close" or "open") .. "'")
-    end,
-  },
+  handlers = {},
 }
 
 M.init = function(self)
   self.signs = {}
-  for _, sign in ipairs(vim.fn.sign_getdefined()) do
-    if sign.text then self.signs[sign.text:gsub("%s", "")] = sign end
+
+  -- Diagnostic handlers
+  for _, sign in ipairs({ "Error", "Hint", "Info", "Warn" }) do
+    local name = "DiagnosticSign" .. sign
+    if not self.handlers[name] then self.handlers[name] = vim.schedule(vim.diagnostic.open_float) end
+  end
+
+  -- DAP handlers
+  for _, sign in ipairs({ "", "Rejected", "Condition" }) do
+    local name = "DapBreakpoint" .. sign
+    if not self.handlers[name] then self.handlers[name] = require("dap").toggle_breakpoint end
+  end
+
+  self.handlers.line_number = function(args)
+    local dap_avail, dap = pcall(require, "dap")
+    if dap_avail then vim.schedule(dap.toggle_breakpoint) end
+  end
+
+  self.handlers.git_signs = function(args)
+    if gitsigns_avail then vim.schedule(gitsigns.preview_hunk) end
+  end
+
+  self.handlers.fold = function(args)
+    local lnum = args.mousepos.line
+    if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then return end
+    vim.cmd.execute("'" .. lnum .. "fold" .. (vim.fn.foldclosed(lnum) == -1 and "close" or "open") .. "'")
   end
 end
+
+M.signs = {
+  -- condition = function() return conditions.has_diagnostics() end,
+  init = function(self)
+    local signs = vim.fn.sign_getplaced(vim.api.nvim_get_current_buf(), {
+      group = "*",
+      lnum = vim.v.lnum,
+    })
+
+    if #signs == 0 or signs[1].signs == nil then
+      self.sign = nil
+      self.has_sign = false
+      return
+    end
+
+    -- Filter out git signs
+    signs = vim.tbl_filter(function(sign) return not vim.startswith(sign.group, "gitsigns") end, signs[1].signs)
+
+    if #signs == 0 then
+      self.sign = nil
+    else
+      self.sign = signs[1]
+    end
+
+    self.has_sign = self.sign ~= nil
+  end,
+  provider = function(self)
+    if self.has_sign then return vim.fn.sign_getdefined(self.sign.name)[1].text end
+    return " "
+  end,
+  hl = function(self)
+    if self.has_sign then
+      local hl = self.sign.name
+      return (vim.fn.hlexists(hl) ~= 0 and hl)
+    end
+  end,
+  on_click = {
+    name = "sign_click",
+    callback = function(self, ...)
+      local args = self.click_args(self, ...)
+      if args.sign and args.sign.name and self.handlers[args.sign.name] then self.handlers[args.sign.name](args) end
+    end,
+  },
+}
 
 M.line_numbers = {
   provider = function()
@@ -73,63 +112,6 @@ M.line_numbers = {
       if self.handlers.line_number then self.handlers.line_number(self.click_args(self, ...)) end
     end,
   },
-}
-
-M.diagnostics = {
-  condition = function() return conditions.has_diagnostics() end,
-  static = {
-    sign_text = {
-      DiagnosticSignError = " ",
-      DiagnosticSignWarn = " ",
-      DiagnosticSignInfo = " ",
-      DiagnosticSignHint = " ",
-    },
-  },
-  init = function(self)
-    local signs = get_signs(self, "vim.diagnostic")
-
-    if #signs == 0 or signs == nil then
-      self.sign = nil
-    else
-      self.sign = signs[1]
-    end
-
-    self.has_sign = self.sign ~= nil
-  end,
-  provider = function(self)
-    if self.has_sign then return self.sign_text[self.sign.name] end
-    return ""
-  end,
-  hl = function(self)
-    if self.has_sign then return self.sign.name end
-  end,
-  on_click = {
-    name = "diagnostics_click",
-    callback = function(self, ...)
-      if self.handlers.diagnostics then self.handlers.diagnostics(self.click_args(self, ...)) end
-    end,
-  },
-}
-
-M.debug = {
-  init = function(self)
-    local signs = get_signs(self, "dap")
-
-    if #signs == 0 or signs == nil then
-      self.sign = nil
-    else
-      self.sign = signs[1]
-    end
-
-    self.has_sign = self.sign ~= nil
-  end,
-  provider = function(self)
-    if self.has_sign then return "" end
-    return ""
-  end,
-  hl = function(self)
-    if self.has_sign then return "DebugBreakpoint" end
-  end,
 }
 
 M.folds = {
@@ -158,6 +140,7 @@ M.folds = {
 }
 
 M.git_signs = {
+  condition = function() return conditions.is_git_repo() end,
   init = function(self)
     local signs = vim.fn.sign_getplaced(vim.api.nvim_get_current_buf(), {
       group = "gitsigns_vimfn_signs_",
