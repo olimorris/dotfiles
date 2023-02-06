@@ -26,6 +26,10 @@ M.static = {
 M.init = function(self)
   self.signs = {}
 
+  self.handlers.signs = function(args)
+    return vim.schedule(vim.diagnostic.open_float)
+  end
+
   self.handlers.line_number = function(args)
     local dap_avail, dap = pcall(require, "dap")
     if dap_avail then vim.schedule(dap.toggle_breakpoint) end
@@ -80,7 +84,7 @@ M.signs = {
   on_click = {
     name = "sign_click",
     callback = function(self, ...)
-      vim.schedule(vim.diagnostic.open_float)
+      if self.handlers.signs then self.handlers.signs(self.click_args(self, ...)) end
     end,
   },
 }
