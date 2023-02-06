@@ -272,7 +272,7 @@ return {
         severity_sort = true,
         signs = true,
         underline = false,
-        update_in_insert = false,
+        update_in_insert = true,
         virtual_text = false,
         -- virtual_text = {
         --   prefix = "",
@@ -291,7 +291,6 @@ return {
           require("legendary").commands({
             {
               ":NullFormat",
-              hide = true,
               function()
                 vim.lsp.buf.format({
                   id = client.id,
@@ -299,6 +298,7 @@ return {
                   async = true,
                 })
               end,
+              hide = true,
               description = "null-ls: format buffer",
             },
           })
@@ -330,26 +330,14 @@ return {
             filetypes = { "sh", "zsh" },
           }),
           null_ls.builtins.formatting.stylua,
+          null_ls.builtins.formatting.xmllint,
         },
       })
 
       require("mason-null-ls").setup({
-        ensure_installed = {
-          "eslint_d",
-          "fish_indent",
-          "fixjson",
-          "phpcsfixer",
-          "prettier",
-          "rubocop",
-          "shfmt",
-          "stylua",
-        },
         automatic_installation = true,
         automatic_setup = true,
       })
-
-      -- Required when `automatic_setup` is true
-      require("mason-null-ls").setup_handlers()
 
       -- Setup better folding
       local ok, ufo = pcall(require, "ufo")
