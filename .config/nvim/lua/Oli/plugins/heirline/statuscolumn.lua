@@ -26,18 +26,6 @@ M.static = {
 M.init = function(self)
   self.signs = {}
 
-  -- Diagnostic handlers
-  for _, sign in ipairs({ "Error", "Hint", "Info", "Warn" }) do
-    local name = "DiagnosticSign" .. sign
-    if not self.handlers[name] then self.handlers[name] = vim.schedule(vim.diagnostic.open_float) end
-  end
-
-  -- DAP handlers
-  for _, sign in ipairs({ "", "Rejected", "Condition" }) do
-    local name = "DapBreakpoint" .. sign
-    if not self.handlers[name] then self.handlers[name] = require("dap").toggle_breakpoint end
-  end
-
   self.handlers.line_number = function(args)
     local dap_avail, dap = pcall(require, "dap")
     if dap_avail then vim.schedule(dap.toggle_breakpoint) end
@@ -92,8 +80,7 @@ M.signs = {
   on_click = {
     name = "sign_click",
     callback = function(self, ...)
-      local args = self.click_args(self, ...)
-      if args.sign and args.sign.name and self.handlers[args.sign.name] then self.handlers[args.sign.name](args) end
+      vim.schedule(vim.diagnostic.open_float)
     end,
   },
 }
