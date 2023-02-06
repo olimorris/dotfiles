@@ -63,9 +63,9 @@ return {
           statusline_bg = "#f0f0f0", -- gray
           statuscolumn_border = "#e7e7e7", -- gray
           ellipsis = "#808080", -- gray
-          git_add = "require('onedarkpro.helpers').darken('green', 0, 'onelight')",
-          git_change = "require('onedarkpro.helpers').darken('yellow', 0, 'onelight')",
-          git_delete = "require('onedarkpro.helpers').darken('red', 0, 'onelight')",
+          git_add = "require('onedarkpro.helpers').get_preloaded_colors('onelight').green",
+          git_modify = "require('onedarkpro.helpers').get_preloaded_colors('onelight').yellow",
+          git_delete = "require('onedarkpro.helpers').get_preloaded_colors('onelight').red",
           telescope_prompt = "require('onedarkpro.helpers').darken('bg', 2, 'onelight')",
           telescope_results = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
           telescope_preview = "require('onedarkpro.helpers').darken('bg', 7, 'onelight')",
