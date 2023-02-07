@@ -207,6 +207,27 @@ namespace :install do
 end
 
 namespace :update do
+  desc 'Patch fonts'
+  task :fonts do
+    section 'Patching fonts'
+
+    fontforge_dir = File.expand_path('~/.fontforge')
+    input_dir = File.expand_path('~/fonts_to_patch')
+    output_dir = File.expand_path('~/patched_fonts')
+
+    unless testing?
+      # Check if fontforge is installed
+      run %( git clone https://github.com/ryanoasis/nerd-fonts ~/.fontforge ) unless File.directory?(fontforge_dir)
+
+      yesno?("Have you copied fonts to the #{input_dir} folder?")
+
+      run %( cd ~/.fontforge && git pull )
+      Dir.foreach(input_dir) do |font|
+        run %( cd ~/.fontforge && fontforge -script font-patcher --fontawesome --fontawesomeextension --fontlogos --octicons --codicons --powersymbols --pomicons --powerline --powerlineextra --material --weather --out #{output_dir} #{input_dir}/#{font} )
+      end
+    end
+  end
+
   desc 'Update Neovim'
   task :neovim do
     section 'Updating Neovim'

@@ -1,11 +1,11 @@
 require 'rake'
 
-def section(title, description="")
+def section(title, _description = '')
   seperator_count = (80 - title.length) / 2
-  puts ("\n" + "="*seperator_count) + title.upcase + ("="*seperator_count)
-  puts "~> Performing as dry run" if ENV['DRY_RUN']
-  puts "~> Performing as super user" if ENV['SUDO']
-  puts "~> Performing as test env user" if ENV['TEST_ENV']
+  puts ("\n" + '=' * seperator_count) + title.upcase + ('=' * seperator_count)
+  puts '~> Performing as dry run' if ENV['DRY_RUN']
+  puts '~> Performing as super user' if ENV['SUDO']
+  puts '~> Performing as test env user' if ENV['TEST_ENV']
 end
 
 def run(cmd)
@@ -23,6 +23,11 @@ def run(cmd)
   end
 end
 
+def yesno?(question)
+  require 'highline/import'
+  exit unless HighLine.agree(question)
+end
+
 def testable?(filename)
   !SKIP_TESTS_FOR.include?(filename)
 end
@@ -37,5 +42,5 @@ def find_replace(file_name, find, replace)
   new_text = text.gsub(find, replace)
 
   # To write changes to the file, use:
-  File.open(file_name_new, "w") {|file| file.puts new_text }
+  File.open(file_name_new, 'w') { |file| file.puts new_text }
 end
