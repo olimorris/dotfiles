@@ -117,7 +117,7 @@ function om.Lazygit()
     end,
     on_close = function(term)
       vim.o.laststatus = 3
-      vim.o.showtabline = 2
+      -- vim.o.showtabline = 2
     end,
   })
 end

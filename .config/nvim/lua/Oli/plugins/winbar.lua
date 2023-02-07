@@ -38,7 +38,7 @@ function M.load()
       separator = { fg = colors.breadcrumbs },
       modified = { fg = colors.red },
       dirname = { fg = colors.breadcrumbs, italic = true },
-      basename = { fg = colors.breadcrumbs, italic = true, bold = false },
+      basename = { fg = colors.fg, italic = false, bold = false },
       context = { fg = colors.breadcrumbs, italic = true },
     },
   })

@@ -72,18 +72,23 @@ return {
               t.lazy_required_fn(
                 "telescope.builtin",
                 "live_grep",
-                { path_display = { "shorten" }, grep_open_files = true }
+                { prompt_title = "Open Files", path_display = { "shorten" }, grep_open_files = true }
               ),
               description = "Find in open files",
             },
             {
               "<Leader>g",
-              t.lazy_required_fn("telescope.builtin", "live_grep", { path_display = { "smart" } }),
-              description = "Find in pwd",
+              t.lazy_required_fn("telescope.builtin", "live_grep", { prompt_title = "Cwd Search", path_display = { "smart" } }),
+              description = "Find in cwd",
+            },
+            {
+              "<C-b>",
+              t.lazy_required_fn("telescope.builtin", "buffers", { prompt_title = "Buffer List", path_display = { "smart" } }),
+              description = "List buffers",
             },
             {
               "<Leader><Leader>",
-              "<cmd>lua require('telescope').extensions.frecency.frecency({ workspace = 'CWD' })<CR>",
+              "<cmd>lua require('telescope').extensions.frecency.frecency({ prompt_title = 'Recent Files', workspace = 'CWD' })<CR>",
               description = "Find recent files",
             },
           },
@@ -174,6 +179,7 @@ return {
             i = {
               ["<esc>"] = require("telescope.actions").close,
               ["<C-e>"] = custom_actions.multi_select,
+              ["<C-c>"] = require("telescope.actions").delete_buffer,
               ["<C-j>"] = require("telescope.actions").move_selection_next,
               ["<C-d>"] = require("telescope.actions").preview_scrolling_down,
               ["<C-f>"] = require("telescope.actions").preview_scrolling_up,

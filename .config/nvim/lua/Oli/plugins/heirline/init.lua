@@ -111,11 +111,11 @@ function M.load()
       statuscolumn.folds,
       statuscolumn.git_signs,
     },
-    tabline = bufferline,
+    -- tabline = bufferline,
   })
 
-  vim.o.showtabline = 2
-  vim.cmd([[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])
+  -- vim.o.showtabline = 2
+  -- vim.cmd([[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])
 end
 
 ---Used by Lazy to load the statusline
