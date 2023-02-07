@@ -1,6 +1,11 @@
 return {
   {
-    "kevinhwang91/nvim-ufo",
+    --TODO: Add commands and keymaps
+    "mfussenegger/nvim-jdtls", -- Extensions for nicer Java development in Neovim
+    ft = "java"
+  },
+  {
+    "kevinhwang91/nvim-ufo", -- Better folds in Neovim
     dependencies = "kevinhwang91/promise-async",
     init = function()
       require("legendary").keymaps({

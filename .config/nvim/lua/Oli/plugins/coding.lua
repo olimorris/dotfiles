@@ -356,6 +356,29 @@ return {
   {
     "stevearc/overseer.nvim", -- Task runner and job management
     lazy = true,
+    init = function()
+      require("legendary").commands({
+        {
+          itemgroup = "Overseer",
+          icon = "省",
+          description = "Task running functionality...",
+          commands = {
+            {
+              ":OverseerRun",
+              description = "Run a task from a template",
+            },
+            {
+              ":OverseerBuild",
+              description = "Open the task builder",
+            },
+            {
+              ":OverseerToggle",
+              description = "Toggle the Overseer window",
+            },
+          },
+        },
+      })
+    end,
     config = {
       component_aliases = {
         default_neotest = {
@@ -364,6 +387,7 @@ return {
           "on_complete_dispose",
         },
       },
+      templates = { "builtin", "java_build" },
     },
   },
   {
@@ -382,7 +406,7 @@ return {
       require("legendary").keymaps({
         {
           itemgroup = "Neotest",
-          icon = "省",
+          icon = "ﭧ",
           description = "Testing functionality...",
           keymaps = {
             -- Neotest plugin

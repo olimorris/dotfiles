@@ -14,6 +14,9 @@ return {
         ["null-ls"] = {
           ignore = true, -- Ignore annoying code action prompts
         },
+        ["jdtls"] = {
+          ignore = true, -- Ignore annoying code action prompts
+        },
       },
     },
   },
