@@ -10,6 +10,7 @@ docker
 fd
 fish
 flux
+fontforge
 fortune
 fzf
 gh
@@ -23,11 +24,8 @@ httpie
 jpeg
 lazygit
 librsync
-libspiro
 libtermkey
-libuninameslist
 libvterm
-little-cms2
 lolcat
 luajit
 luajit-openresty
@@ -35,11 +33,11 @@ luarocks
 luv
 mackup
 mas
+maven
 msgpack
 neofetch
 ninja
 node
-pango
 php-cs-fixer
 rclone
 reattach-to-user-namespace
@@ -56,7 +54,6 @@ vim
 vivid
 watchman
 wget
-woff2
 yarn
 zoxide
 zsh-completions

@@ -57,6 +57,7 @@ forwardable
 getoptlong
 globalid
 high_voltage
+highline
 i18n
 importmap-rails
 io-console
