@@ -112,8 +112,8 @@ return {
 
       -- Terminal header
       dashboard.section.terminal.command = "cat | lolcat --seed=24 "
-          .. os.getenv("HOME")
-          .. "/.config/nvim/static/neovim.cat"
+        .. os.getenv("HOME")
+        .. "/.config/nvim/static/neovim.cat"
       dashboard.section.terminal.width = 69
       dashboard.section.terminal.height = 8
 
