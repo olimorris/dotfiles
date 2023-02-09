@@ -1,6 +1,12 @@
 return {
   "nvim-tree/nvim-web-devicons",
   {
+    "tzachar/local-highlight.nvim",
+    opts = {
+      file_types = { "lua", "javascript", "python", "ruby" },
+    },
+  },
+  {
     "j-hui/fidget.nvim", -- Display LSP status messages in a floating window
     opts = {
       text = {
