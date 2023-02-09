@@ -78,8 +78,8 @@ return {
             },
             {
               "<Leader>g",
-              t.lazy_required_fn("telescope.builtin", "live_grep", { prompt_title = "Cwd Search", path_display = { "smart" } }),
-              description = "Find in cwd",
+              t.lazy_required_fn("telescope.builtin", "live_grep", { prompt_title = "Search CWD", path_display = { "smart" } }),
+              description = "Search CWD",
             },
             {
               "<C-b>",
