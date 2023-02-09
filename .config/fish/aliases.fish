@@ -149,6 +149,7 @@ alias ...='cd ../..'
 alias desk='cd ~/Desktop'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+alias ze='zoxide edit'
 
 # Tmux
 alias tsa='tmux-sendall'                # Send a command to all windows and panes that don't have a process running
