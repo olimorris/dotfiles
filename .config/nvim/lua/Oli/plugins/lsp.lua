@@ -116,7 +116,7 @@ return {
       })
 
       -- we will use nvim-jdtls to setup the lsp
-      lsp.skip_server_setup({ "jtdls" })
+      lsp.skip_server_setup({ "jdtls" })
 
       lsp.set_server_config({
         capabilities = {
