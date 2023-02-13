@@ -25,6 +25,7 @@ function M.load()
 
   require("barbecue").setup({
     exclude_filetypes = { "netrw", "toggleterm" },
+    show_modified = true,
     symbols = {
       separator = "",
       ellipsis = "",
@@ -32,6 +33,7 @@ function M.load()
     modifiers = {
       dirname = ":~:.:s?.config/nvim/lua?Neovim?",
     },
+    custom_section = function() return "%#VimLogo#  " end,
     theme = {
       normal = { fg = colors.breadcrumbs, bg = colors.bg, italic = true },
       ellipsis = { fg = colors.breadcrumbs },

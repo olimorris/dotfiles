@@ -80,6 +80,7 @@ return {
         MatchParen = { fg = "${cyan}" },
         ModeMsg = { fg = "${gray}" }, -- Make command line text lighter
         Search = { bg = "${selection}", fg = "${yellow}", style = "underline" },
+        VimLogo = { fg = { dark = "#81b766", light = "#029632" } },
 
         TabLine = { fg = "${gray}", bg = "${bg}" },
         TabLineSel = { fg = "${bg}", bg = "${purple}" },
@@ -112,7 +113,6 @@ return {
         AlphaFooter = { fg = "${gray}", style = "italic" },
 
         -- Bufferline
-        BufferlineVim = { fg = { dark = "#81b766", light = "#029632" } },
         BufferlineNormal = { bg = "${bg}", fg = "${gray}" },
         BufferlineSelected = { bg = "${statusline_bg}", fg = "${purple}" },
         BufferlineOffset = { fg = "${purple}", style = "bold" },
@@ -175,10 +175,6 @@ return {
         },
         TelescopePromptCounter = { fg = "${fg}" },
         TelescopePromptNormal = { fg = "${fg}", bg = "${telescope_prompt}" },
-        TelescopePromptPrefix = {
-          fg = "${purple}",
-          bg = "${telescope_prompt}",
-        },
         TelescopePromptTitle = {
           fg = "${telescope_prompt}",
           bg = "${purple}",
