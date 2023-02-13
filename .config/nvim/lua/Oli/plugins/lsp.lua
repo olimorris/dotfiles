@@ -107,9 +107,9 @@ return {
         "intelephense",
         "jdtls",
         "jsonls",
+        "lua_ls",
         "pyright",
         "solargraph",
-        "sumneko_lua",
         -- "tailwindcss", -- Disabled due to high node CPU usage
         "tsserver",
         "vuels",
