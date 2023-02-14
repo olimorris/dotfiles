@@ -28,8 +28,9 @@ local apps = {
 
 local launchOrToggle = function(key, app_name, app_filename)
   hs.hotkey.bind(hyper, key, function()
-    app = hs.application.find(app_name)
+    local app = hs.application.find(app_name)
     -- Toggle - show
+    local awin = nil
     if app then awin = app:mainWindow() end
     -- Toggle - hide
     if awin and app and app:isFrontmost() then
@@ -38,7 +39,7 @@ local launchOrToggle = function(key, app_name, app_filename)
       -- Launch
       if app_filename then return hs.application.launchOrFocus(app_filename) end
 
-      local app = hs.application.find(app_name)
+      app = hs.application.find(app_name)
 
       hs.application.launchOrFocus(app_name)
       app.setFrontmost(app)
