@@ -1,7 +1,7 @@
 return {
   {
     "VonHeikemen/lsp-zero.nvim",
-    branch = 'v1.x',
+    branch = "v1.x",
     dependencies = {
       -- LSP Support
       "neovim/nvim-lspconfig",
@@ -340,6 +340,7 @@ return {
       })
 
       require("mason-null-ls").setup({
+        ensure_installed = { "java-debug-adapter", "java-test" },
         automatic_installation = true,
         automatic_setup = true,
       })

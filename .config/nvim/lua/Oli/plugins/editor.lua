@@ -2,7 +2,37 @@ return {
   {
     --TODO: Add commands and keymaps
     "mfussenegger/nvim-jdtls", -- Extensions for nicer Java development in Neovim
-    ft = "java"
+    ft = "java",
+    init = function()
+      require("legendary").commands({
+        itemgroup = "Java",
+        icon = "",
+        description = "Java functionality...",
+        commands = {
+          {
+            "JdtCompile",
+            description = "Compile the current project",
+          },
+          {
+            "JdtUpdateConfig",
+            description = "Update the configuration of the current project",
+          },
+        },
+      })
+      require("legendary").keymaps({
+        itemgroup = "Java",
+        keymaps = {
+          {
+            "<LocalLeader>o",
+            function() require("jdtls").organize_imports() end,
+            description = "Organize imports",
+            { noremap = true, silent = true },
+          },
+          -- TODO: add keymaps for extracting variables and constants:
+          --  https://github.com/mfussenegger/nvim-jdtls#usage
+        },
+      })
+    end,
   },
   {
     "kevinhwang91/nvim-ufo", -- Better folds in Neovim
