@@ -41,6 +41,7 @@ sketch
 slack
 spotify
 steam
+superkey
 tableplus
 textexpander
 textmate

@@ -49,6 +49,6 @@ map cmd+right send_text all \x05
 mouse_map ctrl+left press ungrabbed,grabbed mouse_click_url
 
 # BEGIN_KITTY_THEME
-# Onelight
+# Onedark
 include current-theme.conf
 # END_KITTY_THEME
