@@ -33,7 +33,13 @@ function M.load()
     modifiers = {
       dirname = ":~:.:s?.config/nvim/lua?Neovim?",
     },
-    custom_section = function() return "%#VimLogo#  " end,
+    custom_section = function()
+      return {
+        { " " },
+        { "", "VimLogo" },
+        { " " },
+      }
+    end,
     theme = {
       normal = { fg = colors.breadcrumbs, bg = colors.bg, italic = true },
       ellipsis = { fg = colors.breadcrumbs },

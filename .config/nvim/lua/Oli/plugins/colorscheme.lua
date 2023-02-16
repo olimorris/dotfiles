@@ -19,7 +19,7 @@ return {
       })
     end,
     opts = {
-      caching = false,
+      -- caching = false,
       cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
       plugins = {
         barbar = false,
@@ -77,6 +77,7 @@ return {
       highlights = {
         CursorLineNr = { bg = "${bg}", fg = "${purple}", style = "bold" },
         DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
+        LocalHighlight = { link = "CursorColumn" },
         MatchParen = { fg = "${cyan}" },
         ModeMsg = { fg = "${gray}" }, -- Make command line text lighter
         Search = { bg = "${selection}", fg = "${yellow}", style = "underline" },
