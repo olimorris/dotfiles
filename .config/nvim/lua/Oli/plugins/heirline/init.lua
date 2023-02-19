@@ -7,6 +7,13 @@ local M = {
       cmd = "Bdelete",
     },
     "nvim-tree/nvim-web-devicons",
+    {
+      "SmiteshP/nvim-navic", -- Winbar component showing current code context
+      opts = {
+        highlight = true,
+        separator = "  ",
+      },
+    },
   },
   init = function()
     require("legendary").keymaps({
@@ -37,11 +44,22 @@ local M = {
 
 -- Filetypes where certain elements of the statusline will not be shown
 local filetypes = {
+  "^git.*",
+  "fugitive",
+  "alpha",
   "^neo--tree$",
   "^neotest--summary$",
   "^neo--tree--popup$",
   "^NvimTree$",
   "^toggleterm$",
+}
+
+-- Buftypes which should cause elements to be hidden
+local buftypes = {
+  "nofile",
+  "prompt",
+  "help",
+  "quickfix",
 }
 
 -- Filetypes which force the statusline to be inactive
@@ -65,6 +83,7 @@ function M.load()
 
   local statusline = require(config_namespace .. ".plugins.heirline.statusline")
   local statuscolumn = require(config_namespace .. ".plugins.heirline.statuscolumn")
+  local winbar = require(config_namespace .. ".plugins.heirline.winbar")
   local bufferline = require(config_namespace .. ".plugins.heirline.bufferline")
 
   local align = { provider = "%=" }
@@ -75,6 +94,7 @@ function M.load()
     statusline = {
       static = {
         filetypes = filetypes,
+        buftypes = buftypes,
         force_inactive_filetypes = force_inactive_filetypes,
       },
       condition = function(self)
@@ -99,6 +119,7 @@ function M.load()
     statuscolumn = {
       condition = function()
         return not conditions.buffer_matches({
+          buftype = buftypes,
           filetype = force_inactive_filetypes,
         })
       end,
@@ -111,11 +132,23 @@ function M.load()
       statuscolumn.folds,
       statuscolumn.git_signs,
     },
-    -- tabline = bufferline,
+    winbar = {
+      {
+        condition = function()
+          return conditions.buffer_matches({
+            buftype = { "nofile", "prompt", "help", "quickfix" },
+            filetype = { "alpha", "oil" },
+          })
+        end,
+        init = function() vim.opt_local.winbar = nil end,
+      },
+      winbar.cwd,
+      winbar.filename,
+      winbar.navic,
+      align,
+      winbar.vim_logo,
+    },
   })
-
-  -- vim.o.showtabline = 2
-  -- vim.cmd([[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])
 end
 
 ---Used by Lazy to load the statusline

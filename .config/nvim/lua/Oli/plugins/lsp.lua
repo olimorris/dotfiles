@@ -269,6 +269,8 @@ return {
         autocmds(client, bufnr)
         commands(client, bufnr)
         mappings(client, bufnr)
+
+        if client.server_capabilities.documentSymbolProvider then require("nvim-navic").attach(client, bufnr) end
       end)
 
       lsp.setup()

@@ -3,16 +3,23 @@ if not ok then return end
 
 return {
   {
-    name = "ColorSchemeChanges",
+    name = "Heirline",
     {
       "ColorScheme",
-      function()
-        require(config_namespace .. ".plugins.winbar").load()
-        require(config_namespace .. ".plugins.heirline").load()
-      end,
+      function() require(config_namespace .. ".plugins.heirline").load() end,
       opts = {
         pattern = { "*" },
       },
+    },
+    {
+      "User",
+      function(args)
+        local buf = args.buf
+        local buftype = vim.tbl_contains({ "prompt", "nofile", "help", "quickfix" }, vim.bo[buf].buftype)
+        local filetype = vim.tbl_contains({ "", "alpha", "gitcommit", "fugitive" }, vim.bo[buf].filetype)
+        if buftype or filetype then vim.opt_local.winbar = nil end
+      end,
+      opts = { pattern = "HeirlineInitWinbar" },
     },
   },
   {
