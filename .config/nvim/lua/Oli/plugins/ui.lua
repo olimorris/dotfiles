@@ -1,7 +1,7 @@
 return {
   "nvim-tree/nvim-web-devicons",
   {
-    "tzachar/local-highlight.nvim",
+    "tzachar/local-highlight.nvim", -- Highlight word under cursor throughout the visible buffer
     opts = {
       file_types = { "lua", "javascript", "python", "ruby" },
     },
@@ -27,7 +27,7 @@ return {
     },
   },
   {
-    "stevearc/dressing.nvim", -- Utilises Neovim 0.6's new UI hooks to manage inputs, selects etc
+    "stevearc/dressing.nvim", -- Utilises Neovim UI hooks to manage inputs, selects etc
     config = {
       input = {
         default_prompt = "> ",
@@ -55,7 +55,7 @@ return {
     },
   },
   {
-    "lewis6991/gitsigns.nvim", -- Git signs in the sign column
+    "lewis6991/gitsigns.nvim", -- Git signs in the statuscolumn
     opts = {
       signs = {
         add = { hl = "GitSignsAdd", text = "▌" },

@@ -57,6 +57,7 @@ return {
           telescope_selection = "require('onedarkpro.helpers').darken('bg', 8, 'onedark')",
           copilot = "require('onedarkpro.helpers').darken('gray', 8, 'onedark')",
           breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'onedark')",
+          local_highlight = "require('onedarkpro.helpers').lighten('bg', 2, 'onedark')",
         },
         light = {
           comment = "#bebebe", -- Revert back to original comment colors
@@ -72,12 +73,13 @@ return {
           telescope_selection = "require('onedarkpro.helpers').darken('bg', 9, 'onelight')",
           copilot = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
           breadcrumbs = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
+          local_highlight = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
         },
       },
       highlights = {
         CursorLineNr = { bg = "${bg}", fg = "${purple}", style = "bold" },
         DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
-        LocalHighlight = { link = "CursorColumn" },
+        LocalHighlight = { bg = "${local_highlight}" },
         MatchParen = { fg = "${cyan}" },
         ModeMsg = { fg = "${gray}" }, -- Make command line text lighter
         Search = { bg = "${selection}", fg = "${yellow}", style = "underline" },
@@ -152,6 +154,9 @@ return {
         -- Luasnip
         LuaSnipChoiceNode = { fg = "${yellow}" },
         LuaSnipInsertNode = { fg = "${yellow}" },
+
+        -- Navic
+        NavicText = { fg = "${breadcrumbs}", style = "italic" },
 
         -- Neotest
         NeotestAdapterName = { fg = "${purple}", style = "bold" },
