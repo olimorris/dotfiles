@@ -1,5 +1,5 @@
--- The hyperkey is mapped to caps lock via Karabiner
-local hyper = { "cmd", "alt", "ctrl", "shift" }
+-- The hyperkey is mapped to caps lock
+local hyper = { "cmd", "alt", "ctrl" }
 
 ------------------------------- APP LAUNCH/TOGGLE ------------------------------
 --[[
@@ -13,10 +13,6 @@ local apps = {
   e = "Microsoft Excel",
   f = "Finder",
   g = "Google Chrome",
-  h = "", -- Reserved
-  j = "", -- Reserved
-  k = "", -- Reserved
-  l = "", -- Reserved
   m = "HEY", -- Mail
   n = "Bear", -- Notes
   o = "Notion", -- Life OS
