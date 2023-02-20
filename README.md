@@ -33,7 +33,7 @@ cd ~/.dotfiles && rake install
 - Your custom launch agents will be installed
 - Your development environments will be installed and configured
 
-## :keyboard: Useful commands
+## :floppy_disk: Useful commands
 
 - To backup your dotfiles:
 
@@ -46,6 +46,20 @@ cd ~/.dotfiles && rake backup
 ```bash
 cd ~/.dotfiles && rake sync
 ```
+
+## :keyboard: Useful keymaps
+
+I implement a Hyperkey (<kbd>Ctrl</kbd> + <kbd>Opt</kbd> + <kbd>Cmd</kbd>) to allow for faster [application toggling](https://github.com/olimorris/dotfiles/blob/main/.config/hammerspoon/keymaps.lua) and easier to remember app shortcuts.
+
+<details>
+  <summary>Click to see the app shortcuts</summary>
+
+- Clipboard history - <kbd>Hyperkey</kbd> + <kbd>Shift</kbd> + <kbd>v</kbd>
+- Create a temporary email address - <kbd>Hyperkey</kbd> + <kbd>Shift</kbd> + <kbd>e</kbd>
+- Center window - <kbd>Opt</kbd> + <kbd>c</kbd>
+- Pick color with ColorSlurp - <kbd>Hyperkey</kbd> + <kbd>Shift</kbd> + <kbd>p</kbd>
+
+</details>
 
 ## :clap: Thanks
 
