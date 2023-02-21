@@ -49,15 +49,20 @@ cd ~/.dotfiles && rake sync
 
 ## :keyboard: Useful keymaps
 
-I implement a Hyperkey (<kbd>Ctrl</kbd> + <kbd>Opt</kbd> + <kbd>Cmd</kbd>) to allow for faster [application toggling](https://github.com/olimorris/dotfiles/blob/main/.config/hammerspoon/keymaps.lua) and easier to remember app shortcuts.
+I implement a [Hyperkey](https://hyperkey.app) (<kbd>ctrl</kbd><kbd>opt</kbd><kbd>cmd</kbd>) to allow for faster [application toggling](https://github.com/olimorris/dotfiles/blob/main/.config/hammerspoon/keymaps.lua) and easier to remember app shortcuts.
 
 <details>
   <summary>Click to see the app shortcuts</summary>
 
-- Clipboard history - <kbd>Hyperkey</kbd> + <kbd>Shift</kbd> + <kbd>v</kbd>
-- Create a temporary email address - <kbd>Hyperkey</kbd> + <kbd>Shift</kbd> + <kbd>e</kbd>
-- Center window - <kbd>Opt</kbd> + <kbd>c</kbd>
-- Pick color with ColorSlurp - <kbd>Hyperkey</kbd> + <kbd>Shift</kbd> + <kbd>p</kbd>
+- Center window                     <kbd>opt</kbd><kbd>c</kbd>
+- Create a temp email address       <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>e</kbd>
+- Pick color with ColorSlurp        <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>p</kbd>
+- Search screen (uses OCR)          <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>f</kbd>
+- Show Cleanshot history            <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>h</kbd>
+- Show clipboard history            <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>v</kbd>
+- Toggle dark mode                  <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>d</kbd>
+
+> :bangbang: Thanks to this great [Reddit post](https://www.reddit.com/r/macapps/comments/xwfp82/comment/ir6trn4)
 
 </details>
 
