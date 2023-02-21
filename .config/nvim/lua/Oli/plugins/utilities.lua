@@ -59,7 +59,7 @@ return {
   },
   {
     "olimorris/persisted.nvim", -- Session management
-    lazy = true,
+    -- lazy = true,
     init = function()
       require("legendary").keymaps({
         {
@@ -76,7 +76,6 @@ return {
           },
         },
       })
-
       require("legendary").commands({
         {
           itemgroup = "Persisted",
@@ -108,7 +107,6 @@ return {
     end,
     opts = {
       save_dir = Sessiondir .. "/",
-      branch_separator = "@@",
       use_git_branch = true,
       silent = true,
       should_autosave = function()
