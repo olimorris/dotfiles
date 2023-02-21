@@ -26,9 +26,7 @@ M.static = {
 M.init = function(self)
   self.signs = {}
 
-  self.handlers.signs = function(args)
-    return vim.schedule(vim.diagnostic.open_float)
-  end
+  self.handlers.signs = function(args) return vim.schedule(vim.diagnostic.open_float) end
 
   self.handlers.line_number = function(args)
     local dap_avail, dap = pcall(require, "dap")
@@ -106,22 +104,28 @@ M.line_numbers = {
 }
 
 M.folds = {
-  provider = function()
-    if vim.v.virtnum ~= 0 then return "" end
-
-    local lnum = vim.v.lnum
-    local icon = " "
-
-    if vim.fn.foldlevel(lnum) > vim.fn.foldlevel(lnum - 1) then
-      if vim.fn.foldclosed(lnum) == -1 then
-        icon = ""
-      else
-        icon = ""
-      end
-    end
-
-    return icon
+  init = function(self)
+    self.lnum = vim.v.lnum
+    self.folded = vim.fn.foldlevel(self.lnum) > vim.fn.foldlevel(self.lnum - 1)
   end,
+  {
+    condition = function(self) return self.folded end,
+    {
+      provider = function(self)
+        if vim.fn.foldclosed(self.lnum) == -1 then return "" end
+      end,
+    },
+    {
+      provider = function(self)
+        if vim.fn.foldclosed(self.lnum) ~= -1 then return "" end
+      end,
+      hl = { fg = "yellow" },
+    },
+  },
+  {
+    condition = function(self) return not self.folded end,
+    provider = " ",
+  },
   on_click = {
     name = "fold_click",
     callback = function(self, ...)

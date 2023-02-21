@@ -19,11 +19,10 @@ M.cwd = {
   {
     provider = function()
       local cwd = vim.fn.fnamemodify(vim.loop.cwd(), modifiers.dirname or nil)
-      return " " .. table.concat(vim.fn.split(cwd, "/"), sep) .. " "
+      return " " .. table.concat(vim.fn.split(cwd, "/"), sep) .. sep
     end,
-    hl = { fg = "gray", bg = "statusline_bg", italic = true },
+    hl = { fg = "breadcrumbs", italic = true },
   },
-  LeftSlantEnd,
 }
 
 M.filename = {
@@ -31,7 +30,7 @@ M.filename = {
   {
     provider = function()
       local head = vim.fn.fnamemodify(vim.fn.expand("%:h"), modifiers.dirname or nil)
-      return " " .. table.concat(vim.fn.split(head, "/"), sep)
+      return table.concat(vim.fn.split(head, "/"), sep)
     end,
     hl = { fg = "breadcrumbs", italic = true },
   },
@@ -45,9 +44,21 @@ M.filename = {
     },
     {
       provider = function() return vim.fn.expand("%:t") end,
-      hl = { fg = "comment" }
+      hl = function()
+        if vim.o.background == "light" then
+          return { fg = "fg" }
+        else
+          return { fg = "comment" }
+        end
+      end,
     },
     hl = { fg = "breadcrumbs", italic = true },
+  },
+  -- Modifier
+  {
+    condition = function() return vim.bo.modified end,
+    provider = " ",
+    hl = { fg = "red" },
   },
 }
 

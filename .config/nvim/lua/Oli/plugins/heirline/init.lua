@@ -137,7 +137,7 @@ function M.load()
         condition = function()
           return conditions.buffer_matches({
             buftype = { "nofile", "prompt", "help", "quickfix" },
-            filetype = { "alpha", "oil" },
+            filetype = { "alpha", "oil", "toggleterm" },
           })
         end,
         init = function() vim.opt_local.winbar = nil end,

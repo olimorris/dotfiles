@@ -179,11 +179,11 @@ local FileName = {
 }
 
 local FileFlags = {
-  {
-    condition = function() return vim.bo.modified end,
-    provider = " ",
-    hl = { fg = "gray" },
-  },
+  -- {
+  --   condition = function() return vim.bo.modified end,
+  --   provider = " ",
+  --   hl = { fg = "gray" },
+  -- },
   {
     condition = function() return not vim.bo.modifiable or vim.bo.readonly end,
     provider = " ",
