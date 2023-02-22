@@ -23,6 +23,17 @@ return {
     },
   },
   {
+    name = "PersistedHooks",
+    {
+      "User",
+      function(args)
+        vim.api.nvim_input("<ESC>:%bd!<CR>")
+        require("persisted").stop()
+      end,
+      opts = { pattern = "PersistedTelescopeLoadPre" },
+    },
+  },
+  {
     name = "ReturnToLastEditingPosition",
     {
       "BufReadPost",

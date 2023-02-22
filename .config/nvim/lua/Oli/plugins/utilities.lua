@@ -98,6 +98,10 @@ return {
               description = "Stop the current session",
             },
             {
+              ":SessionLoad",
+              description = "Load the last session",
+            },
+            {
               ":SessionDelete",
               description = "Delete the current session",
             },
@@ -113,12 +117,6 @@ return {
         if vim.bo.filetype == "alpha" then return false end
         return true
       end,
-      telescope = {
-        before_source = function()
-          vim.api.nvim_input("<ESC>:%bd!<CR>")
-          require("persisted").stop()
-        end,
-      },
     },
   },
   {
