@@ -56,11 +56,17 @@ I implement a [Hyperkey](https://hyperkey.app) (<kbd>ctrl</kbd><kbd>opt</kbd><kb
 
 - Center window                     <kbd>opt</kbd><kbd>c</kbd>
 - Create a temp email address       <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>e</kbd>
+- Hide my email                     <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>h</kbd>
+- Lock screen                       <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>l</kbd>
 - Pick color with ColorSlurp        <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>p</kbd>
-- Search screen (uses OCR)          <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>f</kbd>
-- Show Cleanshot history            <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>h</kbd>
+- Search files                      <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>f</kbd>
+- Search Raindrop bookmarks         <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>b</kbd>
+- Search screen (uses OCR)          <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>r</kbd>
+- Show Cleanshot history            <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>c</kbd>
 - Show clipboard history            <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>v</kbd>
 - Toggle dark mode                  <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>d</kbd>
+- Windows - Left half               <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>←</kbd>
+- Windows - Right half              <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>→</kbd>
 
 > :bangbang: Thanks to this great [Reddit post](https://www.reddit.com/r/macapps/comments/xwfp82/comment/ir6trn4)
 
