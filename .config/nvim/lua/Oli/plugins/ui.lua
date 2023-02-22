@@ -135,7 +135,8 @@ return {
         button("n", "   New file", "<cmd>ene <BAR> startinsert <CR>"),
         button("r", "   Recent files", "<cmd>Telescope frecency workspace=CWD<CR>"),
         button("f", "   Find file", "<cmd>Telescope find_files hidden=true path_display=smart<CR>"),
-        button("p", "   Projects", "<cmd>Telescope projects<CR>"),
+        button("s", "󱘣   Search files", "<cmd>Telescope live_grep path_display=smart<CR>"),
+        -- button("p", "   Projects", "<cmd>Telescope projects<CR>"),
         button("u", "   Update plugins", "<cmd>lua require('lazy').sync()<CR>"),
         button("q", "   Quit Neovim", "<cmd>qa!<CR>"),
       }
@@ -159,13 +160,13 @@ return {
       dashboard.config.layout = {
         { type = "padding", val = 1 },
         dashboard.section.terminal,
-        { type = "padding", val = 9 },
+        { type = "padding", val = 10 },
         dashboard.section.buttons,
         { type = "padding", val = 1 },
         dashboard.section.footer,
       }
 
-      dashboard.config.opts.noautocmd = true
+      dashboard.config.opts.noautocmd = false
 
       alpha.setup(dashboard.opts)
     end,
