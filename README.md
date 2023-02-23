@@ -54,7 +54,6 @@ I implement a [Hyperkey](https://hyperkey.app) (<kbd>ctrl</kbd><kbd>opt</kbd><kb
 <details>
   <summary>Click to see the app shortcuts</summary>
 
-- Center window                     <kbd>opt</kbd><kbd>c</kbd>
 - Create a temp email address       <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>e</kbd>
 - Hide my email                     <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>h</kbd>
 - Lock screen                       <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>l</kbd>
@@ -65,10 +64,14 @@ I implement a [Hyperkey](https://hyperkey.app) (<kbd>ctrl</kbd><kbd>opt</kbd><kb
 - Show Cleanshot history            <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>c</kbd>
 - Show clipboard history            <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>v</kbd>
 - Toggle dark mode                  <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>d</kbd>
-- Windows - Left half               <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>←</kbd>
-- Windows - Right half              <kbd>Hyperkey</kbd><kbd>shift</kbd><kbd>→</kbd>
+- Windows - Center                  <kbd>opt</kbd><kbd>c</kbd>
+- Windows - Maximise                <kbd>opt</kbd><kbd>m</kbd>
+- Windows - Left half               <kbd>Hyperkey</kbd><kbd>←</kbd>
+- Windows - Right half              <kbd>Hyperkey</kbd><kbd>→</kbd>
+- Windows - First third             <kbd>Hyperkey</kbd><kbd>↑</kbd>
+- Windows - Last two thirds         <kbd>Hyperkey</kbd><kbd>↓</kbd>
 
-> :bangbang: Thanks to this great [Reddit post](https://www.reddit.com/r/macapps/comments/xwfp82/comment/ir6trn4)
+> Thanks to this great [Reddit post](https://www.reddit.com/r/macapps/comments/xwfp82/comment/ir6trn4)
 
 </details>
 
