@@ -347,7 +347,7 @@ M.SearchResults = {
 
 ---Return the status of the current session
 M.Session = {
-  condition = function(self) return (vim.g.persisting ~= nil) end,
+  update = { "User", pattern = "PersistedStateChange" },
   {
     condition = function(self)
       return not conditions.buffer_matches({
@@ -359,7 +359,7 @@ M.Session = {
       provider = function(self)
         if vim.g.persisting then
           return "   "
-        elseif vim.g.persisting == false then
+        else
           return "   "
         end
       end,
