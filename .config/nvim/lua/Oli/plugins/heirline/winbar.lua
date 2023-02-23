@@ -16,10 +16,14 @@ M.vim_logo = {
 }
 
 M.cwd = {
+  init = function(self) self.cwd = vim.fn.fnamemodify(vim.loop.cwd(), modifiers.dirname or nil) end,
   {
-    provider = function()
-      local cwd = vim.fn.fnamemodify(vim.loop.cwd(), modifiers.dirname or nil)
-      return " " .. table.concat(vim.fn.split(cwd, "/"), sep) .. sep
+    condition = function(self) return true end,
+    provider = function(self)
+      local trim = 30
+      local output = table.concat(vim.fn.split(self.cwd, "/"), sep)
+      if self.cwd:len() > trim then output = ".." .. output:sub(-trim) end
+      return output .. sep
     end,
     hl = { fg = "breadcrumbs", italic = true },
   },
@@ -27,10 +31,13 @@ M.cwd = {
 
 M.filename = {
   -- Path to file
+  init = function(self) self.head = vim.fn.fnamemodify(vim.fn.expand("%:h"), modifiers.dirname or nil) end,
   {
-    provider = function()
-      local head = vim.fn.fnamemodify(vim.fn.expand("%:h"), modifiers.dirname or nil)
-      return table.concat(vim.fn.split(head, "/"), sep)
+    provider = function(self)
+      local trim = 40
+      local output = table.concat(vim.fn.split(self.head, "/"), sep)
+      if self.head:len() > trim then output = ".." .. output:sub(-trim) end
+      return output
     end,
     hl = { fg = "breadcrumbs", italic = true },
   },
