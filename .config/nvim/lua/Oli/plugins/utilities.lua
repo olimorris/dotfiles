@@ -59,7 +59,17 @@ return {
   },
   {
     "olimorris/persisted.nvim", -- Session management
-    -- lazy = true,
+    priority = 100,
+    opts = {
+      save_dir = Sessiondir .. "/",
+      use_git_branch = true,
+      silent = true,
+      -- autoload = true,
+      should_autosave = function()
+        if vim.bo.filetype == "alpha" then return false end
+        return true
+      end,
+    },
     init = function()
       require("legendary").keymaps({
         {
@@ -109,15 +119,6 @@ return {
         },
       })
     end,
-    opts = {
-      save_dir = Sessiondir .. "/",
-      use_git_branch = true,
-      silent = true,
-      should_autosave = function()
-        if vim.bo.filetype == "alpha" then return false end
-        return true
-      end,
-    },
   },
   {
     "kevinhwang91/nvim-bqf", -- Better quickfix window,

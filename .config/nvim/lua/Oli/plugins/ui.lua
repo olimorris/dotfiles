@@ -102,6 +102,7 @@ return {
   },
   {
     "goolord/alpha-nvim", -- Dashboard for Neovim
+    priority = 5, -- Load after persisted.nvim
     init = function()
       require("legendary").commands({
         {
