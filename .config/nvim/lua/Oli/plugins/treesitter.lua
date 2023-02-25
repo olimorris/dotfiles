@@ -5,7 +5,10 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
       "JoosepAlviste/nvim-ts-context-commentstring", -- Smart commenting in multi language files - Enabled in Treesitter file
-      "windwp/nvim-ts-autotag", -- Autoclose and autorename HTML and Vue tags
+      {
+        "windwp/nvim-ts-autotag", -- Autoclose and autorename HTML and Vue tags
+        config = true,
+      },
       "RRethy/nvim-treesitter-endwise", -- Automatically add end keywords for Ruby, Lua, Python, and more
       {
         "windwp/nvim-autopairs", -- Autopair plugin

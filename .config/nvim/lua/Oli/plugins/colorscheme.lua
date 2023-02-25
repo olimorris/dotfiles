@@ -175,6 +175,9 @@ return {
           fg = "${telescope_results}",
           bg = "${telescope_results}",
         },
+        TelescopePromptPrefix = {
+          fg = "${purple}",
+        },
         TelescopePromptBorder = {
           fg = "${telescope_prompt}",
           bg = "${telescope_prompt}",
