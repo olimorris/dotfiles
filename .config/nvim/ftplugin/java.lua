@@ -2,7 +2,7 @@
 -- May need the verbose configuration at some point
 local config = {
   cmd = { os.getenv("HOME_DIR") .. ".local/share/nvim/mason/bin/jdtls" },
-  root_dir = vim.fs.dirname(vim.fs.find({ ".gradlew", ".git", "mvnw" }, { upward = true })[1]),
+  root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
 }
 
 -- Add additional support for Java plugins (which we've installed with mason-null-ls)
@@ -28,7 +28,9 @@ config["on_attach"] = function(client, bufnr)
   -- Remove the option if you do not want that.
   -- You can use the `JdtHotcodeReplace` command to trigger it manually
   require("jdtls").setup_dap({ hotcodereplace = "auto" })
-  require('jdtls.setup').add_commands()
+  require("jdtls.setup").add_commands()
+
+  if client.server_capabilities.documentSymbolProvider then require("nvim-navic").attach(client, bufnr) end
 end
 
 require("jdtls").start_or_attach(config)
