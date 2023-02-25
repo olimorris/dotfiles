@@ -92,8 +92,9 @@ namespace :install do
     unless testing?
       time = Time.new.strftime('%s')
       run %( git clone --depth 1 --branch nightly https://github.com/neovim/neovim ~/.neovim/#{time} )
-      run %( rm -rf /usr/local/bin/nvim )
       run %( rm -rf /opt/homebrew/bin/nvim )
+      run %( rm -rf /usr/local/bin/nvim )
+      run %( rm -rf /usr/local/share/nvim )
       run %( \(cd ~/.neovim/#{time} && make CMAKE_BUILD_TYPE=RelWithDebInfo && make install\) )
       run %( ln -s ~/.neovim/#{time} ~/.neovim/latest )
     end

@@ -9,7 +9,7 @@ return {
       "RRethy/nvim-treesitter-endwise", -- Automatically add end keywords for Ruby, Lua, Python, and more
       {
         "windwp/nvim-autopairs", -- Autopair plugin
-        config = {
+        opts = {
           close_triple_quotes = true,
           check_ts = true,
           fast_wrap = {
@@ -19,7 +19,7 @@ return {
       },
       {
         "abecodes/tabout.nvim", -- Tab out from parenthesis, quotes, brackets...
-        config = {
+        opts = {
           tabkey = "<Tab>", -- key to trigger tabout, set to an empty string to disable
           backwards_tabkey = "<S-Tab>", -- key to trigger backwards tabout, set to an empty string to disable
           completion = true, -- We use tab for completion so set this to true

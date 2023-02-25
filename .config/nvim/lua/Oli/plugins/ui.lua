@@ -28,7 +28,7 @@ return {
   },
   {
     "stevearc/dressing.nvim", -- Utilises Neovim UI hooks to manage inputs, selects etc
-    config = {
+    opts = {
       input = {
         default_prompt = "> ",
         relative = "editor",

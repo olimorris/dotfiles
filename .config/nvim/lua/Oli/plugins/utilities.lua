@@ -35,7 +35,7 @@ return {
         { "<C-x>", "<cmd>ToggleTerm<CR>", description = "Toggleterm", mode = { "n", "t" } },
       })
     end,
-    config = {
+    opts = {
       direction = "float",
       float_opts = {
         border = "single",
