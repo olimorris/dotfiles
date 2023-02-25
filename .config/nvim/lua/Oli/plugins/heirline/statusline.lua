@@ -116,7 +116,9 @@ M.GitBranch = {
     end,
     LeftSlantStart,
     {
-      provider = function(self) return "  " .. self.status_dict.head .. " " end,
+      provider = function(self)
+        return "  " .. (self.status_dict.head == "" and "main" or self.status_dict.head) .. " "
+      end,
       on_click = {
         callback = function() om.ListBranches() end,
         name = "git_change_branch",

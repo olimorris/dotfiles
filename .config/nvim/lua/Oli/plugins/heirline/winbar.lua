@@ -16,32 +16,54 @@ M.vim_logo = {
 }
 
 M.cwd = {
-  init = function(self) self.cwd = vim.fn.fnamemodify(vim.loop.cwd(), modifiers.dirname or nil) end,
+  init = function(self) self.cwd = vim.fn.fnamemodify(vim.fn.getcwd(0), modifiers.dirname or nil) end,
+  hl = { fg = "breadcrumbs", italic = true },
+
+  flexible = 1,
   {
-    condition = function(self) return true end,
+    -- evaluates to the full-length path
     provider = function(self)
-      local trim = 30
-      local output = table.concat(vim.fn.split(self.cwd, "/"), sep)
-      if self.cwd:len() > trim then output = ".." .. output:sub(-trim) end
-      return output .. sep
+      local trail = self.cwd:sub(-1) == "/" and "" or "/"
+      return table.concat(vim.fn.split(self.cwd .. trail, "/"), sep) .. sep
     end,
-    hl = { fg = "breadcrumbs", italic = true },
+  },
+  {
+    -- evaluates to the shortened path
+    provider = function(self)
+      local cwd = vim.fn.pathshorten(self.cwd)
+      return table.concat(vim.fn.split(cwd, "/"), sep) .. sep
+    end,
+  },
+  {
+    -- evaluates to "", hiding the component
+    provider = "",
+  },
+}
+
+M.filepath = {
+  -- Path to file
+  init = function(self)
+    self.filename = vim.fn.fnamemodify(vim.fn.expand("%:h"), modifiers.dirname or nil)
+    if self.filename == "" then self.filename = "[No Name]" end
+  end,
+  hl = { fg = "breadcrumbs", italic = true },
+
+  flexible = 2,
+  {
+    provider = function(self) return table.concat(vim.fn.split(self.filename, "/"), sep) end,
+  },
+  {
+    provider = function(self)
+      local filename = vim.fn.pathshorten(self.filename)
+      return table.concat(vim.fn.split(filename, "/"), sep)
+    end,
+  },
+  {
+    provider = "",
   },
 }
 
 M.filename = {
-  -- Path to file
-  init = function(self) self.head = vim.fn.fnamemodify(vim.fn.expand("%:h"), modifiers.dirname or nil) end,
-  {
-    provider = function(self)
-      local trim = 40
-      local output = table.concat(vim.fn.split(self.head, "/"), sep)
-      if self.head:len() > trim then output = ".." .. output:sub(-trim) end
-      return output
-    end,
-    hl = { fg = "breadcrumbs", italic = true },
-  },
-  -- File name
   {
     {
       provider = function()
@@ -74,19 +96,23 @@ M.navic = {
   init = function(self) self.navic = require("nvim-navic").get_location() end,
   update = "CursorMoved",
   {
-    {
-      condition = function(self)
-        if #self.navic > 0 then
-          return true
-        else
-          return false
-        end
-      end,
-      provider = sep,
-      hl = { fg = "breadcrumbs", italic = true },
-    },
+    condition = function(self)
+      if #self.navic > 0 then
+        return true
+      else
+        return false
+      end
+    end,
+    provider = sep,
+    hl = { fg = "breadcrumbs", italic = true },
+  },
+  {
+    flexible = 3,
     {
       provider = function(self) return self.navic end,
+    },
+    {
+      provider = "",
     },
   },
 }
