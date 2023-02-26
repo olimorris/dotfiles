@@ -12,5 +12,8 @@ return {
   end,
   desc = "package a maven project",
   tags = { overseer.TAG.BUILD },
-  condition = { filetype = { "java" } },
+  condition = {
+    filetype = { "java" },
+    callback = function() return vim.fs.find({ "pom.xml" }, { upward = true })[1] ~= nil end,
+  },
 }

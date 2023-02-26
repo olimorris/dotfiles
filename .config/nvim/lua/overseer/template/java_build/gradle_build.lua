@@ -12,5 +12,10 @@ return {
   end,
   desc = "build a gradle project",
   tags = { overseer.TAG.BUILD },
-  condition = { filetype = { "java", "groovy" } },
+  condition = {
+    filetype = { "java", "groovy" },
+    callback = function()
+      return vim.fs.find({ "gradlew", "build.gradle" }, { upward = true })[1] ~= nil
+    end,
+  },
 }

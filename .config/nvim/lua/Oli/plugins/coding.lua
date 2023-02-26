@@ -364,7 +364,7 @@ return {
           "on_complete_dispose",
         },
       },
-      templates = { "builtin", "java_build" },
+      templates = { "java_build" },
     },
     init = function()
       require("legendary").commands({
