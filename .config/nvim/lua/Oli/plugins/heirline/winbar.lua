@@ -103,17 +103,16 @@ M.navic = {
         return false
       end
     end,
-    provider = sep,
+    {
+      flexible = 3,
+      {
+        provider = function(self) return sep .. self.navic end,
+      },
+      {
+        provider = "",
+      },
+    },
     hl = { fg = "breadcrumbs", italic = true },
-  },
-  {
-    flexible = 3,
-    {
-      provider = function(self) return self.navic end,
-    },
-    {
-      provider = "",
-    },
   },
 }
 
