@@ -127,6 +127,7 @@ M.GitBranch = {
     },
     {
       condition = function() return (_G.GitStatus ~= nil and (_G.GitStatus.ahead ~= 0 or _G.GitStatus.behind ~= 0)) end,
+      update = { "User", pattern = "GitStatusChanged" },
       {
         condition = function() return _G.GitStatus.status == "pending" end,
         provider = " ",
