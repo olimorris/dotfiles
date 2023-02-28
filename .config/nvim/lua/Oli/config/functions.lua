@@ -1,3 +1,5 @@
+local Job = require("plenary.job")
+
 function om.ChangeFiletype()
   vim.ui.input({ prompt = "Change filetype to: " }, function(new_ft)
     if new_ft ~= nil then vim.bo.filetype = new_ft end
@@ -28,35 +30,39 @@ end
 function om.GitRemoteSync()
   if not _G.GitStatus then _G.GitStatus = { ahead = 0, behind = 0, status = nil } end
 
-  local function update_git_status()
-    local Job = require("plenary.job")
+  -- Fetch the remote repository
+  local git_fetch = Job:new({
+    command = "git",
+    args = { "fetch" },
+    on_start = function() _G.GitStatus.status = "pending" end,
+  })
 
-    _G.GitStatus.status = "pending"
-
-    -- Fetch the remote repository first
-    Job:new({
-      command = "git",
-      args = { "fetch" },
-    }):start()
-
-    -- Then compare local to upstream
-    Job:new({
-      command = "git",
-      args = { "rev-list", "--left-right", "--count", "HEAD...@{upstream}" },
-      on_exit = function(job, _)
-        local res = job:result()[1]
-        if type(res) ~= "string" then
-          _G.GitStatus = { ahead = 0, behind = 0, status = "error" }
-          return
+  -- Compare local repository to upstream
+  local git_upstream = Job:new({
+    command = "git",
+    args = { "rev-list", "--left-right", "--count", "HEAD...@{upstream}" },
+    on_start = function()
+      _G.GitStatus.status = "pending"
+      vim.schedule(
+        function()
+          vim.api.nvim_exec_autocmds("User", { pattern = "GitStatusChanged", data = { status = "pending" } })
         end
-        local _, ahead, behind = pcall(string.match, res, "(%d+)%s*(%d+)")
+      )
+    end,
+    on_exit = function(job, _)
+      local res = job:result()[1]
+      if type(res) ~= "string" then
+        _G.GitStatus = { ahead = 0, behind = 0, status = "error" }
+        return
+      end
+      local _, ahead, behind = pcall(string.match, res, "(%d+)%s*(%d+)")
 
-        _G.GitStatus = { ahead = tonumber(ahead), behind = tonumber(behind), status = "done" }
-      end,
-    }):start()
-  end
+      _G.GitStatus = { ahead = tonumber(ahead), behind = tonumber(behind), status = "done" }
+    end,
+  })
 
-  vim.schedule_wrap(update_git_status())
+  git_fetch:start()
+  git_upstream:start()
 end
 
 local function GitPushPull(action, tense)
@@ -66,8 +72,6 @@ local function GitPushPull(action, tense)
     prompt = action:gsub("^%l", string.upper) .. " commits to/from " .. "'origin/" .. branch .. "'?",
   }, function(choice)
     if choice == "Yes" then
-      local Job = require("plenary.job")
-
       Job:new({
         command = "git",
         args = { action },
@@ -77,15 +81,9 @@ local function GitPushPull(action, tense)
   end)
 end
 
-function om.GitPull()
-  GitPushPull("pull", "from")
-  vim.cmd([[do User GitStatusChanged]])
-end
+function om.GitPull() GitPushPull("pull", "from") end
 
-function om.GitPush()
-  GitPushPull("push", "to")
-  vim.cmd([[do User GitStatusChanged]])
-end
+function om.GitPush() GitPushPull("push", "to") end
 
 function om.MoveToBuffer()
   vim.ui.input({ prompt = "Move to buffer number: " }, function(bufnr)
