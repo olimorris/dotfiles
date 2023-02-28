@@ -35,6 +35,7 @@ function om.GitRemoteSync()
     command = "git",
     args = { "fetch" },
     on_start = function() _G.GitStatus.status = "pending" end,
+    on_exit = function() _G.GitStatus.status = "done" end,
   })
 
   -- Compare local repository to upstream
@@ -43,11 +44,7 @@ function om.GitRemoteSync()
     args = { "rev-list", "--left-right", "--count", "HEAD...@{upstream}" },
     on_start = function()
       _G.GitStatus.status = "pending"
-      vim.schedule(
-        function()
-          vim.api.nvim_exec_autocmds("User", { pattern = "GitStatusChanged", data = { status = "pending" } })
-        end
-      )
+      vim.schedule(function() vim.api.nvim_exec_autocmds("User", { pattern = "GitStatusChanged" }) end)
     end,
     on_exit = function(job, _)
       local res = job:result()[1]
@@ -58,6 +55,7 @@ function om.GitRemoteSync()
       local _, ahead, behind = pcall(string.match, res, "(%d+)%s*(%d+)")
 
       _G.GitStatus = { ahead = tonumber(ahead), behind = tonumber(behind), status = "done" }
+      vim.schedule(function() vim.api.nvim_exec_autocmds("User", { pattern = "GitStatusChanged" }) end)
     end,
   })
 
