@@ -26,6 +26,7 @@ byebug
 capybara
 cgi
 childprocess
+chronic
 coderay
 coffee-script-source
 concurrent-ruby
@@ -125,10 +126,12 @@ railties
 rainbow
 rake
 rb-fsevent
+rchardet
 rdbg
 rdoc
 readline
 readline-ext
+reckon
 regexp_parser
 reline
 resolv

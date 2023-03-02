@@ -23,6 +23,7 @@ gradle
 httpie
 jpeg
 lazygit
+ledger
 librsync
 libtermkey
 libvterm

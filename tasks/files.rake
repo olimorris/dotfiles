@@ -20,7 +20,7 @@ namespace :backup do
     dirs = {
       'Code' => 'Code',
       '.dotfiles' => '.dotfiles',
-      "\"Oli's Documents\"" => "\"Oli's Documents\""
+      'OliDocs' => 'OliDocs'
     }
 
     flag = '-P' if args[:progress]
