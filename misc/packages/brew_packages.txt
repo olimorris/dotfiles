@@ -17,9 +17,9 @@ gh
 git
 git-flow-avh
 glow
-gnupg
 go
 gobject-introspection
+gradle
 httpie
 jpeg
 lazygit
@@ -38,6 +38,7 @@ msgpack
 neofetch
 ninja
 node
+openjdk@11
 php-cs-fixer
 rclone
 reattach-to-user-namespace
