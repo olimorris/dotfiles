@@ -101,7 +101,7 @@ return {
         AerialMethodIcon = { fg = "${green}" },
         AerialStructIcon = { fg = "${cyan}" },
 
-        -- Alpha (dashboard) plugin
+        -- Alpha
         AlphaHeader = {
           fg = { dark = "${green}", light = "${red}" },
         },
