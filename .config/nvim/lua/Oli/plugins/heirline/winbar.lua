@@ -47,19 +47,21 @@ M.filepath = {
     if self.filename == "" then self.filename = "[No Name]" end
   end,
   hl = { fg = "breadcrumbs", italic = true },
-
-  flexible = 2,
   {
-    provider = function(self) return table.concat(vim.fn.split(self.filename, "/"), sep) end,
-  },
-  {
-    provider = function(self)
-      local filename = vim.fn.pathshorten(self.filename)
-      return table.concat(vim.fn.split(filename, "/"), sep)
-    end,
-  },
-  {
-    provider = "",
+    condition = function(self) return self.filename ~= "." end,
+    flexible = 2,
+    {
+      provider = function(self) return table.concat(vim.fn.split(self.filename, "/"), sep) .. sep end,
+    },
+    {
+      provider = function(self)
+        local filename = vim.fn.pathshorten(self.filename)
+        return table.concat(vim.fn.split(filename, "/"), sep)
+      end,
+    },
+    {
+      provider = "",
+    },
   },
 }
 
@@ -68,7 +70,7 @@ M.filename = {
     {
       provider = function()
         local filetype_icon, filetype_hl = require("nvim-web-devicons").get_icon_by_filetype(vim.bo.filetype)
-        return sep .. (filetype_icon and "%#" .. filetype_hl .. "#" .. filetype_icon .. " " or "")
+        return (filetype_icon and "%#" .. filetype_hl .. "#" .. filetype_icon .. " " or "")
       end,
     },
     {
