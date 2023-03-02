@@ -10,7 +10,6 @@
     # Config directory
     ~/.config/fish: .config/fish
     ~/.config/hammerspoon: .config/hammerspoon
-    ~/.config/karabiner: .config/karabiner
     ~/.config/kitty: .config/kitty
     ~/.config/nvim: .config/nvim
     ~/.config/rclone: .config/rclone
