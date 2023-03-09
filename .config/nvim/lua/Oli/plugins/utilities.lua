@@ -167,8 +167,4 @@ return {
       vim.g.startuptime_exe_args = { "+let g:auto_session_enabled = 0" }
     end,
   },
-  {
-    "ledger/vim-ledger", -- Ledger filetype support
-    ft = { "ledger", "journal" },
-  },
 }
