@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://user-images.githubusercontent.com/9512444/209835727-28652594-1f87-4ff0-ab94-8c2057512e2f.png" alt="Neovim">
+<img src="https://user-images.githubusercontent.com/9512444/224173335-446d701d-cca3-41bd-8889-572a93ddaf41.png" alt="Dotfiles">
 </p>
 
 <h1 align="center">Oli's Dotfiles</h1>
