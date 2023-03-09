@@ -304,27 +304,27 @@ M.Ruler = {
   },
 }
 
+M.MacroRecording = {
+  condition = function(self) return vim.fn.reg_recording() ~= "" end,
+  {
+    provider = "",
+    hl = { fg = "blue", bg = "bg" },
+  },
+  {
+    provider = function(self) return " " .. vim.fn.reg_recording() .. " " end,
+    hl = { bg = "blue", fg = "bg" },
+  },
+  {
+    provider = "",
+    hl = { fg = "bg", bg = "blue" },
+  },
+}
+
 M.SearchResults = {
-  condition = function(self)
-    local lines = vim.api.nvim_buf_line_count(0)
-    if lines > 50000 then return end
-
-    local query = vim.fn.getreg("/")
-    if query == "" then return end
-
-    if query:find("@") then return end
-
-    local search_count = vim.fn.searchcount({ recompute = 1, maxcount = -1 })
-    local active = false
-    if vim.v.hlsearch and vim.v.hlsearch == 1 and search_count.total > 0 then active = true end
-    if not active then return end
-
-    query = query:gsub([[^\V]], "")
-    query = query:gsub([[\<]], ""):gsub([[\>]], "")
-
-    self.query = query
-    self.count = search_count
-    return true
+  condition = function(self) return vim.v.hlsearch ~= 0 end,
+  init = function(self)
+    local ok, search = pcall(vim.fn.searchcount)
+    if ok and search.total then self.search = search end
   end,
   {
     provider = "",
@@ -332,13 +332,9 @@ M.SearchResults = {
   },
   {
     provider = function(self)
-      return table.concat({
-        " ",
-        self.count.current,
-        "/",
-        self.count.total,
-        " ",
-      })
+      local search = self.search
+
+      return string.format(" %d/%d ", search.current, math.min(search.total, search.maxcount))
     end,
     hl = function() return { bg = utils.get_highlight("Substitute").bg, fg = "bg" } end,
   },
@@ -443,7 +439,7 @@ M.Lazy = {
       filetype = self.filetypes,
     }) and require("lazy.status").has_updates()
   end,
-  update = { "User", pattern = "LazyUpdate" },
+  -- update = { "User", pattern = "LazyUpdate" },
   provider = function() return "  " .. require("lazy.status").updates() .. " " end,
   on_click = {
     callback = function() require("lazy").update() end,

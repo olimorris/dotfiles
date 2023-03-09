@@ -151,7 +151,7 @@ M.git_signs = {
 
     self.has_sign = self.sign ~= nil
   end,
-  provider = " ▏",
+  provider = "┃",
   hl = function(self)
     if self.has_sign then return self.sign.name end
     return "HeirlineStatusColumn"
