@@ -8,8 +8,8 @@
 <a href="https://github.com/olimorris/dotfiles/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/olimorris/dotfiles/build.yml?branch=main&label=build&style=for-the-badge"></a>
 </p>
 
-<p align="center">
-My macOS dotfiles. Installation instructions are my own
+<p>
+My macOS dotfiles. Installation instructions are my own. Regular Neovim tweaks. Occasional workflow tips worth stealing :smile:
 </p>
 
 ## :computer: Setting up a new Mac
