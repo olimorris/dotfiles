@@ -82,6 +82,13 @@ return {
     },
     {
       "FileType",
+      ":setlocal shiftwidth=4 tabstop=4",
+      opts = {
+        pattern = { "ledger" },
+      },
+    },
+    {
+      "FileType",
       ":setlocal wrap linebreak",
       opts = { pattern = "markdown" },
     },
