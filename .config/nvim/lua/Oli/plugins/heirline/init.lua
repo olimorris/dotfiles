@@ -125,7 +125,6 @@ function M.load()
         end,
         init = function() vim.opt_local.winbar = nil end,
       },
-      winbar.cwd,
       winbar.filepath,
       winbar.filename,
       winbar.navic,

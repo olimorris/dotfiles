@@ -7,7 +7,7 @@ local LeftSlantEnd = {
 }
 
 local modifiers = {
-  dirname = ":.:s?/Users/Oli/.dotfiles?dotfiles?:s?.config/nvim/lua/Oli?Neovim?:s?/Users/Oli/Code?Code?",
+  dirname = ":s?/Users/Oli/.dotfiles?dotfiles?:s?.config/nvim/lua/Oli?Neovim?:s?/Users/Oli/Code?Code?",
 }
 
 M.vim_logo = {
@@ -15,48 +15,25 @@ M.vim_logo = {
   hl = "VimLogo",
 }
 
-M.cwd = {
-  init = function(self) self.cwd = vim.fn.fnamemodify(vim.fn.getcwd(0), modifiers.dirname or nil) end,
-  hl = { fg = "breadcrumbs", italic = true },
-
-  flexible = 1,
-  {
-    -- evaluates to the full-length path
-    provider = function(self)
-      local trail = self.cwd:sub(-1) == "/" and "" or "/"
-      return table.concat(vim.fn.split(self.cwd .. trail, "/"), sep) .. sep
-    end,
-  },
-  {
-    -- evaluates to the shortened path
-    provider = function(self)
-      local cwd = vim.fn.pathshorten(self.cwd)
-      return table.concat(vim.fn.split(cwd, "/"), sep) .. sep
-    end,
-  },
-  {
-    -- evaluates to "", hiding the component
-    provider = "",
-  },
-}
-
 M.filepath = {
-  -- Path to file
   init = function(self)
-    self.filename = vim.fn.fnamemodify(vim.fn.expand("%:h"), modifiers.dirname or nil)
-    if self.filename == "" then self.filename = "[No Name]" end
+    local current_dir = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h")
+
+    self.filepath = vim.fn.fnamemodify(current_dir, modifiers.dirname or nil)
+    self.short_path = vim.fn.fnamemodify(vim.fn.expand("%:h"), modifiers.dirname or nil)
+    if self.filepath == "" then self.filepath = "[No Name]" end
   end,
   hl = { fg = "breadcrumbs", italic = true },
   {
-    condition = function(self) return self.filename ~= "." end,
+    condition = function(self) return self.filepath ~= "." end,
     flexible = 2,
     {
-      provider = function(self) return table.concat(vim.fn.split(self.filename, "/"), sep) .. sep end,
+      provider = function(self) return table.concat(vim.fn.split(self.filepath, "/"), sep) .. sep end,
     },
     {
       provider = function(self)
-        local filename = vim.fn.pathshorten(self.filename)
-        return table.concat(vim.fn.split(filename, "/"), sep)
+        local filepath = vim.fn.pathshorten(self.short_path)
+        return table.concat(vim.fn.split(self.short_path, "/"), sep) .. sep
       end,
     },
     {

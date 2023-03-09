@@ -9,7 +9,8 @@
 </p>
 
 <p>
-My macOS dotfiles. Installation instructions are my own. Regular Neovim tweaks. Occasional workflow tips worth stealing :smile:
+My macOS dotfiles. Installation instructions are my own<br><br>
+Regular Neovim tweaks. Occasional workflow tips worth stealing :smile:
 </p>
 
 ## :computer: Setting up a new Mac
