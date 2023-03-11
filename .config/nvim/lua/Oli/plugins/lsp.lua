@@ -31,6 +31,15 @@ return {
       -- Snippets
       "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
+
+      -- Others
+      {
+        "VidocqH/lsp-lens.nvim",
+        opts = {
+          include_declaration = false,
+        },
+        config = true,
+      },
     },
     init = function()
       require("legendary").commands({
