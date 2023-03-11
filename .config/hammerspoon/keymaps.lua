@@ -22,7 +22,7 @@ local apps = {
   z = "Todoist",
 }
 
-local launchOrToggle = function(key, app_name, app_filename)
+local LaunchOrToggle = function(key, app_name, app_filename)
   hs.hotkey.bind(hyper, key, function()
     local app = hs.application.find(app_name)
     -- Toggle - show
@@ -46,67 +46,8 @@ end
 
 for key, app_name in pairs(apps) do
   if type(app_name) == "table" then
-    launchOrToggle(key, app_name[1], app_name[2])
+    LaunchOrToggle(key, app_name[1], app_name[2])
   else
-    launchOrToggle(key, app_name)
+    LaunchOrToggle(key, app_name)
   end
 end
-
-------------------------------- WINDOW MANAGEMENT ------------------------------
-
-hs.window.animationDuration = 0
-
--- Move window to left 50%
-hs.hotkey.bind(hyper, "h", function()
-  local win = hs.window.focusedWindow()
-  if not win then return end
-  win:moveToUnit(hs.layout.left50)
-end)
-
--- Maximise window
-hs.hotkey.bind(hyper, "j", function()
-  local win = hs.window.focusedWindow()
-  if not win then return end
-  win:moveToUnit(hs.layout.maximized)
-end)
-
--- Move window to next screen
-hs.hotkey.bind(hyper, "k", function()
-  local win = hs.window.focusedWindow()
-  if not win then return end
-  win:moveToScreen(win:screen():next())
-end)
-
--- Move window to right 50%
-hs.hotkey.bind(hyper, "l", function()
-  local win = hs.window.focusedWindow()
-  if not win then return end
-  win:moveToUnit(hs.layout.right50)
-end)
-
--- Move window to left 30%
-hs.hotkey.bind(hyper, "1", function()
-  local win = hs.window.focusedWindow()
-  if not win then return end
-  win:moveToUnit(hs.layout.left30)
-end)
-
--- Move window to right 70%
-hs.hotkey.bind(hyper, "2", function()
-  local win = hs.window.focusedWindow()
-  if not win then return end
-  win:moveToUnit(hs.layout.right70)
-end)
-
-------------------------------------- MOUSE ------------------------------------
-hs.eventtap
-  .new({ hs.eventtap.event.types.otherMouseUp }, function(event)
-    local button = event:getProperty(hs.eventtap.event.properties.mouseEventButtonNumber)
-    if button == 3 then hs.eventtap.keyStroke({ "cmd" }, "[") end
-    if button == 4 then hs.eventtap.keyStroke({ "cmd" }, "]") end
-  end)
-  :start()
-
------------------------------------- OTHERS ------------------------------------
--- bind shift+ctrl+option+l to lock screen
-hs.hotkey.bind({ "alt", "ctrl", "shift" }, "L", function() hs.caffeinate.lockScreen() end)

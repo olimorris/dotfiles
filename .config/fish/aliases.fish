@@ -75,7 +75,8 @@ alias mssh='ruby ~/.dotfiles/commands/ssh.rb'
 alias sep='ruby ~/.dotfiles/commands/make_separator.rb'
 alias deploy="ssh DigitalOcean 'bash -s' < deploy.sh"
 alias led="ledger -f ~/OliDocs/ff/Finances/Ledger/data.ledger"
-alias ledr="reckon -f monzo.csv -c £ --ignore-columns 1,4,5,6,8,10,11 --money-column 2 --contains-header 1 -t tokens.yaml -l data.ledger -o output.ledger"
+alias led_bank="reckon -f bank.csv -c £ -a Assets:Bank --ignore-columns 1,4,5,6,8,10,11 --money-column 2 --contains-header 1 -t tokens.yaml -l data.ledger -o output_bank.ledger"
+alias led_card="reckon -f card.csv -i -c £ -a Liabilities:'Credit Card' --money-column 3 --date-column 1 --contains-header 1 -t tokens.yaml -l data.ledger -o output_card.ledger"
 
 # Neovim / Vim
 alias vi='nvim'
