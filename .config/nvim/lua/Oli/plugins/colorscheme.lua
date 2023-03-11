@@ -33,6 +33,7 @@ return {
         which_key = false,
       },
       styles = {
+        tags = "italic",
         methods = "bold",
         functions = "bold",
         keywords = "italic",
@@ -77,6 +78,7 @@ return {
         },
       },
       highlights = {
+        LspLens = { fg = "${red}" },
         CursorLineNr = { bg = "${bg}", fg = "${fg}" },
         DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
         LocalHighlight = { bg = "${local_highlight}" },
