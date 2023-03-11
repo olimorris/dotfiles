@@ -89,7 +89,7 @@ M.signs = {
 
 M.line_numbers = {
   provider = function()
-    if vim.v.virtnum > 0 then return "" end
+    if vim.v.virtnum ~= 0 then return "" end
 
     if vim.v.relnum == 0 then return vim.v.lnum end
 
