@@ -7,26 +7,6 @@ return {
     },
   },
   {
-    "j-hui/fidget.nvim", -- Display LSP status messages in a floating window
-    opts = {
-      text = {
-        spinner = "line",
-        done = "",
-      },
-      window = {
-        blend = 0,
-      },
-      sources = {
-        ["null-ls"] = {
-          ignore = true, -- Ignore annoying code action prompts
-        },
-        ["jdtls"] = {
-          ignore = true, -- Ignore annoying code action prompts
-        },
-      },
-    },
-  },
-  {
     "stevearc/dressing.nvim", -- Utilises Neovim UI hooks to manage inputs, selects etc
     opts = {
       input = {

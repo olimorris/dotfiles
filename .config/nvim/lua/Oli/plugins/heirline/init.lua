@@ -88,6 +88,7 @@ function M.load()
       statusline.GitBranch,
       statusline.FileNameBlock,
       statusline.LspDiagnostics,
+      statusline.LspAttached,
       align,
       statusline.Overseer,
       statusline.Dap,

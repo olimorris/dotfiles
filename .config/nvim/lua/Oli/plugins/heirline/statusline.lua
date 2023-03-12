@@ -272,6 +272,41 @@ M.LspDiagnostics = {
   },
 }
 
+M.LspAttached = {
+  condition = conditions.lsp_attached,
+  update = { "LspAttach", "LspDetach" },
+  static = {
+    lsp_attached = false,
+    show_lsps = {
+      copilot = false,
+      ["null-ls"] = false,
+    },
+  },
+  init = function(self)
+    for i, server in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
+      if self.show_lsps[server.name] ~= false then
+        self.lsp_attached = true
+        return
+      end
+    end
+  end,
+  {
+    condition = function(self) return self.lsp_attached end,
+    LeftSlantStart,
+    {
+      provider = "  ",
+      hl = { fg = "gray", bg = "statusline_bg" },
+    },
+    LeftSlantEnd,
+  },
+  on_click = {
+    callback = function()
+      vim.defer_fn(function() vim.cmd("LspInfo") end, 100)
+    end,
+    name = "heirline_LSP",
+  },
+}
+
 ---Return the current line number as a % of total lines and the total lines in the file
 M.Ruler = {
   condition = function(self)
