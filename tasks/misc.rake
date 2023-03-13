@@ -234,6 +234,7 @@ namespace :update do
     section 'Updating Neovim'
 
     unless testing?
+      run %( rm ~/.neovim/backup )
       run %( mv ~/.neovim/latest ~/.neovim/backup )
       Rake::Task['install:neovim'].invoke
     end
