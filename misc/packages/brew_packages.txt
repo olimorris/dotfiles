@@ -40,6 +40,7 @@ neofetch
 ninja
 node
 openjdk@11
+pandoc
 php-cs-fixer
 rclone
 reattach-to-user-namespace

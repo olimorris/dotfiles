@@ -5,7 +5,7 @@
 462054704   Microsoft Word                 (16.70)
 961632517   Be Focused Pro                 (2.2)
 585829637   Todoist                        (8.1.2)
-1569813296  1Password for Safari           (2.7.0)
+1569813296  1Password for Safari           (2.8.0)
 1470584107  Dato                           (4.5.1)
 1592917505  Noir                           (2022.3.5)
 937984704   Amphetamine                    (5.2.2)
