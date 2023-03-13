@@ -250,10 +250,7 @@ M.LspDiagnostics = {
     hl = { fg = "gray", bg = "bg" },
     {
       {
-        provider = function(self)
-          local spacer = (self.errors > 0 or self.warnings > 0) and " " or ""
-          return spacer .. vim.fn.sign_getdefined("DiagnosticSignHint")[1].text .. self.hints
-        end,
+        provider = function(self) return " " .. vim.fn.sign_getdefined("DiagnosticSignHint")[1].text .. self.hints end,
       },
     },
   },
@@ -263,10 +260,7 @@ M.LspDiagnostics = {
     hl = { fg = "gray", bg = "bg" },
     {
       {
-        provider = function(self)
-          local spacer = (self.errors > 0 or self.warnings > 0 or self.hints) and " " or ""
-          return spacer .. vim.fn.sign_getdefined("DiagnosticSignInfo")[1].text .. self.info
-        end,
+        provider = function(self) return " " .. vim.fn.sign_getdefined("DiagnosticSignInfo")[1].text .. self.info end,
       },
     },
   },
@@ -274,7 +268,6 @@ M.LspDiagnostics = {
 
 M.LspAttached = {
   condition = conditions.lsp_attached,
-  update = { "LspAttach", "LspDetach" },
   static = {
     lsp_attached = false,
     show_lsps = {
@@ -290,6 +283,13 @@ M.LspAttached = {
       end
     end
   end,
+  update = { "LspAttach", "LspDetach" },
+  on_click = {
+    callback = function()
+      vim.defer_fn(function() vim.cmd("LspInfo") end, 100)
+    end,
+    name = "heirline_LSP",
+  },
   {
     condition = function(self) return self.lsp_attached end,
     LeftSlantStart,
@@ -298,12 +298,6 @@ M.LspAttached = {
       hl = { fg = "gray", bg = "statusline_bg" },
     },
     LeftSlantEnd,
-  },
-  on_click = {
-    callback = function()
-      vim.defer_fn(function() vim.cmd("LspInfo") end, 100)
-    end,
-    name = "heirline_LSP",
   },
 }
 
