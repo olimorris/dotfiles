@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import os
-import sys
 import subprocess
+import sys
 
 nvim_path = "~/.config/nvim"
 tmux_path = "~/.config/tmux"
@@ -24,6 +24,7 @@ apps = [
     "neovim",
     "fish",
 ]
+
 
 def app_macos(mode):
     """
@@ -49,6 +50,7 @@ def app_macos(mode):
     with open(os.path.expanduser(path_to_file), "w") as config_file:
         config_file.write(contents)
 
+
 def app_kitty(mode):
     """
     Change the Kitty terminal
@@ -58,7 +60,10 @@ def app_kitty(mode):
     if mode == "light":
         theme = "Onelight"
 
-    subprocess.run(["/opt/homebrew/bin/kitty", "+kitten", "themes", "--reload-in=all", theme])
+    subprocess.run(
+        ["/opt/homebrew/bin/kitty", "+kitten", "themes", "--reload-in=all", theme]
+    )
+
 
 def app_starship(mode):
     """
@@ -154,8 +159,10 @@ def app_neovim(mode):
 
     return
 
+
 def app_fish(mode):
     return subprocess.run(["/opt/homebrew/bin/fish"])
+
 
 def run_apps(mode=None):
     """
