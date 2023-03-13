@@ -1,6 +1,10 @@
 return {
   "nvim-tree/nvim-web-devicons",
   {
+    "lukas-reineke/virt-column.nvim", -- Use charactes in the color column
+    config = true,
+  },
+  {
     "tzachar/local-highlight.nvim", -- Highlight word under cursor throughout the visible buffer
     opts = {
       file_types = { "lua", "javascript", "python", "ruby" },

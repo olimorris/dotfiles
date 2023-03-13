@@ -59,6 +59,7 @@ return {
           copilot = "require('onedarkpro.helpers').darken('gray', 8, 'onedark')",
           breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'onedark')",
           local_highlight = "require('onedarkpro.helpers').lighten('bg', 2, 'onedark')",
+          light_gray = "require('onedarkpro.helpers').darken('gray', 7, 'onedark')",
         },
         light = {
           comment = "#bebebe", -- Revert back to original comment colors
@@ -75,9 +76,11 @@ return {
           copilot = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
           breadcrumbs = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
           local_highlight = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
+          light_gray = "require('onedarkpro.helpers').lighten('gray', 10, 'onelight')",
         },
       },
       highlights = {
+        LspLens = { fg = "${light_gray}", style = "italic" },
         CursorLineNr = { bg = "${bg}", fg = "${fg}" },
         DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
         LocalHighlight = { bg = "${local_highlight}" },
@@ -202,6 +205,9 @@ return {
         TelescopeSelection = { bg = "${telescope_selection}" },
         TelescopePreviewNormal = { bg = "${telescope_preview}" },
         TelescopePreviewBorder = { fg = "${telescope_preview}", bg = "${telescope_preview}" },
+
+        -- Virt Column
+        VirtColumn = { fg = "${indentline}" },
       },
     },
     config = function(_, opts)
