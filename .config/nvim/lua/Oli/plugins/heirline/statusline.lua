@@ -25,15 +25,12 @@ M.VimMode = {
   init = function(self)
     self.mode = vim.fn.mode(1)
     self.mode_color = self.mode_colors[self.mode:sub(1, 1)]
-
-    if not self.once then
-      vim.api.nvim_create_autocmd("ModeChanged", {
-        pattern = "*:*o",
-        command = "redrawstatus",
-      })
-      self.once = true
-    end
   end,
+  update = {
+    "ModeChanged",
+    pattern = "*:*",
+    callback = vim.schedule_wrap(function() vim.cmd("redrawstatus") end),
+  },
   static = {
     mode_names = {
       n = "NORMAL",
@@ -93,9 +90,6 @@ M.VimMode = {
     on_click = {
       callback = function() vim.cmd("Alpha") end,
       name = "heirline_mode",
-    },
-    update = {
-      "ModeChanged",
     },
   },
   {
@@ -335,6 +329,12 @@ M.Ruler = {
 
 M.MacroRecording = {
   condition = function(self) return vim.fn.reg_recording() ~= "" end,
+  update = {
+    "RecordingEnter",
+    "RecordingLeave",
+    -- redraw the statusline on recording events
+    callback = vim.schedule_wrap(function() vim.cmd("redrawstatus") end),
+  },
   {
     provider = "",
     hl = { fg = "blue", bg = "bg" },
