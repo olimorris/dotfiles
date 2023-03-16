@@ -75,6 +75,15 @@ M.signs = {
   end,
   hl = function(self)
     if self.has_sign then
+      -- Neotest signs
+      if self.sign.group == "neotest-status" then
+        if self.sign.name == "neotest_running" then return "NeotestRunning" end
+        if self.sign.name == "neotest_failed" then return "NeotestFailed" end
+        if self.sign.name == "neotest_passed" then return "NeotestPassed" end
+        return "NeotestSkipped"
+      end
+
+      -- Everything else
       local hl = self.sign.name
       return (vim.fn.hlexists(hl) ~= 0 and hl)
     end
