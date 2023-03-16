@@ -37,11 +37,7 @@ return {
         "VidocqH/lsp-lens.nvim",
         opts = {
           enable = true,
-          sections = { -- Enable / Disable specific request
-            definition = false,
-            references = true,
-            implementation = true,
-          },
+          include_declaration = true,
         },
         config = true,
       },
