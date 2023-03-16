@@ -12,12 +12,11 @@ function search
             zoxide query -l -s "$p"
             zoxide query -l -s "$p/" # Needed for Code directories
         end |
-        sed "s;$CODE_DIR;;" | # remove the projects prefix
-        sed "s;/Users/Oli;;" | # remove the home prefix
         grep / | # only show directories
         sort -rnk1 | # sort by score
         uniq | # remove any duplicates
         awk '{print $2}' | # only show the path
+        sed 's|^/Users/Oli|~|' | # replace /Users/Oli prefix with ~
         fzf --height=100% --no-border --no-sort --no-info
 end
 
@@ -35,12 +34,14 @@ set selected_name (basename "$selected" | tr . _)
 set tmux_running (pgrep tmux)
 
 if test -z "$TMUX" && test -z "$tmux_running"
-    tmux new-session -s "$selected_name" -c "$selected"
+    set -l selected_abs_path (echo "$selected" | sed "s|^~|$HOME|")
+    tmux new-session -s "$selected_name" -c "$selected_abs_path"
     exit 0
 end
 
 if ! tmux has-session -t="$selected_name" 2>/dev/null
-    tmux new-session -ds "$selected_name" -c "$selected"
+    set -l selected_abs_path (echo "$selected" | sed "s|^~|$HOME|")
+    tmux new-session -ds "$selected_name" -c "$selected_abs_path"
 end
 
 tmux switch-client -t "$selected_name"
