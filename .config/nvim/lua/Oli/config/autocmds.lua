@@ -3,6 +3,19 @@ if not ok then return end
 
 return {
   {
+    name = "ConcealAttributes",
+    {
+      { "BufEnter", "BufWritePost", "TextChanged", "InsertLeave" },
+      function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        om.ConcealHTML(bufnr)
+      end,
+      opts = {
+        pattern = { "*.html" },
+      },
+    },
+  },
+  {
     name = "Heirline",
     {
       "ColorScheme",
@@ -76,6 +89,13 @@ return {
   },
   {
     name = "FiletypeOptions",
+    {
+      "FileType",
+      function() vim.wo.colorcolumn = 0 end,
+      opts = {
+        pattern = { "oil" },
+      },
+    },
     {
       "FileType",
       ":setlocal shiftwidth=2 tabstop=2",

@@ -33,9 +33,10 @@ vb.tabstop = 4 -- Number of spaces in a tab
 -- vb.wrapmargin = 1
 
 -- Vim options
-vo.background = "dark"
+vo.background = "light"
 vo.cmdheight = 0 -- Hide the command bar
 vo.clipboard = { "unnamedplus" } -- Use the system clipboard
+vo.conceallevel = 2 -- Concealed text is completely hidden
 vo.completeopt = { "menuone", "noselect" } -- Completion opions for code completion
 vo.cursorlineopt = "screenline,number" -- Highlight the screen line of the cursor with CursorLine and the line number with CursorLineNr
 vo.emoji = false -- Turn off emojis
