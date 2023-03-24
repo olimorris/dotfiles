@@ -6,7 +6,10 @@ return {
     name = "Heirline",
     {
       "ColorScheme",
-      function() require(config_namespace .. ".plugins.heirline").load() end,
+      function()
+        local utils = require("heirline.utils")
+        utils.on_colorscheme(require("onedarkpro.helpers").get_colors())
+      end,
       opts = {
         pattern = { "*" },
       },

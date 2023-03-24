@@ -53,25 +53,24 @@ local force_inactive_filetypes = {
   "^frecency$",
   "^lazy$",
   "^netrw$",
+  "^oil$",
   "^TelescopePrompt$",
   "^undotree$",
 }
 
 ---Load the bufferline, tabline and statusline. Extracting this to a seperate
----function allows us to call it from autocmds and preserve colors
-function M.load()
+function M.config()
   local heirline = require("heirline")
   local conditions = require("heirline.conditions")
 
-  local statusline = require(config_namespace .. ".plugins.heirline.statusline")
-  local statuscolumn = require(config_namespace .. ".plugins.heirline.statuscolumn")
   local winbar = require(config_namespace .. ".plugins.heirline.winbar")
   local bufferline = require(config_namespace .. ".plugins.heirline.bufferline")
+  local statusline = require(config_namespace .. ".plugins.heirline.statusline")
+  local statuscolumn = require(config_namespace .. ".plugins.heirline.statuscolumn")
 
   local align = { provider = "%=" }
   local spacer = { provider = " " }
 
-  heirline.load_colors(require("onedarkpro.helpers").get_colors())
   heirline.setup({
     statusline = {
       static = {
@@ -134,8 +133,5 @@ function M.load()
     },
   })
 end
-
----Used by Lazy to load the statusline
-function M.config() M.load() end
 
 return M
