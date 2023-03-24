@@ -77,4 +77,5 @@ bookmarks
 misc/enhance-rails-intellisense-in-solargraph
 .DS_Store
 backup
+.repro
 
