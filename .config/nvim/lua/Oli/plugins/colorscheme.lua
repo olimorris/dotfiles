@@ -58,7 +58,7 @@ return {
           telescope_selection = "require('onedarkpro.helpers').darken('bg', 8, 'onedark')",
           copilot = "require('onedarkpro.helpers').darken('gray', 8, 'onedark')",
           breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'onedark')",
-          local_highlight = "require('onedarkpro.helpers').lighten('bg', 2, 'onedark')",
+          local_highlight = "require('onedarkpro.helpers').lighten('bg', 4, 'onedark')",
           light_gray = "require('onedarkpro.helpers').darken('gray', 7, 'onedark')",
         },
         light = {

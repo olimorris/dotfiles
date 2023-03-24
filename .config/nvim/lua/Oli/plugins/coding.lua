@@ -416,6 +416,7 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "antoinemadec/FixCursorHold.nvim",
 
+      -- Adapters
       "nvim-neotest/neotest-plenary",
       "olimorris/neotest-rspec",
       "olimorris/neotest-phpunit",

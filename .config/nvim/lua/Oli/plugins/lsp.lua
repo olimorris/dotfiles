@@ -253,16 +253,44 @@ return {
               description = "Line diagnostics",
               opts = { buffer = bufnr },
             },
-            { "K", vim.lsp.buf.hover, description = "Show hover information", opts = { buffer = bufnr } },
+            {
+              "K",
+              vim.lsp.buf.hover,
+              description = "Show hover information",
+              opts = {
+                buffer = bufnr,
+              },
+            },
             {
               "<LocalLeader>p",
               t.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer"),
               description = "Peek definition",
               opts = { buffer = bufnr },
             },
-            { "ga", vim.lsp.buf.code_action, description = "Show code actions", opts = { buffer = bufnr } },
-            { "gs", vim.lsp.buf.signature_help, description = "Show signature help", opts = { buffer = bufnr } },
-            { "<LocalLeader>rn", vim.lsp.buf.rename, description = "Rename symbol", opts = { buffer = bufnr } },
+            {
+              "ga",
+              vim.lsp.buf.code_action,
+              description = "Show code actions",
+              opts = {
+                buffer = bufnr,
+              },
+            },
+            {
+              "gs",
+              vim.lsp.buf.signature_help,
+              description = "Show signature help",
+              opts = {
+                buffer = bufnr,
+              },
+            },
+            {
+              "<LocalLeader>rn",
+              vim.lsp.buf.rename,
+              description = "Rename symbol",
+              opts = {
+                buffer = bufnr,
+              },
+            },
 
             {
               "[",
@@ -388,7 +416,6 @@ return {
               fallback()
             end
           end, { "i", "s" }),
-
           -- go to previous placeholder in the snippet
           ["<C-h>"] = cmp.mapping(function(fallback)
             if luasnip.jumpable(-1) then
