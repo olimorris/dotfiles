@@ -70,8 +70,24 @@ return {
           icon = "",
           description = "Filetree functionality...",
           keymaps = {
-            { "-", "<cmd>Oil --float .<CR>", description = "Open File Explorer" },
-            { "_", "<cmd>Oil --float<CR>", description = "Open File Explorer to current file" },
+            {
+              "-",
+              function()
+                vim.cmd("split")
+                vim.cmd("wincmd k")
+                vim.cmd("Oil .")
+              end,
+              description = "Open File Explorer",
+            },
+            {
+              "_",
+              function()
+                vim.cmd("split")
+                vim.cmd("wincmd k")
+                vim.cmd("Oil")
+              end,
+              description = "Open File Explorer to current file",
+            },
             -- {
             --   "<C-s>",
             --   "<cmd>require('oil').save()<CR>",
@@ -84,9 +100,21 @@ return {
     end,
     opts = {
       keymaps = {
+        ["<CR>"] = {
+          callback = function()
+            vim.cmd("wincmd j")
+            vim.cmd("close")
+            require("oil").select()
+          end,
+        },
         ["<C-c>"] = false,
         ["<C-s>"] = false,
-        ["q"] = "actions.close",
+        ["q"] = {
+          callback = function()
+            require("oil").close()
+            vim.cmd("close")
+          end,
+        },
         [">"] = "actions.toggle_hidden",
       },
       buf_options = {
