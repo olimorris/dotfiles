@@ -42,6 +42,7 @@ node
 openjdk@11
 pandoc
 php-cs-fixer
+php@8.1
 rclone
 reattach-to-user-namespace
 ripgrep
