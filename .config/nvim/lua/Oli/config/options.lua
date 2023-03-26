@@ -33,7 +33,7 @@ vb.tabstop = 4 -- Number of spaces in a tab
 -- vb.wrapmargin = 1
 
 -- Vim options
-vo.background = "light"
+vo.background = "dark"
 vo.cmdheight = 0 -- Hide the command bar
 vo.clipboard = { "unnamedplus" } -- Use the system clipboard
 vo.conceallevel = 2 -- Concealed text is completely hidden
