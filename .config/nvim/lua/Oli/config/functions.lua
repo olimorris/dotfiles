@@ -125,8 +125,8 @@ function om.Lazygit()
     direction = "float",
     float_opts = {
       border = "single",
-      height = vim.fn.winheight("%"),
-      width = vim.fn.winwidth("%"),
+      height = vim.o.lines,
+      width = vim.o.columns
     },
     on_open = function(term)
       vim.o.laststatus = 0
