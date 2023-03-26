@@ -15,7 +15,8 @@ require("lazy").setup({
   spec = { import = config_namespace .. ".plugins" },
   dev = {
     path = "~/Code/Neovim",
-    patterns = { "olimorris" },
+    -- Only load my local plugins when we're on my machine
+    patterns = (jit.os == "OSX" and vim.fn.hostname() == "Oli") and { "olimorris" } or {},
   },
   checker = {
     enabled = true,
@@ -35,12 +36,15 @@ require("lazy").setup({
     },
   },
   performance = {
+    cache = {
+      enabled = true,
+    },
     rtp = {
       disabled_plugins = {
         "gzip",
-        -- "matchit",
-        -- "matchparen",
-        -- "netrwPlugin",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",
