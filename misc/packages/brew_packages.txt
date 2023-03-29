@@ -20,6 +20,7 @@ glow
 go
 gobject-introspection
 gradle
+hledger
 httpie
 jpeg
 lazygit
