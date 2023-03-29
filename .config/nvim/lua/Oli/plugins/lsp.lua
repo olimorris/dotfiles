@@ -34,12 +34,12 @@ return {
 
       -- Others
       {
-        "VidocqH/lsp-lens.nvim",
-        opts = {
-          enable = true,
-          include_declaration = true,
-        },
-        config = true,
+        -- "VidocqH/lsp-lens.nvim",
+        -- opts = {
+        --   enable = true,
+        --   include_declaration = true,
+        -- },
+        -- config = true,
       },
     },
     init = function()
