@@ -197,7 +197,7 @@ return {
         extensions = {
           frecency = {
             show_scores = false,
-            show_unindexed = true,
+            show_unindexed = false,
             ignore_patterns = {
               "*.git/*",
               "*/tmp/*",
