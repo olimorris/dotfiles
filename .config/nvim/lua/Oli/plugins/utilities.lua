@@ -65,7 +65,7 @@ return {
       silent = true,
       -- autoload = true,
       should_autosave = function()
-        if vim.bo.filetype == "alpha" or vim.bo.filetype == "oil" then return false end
+        if vim.bo.filetype == "alpha" or vim.bo.filetype == "oil" or vim.bo.filetype == "lazy" then return false end
         return true
       end,
     },
