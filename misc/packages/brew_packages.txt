@@ -62,4 +62,5 @@ watchman
 wget
 yarn
 zoxide
+zsh
 zsh-completions

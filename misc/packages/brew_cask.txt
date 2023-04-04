@@ -17,6 +17,7 @@ google-chrome
 grammarly
 hammerspoon
 imageoptim
+iterm2
 karabiner-elements
 keyboard-maestro
 kitty
