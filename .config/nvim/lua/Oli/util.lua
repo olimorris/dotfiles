@@ -6,7 +6,7 @@ _G.om = {}
 ---@return boolean
 function om.has(feature) return vim.fn.has(feature) > 0 end
 
-om.nightly = om.has("nvim-0.9")
+om.nightly = om.has("nvim-0.10")
 
 ---Source a lua or vimscript file
 ---@param path string path relative to the nvim directory
