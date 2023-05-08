@@ -105,7 +105,7 @@ function M.config()
         return not conditions.buffer_matches({
           buftype = buftypes,
           filetype = force_inactive_filetypes,
-        }) and om.nightly
+        })
       end,
       static = statuscolumn.static,
       init = statuscolumn.init,
