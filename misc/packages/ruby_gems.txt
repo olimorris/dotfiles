@@ -29,6 +29,7 @@ childprocess
 chronic
 coderay
 coffee-script-source
+colorize
 concurrent-ruby
 crass
 csv
@@ -59,6 +60,7 @@ getoptlong
 globalid
 high_voltage
 highline
+hledger-forecast
 i18n
 importmap-rails
 io-console
@@ -85,6 +87,7 @@ mini_portile2
 minitest
 minitest-reporters
 minitest-reporters-json_reporter
+money
 msgpack
 multi_json
 multipart-post
@@ -126,6 +129,7 @@ railties
 rainbow
 rake
 rb-fsevent
+rbs
 rchardet
 rdbg
 rdoc
@@ -174,6 +178,7 @@ strscan
 syntax_tree
 syslog
 tempfile
+terminal-table
 thor
 thread_safe
 tilt
