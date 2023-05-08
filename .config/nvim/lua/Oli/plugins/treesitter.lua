@@ -73,6 +73,20 @@ return {
             show_help = "?",
           },
         },
+
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+
+            keymaps = {
+              -- Use v[keymap], c[keymap], d[keymap] to perform any operation
+              ["af"] = "@function.outer",
+              ["if"] = "@function.inner",
+              ["ac"] = "@class.outer",
+            },
+          },
+        },
       })
     end,
   },
