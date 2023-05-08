@@ -7,6 +7,7 @@ return {
     {
       { "BufEnter", "BufWritePost", "TextChanged", "InsertLeave" },
       function()
+        vim.opt.conceallevel = 2 -- Concealed text is completely hidden
         local bufnr = vim.api.nvim_get_current_buf()
         om.ConcealHTML(bufnr)
       end,
