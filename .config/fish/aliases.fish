@@ -46,7 +46,8 @@ alias nah='git reset --hard && git clean -df'
 alias gfix='git rm -r --cached . && git add .'
 
 # hledger
-alias hf='hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal bal ass --forecast --auto -e'
+alias hf='hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal --forecast --auto'
+alias hb='hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal bal -M --tree --budget expenses'
 alias hg='hledger-forecast generate -t $FINANCES/transactions.journal -f $FINANCES/forecast.yml -o $FINANCES/forecast.journal --force'
 alias hs='hledger-forecast summarize -f $FINANCES/forecast.yml'
 

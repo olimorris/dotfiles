@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+
+def get_reckon_command(input_file, choice)
+  case choice
+  when '1' # Monzo
+    "reckon -f #{input_file} -o output_monzo.journal -c £ -a Assets:Monzo --ignore-columns 1,4,5,6,8,10,11 --money-column 2 --contains-header 1 -t tokens.yaml -l transactions.journal"
+  when '2' # Amex
+    "reckon -f #{input_file} -o output_amex.journal -i -c £ -a Liabilities:Amex --money-column 3 --date-column 1 --contains-header 1 -t tokens.yaml -l transactions.journal"
+  else
+    raise 'Invalid choice'
+  end
+end
+
+def run_reckon_command(input_file, choice)
+  command = get_reckon_command(input_file, choice)
+
+  if system(command)
+    puts "Imported #{input_file} successfully."
+  else
+    puts "Error importing #{input_file}."
+  end
+end
+
+def main
+  puts "Let's import some transactions with Reckon\n\n"
+  puts 'Choose the type of CSV file to import:'
+  puts '1) Monzo CSV'
+  puts '2) Amex CSV'
+  print "\nEnter your choice (1/2): "
+  choice = gets.chomp
+
+  case choice
+  when '1'
+    puts 'Enter the path to the Monzo CSV file:'
+  when '2'
+    puts 'Enter the path to the Amex CSV file:'
+  else
+    puts 'Invalid choice. Exiting.'
+    exit
+  end
+
+  input_file = File.expand_path(gets.chomp)
+  unless File.exist?(input_file)
+    puts 'File not found. Exiting.'
+    exit
+  end
+
+  run_reckon_command(input_file, choice)
+end
+
+main
