@@ -1,8 +1,8 @@
 - defaults:
     link:
-      force: true
-      create: true
-      relink: true
+        create: true
+        force: true
+        relink: true
 
 - clean: ["~"]
 
@@ -32,15 +32,16 @@
     ~/.env: .config/fish/.env
     ~/.gitconfig: .config/git/.gitconfig
     ~/.gitignore_global: .config/git/.gitignore_global
+    ~/.lesskey: .config/less/.lesskey
     ~/.mackup: .config/mackup/.mackup
     ~/.mackup.cfg: .config/mackup/.mackup.cfg
     ~/.profile: .config/bash/.profile
     ~/.ssh: .config/ssh
-    ~/.tool-versions: .tool-versions
     ~/.tofish: .config/fish/.tofish
+    ~/.tool-versions: .tool-versions
+    ~/.vim/custom_snippets: .config/vim/custom_snippets
     ~/.vimrc: .config/vim/.vimrc
     ~/.vimrc.plugins: .config/vim/.vimrc.plugins
-    ~/.vim/custom_snippets: .config/vim/custom_snippets
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
