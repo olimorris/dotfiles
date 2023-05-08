@@ -45,6 +45,11 @@ alias gdm='git checkout -b dev-master'
 alias nah='git reset --hard && git clean -df'
 alias gfix='git rm -r --cached . && git add .'
 
+# hledger
+alias hf='hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal bal ass --forecast --auto -e'
+alias hg='hledger-forecast generate -t $FINANCES/transactions.journal -f $FINANCES/forecast.yml -o $FINANCES/forecast.journal --force'
+alias hs='hledger-forecast summarize -f $FINANCES/forecast.yml'
+
 # Homebrew
 alias br='brew remove'
 alias bu='brew update'
@@ -73,10 +78,6 @@ alias dotbot='cd ~/.dotfiles && ./dotbot_install'
 alias dotup='cd ~/.dotfiles && git submodule update --remote dotbot'
 alias mssh='ruby ~/.dotfiles/commands/ssh.rb'
 alias sep='ruby ~/.dotfiles/commands/make_separator.rb'
-alias deploy="ssh DigitalOcean 'bash -s' < deploy.sh"
-alias led="ledger -f ~/OliDocs/ff/Finances/Ledger/data.ledger"
-alias led_bank="reckon -f bank.csv -c £ -a Assets:Bank --ignore-columns 1,4,5,6,8,10,11 --money-column 2 --contains-header 1 -t tokens.yaml -l data.ledger -o output_bank.ledger"
-alias led_card="reckon -f card.csv -i -c £ -a Liabilities:'Credit Card' --money-column 3 --date-column 1 --contains-header 1 -t tokens.yaml -l data.ledger -o output_card.ledger"
 
 # Neovim / Vim
 alias vi='nvim'
