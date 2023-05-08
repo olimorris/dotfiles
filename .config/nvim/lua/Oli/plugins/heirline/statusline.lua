@@ -200,7 +200,12 @@ M.LspDiagnostics = {
     self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
   end,
   on_click = {
-    callback = function() vim.cmd("normal gf") end,
+    callback = function()
+      require("telescope.builtin").diagnostics({
+        layout_strategy = "center",
+        bufnr = 0,
+      })
+    end,
     name = "heirline_diagnostics",
   },
   update = { "DiagnosticChanged", "BufEnter" },
@@ -332,8 +337,6 @@ M.MacroRecording = {
   update = {
     "RecordingEnter",
     "RecordingLeave",
-    -- redraw the statusline on recording events
-    callback = vim.schedule_wrap(function() vim.cmd("redrawstatus") end),
   },
   {
     provider = "",
