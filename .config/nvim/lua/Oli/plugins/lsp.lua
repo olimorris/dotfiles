@@ -31,16 +31,6 @@ return {
       -- Snippets
       "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
-
-      -- Others
-      {
-        -- "VidocqH/lsp-lens.nvim",
-        -- opts = {
-        --   enable = true,
-        --   include_declaration = true,
-        -- },
-        -- config = true,
-      },
     },
     init = function()
       require("legendary").commands({
@@ -235,6 +225,7 @@ return {
                 bufnr = 0,
               }),
               description = "Find diagnostics",
+              opts = { noremap = true },
             },
             { "gd", vim.lsp.buf.definition, description = "Go to definition", opts = { buffer = bufnr } },
             { "gi", vim.lsp.buf.implementation, description = "Go to implementation", opts = { buffer = bufnr } },
@@ -372,6 +363,8 @@ return {
               "yaml",
             },
           }),
+          null_ls.builtins.formatting.gofmt,
+          null_ls.builtins.formatting.goimports,
           null_ls.builtins.formatting.rubocop,
           null_ls.builtins.formatting.shfmt.with({
             filetypes = { "sh", "zsh" },

@@ -120,7 +120,7 @@ function M.config()
       {
         condition = function()
           return conditions.buffer_matches({
-            buftype = { "nofile", "prompt", "help", "quickfix" },
+            buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
             filetype = { "alpha", "oil", "toggleterm" },
           })
         end,

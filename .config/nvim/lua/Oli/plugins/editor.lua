@@ -70,8 +70,8 @@ return {
           icon = "",
           description = "Filetree functionality...",
           keymaps = {
-            { "-", "<cmd>Oil --float .<CR>", description = "Open File Explorer" },
-            { "_", "<cmd>Oil --float<CR>", description = "Open File Explorer to current file" },
+            { "-", function() require("oil").toggle_float(".") end, description = "Open File Explorer" },
+            { "_", function() require("oil").toggle_float() end, description = "Open File Explorer to current file" },
             -- {
             --   "<C-s>",
             --   "<cmd>require('oil').save()<CR>",
