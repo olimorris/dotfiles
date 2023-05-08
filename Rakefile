@@ -61,7 +61,7 @@ task :update do
   Rake::Task['tests:setup'].invoke if testing?
   Rake::Task['update:brew'].invoke
   Rake::Task['update:dotbot'].invoke
-  Rake::Task['update:neovim'].invoke
+  # Rake::Task['update:neovim'].invoke
   # Rake::Task['update:neovim_plugins'].invoke
   Rake::Task['update:vim_plugins'].invoke
   Rake::Task['update:rust'].invoke
