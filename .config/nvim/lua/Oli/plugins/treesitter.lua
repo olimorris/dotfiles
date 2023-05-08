@@ -15,10 +15,23 @@ return {
         opts = {
           close_triple_quotes = true,
           check_ts = true,
+          enable_moveright = true,
           fast_wrap = {
             map = "<c-e>",
           },
         },
+        config = function(_, opts)
+          local autopairs = require("nvim-autopairs")
+
+          autopairs.setup(opts)
+
+          local Rule = require("nvim-autopairs.rule")
+          local ts_conds = require("nvim-autopairs.ts-conds")
+
+          autopairs.add_rules({
+            Rule("{{", "  }", "vue"):set_end_pair_length(2):with_pair(ts_conds.is_ts_node("text")),
+          })
+        end,
       },
       {
         "abecodes/tabout.nvim", -- Tab out from parenthesis, quotes, brackets...
