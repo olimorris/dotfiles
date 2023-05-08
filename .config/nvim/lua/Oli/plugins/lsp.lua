@@ -31,6 +31,19 @@ return {
       -- Snippets
       "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
+
+      -- Misc
+      {
+        "KostkaBrukowa/definition-or-references.nvim", -- Definition and references in a single command
+        config = {
+          on_references_result = function()
+            require("telescope.builtin").lsp_references({
+              layout_strategy = "center",
+              bufnr = 0,
+            })
+          end,
+        },
+      },
     },
     init = function()
       require("legendary").commands({
@@ -227,17 +240,23 @@ return {
               description = "Find diagnostics",
               opts = { noremap = true },
             },
-            { "gd", vim.lsp.buf.definition, description = "Go to definition", opts = { buffer = bufnr } },
+            -- { "gd", vim.lsp.buf.definition, description = "Go to definition", opts = { buffer = bufnr } },
+            {
+              "gd",
+              require("definition-or-references").definition_or_references,
+              description = "Go to definition/reference",
+              opts = { silent = true },
+            },
             { "gi", vim.lsp.buf.implementation, description = "Go to implementation", opts = { buffer = bufnr } },
             { "gt", vim.lsp.buf.type_definition, description = "Go to type definition", opts = { buffer = bufnr } },
-            {
-              "gr",
-              t.lazy_required_fn("telescope.builtin", "lsp_references", {
-                layout_strategy = "center",
-              }),
-              description = "Find references",
-              opts = { buffer = bufnr },
-            },
+            -- {
+            --   "gr",
+            --   t.lazy_required_fn("telescope.builtin", "lsp_references", {
+            --     layout_strategy = "center",
+            --   }),
+            --   description = "Find references",
+            --   opts = { buffer = bufnr },
+            -- },
             {
               "gl",
               "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
