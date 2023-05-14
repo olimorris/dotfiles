@@ -230,11 +230,13 @@ return {
   },
   {
     "ahmedkhalf/project.nvim", -- Automatically set the cwd to the project root
-    name = "project_nvim",
     opts = {
       ignore_lsp = { "efm", "null-ls" },
       patterns = { "Gemfile" },
     },
+    config = function(_, opts)
+      require("project_nvim").setup(opts)
+    end
   },
   {
     "danymat/neogen", -- Annotation generator
