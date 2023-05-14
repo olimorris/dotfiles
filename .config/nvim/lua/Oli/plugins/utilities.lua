@@ -65,7 +65,17 @@ return {
       silent = true,
       -- autoload = true,
       should_autosave = function()
-        if vim.bo.filetype == "alpha" or vim.bo.filetype == "oil" or vim.bo.filetype == "lazy" then return false end
+        local excluded_filetypes = {
+          "alpha",
+          "oil",
+          "lazy",
+          ""
+        }
+
+        for _, filetype in ipairs(excluded_filetypes) do
+          if vim.bo.filetype == filetype then return false end
+        end
+
         return true
       end,
     },
