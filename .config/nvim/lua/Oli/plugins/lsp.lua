@@ -1,11 +1,14 @@
 return {
   {
     "VonHeikemen/lsp-zero.nvim",
-    branch = "v1.x",
+    branch = "v2.x",
     dependencies = {
       -- LSP Support
       "neovim/nvim-lspconfig",
-      "williamboman/mason.nvim",
+      {
+        "williamboman/mason.nvim",
+        build = function() pcall(vim.cmd, "MasonUpdate") end,
+      },
       "williamboman/mason-lspconfig.nvim",
 
       -- Null-ls
@@ -26,6 +29,10 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-nvim-lua",
+      {
+        "zbirenbaum/copilot-cmp",
+        config = function() require("copilot_cmp").setup() end,
+      },
       "onsails/lspkind.nvim",
 
       -- Snippets
@@ -35,15 +42,30 @@ return {
       -- Misc
       {
         "KostkaBrukowa/definition-or-references.nvim", -- Definition and references in a single command
-        config = {
-          on_references_result = function()
-            require("telescope.builtin").lsp_references({
-              layout_strategy = "center",
-              bufnr = 0,
-            })
-          end,
-        },
+        config = function()
+          local function handle_references_response(result)
+            require("telescope.pickers")
+              .new({}, {
+                prompt_title = "LSP References",
+                finder = require("telescope.finders").new_table({
+                  results = vim.lsp.util.locations_to_items(result, "utf-16"),
+                  entry_maker = require("telescope.make_entry").gen_from_quickfix(),
+                }),
+                layout_strategy = "center",
+                previewer = require("telescope.config").values.qflist_previewer({}),
+              })
+              :find()
+          end
+
+          require("definition-or-references").setup({
+            on_references_result = handle_references_response,
+          })
+        end,
       },
+      {
+        "VidocqH/lsp-lens.nvim", -- Display references and definitions
+        config = true
+      }
     },
     init = function()
       require("legendary").commands({
@@ -99,17 +121,18 @@ return {
     config = function()
       vim.o.runtimepath = vim.o.runtimepath .. ",~/.dotfiles/.config/snippets"
 
-      local lsp = require("lsp-zero")
-      lsp.preset("lsp-compe")
-
-      lsp.set_preferences({
+      local lsp = require("lsp-zero").preset({
         set_lsp_keymaps = false,
-        sign_icons = {
-          error = " ",
-          warn = " ",
-          hint = " ",
-          info = " ",
+        manage_nvim_cmp = {
+          set_basic_mappings = true,
         },
+      })
+
+      lsp.set_sign_icons({
+        error = " ",
+        warn = " ",
+        hint = " ",
+        info = " ",
       })
 
       lsp.ensure_installed({
@@ -142,8 +165,6 @@ return {
           },
         },
       })
-
-      lsp.nvim_workspace()
 
       local function autocmds(client, bufnr)
         require("legendary").autocmds({
@@ -405,11 +426,14 @@ return {
 
       --Setup completion
       local cmp = require("cmp")
+      local cmp_action = require("lsp-zero").cmp_action()
       local luasnip = require("luasnip")
+
+      require("luasnip.loaders.from_vscode").lazy_load()
 
       vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
-      cmp.setup(lsp.defaults.cmp_config({
+      cmp.setup({
         formatting = {
           format = function(...) return require("lspkind").cmp_format({ mode = "symbol_text" })(...) end,
         },
@@ -420,6 +444,13 @@ return {
           },
         },
         mapping = {
+          -- <C-y> = Confirm snippet
+          -- <C-p> / <Up> = Previous item
+          -- <C-n> / <Down> = Next item
+
+          ["<Tab>"] = cmp_action.luasnip_supertab(),
+          ["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
+
           -- go to next placeholder in the snippet
           ["<C-l>"] = cmp.mapping(function(fallback)
             if luasnip.jumpable(1) then
@@ -439,13 +470,14 @@ return {
         },
         sources = {
           { name = "luasnip", priority = 100, max_item_count = 8 },
+          { name = "copilot", priority = 90, max_item_count = 8 },
           { name = "nvim_lsp", priority = 90, keyword_length = 3, max_item_count = 8 },
           { name = "path", priority = 20 },
           { name = "buffer", priority = 10, keyword_length = 3, max_item_count = 8 },
           { name = "nvim_lua" },
           { name = "nvim_lsp_signature_help" },
         },
-      }))
+      })
 
       cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
