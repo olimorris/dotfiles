@@ -9,7 +9,7 @@ local hyper = { "cmd", "alt", "ctrl" }
 ]]
 local apps = {
   b = "Safari", -- Browser
-  c = { "Code", "Visual Studio Code" },
+  c = { "Code - Insiders", "Visual Studio Code - Insiders" },
   e = "Microsoft Excel",
   f = "Finder",
   g = "Google Chrome",
@@ -19,12 +19,14 @@ local apps = {
   p = "1Password",
   r = "Reeder",
   t = "kitty", -- Terminal
+  w = "word",
   z = "Todoist",
 }
 
 local LaunchOrToggle = function(key, app_name, app_filename)
   hs.hotkey.bind(hyper, key, function()
     local app = hs.application.find(app_name)
+    print(app)
     -- Toggle - show
     local awin = nil
     if app then awin = app:mainWindow() end
