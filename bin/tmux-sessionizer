@@ -7,7 +7,7 @@
 # https://github.com/caarlos0/dotfiles.fish/blob/main/bin/tmux-sessionizer
 
 function search
-    find "$DOTFILES" "$CODE_DIR" -maxdepth 1 -type d |
+    find "$DOTFILES" "$CODE_DIR" "$FINANCES" -maxdepth 1 -type d |
         while read p
             zoxide query -l -s "$p"
             zoxide query -l -s "$p/" # Needed for Code directories
@@ -15,7 +15,7 @@ function search
         grep / | # only show directories
         sort -rnk1 | # sort by score
         uniq | # remove any duplicates
-        # awk '{print $2}' | # only show the path
+        awk '{print $2}' | # only show the path
         sed 's|^/Users/Oli|~|' | # replace /Users/Oli prefix with ~
         fzf --height=100% --no-border --no-sort --no-info
 end
@@ -25,7 +25,7 @@ if test (count $argv) -eq 1
 else
     set selected $(search)
 end
-
+echo "Selected directory: $selected"
 if test -z $selected
     exit 0
 end
@@ -33,7 +33,6 @@ end
 # Add the selected directory to Zoxide's database
 zoxide add "$selected"
 
-source ~/.config/fish/config.fish
 set selected_name (basename "$selected" | tr . _)
 set tmux_running (pgrep tmux)
 
