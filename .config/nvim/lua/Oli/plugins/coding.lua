@@ -135,6 +135,7 @@ return {
     dependencies = {
       "theHamsta/nvim-dap-virtual-text", -- help to find variable definitions in debug mode
       "rcarriga/nvim-dap-ui", -- Nice UI for nvim-dap
+      "suketa/nvim-dap-ruby", -- Debug Ruby
     },
     init = function()
       require("legendary").keymaps({
@@ -172,6 +173,7 @@ return {
     end,
     config = function()
       local dap = require("dap")
+      require("dap-ruby").setup()
 
       ---Show the nice virtual text when debugging
       ---@return nil|function
@@ -197,51 +199,6 @@ return {
           linehl = "",
           numhl = "DebugHighlight",
         })
-      end
-
-      ---Custom Ruby debugging config
-      ---@param dap table
-      ---@return nil
-      local function ruby_setup(dap)
-        dap.adapters.ruby = function(callback, config)
-          local script
-
-          if config.current_line then
-            script = config.script .. ":" .. vim.fn.line(".")
-          else
-            script = config.script
-          end
-
-          callback({
-            type = "server",
-            host = "127.0.0.1",
-            port = "${port}",
-            executable = {
-              command = "bundle",
-              args = { "exec", "rdbg", "--open", "--port", "${port}", "-c", "--", config.command, script },
-            },
-          })
-        end
-
-        dap.configurations.ruby = {
-          {
-            type = "ruby",
-            name = "debug rspec current_line",
-            request = "attach",
-            localfs = true,
-            command = "rspec",
-            script = "${file}",
-            current_line = true,
-          },
-          {
-            type = "ruby",
-            name = "debug current file",
-            request = "attach",
-            localfs = true,
-            command = "ruby",
-            script = "${file}",
-          },
-        }
       end
 
       ---Slick UI which is automatically triggered when debugging
@@ -280,7 +237,6 @@ return {
 
       virtual_text_setup()
       signs_setup()
-      ruby_setup(dap)
       ui_setup(dap)
     end,
   },
