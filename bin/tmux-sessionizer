@@ -15,7 +15,7 @@ function search
         grep / | # only show directories
         sort -rnk1 | # sort by score
         uniq | # remove any duplicates
-        awk '{print $2}' | # only show the path
+        # awk '{print $2}' | # only show the path
         sed 's|^/Users/Oli|~|' | # replace /Users/Oli prefix with ~
         fzf --height=100% --no-border --no-sort --no-info
 end
@@ -30,6 +30,10 @@ if test -z $selected
     exit 0
 end
 
+# Add the selected directory to Zoxide's database
+zoxide add "$selected"
+
+source ~/.config/fish/config.fish
 set selected_name (basename "$selected" | tr . _)
 set tmux_running (pgrep tmux)
 
