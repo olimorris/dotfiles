@@ -29,5 +29,9 @@
 	line-numbers = true
 [credential]
 	helper = manager-core
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
 [alias]
 	pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+[credential "https://dev.azure.com"]
+	useHttpPath = true
