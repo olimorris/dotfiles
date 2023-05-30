@@ -8,10 +8,12 @@ cleanmymac
 cleanshot
 daedalus-mainnet
 diffmerge
+discord
 fantastical
 font-dejavu-sans-mono-for-powerline
 fontforge
 geekbench
+git-credential-manager-core
 github
 google-chrome
 grammarly
@@ -26,7 +28,6 @@ ledger-live
 little-snitch
 lunar
 marta
-microsoft-teams
 monitorcontrol
 moom
 nordvpn
