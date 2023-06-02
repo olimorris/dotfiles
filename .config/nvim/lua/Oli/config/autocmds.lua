@@ -106,7 +106,7 @@ return {
     },
     {
       "FileType",
-      ":setlocal shiftwidth=4 tabstop=4",
+      ":setlocal shiftwidth=4 tabstop=4 expandtab",
       opts = {
         pattern = { "ledger", "journal" },
       },
