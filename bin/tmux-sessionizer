@@ -25,7 +25,7 @@ if test (count $argv) -eq 1
 else
     set selected $(search)
 end
-echo "Selected directory: $selected"
+
 if test -z $selected
     exit 0
 end
