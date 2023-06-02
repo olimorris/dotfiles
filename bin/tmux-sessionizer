@@ -30,21 +30,20 @@ if test -z $selected
     exit 0
 end
 
-# Add the selected directory to Zoxide's database
+# Add the selected directory to Zoxide's database or increment its score
+set selected (echo "$selected" | sed "s|^~|$HOME|")
 zoxide add "$selected"
 
 set selected_name (basename "$selected" | tr . _)
 set tmux_running (pgrep tmux)
 
 if test -z "$TMUX" && test -z "$tmux_running"
-    set -l selected_abs_path (echo "$selected" | sed "s|^~|$HOME|")
-    tmux new-session -s "$selected_name" -c "$selected_abs_path"
+    tmux new-session -s "$selected_name" -c "$selected"
     exit 0
 end
 
 if ! tmux has-session -t="$selected_name" 2>/dev/null
-    set -l selected_abs_path (echo "$selected" | sed "s|^~|$HOME|")
-    tmux new-session -ds "$selected_name" -c "$selected_abs_path"
+    tmux new-session -ds "$selected_name" -c "$selected"
 end
 
 tmux switch-client -t "$selected_name"
