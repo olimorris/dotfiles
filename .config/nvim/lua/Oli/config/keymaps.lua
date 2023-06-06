@@ -26,6 +26,12 @@ function SetupMultipleCursors()
 end
 
 return legendary.keymaps({
+  {
+    "<C-x>",
+    function() om.float_term(nil, { cwd = nil, esc_esc = true }) end,
+    description = "Open terminal",
+    mode = { "n", "t" },
+  },
   { "<C-y>", "<cmd>%y+<CR>", hide = true, description = "Copy buffer" },
   {
     "<C-s>",

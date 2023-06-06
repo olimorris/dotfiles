@@ -90,7 +90,7 @@ return legendary.commands({
   },
   {
     "Lazygit",
-    function() om.Lazygit():toggle() end,
+    function() om.float_term("lazygit", { size = { width = 1, height = 1 } }) end,
     description = "Git terminal",
   },
   {
