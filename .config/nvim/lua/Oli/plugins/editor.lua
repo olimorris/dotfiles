@@ -63,6 +63,18 @@ return {
   },
   {
     "stevearc/oil.nvim", -- File manager
+    opts = {
+      keymaps = {
+        ["<C-c>"] = false,
+        ["<C-s>"] = "actions.save",
+        ["q"] = "actions.close",
+        [">"] = "actions.toggle_hidden",
+      },
+      buf_options = {
+        buflisted = false,
+      },
+      skip_confirm_for_simple_edits = true,
+    },
     init = function()
       require("legendary").keymaps({
         {
@@ -82,24 +94,6 @@ return {
         },
       })
     end,
-    opts = {
-      keymaps = {
-        ["<C-c>"] = false,
-        ["<C-s>"] = "actions.save",
-        ["q"] = "actions.close",
-        [">"] = "actions.toggle_hidden",
-      },
-      buf_options = {
-        buflisted = false,
-      },
-      skip_confirm_for_simple_edits = true,
-      float = {
-        border = "single",
-        win_options = {
-          winblend = 0,
-        },
-      },
-    },
   },
   {
     "stevearc/aerial.nvim", -- Toggled list of classes, methods etc in current file
