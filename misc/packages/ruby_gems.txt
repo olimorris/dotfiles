@@ -5,6 +5,7 @@ benchmark
 bigdecimal
 bundler
 cgi
+chronic
 colorize
 concurrent-ruby
 csv
@@ -71,9 +72,11 @@ racc
 rainbow
 rake
 rbs
+rchardet
 rdoc
 readline
 readline-ext
+reckon
 regexp_parser
 reline
 resolv
