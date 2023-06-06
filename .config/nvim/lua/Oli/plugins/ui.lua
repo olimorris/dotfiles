@@ -1,7 +1,31 @@
 return {
   "nvim-tree/nvim-web-devicons",
   {
-    "lukas-reineke/virt-column.nvim", -- Use charactes in the color column
+    "folke/edgy.nvim",
+    event = "VeryLazy",
+    opts = {
+      bottom = {
+        {
+          ft = "lazyterm",
+          title = "Terminal",
+          size = { height = 0.2 },
+          filter = function(buf) return not vim.b[buf].lazyterm_cmd end,
+        },
+        { ft = "qf", title = "QuickFix" },
+      },
+      -- left = {
+      --   {
+      --     title = "File System",
+      --     ft = "oil",
+      --   },
+      -- },
+      right = {
+        { ft = "aerial", title = "Symbols", size = { width = 0.3 } },
+      },
+    },
+  },
+  {
+    "lukas-reineke/virt-column.nvim", -- Use characters in the color column
     config = true,
   },
   {
