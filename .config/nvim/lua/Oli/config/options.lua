@@ -78,6 +78,7 @@ vo.showmatch = true -- Show matching brackets by flickering
 vo.showmode = false -- Do not show the mode
 vo.sidescrolloff = 8 -- The minimal number of columns to keep to the left and to the right of the cursor if 'nowrap' is set
 vo.smartcase = true -- Don't ignore case with capitals
+vo.splitkeep = "screen" -- Default splitting will cause your main splits to jump when opening an edgebar.
 vo.splitbelow = true -- Put new windows below current
 vo.splitright = true -- Put new windows right of current
 vo.termguicolors = true -- True color support
