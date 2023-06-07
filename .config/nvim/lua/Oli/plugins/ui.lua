@@ -13,12 +13,12 @@ return {
         },
         { ft = "qf", title = "QuickFix" },
       },
-      -- left = {
-      --   {
-      --     title = "File System",
-      --     ft = "oil",
-      --   },
-      -- },
+      left = {
+        {
+          ft = "oil",
+          title = "File System",
+        },
+      },
       right = {
         { ft = "aerial", title = "Symbols", size = { width = 0.3 } },
         { ft = "neotest-summary", title = "Tests", size = { width = 0.3 } },
