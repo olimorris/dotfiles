@@ -9,7 +9,7 @@ return {
         {
           ft = "lazyterm",
           title = "Terminal",
-          size = { height = om.on_big_screen and 20 or 0.2 },
+          size = { height = om.on_big_screen() and 20 or 0.2 },
           filter = function(buf) return not vim.b[buf].lazyterm_cmd end,
         },
         { ft = "qf", title = "QuickFix" },
@@ -168,7 +168,7 @@ return {
       dashboard.section.footer.opts.hl = "AlphaFooter"
 
       -- Layout
-      if om.on_big_screen then
+      if om.on_big_screen() then
         dashboard.config.layout = {
           { type = "padding", val = 5 },
           dashboard.section.terminal,
