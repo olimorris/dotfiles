@@ -19,34 +19,6 @@ return {
       })
     end,
     opts = {
-      caching = false,
-      cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
-      plugins = {
-        barbar = false,
-        lsp_saga = false,
-        marks = false,
-        polygot = false,
-        startify = false,
-        telescope = false,
-        trouble = false,
-        vim_ultest = false,
-        which_key = false,
-      },
-      styles = {
-        tags = "italic",
-        methods = "bold",
-        functions = "bold",
-        keywords = "italic",
-        comments = "italic",
-        parameters = "italic",
-        conditionals = "italic",
-        virtual_text = "italic",
-      },
-      options = {
-        cursorline = true,
-        -- transparency = true,
-        -- highlight_inactive_windows = true,
-      },
       colors = {
         dark = {
           statusline_bg = "#2e323b", -- gray
@@ -80,13 +52,17 @@ return {
         },
       },
       highlights = {
-        LspLens = { fg = "${light_gray}", style = "italic" },
+        EdgyNormal = { bg = "${bg}" },
+        EdgyTitle = { fg = "${purple}", bold = true },
+        NormalFloat = { bg = "${bg}" }, -- Set the terminal background to be the same as the editor
+
+        LspLens = { fg = "${light_gray}", italic = true },
         CursorLineNr = { bg = "${bg}", fg = "${fg}" },
-        DiffChange = { style = "underline" }, -- diff mode: Changed line |diff.txt|
+        DiffChange = { underline = true }, -- diff mode: Changed line |diff.txt|
         LocalHighlight = { bg = "${local_highlight}" },
         MatchParen = { fg = "${cyan}" },
         ModeMsg = { fg = "${gray}" }, -- Make command line text lighter
-        Search = { bg = "${selection}", fg = "${yellow}", style = "underline" },
+        Search = { bg = "${selection}", fg = "${yellow}", underline = true },
         VimLogo = { fg = { dark = "#81b766", light = "#029632" } },
 
         TabLine = { fg = "${gray}", bg = "${bg}" },
@@ -96,7 +72,7 @@ return {
         ["@text.todo.checked"] = { fg = "${bg}", bg = "${purple}" },
 
         -- Aerial plugin
-        AerialClass = { fg = "${purple}", style = "bold,italic" },
+        AerialClass = { fg = "${purple}", bold = true, italic = true },
         AerialClassIcon = { fg = "${purple}" },
         AerialConstructorIcon = { fg = "${yellow}" },
         AerialEnumIcon = { fg = "${blue}" },
@@ -111,44 +87,44 @@ return {
         },
         AlphaButtonText = {
           fg = "${blue}",
-          style = "bold",
+          bold = true,
         },
         AlphaButtonShortcut = {
           fg = { dark = "${green}", light = "${yellow}" },
-          style = "italic",
+          italic = true,
         },
-        AlphaFooter = { fg = "${gray}", style = "italic" },
+        AlphaFooter = { fg = "${gray}", italic = true },
 
         -- Bufferline
         BufferlineNormal = { bg = "${bg}", fg = "${gray}" },
         BufferlineSelected = { bg = "${statusline_bg}", fg = "${purple}" },
-        BufferlineOffset = { fg = "${purple}", style = "bold" },
+        BufferlineOffset = { fg = "${purple}", bold = true },
 
         -- ChatGPT
         ChatGPTWindow = { bg = "${float_bg}", fg = "${fg}" },
         ChatGPTPrompt = { bg = "${float_bg}", fg = "${fg}" },
-        ChatGPTQuestion = { fg = "${blue}", style = "italic" },
+        ChatGPTQuestion = { fg = "${blue}", italic = true },
         ChatGPTTotalTokens = { fg = "${bg}", bg = "${gray}" },
         ChatGPTTotalTokensBorder = { fg = "${gray}" },
 
         -- Cmp
-        CmpItemAbbrMatch = { fg = "${blue}", style = "bold" },
-        CmpItemAbbrMatchFuzzy = { fg = "${blue}", style = "underline" },
+        CmpItemAbbrMatch = { fg = "${blue}", bold = true },
+        CmpItemAbbrMatchFuzzy = { fg = "${blue}", underline = true },
 
         -- Copilot
-        CopilotSuggestion = { fg = "${copilot}", style = "italic" },
+        CopilotSuggestion = { fg = "${copilot}", italic = true },
 
         -- DAP
-        DebugBreakpoint = { fg = "${red}", style = "bold" },
-        DebugHighlightLine = { fg = "${purple}", style = "italic" },
-        NvimDapVirtualText = { fg = "${cyan}", style = "italic" },
+        DebugBreakpoint = { fg = "${red}", bold = true },
+        DebugHighlightLine = { fg = "${purple}", italic = true },
+        NvimDapVirtualText = { fg = "${cyan}", italic = true },
 
         -- DAP UI
-        DapUIBreakpointsCurrentLine = { fg = "${yellow}", style = "bold" },
+        DapUIBreakpointsCurrentLine = { fg = "${yellow}", bold = true },
 
         -- Fidget
         FidgetTask = { fg = "${gray}" },
-        FidgetTitle = { fg = "${purple}", style = "italic" },
+        FidgetTitle = { fg = "${purple}", italic = true },
 
         -- Heirline
         Heirline = { bg = "${statusline_bg}" },
@@ -160,16 +136,16 @@ return {
         LuaSnipInsertNode = { fg = "${yellow}" },
 
         -- Navic
-        NavicText = { fg = "${breadcrumbs}", style = "italic" },
+        NavicText = { fg = "${breadcrumbs}", italic = true },
 
         -- Neotest
-        NeotestAdapterName = { fg = "${purple}", style = "bold" },
-        NeotestFocused = { style = "bold" },
-        NeotestNamespace = { fg = "${blue}", style = "bold" },
+        NeotestAdapterName = { fg = "${purple}", bold = true },
+        NeotestFocused = { bold = true },
+        NeotestNamespace = { fg = "${blue}", bold = true },
 
         -- Neotree
-        NeoTreeRootName = { fg = "${purple}", style = "bold" },
-        NeoTreeFileNameOpened = { fg = "${purple}", style = "italic" },
+        NeoTreeRootName = { fg = "${purple}", bold = true },
+        NeoTreeFileNameOpened = { fg = "${purple}", italic = true },
 
         -- Nvim UFO
         UfoFoldedEllipsis = { fg = "${ellipsis}" },
@@ -208,6 +184,35 @@ return {
 
         -- Virt Column
         VirtColumn = { fg = "${indentline}" },
+      },
+
+      caching = false,
+      cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
+      plugins = {
+        barbar = false,
+        lsp_saga = false,
+        marks = false,
+        polygot = false,
+        startify = false,
+        telescope = false,
+        trouble = false,
+        vim_ultest = false,
+        which_key = false,
+      },
+      styles = {
+        tags = "italic",
+        methods = "bold",
+        functions = "bold",
+        keywords = "italic",
+        comments = "italic",
+        parameters = "italic",
+        conditionals = "italic",
+        virtual_text = "italic",
+      },
+      options = {
+        cursorline = true,
+        -- transparency = true,
+        -- highlight_inactive_windows = true,
       },
     },
     config = function(_, opts)
