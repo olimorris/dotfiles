@@ -84,12 +84,6 @@ return {
           keymaps = {
             { "-", function() require("oil").toggle_float(".") end, description = "Open File Explorer" },
             { "_", function() require("oil").toggle_float() end, description = "Open File Explorer to current file" },
-            -- {
-            --   "<C-s>",
-            --   "<cmd>require('oil').save()<CR>",
-            --   description = "Save work tree changes",
-            --   opts = { filetype = "Oil" },
-            -- },
           },
         },
       })
