@@ -9,15 +9,15 @@ return {
         {
           ft = "lazyterm",
           title = "Terminal",
-          size = { height = 0.2 },
+          size = { height = om.on_big_screen and 20 or 0.2 },
           filter = function(buf) return not vim.b[buf].lazyterm_cmd end,
         },
         { ft = "qf", title = "QuickFix" },
-      },
-      left = {
         {
-          ft = "oil",
-          title = "File System",
+          ft = "help",
+          size = { height = 20 },
+          -- only show help buffers
+          filter = function(buf) return vim.bo[buf].buftype == "help" end,
         },
       },
       right = {
@@ -168,14 +168,25 @@ return {
       dashboard.section.footer.opts.hl = "AlphaFooter"
 
       -- Layout
-      dashboard.config.layout = {
-        { type = "padding", val = 1 },
-        dashboard.section.terminal,
-        { type = "padding", val = 2 },
-        dashboard.section.buttons,
-        { type = "padding", val = 1 },
-        dashboard.section.footer,
-      }
+      if om.on_big_screen then
+        dashboard.config.layout = {
+          { type = "padding", val = 5 },
+          dashboard.section.terminal,
+          { type = "padding", val = 5 },
+          dashboard.section.buttons,
+          { type = "padding", val = 2 },
+          dashboard.section.footer,
+        }
+      else
+        dashboard.config.layout = {
+          { type = "padding", val = 1 },
+          dashboard.section.terminal,
+          { type = "padding", val = 2 },
+          dashboard.section.buttons,
+          { type = "padding", val = 1 },
+          dashboard.section.footer,
+        }
+      end
 
       dashboard.config.opts.noautocmd = false
 

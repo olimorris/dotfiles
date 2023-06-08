@@ -35,6 +35,10 @@ function om.float_term(cmd, opts)
   return terminals[termkey]
 end
 
+function om.on_big_screen()
+  return vim.o.columns > 150 and vim.o.lines > 40
+end
+
 ---Source a lua or vimscript file
 ---@param path string path relative to the nvim directory
 ---@param prefix boolean?
