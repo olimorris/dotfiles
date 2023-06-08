@@ -135,6 +135,7 @@ return {
           layout_strategy = "horizontal",
           layout_config = {
             horizontal = {
+              height = om.on_big_screen() and 0.6 or 0.95,
               preview_width = 0.55,
               prompt_position = "top",
               width = 0.9,
@@ -145,7 +146,7 @@ return {
               preview_cutoff = 10,
             },
             vertical = {
-              height = 0.9,
+              height = om.on_big_screen() and 0.4 or 0.9,
               preview_height = 0.3,
               width = 0.9,
               preview_cutoff = 10,
