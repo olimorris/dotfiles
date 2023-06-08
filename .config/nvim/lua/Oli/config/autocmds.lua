@@ -92,13 +92,6 @@ return {
     name = "FiletypeOptions",
     {
       "FileType",
-      function() vim.wo.colorcolumn = 0 end,
-      opts = {
-        pattern = { "oil" },
-      },
-    },
-    {
-      "FileType",
       ":setlocal shiftwidth=2 tabstop=2",
       opts = {
         pattern = { "css", "eruby", "html", "lua", "javascript", "json", "ruby", "vue" },
