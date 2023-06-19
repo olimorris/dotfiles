@@ -23,6 +23,7 @@ return {
       right = {
         { ft = "aerial", title = "Symbols", size = { width = 0.3 } },
         { ft = "neotest-summary", title = "Tests", size = { width = 0.3 } },
+        -- { ft = "oil", title = "File Explorer", size = { width = 0.3 } },
       },
     },
   },

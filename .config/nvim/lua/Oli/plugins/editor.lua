@@ -1,5 +1,24 @@
 return {
   {
+    "cameron-wags/rainbow_csv.nvim",
+    config = true,
+    ft = {
+      "csv",
+      "tsv",
+      "csv_semicolon",
+      "csv_whitespace",
+      "csv_pipe",
+      "rfc_csv",
+      "rfc_semicolon",
+    },
+    cmd = {
+      "RainbowDelim",
+      "RainbowDelimSimple",
+      "RainbowDelimQuoted",
+      "RainbowMultiDelim",
+    },
+  },
+  {
     --TODO: Add commands and keymaps
     "mfussenegger/nvim-jdtls", -- Extensions for nicer Java development in Neovim
     ft = "java",
@@ -222,9 +241,7 @@ return {
       ignore_lsp = { "efm", "null-ls" },
       patterns = { "Gemfile" },
     },
-    config = function(_, opts)
-      require("project_nvim").setup(opts)
-    end
+    config = function(_, opts) require("project_nvim").setup(opts) end,
   },
   {
     "danymat/neogen", -- Annotation generator

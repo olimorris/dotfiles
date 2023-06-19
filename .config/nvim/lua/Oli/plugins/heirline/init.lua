@@ -52,6 +52,7 @@ local force_inactive_filetypes = {
   "^DressingInput$",
   "^frecency$",
   "^lazy$",
+  "^lazyterm$",
   "^netrw$",
   "^oil$",
   "^TelescopePrompt$",

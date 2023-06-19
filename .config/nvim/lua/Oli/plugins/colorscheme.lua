@@ -54,7 +54,9 @@ return {
       highlights = {
         EdgyNormal = { bg = "${bg}" },
         EdgyTitle = { fg = "${purple}", bold = true },
+
         NormalFloat = { bg = "${bg}" }, -- Set the terminal background to be the same as the editor
+        FloatBorder = { fg = "${gray}", bg = "${bg}" },
 
         LspLens = { fg = "${light_gray}", italic = true },
         CursorLineNr = { bg = "${bg}", fg = "${fg}" },

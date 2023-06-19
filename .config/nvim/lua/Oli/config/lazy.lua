@@ -31,6 +31,7 @@ require("lazy").setup({
     colorscheme = { "onedark", "onelight" },
   },
   ui = {
+    border = "single",
     icons = {
       plugin = "",
     },
