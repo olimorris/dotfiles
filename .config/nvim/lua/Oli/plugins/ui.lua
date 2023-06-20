@@ -5,6 +5,7 @@ return {
     event = "VeryLazy",
     init = function() vim.opt.splitkeep = "screen" end,
     opts = {
+      animate = { enabled = false },
       bottom = {
         {
           ft = "lazyterm",
