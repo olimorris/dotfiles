@@ -92,6 +92,9 @@ return {
       buf_options = {
         buflisted = false,
       },
+      float = {
+        border = "none"
+      },
       skip_confirm_for_simple_edits = true,
     },
     init = function()
