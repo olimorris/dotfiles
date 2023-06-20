@@ -103,16 +103,4 @@ return {
       })
     end,
   },
-  {
-    "nvim-treesitter/playground", -- View Treesitter definitions
-    cmd = { "TSPlayground", "TSHighlightCapturesUnderCursor" },
-    init = function()
-      require("legendary").commands({
-        {
-          ":TSPlayground",
-          description = "Treesitter Playground",
-        },
-      })
-    end,
-  },
 }
