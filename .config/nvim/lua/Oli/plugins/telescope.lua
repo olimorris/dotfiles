@@ -6,36 +6,6 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       {
-        "ThePrimeagen/harpoon", -- Navigate between marked files
-        init = function()
-          require("legendary").keymaps({
-            {
-              itemgroup = "Harpoon",
-              icon = "異",
-              description = "Harpoon functionality...",
-              keymaps = {
-                { "<C-e>", "<cmd>Telescope harpoon marks<CR>", description = "Show marks" },
-                { "<Leader>a", "<cmd>lua require('harpoon.mark').add_file()<CR>", description = "Add file" },
-              },
-            },
-          })
-          for i = 1, 5 do
-            require("legendary").keymaps({
-              {
-                itemgroup = "Harpoon",
-                keymaps = {
-                  {
-                    "<Leader>" .. i,
-                    "<cmd>lua require('harpoon.ui').nav_file(" .. i .. ")<CR>",
-                    description = "Go to file " .. i,
-                  },
-                },
-              },
-            })
-          end
-        end,
-      },
-      {
         "debugloop/telescope-undo.nvim", -- Visualise undotree
         init = function()
           require("legendary").keymaps({
@@ -233,7 +203,6 @@ return {
       telescope.load_extension("fzf")
       telescope.load_extension("undo")
       telescope.load_extension("aerial")
-      telescope.load_extension("harpoon")
       telescope.load_extension("frecency")
       telescope.load_extension("persisted")
       telescope.load_extension("refactoring")
