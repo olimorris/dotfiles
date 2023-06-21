@@ -93,7 +93,7 @@ return {
         buflisted = false,
       },
       float = {
-        border = "none"
+        border = "none",
       },
       skip_confirm_for_simple_edits = true,
     },
@@ -132,72 +132,24 @@ return {
     },
   },
   {
-    "phaazon/hop.nvim", -- Speedily navigate anywhere in a buffer
-    keys = { "f", "F", "t", "T", "s", "S" },
-    init = function()
-      local directions = require("hop.hint").HintDirection
-      require("legendary").keymaps({
-        {
-          "f",
-          function()
-            return require("hop").hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
-          end,
-          hide = true,
-          description = "Hop",
-          mode = { "n", "o" },
-        },
-        {
-          "F",
-          function()
-            return require("hop").hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
-          end,
-          hide = true,
-          description = "Hop",
-          mode = { "n", "o" },
-        },
-        {
-          "t",
-          function()
-            return require("hop").hint_char1({
-              direction = directions.AFTER_CURSOR,
-              current_line_only = true,
-              hint_offset = -1,
-            })
-          end,
-          hide = true,
-          description = "Hop",
-          mode = { "n", "o" },
-        },
-        {
-          "T",
-          function()
-            return require("hop").hint_char1({
-              direction = directions.BEFORE_CURSOR,
-              current_line_only = true,
-              hint_offset = 1,
-            })
-          end,
-          hide = true,
-          description = "Hop",
-          mode = { "n", "o" },
-        },
-        {
-          "s",
-          function() return require("hop").hint_char1({ direction = directions.AFTER_CURSOR }) end,
-          hide = true,
-          description = "Hop",
-          mode = { "n", "o" },
-        },
-        {
-          "S",
-          function() return require("hop").hint_char1({ direction = directions.BEFORE_CURSOR }) end,
-          hide = true,
-          description = "Hop",
-          mode = { "n", "o" },
-        },
-      })
-    end,
-    config = true,
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      {
+        "s",
+        mode = { "n", "x", "o" },
+        function()
+          -- default options: exact mode, multi window, all directions, with a backdrop
+          require("flash").jump()
+        end,
+      },
+      {
+        "S",
+        mode = { "o", "x" },
+        function() require("flash").treesitter() end,
+      },
+    },
   },
   {
     "cshuaimin/ssr.nvim", -- Advanced search and replace using Treesitter

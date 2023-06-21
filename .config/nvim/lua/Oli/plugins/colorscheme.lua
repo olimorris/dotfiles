@@ -190,6 +190,7 @@ return {
 
       caching = false,
       cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
+
       plugins = {
         barbar = false,
         lsp_saga = false,
