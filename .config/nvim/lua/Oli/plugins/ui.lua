@@ -20,10 +20,11 @@ return {
           -- only show help buffers
           filter = function(buf) return vim.bo[buf].buftype == "help" end,
         },
+        { title = "Neotest Output", ft = "neotest-output-panel", size = { height = 15 } },
       },
       right = {
         { ft = "aerial", title = "Symbols", size = { width = 0.3 } },
-        { ft = "neotest-summary", title = "Tests", size = { width = 0.3 } },
+        { ft = "neotest-summary", title = "Neotest Summary", size = { width = 0.3 } },
         { ft = "oil", title = "File Explorer", size = { width = 0.3 } },
       },
     },
