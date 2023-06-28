@@ -29,6 +29,7 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-nvim-lua",
+      "lukas-reineke/cmp-under-comparator",
       {
         "zbirenbaum/copilot-cmp",
         config = function() require("copilot_cmp").setup() end,
@@ -64,8 +65,8 @@ return {
       },
       {
         "VidocqH/lsp-lens.nvim", -- Display references and definitions
-        config = true
-      }
+        config = true,
+      },
     },
     init = function()
       require("legendary").commands({
@@ -483,7 +484,6 @@ return {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
           { name = "path" },
-        }, {
           {
             name = "cmdline",
             option = {
@@ -491,6 +491,16 @@ return {
             },
           },
         }),
+        sorting = {
+          comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.recently_used,
+            require("cmp-under-comparator").under,
+            cmp.config.compare.kind,
+          },
+        },
       })
 
       cmp.setup.cmdline("/", {
