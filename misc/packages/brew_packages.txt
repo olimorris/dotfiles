@@ -1,5 +1,6 @@
 act
 asdf
+bats-core
 brew-cask-completion
 cmake
 code-minimap

@@ -40,6 +40,7 @@ jaro_winkler
 json
 kramdown
 kramdown-parser-gfm
+language_server-protocol
 logger
 matrix
 minitest
@@ -64,6 +65,7 @@ parser
 pathname
 power_assert
 pp
+prettier_print
 prettyprint
 prime
 pstore
@@ -100,8 +102,10 @@ set
 shellwords
 singleton
 solargraph
+sorbet-runtime
 stringio
 strscan
+syntax_tree
 syslog
 tempfile
 terminal-table
