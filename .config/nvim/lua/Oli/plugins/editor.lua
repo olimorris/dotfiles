@@ -38,47 +38,30 @@ return {
           },
         },
       })
-      require("legendary").keymaps({
-        itemgroup = "Java",
-        keymaps = {
-          {
-            "<LocalLeader>o",
-            function() require("jdtls").organize_imports() end,
-            description = "Organize imports",
-            { noremap = true, silent = true },
-          },
-          -- TODO: add keymaps for extracting variables and constants:
-          --  https://github.com/mfussenegger/nvim-jdtls#usage
-        },
-      })
     end,
+    keys = {
+      {
+        "<LocalLeader>o",
+        function() require("jdtls").organize_imports() end,
+        desc = "Java: Organize imports",
+      },
+    },
   },
   {
     "kevinhwang91/nvim-ufo", -- Better folds in Neovim
     dependencies = "kevinhwang91/promise-async",
-    init = function()
-      require("legendary").keymaps({
-        {
-          itemgroup = "Folds",
-          icon = "",
-          description = "Folding functionality...",
-          keymaps = {
-            {
-              "zR",
-              function() require("ufo").openAllFolds() end,
-              description = "Open fold",
-              { noremap = true, silent = true },
-            },
-            {
-              "zM",
-              function() require("ufo").closeAllFolds() end,
-              description = "Close fold",
-              { noremap = true, silent = true },
-            },
-          },
-        },
-      })
-    end,
+    keys = {
+      {
+        "zR",
+        function() require("ufo").openAllFolds() end,
+        desc = "Open fold",
+      },
+      {
+        "zM",
+        function() require("ufo").closeAllFolds() end,
+        desc = "Close fold",
+      },
+    },
   },
   {
     "stevearc/oil.nvim", -- File manager
@@ -97,28 +80,22 @@ return {
       },
       skip_confirm_for_simple_edits = true,
     },
-    init = function()
-      require("legendary").keymaps({
-        {
-          itemgroup = "Oil",
-          icon = "",
-          description = "Filetree functionality...",
-          keymaps = {
-            { "-", function() require("oil").toggle_float(".") end, description = "Open File Explorer" },
-            { "_", function() require("oil").toggle_float() end, description = "Open File Explorer to current file" },
-          },
-        },
-      })
-    end,
+    keys = {
+      { "-", function() require("oil").toggle_float(".") end, desc = "Open File Explorer" },
+      { "_", function() require("oil").toggle_float() end, desc = "Open File Explorer to current file" },
+    },
   },
   {
     "stevearc/aerial.nvim", -- Toggled list of classes, methods etc in current file
     cmd = "AerialToggle",
-    init = function()
-      require("legendary").keymaps({
-        { "<C-t>", "<cmd>AerialToggle<CR>", description = "Aerial" },
-      })
-    end,
+    keys = {
+      {
+        "<C-t>",
+        function() require("aerial").toggle() end,
+        mode = { "n", "x", "o" },
+        desc = "Toggle Aerial",
+      },
+    },
     opts = {
       backends = {
         ["_"] = { "lsp", "treesitter", "markdown" },
@@ -133,39 +110,43 @@ return {
   },
   {
     "folke/flash.nvim",
-    event = "VeryLazy",
-    opts = {},
     keys = {
       {
-        "s",
+        "f",
+        function() require("flash").jump() end,
         mode = { "n", "x", "o" },
-        function()
-          -- default options: exact mode, multi window, all directions, with a backdrop
-          require("flash").jump()
-        end,
+        desc = "Flash - Jump forwards",
+      },
+      {
+        "F",
+        function() require("flash").treesitter() end,
+        mode = { "o", "x" },
+        desc = "Flash - Jump backwards",
       },
       {
         "S",
-        mode = { "o", "x" },
+        mode = { "n", "o", "x" },
         function() require("flash").treesitter() end,
+        desc = "Flash Treesitter",
+      },
+      {
+        "r",
+        function() require("flash").remote() end,
+        mode = "o",
+        desc = "Remote Flash",
       },
     },
   },
   {
     "cshuaimin/ssr.nvim", -- Advanced search and replace using Treesitter
     lazy = true,
-    init = function()
-      require("legendary").keymaps({
-        itemgroup = "Find and Replace",
-        keymaps = {
-          {
-            "<LocalLeader>sr",
-            function() require("ssr").open() end,
-            description = "Structured search and replace",
-          },
-        },
-      })
-    end,
+    keys = {
+      {
+        "<LocalLeader>sr",
+        function() require("ssr").open() end,
+        desc = "Structured search and replace",
+      },
+    },
     opts = {
       keymaps = {
         replace_all = "<C-CR>",

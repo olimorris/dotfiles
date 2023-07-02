@@ -2,8 +2,8 @@ return {
   "nvim-lua/plenary.nvim", -- Required dependency for many plugins. Super useful Lua functions
   {
     "mrjones2014/legendary.nvim", -- A command palette for keymaps, commands and autocmds
+    priority = 10000,
     lazy = false, -- Never lazy load this
-    priority = 900,
     dependencies = "kkharji/sqlite.lua",
     init = function()
       require("legendary").keymaps({
@@ -21,6 +21,7 @@ return {
         select_prompt = "Legendary",
         include_builtin = false,
         include_legendary_cmds = false,
+        lazy_nvim = { auto_register = true },
         which_key = { auto_register = false },
         autocmds = require(config_namespace .. ".config.autocmds"),
       })
