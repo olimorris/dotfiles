@@ -152,6 +152,10 @@ return {
         -- Nvim UFO
         UfoFoldedEllipsis = { fg = "${ellipsis}" },
 
+        -- Satellite
+        ScrollView = { bg = "${gray}" },
+        SatelliteCursor = { fg = "${purple}" },
+
         -- Telescope
         TelescopeBorder = {
           fg = "${telescope_results}",

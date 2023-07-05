@@ -1,6 +1,10 @@
 return {
   "nvim-tree/nvim-web-devicons",
   {
+    "lewis6991/satellite.nvim",
+    config = true,
+  },
+  {
     "folke/edgy.nvim",
     event = "VeryLazy",
     init = function() vim.opt.splitkeep = "screen" end,
