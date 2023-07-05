@@ -137,22 +137,22 @@ return {
       },
     },
   },
-  {
-    "cshuaimin/ssr.nvim", -- Advanced search and replace using Treesitter
-    lazy = true,
-    keys = {
-      {
-        "<LocalLeader>sr",
-        function() require("ssr").open() end,
-        desc = "Structured search and replace",
-      },
-    },
-    opts = {
-      keymaps = {
-        replace_all = "<C-CR>",
-      },
-    },
-  },
+  -- {
+  --   "cshuaimin/ssr.nvim", -- Advanced search and replace using Treesitter
+  --   lazy = true,
+  --   keys = {
+  --     {
+  --       "<LocalLeader>sr",
+  --       function() require("ssr").open() end,
+  --       desc = "Structured search and replace",
+  --     },
+  --   },
+  --   opts = {
+  --     keymaps = {
+  --       replace_all = "<C-CR>",
+  --     },
+  --   },
+  -- },
   {
     "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
     event = "BufEnter",
@@ -178,20 +178,5 @@ return {
       patterns = { "Gemfile" },
     },
     config = function(_, opts) require("project_nvim").setup(opts) end,
-  },
-  {
-    "danymat/neogen", -- Annotation generator
-    cmd = "Neogen",
-    init = function()
-      require("legendary").commands({
-        {
-          ":Neogen",
-          description = "Generate annotation",
-        },
-      })
-    end,
-    opts = {
-      snippet_engine = "luasnip",
-    },
   },
 }

@@ -104,34 +104,34 @@ return {
     "kevinhwang91/nvim-bqf", -- Better quickfix window,
     ft = "qf",
   },
-  {
-    "nathom/tmux.nvim", -- Navigate Tmux panes inside of neovim
-    enabled = function() return os.getenv("TMUX") end,
-    init = function()
-      require("legendary").keymaps({
-        {
-          "<C-k>",
-          "<cmd>lua require('tmux').move_up()<CR>",
-          description = "Tmux: Move up",
-        },
-        {
-          "<C-j>",
-          "<cmd>lua require('tmux').move_down()<CR>",
-          description = "Tmux: Move down",
-        },
-        {
-          "<C-h>",
-          "<cmd>lua require('tmux').move_left()<CR>",
-          description = "Tmux: Move left",
-        },
-        {
-          "<C-l>",
-          "<cmd>lua require('tmux').move_right()<CR>",
-          description = "Tmux: Move right",
-        },
-      })
-    end,
-  },
+  -- {
+  --   "nathom/tmux.nvim", -- Navigate Tmux panes inside of neovim
+  --   enabled = function() return os.getenv("TMUX") end,
+  --   init = function()
+  --     require("legendary").keymaps({
+  --       {
+  --         "<C-k>",
+  --         "<cmd>lua require('tmux').move_up()<CR>",
+  --         description = "Tmux: Move up",
+  --       },
+  --       {
+  --         "<C-j>",
+  --         "<cmd>lua require('tmux').move_down()<CR>",
+  --         description = "Tmux: Move down",
+  --       },
+  --       {
+  --         "<C-h>",
+  --         "<cmd>lua require('tmux').move_left()<CR>",
+  --         description = "Tmux: Move left",
+  --       },
+  --       {
+  --         "<C-l>",
+  --         "<cmd>lua require('tmux').move_right()<CR>",
+  --         description = "Tmux: Move right",
+  --       },
+  --     })
+  --   end,
+  -- },
   {
     "dstein64/vim-startuptime", -- Profile your Neovim startup time
     cmd = "StartupTime",
