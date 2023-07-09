@@ -154,7 +154,7 @@ return {
 
         -- Satellite
         ScrollView = { bg = "${gray}" },
-        SatelliteCursor = { fg = "${purple}" },
+        SatelliteCursor = { fg = "${red}" },
 
         -- Telescope
         TelescopeBorder = {
