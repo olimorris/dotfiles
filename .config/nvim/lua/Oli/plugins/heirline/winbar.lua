@@ -23,7 +23,7 @@ M.filepath = {
     self.short_path = vim.fn.fnamemodify(vim.fn.expand("%:h"), modifiers.dirname or nil)
     if self.filepath == "" then self.filepath = "[No Name]" end
   end,
-  hl = { fg = "breadcrumbs", italic = true },
+  hl = "NavicText",
   {
     condition = function(self) return self.filepath ~= "." end,
     flexible = 2,
@@ -60,7 +60,7 @@ M.filename = {
         end
       end,
     },
-    hl = { fg = "breadcrumbs", italic = true },
+    hl = "NavicText",
   },
   -- Modifier
   {
@@ -91,7 +91,7 @@ M.navic = {
         provider = "",
       },
     },
-    hl = { fg = "breadcrumbs", italic = true },
+    hl = "NavicText",
   },
 }
 
