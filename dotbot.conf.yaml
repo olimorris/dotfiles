@@ -8,6 +8,7 @@
 
 - link:
     # Config directory
+    ~/.config/efm-langserver: .config/efm-langserver
     ~/.config/fish: .config/fish
     ~/.config/hammerspoon: .config/hammerspoon
     ~/.config/kitty: .config/kitty

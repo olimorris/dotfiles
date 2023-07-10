@@ -11,15 +11,6 @@ return {
       },
       "williamboman/mason-lspconfig.nvim",
 
-      -- Null-ls
-      {
-        "jose-elias-alvarez/null-ls.nvim", -- General purpose LSP server for running linters, formatters, etc
-        dependencies = {
-          "jayp0521/mason-null-ls.nvim", -- Automatically install null-ls servers
-          "williamboman/mason.nvim",
-        },
-      },
-
       -- Autocompletion
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-buffer",
@@ -140,6 +131,7 @@ return {
         "bashls",
         "cssls",
         "dockerls",
+        "efm",
         "html",
         "intelephense",
         "jdtls",
@@ -152,6 +144,11 @@ return {
         "vuels",
         "yamlls",
       })
+
+      -- LSPs that we allow to format documents
+      local allowed_to_format = {
+        "efm",
+      }
 
       -- we will use nvim-jdtls to setup the lsp
       lsp.skip_server_setup({ "jdtls" })
@@ -221,10 +218,6 @@ return {
             function() vim.cmd("edit " .. vim.lsp.get_log_path()) end,
             description = "Show logs",
           },
-          {
-            "NullLsInstall",
-            description = "null-ls: Install plugins",
-          },
         })
 
         vim.g.lsp_commands = true
@@ -247,12 +240,6 @@ return {
           icon = "",
           description = "LSP related functionality",
           keymaps = {
-            {
-              "<Leader>f",
-              "<cmd>NullFormat<CR>",
-              description = "Format document",
-              mode = { "n", "v" },
-            },
             {
               "gf",
               t.lazy_required_fn("telescope.builtin", "diagnostics", {
@@ -340,8 +327,23 @@ return {
         commands(client, bufnr)
         mappings(client, bufnr)
 
+        if vim.tbl_contains(allowed_to_format, client.name) then
+          client.server_capabilities.documentFormattingProvider = true
+          client.server_capabilities.documentFormattingRangeProvider = true
+        end
+
         if client.server_capabilities.documentSymbolProvider then require("nvim-navic").attach(client, bufnr) end
       end)
+
+      lsp.format_mapping("gq", {
+        format_opts = {
+          async = false,
+          timeout_ms = 10000,
+        },
+        servers = {
+          ["efm"] = { "css", "html", "lua", "javascript", "json", "typescript", "markdown", "vue", "yaml" },
+        },
+      })
 
       lsp.setup()
 
@@ -355,70 +357,6 @@ return {
         --   prefix = "",
         --   spacing = 0,
         -- },
-      })
-
-      -- Null-ls
-      local null_ls = require("null-ls")
-      local null_opts = lsp.build_options("null-ls", {})
-
-      null_ls.setup({
-        on_attach = function(client, bufnr)
-          null_opts.on_attach(client, bufnr)
-
-          require("legendary").commands({
-            {
-              ":NullFormat",
-              function()
-                vim.lsp.buf.format({
-                  id = client.id,
-                  timeout_ms = 5000,
-                  async = true,
-                })
-              end,
-              hide = true,
-              description = "null-ls: format buffer",
-            },
-          })
-        end,
-        debounce = 150,
-        sources = {
-          -- Code completion
-          null_ls.builtins.code_actions.eslint_d,
-
-          -- Formatting
-          null_ls.builtins.formatting.black,
-          null_ls.builtins.formatting.fish_indent,
-          null_ls.builtins.formatting.fixjson,
-          null_ls.builtins.formatting.google_java_format,
-          null_ls.builtins.formatting.isort,
-          null_ls.builtins.formatting.phpcsfixer,
-          null_ls.builtins.formatting.prettier.with({
-            filetypes = {
-              "css",
-              "dockerfile",
-              "html",
-              "javascript",
-              "json",
-              "markdown",
-              "vue",
-              "yaml",
-            },
-          }),
-          null_ls.builtins.formatting.gofmt,
-          null_ls.builtins.formatting.goimports,
-          null_ls.builtins.formatting.rubocop,
-          null_ls.builtins.formatting.shfmt.with({
-            filetypes = { "sh", "zsh" },
-          }),
-          null_ls.builtins.formatting.stylua,
-          null_ls.builtins.formatting.xmllint,
-        },
-      })
-
-      require("mason-null-ls").setup({
-        ensure_installed = { "java-debug-adapter", "java-test" },
-        automatic_installation = true,
-        automatic_setup = true,
       })
 
       -- Setup better folding

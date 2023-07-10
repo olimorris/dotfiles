@@ -9,6 +9,7 @@
 !.config/asdf/**/*
 !.config/bash/**/*
 !.config/composer/composer.json
+!.config/efm-langserver/*
 !.config/fish/*
 !.config/git/**/*
 !.config/hammerspoon/**/*

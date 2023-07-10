@@ -1,0 +1,50 @@
+version: 2
+log-file: "/Users/Oli/.local/state/nvim/efm.log"
+log-level: 2
+root-markers:
+  - .git/
+  - package.json
+
+tools:
+  eslint: &eslint
+    lint-command: 'eslint_d -f unix --stdin'
+    lint-ignore-exit-code: true
+    lint-stdin: true
+
+  prettier: &prettier
+    format-command: 'prettier'
+
+  stylua: &stylua
+    format-command: 'stylua -'
+    format-stdin: true
+
+languages:
+  javascript:
+    - <<: *eslint
+    - <<: *prettier
+  typescript:
+    - <<: *eslint
+    - <<: *prettier
+  javascriptreact:
+    - <<: *eslint
+    - <<: *prettier
+  typescriptreact:
+    - <<: *eslint
+    - <<: *prettier
+  yaml:
+    - <<: *prettier
+  json:
+    - <<: *prettier
+  html:
+    - <<: *prettier
+  vue:
+    - <<: *eslint
+    - <<: *prettier
+  scss:
+    - <<: *prettier
+  css:
+    - <<: *prettier
+  markdown:
+    - <<: *prettier
+  lua:
+    - <<: *stylua
