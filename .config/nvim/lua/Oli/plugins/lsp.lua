@@ -145,11 +145,6 @@ return {
         "yamlls",
       })
 
-      -- LSPs that we allow to format documents
-      local allowed_to_format = {
-        "efm",
-      }
-
       -- we will use nvim-jdtls to setup the lsp
       lsp.skip_server_setup({ "jdtls" })
 
@@ -327,10 +322,10 @@ return {
         commands(client, bufnr)
         mappings(client, bufnr)
 
-        if vim.tbl_contains(allowed_to_format, client.name) then
-          client.server_capabilities.documentFormattingProvider = true
-          client.server_capabilities.documentFormattingRangeProvider = true
-        end
+        -- if vim.tbl_contains(allowed_to_format, client.name) then
+        --   client.server_capabilities.documentFormattingProvider = true
+        --   client.server_capabilities.documentFormattingRangeProvider = true
+        -- end
 
         if client.server_capabilities.documentSymbolProvider then require("nvim-navic").attach(client, bufnr) end
       end)

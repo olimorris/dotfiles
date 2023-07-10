@@ -7,15 +7,15 @@ root-markers:
 
 tools:
   eslint: &eslint
-    lint-command: 'eslint_d -f unix --stdin'
+    lint-command: "eslint_d -f unix --stdin"
     lint-ignore-exit-code: true
     lint-stdin: true
 
   prettier: &prettier
-    format-command: 'prettier'
+    format-command: "prettier"
 
   stylua: &stylua
-    format-command: 'stylua -'
+    format-command: "stylua -"
     format-stdin: true
 
 languages:
