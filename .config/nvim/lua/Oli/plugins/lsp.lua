@@ -322,11 +322,6 @@ return {
         commands(client, bufnr)
         mappings(client, bufnr)
 
-        -- if vim.tbl_contains(allowed_to_format, client.name) then
-        --   client.server_capabilities.documentFormattingProvider = true
-        --   client.server_capabilities.documentFormattingRangeProvider = true
-        -- end
-
         if client.server_capabilities.documentSymbolProvider then require("nvim-navic").attach(client, bufnr) end
       end)
 
@@ -336,7 +331,19 @@ return {
           timeout_ms = 10000,
         },
         servers = {
-          ["efm"] = { "css", "html", "lua", "javascript", "json", "typescript", "markdown", "vue", "yaml" },
+          ["efm"] = {
+            "css",
+            "fish",
+            "html",
+            "lua",
+            "javascript",
+            "json",
+            "typescript",
+            "markdown",
+            "python",
+            "vue",
+            "yaml",
+          },
         },
       })
 

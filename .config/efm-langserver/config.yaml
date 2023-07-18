@@ -1,6 +1,6 @@
 version: 2
 log-file: "/Users/Oli/.local/state/nvim/efm.log"
-log-level: 2
+log-level: 1
 root-markers:
   - .git/
   - package.json
@@ -11,40 +11,54 @@ tools:
     lint-ignore-exit-code: true
     lint-stdin: true
 
+  fish: &fish
+    format-command: "fish_indent"
+    to-stdin: true
+
   prettier: &prettier
     format-command: "prettier"
 
-  stylua: &stylua
-    format-command: "stylua -"
+  python-black: &python-black
+    format-command: 'black --no-color -q -'
     format-stdin: true
 
+  stylua: &stylua
+    format-command: "stylua --color Never -"
+    format-stdin: true
+    root-markers:
+      - stylua.toml
+
 languages:
-  javascript:
-    - <<: *eslint
+  css:
     - <<: *prettier
-  typescript:
+  fish:
+    - <<: *fish
+  html:
+    - <<: *prettier
+  javascript:
     - <<: *eslint
     - <<: *prettier
   javascriptreact:
     - <<: *eslint
     - <<: *prettier
-  typescriptreact:
-    - <<: *eslint
-    - <<: *prettier
-  yaml:
-    - <<: *prettier
   json:
     - <<: *prettier
-  html:
+  lua:
+    - <<: *stylua
+  markdown:
+    - <<: *prettier
+  python:
+    - <<: *python-black
+  scss:
+    - <<: *prettier
+  typescript:
+    - <<: *eslint
+    - <<: *prettier
+  typescriptreact:
+    - <<: *eslint
     - <<: *prettier
   vue:
     - <<: *eslint
     - <<: *prettier
-  scss:
+  yaml:
     - <<: *prettier
-  css:
-    - <<: *prettier
-  markdown:
-    - <<: *prettier
-  lua:
-    - <<: *stylua
