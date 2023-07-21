@@ -45,7 +45,10 @@ logger
 matrix
 minitest
 money
+msgpack
+multi_json
 mutex_m
+neovim
 net-ftp
 net-http
 net-imap

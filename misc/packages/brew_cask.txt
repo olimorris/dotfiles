@@ -1,6 +1,7 @@
 1password
 appcleaner
 bartender
+betterdisplay
 cleanmymac
 cleanshot
 diffmerge
