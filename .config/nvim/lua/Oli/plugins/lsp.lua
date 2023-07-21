@@ -344,6 +344,7 @@ return {
             "vue",
             "yaml",
           },
+          ["solargraph"] = { "ruby" }
         },
       })
 

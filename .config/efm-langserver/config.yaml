@@ -19,7 +19,7 @@ tools:
     format-command: "prettier"
 
   python-black: &python-black
-    format-command: 'black --no-color -q -'
+    format-command: "black --no-color -q -"
     format-stdin: true
 
   stylua: &stylua
