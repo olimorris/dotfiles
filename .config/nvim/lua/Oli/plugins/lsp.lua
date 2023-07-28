@@ -322,6 +322,11 @@ return {
         commands(client, bufnr)
         mappings(client, bufnr)
 
+        if client.name == "efm" then
+          client.server_capabilities.documentFormattingProvider = true
+          client.server_capabilities.documentFormattingRangeProvider = true
+        end
+
         if client.server_capabilities.documentSymbolProvider then require("nvim-navic").attach(client, bufnr) end
       end)
 
