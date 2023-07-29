@@ -68,12 +68,15 @@ return {
     {
       "User",
       function(session)
-        require("persisted").save()
+        -- Prompt to save the current session
+        if vim.fn.confirm("Save the current session?", "&Yes\n&No") == 1 then
+          require("persisted").save({ session = vim.g.persisted_loaded_session })
+        end
 
-        -- Delete all of the open buffers
-        vim.api.nvim_input("<ESC>:%bd!<CR>")
+        -- Clear all of the open buffers
+        vim.api.nvim_input("silent <ESC>:%bd!<CR>")
 
-        -- Don't start saving the session yet
+        -- Disable automatic session saving
         require("persisted").stop()
       end,
       opts = { pattern = "PersistedTelescopeLoadPre" },
