@@ -341,15 +341,17 @@ return {
             "fish",
             "html",
             "lua",
+            "java",
             "javascript",
             "json",
             "typescript",
             "markdown",
+            "php",
             "python",
             "vue",
             "yaml",
           },
-          ["solargraph"] = { "ruby" }
+          ["solargraph"] = { "ruby" },
         },
       })
 

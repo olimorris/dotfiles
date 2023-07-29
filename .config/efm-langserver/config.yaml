@@ -11,9 +11,21 @@ tools:
     lint-ignore-exit-code: true
     lint-stdin: true
 
+  google-java-format: &google-java-format
+    format-command: "google-java-format -"
+    format-stdin: true
+
   fish: &fish
     format-command: "fish_indent"
     to-stdin: true
+
+  isort: &isort
+    format-command: "isort --stdout --filename ${INPUT} -"
+    format-stdin: true
+
+  php-cs-fixer: &php-cs-fixer
+    format-command: "php-cs-fixer fix --quiet"
+    format-stdin: true
 
   prettier: &prettier
     format-command: "prettier"
@@ -35,6 +47,8 @@ languages:
     - <<: *fish
   html:
     - <<: *prettier
+  java:
+    - <<: *google-java-format
   javascript:
     - <<: *eslint
     - <<: *prettier
@@ -47,7 +61,10 @@ languages:
     - <<: *stylua
   markdown:
     - <<: *prettier
+  php:
+    - <<: *php-cs-fixer
   python:
+    - <<: *isort
     - <<: *python-black
   scss:
     - <<: *prettier
