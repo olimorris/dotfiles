@@ -34,6 +34,10 @@ tools:
     format-command: "black --no-color -q -"
     format-stdin: true
 
+  shfmt: &shfmt
+    format-command: "shfmt -filename {$INPUT} -"
+    format-stdin: true
+
   stylua: &stylua
     format-command: "stylua --color Never -"
     format-stdin: true
@@ -68,6 +72,8 @@ languages:
     - <<: *python-black
   scss:
     - <<: *prettier
+  sh:
+    - <<: *shfmt
   typescript:
     - <<: *eslint
     - <<: *prettier

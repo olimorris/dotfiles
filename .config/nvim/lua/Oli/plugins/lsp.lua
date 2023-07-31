@@ -348,6 +348,7 @@ return {
             "markdown",
             "php",
             "python",
+            "sh",
             "vue",
             "yaml",
           },
