@@ -102,7 +102,6 @@ function M.config()
     },
     statuscolumn = {
       condition = function()
-        -- TODO: Update this when 0.9 is released
         return not conditions.buffer_matches({
           buftype = buftypes,
           filetype = force_inactive_filetypes,
