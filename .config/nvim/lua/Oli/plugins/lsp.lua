@@ -33,28 +33,6 @@ return {
 
       -- Misc
       {
-        "KostkaBrukowa/definition-or-references.nvim", -- Definition and references in a single command
-        config = function()
-          local function handle_references_response(result)
-            require("telescope.pickers")
-              .new({}, {
-                prompt_title = "LSP References",
-                finder = require("telescope.finders").new_table({
-                  results = vim.lsp.util.locations_to_items(result, "utf-16"),
-                  entry_maker = require("telescope.make_entry").gen_from_quickfix(),
-                }),
-                layout_strategy = "center",
-                previewer = require("telescope.config").values.qflist_previewer({}),
-              })
-              :find()
-          end
-
-          require("definition-or-references").setup({
-            on_references_result = handle_references_response,
-          })
-        end,
-      },
-      {
         "VidocqH/lsp-lens.nvim", -- Display references and definitions
         config = true,
       },
@@ -244,23 +222,17 @@ return {
               description = "Find diagnostics",
               opts = { noremap = true },
             },
-            -- { "gd", vim.lsp.buf.definition, description = "Go to definition", opts = { buffer = bufnr } },
-            {
-              "gd",
-              require("definition-or-references").definition_or_references,
-              description = "Go to definition/reference",
-              opts = { silent = true },
-            },
+            { "gd", vim.lsp.buf.definition, description = "Go to definition", opts = { buffer = bufnr } },
             { "gi", vim.lsp.buf.implementation, description = "Go to implementation", opts = { buffer = bufnr } },
             { "gt", vim.lsp.buf.type_definition, description = "Go to type definition", opts = { buffer = bufnr } },
-            -- {
-            --   "gr",
-            --   t.lazy_required_fn("telescope.builtin", "lsp_references", {
-            --     layout_strategy = "center",
-            --   }),
-            --   description = "Find references",
-            --   opts = { buffer = bufnr },
-            -- },
+            {
+              "gr",
+              t.lazy_required_fn("telescope.builtin", "lsp_references", {
+                layout_strategy = "center",
+              }),
+              description = "Find references",
+              opts = { buffer = bufnr },
+            },
             {
               "gl",
               "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
