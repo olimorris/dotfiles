@@ -395,6 +395,11 @@ M.Session = {
         end
       end,
       hl = { fg = "gray", bg = "statusline_bg" },
+      update = {
+        "User",
+        pattern = "PersistedToggled",
+        callback = vim.schedule_wrap(function() vim.cmd("redrawstatus") end),
+      },
       on_click = {
         callback = function() vim.cmd("SessionToggle") end,
         name = "toggle_session",
