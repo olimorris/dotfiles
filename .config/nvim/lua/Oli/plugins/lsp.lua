@@ -30,12 +30,6 @@ return {
       -- Snippets
       "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
-
-      -- Misc
-      {
-        "VidocqH/lsp-lens.nvim", -- Display references and definitions
-        config = true,
-      },
     },
     init = function()
       require("legendary").commands({
@@ -295,6 +289,8 @@ return {
         mappings(client, bufnr)
 
         if client.name == "efm" then
+          client.server_capabilities.hoverProvider = true
+          client.server_capabilities.codeActionProvider = true
           client.server_capabilities.documentFormattingProvider = true
           client.server_capabilities.documentFormattingRangeProvider = true
         end

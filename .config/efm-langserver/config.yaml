@@ -17,7 +17,11 @@ tools:
 
   fish: &fish
     format-command: "fish_indent"
-    to-stdin: true
+    format-stdin: true
+
+  html-prettier: &html-prettier
+    format-command: "prettier ${--tab-width:tabWidth} ${--single-quote:singleQuote} --parser html"
+    format-stdin: true
 
   isort: &isort
     format-command: "isort --stdout --filename ${INPUT} -"
@@ -28,14 +32,26 @@ tools:
     format-stdin: true
 
   prettier: &prettier
-    format-command: "prettier"
+    format-command: "prettier --stdin --stdin-filepath ${INPUT} ${--range-start:charStart} ${--range-end:charEnd} ${--tab-width:tabSize} ${--use-tabs:!insertSpaces}"
+    format-stdin: true
+    format-can-range: true
+    root-markers:
+      - .prettierrc
+      - .prettierrc.json
+      - .prettierrc.js
+      - .prettierrc.yml
+      - .prettierrc.yaml
+      - .prettierrc.json5
+      - .prettierrc.mjs
+      - .prettierrc.cjs
+      - .prettierrc.toml
 
   python-black: &python-black
     format-command: "black --no-color -q -"
     format-stdin: true
 
   shfmt: &shfmt
-    format-command: "shfmt -filename {$INPUT} -"
+    format-command: "shfmt -filename ${INPUT} -"
     format-stdin: true
 
   stylua: &stylua
@@ -50,7 +66,7 @@ languages:
   fish:
     - <<: *fish
   html:
-    - <<: *prettier
+    - <<: *html-prettier
   java:
     - <<: *google-java-format
   javascript:
