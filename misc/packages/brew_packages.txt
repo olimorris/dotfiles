@@ -42,13 +42,13 @@ node
 openjdk@11
 openjdk@17
 pandoc
-php-cs-fixer
 php@8.1
 rclone
 reattach-to-user-namespace
 ripgrep
 ruby-build
 shfmt
+shunit2
 spring-io/tap/spring-boot
 starship
 subversion

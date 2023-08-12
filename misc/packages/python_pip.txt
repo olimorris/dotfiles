@@ -1,6 +1,6 @@
 attrs==23.1.0
 black==23.7.0
-click==8.1.5
+click==8.1.6
 exceptiongroup==1.1.2
 greenlet==2.0.2
 iniconfig==2.0.0
@@ -8,15 +8,15 @@ msgpack==1.0.5
 mypy-extensions==1.0.0
 neovim-remote==2.5.1
 packaging==23.1
-pathspec==0.11.1
-platformdirs==3.9.1
+pathspec==0.11.2
+platformdirs==3.10.0
 pluggy==1.2.0
 psutil==5.9.5
 py==1.11.0
 pynvim==0.4.3
-pyparsing==3.1.0
+pyparsing==3.1.1
 pytest==7.4.0
-PyYAML==6.0
+PyYAML==6.0.1
 termcolor==2.3.0
 tomli==2.0.1
 yamllint==1.32.0
