@@ -108,35 +108,6 @@ return {
       },
     },
   },
-  {
-    "folke/flash.nvim",
-    keys = {
-      {
-        "f",
-        function() require("flash").jump() end,
-        mode = { "n", "x", "o" },
-        desc = "Flash - Jump forwards",
-      },
-      {
-        "F",
-        function() require("flash").treesitter() end,
-        mode = { "o", "x" },
-        desc = "Flash - Jump backwards",
-      },
-      {
-        "S",
-        mode = { "n", "o", "x" },
-        function() require("flash").treesitter() end,
-        desc = "Flash Treesitter",
-      },
-      {
-        "r",
-        function() require("flash").remote() end,
-        mode = "o",
-        desc = "Remote Flash",
-      },
-    },
-  },
   -- {
   --   "cshuaimin/ssr.nvim", -- Advanced search and replace using Treesitter
   --   lazy = true,
