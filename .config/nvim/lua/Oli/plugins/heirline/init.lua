@@ -1,6 +1,6 @@
 local M = {
   "rebelot/heirline.nvim",
-  priority = 500,
+  lazy = true,
   dependencies = {
     {
       "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
@@ -88,7 +88,7 @@ function M.config()
       statusline.GitBranch,
       -- statusline.FileNameBlock,
       statusline.LspAttached,
-      statusline.LspDiagnostics,
+      -- statusline.LspDiagnostics,
       align,
       statusline.Overseer,
       statusline.Dap,
