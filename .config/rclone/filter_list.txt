@@ -3,6 +3,7 @@
 - node_modules/
 - vendor/
 - tmp/
+- ~/Code/ML/Data/**
 - .config/fish/.tofish/**
 - .config/fish/completions/**
 - .config/fish/functions/**
