@@ -1,3 +1,10 @@
+local icons = {
+  error = "",
+  warn = "",
+  info = "",
+  hint = "",
+}
+
 return {
   {
     "VonHeikemen/lsp-zero.nvim",
@@ -30,6 +37,14 @@ return {
       -- Snippets
       "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
+
+      -- Misc
+      {
+        "ivanjermakov/troublesum.nvim",
+        opts = {
+          severity_format = { icons.error, icons.warn, icons.info, icons.hint },
+        },
+      },
     },
     init = function()
       require("legendary").commands({
@@ -92,12 +107,7 @@ return {
         },
       })
 
-      lsp.set_sign_icons({
-        error = " ",
-        warn = " ",
-        hint = " ",
-        info = " ",
-      })
+      lsp.set_sign_icons(icons)
 
       lsp.ensure_installed({
         "bashls",
