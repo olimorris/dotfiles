@@ -219,4 +219,4 @@ local VimLogo = {
   hl = "BufferlineVim",
 }
 
-return { BufferLineOffset, VimLogo, BufferLine, require(config_namespace .. ".plugins.heirline.tabline") }
+return { BufferLineOffset, VimLogo, BufferLine, require("plugins.heirline.tabline") }

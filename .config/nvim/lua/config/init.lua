@@ -1,5 +1,5 @@
 -- Load options before Lazy inits
-require(config_namespace .. ".config.options")
+require("config.options")
 
 -- Begin Lazy install and plugin setup
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -16,7 +16,7 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup({
-  spec = { import = config_namespace .. ".plugins" },
+  spec = { import = "plugins" },
   dev = {
     path = "~/Code/Neovim",
     -- Only load my local plugins when we're on my machine
@@ -60,13 +60,13 @@ require("lazy").setup({
 })
 
 -- Load functions next as our plugins and autocmds require them
-require(config_namespace .. ".config.functions")
+require("config.functions")
 
 -- Autocmds and keymaps can be loaded, lazily, after plugins
 vim.api.nvim_create_autocmd("User", {
   pattern = "VeryLazy",
   callback = function()
-    require(config_namespace .. ".config.commands")
-    require(config_namespace .. ".config.keymaps")
+    require("config.commands")
+    require("config.keymaps")
   end,
 })

@@ -64,10 +64,10 @@ function M.config()
   local heirline = require("heirline")
   local conditions = require("heirline.conditions")
 
-  local winbar = require(config_namespace .. ".plugins.heirline.winbar")
-  local bufferline = require(config_namespace .. ".plugins.heirline.bufferline")
-  local statusline = require(config_namespace .. ".plugins.heirline.statusline")
-  local statuscolumn = require(config_namespace .. ".plugins.heirline.statuscolumn")
+  local winbar = require("plugins.heirline.winbar")
+  local bufferline = require("plugins.heirline.bufferline")
+  local statusline = require("plugins.heirline.statusline")
+  local statuscolumn = require("plugins.heirline.statuscolumn")
 
   local align = { provider = "%=" }
   local spacer = { provider = " " }
