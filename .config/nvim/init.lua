@@ -3,4 +3,4 @@
 _G.config_namespace = "Oli"
 
 require(config_namespace .. ".util")
-require(config_namespace .. ".config.lazy")
+require(config_namespace .. ".config")
