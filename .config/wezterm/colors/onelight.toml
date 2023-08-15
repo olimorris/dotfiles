@@ -1,0 +1,33 @@
+[colors]
+ansi = [
+  '#6a6a6a',
+  '#e05661',
+  '#1da912',
+  '#eea825',
+  '#118dc3',
+  '#9a77cf',
+  '#56b6c2',
+  '#fafafa',
+]
+brights = [
+  '#bebebe',
+  '#e88189',
+  '#25d717',
+  '#f2bb54',
+  '#1caceb',
+  '#b69ddc',
+  '#7bc6d0',
+  '#ffffff',
+]
+
+background = '#fafafa'
+foreground = '#6a6a6a'
+selection_bg = '#9a77cf'
+selection_fg = '#fafafa'
+
+[colors.indexed]
+
+[metadata]
+name = 'onedarkpro_onelight'
+origin_url = 'https://github.com/olimorris/onedarkpro.nvim'
+
