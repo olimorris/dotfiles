@@ -24,6 +24,8 @@ background = '#282c34'
 foreground = '#abb2bf'
 selection_bg = '#c678dd'
 selection_fg = '#abb2bf'
+cursor_bg = '#cccccc'
+cursor_fg = '#282c34'
 
 [colors.indexed]
 
