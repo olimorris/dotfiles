@@ -18,7 +18,7 @@ local apps = {
   o = "Notion", -- Life OS
   p = "1Password",
   -- r = RESERVED
-  t = "kitty", -- Terminal
+  t = "WezTerm", -- Terminal
   w = "word",
   z = "Todoist",
 }
