@@ -271,7 +271,7 @@ M.LspAttached = {
     lsp_attached = false,
     show_lsps = {
       copilot = false,
-      ["null-ls"] = false,
+      efm = false,
     },
   },
   init = function(self)

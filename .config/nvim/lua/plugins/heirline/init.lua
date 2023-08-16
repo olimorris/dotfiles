@@ -121,7 +121,7 @@ function M.config()
         condition = function()
           return conditions.buffer_matches({
             buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
-            filetype = { "alpha", "oil", "toggleterm" },
+            filetype = { "alpha", "oil", "lspinfo", "toggleterm" },
           })
         end,
         init = function() vim.opt_local.winbar = nil end,
