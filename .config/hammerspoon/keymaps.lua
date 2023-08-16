@@ -19,6 +19,7 @@ local apps = {
   p = "1Password",
   -- r = RESERVED
   t = "WezTerm", -- Terminal
+  v = "VLC", -- Video
   w = "word",
   z = "Todoist",
 }

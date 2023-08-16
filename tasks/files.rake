@@ -20,6 +20,8 @@ namespace :backup do
     dirs = {
       'Code' => 'Code',
       '.dotfiles' => '.dotfiles',
+    }
+    secure_dirs = {
       'OliDocs' => 'OliDocs'
     }
 
@@ -27,6 +29,9 @@ namespace :backup do
 
     dirs.each do |local, remote|
       run %( /opt/homebrew/bin/rclone sync #{flag} ~/#{local} koofr:#{remote} --filter-from ~/.config/rclone/filter_list.txt )
+    end
+    secure_dirs.each do |local, remote|
+      run %( /opt/homebrew/bin/rclone sync #{flag} ~/#{local} encrypted:#{remote} --filter-from ~/.config/rclone/filter_list.txt )
     end
   end
 end
