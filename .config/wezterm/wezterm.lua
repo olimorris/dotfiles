@@ -1,38 +1,42 @@
 local wezterm = require("wezterm")
 local config = {}
 
-if wezterm.config_builder then config = wezterm.config_builder() end
-
-config.hide_tab_bar_if_only_one_tab = true
-
 config.color_scheme = "onedarkpro_onedark"
-
-config.line_height = 1.6
-
-config.font_size = 21
+config.cursor_blink_rate = 0
+config.enable_tab_bar = false -- Using tmux instead...yes I know!!
 config.font = wezterm.font("Operator Mono", { weight = "Book" })
 config.font_rules = {
-  -- Bold
   {
     intensity = "Bold",
     italic = false,
-    font = wezterm.font("Operator Mono", { stretch = "Expanded", weight = "Bold" }),
-  },
-  -- Bold-and-italic
-  {
-    intensity = "Bold",
-    italic = true,
-    font = wezterm.font("Operator Mono", { stretch = "Expanded", italic = true, weight = "Bold" }),
+    font = wezterm.font("Operator Mono", { weight = "Medium" }),
   },
 }
-
+config.font_size = 21
+config.front_end = "WebGpu"
+config.hide_tab_bar_if_only_one_tab = true
+config.keys = {
+  { key = "\r", mods = "CTRL", action = wezterm.action({ SendString = "\x1b[13;5u" }) },
+  { key = "\r", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b[13;2u" }) },
+  { key = "LeftArrow", mods = "ALT", action = wezterm.action({ SendString = "\x1b\x62" }) },
+  { key = "RightArrow", mods = "ALT", action = wezterm.action({ SendString = "\x1b\x66" }) },
+}
+config.line_height = 1.6
+config.mouse_bindings = {
+  -- Open a link
+  {
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = "CTRL",
+    action = "OpenLinkAtMouseCursor",
+  },
+}
+config.window_close_confirmation = "NeverPrompt"
+config.window_decorations = "RESIZE"
 config.window_padding = {
   left = 5,
   right = 5,
   top = 0,
   bottom = 0,
 }
-config.window_decorations = "RESIZE"
-config.window_close_confirmation = 'NeverPrompt'
 
 return config
