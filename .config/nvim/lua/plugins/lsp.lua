@@ -42,6 +42,7 @@ return {
       {
         "ivanjermakov/troublesum.nvim",
         opts = {
+          enabled = function() return vim.bo.filetype ~= "lazy" end,
           severity_format = { icons.error, icons.warn, icons.info, icons.hint },
         },
       },
@@ -322,11 +323,11 @@ return {
             "java",
             "javascript",
             "json",
-            "typescript",
             "markdown",
             "php",
             "python",
             "sh",
+            "typescript",
             "vue",
             "yaml",
           },
