@@ -35,8 +35,10 @@ spotify
 steam
 superkey
 tableplus
+telegram
 textexpander
 typora
 visual-studio-code
 vlc
+wezterm
 zoom

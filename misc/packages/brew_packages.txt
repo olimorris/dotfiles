@@ -25,6 +25,7 @@ guile
 hledger
 httpie
 jpeg
+jython
 lazygit
 ledger
 less
@@ -39,6 +40,7 @@ neofetch
 neovim
 ninja
 node
+opencv
 openjdk@11
 openjdk@17
 pandoc
