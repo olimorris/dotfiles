@@ -79,12 +79,6 @@ return {
         mode = { "i" },
       },
       {
-        "<C-n>",
-        function() require("copilot.suggestion").next() end,
-        desc = "Copilot: Next suggestion",
-        mode = { "i" },
-      },
-      {
         "<C-\\>",
         function() require("copilot.panel").open() end,
         desc = "Copilot: Show Copilot panel",
