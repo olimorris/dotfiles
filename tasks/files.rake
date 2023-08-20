@@ -18,20 +18,15 @@ namespace :backup do
     section 'Using RCLONE to backup files'
 
     dirs = {
-      'Code' => 'Code',
-      '.dotfiles' => '.dotfiles',
-    }
-    secure_dirs = {
-      'OliDocs' => 'OliDocs'
+      '.dotfiles' => 'koofr:.dotfiles',
+      'Code' => 'encrypted:Code',
+      'OliDocs' => 'encrypted:OliDocs'
     }
 
     flag = '-P' if args[:progress]
 
     dirs.each do |local, remote|
-      run %( /opt/homebrew/bin/rclone sync #{flag} ~/#{local} koofr:#{remote} --filter-from ~/.config/rclone/filter_list.txt )
-    end
-    secure_dirs.each do |local, remote|
-      run %( /opt/homebrew/bin/rclone sync #{flag} ~/#{local} encrypted:#{remote} --filter-from ~/.config/rclone/filter_list.txt )
+      run %( /opt/homebrew/bin/rclone sync #{flag} ~/#{local} #{remote} --filter-from ~/.config/rclone/filter_list.txt )
     end
   end
 end

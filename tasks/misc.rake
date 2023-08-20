@@ -58,8 +58,8 @@ namespace :install do
     unless testing?
       run %( asdf plugin add python )
       run %( asdf install python 2.7.18 )
-      run %( asdf install python 3.10.0 )
-      run %( asdf global python 3.10.0 2.7.18 )
+      run %( asdf install python 3.11.0 )
+      run %( asdf global python 3.11.0 2.7.18 )
       run %( ~/.asdf/shims/python -m pip install --upgrade pip )
       run %( ~/.asdf/shims/python -m pip install pynvim )
       run %( ~/.asdf/shims/python2 -m pip install --upgrade pip )
@@ -81,7 +81,8 @@ namespace :install do
 
       run %( asdf plugin add nodejs )
       run %( asdf install nodejs latest )
-      run %( asdf global nodejs latest )
+      run %( asdf install nodejs 16.17.0 )
+      run %( asdf global nodejs 16.17.0 )
     end
   end
 
