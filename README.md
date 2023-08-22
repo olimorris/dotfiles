@@ -16,7 +16,7 @@ Regular Neovim tweaks. Occasional workflow tips worth stealing :smile:
 ## :computer: Setting up a new Mac
 
 - Ensure you're signed into iCloud and the App Store
-- Download the `~/Code` and `~/.dotfiles` folders from [Koofr](https://koofr.eu)
+- Download the `~/Code` and `~/.dotfiles` folders from online storage
 - Open up a terminal and run:
 
 ```bash

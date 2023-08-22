@@ -18,9 +18,9 @@ namespace :backup do
     section 'Using RCLONE to backup files'
 
     dirs = {
-      '.dotfiles' => 'koofr:.dotfiles',
-      'Code' => 'encrypted:Code',
-      'OliDocs' => 'encrypted:OliDocs'
+      '.dotfiles' => ENV['STORAGE_FOLDER'] + ':dotfiles',
+      'Code' => ENV['STORAGE_ENCRYPTED_FOLDER'] + ':Code',
+      'OliDocs' => ENV['STORAGE_ENCRYPTED_FOLDER'] + ':Documents'
     }
 
     flag = '-P' if args[:progress]
