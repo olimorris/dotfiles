@@ -180,9 +180,9 @@ return {
       end
 
       ---Slick UI which is automatically triggered when debugging
-      ---@param dap table
+      ---@param adapter table
       ---@return nil
-      local function ui_setup(dap)
+      local function ui_setup(adapter)
         local ok, dapui = om.safe_require("dapui")
         if not ok then return end
 
@@ -206,9 +206,9 @@ return {
             },
           },
         })
-        dap.listeners.after.event_initialized["dapui_config"] = dapui.open
-        dap.listeners.before.event_terminated["dapui_config"] = dapui.close
-        dap.listeners.before.event_exited["dapui_config"] = dapui.close
+        adapter.listeners.after.event_initialized["dapui_config"] = dapui.open
+        adapter.listeners.before.event_terminated["dapui_config"] = dapui.close
+        adapter.listeners.before.event_exited["dapui_config"] = dapui.close
       end
 
       dap.set_log_level("TRACE")
