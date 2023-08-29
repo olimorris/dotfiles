@@ -192,7 +192,7 @@ return {
         VirtColumn = { fg = "${indentline}" },
       },
 
-      caching = false,
+      -- caching = false,
       cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
 
       plugins = {
