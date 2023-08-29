@@ -65,16 +65,13 @@
 .config/nvim/plugin
 
 # Fish
+.env
 .config/fish/env
 .config/fish/fish_variables
 
 # Tmux
 .config/tmux/plugins
 .config/tmux/resurrect
-
-# Zsh
-.env
-bookmarks
 
 # Others
 misc/enhance-rails-intellisense-in-solargraph
