@@ -123,8 +123,8 @@ return legendary.keymaps({
   },
 
   -- Splits
-  { "<LocalLeader>sv", "<C-w>v", description = "Split: Vertical" },
-  { "<LocalLeader>sh", "<C-w>h", description = "Split: Horizontal" },
+  { "<LocalLeader>sv", "<cmd>vsplit<CR>", description = "Split: Vertical" },
+  { "<LocalLeader>sh", "<cmd>split<CR>", description = "Split: Horizontal" },
   { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
   { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
 
