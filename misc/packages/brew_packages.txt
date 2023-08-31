@@ -36,6 +36,7 @@ luarocks
 mackup
 mas
 maven
+most
 neofetch
 neovim
 ninja
