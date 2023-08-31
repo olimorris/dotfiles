@@ -7,18 +7,21 @@ return {
       "nvim-lua/plenary.nvim",
       {
         "debugloop/telescope-undo.nvim", -- Visualise undotree
+        config = function() require("telescope").load_extension("undo") end,
         init = function()
           require("legendary").keymaps({
             { "<LocalLeader>u", "<cmd>Telescope undo<CR>", description = "Telescope undo" },
           })
         end,
       },
-      {
-        "nvim-telescope/telescope-fzf-native.nvim", -- Use fzf within Telescope
-        build = "make",
-      },
+      -- {
+      --   "nvim-telescope/telescope-fzf-native.nvim", -- Use fzf within Telescope
+      --   config = function() require("telescope").load_extension("fzf") end,
+      --   build = "make",
+      -- },
       {
         "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
+        config = function() require("telescope").load_extension("frecency") end,
         dependencies = {
           "kkharji/sqlite.lua",
         },
@@ -48,12 +51,20 @@ return {
             },
             {
               "<Leader>g",
-              t.lazy_required_fn("telescope.builtin", "live_grep", { prompt_title = "Search CWD", path_display = { "smart" } }),
+              t.lazy_required_fn(
+                "telescope.builtin",
+                "live_grep",
+                { prompt_title = "Search CWD", path_display = { "smart" } }
+              ),
               description = "Search CWD",
             },
             {
               "<C-b>",
-              t.lazy_required_fn("telescope.builtin", "buffers", { prompt_title = "Buffer List", path_display = { "smart" } }),
+              t.lazy_required_fn(
+                "telescope.builtin",
+                "buffers",
+                { prompt_title = "Buffer List", path_display = { "smart" } }
+              ),
               description = "List buffers",
             },
             {
@@ -200,10 +211,7 @@ return {
       })
 
       -- Extensions
-      telescope.load_extension("fzf")
-      telescope.load_extension("undo")
       telescope.load_extension("aerial")
-      telescope.load_extension("frecency")
       telescope.load_extension("persisted")
       telescope.load_extension("refactoring")
     end,
