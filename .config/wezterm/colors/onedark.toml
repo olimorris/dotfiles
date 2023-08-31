@@ -9,6 +9,7 @@ ansi = [
   '#56b6c2',
   '#abb2bf',
 ]
+background = '#282c34'
 brights = [
   '#5c6370',
   '#e9969d',
@@ -19,13 +20,11 @@ brights = [
   '#7bc6d0',
   '#c8cdd5',
 ]
-
-background = '#282c34'
+cursor_bg = '#cccccc'
+cursor_fg = '#282c34'
 foreground = '#abb2bf'
 selection_bg = '#c678dd'
 selection_fg = '#abb2bf'
-cursor_bg = '#cccccc'
-cursor_fg = '#282c34'
 
 [colors.indexed]
 

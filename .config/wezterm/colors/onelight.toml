@@ -23,8 +23,8 @@ brights = [
 cursor_bg = '#cccccc'
 cursor_fg = '#fafafa'
 foreground = '#6a6a6a'
-selection_bg = '#979eab'
-selection_fg = '#fafafa'
+selection_bg = '#9a77cf'
+selection_fg = '#6a6a6a'
 
 [colors.indexed]
 
