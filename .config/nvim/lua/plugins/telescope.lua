@@ -139,7 +139,6 @@ return {
           set_env = { COLORTERM = "truecolor" },
           file_ignore_patterns = {
             ".git/",
-            "%.csv",
             "%.jpg",
             "%.jpeg",
             "%.png",
