@@ -33,7 +33,6 @@
     ~/.env: .config/fish/.env
     ~/.gitconfig: .config/git/.gitconfig
     ~/.gitignore_global: .config/git/.gitignore_global
-    ~/.lesskey: .config/less/.lesskey
     ~/.mackup: .config/mackup/.mackup
     ~/.mackup.cfg: .config/mackup/.mackup.cfg
     ~/.profile: .config/bash/.profile

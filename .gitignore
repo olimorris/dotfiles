@@ -14,7 +14,6 @@
 !.config/git/**/*
 !.config/hammerspoon/**/*
 !.config/karabiner/karabiner.json
-!.config/less/**/*
 !.config/kitty/**/*
 !.config/mackup/**/*
 !.config/nix/**/*
