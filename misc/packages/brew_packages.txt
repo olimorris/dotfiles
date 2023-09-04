@@ -28,7 +28,6 @@ jpeg
 jython
 lazygit
 ledger
-less
 librsync
 lolcat
 luajit-openresty
