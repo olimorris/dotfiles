@@ -25,6 +25,7 @@
 !.config/starship/**/*
 !.config/tmux/**/*
 !.config/vim/**/*
+!.config/vivid/**/*
 !.config/wezterm/**/*
 !.config/zsh/**/*
 
