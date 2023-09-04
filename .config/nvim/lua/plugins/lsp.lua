@@ -41,9 +41,17 @@ return {
       -- Misc
       {
         "ivanjermakov/troublesum.nvim",
+        event = "LspAttach",
         opts = {
           enabled = function() return vim.bo.filetype ~= "lazy" end,
           severity_format = { icons.error, icons.warn, icons.info, icons.hint },
+        },
+      },
+      {
+        "dgagn/diagflow.nvim",
+        event = "LspAttach",
+        opts = {
+          scope = "line",
         },
       },
     },

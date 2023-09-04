@@ -124,6 +124,12 @@ return {
         -- DAP UI
         DapUIBreakpointsCurrentLine = { fg = "${yellow}", bold = true },
 
+        -- Diagflow.nvim
+        DiagnosticFloatingError = { fg = "${red}", italic = true },
+        DiagnosticFloatingWarn = { fg = "${yellow}", italic = true },
+        DiagnosticFloatingHint = { fg = "${cyan}", italic = true },
+        DiagnosticFloatingInfo = { fg = "${blue}", italic = true },
+
         -- Fidget
         FidgetTask = { fg = "${gray}" },
         FidgetTitle = { fg = "${purple}", italic = true },
