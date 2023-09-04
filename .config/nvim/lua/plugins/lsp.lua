@@ -51,10 +51,12 @@ return {
         "dgagn/diagflow.nvim",
         event = "LspAttach",
         opts = {
+          format = function(diag) return " " .. diag.message end,
           scope = "line",
         },
       },
     },
+
     init = function()
       require("legendary").commands({
         {

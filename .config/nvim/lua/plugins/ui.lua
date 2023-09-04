@@ -32,8 +32,8 @@ return {
   {
     "lukas-reineke/virt-column.nvim", -- Use characters in the color column
     opts = {
-      char = "│"
-    }
+      char = "│",
+    },
   },
   {
     "tzachar/local-highlight.nvim", -- Highlight word under cursor throughout the visible buffer
