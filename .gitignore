@@ -5,7 +5,6 @@
 ################################### WHITELIST ##################################
 
 # Config
-!.config/alacritty/**/*
 !.config/asdf/**/*
 !.config/bash/**/*
 !.config/composer/composer.json
@@ -15,7 +14,6 @@
 !.config/git/**/*
 !.config/hammerspoon/**/*
 !.config/karabiner/karabiner.json
-!.config/kitty/**/*
 !.config/mackup/**/*
 !.config/nix/**/*
 !.config/nvim/**/*
@@ -66,8 +64,6 @@
 .config/nvim/plugin
 
 # Fish
-.env
-.config/env/.env
 .config/fish/fish_variables
 
 # Tmux
