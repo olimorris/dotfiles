@@ -30,7 +30,7 @@
     ~/.bashrc: .config/bash/.bashrc
     ~/.color_mode: .config/.color_mode
     ~/.composer: .config/composer
-    ~/.env: .config/fish/.env
+    ~/.env: .config/env/.env
     ~/.gitconfig: .config/git/.gitconfig
     ~/.gitignore_global: .config/git/.gitignore_global
     ~/.mackup: .config/mackup/.mackup

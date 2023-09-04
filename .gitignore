@@ -10,6 +10,7 @@
 !.config/bash/**/*
 !.config/composer/composer.json
 !.config/efm-langserver/*
+!.config/env/.env.example
 !.config/fish/*
 !.config/git/**/*
 !.config/hammerspoon/**/*
@@ -65,7 +66,7 @@
 
 # Fish
 .env
-.config/fish/env
+.config/env/.env
 .config/fish/fish_variables
 
 # Tmux

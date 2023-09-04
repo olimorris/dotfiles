@@ -1,3 +1,7 @@
 #!/bin/sh
 
+. /Users/Oli/.env
+export STORAGE_FOLDER
+export STORAGE_ENCRYPTED_FOLDER
+
 cd /Users/Oli/.dotfiles && /Users/Oli/.asdf/shims/rake backup:files
