@@ -1,4 +1,4 @@
--- Load options before Lazy inits
+-- Load Neovim options before Lazy loads plugins
 require("config.options")
 
 -- Begin Lazy install and plugin setup
