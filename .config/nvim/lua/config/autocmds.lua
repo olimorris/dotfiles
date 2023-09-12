@@ -1,3 +1,7 @@
+local conceal_ns = vim.api.nvim_create_namespace("class_conceal")
+
+---Use Legendary.nvim to create autocmds
+---REF: https://github.com/mrjones2014/legendary.nvim/blob/master/doc/table_structures/AUTOCMDS.md
 return {
   {
     name = "ConcealAttributes",
@@ -5,16 +9,17 @@ return {
       { "BufEnter", "BufWritePost", "TextChanged", "InsertLeave" },
       function()
         vim.opt.conceallevel = 2 -- Concealed text is completely hidden
+
         local bufnr = vim.api.nvim_get_current_buf()
 
         ---Conceal HTML class attributes. Ideal for big TailwindCSS class lists
         ---Ref: https://gist.github.com/mactep/430449fd4f6365474bfa15df5c02d27b
-        local conceal_ns = vim.api.nvim_create_namespace("class_conceal")
         local language_tree = vim.treesitter.get_parser(bufnr, "html")
         local syntax_tree = language_tree:parse()
         local root = syntax_tree[1]:root()
 
-        local query = vim.treesitter.query.parse(
+        local ok, query = pcall(
+          vim.treesitter.query.parse,
           "html",
           [[
     ((attribute
@@ -22,6 +27,7 @@ return {
         (quoted_attribute_value (attribute_value) @class_value) (#set! @class_value conceal "…")))
     ]]
         )
+        if not ok then om.dd(query) end
 
         for _, captures, metadata in query:iter_matches(root, bufnr, root:start(), root:end_(), {}) do
           local start_row, start_col, end_row, end_col = captures[2]:range()
