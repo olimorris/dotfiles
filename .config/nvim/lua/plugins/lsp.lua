@@ -8,7 +8,7 @@ local icons = {
 return {
   {
     "VonHeikemen/lsp-zero.nvim",
-    branch = "v2.x",
+    branch = "v3.x",
     dependencies = {
       -- LSP Support
       "neovim/nvim-lspconfig",
@@ -111,37 +111,42 @@ return {
     config = function()
       vim.o.runtimepath = vim.o.runtimepath .. ",~/.dotfiles/.config/snippets"
 
-      local lsp = require("lsp-zero").preset({
+      local lsp_zero = require('lsp-zero')
+      lsp_zero.preset({
         set_lsp_keymaps = false,
         manage_nvim_cmp = {
           set_basic_mappings = true,
         },
       })
 
-      lsp.set_sign_icons(icons)
+      lsp_zero.set_sign_icons(icons)
 
-      lsp.ensure_installed({
-        "bashls",
-        "cssls",
-        "dockerls",
-        "efm",
-        "html",
-        "intelephense",
-        "jdtls",
-        "jsonls",
-        "lua_ls",
-        "pyright",
-        "solargraph",
-        -- "tailwindcss", -- Disabled due to high node CPU usage
-        "tsserver",
-        "vuels",
-        "yamlls",
+      require("mason").setup({})
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "bashls",
+          "cssls",
+          "dockerls",
+          "efm",
+          "html",
+          "intelephense",
+          "jdtls",
+          "jsonls",
+          "lua_ls",
+          "pyright",
+          "solargraph",
+          -- "tailwindcss", -- Disabled due to high node CPU usage
+          "tsserver",
+          "vuels",
+          "yamlls",
+        },
+        handlers = {
+          lsp_zero.default_setup,
+          jdtls = lsp_zero.noop -- we will use nvim-jdtls to setup the lsp
+        },
       })
 
-      -- we will use nvim-jdtls to setup the lsp
-      lsp.skip_server_setup({ "jdtls" })
-
-      lsp.set_server_config({
+      lsp_zero.set_server_config({
         capabilities = {
           textDocument = {
             foldingRange = {
@@ -304,7 +309,7 @@ return {
         })
       end
 
-      lsp.on_attach(function(client, bufnr)
+      lsp_zero.on_attach(function(client, bufnr)
         autocmds(client, bufnr)
         commands(client, bufnr)
         mappings(client, bufnr)
@@ -319,7 +324,7 @@ return {
         if client.server_capabilities.documentSymbolProvider then require("nvim-navic").attach(client, bufnr) end
       end)
 
-      lsp.format_mapping("gq", {
+      lsp_zero.format_mapping("gq", {
         format_opts = {
           async = false,
           timeout_ms = 10000,
@@ -345,7 +350,7 @@ return {
         },
       })
 
-      lsp.setup()
+      lsp_zero.setup()
 
       vim.diagnostic.config({
         severity_sort = true,
