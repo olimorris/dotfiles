@@ -8,7 +8,6 @@ diffmerge
 discord
 fantastical
 font-dejavu-sans-mono-for-powerline
-fontforge
 geekbench
 git-credential-manager-core
 github
@@ -16,7 +15,6 @@ google-chrome
 hammerspoon
 imageoptim
 keyboard-maestro
-kitty
 launchcontrol
 ledger-live
 little-snitch

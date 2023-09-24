@@ -1,6 +1,4 @@
-homebrew/cask
 homebrew/cask-fonts
-homebrew/core
 homebrew/services
 microsoft/git
 spring-io/tap
