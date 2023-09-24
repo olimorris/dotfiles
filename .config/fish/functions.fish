@@ -38,6 +38,10 @@ function o -d Open
     end
 end
 
+function which
+    type -p $argv
+end
+
 function tn -d "Create a new Tmux session (or attach to one) based on the current directory"
     set selected (pwd | sed 's/.*\///g')
     # Replace a '.' in any file names with an underscore
