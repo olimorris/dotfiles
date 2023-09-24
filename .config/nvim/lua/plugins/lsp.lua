@@ -51,6 +51,7 @@ return {
         "dgagn/diagflow.nvim",
         event = "LspAttach",
         opts = {
+          enable = function() return vim.bo.filetype ~= "lazy" end,
           format = function(diag) return " " .. diag.message end,
           scope = "line",
         },
