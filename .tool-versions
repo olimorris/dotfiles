@@ -1,6 +1,6 @@
 java openjdk-19
 lua 5.4.3
-python 3.11.0
+python 3.11.0 2.7.18
 postgres 14.1
-ruby 3.0.0
-nodejs 16.17.0
+ruby 3.1.1
+nodejs 18.18.0
