@@ -1,6 +1,6 @@
 namespace :backup do
   desc 'Backup app config'
-  task :mackup do
+  task :app_config do
     section 'Using Mackup to backup app configs'
 
     if ENV['DRY_RUN']
@@ -19,7 +19,6 @@ namespace :backup do
 
     dirs = {
       '.dotfiles' => "#{ENV['STORAGE_FOLDER']}:dotfiles",
-
       'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code",
       'OliDocs' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Documents"
     }
@@ -35,7 +34,7 @@ end
 namespace :install do
   desc 'Install files'
 
-  task :mackup do
+  task :app_config do
     section 'Installing Mackup'
 
     if !File.file?(File.expand_path('~/.mackup.cfg')) && !ENV['DRY_RUN']
@@ -55,46 +54,17 @@ namespace :install do
     end
   end
 
-  task :dotbot do
+  task :dotfiles do
     section 'Using Dotbot to symlink dotfiles'
 
     run %( ./dotbot_install )
-  end
-
-  task :files do
-    section 'Linking folders to their Git repository'
-
-    run %( cd ~/.dotfiles && git init )
-    run %( cd ~/.dotfiles && git remote add origin https://github.com/olimorris/dotfiles.git )
-    run %( cd ~/.dotfiles && git fetch origin )
-    run %( cd ~/.dotfiles && git reset origin/main )
-
-    run %( cd ~/Code/Projects/onedarkpro.nvim && git init )
-    run %( cd ~/Code/Projects/onedarkpro.nvim && git remote add origin https://github.com/olimorris/onedarkpro.nvim.git )
-    run %( cd ~/Code/Projects/onedarkpro.nvim && git fetch origin )
-    run %( cd ~/Code/Projects/onedarkpro.nvim && git reset origin/main )
-
-    run %( cd ~/Code/Projects/persisted.nvim && git init )
-    run %( cd ~/Code/Projects/persisted.nvim && git remote add origin https://github.com/olimorris/persisted.nvim.git )
-    run %( cd ~/Code/Projects/persisted.nvim && git fetch origin )
-    run %( cd ~/Code/Projects/persisted.nvim  && git reset origin/main )
-
-    run %( cd ~/Code/Projects/neotest-rspec && git init )
-    run %( cd ~/Code/Projects/neotest-rspec && git remote add origin https://github.com/olimorris/neotest-rspec.git )
-    run %( cd ~/Code/Projects/neotest-rspec && git fetch origin )
-    run %( cd ~/Code/Projects/neotest-rspec && git reset origin/main )
-
-    run %( cd ~/Code/Projects/neotest-phpunit && git init )
-    run %( cd ~/Code/Projects/neotest-phpunit && git remote add origin https://github.com/olimorris/neotest-phpunit.git )
-    run %( cd ~/Code/Projects/neotest-phpunit && git fetch origin )
-    run %( cd ~/Code/Projects/neotest-phpunit && git reset origin/main )
   end
 end
 
 namespace :uninstall do
   desc 'Uninstall dotfiles'
 
-  task :mackup do
+  task :app_config do
     section 'Using Mackup to put app configs back'
 
     if ENV['DRY_RUN']
@@ -105,7 +75,7 @@ namespace :uninstall do
     end
   end
 
-  task :dotbot do
+  task :dotfiles do
     section 'Uninstall Dotbot and restoring dotfiles'
 
     run %( ./dotbot_uninstall )
@@ -114,8 +84,9 @@ end
 
 namespace :update do
   desc 'Update Dotbot'
-  task :dotbot do
+  task :dotfiles do
     section 'Updating Dotbot'
+
     run %( git submodule update --remote dotbot )
     run %( ./dotbot_install )
   end
