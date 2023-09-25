@@ -30,13 +30,15 @@ desc 'Install Everything'
 task :install do
   section 'Installing'
 
+  Rake::Task['tests:setup'].invoke if testing?
+
   # Packages
   Rake::Task['install:xcode'].invoke
   Rake::Task['install:brew'].invoke
   Rake::Task['install:brew_packages'].invoke
   Rake::Task['install:brew_cask_packages'].invoke
   Rake::Task['install:brew_clean_up'].invoke
-  Rake::Task['install:app_store'].invoke
+  Rake::Task['install:app_store'].invoke unless testing?
 
   # Files
   Rake::Task['install:app_config'].invoke
@@ -66,6 +68,8 @@ end
 desc 'Update Everything'
 task :update do
   section 'Updating'
+
+  Rake::Task['tests:setup'].invoke if testing?
 
   # Packages
   Rake::Task['update:brew'].invoke
