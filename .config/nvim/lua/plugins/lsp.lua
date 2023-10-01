@@ -14,7 +14,9 @@ return {
       "neovim/nvim-lspconfig",
       {
         "williamboman/mason.nvim",
-        build = function() pcall(vim.cmd, "MasonUpdate") end,
+        build = function()
+          pcall(vim.cmd, "MasonUpdate")
+        end,
       },
       "williamboman/mason-lspconfig.nvim",
 
@@ -30,7 +32,9 @@ return {
       "lukas-reineke/cmp-under-comparator",
       {
         "zbirenbaum/copilot-cmp",
-        config = function() require("copilot_cmp").setup() end,
+        config = function()
+          require("copilot_cmp").setup()
+        end,
       },
       "onsails/lspkind.nvim",
 
@@ -43,7 +47,9 @@ return {
         "ivanjermakov/troublesum.nvim",
         event = "LspAttach",
         opts = {
-          enabled = function() return vim.bo.filetype ~= "lazy" end,
+          enabled = function()
+            return vim.bo.filetype ~= "lazy"
+          end,
           severity_format = { icons.error, icons.warn, icons.info, icons.hint },
         },
       },
@@ -51,8 +57,12 @@ return {
         "dgagn/diagflow.nvim",
         event = "LspAttach",
         opts = {
-          enable = function() return vim.bo.filetype ~= "lazy" end,
-          format = function(diag) return " " .. diag.message end,
+          enable = function()
+            return vim.bo.filetype ~= "lazy"
+          end,
+          format = function(diag)
+            return " " .. diag.message
+          end,
           scope = "line",
         },
       },
@@ -112,7 +122,7 @@ return {
     config = function()
       vim.o.runtimepath = vim.o.runtimepath .. ",~/.dotfiles/.config/snippets"
 
-      local lsp_zero = require('lsp-zero')
+      local lsp_zero = require("lsp-zero")
       lsp_zero.preset({
         set_lsp_keymaps = false,
         manage_nvim_cmp = {
@@ -143,7 +153,7 @@ return {
         },
         handlers = {
           lsp_zero.default_setup,
-          jdtls = lsp_zero.noop -- we will use nvim-jdtls to setup the lsp
+          jdtls = lsp_zero.noop, -- we will use nvim-jdtls to setup the lsp
         },
       })
 
@@ -179,7 +189,9 @@ return {
 
       local function commands(client, bufnr)
         -- Only need to set these once!
-        if vim.g.lsp_commands then return {} end
+        if vim.g.lsp_commands then
+          return {}
+        end
 
         require("legendary").commands({
           {
@@ -209,7 +221,9 @@ return {
           },
           {
             "LspLog",
-            function() vim.cmd("edit " .. vim.lsp.get_log_path()) end,
+            function()
+              vim.cmd("edit " .. vim.lsp.get_log_path())
+            end,
             description = "Show logs",
           },
         })
@@ -219,10 +233,9 @@ return {
 
       local function mappings(client, bufnr)
         if
-          #vim.tbl_filter(
-            function(keymap) return (keymap.desc or ""):lower() == "rename symbol" end,
-            vim.api.nvim_buf_get_keymap(bufnr, "n")
-          ) > 0
+          #vim.tbl_filter(function(keymap)
+            return (keymap.desc or ""):lower() == "rename symbol"
+          end, vim.api.nvim_buf_get_keymap(bufnr, "n")) > 0
         then
           return
         end
@@ -322,7 +335,9 @@ return {
           client.server_capabilities.documentFormattingRangeProvider = true
         end
 
-        if client.server_capabilities.documentSymbolProvider then require("nvim-navic").attach(client, bufnr) end
+        if client.server_capabilities.documentSymbolProvider then
+          require("nvim-navic").attach(client, bufnr)
+        end
       end)
 
       lsp_zero.format_mapping("gq", {
@@ -367,7 +382,9 @@ return {
 
       -- Setup better folding
       local ok, ufo = pcall(require, "ufo")
-      if ok then require("ufo").setup() end
+      if ok then
+        require("ufo").setup()
+      end
 
       --Setup completion
       local cmp = require("cmp")
@@ -380,7 +397,9 @@ return {
 
       cmp.setup({
         formatting = {
-          format = function(...) return require("lspkind").cmp_format({ mode = "symbol_text" })(...) end,
+          format = function(...)
+            return require("lspkind").cmp_format({ mode = "symbol_text" })(...)
+          end,
         },
         window = {
           bordered = {
