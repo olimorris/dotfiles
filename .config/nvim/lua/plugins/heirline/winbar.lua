@@ -25,7 +25,7 @@ M.filepath = {
       self.filepath = "[No Name]"
     end
   end,
-  hl = "NavicText",
+  hl = "HeirlineWinbar",
   {
     condition = function(self)
       return self.filepath ~= "."
@@ -68,7 +68,7 @@ M.filename = {
         end
       end,
     },
-    hl = "NavicText",
+    hl = "HeirlineWinbar",
   },
   -- Modifier
   {
@@ -80,8 +80,9 @@ M.filename = {
   },
 }
 
+-- Inspired by:
+-- https://github.com/eli-front/nvim-config/blob/5a225e1e6de3d6f1bdca2025602c3e7a4917e31b/lua/elifront/utils/status/init.lua#L32
 M.symbols = {
-  -- condition = function() return require("nvim-navic").is_available() end,
   init = function(self)
     self.symbols = require("aerial").get_location(true) or {}
   end,
@@ -97,8 +98,6 @@ M.symbols = {
     {
       flexible = 3,
       {
-        -- Inspired by:
-        -- https://github.com/eli-front/nvim-config/blob/5a225e1e6de3d6f1bdca2025602c3e7a4917e31b/lua/elifront/utils/status/init.lua#L32
         provider = function(self)
           local symbols = {}
 
@@ -141,7 +140,7 @@ M.symbols = {
         provider = "",
       },
     },
-    hl = "NavicText",
+    hl = "HeirlineWinbar",
   },
 }
 

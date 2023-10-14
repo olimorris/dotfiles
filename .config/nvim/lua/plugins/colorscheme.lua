@@ -141,13 +141,11 @@ return {
         Heirline = { bg = "${statusline_bg}" },
         HeirlineStatusColumn = { fg = "${statuscolumn_border}" },
         HeirlineBufferline = { fg = { dark = "#939aa3", light = "#6a6a6a" } },
+        HeirlineWinbar = { fg = "${breadcrumbs}", italic = true },
 
         -- Luasnip
         LuaSnipChoiceNode = { fg = "${yellow}" },
         LuaSnipInsertNode = { fg = "${yellow}" },
-
-        -- Navic
-        NavicText = { fg = "${breadcrumbs}", italic = true },
 
         -- Neotest
         NeotestAdapterName = { fg = "${purple}", bold = true },
