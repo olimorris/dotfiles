@@ -335,10 +335,6 @@ return {
           client.server_capabilities.documentFormattingProvider = true
           client.server_capabilities.documentFormattingRangeProvider = true
         end
-
-        if client.server_capabilities.documentSymbolProvider then
-          require("nvim-navic").attach(client, bufnr)
-        end
       end)
 
       lsp_zero.format_mapping("gq", {

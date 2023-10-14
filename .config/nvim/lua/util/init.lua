@@ -58,3 +58,19 @@ function om.safe_require(module, opts)
   end
   return ok, result
 end
+
+--- Encode a position to a single value that can be decoded later
+---@param line integer line number of position
+---@param col integer column number of position
+---@param winnr integer a window number
+---@return integer the encoded position
+function om.encode_pos(line, col, winnr)
+  return bit.bor(bit.lshift(line, 16), bit.lshift(col, 6), winnr)
+end
+
+--- Decode a previously encoded position to it's sub parts
+---@param c integer the encoded position
+---@return integer line, integer column, integer window
+function om.decode_pos(c)
+  return bit.rshift(c, 16), bit.band(bit.rshift(c, 6), 1023), bit.band(c, 63)
+end

@@ -7,13 +7,6 @@ local M = {
       cmd = "Bdelete",
     },
     "nvim-tree/nvim-web-devicons",
-    {
-      "SmiteshP/nvim-navic", -- Winbar component showing current code context
-      opts = {
-        highlight = true,
-        separator = "  ",
-      },
-    },
   },
   init = function()
     require("legendary").keymaps({
@@ -128,7 +121,7 @@ function M.config()
       },
       winbar.filepath,
       winbar.filename,
-      winbar.navic,
+      winbar.symbols,
       align,
       winbar.vim_logo,
     },

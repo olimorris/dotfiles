@@ -78,10 +78,13 @@ return {
         AerialClassIcon = { fg = "${purple}" },
         AerialConstructorIcon = { fg = "${yellow}" },
         AerialEnumIcon = { fg = "${blue}" },
-        AerialFunctionIcon = { fg = "${red}" },
+        AerialFunctionIcon = { fg = "${blue}" },
         AerialInterfaceIcon = { fg = "${orange}" },
         AerialMethodIcon = { fg = "${green}" },
+        AerialObjectIcon = { fg = "${purple}" },
+        AerialPackageIcon = { fg = "${fg}" },
         AerialStructIcon = { fg = "${cyan}" },
+        AerialVariableIcon = { fg = "${orange}" },
 
         -- Alpha
         AlphaHeader = {
