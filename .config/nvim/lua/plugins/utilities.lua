@@ -21,8 +21,10 @@ return {
         select_prompt = "Legendary",
         include_builtin = false,
         include_legendary_cmds = false,
-        lazy_nvim = { auto_register = true },
-        which_key = { auto_register = false },
+        extensions = {
+          lazy_nvim = true,
+          which_key = false
+        },
         -- Load these with the plugin to ensure they are loaded before any Neovim events
         autocmds = require("config.autocmds"),
       })
