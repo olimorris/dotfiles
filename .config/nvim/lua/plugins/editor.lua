@@ -42,7 +42,9 @@ return {
     keys = {
       {
         "<LocalLeader>o",
-        function() require("jdtls").organize_imports() end,
+        function()
+          require("jdtls").organize_imports()
+        end,
         desc = "Java: Organize imports",
       },
     },
@@ -53,12 +55,16 @@ return {
     keys = {
       {
         "zR",
-        function() require("ufo").openAllFolds() end,
+        function()
+          require("ufo").openAllFolds()
+        end,
         desc = "Open fold",
       },
       {
         "zM",
-        function() require("ufo").closeAllFolds() end,
+        function()
+          require("ufo").closeAllFolds()
+        end,
         desc = "Close fold",
       },
     },
@@ -81,8 +87,20 @@ return {
       skip_confirm_for_simple_edits = true,
     },
     keys = {
-      { "-", function() require("oil").toggle_float(".") end, desc = "Open File Explorer" },
-      { "_", function() require("oil").toggle_float() end, desc = "Open File Explorer to current file" },
+      {
+        "-",
+        function()
+          require("oil").toggle_float(".")
+        end,
+        desc = "Open File Explorer",
+      },
+      {
+        "_",
+        function()
+          require("oil").toggle_float()
+        end,
+        desc = "Open File Explorer to current file",
+      },
     },
   },
   {
@@ -91,7 +109,9 @@ return {
     keys = {
       {
         "<C-t>",
-        function() require("aerial").toggle() end,
+        function()
+          require("aerial").toggle()
+        end,
         mode = { "n", "x", "o" },
         desc = "Toggle Aerial",
       },
@@ -148,6 +168,8 @@ return {
       ignore_lsp = { "efm", "null-ls" },
       patterns = { "Gemfile" },
     },
-    config = function(_, opts) require("project_nvim").setup(opts) end,
+    config = function(_, opts)
+      require("project_nvim").setup(opts)
+    end,
   },
 }

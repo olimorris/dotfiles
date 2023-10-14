@@ -45,7 +45,9 @@ return {
         }
 
         for _, filetype in ipairs(excluded_filetypes) do
-          if vim.bo.filetype == filetype then return false end
+          if vim.bo.filetype == filetype then
+            return false
+          end
         end
 
         return true
@@ -73,7 +75,9 @@ return {
           commands = {
             {
               ":Sessions",
-              function() vim.cmd([[Telescope persisted]]) end,
+              function()
+                vim.cmd([[Telescope persisted]])
+              end,
               description = "List sessions",
             },
             {
@@ -107,7 +111,9 @@ return {
   },
   {
     "nathom/tmux.nvim", -- Navigate Tmux panes inside of neovim
-    enabled = function() return os.getenv("TMUX") end,
+    enabled = function()
+      return os.getenv("TMUX")
+    end,
     init = function()
       require("legendary").keymaps({
         {

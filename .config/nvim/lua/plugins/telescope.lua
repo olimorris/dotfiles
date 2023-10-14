@@ -22,9 +22,6 @@ return {
       {
         "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
         config = function() require("telescope").load_extension("frecency") end,
-        dependencies = {
-          "kkharji/sqlite.lua",
-        },
       },
     },
     init = function()

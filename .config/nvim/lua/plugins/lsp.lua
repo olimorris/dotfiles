@@ -157,6 +157,7 @@ return {
         },
       })
 
+      -- For nvim-ufo folding
       lsp_zero.set_server_config({
         capabilities = {
           textDocument = {
