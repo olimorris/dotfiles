@@ -10,7 +10,7 @@ om.nightly = om.has("nvim-0.10")
 
 ---Display the given error
 om.dd = function(...) require("util.debug").dump(...) end
-vim.print = om.dd
+-- vim.print = om.dd
 
 local terminals = {}
 
