@@ -107,14 +107,21 @@ return {
   },
   {
     "lukas-reineke/indent-blankline.nvim", -- Show indentation lines
-    opts = {
-      use_treesitter = true,
-      show_first_indent_level = false,
-      show_trailing_blankline_indent = false,
+    config = function()
+      require("ibl").setup({
+        indent = {
+          char = "│",
+        },
+        scope = {
+          highlight = "IblIndent",
+          show_end = false,
+          show_start = false,
+        },
+      })
 
-      -- filetype_exclude = filetypes_to_exclude,
-      buftype_exclude = { "terminal", "nofile" },
-    },
+      local hooks = require("ibl.hooks")
+      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
+    end,
   },
   {
     "goolord/alpha-nvim", -- Dashboard for Neovim
