@@ -39,4 +39,5 @@ typora
 visual-studio-code
 vlc
 wezterm
+xscope
 zoom

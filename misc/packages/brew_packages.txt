@@ -27,6 +27,7 @@ jpeg
 jython
 lazygit
 ledger
+libffi
 librsync
 libspiro
 libtermkey
@@ -52,6 +53,7 @@ ossp-uuid
 pandoc
 php@8.1
 postgresql@14
+python@3.9
 rclone
 reattach-to-user-namespace
 ripgrep
