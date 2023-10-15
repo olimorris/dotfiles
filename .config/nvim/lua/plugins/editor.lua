@@ -117,12 +117,10 @@ return {
       },
     },
     opts = {
-      backends = {
-        ["_"] = { "lsp", "treesitter", "markdown" },
-        ruby = { "treesitter" },
-      },
+      attach_mode = "global",
       close_on_select = true,
       filter_kind = false,
+      -- Use nvim-navic icons
       icons = {
         File = "󰈙 ",
         Module = " ",
@@ -155,7 +153,6 @@ return {
         min_width = 30,
         default_direction = "prefer_right",
       },
-      attach_mode = "global",
     },
   },
   -- {
