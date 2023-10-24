@@ -22,7 +22,7 @@ return {
         include_builtin = false,
         include_legendary_cmds = false,
         extensions = {
-          lazy_nvim = true,
+          lazy_nvim = false,
           which_key = false
         },
         -- Load these with the plugin to ensure they are loaded before any Neovim events
