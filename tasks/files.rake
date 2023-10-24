@@ -6,8 +6,9 @@ namespace :backup do
     if ENV['DRY_RUN']
       puts "~> Chill! It's a dry run"
       system %( mackup backup --dry-run )
+      system %( mackup uninstall --dry-run )
     else
-      run %( mackup backup --force )
+      run %( mackup backup --force && mackup uninstall --force )
     end
   end
 
@@ -49,8 +50,9 @@ namespace :install do
     if ENV['DRY_RUN']
       puts "~> Chill! It's a dry run"
       system %( mackup restore --dry-run )
+      system %( mackup uninstall --dry-run )
     else
-      run %( mackup restore --force )
+      run %( mackup restore --force && mackup uninstall --force )
     end
   end
 
@@ -64,16 +66,7 @@ end
 namespace :uninstall do
   desc 'Uninstall dotfiles'
 
-  task :app_config do
-    section 'Using Mackup to put app configs back'
-
-    if ENV['DRY_RUN']
-      puts '~> Just a dry run'
-      system %( mackup uninstall --dry-run )
-    else
-      run %( mackup uninstall )
-    end
-  end
+  # Don't need to uninstall Mackup as we don't use symlinks
 
   task :dotfiles do
     section 'Uninstall Dotbot and restoring dotfiles'

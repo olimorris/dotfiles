@@ -104,6 +104,5 @@ desc 'Uninstall'
 task :uninstall do
   section 'Uninstalling'
 
-  Rake::Task['uninstall:app_config'].invoke
   Rake::Task['uninstall:dotfiles'].invoke
 end
