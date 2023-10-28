@@ -10,6 +10,7 @@ local hyper = { "cmd", "alt", "ctrl" }
 local apps = {
   b = "Safari", -- Browser
   c = { "Code", "Visual Studio Code" },
+  d = "Discord",
   e = "Microsoft Excel",
   f = "Finder",
   g = "Google Chrome",
