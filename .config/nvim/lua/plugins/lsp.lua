@@ -44,7 +44,7 @@ return {
 
       -- Misc
       {
-        "ivanjermakov/troublesum.nvim",
+        "ivanjermakov/troublesum.nvim", -- LSP diagnostics in virtual text at the top of the screen
         event = "LspAttach",
         opts = {
           enabled = function()
@@ -54,7 +54,7 @@ return {
         },
       },
       {
-        "dgagn/diagflow.nvim",
+        "dgagn/diagflow.nvim", -- LSP messages in virtual text at the top of the screen
         event = "LspAttach",
         opts = {
           enable = function()
@@ -64,6 +64,20 @@ return {
             return " " .. diag.message
           end,
           scope = "line",
+        },
+      },
+      {
+        "stevearc/conform.nvim", -- Formatting plugin
+        opts = {
+          formatters_by_ft = {
+            css = { "prettier" },
+            html = { "prettier" },
+            javascript = { "prettier" },
+            lua = { "stylua" },
+            php = { "php-cs-fixer" },
+            python = { "isort", "black" },
+            ruby = { "rubocop" },
+          },
         },
       },
     },
@@ -138,7 +152,7 @@ return {
           "bashls",
           "cssls",
           "dockerls",
-          "efm",
+          -- "efm",
           "html",
           "intelephense",
           "jdtls",
@@ -261,6 +275,14 @@ return {
             { "gi", vim.lsp.buf.implementation, description = "Go to implementation", opts = { buffer = bufnr } },
             { "gt", vim.lsp.buf.type_definition, description = "Go to type definition", opts = { buffer = bufnr } },
             {
+              "gq",
+              function()
+                require("conform").format({ bufnr = bufnr })
+              end,
+              description = "Format",
+              opts = { buffer = bufnr },
+            },
+            {
               "gr",
               t.lazy_required_fn("telescope.builtin", "lsp_references", {
                 layout_strategy = "center",
@@ -328,40 +350,7 @@ return {
         autocmds(client, bufnr)
         commands(client, bufnr)
         mappings(client, bufnr)
-
-        if client.name == "efm" then
-          client.server_capabilities.hoverProvider = true
-          client.server_capabilities.codeActionProvider = true
-          client.server_capabilities.documentFormattingProvider = true
-          client.server_capabilities.documentFormattingRangeProvider = true
-        end
       end)
-
-      lsp_zero.format_mapping("gq", {
-        format_opts = {
-          async = false,
-          timeout_ms = 10000,
-        },
-        servers = {
-          ["efm"] = {
-            "css",
-            "fish",
-            "html",
-            "lua",
-            "java",
-            "javascript",
-            "json",
-            "markdown",
-            "php",
-            "python",
-            "sh",
-            "typescript",
-            "vue",
-            "yaml",
-          },
-          ["solargraph"] = { "ruby" },
-        },
-      })
 
       lsp_zero.setup()
 
