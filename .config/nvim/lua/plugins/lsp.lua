@@ -1,3 +1,5 @@
+local lsp_buffers = {}
+
 local icons = {
   error = "",
   warn = "",
@@ -69,10 +71,15 @@ return {
       {
         "stevearc/conform.nvim", -- Formatting plugin
         opts = {
+          format_on_save = {
+            timeout_ms = 500,
+            lsp_fallback = true,
+          },
           formatters_by_ft = {
             css = { "prettier" },
             html = { "prettier" },
             javascript = { "prettier" },
+            json = { "prettier" },
             lua = { "stylua" },
             php = { "php-cs-fixer" },
             python = { "isort", "black" },
@@ -252,7 +259,7 @@ return {
             return (keymap.desc or ""):lower() == "rename symbol"
           end, vim.api.nvim_buf_get_keymap(bufnr, "n")) > 0
         then
-          return
+          return {}
         end
 
         local t = require("legendary.toolbox")
@@ -347,9 +354,15 @@ return {
       end
 
       lsp_zero.on_attach(function(client, bufnr)
+        if vim.tbl_contains(lsp_buffers, bufnr) then
+          return
+        end
+
         autocmds(client, bufnr)
         commands(client, bufnr)
         mappings(client, bufnr)
+
+        table.insert(lsp_buffers, bufnr)
       end)
 
       lsp_zero.setup()
