@@ -6,6 +6,7 @@ nvim_path = "~/.config/nvim"
 tmux_path = "~/.config/tmux"
 starship_path = "~/.config/starship"
 wezterm_path = "~/.config/wezterm"
+wallpaper_path = "~/.dotfiles/misc/ui/wallpaper"
 
 # If we toggle dark mode via Alfred, we end up in a infinite loop. The dark-mode
 # binary changes the MacOS mode which in turn causes color-mode-notify to run
@@ -17,6 +18,7 @@ ran_from_cmd_line = False
 # The order in which apps are changed
 apps = [
     "macos",
+    "wallpaper",
     "wezterm",
     "starship",
     "tmux",
@@ -50,18 +52,24 @@ def app_macos(mode):
         config_file.write(contents)
 
 
-def app_kitty(mode):
-    """
-    Change the Kitty terminal
-    """
-    theme = "Onedark"
+def app_wallpaper(mode):
+    if mode == "dark":
+        wallpaper = "dark.png"
+    else:
+        wallpaper = "light.png"
 
-    if mode == "light":
-        theme = "Onelight"
+    try:
+        script = f"""
+            tell application "System Events"
+                tell every desktop
+                    set picture to "{os.path.expanduser(wallpaper_path)}/{wallpaper}"
+                end tell
+            end tell
+            """
 
-    subprocess.run(
-        ["/opt/homebrew/bin/kitty", "+kitten", "themes", "--reload-in=all", theme]
-    )
+        subprocess.run(["osascript", "-e", script])
+    except subprocess.CalledProcessError as e:
+        print(f"An error occurred: {e}")
 
 
 def app_starship(mode):
@@ -86,6 +94,7 @@ def app_starship(mode):
             ]
         )
 
+
 def app_wezterm(mode):
     """
     Change the theme in the terminal
@@ -99,12 +108,12 @@ def app_wezterm(mode):
     # Change the mode to ensure on a fresh startup, the color is remembered
     if mode == "dark":
         wezterm_contents = wezterm_contents.replace(
-            'onedarkpro_onelight', 'onedarkpro_onedark'
+            "onedarkpro_onelight", "onedarkpro_onedark"
         )
 
     if mode == "light":
         wezterm_contents = wezterm_contents.replace(
-            'onedarkpro_onedark', 'onedarkpro_onelight'
+            "onedarkpro_onedark", "onedarkpro_onelight"
         )
 
     with open(os.path.expanduser(config), "w") as config_file:
