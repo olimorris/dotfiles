@@ -8,6 +8,7 @@ composer
 dark-mode
 dash
 docker
+fbthrift
 fd
 fish
 flux
@@ -22,14 +23,18 @@ gobject-introspection
 gradle
 guile
 hledger
+httpd
 httpie
 jpeg
 jython
 lazygit
 ledger
 libffi
+libmaxminddb
 librsync
+libsmi
 libspiro
+libssh
 libtermkey
 libuninameslist
 libvterm
@@ -59,6 +64,7 @@ reattach-to-user-namespace
 ripgrep
 shfmt
 shunit2
+speexdsp
 spring-io/tap/spring-boot
 starship
 subversion
