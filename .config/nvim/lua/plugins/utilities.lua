@@ -23,7 +23,7 @@ return {
         include_legendary_cmds = false,
         extensions = {
           lazy_nvim = false,
-          which_key = false
+          which_key = false,
         },
         -- Load these with the plugin to ensure they are loaded before any Neovim events
         autocmds = require("config.autocmds"),

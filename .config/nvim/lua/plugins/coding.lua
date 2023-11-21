@@ -33,27 +33,37 @@ return {
           keymaps = {
             {
               "<LocalLeader>re",
-              function() require("telescope").extensions.refactoring.refactors() end,
+              function()
+                require("telescope").extensions.refactoring.refactors()
+              end,
               description = "Open Refactoring.nvim",
               mode = { "n", "v", "x" },
             },
             {
               "<LocalLeader>rd",
-              function() require("refactoring").debug.printf({ below = false }) end,
+              function()
+                require("refactoring").debug.printf({ below = false })
+              end,
               description = "Insert Printf statement for debugging",
             },
             {
               "<LocalLeader>rv",
               {
-                n = function() require("refactoring").debug.print_var({ normal = true }) end,
-                x = function() require("refactoring").debug.print_var({}) end,
+                n = function()
+                  require("refactoring").debug.print_var({ normal = true })
+                end,
+                x = function()
+                  require("refactoring").debug.print_var({})
+                end,
               },
               description = "Insert Print_Var statement for debugging",
               mode = { "n", "v" },
             },
             {
               "<LocalLeader>rc",
-              function() require("refactoring").debug.cleanup() end,
+              function()
+                require("refactoring").debug.cleanup()
+              end,
               description = "Cleanup debug statements",
             },
           },
@@ -68,19 +78,25 @@ return {
     keys = {
       {
         "<C-a>",
-        function() require("copilot.suggestion").accept() end,
+        function()
+          require("copilot.suggestion").accept()
+        end,
         desc = "Copilot: Accept suggestion",
         mode = { "i" },
       },
       {
         "<C-x>",
-        function() require("copilot.suggestion").dismiss() end,
+        function()
+          require("copilot.suggestion").dismiss()
+        end,
         desc = "Copilot: Dismiss suggestion",
         mode = { "i" },
       },
       {
         "<C-\\>",
-        function() require("copilot.panel").open() end,
+        function()
+          require("copilot.panel").open()
+        end,
         desc = "Copilot: Show Copilot panel",
         mode = { "n", "i" },
       },
@@ -89,7 +105,9 @@ return {
       require("legendary").commands({
         {
           ":CopilotToggle",
-          function() require("copilot.suggestion").toggle_auto_trigger() end,
+          function()
+            require("copilot.suggestion").toggle_auto_trigger()
+          end,
           description = "Copilot: Toggle on/off for buffer",
         },
       })
@@ -114,6 +132,7 @@ return {
       "theHamsta/nvim-dap-virtual-text", -- help to find variable definitions in debug mode
       "rcarriga/nvim-dap-ui", -- Nice UI for nvim-dap
       "suketa/nvim-dap-ruby", -- Debug Ruby
+      "mfussenegger/nvim-dap-python", -- Debug Python
     },
     init = function()
       require("legendary").keymaps({
@@ -152,12 +171,15 @@ return {
     config = function()
       local dap = require("dap")
       require("dap-ruby").setup()
+      require("dap-python").setup("~/.virtualenvs/debugpy/bin/python")
 
       ---Show the nice virtual text when debugging
       ---@return nil|function
       local function virtual_text_setup()
         local ok, virtual_text = om.safe_require("nvim-dap-virtual-text")
-        if not ok then return end
+        if not ok then
+          return
+        end
 
         return virtual_text.setup()
       end
@@ -184,7 +206,9 @@ return {
       ---@return nil
       local function ui_setup(adapter)
         local ok, dapui = om.safe_require("dapui")
-        if not ok then return end
+        if not ok then
+          return
+        end
 
         dapui.setup({
           layouts = {
@@ -283,6 +307,7 @@ return {
 
       -- Adapters
       "nvim-neotest/neotest-plenary",
+      "nvim-neotest/neotest-python",
       "olimorris/neotest-rspec",
       "olimorris/neotest-phpunit",
     },
@@ -324,6 +349,9 @@ return {
       require("neotest").setup({
         adapters = {
           require("neotest-plenary"),
+          require("neotest-python")({
+            dap = { justMyCode = false },
+          }),
           require("neotest-rspec"),
           require("neotest-phpunit"),
         },
