@@ -88,14 +88,14 @@ return {
     },
     keys = {
       {
-        "-",
+        "_",
         function()
           require("oil").toggle_float(".")
         end,
         desc = "Open File Explorer",
       },
       {
-        "_",
+        "-",
         function()
           require("oil").toggle_float()
         end,
