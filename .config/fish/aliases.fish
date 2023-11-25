@@ -109,6 +109,8 @@ alias jup='jupyter notebook'
 alias pipb='pip freeze > ~/.dotfiles/PIP.txt'
 alias pipi='pip install -r ~/.dotfiles/PIP.txt'
 alias jupr="jupyter notebook --NotebookApp.allow_origin='https://colab.research.google.com' --port=9090 --no-browser"
+alias pypiu_test='rm -rf dist/* && python3 -m build && python3 -m twine upload --repository testpypi dist/*'
+alias pypiu='rm -rf dist/* && python3 -m build && python3 -m twine upload dist/*'
 
 # Rails
 alias r='bin/rails'
