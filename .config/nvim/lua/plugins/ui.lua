@@ -3,7 +3,9 @@ return {
   {
     "folke/edgy.nvim",
     event = "VeryLazy",
-    init = function() vim.opt.splitkeep = "screen" end,
+    init = function()
+      vim.opt.splitkeep = "screen"
+    end,
     opts = {
       animate = { enabled = false },
       bottom = {
@@ -11,14 +13,18 @@ return {
           ft = "lazyterm",
           title = "Terminal",
           size = { height = om.on_big_screen() and 20 or 0.2 },
-          filter = function(buf) return not vim.b[buf].lazyterm_cmd end,
+          filter = function(buf)
+            return not vim.b[buf].lazyterm_cmd
+          end,
         },
         { ft = "qf", title = "QuickFix" },
         {
           ft = "help",
           size = { height = 20 },
           -- only show help buffers
-          filter = function(buf) return vim.bo[buf].buftype == "help" end,
+          filter = function(buf)
+            return vim.bo[buf].buftype == "help"
+          end,
         },
         { title = "Neotest Output", ft = "neotest-output-panel", size = { height = 15 } },
       },

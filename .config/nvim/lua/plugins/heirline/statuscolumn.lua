@@ -229,4 +229,11 @@ M.git_signs = {
   },
 }
 
+M.line = {
+  {
+    provider = "│ ",
+    hl = "HeirlineStatusColumn",
+  },
+}
+
 return M

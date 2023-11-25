@@ -4,7 +4,9 @@ return {
     build = ":TSUpdate",
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
-      "JoosepAlviste/nvim-ts-context-commentstring", -- Smart commenting in multi language files - Enabled in Treesitter file
+      {
+        "JoosepAlviste/nvim-ts-context-commentstring", -- Smart commenting in multi language files - Enabled in Treesitter file
+      },
       {
         "windwp/nvim-ts-autotag", -- Autoclose and autorename HTML and Vue tags
         config = true,
@@ -63,9 +65,6 @@ return {
 
         -- nvim-treesitter-endwise plugin
         endwise = { enable = true },
-
-        -- nvim-ts-context-commentstring plugin
-        context_commentstring = { enable = true },
 
         -- playground
         playground = {

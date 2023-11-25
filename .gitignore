@@ -65,6 +65,7 @@
 
 # Fish
 .config/fish/fish_variables
+.config/fish/fish_history
 
 # Tmux
 .config/tmux/plugins

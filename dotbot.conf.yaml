@@ -11,7 +11,6 @@
     ~/.config/efm-langserver: .config/efm-langserver
     ~/.config/fish: .config/fish
     ~/.config/hammerspoon: .config/hammerspoon
-    ~/.config/kitty: .config/kitty
     ~/.config/nvim: .config/nvim
     ~/.config/rclone: .config/rclone
     ~/.config/snippets: .config/snippets
@@ -36,12 +35,15 @@
     ~/.mackup: .config/mackup/.mackup
     ~/.mackup.cfg: .config/mackup/.mackup.cfg
     ~/.profile: .config/bash/.profile
+    ~/.pypirc: .config/.pypirc
     ~/.ssh: .config/ssh
     ~/.tofish: .config/fish/.tofish
     ~/.tool-versions: .tool-versions
     ~/.vim/custom_snippets: .config/vim/custom_snippets
     ~/.vimrc: .config/vim/.vimrc
     ~/.vimrc.plugins: .config/vim/.vimrc.plugins
+    ~/.local/share/fish/fish_history: .config/fish/fish_history
+
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

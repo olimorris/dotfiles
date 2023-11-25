@@ -25,7 +25,9 @@ return {
         ]]
 
         local ok, ts_query = pcall(vim.treesitter.query.parse, "html", query)
-        if not ok then return om.dd(ts_query) end
+        if not ok then
+          return om.dd(ts_query)
+        end
 
         for _, captures, metadata in ts_query:iter_matches(root, bufnr, root:start(), root:end_(), {}) do
           local start_row, start_col, end_row, end_col = captures[2]:range()
@@ -62,7 +64,9 @@ return {
         local buf = args.buf
         local buftype = vim.tbl_contains({ "prompt", "nofile", "help", "quickfix" }, vim.bo[buf].buftype)
         local filetype = vim.tbl_contains({ "", "alpha", "gitcommit", "fugitive" }, vim.bo[buf].filetype)
-        if buftype or filetype then vim.opt_local.winbar = nil end
+        if buftype or filetype then
+          vim.opt_local.winbar = nil
+        end
       end,
       opts = { pattern = "HeirlineInitWinbar" },
     },
@@ -103,7 +107,9 @@ return {
     name = "GitTrackRemoteBranch",
     {
       { "TermLeave" },
-      function() om.GitRemoteSync() end,
+      function()
+        om.GitRemoteSync()
+      end,
       opts = {
         pattern = { "*" },
       },
@@ -112,7 +118,9 @@ return {
       { "VimEnter" },
       function()
         local timer = vim.loop.new_timer()
-        timer:start(0, 120000, function() om.GitRemoteSync() end)
+        timer:start(0, 120000, function()
+          om.GitRemoteSync()
+        end)
       end,
       opts = {
         pattern = { "*" },
@@ -137,7 +145,7 @@ return {
     },
     {
       "FileType",
-      ":setlocal wrap linebreak",
+      ":setlocal wrap linebreak formatoptions-=t",
       opts = { pattern = "markdown" },
     },
     {
@@ -240,7 +248,9 @@ return {
     name = "HighlightYankedText",
     {
       "TextYankPost",
-      function() vim.highlight.on_yank() end,
+      function()
+        vim.highlight.on_yank()
+      end,
       opts = { pattern = "*" },
     },
   },

@@ -108,6 +108,7 @@ function M.config()
       spacer,
       statuscolumn.folds,
       statuscolumn.git_signs,
+      -- statuscolumn.line,
     },
     winbar = {
       {
@@ -117,7 +118,9 @@ function M.config()
             filetype = { "alpha", "oil", "lspinfo", "toggleterm" },
           })
         end,
-        init = function() vim.opt_local.winbar = nil end,
+        init = function()
+          vim.opt_local.winbar = nil
+        end,
       },
       winbar.filepath,
       winbar.filename,
