@@ -199,7 +199,6 @@ M.git_signs = {
     init = function(self)
       local signs = vim.fn.sign_getplaced(vim.api.nvim_get_current_buf(), {
         group = "gitsigns_vimfn_signs_",
-        id = vim.v.lnum,
         lnum = vim.v.lnum,
       })
 
