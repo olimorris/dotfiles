@@ -79,6 +79,7 @@ return {
   {
     "lewis6991/gitsigns.nvim", -- Git signs in the statuscolumn
     opts = {
+      _extmark_signs = false,
       signs = {
         add = { hl = "GitSignsAdd", text = "▌" },
         change = { hl = "GitSignsChange", text = "▌" },
