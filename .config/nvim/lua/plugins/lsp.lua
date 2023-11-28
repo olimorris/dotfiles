@@ -66,6 +66,7 @@ return {
             return " " .. diag.message
           end,
           scope = "line",
+          toggle_event = { "InsertEnter" },
         },
       },
       {
@@ -88,7 +89,6 @@ return {
         },
       },
     },
-
     init = function()
       require("legendary").commands({
         {
