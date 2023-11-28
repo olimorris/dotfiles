@@ -407,10 +407,9 @@ return {
           },
         },
         mapping = {
-          -- <C-y> = Confirm snippet
           -- <C-p> / <Up> = Previous item
           -- <C-n> / <Down> = Next item
-
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
           ["<Tab>"] = cmp_action.luasnip_supertab(),
           ["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
 
