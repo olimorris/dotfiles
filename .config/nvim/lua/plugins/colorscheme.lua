@@ -59,7 +59,7 @@ return {
         FloatBorder = { fg = "${gray}", bg = "${bg}" },
 
         LspLens = { fg = "${light_gray}", italic = true },
-        CursorLineNr = { bg = "${bg}", fg = "${fg}" },
+        CursorLineNr = { bg = "${bg}", fg = "${fg}", italic = true, bold = true },
         DiffChange = { underline = true }, -- diff mode: Changed line |diff.txt|
         LocalHighlight = { bg = "${local_highlight}" },
         MatchParen = { fg = "${cyan}" },
