@@ -1,5 +1,4 @@
--- The hyperkey is mapped to caps lock
-local hyper = { "cmd", "alt", "ctrl" }
+local hyper = Hyper
 
 ------------------------------- APP LAUNCH/TOGGLE ------------------------------
 --[[
@@ -28,16 +27,19 @@ local apps = {
 local LaunchOrToggle = function(key, app_name, app_filename)
   hs.hotkey.bind(hyper, key, function()
     local app = hs.application.find(app_name)
-    print(app)
     -- Toggle - show
     local awin = nil
-    if app then awin = app:mainWindow() end
+    if app then
+      awin = app:mainWindow()
+    end
     -- Toggle - hide
     if awin and app and app:isFrontmost() then
       app:hide()
     else
       -- Launch
-      if app_filename then return hs.application.launchOrFocus(app_filename) end
+      if app_filename then
+        return hs.application.launchOrFocus(app_filename)
+      end
 
       app = hs.application.find(app_name)
 
