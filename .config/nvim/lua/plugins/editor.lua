@@ -58,6 +58,7 @@ return {
         ["<C-s>"] = "actions.save",
         ["q"] = "actions.close",
         [">"] = "actions.toggle_hidden",
+        ["<C-y>"] = "actions.copy_entry_path",
       },
       buf_options = {
         buflisted = false,
