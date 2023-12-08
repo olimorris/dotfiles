@@ -46,6 +46,15 @@ return {
     -- Line Numbers
     {
       provider = "%=%4{v:virtnum ? '' : &nu ? (&rnu && v:relnum ? v:relnum : v:lnum) . ' ' : ''}",
+      on_click = {
+        name = "heirline_statuscolumn_dap",
+        callback = function(_self)
+          local mouse = vim.fn.getmousepos()
+          local cursor_pos = { mouse.line, 0 }
+          vim.api.nvim_win_set_cursor(mouse.winid, cursor_pos)
+          require("dap").toggle_breakpoint()
+        end,
+      },
     },
     -- Git Signs
     {
