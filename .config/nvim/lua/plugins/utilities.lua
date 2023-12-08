@@ -112,6 +112,18 @@ return {
     ft = "qf",
   },
   {
+
+    "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
+    cmd = "Bdelete",
+    init = function()
+      require("legendary").keymaps({
+        { "<C-c>", "<cmd>Bdelete<CR>", hide = true, description = "Close Buffer" }, -- bufdelete.nvim
+        { "<Tab>", "<cmd>bnext<CR>", hide = true, description = "Next buffer", opts = { noremap = false } }, -- Heirline.nvim
+        { "<S-Tab>", "<cmd>bprev<CR>", hide = true, description = "Previous buffer", opts = { noremap = false } }, -- Heirline.nvim
+      })
+    end,
+  },
+  {
     "nathom/tmux.nvim", -- Navigate Tmux panes inside of neovim
     enabled = function()
       return os.getenv("TMUX")

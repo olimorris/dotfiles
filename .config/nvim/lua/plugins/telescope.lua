@@ -1,13 +1,14 @@
 return {
   {
     "nvim-telescope/telescope.nvim", -- Awesome fuzzy finder for everything
-    lazy = true,
     cmd = "Telescope",
     dependencies = {
       "nvim-lua/plenary.nvim",
       {
         "debugloop/telescope-undo.nvim", -- Visualise undotree
-        config = function() require("telescope").load_extension("undo") end,
+        config = function()
+          require("telescope").load_extension("undo")
+        end,
         init = function()
           require("legendary").keymaps({
             { "<LocalLeader>u", "<cmd>Telescope undo<CR>", description = "Telescope undo" },
@@ -21,7 +22,9 @@ return {
       -- },
       {
         "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
-        config = function() require("telescope").load_extension("frecency") end,
+        config = function()
+          require("telescope").load_extension("frecency")
+        end,
       },
     },
     init = function()

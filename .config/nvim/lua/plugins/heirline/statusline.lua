@@ -29,7 +29,9 @@ M.VimMode = {
   update = {
     "ModeChanged",
     pattern = "*:*",
-    callback = vim.schedule_wrap(function() vim.cmd("redrawstatus") end),
+    callback = vim.schedule_wrap(function()
+      vim.cmd("redrawstatus")
+    end),
   },
   static = {
     mode_names = {
@@ -85,23 +87,33 @@ M.VimMode = {
     },
   },
   {
-    provider = function(self) return " %2(" .. self.mode_names[self.mode] .. "%) " end,
-    hl = function(self) return { fg = "bg", bg = self.mode_color } end,
+    provider = function(self)
+      return " %2(" .. self.mode_names[self.mode] .. "%) "
+    end,
+    hl = function(self)
+      return { fg = "bg", bg = self.mode_color }
+    end,
     on_click = {
-      callback = function() vim.cmd("Alpha") end,
+      callback = function()
+        vim.cmd("Alpha")
+      end,
       name = "heirline_mode",
     },
   },
   {
     provider = "",
-    hl = function(self) return { fg = self.mode_color, bg = "bg" } end,
+    hl = function(self)
+      return { fg = self.mode_color, bg = "bg" }
+    end,
   },
 }
 
 ---Return the current git branch in the cwd
 M.GitBranch = {
   condition = conditions.is_git_repo,
-  init = function(self) self.status_dict = vim.b.gitsigns_status_dict end,
+  init = function(self)
+    self.status_dict = vim.b.gitsigns_status_dict
+  end,
   {
     condition = function(self)
       return not conditions.buffer_matches({
@@ -114,35 +126,53 @@ M.GitBranch = {
         return "  " .. (self.status_dict.head == "" and "main" or self.status_dict.head) .. " "
       end,
       on_click = {
-        callback = function() om.ListBranches() end,
+        callback = function()
+          om.ListBranches()
+        end,
         name = "git_change_branch",
       },
       hl = { fg = "gray", bg = "statusline_bg" },
     },
     {
-      condition = function() return (_G.GitStatus ~= nil and (_G.GitStatus.ahead ~= 0 or _G.GitStatus.behind ~= 0)) end,
+      condition = function()
+        return (_G.GitStatus ~= nil and (_G.GitStatus.ahead ~= 0 or _G.GitStatus.behind ~= 0))
+      end,
       update = { "User", pattern = "GitStatusChanged" },
       {
-        condition = function() return _G.GitStatus.status == "pending" end,
+        condition = function()
+          return _G.GitStatus.status == "pending"
+        end,
         provider = " ",
         hl = { fg = "gray", bg = "statusline_bg" },
       },
       {
-        provider = function() return _G.GitStatus.behind .. " " end,
-        hl = function() return { fg = _G.GitStatus.behind == 0 and "gray" or "red", bg = "statusline_bg" } end,
+        provider = function()
+          return _G.GitStatus.behind .. " "
+        end,
+        hl = function()
+          return { fg = _G.GitStatus.behind == 0 and "gray" or "red", bg = "statusline_bg" }
+        end,
         on_click = {
           callback = function()
-            if _G.GitStatus.behind > 0 then om.GitPull() end
+            if _G.GitStatus.behind > 0 then
+              om.GitPull()
+            end
           end,
           name = "git_pull",
         },
       },
       {
-        provider = function() return _G.GitStatus.ahead .. " " end,
-        hl = function() return { fg = _G.GitStatus.ahead == 0 and "gray" or "green", bg = "statusline_bg" } end,
+        provider = function()
+          return _G.GitStatus.ahead .. " "
+        end,
+        hl = function()
+          return { fg = _G.GitStatus.ahead == 0 and "gray" or "green", bg = "statusline_bg" }
+        end,
         on_click = {
           callback = function()
-            if _G.GitStatus.ahead > 0 then om.GitPush() end
+            if _G.GitStatus.ahead > 0 then
+              om.GitPush()
+            end
           end,
           name = "git_push",
         },
@@ -154,7 +184,9 @@ M.GitBranch = {
 
 ---Return the filename of the current buffer
 local FileBlock = {
-  init = function(self) self.filename = vim.api.nvim_buf_get_name(0) end,
+  init = function(self)
+    self.filename = vim.api.nvim_buf_get_name(0)
+  end,
   condition = function(self)
     return not conditions.buffer_matches({
       filetype = self.filetypes,
@@ -165,11 +197,15 @@ local FileBlock = {
 local FileName = {
   provider = function(self)
     local filename = vim.fn.fnamemodify(self.filename, ":t")
-    if filename == "" then return "[No Name]" end
+    if filename == "" then
+      return "[No Name]"
+    end
     return " " .. filename .. " "
   end,
   on_click = {
-    callback = function() vim.cmd("Telescope find_files") end,
+    callback = function()
+      vim.cmd("Telescope find_files")
+    end,
     name = "find_files",
   },
   hl = { fg = "gray", bg = "statusline_bg" },
@@ -182,7 +218,9 @@ local FileFlags = {
   --   hl = { fg = "gray" },
   -- },
   {
-    condition = function() return not vim.bo.modifiable or vim.bo.readonly end,
+    condition = function()
+      return not vim.bo.modifiable or vim.bo.readonly
+    end,
     provider = " ",
     hl = { fg = "gray" },
   },
@@ -211,14 +249,18 @@ M.LspDiagnostics = {
   update = { "DiagnosticChanged", "BufEnter" },
   -- Errors
   {
-    condition = function(self) return self.errors > 0 end,
+    condition = function(self)
+      return self.errors > 0
+    end,
     hl = { fg = "bg", bg = "red" },
     {
       {
         provider = "",
       },
       {
-        provider = function(self) return vim.fn.sign_getdefined("DiagnosticSignError")[1].text .. self.errors end,
+        provider = function(self)
+          return vim.fn.sign_getdefined("DiagnosticSignError")[1].text .. self.errors
+        end,
       },
       {
         provider = "",
@@ -228,14 +270,18 @@ M.LspDiagnostics = {
   },
   -- Warnings
   {
-    condition = function(self) return self.warnings > 0 end,
+    condition = function(self)
+      return self.warnings > 0
+    end,
     hl = { fg = "bg", bg = "yellow" },
     {
       {
         provider = "",
       },
       {
-        provider = function(self) return vim.fn.sign_getdefined("DiagnosticSignWarn")[1].text .. self.warnings end,
+        provider = function(self)
+          return vim.fn.sign_getdefined("DiagnosticSignWarn")[1].text .. self.warnings
+        end,
       },
       {
         provider = "",
@@ -245,21 +291,29 @@ M.LspDiagnostics = {
   },
   -- Hints
   {
-    condition = function(self) return self.hints > 0 end,
+    condition = function(self)
+      return self.hints > 0
+    end,
     hl = { fg = "gray", bg = "bg" },
     {
       {
-        provider = function(self) return " " .. vim.fn.sign_getdefined("DiagnosticSignHint")[1].text .. self.hints end,
+        provider = function(self)
+          return " " .. vim.fn.sign_getdefined("DiagnosticSignHint")[1].text .. self.hints
+        end,
       },
     },
   },
   -- Info
   {
-    condition = function(self) return self.info > 0 end,
+    condition = function(self)
+      return self.info > 0
+    end,
     hl = { fg = "gray", bg = "bg" },
     {
       {
-        provider = function(self) return " " .. vim.fn.sign_getdefined("DiagnosticSignInfo")[1].text .. self.info end,
+        provider = function(self)
+          return " " .. vim.fn.sign_getdefined("DiagnosticSignInfo")[1].text .. self.info
+        end,
       },
     },
   },
@@ -285,12 +339,16 @@ M.LspAttached = {
   update = { "LspAttach", "LspDetach" },
   on_click = {
     callback = function()
-      vim.defer_fn(function() vim.cmd("LspInfo") end, 100)
+      vim.defer_fn(function()
+        vim.cmd("LspInfo")
+      end, 100)
     end,
     name = "heirline_LSP",
   },
   {
-    condition = function(self) return self.lsp_attached end,
+    condition = function(self)
+      return self.lsp_attached
+    end,
     LeftSlantStart,
     {
       provider = "  ",
@@ -333,7 +391,9 @@ M.Ruler = {
 }
 
 M.MacroRecording = {
-  condition = function(self) return vim.fn.reg_recording() ~= "" end,
+  condition = function(self)
+    return vim.fn.reg_recording() ~= ""
+  end,
   update = {
     "RecordingEnter",
     "RecordingLeave",
@@ -343,7 +403,9 @@ M.MacroRecording = {
     hl = { fg = "blue", bg = "bg" },
   },
   {
-    provider = function(self) return " " .. vim.fn.reg_recording() .. " " end,
+    provider = function(self)
+      return " " .. vim.fn.reg_recording() .. " "
+    end,
     hl = { bg = "blue", fg = "bg" },
   },
   {
@@ -353,14 +415,20 @@ M.MacroRecording = {
 }
 
 M.SearchResults = {
-  condition = function(self) return vim.v.hlsearch ~= 0 end,
+  condition = function(self)
+    return vim.v.hlsearch ~= 0
+  end,
   init = function(self)
     local ok, search = pcall(vim.fn.searchcount)
-    if ok and search.total then self.search = search end
+    if ok and search.total then
+      self.search = search
+    end
   end,
   {
     provider = "",
-    hl = function() return { fg = utils.get_highlight("Substitute").bg, bg = "bg" } end,
+    hl = function()
+      return { fg = utils.get_highlight("Substitute").bg, bg = "bg" }
+    end,
   },
   {
     provider = function(self)
@@ -368,11 +436,15 @@ M.SearchResults = {
 
       return string.format(" %d/%d ", search.current, math.min(search.total, search.maxcount))
     end,
-    hl = function() return { bg = utils.get_highlight("Substitute").bg, fg = "bg" } end,
+    hl = function()
+      return { bg = utils.get_highlight("Substitute").bg, fg = "bg" }
+    end,
   },
   {
     provider = "",
-    hl = function() return { bg = utils.get_highlight("Substitute").bg, fg = "bg" } end,
+    hl = function()
+      return { bg = utils.get_highlight("Substitute").bg, fg = "bg" }
+    end,
   },
 }
 
@@ -398,10 +470,14 @@ M.Session = {
       update = {
         "User",
         pattern = "PersistedToggled",
-        callback = vim.schedule_wrap(function() vim.cmd("redrawstatus") end),
+        callback = vim.schedule_wrap(function()
+          vim.cmd("redrawstatus")
+        end),
       },
       on_click = {
-        callback = function() vim.cmd("SessionToggle") end,
+        callback = function()
+          vim.cmd("SessionToggle")
+        end,
         name = "toggle_session",
       },
     },
@@ -412,7 +488,9 @@ M.Session = {
 M.Overseer = {
   condition = function()
     local ok, _ = om.safe_require("overseer")
-    if ok then return true end
+    if ok then
+      return true
+    end
   end,
   init = function(self)
     self.overseer = require("overseer")
@@ -434,7 +512,9 @@ M.Overseer = {
     },
   },
   {
-    condition = function(self) return #self.tasks.list_tasks() > 0 end,
+    condition = function(self)
+      return #self.tasks.list_tasks() > 0
+    end,
     {
       provider = function(self)
         local tasks_by_status = self.overseer.util.tbl_group_by(self.tasks.list_tasks({ unique = true }), "status")
@@ -447,9 +527,13 @@ M.Overseer = {
           end
         end
       end,
-      hl = function(self) return { fg = self.color } end,
+      hl = function(self)
+        return { fg = self.color }
+      end,
       on_click = {
-        callback = function() require("neotest").run.run_last() end,
+        callback = function()
+          require("neotest").run.run_last()
+        end,
         name = "run_last_test",
       },
     },
@@ -461,9 +545,13 @@ M.Dap = {
     local session = require("dap").session()
     return session ~= nil
   end,
-  provider = function() return "  " end,
+  provider = function()
+    return "  "
+  end,
   on_click = {
-    callback = function() require("dap").continue() end,
+    callback = function()
+      require("dap").continue()
+    end,
     name = "dap_continue",
   },
   hl = { fg = "red" },
@@ -477,9 +565,13 @@ M.Lazy = {
     }) and require("lazy.status").has_updates()
   end,
   -- update = { "User", pattern = "LazyUpdate" },
-  provider = function() return "  " .. require("lazy.status").updates() .. " " end,
+  provider = function()
+    return "  " .. require("lazy.status").updates() .. " "
+  end,
   on_click = {
-    callback = function() require("lazy").update() end,
+    callback = function()
+      require("lazy").update()
+    end,
     name = "update_plugins",
   },
   hl = { fg = "gray" },
@@ -492,18 +584,26 @@ local FileIcon = {
     local extension = vim.fn.fnamemodify(filename, ":e")
     self.icon, self.icon_color = require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
   end,
-  provider = function(self) return self.icon and (" " .. self.icon .. " ") end,
+  provider = function(self)
+    return self.icon and (" " .. self.icon .. " ")
+  end,
   on_click = {
-    callback = function() om.ChangeFiletype() end,
+    callback = function()
+      om.ChangeFiletype()
+    end,
     name = "change_ft",
   },
   hl = { fg = "gray", bg = "statusline_bg" },
 }
 
 local FileType = {
-  provider = function() return string.lower(vim.bo.filetype) .. " " end,
+  provider = function()
+    return string.lower(vim.bo.filetype) .. " "
+  end,
   on_click = {
-    callback = function() om.ChangeFiletype() end,
+    callback = function()
+      om.ChangeFiletype()
+    end,
     name = "change_ft",
   },
   hl = { fg = "gray", bg = "statusline_bg" },

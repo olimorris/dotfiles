@@ -1,98 +1,47 @@
-local M = {
+return {
   "rebelot/heirline.nvim",
   lazy = true,
-  dependencies = {
-    {
-      "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
-      cmd = "Bdelete",
-    },
-    "nvim-tree/nvim-web-devicons",
-  },
-  init = function()
-    require("legendary").keymaps({
-      { "<C-c>", "<cmd>Bdelete<CR>", hide = true, description = "Close Buffer" }, -- bufdelete.nvim
-      { "<Tab>", "<cmd>bnext<CR>", hide = true, description = "Next buffer", opts = { noremap = false } }, -- Heirline.nvim
-      { "<S-Tab>", "<cmd>bprev<CR>", hide = true, description = "Previous buffer", opts = { noremap = false } }, -- Heirline.nvim
-    })
-  end,
-}
+  config = function()
+    local filetypes = {
+      "^git.*",
+      "fugitive",
+      "alpha",
+      "^neo--tree$",
+      "^neotest--summary$",
+      "^neo--tree--popup$",
+      "^NvimTree$",
+      "^toggleterm$",
+    }
+    local buftypes = {
+      "nofile",
+      "prompt",
+      "help",
+      "quickfix",
+    }
+    local force_inactive_filetypes = {
+      "^aerial$",
+      "^alpha$",
+      "^chatgpt$",
+      "^DressingInput$",
+      "^frecency$",
+      "^lazy$",
+      "^lazyterm$",
+      "^netrw$",
+      "^oil$",
+      "^TelescopePrompt$",
+      "^undotree$",
+    }
 
--- Filetypes where certain elements of the statusline will not be shown
-local filetypes = {
-  "^git.*",
-  "fugitive",
-  "alpha",
-  "^neo--tree$",
-  "^neotest--summary$",
-  "^neo--tree--popup$",
-  "^NvimTree$",
-  "^toggleterm$",
-}
+    local heirline = require("heirline")
+    local conditions = require("heirline.conditions")
 
--- Buftypes which should cause elements to be hidden
-local buftypes = {
-  "nofile",
-  "prompt",
-  "help",
-  "quickfix",
-}
+    local winbar = require("plugins.heirline.winbar")
+    local bufferline = require("plugins.heirline.bufferline")
+    local statusline = require("plugins.heirline.statusline")
 
--- Filetypes which force the statusline to be inactive
-local force_inactive_filetypes = {
-  "^aerial$",
-  "^alpha$",
-  "^chatgpt$",
-  "^DressingInput$",
-  "^frecency$",
-  "^lazy$",
-  "^lazyterm$",
-  "^netrw$",
-  "^oil$",
-  "^TelescopePrompt$",
-  "^undotree$",
-}
+    local align = { provider = "%=" }
+    local spacer = { provider = " " }
 
----Load the bufferline, tabline and statusline. Extracting this to a seperate
-function M.config()
-  local heirline = require("heirline")
-  local conditions = require("heirline.conditions")
-
-  local winbar = require("plugins.heirline.winbar")
-  local bufferline = require("plugins.heirline.bufferline")
-  local statusline = require("plugins.heirline.statusline")
-  local statuscolumn = require("plugins.heirline.statuscolumn")
-
-  local align = { provider = "%=" }
-  local spacer = { provider = " " }
-
-  heirline.setup({
-    statusline = {
-      static = {
-        filetypes = filetypes,
-        buftypes = buftypes,
-        force_inactive_filetypes = force_inactive_filetypes,
-      },
-      condition = function(self)
-        return not conditions.buffer_matches({
-          filetype = self.force_inactive_filetypes,
-        })
-      end,
-      statusline.VimMode,
-      statusline.GitBranch,
-      -- statusline.FileNameBlock,
-      statusline.LspAttached,
-      -- statusline.LspDiagnostics,
-      align,
-      statusline.Overseer,
-      statusline.Dap,
-      statusline.Lazy,
-      statusline.FileType,
-      -- statusline.FileEncoding,
-      statusline.Session,
-      statusline.MacroRecording,
-      statusline.SearchResults,
-      statusline.Ruler,
-    },
     statuscolumn = {
       condition = function()
         return not conditions.buffer_matches({
@@ -110,25 +59,53 @@ function M.config()
       statuscolumn.git_signs,
       -- statuscolumn.line,
     },
-    winbar = {
-      {
-        condition = function()
-          return conditions.buffer_matches({
-            buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
-            filetype = { "alpha", "oil", "lspinfo", "toggleterm" },
+    heirline.setup({
+      statusline = {
+        static = {
+          filetypes = filetypes,
+          buftypes = buftypes,
+          force_inactive_filetypes = force_inactive_filetypes,
+        },
+        condition = function(self)
+          return not conditions.buffer_matches({
+            filetype = self.force_inactive_filetypes,
           })
         end,
-        init = function()
-          vim.opt_local.winbar = nil
-        end,
+        statusline.VimMode,
+        statusline.GitBranch,
+        -- statusline.FileNameBlock,
+        statusline.LspAttached,
+        -- statusline.LspDiagnostics,
+        align,
+        statusline.Overseer,
+        statusline.Dap,
+        statusline.Lazy,
+        statusline.FileType,
+        -- statusline.FileEncoding,
+        statusline.Session,
+        statusline.MacroRecording,
+        statusline.SearchResults,
+        statusline.Ruler,
       },
-      winbar.filepath,
-      winbar.filename,
-      winbar.symbols,
-      align,
-      winbar.vim_logo,
-    },
-  })
-end
-
-return M
+      statuscolumn = require("plugins.heirline.statuscolumn"),
+      winbar = {
+        {
+          condition = function()
+            return conditions.buffer_matches({
+              buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
+              filetype = { "alpha", "oil", "lspinfo", "toggleterm" },
+            })
+          end,
+          init = function()
+            vim.opt_local.winbar = nil
+          end,
+        },
+        winbar.filepath,
+        winbar.filename,
+        winbar.symbols,
+        align,
+        winbar.vim_logo,
+      },
+    })
+  end,
+}
