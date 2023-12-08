@@ -42,23 +42,6 @@ return {
     local align = { provider = "%=" }
     local spacer = { provider = " " }
 
-    statuscolumn = {
-      condition = function()
-        return not conditions.buffer_matches({
-          buftype = buftypes,
-          filetype = force_inactive_filetypes,
-        })
-      end,
-      static = statuscolumn.static,
-      init = statuscolumn.init,
-      statuscolumn.signs,
-      align,
-      statuscolumn.line_numbers,
-      spacer,
-      statuscolumn.folds,
-      statuscolumn.git_signs,
-      -- statuscolumn.line,
-    },
     heirline.setup({
       statusline = {
         static = {
