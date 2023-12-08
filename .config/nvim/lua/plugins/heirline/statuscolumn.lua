@@ -68,7 +68,7 @@ return {
               0,
               self.git_ns,
               { vim.v.lnum - 1, 0 },
-              { vim.v.lnum, 0 },
+              { vim.v.lnum - 1, -1 },
               { limit = 1, details = true }
             )[1]
 
