@@ -120,7 +120,7 @@ return {
         CopilotSuggestion = { fg = "${copilot}", italic = true },
 
         -- DAP
-        DebugBreakpoint = { fg = "${red}", bold = true },
+        DebugBreakpoint = { fg = "${red}", bold = true, italic = true },
         DebugHighlightLine = { fg = "${purple}", italic = true },
         NvimDapVirtualText = { fg = "${cyan}", italic = true },
 
