@@ -1,26 +1,21 @@
-local M = {}
-
 local sep = "  "
-local LeftSlantEnd = {
-  provider = "",
-  hl = { fg = "statusline_bg", bg = "bg" },
-}
 
-local modifiers = {
-  dirname = ":s?/Users/Oli/.dotfiles?dotfiles?:s?.config/nvim/lua/Oli?Neovim?:s?/Users/Oli/Code?Code?",
-}
-
-M.vim_logo = {
+local VimLogo = {
   provider = " ",
   hl = "VimLogo",
 }
 
-M.filepath = {
+local Filepath = {
+  static = {
+    modifiers = {
+      dirname = ":s?/Users/Oli/.dotfiles?dotfiles?:s?.config/nvim/lua/Oli?Neovim?:s?/Users/Oli/Code?Code?",
+    },
+  },
   init = function(self)
     local current_dir = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h")
 
-    self.filepath = vim.fn.fnamemodify(current_dir, modifiers.dirname or nil)
-    self.short_path = vim.fn.fnamemodify(vim.fn.expand("%:h"), modifiers.dirname or nil)
+    self.filepath = vim.fn.fnamemodify(current_dir, self.modifiers.dirname or nil)
+    self.short_path = vim.fn.fnamemodify(vim.fn.expand("%:h"), self.modifiers.dirname or nil)
     if self.filepath == "" then
       self.filepath = "[No Name]"
     end
@@ -48,7 +43,7 @@ M.filepath = {
   },
 }
 
-M.filename = {
+local Filename = {
   {
     {
       provider = function()
@@ -82,7 +77,7 @@ M.filename = {
 
 -- Inspired by:
 -- https://github.com/eli-front/nvim-config/blob/5a225e1e6de3d6f1bdca2025602c3e7a4917e31b/lua/elifront/utils/status/init.lua#L32
-M.symbols = {
+local Symbols = {
   init = function(self)
     self.symbols = require("aerial").get_location(true) or {}
   end,
@@ -144,4 +139,10 @@ M.symbols = {
   },
 }
 
-return M
+return {
+  Filepath,
+  Filename,
+  Symbols,
+  { provider = "%=" },
+  VimLogo,
+}

@@ -2,6 +2,9 @@ local conditions = require("heirline.conditions")
 
 return {
   {
+    static = {
+      git_ns = vim.api.nvim_create_namespace("gitsigns_extmark_signs_"),
+    },
     -- Signs
     {
       init = function(self)
@@ -16,7 +19,7 @@ return {
         )
 
         for _, extmark in pairs(extmarks) do
-          if extmark[4].ns_id ~= vim.api.nvim_get_namespaces()["gitsigns_extmark_signs_"] then
+          if extmark[4].ns_id ~= self.git_ns then
             signs[#signs + 1] = {
               name = extmark[4].sign_hl_group or "",
               text = extmark[4].sign_text,
@@ -51,12 +54,10 @@ return {
           return conditions.is_git_repo() and vim.v.virtnum == 0
         end,
         init = function(self)
-          local ns_id = vim.api.nvim_get_namespaces()["gitsigns_extmark_signs_"]
-
-          if ns_id then
+          if self.git_ns then
             local extmark = vim.api.nvim_buf_get_extmarks(
               0,
-              ns_id,
+              self.git_ns,
               { vim.v.lnum - 1, 0 },
               { vim.v.lnum, 0 },
               { limit = 1, details = true }

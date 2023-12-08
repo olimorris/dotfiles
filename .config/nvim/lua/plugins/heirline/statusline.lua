@@ -20,8 +20,7 @@ local RightSlantEnd = {
   hl = { fg = "bg", bg = "statusline_bg" },
 }
 
----Return the current vim mode
-M.VimMode = {
+local VimMode = {
   init = function(self)
     self.mode = vim.fn.mode(1)
     self.mode_color = self.mode_colors[self.mode:sub(1, 1)]
@@ -108,8 +107,7 @@ M.VimMode = {
   },
 }
 
----Return the current git branch in the cwd
-M.GitBranch = {
+local GitBranch = {
   condition = conditions.is_git_repo,
   init = function(self)
     self.status_dict = vim.b.gitsigns_status_dict
@@ -182,7 +180,6 @@ M.GitBranch = {
   },
 }
 
----Return the filename of the current buffer
 local FileBlock = {
   init = function(self)
     self.filename = vim.api.nvim_buf_get_name(0)
@@ -226,10 +223,10 @@ local FileFlags = {
   },
 }
 
-M.FileNameBlock = utils.insert(FileBlock, LeftSlantStart, utils.insert(FileName, FileFlags), LeftSlantEnd)
+local FileNameBlock = utils.insert(FileBlock, LeftSlantStart, utils.insert(FileName, FileFlags), LeftSlantEnd)
 
 ---Return the LspDiagnostics from the LSP servers
-M.LspDiagnostics = {
+local LspDiagnostics = {
   condition = conditions.has_diagnostics,
   init = function(self)
     self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
@@ -319,7 +316,7 @@ M.LspDiagnostics = {
   },
 }
 
-M.LspAttached = {
+local LspAttached = {
   condition = conditions.lsp_attached,
   static = {
     lsp_attached = false,
@@ -359,7 +356,7 @@ M.LspAttached = {
 }
 
 ---Return the current line number as a % of total lines and the total lines in the file
-M.Ruler = {
+local Ruler = {
   condition = function(self)
     return not conditions.buffer_matches({
       filetype = self.filetypes,
@@ -390,7 +387,7 @@ M.Ruler = {
   },
 }
 
-M.MacroRecording = {
+local MacroRecording = {
   condition = function(self)
     return vim.fn.reg_recording() ~= ""
   end,
@@ -414,7 +411,7 @@ M.MacroRecording = {
   },
 }
 
-M.SearchResults = {
+local SearchResults = {
   condition = function(self)
     return vim.v.hlsearch ~= 0
   end,
@@ -449,7 +446,7 @@ M.SearchResults = {
 }
 
 ---Return the status of the current session
-M.Session = {
+local Session = {
   update = { "User", pattern = "PersistedStateChange" },
   {
     condition = function(self)
@@ -485,7 +482,7 @@ M.Session = {
   },
 }
 
-M.Overseer = {
+local Overseer = {
   condition = function()
     local ok, _ = om.safe_require("overseer")
     if ok then
@@ -540,7 +537,7 @@ M.Overseer = {
   },
 }
 
-M.Dap = {
+local Dap = {
   condition = function()
     local session = require("dap").session()
     return session ~= nil
@@ -558,7 +555,7 @@ M.Dap = {
 }
 
 -- Show plugin updates available from lazy.nvim
-M.Lazy = {
+local Lazy = {
   condition = function(self)
     return not conditions.buffer_matches({
       filetype = self.filetypes,
@@ -609,10 +606,10 @@ local FileType = {
   hl = { fg = "gray", bg = "statusline_bg" },
 }
 
-M.FileType = utils.insert(FileBlock, RightSlantStart, FileIcon, FileType, RightSlantEnd)
+local FileType = utils.insert(FileBlock, RightSlantStart, FileIcon, FileType, RightSlantEnd)
 
 --- Return information on the current file's encoding
-M.FileEncoding = {
+local FileEncoding = {
   condition = function(self)
     return not conditions.buffer_matches({
       filetype = self.filetypes,
@@ -632,4 +629,52 @@ M.FileEncoding = {
   RightSlantEnd,
 }
 
-return M
+return {
+  static = {
+    filetypes = {
+      "^git.*",
+      "fugitive",
+      "alpha",
+      "^neo--tree$",
+      "^neotest--summary$",
+      "^neo--tree--popup$",
+      "^NvimTree$",
+      "^toggleterm$",
+    },
+    force_inactive_filetypes = {
+      "^aerial$",
+      "^alpha$",
+      "^chatgpt$",
+      "^DressingInput$",
+      "^frecency$",
+      "^lazy$",
+      "^lazyterm$",
+      "^netrw$",
+      "^oil$",
+      "^TelescopePrompt$",
+      "^undotree$",
+    },
+  },
+  condition = function(self)
+    return not conditions.buffer_matches({
+      filetype = self.force_inactive_filetypes,
+    })
+  end,
+  {
+    VimMode,
+    GitBranch,
+    -- FileNameBlock,
+    LspAttached,
+    -- LspDiagnostics,
+    { provider = "%=" },
+    Overseer,
+    Dap,
+    Lazy,
+    FileType,
+    -- FileEncoding,
+    Session,
+    MacroRecording,
+    SearchResults,
+    Ruler,
+  },
+}
