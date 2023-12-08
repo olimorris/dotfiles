@@ -11,7 +11,9 @@
 ]]
 
 local ok, legendary = pcall(require, "legendary")
-if not ok then return end
+if not ok then
+  return
+end
 
 -- Functions for multiple cursors
 vim.g.mc = vim.api.nvim_replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]], true, true, true)
@@ -28,7 +30,9 @@ end
 return legendary.keymaps({
   {
     "<C-x>",
-    function() om.float_term(nil, { cwd = nil, esc_esc = true }) end,
+    function()
+      om.float_term(nil, { cwd = nil, esc_esc = true })
+    end,
     description = "Open terminal",
     mode = { "n", "t" },
   },

@@ -1,20 +1,28 @@
 local ok, legendary = pcall(require, "legendary")
-if not ok then return end
+if not ok then
+  return
+end
 
 return legendary.commands({
   {
     ":LineNumbers",
-    function() om.ToggleLineNumbers() end,
+    function()
+      om.ToggleLineNumbers()
+    end,
     description = "Toggle line numbers",
   },
   {
     ":ChangeFiletype",
-    function() om.ChangeFiletype() end,
+    function()
+      om.ChangeFiletype()
+    end,
     description = "Change filetype of current buffer",
   },
   {
     ":CopyMessage",
-    function() vim.cmd([[let @+ = execute('messages')]]) end,
+    function()
+      vim.cmd([[let @+ = execute('messages')]])
+    end,
     description = "Copy message output",
   },
   {
@@ -42,19 +50,25 @@ return legendary.commands({
       },
       {
         "FindAndReplaceUndo",
-        function(opts) vim.api.nvim_command("silent cdo undo") end,
+        function(opts)
+          vim.api.nvim_command("silent cdo undo")
+        end,
         description = "Undo Find and Replace",
       },
     },
   },
   {
     "GitBranchList",
-    function() om.ListBranches() end,
+    function()
+      om.ListBranches()
+    end,
     description = "List the Git branches in this repo",
   },
   {
     "GitRemoteSync",
-    function() om.GitRemoteSync() end,
+    function()
+      om.GitRemoteSync()
+    end,
     description = "Git sync remote repo",
   },
   {
@@ -90,7 +104,9 @@ return legendary.commands({
   },
   {
     "Lazygit",
-    function() om.float_term("lazygit", { size = { width = 1, height = 1 } }) end,
+    function()
+      om.float_term("lazygit", { size = { width = 1, height = 1 } })
+    end,
     description = "Git terminal",
   },
   {
@@ -100,12 +116,16 @@ return legendary.commands({
   },
   {
     ":Snippets",
-    function() om.EditSnippet() end,
+    function()
+      om.EditSnippet()
+    end,
     description = "Edit Snippets",
   },
   {
     ":Theme",
-    function() om.ToggleTheme() end,
+    function()
+      om.ToggleTheme()
+    end,
     description = "Toggle theme",
   },
   {
@@ -113,11 +133,9 @@ return legendary.commands({
     function()
       local uuid = vim.fn.system("uuidgen"):gsub("\n", ""):lower()
       local line = vim.fn.getline(".")
-      vim.schedule(
-        function()
-          vim.fn.setline(".", vim.fn.strpart(line, 0, vim.fn.col(".")) .. uuid .. vim.fn.strpart(line, vim.fn.col(".")))
-        end
-      )
+      vim.schedule(function()
+        vim.fn.setline(".", vim.fn.strpart(line, 0, vim.fn.col(".")) .. uuid .. vim.fn.strpart(line, vim.fn.col(".")))
+      end)
     end,
     description = "Generate a UUID and insert it into the buffer",
   },

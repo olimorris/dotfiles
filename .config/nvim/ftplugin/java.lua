@@ -30,7 +30,9 @@ config["on_attach"] = function(client, bufnr)
   require("jdtls").setup_dap({ hotcodereplace = "auto" })
   require("jdtls.setup").add_commands()
 
-  if client.server_capabilities.documentSymbolProvider then require("nvim-navic").attach(client, bufnr) end
+  if client.server_capabilities.documentSymbolProvider then
+    require("nvim-navic").attach(client, bufnr)
+  end
 end
 
 require("jdtls").start_or_attach(config)

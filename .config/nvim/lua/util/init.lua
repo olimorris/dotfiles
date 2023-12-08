@@ -4,12 +4,16 @@ _G.om = {}
 ---check if a certain feature/version/commit exists in nvim
 ---@param feature string
 ---@return boolean
-function om.has(feature) return vim.fn.has(feature) > 0 end
+function om.has(feature)
+  return vim.fn.has(feature) > 0
+end
 
 om.nightly = om.has("nvim-0.10")
 
 ---Display the given error
-om.dd = function(...) require("util.debug").dump(...) end
+om.dd = function(...)
+  require("util.debug").dump(...)
+end
 -- vim.print = om.dd
 
 local terminals = {}
@@ -32,10 +36,14 @@ function om.float_term(cmd, opts)
     terminals[termkey] = require("lazy.util").float_term(cmd, opts)
     local buf = terminals[termkey].buf
     vim.b[buf].lazyterm_cmd = cmd
-    if opts.esc_esc == false then vim.keymap.set("t", "<esc>", "<esc>", { buffer = buf, nowait = true }) end
+    if opts.esc_esc == false then
+      vim.keymap.set("t", "<esc>", "<esc>", { buffer = buf, nowait = true })
+    end
     vim.api.nvim_create_autocmd("BufEnter", {
       buffer = buf,
-      callback = function() vim.cmd.startinsert() end,
+      callback = function()
+        vim.cmd.startinsert()
+      end,
     })
   end
 
@@ -44,7 +52,9 @@ end
 
 ---Determine if you're on an external monitor
 ---@return boolean
-function om.on_big_screen() return vim.o.columns > 150 and vim.o.lines >= 40 end
+function om.on_big_screen()
+  return vim.o.columns > 150 and vim.o.lines >= 40
+end
 
 ---Require a module using [pcall] and report any errors
 ---@param module string
