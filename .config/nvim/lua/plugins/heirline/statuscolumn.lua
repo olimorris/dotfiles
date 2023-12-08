@@ -37,7 +37,7 @@ return {
         self.sign = signs[1]
       end,
       provider = function(self)
-        return self.sign and self.sign.text or ""
+        return self.sign and self.sign.text or "  "
       end,
       hl = function(self)
         return self.sign and self.sign.sign_hl_group
