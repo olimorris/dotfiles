@@ -1,6 +1,6 @@
 return {
   "rebelot/heirline.nvim",
-  event = "BufEnter",
+  lazy = true,
   config = function()
     require("heirline").setup({
       winbar = require("plugins.heirline.winbar"),
