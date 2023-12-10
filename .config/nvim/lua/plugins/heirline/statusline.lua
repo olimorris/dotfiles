@@ -482,7 +482,7 @@ local Session = {
 
 local Overseer = {
   condition = function()
-    local ok, _ = om.safe_require("overseer")
+    local ok, _ = require("overseer")
     if ok then
       return true
     end

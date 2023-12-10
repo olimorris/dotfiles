@@ -158,7 +158,7 @@ return {
             {
               "<F9>",
               function()
-                local _, dap = om.safe_require("dap")
+                local _, dap = require("dap")
                 dap.disconnect()
                 require("dapui").close()
               end,
@@ -176,7 +176,7 @@ return {
       ---Show the nice virtual text when debugging
       ---@return nil|function
       local function virtual_text_setup()
-        local ok, virtual_text = om.safe_require("nvim-dap-virtual-text")
+        local ok, virtual_text = pcall(require, "nvim-dap-virtual-text")
         if not ok then
           return
         end
@@ -205,7 +205,7 @@ return {
       ---@param adapter table
       ---@return nil
       local function ui_setup(adapter)
-        local ok, dapui = om.safe_require("dapui")
+        local ok, dapui = pcall(require, "dapui")
         if not ok then
           return
         end

@@ -26,7 +26,7 @@ return {
 
         local ok, ts_query = pcall(vim.treesitter.query.parse, "html", query)
         if not ok then
-          return om.dd(ts_query)
+          return print(vim.inspect(ts_query))
         end
 
         for _, captures, metadata in ts_query:iter_matches(root, bufnr, root:start(), root:end_(), {}) do

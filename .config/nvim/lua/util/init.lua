@@ -1,7 +1,7 @@
 -- Set the global namespace
 _G.om = {}
 
----check if a certain feature/version/commit exists in nvim
+---Check if a certain feature/version/commit exists in nvim
 ---@param feature string
 ---@return boolean
 function om.has(feature)
@@ -9,12 +9,6 @@ function om.has(feature)
 end
 
 om.nightly = om.has("nvim-0.10")
-
----Display the given error
-om.dd = function(...)
-  require("util.debug").dump(...)
-end
--- vim.print = om.dd
 
 local terminals = {}
 
@@ -54,19 +48,6 @@ end
 ---@return boolean
 function om.on_big_screen()
   return vim.o.columns > 150 and vim.o.lines >= 40
-end
-
----Require a module using [pcall] and report any errors
----@param module string
----@param opts table?
----@return boolean, any
-function om.safe_require(module, opts)
-  opts = opts or { silent = false }
-  local ok, result = pcall(require, module)
-  if not ok and not opts.silent then
-    vim.notify(result, vim.log.levels.ERROR, { title = string.format("Error requiring: %s", module) })
-  end
-  return ok, result
 end
 
 --- Encode a position to a single value that can be decoded later
