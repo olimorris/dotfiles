@@ -1,5 +1,9 @@
 local v, fn, api = vim.v, vim.fn, vim.api
+
 local conditions = require("heirline.conditions")
+
+local align = { provider = "%=" }
+local spacer = { provider = " ", hl = "HeirlineStatusColumn" }
 
 return {
   {
@@ -16,6 +20,7 @@ return {
         )
 
         for _, extmark in pairs(extmarks) do
+          -- Exclude gitsigns
           if extmark[4].ns_id ~= self.git_ns then
             signs[#signs + 1] = {
               name = extmark[4].sign_hl_group or "",
@@ -65,7 +70,7 @@ return {
             require("neotest").run.run()
           end,
           ["Debug.*"] = function(self, args)
-            require("dap").toggle_breakpoint()
+            require("dap").continue()
           end,
           ["Diagnostic.*"] = function(self, args)
             vim.diagnostic.open_float()
@@ -73,6 +78,13 @@ return {
         },
         Dap = function(self, args)
           require("dap").toggle_breakpoint()
+        end,
+        Fold = function(args)
+          local line = args.mousepos.line
+          if fn.foldlevel(line) <= fn.foldlevel(line - 1) then
+            return
+          end
+          vim.cmd.execute("'" .. line .. "fold" .. (fn.foldclosed(line) == -1 and "close" or "open") .. "'")
         end,
         GitSigns = function(self, args)
           vim.defer_fn(function()
@@ -84,7 +96,7 @@ return {
     init = function(self)
       self.signs = {}
     end,
-    -- Signs
+    -- Signs (except for GitSigns)
     {
       init = function(self)
         local signs = self.get_extmarks(self, -1, v.lnum)
@@ -108,6 +120,7 @@ return {
         end,
       },
     },
+    align,
     -- Line Numbers
     {
       provider = "%=%4{v:virtnum ? '' : &nu ? (&rnu && v:relnum ? v:relnum : v:lnum) . ' ' : ''}",
@@ -115,6 +128,48 @@ return {
         name = "sc_linenumber_click",
         callback = function(self, ...)
           self.handlers.Dap(self.click_args(self, ...))
+        end,
+      },
+    },
+    -- Folds
+    {
+      condition = function()
+        return v.virtnum == 0
+      end,
+      init = function(self)
+        self.fillchars = vim.opt_local.fillchars:get()
+        self.folded = fn.foldlevel(v.lnum) > fn.foldlevel(v.lnum - 1)
+      end,
+      {
+        condition = function(self)
+          return self.folded
+        end,
+        {
+          provider = function(self)
+            if fn.foldclosed(v.lnum) == -1 then
+              return self.fillchars.foldopen
+            end
+          end,
+        },
+        {
+          provider = function(self)
+            if fn.foldclosed(v.lnum) ~= -1 then
+              return self.fillchars.foldclose
+            end
+          end,
+          hl = { fg = "yellow" },
+        },
+      },
+      {
+        condition = function(self)
+          return not self.folded
+        end,
+        provider = " ",
+      },
+      on_click = {
+        name = "sc_fold_click",
+        callback = function(self, ...)
+          self.handlers.Fold(self.click_args(self, ...))
         end,
       },
     },
