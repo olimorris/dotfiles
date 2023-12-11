@@ -7,6 +7,12 @@ local spacer = { provider = " ", hl = "HeirlineStatusColumn" }
 
 return {
   {
+    condition = function()
+      return not conditions.buffer_matches({
+        buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
+        filetype = { "alpha", "oil", "lspinfo", "toggleterm" },
+      })
+    end,
     static = {
       get_extmarks = function(self, bufnr, lnum)
         local signs = {}
@@ -137,12 +143,14 @@ return {
         return v.virtnum == 0
       end,
       init = function(self)
-        self.fillchars = vim.opt_local.fillchars:get()
-        self.folded = fn.foldlevel(v.lnum) > fn.foldlevel(v.lnum - 1)
+        self.is_folded = fn.foldlevel(v.lnum) > fn.foldlevel(v.lnum - 1)
       end,
       {
         condition = function(self)
-          return self.folded
+          return self.is_folded
+        end,
+        init = function(self)
+          self.fillchars = vim.opt_local.fillchars:get()
         end,
         {
           provider = function(self)
@@ -162,7 +170,7 @@ return {
       },
       {
         condition = function(self)
-          return not self.folded
+          return not self.is_folded
         end,
         provider = " ",
       },
@@ -180,17 +188,15 @@ return {
           return conditions.is_git_repo() and v.virtnum == 0
         end,
         init = function(self)
-          if self.git_ns then
-            local extmark = api.nvim_buf_get_extmarks(
-              0,
-              self.git_ns,
-              { v.lnum - 1, 0 },
-              { v.lnum - 1, -1 },
-              { limit = 1, details = true }
-            )[1]
+          local extmark = api.nvim_buf_get_extmarks(
+            0,
+            self.git_ns,
+            { v.lnum - 1, 0 },
+            { v.lnum - 1, -1 },
+            { limit = 1, details = true }
+          )[1]
 
-            self.sign = extmark and extmark[4]["sign_hl_group"]
-          end
+          self.sign = extmark and extmark[4]["sign_hl_group"]
         end,
         {
           provider = "│",
