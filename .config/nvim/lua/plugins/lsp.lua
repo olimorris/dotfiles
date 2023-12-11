@@ -60,13 +60,48 @@ return {
         event = "LspAttach",
         opts = {
           enable = function()
-            return vim.bo.filetype ~= "lazy"
+            return vim.bo.filetype ~= "lazy" and vim.bo.filetype ~= "query"
           end,
           format = function(diag)
             return " " .. diag.message
           end,
           scope = "line",
-          toggle_event = { "InsertEnter" },
+        },
+      },
+      {
+        "piersolenski/wtf.nvim",
+        dependencies = {
+          "MunifTanjim/nui.nvim",
+        },
+        opts = {
+          openai_model_id = "gpt-3.5-turbo",
+          popup_type = "horizontal",
+          hooks = {
+            request_started = function()
+              vim.g.wtf_working = true
+            end,
+            request_finished = function()
+              vim.g.wtf_working = nil
+            end,
+          },
+        },
+        keys = {
+          {
+            "gw",
+            mode = { "n", "x" },
+            function()
+              require("wtf").ai()
+            end,
+            desc = "Debug diagnostic with AI",
+          },
+          {
+            mode = { "n" },
+            "gW",
+            function()
+              require("wtf").search()
+            end,
+            desc = "Search diagnostic with Google",
+          },
         },
       },
       {

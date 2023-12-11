@@ -480,6 +480,14 @@ local Session = {
   },
 }
 
+local Wtf = {
+  condition = function()
+    return vim.g.wtf_working == true
+  end,
+  provider = "󰚩 ",
+  hl = { fg = "gray" },
+}
+
 local Overseer = {
   condition = function()
     local ok, _ = require("overseer")
@@ -665,6 +673,7 @@ return {
     LspAttached,
     -- LspDiagnostics,
     { provider = "%=" },
+    Wtf,
     Overseer,
     Dap,
     Lazy,
