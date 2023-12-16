@@ -58,17 +58,13 @@ return {
         NormalFloat = { bg = "${bg}" }, -- Set the terminal background to be the same as the editor
         FloatBorder = { fg = "${gray}", bg = "${bg}" },
 
-        LspLens = { fg = "${light_gray}", italic = true },
-        CursorLineNr = { bg = "${bg}", fg = "${fg}", italic = true, bold = true },
+        CursorLineNr = { bg = "${bg}", fg = "${fg}", italic = true },
         DiffChange = { underline = true }, -- diff mode: Changed line |diff.txt|
         LocalHighlight = { bg = "${local_highlight}" },
         MatchParen = { fg = "${cyan}" },
         ModeMsg = { fg = "${gray}" }, -- Make command line text lighter
         Search = { bg = "${selection}", fg = "${yellow}", underline = true },
         VimLogo = { fg = { dark = "#81b766", light = "#029632" } },
-
-        TabLine = { fg = "${gray}", bg = "${bg}" },
-        TabLineSel = { fg = "${bg}", bg = "${purple}" },
 
         -- Treesitter plugin
         ["@text.todo.checked"] = { fg = "${bg}", bg = "${purple}" },
@@ -100,18 +96,6 @@ return {
         },
         AlphaFooter = { fg = "${gray}", italic = true },
 
-        -- Bufferline
-        BufferlineNormal = { bg = "${bg}", fg = "${gray}" },
-        BufferlineSelected = { bg = "${statusline_bg}", fg = "${purple}" },
-        BufferlineOffset = { fg = "${purple}", bold = true },
-
-        -- ChatGPT
-        ChatGPTWindow = { bg = "${float_bg}", fg = "${fg}" },
-        ChatGPTPrompt = { bg = "${float_bg}", fg = "${fg}" },
-        ChatGPTQuestion = { fg = "${blue}", italic = true },
-        ChatGPTTotalTokens = { fg = "${bg}", bg = "${gray}" },
-        ChatGPTTotalTokensBorder = { fg = "${gray}" },
-
         -- Cmp
         CmpItemAbbrMatch = { fg = "${blue}", bold = true },
         CmpItemAbbrMatchFuzzy = { fg = "${blue}", underline = true },
@@ -120,7 +104,7 @@ return {
         CopilotSuggestion = { fg = "${copilot}", italic = true },
 
         -- DAP
-        DebugBreakpoint = { fg = "${red}", bold = true, italic = true },
+        DebugBreakpoint = { fg = "${red}", italic = true },
         DebugHighlightLine = { fg = "${purple}", italic = true },
         NvimDapVirtualText = { fg = "${cyan}", italic = true },
 
@@ -132,10 +116,6 @@ return {
         DiagnosticFloatingWarn = { fg = "${yellow}", italic = true },
         DiagnosticFloatingHint = { fg = "${cyan}", italic = true },
         DiagnosticFloatingInfo = { fg = "${blue}", italic = true },
-
-        -- Fidget
-        FidgetTask = { fg = "${gray}" },
-        FidgetTitle = { fg = "${purple}", italic = true },
 
         -- Heirline
         Heirline = { bg = "${statusline_bg}" },
@@ -152,16 +132,8 @@ return {
         NeotestFocused = { bold = true },
         NeotestNamespace = { fg = "${blue}", bold = true },
 
-        -- Neotree
-        NeoTreeRootName = { fg = "${purple}", bold = true },
-        NeoTreeFileNameOpened = { fg = "${purple}", italic = true },
-
         -- Nvim UFO
-        UfoFoldedEllipsis = { fg = "${ellipsis}" },
-
-        -- Satellite
-        ScrollView = { bg = "${gray}" },
-        SatelliteCursor = { fg = "${red}" },
+        UfoFoldedEllipsis = { fg = "${yellow}" },
 
         -- Telescope
         TelescopeBorder = {
