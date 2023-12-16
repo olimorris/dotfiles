@@ -39,7 +39,7 @@ return {
 
         -- Sort by priority
         table.sort(signs, function(a, b)
-          return (a.priority or 0) < (b.priority or 0)
+          return (a.priority or 0) > (b.priority or 0)
         end)
 
         return signs
