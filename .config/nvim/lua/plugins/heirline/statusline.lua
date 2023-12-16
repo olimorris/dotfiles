@@ -90,12 +90,6 @@ local VimMode = {
     hl = function(self)
       return { fg = "bg", bg = self.mode_color }
     end,
-    on_click = {
-      callback = function()
-        vim.cmd("Alpha")
-      end,
-      name = "heirline_mode",
-    },
   },
   {
     provider = "",
@@ -125,7 +119,7 @@ local GitBranch = {
         callback = function()
           om.ListBranches()
         end,
-        name = "git_change_branch",
+        name = "sl_git_click",
       },
       hl = { fg = "gray", bg = "statusline_bg" },
     },
@@ -154,7 +148,7 @@ local GitBranch = {
               om.GitPull()
             end
           end,
-          name = "git_pull",
+          name = "sl_gitpull_click",
         },
       },
       {
@@ -170,7 +164,7 @@ local GitBranch = {
               om.GitPush()
             end
           end,
-          name = "git_push",
+          name = "sl_gitpush_click",
         },
       },
     },
@@ -201,7 +195,7 @@ local FileName = {
     callback = function()
       vim.cmd("Telescope find_files")
     end,
-    name = "find_files",
+    name = "sl_filename_click",
   },
   hl = { fg = "gray", bg = "statusline_bg" },
 }
@@ -239,7 +233,7 @@ local LspDiagnostics = {
         bufnr = 0,
       })
     end,
-    name = "heirline_diagnostics",
+    name = "sl_diagnostics_click",
   },
   update = { "DiagnosticChanged", "BufEnter" },
   -- Errors
@@ -338,7 +332,7 @@ local LspAttached = {
         vim.cmd("LspInfo")
       end, 100)
     end,
-    name = "heirline_LSP",
+    name = "sl_lsp_click",
   },
   {
     condition = function(self)
@@ -380,7 +374,7 @@ local Ruler = {
           vim.cmd("normal! G")
         end
       end,
-      name = "heirline_ruler",
+      name = "sl_ruler_click",
     },
   },
 }
@@ -473,7 +467,7 @@ local Session = {
         callback = function()
           vim.cmd("SessionToggle")
         end,
-        name = "toggle_session",
+        name = "sl_session_click",
       },
     },
     RightSlantEnd,
@@ -537,7 +531,7 @@ local Overseer = {
         callback = function()
           require("neotest").run.run_last()
         end,
-        name = "run_last_test",
+        name = "sl_overseer_click",
       },
     },
   },
@@ -555,7 +549,7 @@ local Dap = {
     callback = function()
       require("dap").continue()
     end,
-    name = "dap_continue",
+    name = "sl_dap_click",
   },
   hl = { fg = "red" },
 }
@@ -575,7 +569,7 @@ local Lazy = {
     callback = function()
       require("lazy").update()
     end,
-    name = "update_plugins",
+    name = "sl_plugins_click",
   },
   hl = { fg = "gray" },
 }
@@ -594,7 +588,7 @@ local FileIcon = {
     callback = function()
       om.ChangeFiletype()
     end,
-    name = "change_ft",
+    name = "sl_fileicon_click",
   },
   hl = { fg = "gray", bg = "statusline_bg" },
 }
@@ -607,7 +601,7 @@ local FileType = {
     callback = function()
       om.ChangeFiletype()
     end,
-    name = "change_ft",
+    name = "sl_filetype_click",
   },
   hl = { fg = "gray", bg = "statusline_bg" },
 }

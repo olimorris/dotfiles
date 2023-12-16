@@ -139,40 +139,20 @@ return {
     },
     -- Folds
     {
-      condition = function()
-        return v.virtnum == 0
-      end,
       init = function(self)
-        self.is_folded = fn.foldlevel(v.lnum) > fn.foldlevel(v.lnum - 1)
+        self.can_fold = fn.foldlevel(v.lnum) > fn.foldlevel(v.lnum - 1)
       end,
       {
         condition = function(self)
-          return self.is_folded
+          return v.virtnum == 0 and self.can_fold
         end,
-        init = function(self)
-          self.fillchars = vim.opt_local.fillchars:get()
-        end,
-        {
-          provider = function(self)
-            if fn.foldclosed(v.lnum) == -1 then
-              return self.fillchars.foldopen
-            end
-          end,
-        },
-        {
-          provider = function(self)
-            if fn.foldclosed(v.lnum) ~= -1 then
-              return self.fillchars.foldclose
-            end
-          end,
-          hl = { fg = "yellow" },
-        },
+        provider = "%C",
       },
       {
         condition = function(self)
-          return not self.is_folded
+          return not self.can_fold
         end,
-        provider = " ",
+        spacer,
       },
       on_click = {
         name = "sc_fold_click",
@@ -210,6 +190,12 @@ return {
             end,
           },
         },
+      },
+      {
+        condition = function()
+          return not conditions.is_git_repo() or v.virtnum ~= 0
+        end,
+        spacer,
       },
     },
   },

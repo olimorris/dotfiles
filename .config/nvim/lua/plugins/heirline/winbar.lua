@@ -1,3 +1,5 @@
+local bit = require("bit")
+
 local sep = "  "
 
 local VimLogo = {
@@ -12,9 +14,9 @@ local Filepath = {
     },
   },
   init = function(self)
-    local current_dir = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h")
+    self.current_dir = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h")
 
-    self.filepath = vim.fn.fnamemodify(current_dir, self.modifiers.dirname or nil)
+    self.filepath = vim.fn.fnamemodify(self.current_dir, self.modifiers.dirname or nil)
     self.short_path = vim.fn.fnamemodify(vim.fn.expand("%:h"), self.modifiers.dirname or nil)
     if self.filepath == "" then
       self.filepath = "[No Name]"
@@ -25,6 +27,14 @@ local Filepath = {
     condition = function(self)
       return self.filepath ~= "."
     end,
+    on_click = {
+      callback = function(self)
+        require("telescope.builtin").find_files({
+          cwd = self.current_dir,
+        })
+      end,
+      name = "wb_path_click",
+    },
     flexible = 2,
     {
       provider = function(self)
@@ -64,6 +74,12 @@ local Filename = {
       end,
     },
     hl = "HeirlineWinbar",
+    on_click = {
+      callback = function(self)
+        require("aerial").toggle()
+      end,
+      name = "wb_filename_click",
+    },
   },
   -- Modifier
   {
@@ -105,12 +121,12 @@ local Symbols = {
 
               -- On-Click action
               on_click = {
-                minwid = om.encode_pos(d.lnum, d.col, self.winnr),
+                minwid = self.encode_pos(d.lnum, d.col, self.winnr),
                 callback = function(_, minwid)
-                  local lnum, col, winnr = om.decode_pos(minwid)
+                  local lnum, col, winnr = self.decode_pos(minwid)
                   vim.api.nvim_win_set_cursor(vim.fn.win_getid(winnr), { lnum, col })
                 end,
-                name = "winbar_symbol",
+                name = "wb_symbol_click",
               },
             }
 
@@ -140,6 +156,14 @@ local Symbols = {
 }
 
 return {
+  static = {
+    encode_pos = function(line, col, winnr)
+      return bit.bor(bit.lshift(line, 16), bit.lshift(col, 6), winnr)
+    end,
+    decode_pos = function(c)
+      return bit.rshift(c, 16), bit.band(bit.rshift(c, 6), 1023), bit.band(c, 63)
+    end,
+  },
   Filepath,
   Filename,
   Symbols,
