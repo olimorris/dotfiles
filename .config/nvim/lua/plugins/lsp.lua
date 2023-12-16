@@ -85,24 +85,29 @@ return {
             end,
           },
         },
-        keys = {
-          {
-            "gw",
-            mode = { "n", "x" },
-            function()
-              require("wtf").ai()
-            end,
-            desc = "Debug diagnostic with AI",
-          },
-          {
-            mode = { "n" },
-            "gW",
-            function()
-              require("wtf").search()
-            end,
-            desc = "Search diagnostic with Google",
-          },
-        },
+        init = function()
+          require("legendary").keymaps({
+            itemgroup = "LSP",
+            keymaps = {
+              {
+                "gw",
+                function()
+                  require("wtf").ai()
+                end,
+                description = "Debug diagnostic with AI",
+                mode = { "n", "x" },
+              },
+              {
+                "gW",
+                function()
+                  require("wtf").search()
+                end,
+                description = "Search diagnostic with Google",
+                mode = { "n" },
+              },
+            },
+          })
+        end,
       },
       {
         "stevearc/conform.nvim", -- Formatting plugin
