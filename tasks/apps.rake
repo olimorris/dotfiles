@@ -88,3 +88,17 @@ namespace :rollback do
     end
   end
 end
+
+namespace :uninstall do
+  desc 'Uninstall Neovim'
+  task :neovim do
+    section 'Uninstalling Neovim'
+
+    unless testing?
+      run %( rm ~/.neovim/backup )
+      run %( mv ~/.neovim/latest ~/.neovim/backup )
+      run %( rm -rf /usr/local/bin/nvim )
+      run %( rm -rf /opt/homebrew/bin/nvim )
+    end
+  end
+end
