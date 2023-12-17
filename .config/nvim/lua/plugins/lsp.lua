@@ -380,8 +380,8 @@ return {
           "jsonls",
           "lua_ls",
           "pyright",
-          "ruby_ls",
-          -- "solargraph",
+          -- "ruby_ls",
+          "solargraph",
           -- "tailwindcss", -- Disabled due to high node CPU usage
           "tsserver",
           "vuels",
