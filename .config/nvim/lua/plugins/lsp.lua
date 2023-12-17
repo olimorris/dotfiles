@@ -193,43 +193,6 @@ return {
 
       lsp_zero.set_sign_icons(icons)
 
-      require("mason").setup({})
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "bashls",
-          "cssls",
-          "dockerls",
-          -- "efm",
-          "html",
-          "intelephense",
-          "jdtls",
-          "jsonls",
-          "lua_ls",
-          "pyright",
-          "solargraph",
-          -- "tailwindcss", -- Disabled due to high node CPU usage
-          "tsserver",
-          "vuels",
-          "yamlls",
-        },
-        handlers = {
-          lsp_zero.default_setup,
-          jdtls = lsp_zero.noop, -- we will use nvim-jdtls to setup the lsp
-        },
-      })
-
-      -- For nvim-ufo folding
-      lsp_zero.set_server_config({
-        capabilities = {
-          textDocument = {
-            foldingRange = {
-              dynamicRegistration = false,
-              lineFoldingOnly = true,
-            },
-          },
-        },
-      })
-
       local function autocmds(client, bufnr)
         require("legendary").autocmds({
           {
@@ -294,11 +257,8 @@ return {
       end
 
       local function mappings(client, bufnr)
-        if
-          #vim.tbl_filter(function(keymap)
-            return (keymap.desc or ""):lower() == "rename symbol"
-          end, vim.api.nvim_buf_get_keymap(bufnr, "n")) > 0
-        then
+        -- Only need to set these once!
+        if vim.g.lsp_keymaps then
           return {}
         end
 
@@ -391,6 +351,8 @@ return {
             { "]", vim.diagnostic.goto_next, description = "Go to next diagnostic item", opts = { buffer = bufnr } },
           },
         })
+
+        vim.g.lsp_keymaps = true
       end
 
       lsp_zero.on_attach(function(client, bufnr)
@@ -405,7 +367,46 @@ return {
         table.insert(lsp_buffers, bufnr)
       end)
 
-      lsp_zero.setup()
+      require("mason").setup({})
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "bashls",
+          "cssls",
+          "dockerls",
+          -- "efm",
+          "html",
+          "intelephense",
+          "jdtls",
+          "jsonls",
+          "lua_ls",
+          "pyright",
+          "ruby_ls",
+          -- "solargraph",
+          -- "tailwindcss", -- Disabled due to high node CPU usage
+          "tsserver",
+          "vuels",
+          "yamlls",
+        },
+        handlers = {
+          lsp_zero.default_setup,
+          jdtls = lsp_zero.noop, -- we will use nvim-jdtls to setup the lsp
+        },
+      })
+
+      -- For nvim-ufo folding
+      lsp_zero.set_server_config({
+        capabilities = {
+          textDocument = {
+            foldingRange = {
+              dynamicRegistration = false,
+              lineFoldingOnly = true,
+            },
+          },
+        },
+      })
+
+      -- Setup better folding
+      require("ufo").setup()
 
       vim.diagnostic.config({
         severity_sort = true,
@@ -418,12 +419,6 @@ return {
         --   spacing = 0,
         -- },
       })
-
-      -- Setup better folding
-      local ok, ufo = pcall(require, "ufo")
-      if ok then
-        require("ufo").setup()
-      end
 
       --Setup completion
       local cmp = require("cmp")
