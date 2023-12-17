@@ -11,7 +11,7 @@ return {
         end,
         init = function()
           require("legendary").keymaps({
-            { "<LocalLeader>u", "<cmd>Telescope undo<CR>", description = "Telescope undo" },
+            { "<LocalLeader>u", "<cmd>Telescope undo<CR>", description = "Undo tree using Telescope" },
           })
         end,
       },

@@ -33,22 +33,24 @@ return {
   {
     "kevinhwang91/nvim-ufo", -- Better folds in Neovim
     dependencies = "kevinhwang91/promise-async",
-    keys = {
-      {
-        "zR",
-        function()
-          require("ufo").openAllFolds()
-        end,
-        desc = "Open fold",
-      },
-      {
-        "zM",
-        function()
-          require("ufo").closeAllFolds()
-        end,
-        desc = "Close fold",
-      },
-    },
+    init = function()
+      require("legendary").keymaps({
+        {
+          "zR",
+          function()
+            require("ufo").openAllFolds()
+          end,
+          description = "Open all folds",
+        },
+        {
+          "zM",
+          function()
+            require("ufo").closeAllFolds()
+          end,
+          description = "Close all folds",
+        },
+      })
+    end,
   },
   {
     "stevearc/oil.nvim", -- File manager
@@ -68,36 +70,27 @@ return {
       },
       skip_confirm_for_simple_edits = true,
     },
-    keys = {
-      {
-        "_",
-        function()
-          require("oil").toggle_float(".")
-        end,
-        desc = "Open File Explorer",
-      },
-      {
-        "-",
-        function()
-          require("oil").toggle_float()
-        end,
-        desc = "Open File Explorer to current file",
-      },
-    },
+    init = function()
+      require("legendary").keymaps({
+        {
+          "_",
+          function()
+            require("oil").toggle_float(".")
+          end,
+          description = "Open File Explorer",
+        },
+        {
+          "-",
+          function()
+            require("oil").toggle_float()
+          end,
+          description = "Open File Explorer to current file",
+        },
+      })
+    end,
   },
   {
     "stevearc/aerial.nvim", -- Toggled list of classes, methods etc in current file
-    cmd = "AerialToggle",
-    keys = {
-      {
-        "<C-t>",
-        function()
-          require("aerial").toggle()
-        end,
-        mode = { "n", "x", "o" },
-        desc = "Toggle Aerial",
-      },
-    },
     opts = {
       attach_mode = "global",
       close_on_select = true,
@@ -136,6 +129,18 @@ return {
         default_direction = "prefer_right",
       },
     },
+    init = function()
+      require("legendary").keymaps({
+        {
+          "<C-t>",
+          function()
+            require("aerial").toggle()
+          end,
+          mode = { "n", "x", "o" },
+          description = "Aerial toggle",
+        },
+      })
+    end,
   },
   -- {
   --   "cshuaimin/ssr.nvim", -- Advanced search and replace using Treesitter

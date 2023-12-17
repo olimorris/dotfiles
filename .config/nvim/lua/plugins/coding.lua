@@ -75,40 +75,48 @@ return {
   {
     "zbirenbaum/copilot.lua", -- AI programming
     event = "InsertEnter",
-    keys = {
-      {
-        "<C-a>",
-        function()
-          require("copilot.suggestion").accept()
-        end,
-        desc = "Copilot: Accept suggestion",
-        mode = { "i" },
-      },
-      {
-        "<C-x>",
-        function()
-          require("copilot.suggestion").dismiss()
-        end,
-        desc = "Copilot: Dismiss suggestion",
-        mode = { "i" },
-      },
-      {
-        "<C-\\>",
-        function()
-          require("copilot.panel").open()
-        end,
-        desc = "Copilot: Show Copilot panel",
-        mode = { "n", "i" },
-      },
-    },
     init = function()
       require("legendary").commands({
-        {
-          ":CopilotToggle",
-          function()
-            require("copilot.suggestion").toggle_auto_trigger()
-          end,
-          description = "Copilot: Toggle on/off for buffer",
+        itemgroup = "Copilot",
+        commands = {
+          {
+            ":CopilotToggle",
+            function()
+              require("copilot.suggestion").toggle_auto_trigger()
+            end,
+            description = "Toggle on/off for buffer",
+          },
+        },
+      })
+      require("legendary").keymaps({
+        itemgroup = "Copilot",
+        description = "Copilot suggestions...",
+        icon = "",
+        keymaps = {
+          {
+            "<C-a>",
+            function()
+              require("copilot.suggestion").accept()
+            end,
+            description = "Accept suggestion",
+            mode = { "i" },
+          },
+          {
+            "<C-x>",
+            function()
+              require("copilot.suggestion").dismiss()
+            end,
+            description = "Dismiss suggestion",
+            mode = { "i" },
+          },
+          {
+            "<C-\\>",
+            function()
+              require("copilot.panel").open()
+            end,
+            description = "Show Copilot panel",
+            mode = { "n", "i" },
+          },
         },
       })
     end,

@@ -20,7 +20,6 @@ return {
       require("legendary").setup({
         select_prompt = "Legendary",
         include_builtin = false,
-        include_legendary_cmds = false,
         extensions = {
           lazy_nvim = false,
           which_key = false,
