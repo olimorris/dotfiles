@@ -482,58 +482,54 @@ local Wtf = {
   hl = { fg = "gray" },
 }
 
+local function OverseerTasksForStatus(status)
+  return {
+    condition = function(self)
+      return self.tasks[status]
+    end,
+    provider = function(self)
+      return string.format("%s%d", self.symbols[status], #self.tasks[status])
+    end,
+    hl = function(self)
+      return {
+        fg = self.colors[status],
+      }
+    end,
+  }
+end
+
 local Overseer = {
   condition = function()
-    local ok, _ = require("overseer")
-    if ok then
-      return true
-    end
+    return package.loaded.overseer
   end,
   init = function(self)
-    self.overseer = require("overseer")
-    self.tasks = self.overseer.task_list
-    self.STATUS = self.overseer.constants.STATUS
+    local tasks = require("overseer.task_list").list_tasks({ unique = true })
+    local tasks_by_status = require("overseer.util").tbl_group_by(tasks, "status")
+    self.tasks = tasks_by_status
   end,
   static = {
     symbols = {
-      ["FAILURE"] = "  ",
       ["CANCELED"] = "  ",
-      ["SUCCESS"] = "  ",
+      ["FAILURE"] = "  ",
       ["RUNNING"] = " 省",
+      ["SUCCESS"] = "  ",
     },
     colors = {
-      ["FAILURE"] = "red",
       ["CANCELED"] = "gray",
-      ["SUCCESS"] = "green",
+      ["FAILURE"] = "red",
       ["RUNNING"] = "yellow",
+      ["SUCCESS"] = "green",
     },
   },
-  {
-    condition = function(self)
-      return #self.tasks.list_tasks() > 0
+  OverseerTasksForStatus("CANCELED"),
+  OverseerTasksForStatus("RUNNING"),
+  OverseerTasksForStatus("SUCCESS"),
+  OverseerTasksForStatus("FAILURE"),
+  on_click = {
+    callback = function()
+      require("neotest").run.run_last()
     end,
-    {
-      provider = function(self)
-        local tasks_by_status = self.overseer.util.tbl_group_by(self.tasks.list_tasks({ unique = true }), "status")
-
-        for _, status in ipairs(self.STATUS.values) do
-          local status_tasks = tasks_by_status[status]
-          if self.symbols[status] and status_tasks then
-            self.color = self.colors[status]
-            return self.symbols[status]
-          end
-        end
-      end,
-      hl = function(self)
-        return { fg = self.color }
-      end,
-      on_click = {
-        callback = function()
-          require("neotest").run.run_last()
-        end,
-        name = "sl_overseer_click",
-      },
-    },
+    name = "sl_overseer_click",
   },
 }
 
