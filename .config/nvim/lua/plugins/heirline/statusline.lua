@@ -347,6 +347,22 @@ local LspAttached = {
   },
 }
 
+local CodeAction = {
+  condition = function()
+    return require("nvim-lightbulb").get_status_text() ~= ""
+  end,
+  provider = "  ",
+  hl = { fg = "yellow", bg = "bg" },
+  on_click = {
+    callback = function()
+      vim.defer_fn(function()
+        return vim.lsp.buf.code_action()
+      end, 100)
+    end,
+    name = "sl_codeaction_click",
+  },
+}
+
 ---Return the current line number as a % of total lines and the total lines in the file
 local Ruler = {
   condition = function(self)
@@ -661,6 +677,7 @@ return {
     GitBranch,
     -- FileNameBlock,
     LspAttached,
+    -- CodeAction,
     -- LspDiagnostics,
     { provider = "%=" },
     Wtf,

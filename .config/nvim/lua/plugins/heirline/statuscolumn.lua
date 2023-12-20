@@ -81,6 +81,9 @@ return {
           ["Diagnostic.*"] = function(self, args)
             vim.diagnostic.open_float()
           end,
+          ["LspLightBulb"] = function(self, args)
+            vim.lsp.buf.code_action()
+          end,
         },
         Dap = function(self, args)
           require("dap").toggle_breakpoint()

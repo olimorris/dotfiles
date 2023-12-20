@@ -51,6 +51,23 @@ return {
         },
       },
       {
+        "kosayoda/nvim-lightbulb",
+        opts = {
+          autocmd = {
+            enabled = true,
+          },
+          priority = 15,
+          sign = {
+            enabled = true,
+            text = "",
+            hl = "LspLightBulb",
+          },
+          -- status_text = {
+          --   enabled = true,
+          -- },
+        },
+      },
+      {
         "piersolenski/wtf.nvim",
         dependencies = {
           "MunifTanjim/nui.nvim",

@@ -31,12 +31,12 @@ return {
   },
   {
     "olimorris/persisted.nvim", -- Session management
+    -- lazy = true,
     priority = 100,
     opts = {
       save_dir = Sessiondir .. "/",
       use_git_branch = true,
       silent = true,
-      -- autoload = true,
       should_autosave = function()
         local excluded_filetypes = {
           "alpha",
