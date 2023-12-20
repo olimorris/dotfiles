@@ -32,12 +32,7 @@ return {
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-nvim-lua",
       "lukas-reineke/cmp-under-comparator",
-      {
-        "zbirenbaum/copilot-cmp",
-        config = function()
-          require("copilot_cmp").setup()
-        end,
-      },
+      "zbirenbaum/copilot-cmp",
       "onsails/lspkind.nvim",
 
       -- Snippets
@@ -53,19 +48,6 @@ return {
             return vim.bo.filetype ~= "lazy"
           end,
           severity_format = { icons.error, icons.warn, icons.info, icons.hint },
-        },
-      },
-      {
-        "dgagn/diagflow.nvim", -- LSP messages in virtual text at the top of the screen
-        event = "LspAttach",
-        opts = {
-          enable = function()
-            return vim.bo.filetype ~= "lazy" and vim.bo.filetype ~= "query"
-          end,
-          format = function(diag)
-            return " " .. diag.message
-          end,
-          scope = "line",
         },
       },
       {
@@ -257,8 +239,11 @@ return {
       end
 
       local function mappings(client, bufnr)
-        -- Only need to set these once!
-        if vim.g.lsp_keymaps then
+        if
+          #vim.tbl_filter(function(keymap)
+            return (keymap.desc or ""):lower() == "rename symbol"
+          end, vim.api.nvim_buf_get_keymap(bufnr, "n")) > 0
+        then
           return {}
         end
 
@@ -351,8 +336,6 @@ return {
             { "]", vim.diagnostic.goto_next, description = "Go to next diagnostic item", opts = { buffer = bufnr } },
           },
         })
-
-        vim.g.lsp_keymaps = true
       end
 
       lsp_zero.on_attach(function(client, bufnr)
@@ -380,8 +363,7 @@ return {
           "jsonls",
           "lua_ls",
           "pyright",
-          -- "ruby_ls",
-          "solargraph",
+          "ruby_ls",
           -- "tailwindcss", -- Disabled due to high node CPU usage
           "tsserver",
           "vuels",
@@ -389,7 +371,7 @@ return {
         },
         handlers = {
           lsp_zero.default_setup,
-          jdtls = lsp_zero.noop, -- we will use nvim-jdtls to setup the lsp
+          jdtls = lsp_zero.noop, -- Use nvim-jdtls to setup the lsp
         },
       })
 
@@ -420,10 +402,11 @@ return {
         -- },
       })
 
-      --Setup completion
+      -- Completion
       local cmp = require("cmp")
       local cmp_action = require("lsp-zero").cmp_action()
       local luasnip = require("luasnip")
+      require("copilot_cmp").setup()
 
       require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -444,7 +427,10 @@ return {
         mapping = {
           -- <C-p> / <Up> = Previous item
           -- <C-n> / <Down> = Next item
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<CR>"] = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = false,
+          }),
           ["<Tab>"] = cmp_action.luasnip_supertab(),
           ["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
 

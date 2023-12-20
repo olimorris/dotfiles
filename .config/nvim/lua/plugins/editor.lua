@@ -55,34 +55,47 @@ return {
   {
     "stevearc/oil.nvim", -- File manager
     opts = {
+      delete_to_trash = true,
+      skip_confirm_for_simple_edits = true,
+      is_always_hidden = function(name, bufnr)
+        return name == ".."
+      end,
       keymaps = {
         ["<C-c>"] = false,
         ["<C-s>"] = "actions.save",
         ["q"] = "actions.close",
         [">"] = "actions.toggle_hidden",
         ["<C-y>"] = "actions.copy_entry_path",
+        ["gd"] = {
+          desc = "Toggle detail view",
+          callback = function()
+            local oil = require("oil")
+            local config = require("oil.config")
+            if #config.columns == 1 then
+              oil.set_columns({ "icon", "permissions", "size", "mtime" })
+            else
+              oil.set_columns({ "icon" })
+            end
+          end,
+        },
       },
       buf_options = {
         buflisted = false,
       },
-      float = {
-        border = "none",
-      },
-      skip_confirm_for_simple_edits = true,
     },
     init = function()
       require("legendary").keymaps({
         {
           "_",
           function()
-            require("oil").toggle_float(".")
+            require("oil").open(vim.fn.getcwd())
           end,
           description = "Open File Explorer",
         },
         {
           "-",
           function()
-            require("oil").toggle_float()
+            require("oil").open()
           end,
           description = "Open File Explorer to current file",
         },
@@ -94,7 +107,10 @@ return {
     opts = {
       attach_mode = "global",
       close_on_select = true,
-      filter_kind = false,
+      layout = {
+        min_width = 30,
+        default_direction = "prefer_right",
+      },
       -- Use nvim-navic icons
       icons = {
         File = "󰈙 ",
@@ -123,10 +139,6 @@ return {
         Event = " ",
         Operator = "󰆕 ",
         TypeParameter = "󰊄 ",
-      },
-      layout = {
-        min_width = 30,
-        default_direction = "prefer_right",
       },
     },
     init = function()

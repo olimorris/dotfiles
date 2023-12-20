@@ -348,6 +348,13 @@ return {
               end,
               description = "Neotest: Test suite",
             },
+            {
+              "<LocalLeader>to",
+              function()
+                require("neotest").output.open({ short = true })
+              end,
+              description = "Neotest: Open test output",
+            },
             { "`", '<cmd>lua require("neotest").summary.toggle()<CR>', description = "Neotest: Toggle test summary" },
           },
         },
