@@ -64,6 +64,7 @@ power_assert
 pp
 prettyprint
 prime
+prism
 pstore
 psych
 racc
@@ -89,6 +90,7 @@ rspec-support
 rss
 rubocop
 rubocop-ast
+ruby-lsp
 ruby-progressbar
 ruby2_keywords
 rubygems-update
@@ -96,6 +98,7 @@ securerandom
 set
 shellwords
 singleton
+sorbet-runtime
 stringio
 strscan
 syslog

@@ -10,7 +10,8 @@ Babel==2.14.0
 backcall==0.2.0
 beautifulsoup4==4.12.2
 bleach==6.1.0
--e git+https://github.com/olimorris/botsniffer.git@98b10baa7835d4708b981abf44d1183660a8b942#egg=botsniffer
+# Editable install with no version control (botsniffer==0.1.0.dev0)
+-e /Users/Oli/.dotfiles/src/botsniffer
 build==1.0.3
 certifi==2023.11.17
 cffi==1.16.0
@@ -92,7 +93,8 @@ pycparser==2.21
 Pygments==2.17.2
 pynvim==0.5.0
 pyproject_hooks==1.0.0
--e git+https://olimorris@github.com/olimorris/PyScoutFM.git@98a7725982a86ba8a1f855866e17adc8c7c95fb7#egg=pyscoutfm
+# Editable install with no version control (pyscoutfm==1.0.0)
+-e /Users/Oli/.dotfiles/src/pyscoutfm
 PySocks==1.7.1
 pytest==7.4.3
 python-dateutil==2.8.2
