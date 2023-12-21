@@ -56,15 +56,12 @@ return {
           autocmd = {
             enabled = true,
           },
-          priority = 15,
           sign = {
-            enabled = true,
-            text = "",
-            hl = "LspLightBulb",
+            enabled = false,
           },
-          -- status_text = {
-          --   enabled = true,
-          -- },
+          status_text = {
+            enabled = true,
+          },
         },
       },
       {
