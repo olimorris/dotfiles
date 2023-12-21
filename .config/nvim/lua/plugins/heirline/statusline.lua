@@ -677,7 +677,7 @@ return {
     GitBranch,
     -- FileNameBlock,
     LspAttached,
-    -- CodeAction,
+    CodeAction,
     -- LspDiagnostics,
     { provider = "%=" },
     Wtf,

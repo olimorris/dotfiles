@@ -2,6 +2,10 @@ local bit = require("bit")
 
 local sep = "  "
 
+local Spacer = {
+  provider = " ",
+}
+
 local VimLogo = {
   provider = " ",
   hl = "VimLogo",
@@ -102,9 +106,8 @@ local Symbols = {
     condition = function(self)
       if vim.tbl_isempty(self.symbols) then
         return false
-      else
-        return true
       end
+      return true
     end,
     {
       flexible = 3,
@@ -164,6 +167,7 @@ return {
       return bit.rshift(c, 16), bit.band(bit.rshift(c, 6), 1023), bit.band(c, 63)
     end,
   },
+  Spacer,
   Filepath,
   Filename,
   Symbols,
