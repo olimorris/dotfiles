@@ -57,7 +57,7 @@ vo.ignorecase = true -- Ignore case
 vo.laststatus = 3 -- Use global statusline
 vo.modelines = 1 -- Only use folding settings for this file
 vo.mouse = "a" -- Use the mouse in all modes
-vo.sessionoptions = "buffers,curdir,folds,globals,tabpages,winpos,winsize" -- Session options to store in the session
+vo.sessionoptions = "buffers,curdir,folds,resize,tabpages,winpos,winsize" -- Session options to store in the session
 vo.scrolloff = 5 -- Set the cursor 5 lines down instead of directly at the top of the file
 --[[
   NOTE: don't store marks as they are currently broken in Neovim!

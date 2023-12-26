@@ -39,7 +39,7 @@ return legendary.keymaps({
   { "<C-y>", "<cmd>%y+<CR>", hide = true, description = "Copy buffer" },
   {
     "<C-s>",
-    "<cmd>silent! write<CR>",
+    "<cmd>silent write<CR>",
     hide = true,
     description = "Save buffer",
     mode = { "n", "i" },

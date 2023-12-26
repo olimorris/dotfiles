@@ -89,6 +89,13 @@ return {
       end,
       opts = { pattern = "PersistedTelescopeLoadPre" },
     },
+    -- {
+    --   "User",
+    --   function(session)
+    --     print(vim.inspect(session.data))
+    --   end,
+    --   opts = { pattern = "PersistedDeletePost" },
+    -- },
   },
   {
     name = "ReturnToLastEditingPosition",
