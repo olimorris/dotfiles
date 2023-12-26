@@ -1,5 +1,10 @@
 return {
   {
+    "sindrets/diffview.nvim",
+    event = "VeryLazy",
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
+  },
+  {
     --TODO: Add commands and keymaps
     "mfussenegger/nvim-jdtls", -- Extensions for nicer Java development in Neovim
     ft = "java",
