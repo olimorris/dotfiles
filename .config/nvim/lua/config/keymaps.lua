@@ -132,6 +132,14 @@ return legendary.keymaps({
   { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
   { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
 
+  -- Surrounds
+  { "(", { x = "S)" }, hide = true, description = "Surround with ()'s", opts = { remap = true } },
+  { ")", { x = "S)" }, hide = true, description = "Surround with ()'s", opts = { remap = true } },
+  { "{", { x = "S}" }, hide = true, description = "Surround with {}'s", opts = { remap = true } },
+  { "}", { x = "S}" }, hide = true, description = "Surround with {}'s", opts = { remap = true } },
+  { "[", { x = "S]" }, hide = true, description = "Surround with []'s", opts = { remap = true } },
+  { "]", { x = "S]" }, hide = true, description = "Surround with []'s", opts = { remap = true } },
+
   -- Misc
   { "<Esc>", "<cmd>:noh<CR>", description = "Clear searches" },
   { "<S-w>", "<cmd>set winbar=<CR>", description = "Hide WinBar" },
