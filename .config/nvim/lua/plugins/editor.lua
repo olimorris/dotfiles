@@ -60,8 +60,12 @@ return {
   {
     "stevearc/oil.nvim", -- File manager
     opts = {
+      default_file_explorer = false,
       delete_to_trash = true,
       skip_confirm_for_simple_edits = true,
+      float = {
+        border = "none",
+      },
       is_always_hidden = function(name, bufnr)
         return name == ".."
       end,
@@ -93,14 +97,14 @@ return {
         {
           "_",
           function()
-            require("oil").open(vim.fn.getcwd())
+            require("oil").toggle_float(vim.fn.getcwd())
           end,
           description = "Open File Explorer",
         },
         {
           "-",
           function()
-            require("oil").open()
+            require("oil").toggle_float()
           end,
           description = "Open File Explorer to current file",
         },

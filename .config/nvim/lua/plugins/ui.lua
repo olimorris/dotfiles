@@ -4,10 +4,14 @@ return {
     "folke/edgy.nvim",
     event = "VeryLazy",
     init = function()
+      vim.opt.laststatus = 3
       vim.opt.splitkeep = "screen"
     end,
     opts = {
       animate = { enabled = false },
+      options = {
+        top = { size = 10 },
+      },
       bottom = {
         {
           ft = "lazyterm",
@@ -29,9 +33,9 @@ return {
         { title = "Neotest Output", ft = "neotest-output-panel", size = { height = 15 } },
       },
       right = {
+        { ft = "oil", title = "File Explorer", size = { height = 0.3 } },
         { ft = "aerial", title = "Symbols", size = { width = 0.3 } },
         { ft = "neotest-summary", title = "Neotest Summary", size = { width = 0.3 } },
-        { ft = "oil", title = "File Explorer", size = { width = 0.3 } },
       },
     },
   },
