@@ -19,6 +19,12 @@ return {
         build = function()
           pcall(vim.cmd, "MasonUpdate")
         end,
+        opts = {
+          ui = {
+            border = "single",
+            width = 0.9,
+          },
+        },
       },
       "williamboman/mason-lspconfig.nvim",
 
@@ -45,7 +51,8 @@ return {
         event = "LspAttach",
         opts = {
           enabled = function()
-            return vim.bo.filetype ~= "lazy"
+            local ft = vim.bo.filetype
+            return ft ~= "lazy" and ft ~= "mason"
           end,
           severity_format = { icons.error, icons.warn, icons.info, icons.hint },
         },
