@@ -327,16 +327,26 @@ return {
           description = "Testing functionality...",
           keymaps = {
             -- Neotest plugin
-            { "<LocalLeader>t", '<cmd>lua require("neotest").run.run()<CR>', description = "Neotest: Test nearest" },
+            {
+              "<LocalLeader>tn",
+              function()
+                require("neotest").run.run()
+              end,
+              description = "Test nearest",
+            },
             {
               "<LocalLeader>tf",
-              '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>',
-              description = "Neotest: Test file",
+              function()
+                require("neotest").run.run(vim.fn.expand("%"))
+              end,
+              description = "Test file",
             },
             {
               "<LocalLeader>tl",
-              '<cmd>lua require("neotest").run.run_last()<CR>',
-              description = "Neotest: Run last test",
+              function()
+                require("neotest").run.run_last()
+              end,
+              description = "Run last test",
             },
             {
               "<LocalLeader>ts",
@@ -346,16 +356,50 @@ return {
                   neotest.run.run({ suite = true, adapter = adapter_id })
                 end
               end,
-              description = "Neotest: Test suite",
+              description = "Test suite",
             },
             {
               "<LocalLeader>to",
               function()
                 require("neotest").output.open({ short = true })
               end,
-              description = "Neotest: Open test output",
+              description = "Open test output",
             },
-            { "`", '<cmd>lua require("neotest").summary.toggle()<CR>', description = "Neotest: Toggle test summary" },
+            {
+              "`",
+              function()
+                require("neotest").summary.toggle()
+              end,
+              description = "Toggle test summary",
+            },
+            {
+              "<LocalLeader>twn",
+              function()
+                require("neotest").watch.toggle()
+              end,
+              description = "Watch nearest test",
+            },
+            {
+              "<LocalLeader>twf",
+              function()
+                require("neotest").watch.toggle({ vim.fn.expand("%") })
+              end,
+              description = "Watch file",
+            },
+            {
+              "<LocalLeader>twa",
+              function()
+                require("neotest").watch.toggle({ suite = true })
+              end,
+              description = "Watch all tests",
+            },
+            {
+              "<LocalLeader>twa",
+              function()
+                require("neotest").watch.stop()
+              end,
+              description = "Stop watching",
+            },
           },
         },
       })
