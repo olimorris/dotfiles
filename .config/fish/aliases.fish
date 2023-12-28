@@ -49,7 +49,7 @@ alias gfix='git rm -r --cached . && git add .'
 alias hf='hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal --auto --debug=2'
 alias hfs='hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal --forecast="this month".. --auto --debug=2 bal "^(ass|liab)" --tree --cumul'
 alias hb='hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal bal -M --tree --budget expenses'
-alias hg='hledger-forecast generate -t $FINANCES/transactions.journal -f $FINANCES/forecast.csv -o $FINANCES/forecast.journal --verbose --force'
+alias hg='hledger-forecast generate -t $FINANCES/transactions.journal -f $FINANCES/forecast.csv -o $FINANCES/forecast.journal --force'
 alias hs='hledger-forecast summarize -f $FINANCES/forecast.csv'
 
 # Homebrew
