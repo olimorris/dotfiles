@@ -89,6 +89,13 @@ return {
       end,
       opts = { pattern = "PersistedTelescopeLoadPre" },
     },
+    {
+      "User",
+      function(session)
+        pcall(vim.cmd, "bw openai-chat")
+      end,
+      opts = { pattern = "PersistedSavePre" },
+    },
     -- {
     --   "User",
     --   function(session)
