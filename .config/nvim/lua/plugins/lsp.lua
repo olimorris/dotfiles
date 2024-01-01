@@ -143,6 +143,7 @@ return {
       })
     end,
     config = function()
+      require("lspconfig.ui.windows").default_options.border = "single"
       vim.o.runtimepath = vim.o.runtimepath .. ",~/.dotfiles/.config/snippets"
 
       local lsp_zero = require("lsp-zero")
