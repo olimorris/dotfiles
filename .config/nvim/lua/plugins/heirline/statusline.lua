@@ -455,39 +455,35 @@ local SearchResults = {
 
 ---Return the status of the current session
 local Session = {
-  update = { "User", pattern = "PersistedStateChange" },
+  condition = function(self)
+    return not conditions.buffer_matches({
+      filetype = self.filetypes,
+    })
+  end,
+  RightSlantStart,
   {
-    condition = function(self)
-      return not conditions.buffer_matches({
-        filetype = self.filetypes,
-      })
+    provider = function(self)
+      if vim.g.persisting then
+        return "   "
+      end
+      return "   "
     end,
-    RightSlantStart,
-    {
-      provider = function(self)
-        if vim.g.persisting then
-          return "   "
-        else
-          return "   "
-        end
-      end,
-      hl = { fg = "gray", bg = "statusline_bg" },
-      update = {
-        "User",
-        pattern = "PersistedToggled",
-        callback = vim.schedule_wrap(function()
-          vim.cmd("redrawstatus")
-        end),
-      },
-      on_click = {
-        callback = function()
-          vim.cmd("SessionToggle")
-        end,
-        name = "sl_session_click",
-      },
+    hl = { fg = "gray", bg = "statusline_bg" },
+    update = {
+      "User",
+      pattern = "PersistedStateChange",
+      callback = vim.schedule_wrap(function()
+        vim.cmd("redrawstatus")
+      end),
     },
-    RightSlantEnd,
+    on_click = {
+      callback = function()
+        vim.cmd("SessionToggle")
+      end,
+      name = "sl_session_click",
+    },
   },
+  RightSlantEnd,
 }
 
 local Wtf = {
@@ -496,6 +492,26 @@ local Wtf = {
   end,
   provider = "󰚩 ",
   hl = { fg = "gray" },
+}
+
+local OpenAI = {
+  static = {
+    processing = false,
+  },
+  update = {
+    "User",
+    pattern = "OpenAIStreaming",
+    callback = function(self, args)
+      self.processing = (args.data.status == "started")
+    end,
+  },
+  {
+    condition = function(self)
+      return self.processing
+    end,
+    provider = " ",
+    hl = { fg = "yellow" },
+  },
 }
 
 local function OverseerTasksForStatus(status)
@@ -681,6 +697,7 @@ return {
     -- LspDiagnostics,
     { provider = "%=" },
     Wtf,
+    OpenAI,
     Overseer,
     Dap,
     Lazy,
