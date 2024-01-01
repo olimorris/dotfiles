@@ -1,6 +1,33 @@
 return {
   "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
   {
+    "olimorris/openai.nvim",
+    cmd = { "AIChat", "AICommands" },
+    config = true,
+    init = function()
+      require("legendary").keymaps({
+        {
+          itemgroup = "OpenAI",
+          icon = "",
+          description = "Use the power of OpenAI...",
+          keymaps = {
+            {
+              "<C-a>",
+              "<cmd>AICommands<CR>",
+              description = "Open the OpenAI action picker",
+              mode = { "n", "v" },
+            },
+            {
+              "<LocalLeader>a",
+              "<cmd>AIChat<CR>",
+              description = "Open an OpenAI chat prompt",
+            },
+          },
+        },
+      })
+    end,
+  },
+  {
     "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
     config = true,
   },
