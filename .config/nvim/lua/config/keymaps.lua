@@ -29,6 +29,12 @@ end
 
 return legendary.keymaps({
   {
+    ";",
+    ":",
+    hide = true,
+    description = "Command mode",
+  },
+  {
     "<C-x>",
     function()
       om.float_term(nil, { cwd = nil, esc_esc = true })
