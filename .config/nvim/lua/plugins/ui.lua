@@ -14,7 +14,7 @@ return {
         description = "Harpoon...",
         keymaps = {
           {
-            "<LocalLeader>a",
+            "<Leader>a",
             function()
               require("harpoon"):list():append()
             end,
