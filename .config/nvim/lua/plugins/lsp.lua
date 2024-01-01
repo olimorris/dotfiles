@@ -72,47 +72,6 @@ return {
         },
       },
       {
-        "piersolenski/wtf.nvim",
-        dependencies = {
-          "MunifTanjim/nui.nvim",
-        },
-        opts = {
-          openai_model_id = "gpt-3.5-turbo",
-          popup_type = "horizontal",
-          hooks = {
-            request_started = function()
-              vim.g.wtf_working = true
-            end,
-            request_finished = function()
-              vim.g.wtf_working = nil
-            end,
-          },
-        },
-        init = function()
-          require("legendary").keymaps({
-            itemgroup = "LSP",
-            keymaps = {
-              {
-                "gw",
-                function()
-                  require("wtf").ai()
-                end,
-                description = "Debug diagnostic with AI",
-                mode = { "n", "x" },
-              },
-              {
-                "gW",
-                function()
-                  require("wtf").search()
-                end,
-                description = "Search diagnostic with Google",
-                mode = { "n" },
-              },
-            },
-          })
-        end,
-      },
-      {
         "stevearc/conform.nvim", -- Formatting plugin
         opts = {
           format_on_save = {
