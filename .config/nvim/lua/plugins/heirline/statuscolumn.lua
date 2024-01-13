@@ -168,7 +168,7 @@ return {
     {
       {
         condition = function()
-          return conditions.is_git_repo() and v.virtnum == 0
+          return conditions.is_git_repo()
         end,
         init = function(self)
           local extmark = api.nvim_buf_get_extmarks(
@@ -196,7 +196,7 @@ return {
       },
       {
         condition = function()
-          return not conditions.is_git_repo() or v.virtnum ~= 0
+          return not conditions.is_git_repo()
         end,
         spacer,
       },
