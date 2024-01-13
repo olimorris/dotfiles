@@ -501,10 +501,10 @@ local OpenAI = {
   update = {
     "User",
     pattern = "CodeCompanion",
-    callback = vim.schedule_wrap(function(self, args)
+    callback = function(self, args)
       self.processing = (args.data.status == "started")
       vim.cmd("redrawstatus")
-    end),
+    end,
   },
   {
     condition = function(self)
