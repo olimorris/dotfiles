@@ -500,10 +500,11 @@ local OpenAI = {
   },
   update = {
     "User",
-    pattern = "OpenAIStreaming",
-    callback = function(self, args)
+    pattern = "CodeCompanion",
+    callback = vim.schedule_wrap(function(self, args)
       self.processing = (args.data.status == "started")
-    end,
+      vim.cmd("redrawstatus")
+    end),
   },
   {
     condition = function(self)
