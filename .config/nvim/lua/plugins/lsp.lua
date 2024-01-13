@@ -395,15 +395,16 @@ return {
 
       cmp.setup({
         formatting = {
-          format = function(...)
-            return require("lspkind").cmp_format({ mode = "symbol_text" })(...)
-          end,
+          fields = { "abbr", "kind", "menu" },
+          format = require("lspkind").cmp_format({
+            mode = "symbol", -- show only symbol annotations
+            maxwidth = 50, -- prevent the popup from showing more than provided characters
+            ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
+          }),
         },
         window = {
-          bordered = {
-            border = "none",
-            winhighlight = "Normal:CmpMenu,FloatBorder:CmpMenu,CursorLine:CmpCursorLine,Search:None",
-          },
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
         },
         mapping = {
           -- <C-p> / <Up> = Previous item
@@ -433,9 +434,9 @@ return {
           end, { "i", "s" }),
         },
         sources = {
-          { name = "luasnip", priority = 100, max_item_count = 8 },
-          { name = "copilot", priority = 90, max_item_count = 8 },
-          { name = "nvim_lsp", priority = 90, keyword_length = 3, max_item_count = 8 },
+          { name = "luasnip", priority = 100, max_item_count = 5 },
+          { name = "copilot", priority = 90, max_item_count = 5 },
+          { name = "nvim_lsp", priority = 90 },
           { name = "path", priority = 20 },
           { name = "buffer", priority = 10, keyword_length = 3, max_item_count = 8 },
           { name = "nvim_lua" },

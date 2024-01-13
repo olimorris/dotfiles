@@ -105,7 +105,7 @@ return legendary.commands({
   {
     "Lazygit",
     function()
-      om.float_term("lazygit", { size = { width = 1, height = 1 } })
+      om.open_term("lazygit", { size = { width = 1, height = 1 }, esc_esc = false })
     end,
     description = "Git terminal",
   },

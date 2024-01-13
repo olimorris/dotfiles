@@ -16,9 +16,9 @@ local terminals = {}
 ---@param cmd string?
 ---@param opts table?
 ---@return function
-function om.float_term(cmd, opts)
+function om.open_term(cmd, opts)
   opts = vim.tbl_deep_extend("force", {
-    ft = "lazyterm",
+    ft = "terminal",
     size = { width = 0.9, height = 0.9 },
   }, opts or {}, { persistent = true })
 
@@ -32,7 +32,17 @@ function om.float_term(cmd, opts)
     vim.b[buf].lazyterm_cmd = cmd
     if opts.esc_esc == false then
       vim.keymap.set("t", "<esc>", "<esc>", { buffer = buf, nowait = true })
+    else
+      -- Escape is escape
+      vim.keymap.set("t", "<esc>", "<C-\\><C-n>", { buffer = buf, nowait = true })
     end
+    if opts.ctrl_hjkl == false then
+      vim.keymap.set("t", "<c-h>", "<c-h>", { buffer = buf, nowait = true })
+      vim.keymap.set("t", "<c-j>", "<c-j>", { buffer = buf, nowait = true })
+      vim.keymap.set("t", "<c-k>", "<c-k>", { buffer = buf, nowait = true })
+      vim.keymap.set("t", "<c-l>", "<c-l>", { buffer = buf, nowait = true })
+    end
+
     vim.api.nvim_create_autocmd("BufEnter", {
       buffer = buf,
       callback = function()

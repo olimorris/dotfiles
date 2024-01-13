@@ -43,7 +43,7 @@ return {
       },
       bottom = {
         {
-          ft = "lazyterm",
+          ft = "terminal",
           title = "Terminal",
           size = { height = om.on_big_screen() and 20 or 0.2 },
           filter = function(buf)

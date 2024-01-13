@@ -3,24 +3,27 @@ return {
   {
     "olimorris/openai.nvim",
     cmd = { "AIChat", "AICommands" },
+  {
+    "olimorris/codecompanion.nvim",
+    cmd = { "CodeCompanionChat", "CodeCompanionActions" },
     config = true,
     init = function()
       require("legendary").keymaps({
         {
-          itemgroup = "OpenAI",
+          itemgroup = "Code Companion",
           icon = "",
           description = "Use the power of OpenAI...",
           keymaps = {
             {
               "<C-a>",
-              "<cmd>AICommands<CR>",
-              description = "Open the OpenAI action picker",
+              "<cmd>CodeCompanionActions<CR>",
+              description = "Open the Code Companion action picker",
               mode = { "n", "v" },
             },
             {
               "<LocalLeader>a",
-              "<cmd>AIChat<CR>",
-              description = "Open an OpenAI chat prompt",
+              "<cmd>CodeCompanionChat<CR>",
+              description = "Open Code Companion chat prompt",
             },
           },
         },

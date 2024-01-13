@@ -52,6 +52,8 @@ return {
         },
       },
       highlights = {
+        CodeCompanionTokens = { fg = "${gray}", italic = true },
+
         EdgyNormal = { bg = "${bg}" },
         EdgyTitle = { fg = "${purple}", bold = true },
 

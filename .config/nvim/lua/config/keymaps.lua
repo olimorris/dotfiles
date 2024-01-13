@@ -29,15 +29,22 @@ end
 
 return legendary.keymaps({
   {
-    ";",
+    "'",
     ":",
     hide = true,
     description = "Command mode",
   },
+
+  {
+    "<C-q>",
+    "<cmd>q<CR>",
+    hide = true,
+    description = "Quit neovim",
+  },
   {
     "<C-x>",
     function()
-      om.float_term(nil, { cwd = nil, esc_esc = true })
+      om.open_term(nil, { cwd = nil })
     end,
     description = "Open terminal",
     mode = { "n", "t" },
