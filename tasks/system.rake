@@ -61,32 +61,9 @@ namespace :install do
     section 'Installing servers'
 
     unless testing?
-      run %( asdf plugin add python )
-      run %( asdf install python 2.7.18 )
-      run %( asdf install python 3.11.0 )
-      run %( asdf global python 3.11.0 2.7.18 )
-      run %( ~/.asdf/shims/python -m pip install --upgrade pip )
-      run %( ~/.asdf/shims/python -m pip install pynvim )
-      run %( ~/.asdf/shims/python2 -m pip install --upgrade pip )
-      run %( ~/.asdf/shims/python2 -m pip install pynvim )
-
-      run %( asdf plugin add ruby )
-      run %( asdf install ruby 3.1.1 )
-      run %( asdf install ruby 2.7.4 )
-      run %( asdf global ruby 3.1.1 )
-
-      run %( asdf plugin add lua )
-      run %( asdf install lua 5.4.3 )
-      run %( asdf global lua 5.4.3 )
-
-      run %( mv -v "/opt/homebrew/var/postgres" "/opt/homebrew/var/postgresql@14" )
-      run %( brew services restart postgresql@14 )
-      run %( brew services )
-
-      run %( asdf plugin add nodejs )
-      run %( asdf install nodejs latest )
-      run %( asdf install nodejs 16.17.0 )
-      run %( asdf global nodejs 16.17.0 )
+      run %( mise use --global lua@latest )
+      run %( mise use --global postgres@latest )
+      run %( mise install )
     end
   end
 end
@@ -117,6 +94,6 @@ namespace :update do
   task :servers do
     section 'Updating servers'
 
-    run %( asdf plugin update --all )
+    run %( mise upgrade )
   end
 end

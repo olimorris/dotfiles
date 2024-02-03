@@ -84,7 +84,7 @@ namespace :rollback do
       run %( (cd ~/.neovim && ls -Art | tail -n 1 | xargs rm -rf) )
 
       # Restore Neovim from the previous nightly build
-      run %( (cd ~/.neovim && ls -Art | fgrep -v .DS_Store | tail -n 1 | xargs -I{} cp -s ~/.neovim/{}/build/bin/nvim /usr/local/bin) )
+      run %( (cd ~/.neovim && ls -Art | fgrep -v .DS_Store | tail -n 1 | xargs -I{} cp -s ~/.neovim/1705399006/build/bin/nvim /usr/local/bin) )
     end
   end
 end
