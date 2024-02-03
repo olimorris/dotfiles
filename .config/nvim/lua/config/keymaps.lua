@@ -34,12 +34,12 @@ return legendary.keymaps({
     hide = true,
     description = "Command mode",
   },
-
   {
     "<C-q>",
     "<cmd>q<CR>",
     hide = true,
     description = "Quit neovim",
+    { remap = true, silent = true },
   },
   {
     "<C-x>",

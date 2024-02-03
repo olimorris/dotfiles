@@ -62,9 +62,10 @@ return {
         { title = "Neotest Output", ft = "neotest-output-panel", size = { height = 15 } },
       },
       right = {
-        { ft = "oil", title = "File Explorer", size = { height = 0.3 } },
         { ft = "aerial", title = "Symbols", size = { width = 0.3 } },
+        { ft = "codecompanion", title = "Code Companion Chat", size = { width = 0.45 } },
         { ft = "neotest-summary", title = "Neotest Summary", size = { width = 0.3 } },
+        { ft = "oil", title = "File Explorer", size = { width = 0.3 } },
       },
     },
   },

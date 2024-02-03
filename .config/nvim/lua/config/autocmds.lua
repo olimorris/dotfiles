@@ -92,7 +92,7 @@ return {
     {
       "User",
       function(session)
-        pcall(vim.cmd, "bw [OpenAI Chat]")
+        pcall(vim.cmd, "bw [CodeCompanion]")
       end,
       opts = { pattern = "PersistedSavePre" },
     },

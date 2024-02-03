@@ -53,6 +53,7 @@ return {
       },
       highlights = {
         CodeCompanionTokens = { fg = "${gray}", italic = true },
+        CodeCompanionVirtualText = { fg = "${gray}", italic = true },
 
         EdgyNormal = { bg = "${bg}" },
         EdgyTitle = { fg = "${purple}", bold = true },
@@ -67,9 +68,6 @@ return {
         ModeMsg = { fg = "${gray}" }, -- Make command line text lighter
         Search = { bg = "${selection}", fg = "${yellow}", underline = true },
         VimLogo = { fg = { dark = "#81b766", light = "#029632" } },
-
-        -- Treesitter plugin
-        ["@text.todo.checked"] = { fg = "${bg}", bg = "${purple}" },
 
         -- Aerial plugin
         AerialClass = { fg = "${purple}", bold = true, italic = true },
@@ -129,6 +127,8 @@ return {
         LuaSnipChoiceNode = { fg = "${yellow}" },
         LuaSnipInsertNode = { fg = "${yellow}" },
 
+        ["@markup.list.unchecked.markdown"] = { fg = "${bg}", bg = "${fg}" },
+
         -- Neotest
         NeotestAdapterName = { fg = "${purple}", bold = true },
         NeotestFocused = { bold = true },
@@ -173,7 +173,7 @@ return {
         VirtColumn = { fg = "${indentline}" },
       },
 
-      -- caching = false,
+      caching = false,
       cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
 
       plugins = {
