@@ -127,7 +127,13 @@ local GitBranch = {
       condition = function()
         return (_G.GitStatus ~= nil and (_G.GitStatus.ahead ~= 0 or _G.GitStatus.behind ~= 0))
       end,
-      update = { "User", pattern = "GitStatusChanged" },
+      update = {
+        "User",
+        pattern = "GitStatusChanged",
+        callback = vim.schedule_wrap(function()
+          vim.cmd("redrawstatus")
+        end),
+      },
       {
         condition = function()
           return _G.GitStatus.status == "pending"
@@ -486,21 +492,13 @@ local Session = {
   RightSlantEnd,
 }
 
-local Wtf = {
-  condition = function()
-    return vim.g.wtf_working == true
-  end,
-  provider = "󰚩 ",
-  hl = { fg = "gray" },
-}
-
-local OpenAI = {
+local CodeCompanion = {
   static = {
     processing = false,
   },
   update = {
     "User",
-    pattern = "CodeCompanion",
+    pattern = "CodeCompanionRequest",
     callback = function(self, args)
       self.processing = (args.data.status == "started")
       vim.cmd("redrawstatus")
@@ -590,7 +588,13 @@ local Lazy = {
       filetype = self.filetypes,
     }) and require("lazy.status").has_updates()
   end,
-  -- update = { "User", pattern = "LazyUpdate" },
+  update = {
+    "User",
+    pattern = "LazyCheck",
+    callback = vim.schedule_wrap(function()
+      vim.cmd("redrawstatus")
+    end),
+  },
   provider = function()
     return "  " .. require("lazy.status").updates() .. " "
   end,
@@ -697,8 +701,7 @@ return {
     CodeAction,
     -- LspDiagnostics,
     { provider = "%=" },
-    Wtf,
-    OpenAI,
+    CodeCompanion,
     Overseer,
     Dap,
     Lazy,

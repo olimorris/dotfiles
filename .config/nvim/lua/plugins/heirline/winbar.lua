@@ -73,7 +73,7 @@ local Filename = {
         if vim.o.background == "light" then
           return { fg = "fg" }
         else
-          return { fg = "comment" }
+          return { fg = "comment", underline = true }
         end
       end,
     },
@@ -154,7 +154,7 @@ local Symbols = {
         provider = "",
       },
     },
-    hl = "HeirlineWinbar",
+    hl = "Comment",
   },
 }
 

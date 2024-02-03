@@ -10,7 +10,7 @@ return {
     condition = function()
       return not conditions.buffer_matches({
         buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
-        filetype = { "alpha", "harpoon", "oil", "lspinfo", "toggleterm" },
+        filetype = { "alpha", "codecompanion", "harpoon", "oil", "lspinfo", "toggleterm" },
       })
     end,
     static = {
