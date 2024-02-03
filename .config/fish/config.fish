@@ -1,3 +1,4 @@
+
 set -u fish_greeting ""
 
 # Variables
@@ -44,5 +45,7 @@ if status is-interactive
     load_env_vars ~/.env
     thefuck --alias | source
     starship init fish | source
-    source /opt/homebrew/opt/asdf/libexec/asdf.fish
+    mise activate fish | source
+else
+    mise activate fish --shims | source
 end

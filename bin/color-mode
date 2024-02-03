@@ -1,3 +1,4 @@
 #!/bin/sh
+export PATH="$HOME/.local/share/mise/shims:$PATH"
 
-/Users/Oli/.asdf/shims/python /Users/Oli/.dotfiles/commands/color_mode.py $1
+python /Users/Oli/.dotfiles/commands/color_mode.py $1
