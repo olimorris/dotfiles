@@ -14,30 +14,51 @@ return {
       })
     end,
     static = {
-      get_extmarks = function(self, bufnr, lnum)
+      get_signs = function(self, bufnr, lnum)
         local signs = {}
 
-        local extmarks = api.nvim_buf_get_extmarks(
-          0,
-          bufnr,
-          { lnum - 1, 0 },
-          { lnum - 1, -1 },
-          { details = true, type = "sign" }
-        )
+        if om.has("nvim-0.10") then
+          local extmarks = api.nvim_buf_get_extmarks(
+            0,
+            bufnr,
+            { lnum - 1, 0 },
+            { lnum - 1, -1 },
+            { details = true, type = "sign" }
+          )
 
-        for _, extmark in pairs(extmarks) do
-          -- Exclude gitsigns
-          if extmark[4].ns_id ~= self.git_ns then
-            signs[#signs + 1] = {
-              name = extmark[4].sign_hl_group or "",
-              text = extmark[4].sign_text,
-              sign_hl_group = extmark[4].sign_hl_group,
-              priority = extmark[4].priority,
-            }
+          for _, extmark in pairs(extmarks) do
+            -- Exclude gitsigns
+            if extmark[4].ns_id ~= self.git_ns then
+              signs[#signs + 1] = {
+                name = extmark[4].sign_hl_group or "",
+                text = extmark[4].sign_text,
+                sign_hl_group = extmark[4].sign_hl_group,
+                priority = extmark[4].priority,
+              }
+            end
+          end
+        else
+          signs = vim.fn.sign_getplaced(vim.api.nvim_get_current_buf(), {
+            group = "*",
+            lnum = vim.v.lnum,
+          })
+
+          -- if #signs == 0 or signs[1].signs == nil then
+          --   return
+          -- end
+
+          -- Filter out git signs
+          signs = vim.tbl_filter(function(sign)
+            return not vim.startswith(sign.group, "gitsigns")
+          end, signs[1].signs)
+
+          -- Update sign meta data
+          for _, sign in ipairs(signs) do
+            sign.text = vim.fn.sign_getdefined(sign.name)[1].text
+            sign.sign_hl_group = sign.name
           end
         end
 
-        -- Sort by priority
         table.sort(signs, function(a, b)
           return (a.priority or 0) > (b.priority or 0)
         end)
@@ -108,7 +129,7 @@ return {
     -- Signs (except for GitSigns)
     {
       init = function(self)
-        local signs = self.get_extmarks(self, -1, v.lnum)
+        local signs = self.get_signs(self, -1, v.lnum)
         self.sign = signs[1]
       end,
       provider = function(self)
@@ -122,7 +143,7 @@ return {
         update = true,
         callback = function(self, ...)
           local line = self.click_args(self, ...).mousepos.line
-          local sign = self.get_extmarks(self, -1, line)[1]
+          local sign = self.get_signs(self, -1, line)[1]
           if sign then
             self:resolve(sign.name)
           end
