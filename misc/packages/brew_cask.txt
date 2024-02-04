@@ -40,7 +40,7 @@ textexpander
 typora
 visual-studio-code
 vlc
-wezterm
 wireshark
 xscope
+zed
 zoom

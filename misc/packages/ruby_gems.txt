@@ -1,4 +1,3 @@
-ast
 base64
 benchmark
 bigdecimal
@@ -35,15 +34,11 @@ io-wait
 ipaddr
 irb
 json
-language_server-protocol
 logger
 matrix
 minitest
 money
-msgpack
-multi_json
 mutex_m
-neovim
 net-ftp
 net-http
 net-imap
@@ -57,18 +52,14 @@ open3
 openssl
 optparse
 ostruct
-parallel
-parser
 pathname
 power_assert
 pp
 prettyprint
 prime
-prism
 pstore
 psych
 racc
-rainbow
 rake
 rbs
 rchardet
@@ -76,7 +67,6 @@ rdoc
 readline
 readline-ext
 reckon
-regexp_parser
 reline
 resolv
 resolv-replace
@@ -88,10 +78,6 @@ rspec-expectations
 rspec-mocks
 rspec-support
 rss
-rubocop
-rubocop-ast
-ruby-lsp
-ruby-progressbar
 ruby2_keywords
 rubygems-update
 securerandom
@@ -101,6 +87,7 @@ singleton
 sorbet-runtime
 stringio
 strscan
+syntax_suggest
 syslog
 tempfile
 terminal-table

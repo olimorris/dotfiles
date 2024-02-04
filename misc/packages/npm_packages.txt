@@ -1,5 +1,2 @@
-eslint
-fixjson
-neovim
+corepack
 npm
-prettier
