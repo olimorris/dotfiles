@@ -18,7 +18,7 @@ ran_from_cmd_line = False
 # The order in which apps are changed
 apps = [
     "macos",
-    "wallpaper",
+    # "wallpaper",
     "wezterm",
     "starship",
     "tmux",
