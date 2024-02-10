@@ -60,7 +60,7 @@ task :install do
   Rake::Task['install:tmux'].invoke
 
   # Apps
-  Rake::Task['install:neovim'].invoke
+  # Rake::Task['install:neovim'].invoke
   Rake::Task['install:rails'].invoke
   Rake::Task['install:vim'].invoke
 end
@@ -86,7 +86,7 @@ task :update do
   Rake::Task['update:servers'].invoke
 
   # Apps
-  Rake::Task['update:neovim'].invoke
+  # Rake::Task['update:neovim'].invoke
   Rake::Task['update:rails'].invoke
   Rake::Task['update:vim'].invoke
 end
