@@ -678,7 +678,6 @@ return {
       "^aerial$",
       "^alpha$",
       "^chatgpt$",
-      "^DressingInput$",
       "^frecency$",
       "^lazy$",
       "^lazyterm$",
