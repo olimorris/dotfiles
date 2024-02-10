@@ -89,13 +89,6 @@ return {
       end,
       opts = { pattern = "PersistedTelescopeLoadPre" },
     },
-    {
-      "User",
-      function(session)
-        pcall(vim.cmd, "bw [CodeCompanion]")
-      end,
-      opts = { pattern = "PersistedSavePre" },
-    },
     -- {
     --   "User",
     --   function(session)
