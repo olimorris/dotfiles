@@ -1,5 +1,5 @@
 # Inspiration taken from: https://github.com/kevinjalbert/dotfiles/
-# This Rakefile should not be run with sudo, it will use sudo where nessecary.
+# This Rakefile should not be run with sudo, it will use sudo where necessary.
 # To perform tasks in a 'dry run' state append the following to your command:
 # DRY_RUN=true
 DOTS_FOLDER = '.dotfiles'
