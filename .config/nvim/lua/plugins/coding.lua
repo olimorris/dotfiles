@@ -6,11 +6,14 @@ return {
     opts = {
       silence_notifications = true,
       display = {
+        advisor = {
+          stream = true,
+        },
         chat = {
-          show_settings = false,
           type = "float",
         },
       },
+      log_level = "TRACE",
     },
     init = function()
       require("legendary").keymaps({
