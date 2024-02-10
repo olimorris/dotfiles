@@ -3,7 +3,7 @@ return {
   {
     "mrjones2014/legendary.nvim", -- A command palette for keymaps, commands and autocmds
     priority = 10000,
-    lazy = false, -- Never lazy load this
+    lazy = false,
     dependencies = "kkharji/sqlite.lua",
     init = function()
       require("legendary").keymaps({
@@ -150,22 +150,6 @@ return {
           description = "Tmux: Move right",
         },
       })
-    end,
-  },
-  {
-    "dstein64/vim-startuptime", -- Profile your Neovim startup time
-    cmd = "StartupTime",
-    init = function()
-      require("legendary").commands({
-        {
-          ":StartupTime",
-          description = "Profile Neovim's startup time",
-        },
-      })
-    end,
-    config = function()
-      vim.g.startuptime_tries = 15
-      vim.g.startuptime_exe_args = { "+let g:auto_session_enabled = 0" }
     end,
   },
 }

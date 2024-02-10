@@ -1,36 +1,7 @@
 return {
   "nvim-tree/nvim-web-devicons",
   {
-    "ThePrimeagen/harpoon",
-    branch = "harpoon2",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = true,
-    init = function()
-      require("telescope").load_extension("harpoon")
-
-      require("legendary").keymaps({
-        itemgroup = "Harpoon",
-        icon = "󱡅",
-        description = "Harpoon...",
-        keymaps = {
-          {
-            "<Leader>a",
-            function()
-              require("harpoon"):list():append()
-            end,
-            description = "Add mark",
-          },
-          {
-            "<C-e>",
-            "<cmd>Telescope harpoon marks<CR>",
-            description = "Browse marks",
-          },
-        },
-      })
-    end,
-  },
-  {
-    "folke/edgy.nvim",
+    "folke/edgy.nvim", -- Create predefined window layouts
     event = "VeryLazy",
     init = function()
       vim.opt.laststatus = 3
