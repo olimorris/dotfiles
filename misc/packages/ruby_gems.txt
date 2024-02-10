@@ -57,6 +57,7 @@ power_assert
 pp
 prettyprint
 prime
+prism
 pstore
 psych
 racc
@@ -78,6 +79,7 @@ rspec-expectations
 rspec-mocks
 rspec-support
 rss
+ruby-lsp
 ruby2_keywords
 rubygems-update
 securerandom
