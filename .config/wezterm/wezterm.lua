@@ -5,15 +5,7 @@ config.color_scheme = "onedarkpro_onedark"
 config.cursor_blink_rate = 0
 config.enable_tab_bar = false -- Using tmux instead...yes I know!!
 config.font = wezterm.font("Operator Mono", { weight = "Book" })
-config.font_rules = {
-  {
-    intensity = "Bold",
-    italic = false,
-    font = wezterm.font("Operator Mono", { weight = "Medium" }),
-  },
-}
 config.font_size = 21
-config.front_end = "WebGpu"
 config.hide_tab_bar_if_only_one_tab = true
 config.keys = {
   { key = "\r", mods = "CTRL", action = wezterm.action({ SendString = "\x1b[13;5u" }) },
