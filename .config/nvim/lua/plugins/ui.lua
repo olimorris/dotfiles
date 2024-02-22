@@ -1,6 +1,13 @@
 return {
   "nvim-tree/nvim-web-devicons",
   {
+    "jinh0/eyeliner.nvim",
+    opts = {
+      dim = true,
+      highlight_on_key = true,
+    },
+  },
+  {
     "folke/edgy.nvim", -- Create predefined window layouts
     event = "VeryLazy",
     init = function()
