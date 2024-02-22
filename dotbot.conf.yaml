@@ -21,6 +21,7 @@
     # Launch Agents
     ~/Library/LaunchAgents/oli.cloud-backup.plist: LaunchAgents/oli.cloud-backup.plist
     ~/Library/LaunchAgents/oli.color-mode-notify.plist: LaunchAgents/oli.color-mode-notify.plist
+    ~/Library/LaunchAgents/oli.finance-output.plist: LaunchAgents/oli.finance-output.plist
 
     # Others
     ~/.applescript: .config/applescript

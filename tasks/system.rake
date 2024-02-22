@@ -47,6 +47,7 @@ namespace :install do
 
     run %( launchctl load -w ~/Library/LaunchAgents/oli.cloud-backup.plist )
     run %( launchctl load -w ~/Library/LaunchAgents/oli.color-mode-notify.plist )
+    run %( launchctl load -w ~/Library/LaunchAgents/oli.finance-output.plist )
   end
 
   desc 'Install macOS Configurations'

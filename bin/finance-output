@@ -1,0 +1,8 @@
+#!/bin/sh
+
+export PATH="$HOME/.local/share/mise/shims:$PATH"
+
+. /Users/Oli/.env
+
+/opt/homebrew/bin/hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal --auto --forecast="this month".. bal "^(ass|liab)" --tree -H -M -b "1 month ago" -e "24 months" -O csv | iconv -f utf-8 -t windows-1252 > $FINANCES/output.csv
+
