@@ -1,37 +1,38 @@
 return {
   "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
   {
+    "olimorris/openai.nvim",
+    config = true,
+  },
+  {
     "olimorris/codecompanion.nvim",
-    cmd = { "CodeCompanionChat", "CodeCompanionToggle", "CodeCompanionActions" },
     opts = {
       silence_notifications = true,
       display = {
-        advisor = {
-          stream = true,
-        },
         chat = {
           type = "float",
         },
       },
-      log_level = "TRACE",
+      log_level = "DEBUG",
     },
     init = function()
+      vim.cmd([[cab cc CodeCompanion]])
       require("legendary").keymaps({
         {
-          itemgroup = "Code Companion",
+          itemgroup = "CodeCompanion",
           icon = "",
           description = "Use the power of OpenAI...",
           keymaps = {
             {
               "<C-a>",
               "<cmd>CodeCompanionActions<CR>",
-              description = "Open the Code Companion action picker",
+              description = "Open the CodeCompanion action picker",
               mode = { "n", "v" },
             },
             {
               "<LocalLeader>a",
               "<cmd>CodeCompanionToggle<CR>",
-              description = "Open Code Companion chat prompt",
+              description = "Open CodeCompanion chat prompt",
               mode = { "n", "v" },
             },
           },
