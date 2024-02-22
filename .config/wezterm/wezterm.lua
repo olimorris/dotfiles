@@ -4,7 +4,10 @@ local config = {}
 config.color_scheme = "onedarkpro_onedark"
 config.cursor_blink_rate = 0
 config.enable_tab_bar = false -- Using tmux instead...yes I know!!
-config.font = wezterm.font("Operator Mono", { weight = "Book" })
+config.font = wezterm.font("Operator Mono", {
+  stretch = "Normal",
+  weight = "Book",
+})
 config.font_size = 21
 config.hide_tab_bar_if_only_one_tab = true
 config.keys = {
