@@ -357,6 +357,17 @@ return {
       })
 
       -- For nvim-ufo folding
+      require("ufo").setup()
+      require("lspconfig").yamlls.setup({
+        capabilities = {
+          textDocument = {
+            foldingRange = {
+              dynamicRegistration = false,
+              lineFoldingOnly = true,
+            },
+          },
+        },
+      })
       lsp_zero.set_server_config({
         capabilities = {
           textDocument = {
@@ -367,9 +378,6 @@ return {
           },
         },
       })
-
-      -- Setup better folding
-      require("ufo").setup()
 
       vim.diagnostic.config({
         severity_sort = true,
