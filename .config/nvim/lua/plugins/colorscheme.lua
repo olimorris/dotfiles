@@ -21,6 +21,7 @@ return {
     opts = {
       colors = {
         dark = {
+          codeblock = "require('onedarkpro.helpers').lighten('bg', 2, 'onedark')",
           statusline_bg = "#2e323b", -- gray
           statuscolumn_border = "#4b5160", -- gray
           ellipsis = "#808080", -- gray
@@ -34,6 +35,7 @@ return {
           light_gray = "require('onedarkpro.helpers').darken('gray', 7, 'onedark')",
         },
         light = {
+          codeblock = "require('onedarkpro.helpers').darken('bg', 3, 'onelight')",
           comment = "#bebebe", -- Revert back to original comment colors
           statusline_bg = "#f0f0f0", -- gray
           statuscolumn_border = "#e7e7e7", -- gray
@@ -55,8 +57,14 @@ return {
         CodeCompanionTokens = { fg = "${gray}", italic = true },
         CodeCompanionVirtualText = { fg = "${gray}", italic = true },
 
+        ["@markup.raw.block.markdown"] = { bg = "${codeblock}" },
+        ["@markup.quote.markdown"] = { italic = true, extend = true },
+
         EdgyNormal = { bg = "${bg}" },
         EdgyTitle = { fg = "${purple}", bold = true },
+
+        EyelinerPrimary = { fg = "${green}" },
+        EyelinerSecondary = { fg = "${blue}" },
 
         NormalFloat = { bg = "${bg}" }, -- Set the terminal background to be the same as the editor
         FloatBorder = { fg = "${gray}", bg = "${bg}" },
