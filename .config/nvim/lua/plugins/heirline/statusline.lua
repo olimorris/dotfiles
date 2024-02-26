@@ -682,7 +682,6 @@ return {
       "^lazy$",
       "^lazyterm$",
       "^netrw$",
-      "^oil$",
       "^TelescopePrompt$",
       "^undotree$",
     },
