@@ -60,12 +60,14 @@ ossp-uuid
 pandoc
 php@8.1
 postgresql@14
+python-docopt
 python@3.9
 rclone
 reattach-to-user-namespace
 ripgrep
 shfmt
 shunit2
+six
 speexdsp
 spring-io/tap/spring-boot
 starship
