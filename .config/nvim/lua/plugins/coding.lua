@@ -6,15 +6,29 @@ return {
   },
   {
     "olimorris/codecompanion.nvim",
-    opts = {
-      silence_notifications = true,
-      display = {
-        chat = {
-          type = "float",
+    config = function()
+      require("codecompanion").setup({
+        adapters = {
+          chat = require("codecompanion.adapters").use("anthropic", {
+            env = {
+              api_key = "cmd:gpg --decrypt ~/.dotfiles/.config/gpg/anthropic-api-key.gpg 2>/dev/null",
+            },
+          }),
+          inline = require("codecompanion.adapters").use("anthropic", {
+            env = {
+              api_key = "cmd:gpg --decrypt ~/.dotfiles/.config/gpg/anthropic-api-key.gpg 2>/dev/null",
+            },
+          }),
         },
-      },
-      log_level = "DEBUG",
-    },
+        silence_notifications = true,
+        display = {
+          chat = {
+            type = "float",
+          },
+        },
+        log_level = "TRACE",
+      })
+    end,
     init = function()
       vim.cmd([[cab cc CodeCompanion]])
       require("legendary").keymaps({
