@@ -32,6 +32,7 @@
     ~/.env: .config/env/.env
     ~/.gitconfig: .config/git/.gitconfig
     ~/.gitignore_global: .config/git/.gitignore_global
+    ~/.gnupg/gpg-agent.conf: .config/gpg/gpg-agent.conf
     ~/.mackup: .config/mackup/.mackup
     ~/.mackup.cfg: .config/mackup/.mackup.cfg
     ~/.mise.toml: .config/mise/.mise.toml
