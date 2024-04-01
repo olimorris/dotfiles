@@ -34,6 +34,7 @@ io-wait
 ipaddr
 irb
 json
+language_server-protocol
 logger
 matrix
 minitest

@@ -9,7 +9,6 @@ composer
 dark-mode
 dash
 docker
-fbthrift
 fd
 fish
 flux
@@ -59,8 +58,11 @@ openjdk@17
 ossp-uuid
 pandoc
 php@8.1
+pinentry-mac
 postgresql@14
 python-docopt
+python-setuptools
+python@3.11
 python@3.9
 rclone
 reattach-to-user-namespace
