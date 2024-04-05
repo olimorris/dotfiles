@@ -9,24 +9,31 @@ return {
     config = function()
       require("codecompanion").setup({
         adapters = {
-          chat = require("codecompanion.adapters").use("anthropic", {
+          anthropic = require("codecompanion.adapters").use("anthropic", {
             env = {
-              api_key = "cmd:gpg --decrypt ~/.dotfiles/.config/gpg/anthropic-api-key.gpg 2>/dev/null",
+              api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
             },
           }),
-          inline = require("codecompanion.adapters").use("anthropic", {
+          openai = require("codecompanion.adapters").use("openai", {
             env = {
-              api_key = "cmd:gpg --decrypt ~/.dotfiles/.config/gpg/anthropic-api-key.gpg 2>/dev/null",
+              api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
             },
           }),
+        },
+        strategies = {
+          chat = "anthropic",
+          inline = "anthropic",
         },
         silence_notifications = true,
         display = {
           chat = {
             type = "float",
+            buf_options = {
+              buflisted = false,
+            },
           },
         },
-        log_level = "TRACE",
+        log_level = "DEBUG",
       })
     end,
     init = function()
