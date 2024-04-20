@@ -1,10 +1,6 @@
 return {
   "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
   {
-    "olimorris/openai.nvim",
-    config = true,
-  },
-  {
     "olimorris/codecompanion.nvim",
     config = function()
       require("codecompanion").setup({
@@ -12,6 +8,11 @@ return {
           anthropic = require("codecompanion.adapters").use("anthropic", {
             env = {
               api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
+            },
+            schema = {
+              model = {
+                default = "claude-3-sonnet-20240229",
+              },
             },
           }),
           openai = require("codecompanion.adapters").use("openai", {
