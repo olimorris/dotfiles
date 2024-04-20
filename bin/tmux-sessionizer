@@ -17,7 +17,7 @@ function search
         uniq | # remove any duplicates
         awk '{print $2}' | # only show the path
         sed 's|^/Users/Oli|~|' | # replace /Users/Oli prefix with ~
-        fzf --height=100% --no-border --no-sort --no-info
+        fzf --height=100% --no-border --no-sort --no-info --no-separator
 end
 
 if test (count $argv) -eq 1
