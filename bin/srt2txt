@@ -1,0 +1,66 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'fileutils'
+
+def parse_options
+  options = {
+    pattern: /\d+\n\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}\n/
+  }
+  OptionParser.new do |opts|
+    opts.banner = 'Usage: srt2text.rb -f INPUT_DIRECTORY -o OUTPUT_FILE [--pattern PATTERN]'
+
+    opts.on('-f', '--input-directory DIRECTORY', 'Input directory containing SRT files') do |dir|
+      options[:input_directory] = dir
+    end
+
+    opts.on('-o', '--output-file FILE', 'Output file to save the combined text') do |file|
+      options[:output_file] = file
+    end
+
+    opts.on('--pattern PATTERN', 'Regular expression pattern for removing timestamps and sequence numbers') do |pattern|
+      options[:pattern] = Regexp.new(pattern)
+    end
+  end.parse!
+
+  if options[:input_directory].nil? || options[:output_file].nil?
+    puts 'Please provide both input directory and output file.'
+    exit(1)
+  end
+
+  options
+end
+
+def process_srt_files(input_directory, pattern)
+  output_text = ''
+  srt_files = Dir.glob("#{input_directory}/*.srt").sort_by { |file| File.basename(file, '.*').to_i }
+
+  srt_files.each_with_index do |srt_file, index|
+    begin
+      text = File.read(srt_file)
+      cleaned_text = text.gsub(pattern, '').gsub(/\n/, ' ')
+      output_text += cleaned_text.strip + ' '
+    rescue StandardError => e
+      puts "Error processing file: #{srt_file}"
+      puts "Error message: #{e.message}"
+    end
+    progress = ((index + 1).to_f / srt_files.length * 100).round(2)
+    print "\rProcessing files: #{progress}%"
+  end
+
+  puts "\nProcessing complete."
+  output_text.strip
+end
+
+def save_output_file(output_file, output_text)
+  File.write(output_file, output_text)
+  puts "Combined text saved to #{output_file}"
+rescue StandardError => e
+  puts "Error saving output file: #{output_file}"
+  puts "Error message: #{e.message}"
+end
+
+# Main script execution
+options = parse_options
+output_text = process_srt_files(options[:input_directory], options[:pattern])
+save_output_file(options[:output_file], output_text)
