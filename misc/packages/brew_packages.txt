@@ -10,6 +10,7 @@ dark-mode
 dash
 docker
 fd
+ffmpeg
 fish
 flux
 fortune
@@ -25,6 +26,7 @@ guile
 hledger
 httpd
 httpie
+imap-uw
 jpeg
 jython
 lazygit
@@ -60,6 +62,7 @@ pandoc
 php@8.1
 pinentry-mac
 postgresql@14
+pygments
 python-docopt
 python-setuptools
 python@3.11
