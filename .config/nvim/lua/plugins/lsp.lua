@@ -344,7 +344,7 @@ return {
           "jsonls",
           "lua_ls",
           "pyright",
-          "ruby_ls",
+          "ruby_lsp",
           -- "tailwindcss", -- Disabled due to high node CPU usage
           "tsserver",
           "vuels",
