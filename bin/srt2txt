@@ -33,7 +33,7 @@ end
 
 def process_srt_files(input_directory, pattern)
   output_text = ''
-  srt_files = Dir.glob("#{input_directory}/*.srt").sort_by { |file| File.basename(file, '.*').to_i }
+  srt_files = Dir.glob("#{input_directory}/*_en.srt").sort_by { |file| File.basename(file, '.*').to_i }
 
   srt_files.each_with_index do |srt_file, index|
     begin
@@ -53,6 +53,9 @@ def process_srt_files(input_directory, pattern)
 end
 
 def save_output_file(output_file, output_text)
+  output_dir = File.dirname(output_file)
+  FileUtils.mkdir_p(output_dir) unless File.directory?(output_dir)
+
   File.write(output_file, output_text)
   puts "Combined text saved to #{output_file}"
 rescue StandardError => e
