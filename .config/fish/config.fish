@@ -48,7 +48,6 @@ end
 
 if status is-interactive
     load_env_vars ~/.env
-    thefuck --alias | source
     starship init fish | source
     mise activate fish | source
 else
