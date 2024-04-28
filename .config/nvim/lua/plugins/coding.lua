@@ -371,6 +371,7 @@ return {
     "nvim-neotest/neotest",
     lazy = true,
     dependencies = {
+      "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "antoinemadec/FixCursorHold.nvim",
@@ -482,7 +483,7 @@ return {
         diagnostic = {
           enabled = false,
         },
-        log_level = 1,
+        log_level = vim.log.levels.ERROR,
         icons = {
           expanded = "",
           child_prefix = "",
