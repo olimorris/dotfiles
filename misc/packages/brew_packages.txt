@@ -17,8 +17,8 @@ fortune
 fzf
 gh
 git
-git-flow-avh
 glow
+gnu-getopt
 go
 gobject-introspection
 gradle
@@ -63,8 +63,8 @@ php@8.1
 pinentry-mac
 postgresql@14
 pygments
-python-docopt
 python-setuptools
+python@3.10
 python@3.11
 python@3.9
 rclone
@@ -77,7 +77,6 @@ speexdsp
 spring-io/tap/spring-boot
 starship
 subversion
-thefuck
 tmux
 tree-sitter
 universal-ctags
