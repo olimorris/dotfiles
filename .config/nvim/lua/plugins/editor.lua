@@ -203,14 +203,4 @@ return {
       },
     },
   },
-  {
-    "ahmedkhalf/project.nvim", -- Automatically set the cwd to the project root
-    opts = {
-      ignore_lsp = { "efm", "null-ls" },
-      patterns = { "Gemfile" },
-    },
-    config = function(_, opts)
-      require("project_nvim").setup(opts)
-    end,
-  },
 }
