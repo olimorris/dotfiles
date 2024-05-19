@@ -29,4 +29,5 @@ cat $inputFile >> $outputFile
 echo '</body>
 </html>' >> $outputFile
 
+cp $outputFile /Users/Oli/Library/Mobile\ Documents/com~apple~CloudDocs/Downloads/output.html
 rm $inputFile
