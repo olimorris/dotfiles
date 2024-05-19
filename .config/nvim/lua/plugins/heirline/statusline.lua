@@ -512,6 +512,26 @@ local CodeCompanion = {
     hl = { fg = "yellow" },
   },
 }
+local CodeCompanionTooling = {
+  static = {
+    processing = false,
+  },
+  update = {
+    "User",
+    pattern = "CodeCompanionTool",
+    callback = function(self, args)
+      self.processing = (args.data.status == "started")
+      vim.cmd("redrawstatus")
+    end,
+  },
+  {
+    condition = function(self)
+      return self.processing
+    end,
+    provider = "󱙺 ",
+    hl = { fg = "green" },
+  },
+}
 
 local function OverseerTasksForStatus(status)
   return {
@@ -699,6 +719,7 @@ return {
     CodeAction,
     -- LspDiagnostics,
     { provider = "%=" },
+    CodeCompanionTooling,
     CodeCompanion,
     Overseer,
     Dap,
