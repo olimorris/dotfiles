@@ -19,11 +19,18 @@ return {
             env = {
               api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
             },
+            schema = {
+              max_tokens = {
+                default = 500,
+              },
+            },
           }),
+          ollama = require("codecompanion.adapters").use("ollama"),
         },
         strategies = {
-          chat = "anthropic",
-          inline = "anthropic",
+          chat = "openai",
+          inline = "openai",
+          tools = "openai",
         },
         silence_notifications = true,
         display = {
@@ -483,7 +490,7 @@ return {
         diagnostic = {
           enabled = false,
         },
-        log_level = vim.log.levels.ERROR,
+        log_level = vim.log.levels.TRACE,
         icons = {
           expanded = "",
           child_prefix = "",
