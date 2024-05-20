@@ -19,11 +19,6 @@ return {
             env = {
               api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
             },
-            schema = {
-              max_tokens = {
-                default = 500,
-              },
-            },
           }),
           ollama = require("codecompanion.adapters").use("ollama"),
         },
