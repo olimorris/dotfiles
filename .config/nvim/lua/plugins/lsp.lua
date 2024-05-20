@@ -58,20 +58,6 @@ return {
         },
       },
       {
-        "kosayoda/nvim-lightbulb",
-        opts = {
-          autocmd = {
-            enabled = true,
-          },
-          sign = {
-            enabled = false,
-          },
-          status_text = {
-            enabled = true,
-          },
-        },
-      },
-      {
         "stevearc/conform.nvim", -- Formatting plugin
         opts = {
           format_on_save = {
@@ -147,12 +133,12 @@ return {
       vim.o.runtimepath = vim.o.runtimepath .. ",~/.dotfiles/.config/snippets"
 
       local lsp_zero = require("lsp-zero")
-      lsp_zero.preset({
-        set_lsp_keymaps = false,
-        manage_nvim_cmp = {
-          set_basic_mappings = true,
-        },
-      })
+      -- lsp_zero.preset({
+      --   set_lsp_keymaps = false,
+      --   manage_nvim_cmp = {
+      --     set_basic_mappings = true,
+      --   },
+      -- })
 
       lsp_zero.set_sign_icons(icons)
 
