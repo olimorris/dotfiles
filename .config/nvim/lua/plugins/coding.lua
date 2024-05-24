@@ -65,6 +65,11 @@ return {
     end,
   },
   {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+  },
+  {
     "kylechui/nvim-surround", -- Use vim commands to surround text, tags with brackets, parenthesis etc
     config = true,
   },
@@ -299,7 +304,6 @@ return {
   },
   {
     "stevearc/overseer.nvim", -- Task runner and job management
-    lazy = true,
     opts = {
       component_aliases = {
         default_neotest = {
@@ -308,7 +312,6 @@ return {
           "on_complete_dispose",
         },
       },
-      templates = { "java_build" },
     },
     init = function()
       require("legendary").commands({
