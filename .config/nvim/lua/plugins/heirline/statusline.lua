@@ -324,7 +324,7 @@ local LspAttached = {
     },
   },
   init = function(self)
-    for i, server in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
+    for i, server in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
       if self.show_lsps[server.name] ~= false then
         self.lsp_attached = true
         return
