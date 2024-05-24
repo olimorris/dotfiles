@@ -135,8 +135,6 @@ return {
 
       local lsp_zero = require("lsp-zero")
 
-      lsp_zero.set_sign_icons(icons)
-
       local function autocmds(client, bufnr)
         require("legendary").autocmds({
           {
@@ -371,6 +369,8 @@ return {
         --   spacing = 0,
         -- },
       })
+
+      lsp_zero.set_sign_icons(icons)
 
       -- Completion
       local cmp = require("cmp")
