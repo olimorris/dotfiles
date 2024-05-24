@@ -16,12 +16,12 @@ vg.maplocalleader = "\\"
 vg.neoterm_autoinsert = 0 -- Do not start terminal in insert mode
 vg.neoterm_autoscroll = 1 -- Autoscroll the terminal
 vg.loaded_perl_provider = 0 -- Do not load Perl
-if vim.fn.filereadable(os.getenv("HOME_DIR") .. ".asdf/shims/python2") then
-  vg.python_host_prog = os.getenv("HOME_DIR") .. ".asdf/shims/python2"
-end
-if vim.fn.filereadable(os.getenv("HOME_DIR") .. ".asdf/shims/python") then
-  vg.python3_host_prog = os.getenv("HOME_DIR") .. ".asdf/shims/python"
-end
+-- if vim.fn.filereadable(os.getenv("HOME_DIR") .. ".asdf/shims/python2") then
+--   vg.python_host_prog = os.getenv("HOME_DIR") .. ".asdf/shims/python2"
+-- end
+-- if vim.fn.filereadable(os.getenv("HOME_DIR") .. ".local/share/mise/installs/python/3.11.0/bin/python") then
+--   vg.python3_host_prog = os.getenv("HOME_DIR") .. ".local/share/mise/installs/python/3.11.0/bin/python"
+-- end
 
 -- Buffer options
 vb.autoindent = true
