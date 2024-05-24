@@ -12,8 +12,6 @@ return {
     "VonHeikemen/lsp-zero.nvim",
     branch = "v3.x",
     dependencies = {
-      -- LSP Support
-      "neovim/nvim-lspconfig",
       {
         "williamboman/mason.nvim",
         build = function()
@@ -28,6 +26,9 @@ return {
       },
       "williamboman/mason-lspconfig.nvim",
 
+      -- LSP Support
+      "neovim/nvim-lspconfig",
+
       -- Autocompletion
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-buffer",
@@ -38,7 +39,7 @@ return {
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-nvim-lua",
       "lukas-reineke/cmp-under-comparator",
-      "zbirenbaum/copilot-cmp",
+      -- "zbirenbaum/copilot-cmp",
       "onsails/lspkind.nvim",
 
       -- Snippets
@@ -133,12 +134,6 @@ return {
       vim.o.runtimepath = vim.o.runtimepath .. ",~/.dotfiles/.config/snippets"
 
       local lsp_zero = require("lsp-zero")
-      -- lsp_zero.preset({
-      --   set_lsp_keymaps = false,
-      --   manage_nvim_cmp = {
-      --     set_basic_mappings = true,
-      --   },
-      -- })
 
       lsp_zero.set_sign_icons(icons)
 
@@ -381,7 +376,7 @@ return {
       local cmp = require("cmp")
       local cmp_action = require("lsp-zero").cmp_action()
       local luasnip = require("luasnip")
-      require("copilot_cmp").setup()
+      -- require("copilot_cmp").setup()
 
       require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -429,7 +424,7 @@ return {
         },
         sources = {
           { name = "luasnip", priority = 100, max_item_count = 5 },
-          { name = "copilot", priority = 90, max_item_count = 5 },
+          -- { name = "copilot", priority = 90, max_item_count = 5 },
           { name = "nvim_lsp", priority = 90 },
           { name = "path", priority = 20 },
           { name = "buffer", priority = 10, keyword_length = 3, max_item_count = 8 },
