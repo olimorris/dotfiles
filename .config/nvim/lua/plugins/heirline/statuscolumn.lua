@@ -5,7 +5,7 @@ local conditions = require("heirline.conditions")
 local align = { provider = "%=" }
 local spacer = { provider = " ", hl = "HeirlineStatusColumn" }
 
-local git_ns = api.nvim_create_namespace("gitsigns_extmark_signs_")
+local git_ns = api.nvim_create_namespace("gitsigns_signs_")
 local function get_signs(bufnr, lnum)
   local signs = {}
 
