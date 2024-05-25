@@ -69,7 +69,7 @@ return {
             },
             {
               "<Leader><Leader>",
-              "<cmd>lua require('telescope').extensions.frecency.frecency({ prompt_title = 'Recent Files', workspace = 'CWD' })<CR>",
+              "<cmd>lua require('telescope').extensions.frecency.frecency({ prompt_title = 'Recent Files', workspace = 'CWD', path_display = { 'smart' } })<CR>",
               description = "Find recent files",
             },
           },
