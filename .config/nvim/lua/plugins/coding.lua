@@ -20,7 +20,7 @@ return {
               api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
             },
           }),
-          ollama = require("codecompanion.adapters").use("ollama"),
+          ollama = "ollama",
         },
         strategies = {
           chat = "openai",
