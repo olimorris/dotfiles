@@ -8,7 +8,7 @@ local hyper = Hyper
 ]]
 local apps = {
   b = "Safari", -- Browser
-  c = { "Code", "Visual Studio Code" },
+  c = "ChatGPT",
   d = "Discord",
   e = "Microsoft Excel",
   f = "Finder",
