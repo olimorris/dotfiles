@@ -1,41 +1,5 @@
 return {
   {
-    "sindrets/diffview.nvim",
-    event = "VeryLazy",
-    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
-  },
-  {
-    --TODO: Add commands and keymaps
-    "mfussenegger/nvim-jdtls", -- Extensions for nicer Java development in Neovim
-    ft = "java",
-    init = function()
-      require("legendary").commands({
-        itemgroup = "Java",
-        icon = "",
-        description = "Java functionality...",
-        commands = {
-          {
-            "JdtCompile",
-            description = "Compile the current project",
-          },
-          {
-            "JdtUpdateConfig",
-            description = "Update the configuration of the current project",
-          },
-        },
-      })
-    end,
-    keys = {
-      {
-        "<LocalLeader>o",
-        function()
-          require("jdtls").organize_imports()
-        end,
-        desc = "Java: Organize imports",
-      },
-    },
-  },
-  {
     "kevinhwang91/nvim-ufo", -- Better folds in Neovim
     dependencies = "kevinhwang91/promise-async",
     init = function()
@@ -169,22 +133,6 @@ return {
       })
     end,
   },
-  -- {
-  --   "cshuaimin/ssr.nvim", -- Advanced search and replace using Treesitter
-  --   lazy = true,
-  --   keys = {
-  --     {
-  --       "<LocalLeader>sr",
-  --       function() require("ssr").open() end,
-  --       desc = "Structured search and replace",
-  --     },
-  --   },
-  --   opts = {
-  --     keymaps = {
-  --       replace_all = "<C-CR>",
-  --     },
-  --   },
-  -- },
   {
     "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
     event = "BufEnter",

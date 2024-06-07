@@ -15,11 +15,6 @@ return {
           })
         end,
       },
-      -- {
-      --   "nvim-telescope/telescope-fzf-native.nvim", -- Use fzf within Telescope
-      --   config = function() require("telescope").load_extension("fzf") end,
-      --   build = "make",
-      -- },
       {
         "nvim-telescope/telescope-frecency.nvim", -- Get frequently opened files
         config = function()

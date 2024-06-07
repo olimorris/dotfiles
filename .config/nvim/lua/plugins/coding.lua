@@ -35,7 +35,7 @@ return {
             },
           },
         },
-        log_level = "DEBUG",
+        log_level = "TRACE",
       })
     end,
     init = function()
