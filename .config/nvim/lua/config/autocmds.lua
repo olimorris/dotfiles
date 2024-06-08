@@ -138,6 +138,15 @@ return {
     name = "FiletypeOptions",
     {
       "FileType",
+      function()
+        vim.keymap.set("n", "q", vim.cmd.close, { desc = "Close the current buffer", buffer = true })
+      end,
+      opts = {
+        pattern = { "checkhealth", "help", "lspinfo", "netrw", "qf", "query" },
+      },
+    },
+    {
+      "FileType",
       ":setlocal shiftwidth=2 tabstop=2",
       opts = {
         pattern = { "css", "eruby", "html", "lua", "javascript", "json", "ruby", "vue" },
