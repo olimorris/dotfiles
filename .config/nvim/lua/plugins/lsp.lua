@@ -39,7 +39,7 @@ return {
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-nvim-lua",
       "lukas-reineke/cmp-under-comparator",
-      -- "zbirenbaum/copilot-cmp",
+      "zbirenbaum/copilot-cmp",
       "onsails/lspkind.nvim",
 
       -- Snippets
