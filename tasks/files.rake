@@ -23,10 +23,10 @@ namespace :backup do
       'OliDocs' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Documents"
     }
 
-    flag = '-P' if args[:progress]
+    flag = ' -P' if args[:progress]
 
     dirs.each do |local, remote|
-      run %( /opt/homebrew/bin/rclone sync #{flag} ~/#{local} #{remote} --filter-from ~/.config/rclone/filter_list.txt )
+      run %( /opt/homebrew/bin/rclone sync ~/#{local} #{remote}#{flag} --filter-from ~/.config/rclone/filter_list.txt )
     end
   end
 end
