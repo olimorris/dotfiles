@@ -130,6 +130,7 @@ return {
         HeirlineStatusColumn = { fg = "${statuscolumn_border}" },
         HeirlineBufferline = { fg = { dark = "#939aa3", light = "#6a6a6a" } },
         HeirlineWinbar = { fg = "${breadcrumbs}", italic = true },
+        HeirlineWinbarEmphasis = { fg = "${fg}", italic = true },
 
         -- Luasnip
         LuaSnipChoiceNode = { fg = "${yellow}" },

@@ -1,3 +1,4 @@
+local conditions = require("heirline.conditions")
 local bit = require("bit")
 
 local sep = "  "
@@ -57,41 +58,91 @@ local Filepath = {
   },
 }
 
-local Filename = {
-  {
-    {
-      provider = function()
-        local filetype_icon, filetype_hl = require("nvim-web-devicons").get_icon_by_filetype(vim.bo.filetype)
-        return (filetype_icon and "%#" .. filetype_hl .. "#" .. filetype_icon .. " " or "")
-      end,
-    },
-    {
-      provider = function()
-        return vim.fn.expand("%:t")
-      end,
-      hl = function()
-        if vim.o.background == "light" then
-          return { fg = "fg" }
-        else
-          return { fg = "comment", underline = true }
-        end
-      end,
-    },
-    hl = "HeirlineWinbar",
-    on_click = {
-      callback = function(self)
-        require("aerial").toggle()
-      end,
-      name = "wb_filename_click",
+local FileIcon = {
+  init = function(self)
+    self.icon, self.icon_color =
+      require("nvim-web-devicons").get_icon_color_by_filetype(vim.bo.filetype, { default = true })
+  end,
+  provider = function(self)
+    return self.icon and (self.icon .. " ")
+  end,
+  hl = function(self)
+    return { fg = self.icon_color }
+  end,
+}
+
+local FileType = {
+  condition = function()
+    return vim.bo.filetype ~= ""
+  end,
+  FileIcon,
+}
+
+local FileName = {
+  static = {
+    modifiers = {
+      dirname = ":s?/Users/Oli/.dotfiles?dotfiles?:s?.config/nvim/lua?Neovim?:s?/Users/Oli/Code?Code?",
     },
   },
-  -- Modifier
+  init = function(self)
+    local filename
+    local has_oil, oil = pcall(require, "oil")
+    if has_oil then
+      filename = oil.get_current_dir()
+    end
+    if not filename then
+      filename =
+        vim.fn.fnamemodify(vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":."), self.modifiers.dirname or nil)
+    end
+    if filename == "" then
+      self.path = ""
+      self.name = "[No Name]"
+      return
+    end
+    -- now, if the filename would occupy more than 90% of the available
+    -- space, we trim the file path to its initials
+    if not conditions.width_percent_below(#filename, 0.90) then
+      filename = vim.fn.pathshorten(filename)
+    end
+
+    self.path = filename:match("^(.*)/")
+    self.name = filename:match("([^/]+)$")
+  end,
+  {
+    provider = function(self)
+      if self.path then
+        return self.path .. "/"
+      end
+    end,
+    hl = "HeirlineWinbar",
+  },
+  {
+    provider = function(self)
+      return self.name
+    end,
+    hl = "HeirlineWinbarEmphasis",
+  },
+  on_click = {
+    callback = function(self)
+      require("aerial").toggle()
+    end,
+    name = "wb_filename_click",
+  },
+}
+local FileFlags = {
   {
     condition = function()
       return vim.bo.modified
     end,
     provider = " ",
     hl = { fg = "red" },
+  },
+  {
+    condition = function()
+      return not vim.bo.modifiable or vim.bo.readonly
+    end,
+    provider = " ",
+    hl = { fg = "blue" },
   },
 }
 
@@ -168,8 +219,10 @@ return {
     end,
   },
   Spacer,
-  Filepath,
-  Filename,
+  -- Filepath,
+  FileType,
+  FileName,
+  FileFlags,
   Symbols,
   { provider = "%=" },
   VimLogo,

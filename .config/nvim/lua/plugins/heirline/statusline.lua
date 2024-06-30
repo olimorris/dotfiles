@@ -496,13 +496,13 @@ local CodeCompanion = {
     hl = { fg = "yellow" },
   },
 }
-local CodeCompanionTooling = {
+local CodeCompanionAgent = {
   static = {
     processing = false,
   },
   update = {
     "User",
-    pattern = "CodeCompanionTool",
+    pattern = "CodeCompanionAgent",
     callback = function(self, args)
       self.processing = (args.data.status == "started")
       vim.cmd("redrawstatus")
@@ -702,7 +702,7 @@ return {
     LspAttached,
     -- LspDiagnostics,
     { provider = "%=" },
-    CodeCompanionTooling,
+    CodeCompanionAgent,
     CodeCompanion,
     Overseer,
     Dap,
