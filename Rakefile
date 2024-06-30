@@ -39,6 +39,11 @@ task :install do
   Rake::Task['install:brew_cask_packages'].invoke
   Rake::Task['install:brew_clean_up'].invoke
   Rake::Task['install:app_store'].invoke unless testing?
+  Rake::Task['install:cargo'].invoke unless testing?
+  Rake::Task['install:gems'].invoke unless testing?
+  Rake::Task['install:npm'].invoke unless testing?
+  Rake::Task['install:pip'].invoke unless testing?
+  Rake::Task['install:tmux'].invoke unless testing?
 
   # Files
   Rake::Task['install:app_config'].invoke
@@ -60,7 +65,7 @@ task :install do
   Rake::Task['install:tmux'].invoke
 
   # Apps
-  Rake::Task['install:neovim'].invoke
+  # Rake::Task['install:neovim'].invoke
   Rake::Task['install:rails'].invoke
   Rake::Task['install:vim'].invoke
 end
@@ -86,7 +91,7 @@ task :update do
   Rake::Task['update:servers'].invoke
 
   # Apps
-  Rake::Task['update:neovim'].invoke
+  # Rake::Task['update:neovim'].invoke
   Rake::Task['update:rails'].invoke
   Rake::Task['update:vim'].invoke
 end
