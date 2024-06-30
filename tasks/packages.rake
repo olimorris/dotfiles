@@ -1,6 +1,7 @@
 BREW_TAPS_FILE = File.expand_path('../misc/packages/brew_taps.txt', __dir__).gsub(/ /, '\ ')
 BREW_PACKAGES_FILE = File.expand_path('../misc/packages/brew_packages.txt', __dir__).gsub(/ /, '\ ')
 BREW_CASK_PACKAGES_FILE = File.expand_path('../misc/packages/brew_cask.txt', __dir__).gsub(/ /, '\ ')
+CARGO_FILE = File.expand_path('../misc/packages/rust_cargo.txt', __dir__).gsub(/ /, '\ ')
 GEMS_FILE = File.expand_path('../misc/packages/ruby_gems.txt', __dir__).gsub(/ /, '\ ')
 MAS_FILE = File.expand_path('../misc/packages/app_store.txt', __dir__).gsub(/ /, '\ ')
 NPM_FILE = File.expand_path('../misc/packages/npm_packages.txt', __dir__).gsub(/ /, '\ ')
@@ -111,6 +112,13 @@ namespace :install do
     app_store_apps.each do |application|
       run %( mas install #{application} )
     end
+  end
+
+  desc 'Install Rust Cargo'
+  task :cargo do
+    section 'Installing Rust Cargo'
+
+    run %( cargo install \< #{CARGO_FILE} )
   end
 
   desc 'Install Ruby Gems'
