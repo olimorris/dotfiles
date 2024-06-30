@@ -11,7 +11,7 @@ return {
             },
             schema = {
               model = {
-                default = "claude-3-sonnet-20240229",
+                default = "claude-3-5-sonnet-20240620",
               },
             },
           }),
@@ -20,12 +20,18 @@ return {
               api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
             },
           }),
-          ollama = "ollama",
         },
         strategies = {
-          chat = "openai",
-          inline = "openai",
-          tools = "openai",
+          chat = "anthropic",
+          inline = "anthropic",
+          agent = "anthropic",
+        },
+        display = {
+          chat = {
+            window = {
+              layout = "vertical", -- float|vertical|horizontal|buffer
+            },
+          },
         },
         inline = {
           opts = {
@@ -33,7 +39,7 @@ return {
           },
         },
         silence_notifications = true,
-        log_level = "TRACE",
+        log_level = "DEBUG",
       })
     end,
     init = function()
