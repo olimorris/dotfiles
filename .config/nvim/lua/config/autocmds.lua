@@ -47,6 +47,18 @@ return {
     },
   },
   {
+    name = "CodeCompanion",
+    {
+      "User",
+      function(args)
+        if args.data.status == "finished" and args.data.placement then
+          require("conform").format({ bufnr = args.buf })
+        end
+      end,
+      opts = { pattern = "CodeCompanionInline" },
+    },
+  },
+  {
     name = "Heirline",
     {
       "ColorScheme",

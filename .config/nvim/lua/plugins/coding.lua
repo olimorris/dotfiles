@@ -32,6 +32,13 @@ return {
               layout = "vertical", -- float|vertical|horizontal|buffer
             },
           },
+          inline = {
+            diff = {
+              hl_groups = {
+                added = "DiffAdd",
+              },
+            },
+          },
         },
         inline = {
           opts = {
