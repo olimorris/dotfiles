@@ -53,7 +53,7 @@ return {
         opts = {
           enabled = function()
             local ft = vim.bo.filetype
-            return ft ~= "lazy" and ft ~= "mason"
+            return ft ~= "lazy" and ft ~= "mason" and ft ~= "codecompanion"
           end,
           severity_format = { icons.error, icons.warn, icons.info, icons.hint },
         },
