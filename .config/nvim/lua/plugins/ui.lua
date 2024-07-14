@@ -91,6 +91,7 @@ return {
         changedelete = { text = "│" },
         untracked = { text = "│" },
       },
+      signs_staged_enable = false,
       numhl = false,
       linehl = false,
     },
