@@ -9,22 +9,30 @@ return {
             env = {
               api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
             },
-            schema = {
-              model = {
-                default = "claude-3-5-sonnet-20240620",
-              },
-            },
           }),
           openai = require("codecompanion.adapters").use("openai", {
             env = {
               api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
             },
           }),
+          llama3 = require("codecompanion.adapters").use("ollama", {
+            schema = {
+              model = {
+                default = "llama3:latest",
+              },
+              num_ctx = {
+                default = 16384,
+              },
+              num_predict = {
+                default = -1,
+              },
+            },
+          }),
         },
         strategies = {
-          chat = "anthropic",
-          inline = "anthropic",
-          agent = "anthropic",
+          chat = { adapter = "anthropic" },
+          inline = { adapter = "anthropic" },
+          agent = { adapter = "anthropic" },
         },
         display = {
           chat = {
@@ -40,23 +48,18 @@ return {
             },
           },
         },
-        inline = {
-          opts = {
-            send_open_buffers = true,
-          },
+        opts = {
+          log_level = "DEBUG",
         },
-        silence_notifications = true,
-        log_level = "DEBUG",
       })
     end,
     init = function()
       vim.cmd([[cab cc CodeCompanion]])
-      vim.cmd([[cab ccb CodeCompanionWithBuffers]])
       require("legendary").keymaps({
         {
           itemgroup = "CodeCompanion",
           icon = "",
-          description = "Use the power of OpenAI...",
+          description = "Use the power of AI...",
           keymaps = {
             {
               "<C-a>",
