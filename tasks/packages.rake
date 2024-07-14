@@ -109,8 +109,8 @@ namespace :install do
   task :app_store do
     section 'Installing App Store apps'
 
-    app_store_apps.each do |application|
-      run %( mas install #{application} )
+    app_store_apps.each do |app|
+      run %( mas install #{app} )
     end
   end
 
@@ -118,7 +118,9 @@ namespace :install do
   task :cargo do
     section 'Installing Rust Cargo'
 
-    run %( cargo install \< #{CARGO_FILE} )
+    cargo_apps.each do |app|
+      run %( cargo install #{app} )
+    end
   end
 
   desc 'Install Ruby Gems'
@@ -218,4 +220,8 @@ end
 
 def app_store_apps
   File.readlines(MAS_FILE).map(&:split).map(&:first)
+end
+
+def cargo_apps
+  File.readlines(CARGO_FILE).map(&:split).map(&:first)
 end

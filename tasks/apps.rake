@@ -4,13 +4,16 @@ namespace :install do
     section 'Installing Neovim'
 
     unless testing?
-      time = Time.new.strftime('%s')
-      run %( git clone --depth 1 --branch nightly https://github.com/neovim/neovim ~/.neovim/#{time} )
-      run %( rm -rf /opt/homebrew/bin/nvim )
-      run %( rm -rf /usr/local/bin/nvim )
-      run %( rm -rf /usr/local/share/nvim )
-      run %( \(cd ~/.neovim/#{time} && make CMAKE_BUILD_TYPE=RelWithDebInfo && make install\) )
-      run %( ln -s ~/.neovim/#{time} ~/.neovim/latest )
+      run %( bob install stable )
+      run %( bob install nightly )
+      run %( bob use nightly )
+      # time = Time.new.strftime('%s')
+      # run %( git clone --depth 1 --branch nightly https://github.com/neovim/neovim ~/.neovim/#{time} )
+      # run %( rm -rf /opt/homebrew/bin/nvim )
+      # run %( rm -rf /usr/local/bin/nvim )
+      # run %( rm -rf /usr/local/share/nvim )
+      # run %( \(cd ~/.neovim/#{time} && make CMAKE_BUILD_TYPE=RelWithDebInfo && make install\) )
+      # run %( ln -s ~/.neovim/#{time} ~/.neovim/latest )
     end
   end
 
@@ -42,9 +45,10 @@ namespace :update do
     section 'Updating Neovim'
 
     unless testing?
-      run %( rm ~/.neovim/backup )
-      run %( mv ~/.neovim/latest ~/.neovim/backup )
-      Rake::Task['install:neovim'].invoke
+      run %( bob update )
+      # run %( rm ~/.neovim/backup )
+      # run %( mv ~/.neovim/latest ~/.neovim/backup )
+      # Rake::Task['install:neovim'].invoke
     end
   end
 
@@ -76,15 +80,16 @@ namespace :rollback do
     section 'Rolling back Neovim'
 
     unless testing?
-      run %( rm -rf /usr/local/bin/nvim )
-      run %( rm -rf /opt/homebrew/bin/nvim )
-
-      # Delete the most recent folder
-      run %( cd ~/.neovim & rm -rf .DS_Store)
-      run %( (cd ~/.neovim && ls -Art | tail -n 1 | xargs rm -rf) )
-
-      # Restore Neovim from the previous nightly build
-      run %( (cd ~/.neovim && ls -Art | fgrep -v .DS_Store | tail -n 1 | xargs -I{} cp -s ~/.neovim/1705399006/build/bin/nvim /usr/local/bin) )
+      run %( bob rollback )
+      # run %( rm -rf /usr/local/bin/nvim )
+      # run %( rm -rf /opt/homebrew/bin/nvim )
+      #
+      # # Delete the most recent folder
+      # run %( cd ~/.neovim & rm -rf .DS_Store)
+      # run %( (cd ~/.neovim && ls -Art | tail -n 1 | xargs rm -rf) )
+      #
+      # # Restore Neovim from the previous nightly build
+      # run %( (cd ~/.neovim && ls -Art | fgrep -v .DS_Store | tail -n 1 | xargs -I{} cp -s ~/.neovim/1705399006/build/bin/nvim /usr/local/bin) )
     end
   end
 end
@@ -95,10 +100,11 @@ namespace :uninstall do
     section 'Uninstalling Neovim'
 
     unless testing?
-      run %( rm ~/.neovim/backup )
-      run %( mv ~/.neovim/latest ~/.neovim/backup )
-      run %( rm -rf /usr/local/bin/nvim )
-      run %( rm -rf /opt/homebrew/bin/nvim )
+      run %( bob erase )
+      # run %( rm ~/.neovim/backup )
+      # run %( mv ~/.neovim/latest ~/.neovim/backup )
+      # run %( rm -rf /usr/local/bin/nvim )
+      # run %( rm -rf /opt/homebrew/bin/nvim )
     end
   end
 end
