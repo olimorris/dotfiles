@@ -40,6 +40,7 @@ pandoc
 php@8.1
 pinentry-mac
 postgresql@14
+python-packaging
 rclone
 reattach-to-user-namespace
 ripgrep

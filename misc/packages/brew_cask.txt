@@ -17,6 +17,7 @@ google-chrome
 hammerspoon
 hex-fiend
 imageoptim
+jordanbaird-ice
 keyboard-maestro
 launchcontrol
 ledger-live
