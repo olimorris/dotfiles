@@ -21,6 +21,7 @@ return {
         select_prompt = "Legendary",
         include_builtin = false,
         extensions = {
+          codecompanion = false,
           lazy_nvim = false,
           which_key = false,
         },
@@ -33,6 +34,7 @@ return {
     "olimorris/persisted.nvim", -- Session management
     lazy = true,
     opts = {
+      log_level = "ERROR",
       save_dir = Sessiondir .. "/",
       use_git_branch = true,
       silent = true,
