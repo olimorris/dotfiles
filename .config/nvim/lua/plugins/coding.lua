@@ -5,32 +5,49 @@ return {
     config = function()
       require("codecompanion").setup({
         adapters = {
-          anthropic = require("codecompanion.adapters").use("anthropic", {
-            env = {
-              api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
-            },
-          }),
-          openai = require("codecompanion.adapters").use("openai", {
-            env = {
-              api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
-            },
-          }),
-          llama3 = require("codecompanion.adapters").use("ollama", {
-            schema = {
-              model = {
-                default = "llama3:latest",
+          anthropic = function()
+            return require("codecompanion.adapters").use("anthropic", {
+              env = {
+                api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
               },
-              num_ctx = {
-                default = 16384,
+            })
+          end,
+          gemini = function()
+            return require("codecompanion.adapters").use("gemini", {
+              env = {
+                api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline",
               },
-              num_predict = {
-                default = -1,
+            })
+          end,
+          openai = function()
+            return require("codecompanion.adapters").use("openai", {
+              env = {
+                api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
               },
-            },
-          }),
+            })
+          end,
+          ["llama3.1"] = function()
+            return require("codecompanion.adapters").use("ollama", {
+              name = "llama3.1",
+              schema = {
+                model = {
+                  default = "llama3.1:latest",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
+              },
+            })
+          end,
         },
         strategies = {
-          chat = { adapter = "anthropic" },
+          chat = {
+            adapter = "anthropic",
+            roles = { llm = "  CodeCompanion", user = "olimorris" },
+          },
           inline = { adapter = "anthropic" },
           agent = { adapter = "anthropic" },
         },
@@ -49,7 +66,7 @@ return {
           },
         },
         opts = {
-          log_level = "DEBUG",
+          log_level = "TRACE",
         },
       })
     end,
