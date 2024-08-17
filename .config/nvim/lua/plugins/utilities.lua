@@ -34,12 +34,17 @@ return {
     "olimorris/persisted.nvim", -- Session management
     lazy = true,
     opts = {
-      log_level = "ERROR",
       save_dir = Sessiondir .. "/",
       use_git_branch = true,
-      silent = true,
+      autosave = true,
       -- autoload = true,
-      should_autosave = function()
+      -- allowed_dirs = {
+      --   "~/Code",
+      -- },
+      -- on_autoload_no_session = function()
+      --   return vim.notify("No session found", vim.log.levels.WARN)
+      -- end,
+      should_save = function()
         local excluded_filetypes = {
           "alpha",
           "oil",
@@ -113,7 +118,6 @@ return {
     ft = "qf",
   },
   {
-
     "famiu/bufdelete.nvim", -- Easily close buffers whilst preserving your window layouts
     cmd = "Bdelete",
     init = function()
