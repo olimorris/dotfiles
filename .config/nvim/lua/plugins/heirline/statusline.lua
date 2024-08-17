@@ -461,7 +461,7 @@ local Session = {
     hl = { fg = "gray", bg = "statusline_bg" },
     update = {
       "User",
-      pattern = "PersistedStateChange",
+      pattern = { "PersistedToggle", "PersistedDeletePost" },
       callback = vim.schedule_wrap(function()
         vim.cmd("redrawstatus")
       end),
@@ -482,9 +482,13 @@ local CodeCompanion = {
   },
   update = {
     "User",
-    pattern = "CodeCompanionRequest",
+    pattern = "CodeCompanionRequest*",
     callback = function(self, args)
-      self.processing = (args.data.status == "started")
+      if args.match == "CodeCompanionRequestStarted" then
+        self.processing = true
+      elseif args.match == "CodeCompanionRequestFinished" then
+        self.processing = false
+      end
       vim.cmd("redrawstatus")
     end,
   },
