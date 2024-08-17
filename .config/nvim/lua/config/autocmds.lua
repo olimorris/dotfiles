@@ -90,7 +90,7 @@ return {
       function(session)
         -- Prompt to save the current session
         if vim.fn.confirm("Save the current session?", "&Yes\n&No") == 1 then
-          require("persisted").save({ session = vim.g.persisted_loaded_session })
+          require("persisted").save({ session = vim.g.persisting_session })
         end
 
         -- Clear all of the open buffers
@@ -106,7 +106,7 @@ return {
     --   function(session)
     --     print(vim.inspect(session.data))
     --   end,
-    --   opts = { pattern = "PersistedDeletePost" },
+    --   opts = { pattern = "PersistedStateChange" },
     -- },
   },
   {
