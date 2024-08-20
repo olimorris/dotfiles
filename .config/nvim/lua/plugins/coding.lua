@@ -6,46 +6,30 @@ return {
       require("codecompanion").setup({
         adapters = {
           anthropic = function()
-            return require("codecompanion.adapters").use("anthropic", {
+            return require("codecompanion.adapters").extend("anthropic", {
               env = {
                 api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
               },
             })
           end,
           gemini = function()
-            return require("codecompanion.adapters").use("gemini", {
+            return require("codecompanion.adapters").extend("gemini", {
               env = {
                 api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline",
               },
             })
           end,
           openai = function()
-            return require("codecompanion.adapters").use("openai", {
+            return require("codecompanion.adapters").extend("openai", {
               env = {
                 api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
-              },
-            })
-          end,
-          ["llama3.1"] = function()
-            return require("codecompanion.adapters").use("ollama", {
-              name = "llama3.1",
-              schema = {
-                model = {
-                  default = "llama3.1:latest",
-                },
-                num_ctx = {
-                  default = 16384,
-                },
-                num_predict = {
-                  default = -1,
-                },
               },
             })
           end,
         },
         strategies = {
           chat = {
-            adapter = "anthropic",
+            adapter = "gemini",
             roles = { llm = "  CodeCompanion", user = "olimorris" },
           },
           inline = { adapter = "anthropic" },
