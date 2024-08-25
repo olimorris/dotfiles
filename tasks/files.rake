@@ -78,7 +78,7 @@ namespace :update do
   task :dotfiles do
     section 'Updating Dotbot'
 
-    run %( git submodule update --remote dotbot )
     run %( ./dotbot_install )
+    run %( git submodule update --remote dotbot )
   end
 end
