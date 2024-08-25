@@ -29,7 +29,7 @@ return {
         },
         strategies = {
           chat = {
-            adapter = "gemini",
+            adapter = "anthropic",
             roles = { llm = "  CodeCompanion", user = "olimorris" },
           },
           inline = { adapter = "anthropic" },
@@ -50,7 +50,7 @@ return {
           },
         },
         opts = {
-          log_level = "TRACE",
+          log_level = "DEBUG",
         },
       })
     end,
