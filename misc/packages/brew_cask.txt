@@ -30,6 +30,8 @@ pdf-expert
 pixelsnap
 postman
 raycast
+rectangle-pro
+rode-central
 screenflow
 shadow
 sketch

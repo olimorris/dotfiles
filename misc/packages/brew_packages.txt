@@ -8,6 +8,7 @@ dark-mode
 dash
 docker
 fd
+ffmpeg@6
 fish
 flux
 fortune
