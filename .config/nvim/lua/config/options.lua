@@ -44,7 +44,7 @@ vo.fillchars = {
   foldopen = "",
   foldclose = "",
   foldsep = " ",
-  diff = "╱",
+  diff = " ",
   eob = " ",
 }
 
@@ -57,7 +57,7 @@ vo.ignorecase = true -- Ignore case
 vo.laststatus = 3 -- Use global statusline
 vo.modelines = 1 -- Only use folding settings for this file
 vo.mouse = "a" -- Use the mouse in all modes
-vo.sessionoptions = "buffers,curdir,folds,resize,tabpages,winpos,winsize" -- Session options to store in the session
+vo.sessionoptions = { "buffers", "curdir", "folds", "resize", "tabpages", "winpos", "winsize" } -- Session options to store in the session
 vo.scrolloff = 5 -- Set the cursor 5 lines down instead of directly at the top of the file
 --[[
   NOTE: don't store marks as they are currently broken in Neovim!
@@ -78,6 +78,7 @@ vo.showmatch = true -- Show matching brackets by flickering
 vo.showmode = false -- Do not show the mode
 vo.sidescrolloff = 8 -- The minimal number of columns to keep to the left and to the right of the cursor if 'nowrap' is set
 vo.smartcase = true -- Don't ignore case with capitals
+vo.smoothscroll = true -- Smoother scrolling
 vo.splitbelow = true -- Put new windows below current
 vo.splitright = true -- Put new windows right of current
 vo.termguicolors = true -- True color support
