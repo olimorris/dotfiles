@@ -70,7 +70,6 @@ return {
         FloatBorder = { fg = "${gray}", bg = "${bg}" },
 
         CursorLineNr = { bg = "${bg}", fg = "${fg}", italic = true },
-        DiffChange = { underline = true }, -- diff mode: Changed line |diff.txt|
         LocalHighlight = { bg = "${local_highlight}" },
         MatchParen = { fg = "${cyan}" },
         ModeMsg = { fg = "${gray}" }, -- Make command line text lighter
