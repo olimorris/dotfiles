@@ -51,11 +51,9 @@ return {
     {
       "User",
       function(args)
-        if args.data.status == "finished" and args.data.placement then
-          require("conform").format({ bufnr = args.buf })
-        end
+        require("conform").format({ bufnr = args.buf })
       end,
-      opts = { pattern = "CodeCompanionInline" },
+      opts = { pattern = "CodeCompanionInlineFinished" },
     },
   },
   {
