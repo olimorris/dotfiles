@@ -20,7 +20,9 @@ namespace :backup do
     dirs = {
       '.dotfiles' => "#{ENV['STORAGE_FOLDER']}:dotfiles",
       'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code",
-      'OliDocs' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Documents"
+      'OliDocs' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Documents",
+      'Downloads' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Downloads",
+      'Documents' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:ICloud_Docs"
     }
 
     flag = ' -P' if args[:progress]
