@@ -99,13 +99,18 @@ return {
       end,
       opts = { pattern = "PersistedTelescopeLoadPre" },
     },
-    -- {
-    --   "User",
-    --   function(session)
-    --     print(vim.inspect(session.data))
-    --   end,
-    --   opts = { pattern = "PersistedStateChange" },
-    -- },
+    {
+      "User",
+      function()
+        -- Ensure no CodeCompanion buffers are saved into the session
+        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+          if vim.bo[buf].filetype == "codecompanion" then
+            vim.api.nvim_buf_delete(buf, { force = true })
+          end
+        end
+      end,
+      opts = { pattern = "PersistedSavePre" },
+    },
   },
   {
     name = "ReturnToLastEditingPosition",
