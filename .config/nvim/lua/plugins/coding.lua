@@ -29,23 +29,16 @@ return {
         },
         strategies = {
           chat = {
-            adapter = "anthropic",
+            adapter = "copilot",
             roles = { llm = "  CodeCompanion", user = "olimorris" },
           },
-          inline = { adapter = "anthropic" },
-          agent = { adapter = "anthropic" },
+          inline = { adapter = "copilot" },
+          agent = { adapter = "copilot" },
         },
         display = {
           chat = {
             window = {
               layout = "vertical", -- float|vertical|horizontal|buffer
-            },
-          },
-          inline = {
-            diff = {
-              hl_groups = {
-                added = "DiffAdd",
-              },
             },
           },
         },
