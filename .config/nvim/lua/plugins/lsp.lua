@@ -325,7 +325,6 @@ return {
           "pyright",
           "ruby_lsp",
           -- "tailwindcss", -- Disabled due to high node CPU usage
-          "tsserver",
           "vuels",
           "yamlls",
         },
