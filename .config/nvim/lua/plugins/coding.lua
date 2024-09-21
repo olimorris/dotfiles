@@ -43,7 +43,14 @@ return {
             roles = { llm = "  CodeCompanion", user = "olimorris" },
           },
           inline = { adapter = "copilot" },
-          agent = { adapter = "copilot" },
+          agent = {
+            adapter = "copilot",
+            tools = {
+              opts = {
+                auto_submit_errors = true,
+              },
+            },
+          },
         },
         display = {
           diff = {
