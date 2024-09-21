@@ -8,16 +8,17 @@ local hyper = Hyper
 ]]
 local apps = {
   b = "Safari", -- Browser
+  c = "Code", -- VS Code
   e = "Microsoft Excel",
   f = "Finder",
   g = "Google Chrome",
   n = "Bear", -- Notes
   o = "Notion", -- Life OS
   p = "1Password",
-  -- r = RESERVED
+  r = "Reminders",
   t = "WezTerm", -- Terminal
   w = "Microsoft Word",
-  z = "Todoist",
+  -- z = RESERVED
 }
 
 local LaunchOrToggle = function(key, app_name, app_filename)
