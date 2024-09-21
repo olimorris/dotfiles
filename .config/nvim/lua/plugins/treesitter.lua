@@ -11,7 +11,10 @@ return {
         "windwp/nvim-ts-autotag", -- Autoclose and autorename HTML and Vue tags
         config = true,
       },
-      "RRethy/nvim-treesitter-endwise", -- Automatically add end keywords for Ruby, Lua, Python, and more
+      {
+        "PriceHiller/nvim-treesitter-endwise", -- Automatically add end keywords for Ruby, Lua, Python, and more
+        branch = "fix/iter-matches",
+      },
       {
         "windwp/nvim-autopairs", -- Autopair plugin
         opts = {
