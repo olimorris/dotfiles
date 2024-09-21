@@ -1,2 +1,2 @@
 require("util")
-require("config")
+require("config.lazy")
