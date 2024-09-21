@@ -2,7 +2,6 @@
 1password-cli
 appcleaner
 audacity
-bartender
 betterdisplay
 cleanmymac
 cleanshot
@@ -18,6 +17,7 @@ google-chrome
 hammerspoon
 hex-fiend
 imageoptim
+itsycal
 jordanbaird-ice
 keyboard-maestro
 launchcontrol

@@ -1,5 +1,6 @@
 act
 bats-core
+bob
 brew-cask-completion
 cmake
 code-minimap
@@ -8,7 +9,6 @@ dark-mode
 dash
 docker
 fd
-ffmpeg@6
 fish
 flux
 fortune
