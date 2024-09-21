@@ -1,6 +1,16 @@
 return {
   "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
   {
+    "echasnovski/mini.diff",
+    config = function()
+      local diff = require("mini.diff")
+      diff.setup({
+        -- Disabled by default
+        source = diff.gen_source.none(),
+      })
+    end,
+  },
+  {
     "olimorris/codecompanion.nvim",
     config = function()
       require("codecompanion").setup({
@@ -36,6 +46,10 @@ return {
           agent = { adapter = "copilot" },
         },
         display = {
+          diff = {
+            close_chat_at = 500,
+            provider = "mini_diff",
+          },
           chat = {
             window = {
               layout = "vertical", -- float|vertical|horizontal|buffer
