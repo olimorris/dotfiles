@@ -4,7 +4,7 @@ export PATH="$HOME/.local/share/mise/shims:$PATH"
 
 . /Users/Oli/.env
 
-/opt/homebrew/bin/hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal --auto --forecast="this month".. bal "^(ass|liab)" --tree -H -M -b "1 month ago" -e "24 months" -O html  > $FINANCES/generated.html
+/opt/homebrew/bin/hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal --auto --forecast="this month".. bal "^(ass|liab)" --tree -H -M -b "1 month ago" -e "24 months" -O html >$FINANCES/generated.html
 
 inputFile=$FINANCES/generated.html
 outputFile=$FINANCES/output.html
@@ -20,14 +20,15 @@ echo '<!DOCTYPE html>
         table{width:100%;border-collapse:collapse;margin-top:20px;font-family:Arial,sans-serif;background-color:#f9f9f9;box-shadow:0 0 10px rgba(0,0,0,.1)}th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #ddd}th{background-color:#f9f9f9;color:#555}td.amount{text-align:right}tr:hover{background-color:#f2f2f2}.account{font-weight:bold;color:#555}.coltotal{background-color:#f9f9f9;color:#555}td,th{text-align:right}td.account,th[style*="text-align:left"]{text-align:left}tr:first-child td:not(.account){background-color:#f9f9f9;color:#555;font-weight:bold}
     </style>
 </head>
-<body>' > $outputFile
+<body>' >$outputFile
 
 # Append the table data
-cat $inputFile >> $outputFile
+cat $inputFile >>$outputFile
 
 # End of the HTML document
 echo '</body>
-</html>' >> $outputFile
+</html>' >>$outputFile
 
-cp $outputFile /Users/Oli/Library/Mobile\ Documents/com~apple~CloudDocs/Downloads/output.html
+cp $outputFile /Users/Oli/Downloads/finances.html
+cp $outputFile /Users/Oli/Documents/finances.html
 rm $inputFile
