@@ -7,7 +7,6 @@ cleanmymac
 cleanshot
 diffmerge
 discord
-fantastical
 font-dejavu-sans-mono-for-powerline
 geekbench
 git-credential-manager
@@ -15,11 +14,11 @@ git-credential-manager-core
 github
 google-chrome
 hammerspoon
+hazel
 hex-fiend
 imageoptim
 itsycal
 jordanbaird-ice
-keyboard-maestro
 launchcontrol
 ledger-live
 little-snitch
@@ -31,9 +30,9 @@ pixelsnap
 postman
 raycast
 rectangle-pro
+reminders-menubar
 rode-central
 screenflow
-shadow
 sketch
 slack
 spotify
@@ -46,7 +45,6 @@ typora
 visual-studio-code
 vlc
 wezterm
-wireshark
 xscope
 zed
 zoom
