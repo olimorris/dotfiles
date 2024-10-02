@@ -91,7 +91,7 @@ task :update do
   Rake::Task['update:servers'].invoke
 
   # Apps
-  # Rake::Task['update:neovim'].invoke
+  Rake::Task['update:neovim'].invoke
   Rake::Task['update:rails'].invoke
   Rake::Task['update:vim'].invoke
 end

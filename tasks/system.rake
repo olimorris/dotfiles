@@ -63,7 +63,6 @@ namespace :install do
 
     unless testing?
       run %( mise use --global lua@latest )
-      run %( mise use --global postgres@latest )
       run %( mise install )
     end
   end
