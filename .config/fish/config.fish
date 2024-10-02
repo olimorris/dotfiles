@@ -10,11 +10,6 @@ set -x GOPATH "$HOME/Code/Go"
 set -x STARSHIP_CONFIG "$HOME/.config/starship/starship.toml"
 set -gx macOS_Theme (cat $HOME/.color_mode | string collect)
 
-# Add OpenSSL to PATH
-set -gx LDFLAGS "-L/opt/homebrew/Cellar/openssl@3/3.2.1/lib"
-set -gx CPPFLAGS "-I/opt/homebrew/Cellar/openssl@3/3.2.1/include"
-set -gx PKG_CONFIG_PATH "/opt/homebrew/Cellar/openssl@3/3.2.1/lib/pkgconfig"
-
 set fish_color_param cyan
 set fish_pager_color_completion blue --bold
 set fish_color_normal black
@@ -50,7 +45,4 @@ end
 if status is-interactive
     load_env_vars ~/.env
     starship init fish | source
-    mise activate fish | source
-else
-    mise activate fish --shims | source
 end
