@@ -29,7 +29,7 @@ return {
           return print(vim.inspect(ts_query))
         end
 
-        for _, captures, metadata in ts_query:iter_matches(root, bufnr, root:start(), root:end_(), {}) do
+        for _, captures, metadata in ts_query:iter_matches(root, bufnr, root:start(), root:end_(), { all = false }) do
           local start_row, start_col, end_row, end_col = captures[2]:range()
           -- This conditional prevents conceal leakage if the class attribute is erroneously formed
           if (end_row - start_row) == 0 then
