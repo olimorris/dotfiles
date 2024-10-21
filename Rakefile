@@ -43,7 +43,6 @@ task :install do
   Rake::Task['install:gems'].invoke unless testing?
   Rake::Task['install:npm'].invoke unless testing?
   Rake::Task['install:pip'].invoke unless testing?
-  Rake::Task['install:tmux'].invoke unless testing?
 
   # Files
   Rake::Task['install:app_config'].invoke
@@ -62,7 +61,6 @@ task :install do
   Rake::Task['install:gems'].invoke
   Rake::Task['install:npm'].invoke
   Rake::Task['install:pip'].invoke
-  Rake::Task['install:tmux'].invoke
 
   # Apps
   Rake::Task['install:neovim'].invoke
@@ -82,7 +80,6 @@ task :update do
   Rake::Task['update:gems'].invoke
   Rake::Task['update:npm'].invoke
   Rake::Task['update:pip'].invoke
-  Rake::Task['update:tmux'].invoke
 
   # Files
   Rake::Task['update:dotfiles'].invoke

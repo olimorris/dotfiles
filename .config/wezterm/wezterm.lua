@@ -1,21 +1,32 @@
 local wezterm = require("wezterm")
-local config = {}
+local helpers = require("helpers")
+local config = wezterm.config_builder()
 
-config.color_scheme = "onedarkpro_onedark"
+require("keys").setup(config)
+require("tabs").setup(config)
+require("workspaces").setup(config)
+wezterm.log_info("Reloading")
+
+---Set the color scheme based on the appearance
+local function scheme()
+  if helpers.mode():find("Dark") then
+    return "onedarkpro_onedark"
+  end
+  return "onedarkpro_onelight"
+end
+config.color_scheme_dirs = { wezterm.home_dir .. "/Code/Neovim/onedarkpro.nvim/extras/wezterm" }
+config.color_scheme = scheme()
+wezterm.add_to_config_reload_watch_list(config.color_scheme_dirs[1] .. config.color_scheme .. ".toml")
+
 config.cursor_blink_rate = 0
-config.enable_tab_bar = false -- Using tmux instead...yes I know!!
+config.default_workspace = "Oli"
+
 config.font = wezterm.font("Operator Mono", {
   stretch = "Normal",
   weight = "Book",
 })
 config.font_size = 21
-config.hide_tab_bar_if_only_one_tab = true
-config.keys = {
-  { key = "\r", mods = "CTRL", action = wezterm.action({ SendString = "\x1b[13;5u" }) },
-  { key = "\r", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b[13;2u" }) },
-  { key = "LeftArrow", mods = "ALT", action = wezterm.action({ SendString = "\x1b\x62" }) },
-  { key = "RightArrow", mods = "ALT", action = wezterm.action({ SendString = "\x1b\x66" }) },
-}
+
 config.line_height = 1.6
 config.mouse_bindings = {
   -- Open a link

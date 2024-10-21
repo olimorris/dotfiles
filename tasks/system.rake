@@ -85,7 +85,7 @@ namespace :update do
 
       run %( cd ~/.fontforge && git pull )
       Dir.foreach(input_dir) do |font|
-        run %( cd ~/.fontforge && fontforge -script font-patcher --fontawesome --fontawesomeextension --fontlogos --octicons --codicons --powersymbols --pomicons --powerline --powerlineextra --material --weather --out #{output_dir} #{input_dir}/#{font} )
+        run %( cd ~/.fontforge && fontforge -script font-patcher --complete --progressbars --out #{output_dir} #{input_dir}/#{font} )
       end
     end
   end

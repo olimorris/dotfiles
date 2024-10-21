@@ -3,7 +3,6 @@ import subprocess
 import sys
 
 nvim_path = "~/.config/nvim"
-tmux_path = "~/.config/tmux"
 starship_path = "~/.config/starship"
 wezterm_path = "~/.config/wezterm"
 wallpaper_path = "~/.dotfiles/misc/ui/wallpaper"
@@ -19,9 +18,8 @@ ran_from_cmd_line = False
 apps = [
     "macos",
     # "wallpaper",
-    "wezterm",
+    # "wezterm",
     "starship",
-    "tmux",
     "neovim",
     "fish",
 ]
@@ -118,35 +116,6 @@ def app_wezterm(mode):
 
     with open(os.path.expanduser(config), "w") as config_file:
         config_file.write(wezterm_contents)
-
-
-def app_tmux(mode):
-    if mode == "dark":
-        subprocess.run(
-            [
-                "cp",
-                os.path.expanduser(tmux_path + "/conf/skin_dark.conf"),
-                os.path.expanduser(tmux_path + "/conf/skin.conf"),
-            ]
-        )
-
-    if mode == "light":
-        subprocess.run(
-            [
-                "cp",
-                os.path.expanduser(tmux_path + "/conf/skin_light.conf"),
-                os.path.expanduser(tmux_path + "/conf/skin.conf"),
-            ]
-        )
-
-    subprocess.run(
-        [
-            "/opt/homebrew/bin/tmux",
-            "source-file",
-            os.path.expanduser(tmux_path + "/tmux.conf"),
-        ]
-    )
-    # return os.system("exec zsh")
 
 
 def app_neovim(mode):

@@ -147,7 +147,6 @@ alias ug='gem update --system && gem update'
 alias c='clear'
 alias tags='ctags -R'
 alias ea='nvim ~/.config/fish/aliases.fish'
-alias et='nvim ~/.config/tmux/tmux.conf'
 alias src='source ~/.config/fish/config.fish && fish_logo'
 alias reloaddns='dscacheutil -flushcache && sudo killall -HUP mDNSResponder'
 
@@ -160,13 +159,3 @@ alias desk='cd ~/Desktop'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ze='zoxide edit'
-
-# Tmux
-alias tsa='tmux-sendall'                # Send a command to all windows and panes that don't have a process running
-alias tks='tmux kill-server'            # Kill everything
-alias tl='tmux list-sessions'           # List all of the open tmux sessions
-alias ts='tmux choose-session'          # Choose a session to attach to
-alias tk='tmux kill-session -t'         # Kill a named tmux session
-alias t='tmux attach || tmux new-session'   # Attaches tmux to the last session; creates a new session if none exists.
-alias tpi='~/.config/tmux/plugins/tpm/bin/install_plugins' # Installs Tmux plugins
-alias tpu='~/.config/tmux/plugins/tpm/bin/update_plugins all' # Updates all Tmux plugins

@@ -143,15 +143,6 @@ namespace :install do
 
     run %( pip3 install -r #{PIP_FILE} )
   end
-
-  desc 'Install Tmux plugins'
-  task :tmux do
-    section 'Installing Tmux plugins'
-
-    run %( rm -rf ~/.config/tmux/plugins )
-    run %( git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm )
-    run %( ~/.config/tmux/plugins/tpm/bin/install_plugins )
-  end
 end
 
 namespace :update do
@@ -196,13 +187,6 @@ namespace :update do
     rescue StandardError
       puts 'PIP update failed'
     end
-  end
-
-  desc 'Update Tmux plugins'
-  task :tmux do
-    section 'Updating Tmux plugins'
-
-    run %( ~/.config/tmux/plugins/tpm/bin/update_plugins all )
   end
 end
 

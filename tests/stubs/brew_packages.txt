@@ -1,5 +1,4 @@
 asdf
 mackup
 mas
-tmux
 fish

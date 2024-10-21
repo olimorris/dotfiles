@@ -15,7 +15,6 @@
     ~/.config/rclone: .config/rclone
     ~/.config/snippets: .config/snippets
     ~/.config/starship: .config/starship
-    ~/.config/tmux: .config/tmux
     ~/.config/vivid: .config/vivid
 
     # Launch Agents

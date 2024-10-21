@@ -21,7 +21,6 @@
 !.config/snippets/**/*
 !.config/ssh/config
 !.config/starship/**/*
-!.config/tmux/**/*
 !.config/vim/**/*
 !.config/vivid/**/*
 !.config/wezterm/**/*
@@ -66,10 +65,6 @@
 # Fish
 .config/fish/fish_variables
 .config/fish/fish_history
-
-# Tmux
-.config/tmux/plugins
-.config/tmux/resurrect
 
 # Others
 misc/enhance-rails-intellisense-in-solargraph

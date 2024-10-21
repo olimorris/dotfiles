@@ -38,7 +38,6 @@ node
 opencv
 ossp-uuid
 pandoc
-perl
 php@8.1
 pinentry-mac
 postgresql@14
@@ -50,7 +49,6 @@ shunit2
 spring-io/tap/spring-boot
 starship
 subversion
-tmux
 tree
 tree-sitter
 universal-ctags
