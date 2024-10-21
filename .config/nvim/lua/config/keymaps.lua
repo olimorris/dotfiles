@@ -140,10 +140,14 @@ return legendary.keymaps({
   },
 
   -- Splits
-  { "<LocalLeader>sv", "<cmd>vsplit<CR>", description = "Split: Vertical" },
-  { "<LocalLeader>sh", "<cmd>split<CR>", description = "Split: Horizontal" },
-  { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
-  { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
+  { "<LocalLeader>sv", "<cmd>vsplit<CR>", description = "Split: Create Vertical" },
+  { "<LocalLeader>sh", "<cmd>split<CR>", description = "Split: Create Horizontal" },
+  { "<LocalLeader>sc", "<cmd>wincmd q<CR>", description = "Split: Close" },
+  { "<LocalLeader>so", "<cmd>wincmd o<CR>", description = "Split: Close all but current" },
+  { "<C-k>", "<cmd>wincmd k<CR>", description = "Split: Move up" },
+  { "<C-j>", "<cmd>wincmd j<CR>", description = "Split: Move down" },
+  { "<C-h>", "<cmd>wincmd h<CR>", description = "Split: Move left" },
+  { "<C-l>", "<cmd>wincmd l<CR>", description = "Split: Move right" },
 
   -- Surrounds
   { "(", { x = "S)" }, hide = true, description = "Surround with ()'s", opts = { remap = true } },
