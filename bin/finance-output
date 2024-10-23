@@ -29,6 +29,5 @@ cat $inputFile >>$outputFile
 echo '</body>
 </html>' >>$outputFile
 
-cp $outputFile /Users/Oli/Downloads/finances.html
 cp $outputFile /Users/Oli/Documents/finances.html
 rm $inputFile
