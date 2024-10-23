@@ -36,31 +36,28 @@ return {
               },
             })
           end,
+          xai = function()
+            return require("codecompanion.adapters").extend("xai", {
+              env = {
+                api_key = "cmd:op read op://personal/xAI_API/credential --no-newline",
+              },
+            })
+          end,
         },
         strategies = {
           chat = {
-            adapter = "copilot",
             roles = { llm = "  CodeCompanion", user = "olimorris" },
-          },
-          inline = { adapter = "copilot" },
-          agent = {
-            adapter = "copilot",
-            tools = {
-              opts = {
-                auto_submit_errors = true,
-              },
-            },
           },
         },
         display = {
-          diff = {
-            close_chat_at = 500,
-            provider = "mini_diff",
-          },
           chat = {
             window = {
               layout = "vertical", -- float|vertical|horizontal|buffer
             },
+          },
+          diff = {
+            close_chat_at = 500,
+            provider = "mini_diff",
           },
         },
         opts = {
@@ -79,19 +76,19 @@ return {
             {
               "<C-a>",
               "<cmd>CodeCompanionActions<CR>",
-              description = "Open the CodeCompanion action picker",
+              description = "Open the action palette",
               mode = { "n", "v" },
             },
             {
               "<LocalLeader>a",
-              "<cmd>CodeCompanionToggle<CR>",
-              description = "Open CodeCompanion chat prompt",
+              "<cmd>CodeCompanionChat Toggle<CR>",
+              description = "Toggle a chat buffer",
               mode = { "n", "v" },
             },
             {
               "ga",
-              "<cmd>CodeCompanionAdd<CR>",
-              description = "Add selected text to CodeCompanion",
+              "<cmd>CodeCompanionChat Add<CR>",
+              description = "Add selected text to a chat buffer",
               mode = { "n", "v" },
             },
           },
