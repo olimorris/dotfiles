@@ -449,13 +449,6 @@ return {
               description = "Open test output",
             },
             {
-              "`",
-              function()
-                require("neotest").summary.toggle()
-              end,
-              description = "Toggle test summary",
-            },
-            {
               "<LocalLeader>twn",
               function()
                 require("neotest").watch.toggle()
