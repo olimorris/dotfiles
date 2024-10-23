@@ -75,11 +75,8 @@ Plug 'alvan/vim-closetag'                   " Autoclose HTML tags
 "Plug 'gorodinskiy/vim-coloresque'          " Display Hex and RGB colors in VIM
 " }}}
 " Misc {{{
-Plug 'benmills/vimux'                       " Interact with tmux from Vim
 Plug 'tpope/vim-repeat'                     " Use the '.' command on plugins
 Plug 'mhinz/vim-startify'                   " A fancy start screen for Vim
-Plug 'christoomey/vim-tmux-runner'          " Send commands from Vim to Tmux
-Plug 'christoomey/vim-tmux-navigator'       " Navigate tmux windows with ease
 " }}}
 " Theming {{{
 Plug 'joshdick/onedark.vim'
