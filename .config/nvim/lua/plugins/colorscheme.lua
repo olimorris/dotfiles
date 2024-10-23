@@ -2,22 +2,6 @@ return {
   {
     "olimorris/onedarkpro.nvim",
     priority = 1000,
-    init = function()
-      require("legendary").commands({
-        {
-          ":OnedarkproCache",
-          description = "Cache the theme",
-        },
-        {
-          ":OnedarkproClean",
-          description = "Clean the theme cache",
-        },
-        {
-          ":OnedarkproColors",
-          description = "Show the theme's colors",
-        },
-      })
-    end,
     opts = {
       colors = {
         dark = {
