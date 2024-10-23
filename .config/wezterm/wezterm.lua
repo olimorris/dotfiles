@@ -1,25 +1,20 @@
 local wezterm = require("wezterm")
-local helpers = require("helpers")
 local config = wezterm.config_builder()
 
-require("keys").setup(config)
-require("tabs").setup(config)
-require("workspaces").setup(config)
+require("colors")(config)
+require("links")(config)
+require("keys")(config)
+require("tabline")(config)
+require("workspaces")(config)
 wezterm.log_info("Reloading")
 
----Set the color scheme based on the appearance
-local function scheme()
-  if helpers.mode():find("Dark") then
-    return "onedarkpro_onedark"
-  end
-  return "onedarkpro_onelight"
-end
-config.color_scheme_dirs = { wezterm.home_dir .. "/Code/Neovim/onedarkpro.nvim/extras/wezterm" }
-config.color_scheme = scheme()
-wezterm.add_to_config_reload_watch_list(config.color_scheme_dirs[1] .. config.color_scheme .. ".toml")
+wezterm.add_to_config_reload_watch_list(wezterm.home_dir .. "/.color_mode")
+config.automatically_reload_config = true
 
-config.cursor_blink_rate = 0
-config.default_workspace = "Oli"
+-- Graphics config
+config.front_end = "WebGpu"
+config.cursor_blink_ease_in = "Constant"
+config.cursor_blink_ease_out = "Constant"
 
 config.font = wezterm.font("Operator Mono", {
   stretch = "Normal",

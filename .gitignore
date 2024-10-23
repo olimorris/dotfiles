@@ -61,6 +61,7 @@
 
 # Config
 .config/nvim/plugin
+.config/wezterm/encryption_key.txt
 
 # Fish
 .config/fish/fish_variables
