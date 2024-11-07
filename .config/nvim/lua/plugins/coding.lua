@@ -22,6 +22,15 @@ return {
               },
             })
           end,
+          copilot = function()
+            return require("codecompanion.adapters").extend("copilot", {
+              schema = {
+                model = {
+                  default = "claude-3.5-sonnet",
+                },
+              },
+            })
+          end,
           gemini = function()
             return require("codecompanion.adapters").extend("gemini", {
               env = {
@@ -46,17 +55,26 @@ return {
         },
         strategies = {
           chat = {
-            roles = { llm = "  CodeCompanion", user = "olimorris" },
+            roles = { llm = "CodeCompanion", user = "olimorris" },
+            slash_commands = {
+              ["buffer"] = {
+                opts = {
+                  provider = "telescope",
+                },
+              },
+              ["file"] = {
+                opts = {
+                  provider = "telescope",
+                },
+              },
+            },
           },
         },
         display = {
           chat = {
-            window = {
-              layout = "vertical", -- float|vertical|horizontal|buffer
-            },
+            render_headers = false,
           },
           diff = {
-            close_chat_at = 500,
             provider = "mini_diff",
           },
         },
