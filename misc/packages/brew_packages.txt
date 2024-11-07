@@ -33,6 +33,7 @@ mas
 maven
 mise
 most
+mvfst
 neofetch
 ninja
 node
