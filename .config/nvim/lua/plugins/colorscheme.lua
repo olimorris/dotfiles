@@ -36,6 +36,15 @@ return {
           local_highlight = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
           light_gray = "require('onedarkpro.helpers').lighten('gray', 10, 'onelight')",
         },
+        rainbow = {
+          "${green}",
+          "${blue}",
+          "${purple}",
+          "${red}",
+          "${orange}",
+          "${yellow}",
+          "${cyan}",
+        },
       },
       highlights = {
         CodeCompanionTokens = { fg = "${gray}", italic = true },
@@ -118,8 +127,6 @@ return {
         -- Luasnip
         LuaSnipChoiceNode = { fg = "${yellow}" },
         LuaSnipInsertNode = { fg = "${yellow}" },
-
-        ["@markup.list.unchecked.markdown"] = { fg = "${bg}", bg = "${fg}" },
 
         -- Neotest
         NeotestAdapterName = { fg = "${purple}", bold = true },
