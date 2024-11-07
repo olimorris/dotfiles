@@ -29,7 +29,7 @@ local function workspaces(config)
     workspace_state.restore_workspace(resurrect.load_state(label, "workspace"), {
       window = window,
       restore_text = true,
-      -- on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+      on_pane_restore = resurrect.tab_state.default_on_pane_restore,
     })
   end)
 

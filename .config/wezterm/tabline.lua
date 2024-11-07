@@ -61,7 +61,7 @@ local function tabs(config)
       tabline_c = {},
       tab_active = { "index" .. "", { "process", padding = { left = 0, right = 1 } } },
       tab_inactive = { "index", { "process", padding = { left = 0, right = 1 } } },
-      tabline_x = { "ram", "cpu", "battery" },
+      tabline_x = { "ram", "cpu", "battery", "datetime" },
       tabline_y = {},
       tabline_z = {},
     },
