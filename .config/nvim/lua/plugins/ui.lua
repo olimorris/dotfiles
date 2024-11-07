@@ -1,6 +1,16 @@
 return {
   "nvim-tree/nvim-web-devicons",
   {
+    "MeanderingProgrammer/render-markdown.nvim", -- Make Markdown buffers look beautiful
+    ft = { "markdown", "codecompanion" },
+    opts = {
+      render_modes = true, -- Render in ALL modes
+      sign = {
+        enabled = false, -- Turn off in the status column
+      },
+    },
+  },
+  {
     "folke/edgy.nvim", -- Create predefined window layouts
     event = "VeryLazy",
     init = function()
