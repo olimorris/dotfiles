@@ -1,5 +1,35 @@
 return {
   {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      bigfile = { enabled = false },
+      git = { enabled = false },
+      gitbrowse = { enabled = false },
+      quickfile = { enabled = false },
+      statuscolumn = { enabled = false },
+      terminal = { enabled = false },
+      toggle = { enabled = false },
+      win = { enabled = false },
+    },
+    init = function(config)
+      local snacks = require("snacks")
+      require("legendary").keymaps({
+        {
+          "<C-c>",
+          function()
+            snacks.bufdelete()
+          end,
+          hide = true,
+          description = "Close Buffer",
+        },
+        { "<Tab>", "<cmd>bnext<CR>", hide = true, description = "Next buffer", opts = { noremap = false } }, -- Heirline.nvim
+        { "<S-Tab>", "<cmd>bprev<CR>", hide = true, description = "Previous buffer", opts = { noremap = false } }, -- Heirline.nvim
+      })
+    end,
+  },
+  {
     "kevinhwang91/nvim-ufo", -- Better folds in Neovim
     dependencies = "kevinhwang91/promise-async",
     init = function()
