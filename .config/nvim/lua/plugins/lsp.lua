@@ -1,5 +1,3 @@
-local lsp_buffers = {}
-
 local icons = {
   [vim.diagnostic.severity.ERROR] = "",
   [vim.diagnostic.severity.WARN] = "",
@@ -8,29 +6,35 @@ local icons = {
 }
 
 return {
-  -- Autocompletion
+  -- Completion
   {
     "hrsh7th/nvim-cmp",
-    dependences = {
+    dependencies = {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
       "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/cmp-nvim-lua",
+      "lukas-reineke/cmp-under-comparator",
     },
-    event = "InsertEnter",
     config = function()
-      local cmp = require("cmp")
       local luasnip = require("luasnip")
+      require("luasnip.loaders.from_vscode").lazy_load()
+      vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
+      local cmp = require("cmp")
       cmp.setup({
-        sources = {
-          { name = "luasnip", priority = 100, max_item_count = 5 },
-          -- { name = "copilot", priority = 90, max_item_count = 5 },
-          { name = "nvim_lsp", priority = 90 },
-          { name = "path", priority = 20 },
-          { name = "buffer", priority = 10, keyword_length = 3, max_item_count = 8 },
-          { name = "nvim_lua" },
-          { name = "nvim_lsp_signature_help" },
+        formatting = {
+          fields = { "abbr", "kind", "menu" },
+          format = require("lspkind").cmp_format({
+            mode = "symbol", -- show only symbol annotations
+            maxwidth = 50, -- prevent the popup from showing more than provided characters
+            ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
+          }),
+        },
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
         },
         mapping = cmp.mapping.preset.insert({
           ["<CR>"] = cmp.mapping.confirm({
@@ -81,10 +85,43 @@ return {
             end
           end, { "i", "s" }),
         }),
-        snippet = {
-          expand = function(args)
-            vim.snippet.expand(args.body)
-          end,
+        sources = {
+          { name = "luasnip", priority = 100, max_item_count = 5 },
+          { name = "nvim_lsp", priority = 90 },
+          { name = "path", priority = 20 },
+          { name = "buffer", priority = 10, keyword_length = 3, max_item_count = 8 },
+          { name = "nvim_lua" },
+          { name = "nvim_lsp_signature_help" },
+        },
+      })
+
+      cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = "path" },
+          {
+            name = "cmdline",
+            option = {
+              ignore_cmds = { "Man", "!" },
+            },
+          },
+        }),
+        sorting = {
+          comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.recently_used,
+            require("cmp-under-comparator").under,
+            cmp.config.compare.kind,
+          },
+        },
+      })
+
+      cmp.setup.cmdline("/", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = "buffer" },
         },
       })
     end,
@@ -93,19 +130,28 @@ return {
   -- LSP
   {
     "neovim/nvim-lspconfig",
-    cmd = { "LspInfo", "LspInstall", "LspStart" },
-    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { "hrsh7th/cmp-nvim-lsp" },
-      { "williamboman/mason.nvim", config = true },
+      {
+        "williamboman/mason.nvim",
+        build = function()
+          pcall(vim.cmd, "MasonUpdate")
+        end,
+        opts = {
+          ui = {
+            border = "single",
+            width = 0.9,
+          },
+        },
+      },
       { "williamboman/mason-lspconfig.nvim" },
     },
     config = function()
-      -- require("ufo").setup()
       require("lspconfig.ui.windows").default_options.border = "single"
       vim.o.runtimepath = vim.o.runtimepath .. ",~/.dotfiles/.config/snippets"
 
-      local lsp_capabilities = vim.tbl_deep_extend("force", require("cmp_nvim_lsp").default_capabilities(), {
+      require("ufo").setup()
+      local capabilities = vim.tbl_deep_extend("force", require("cmp_nvim_lsp").default_capabilities(), {
         textDocument = {
           foldingRange = {
             dynamicRegistration = false,
@@ -115,108 +161,184 @@ return {
       })
 
       local lspconfig_defaults = require("lspconfig").util.default_config
-      lspconfig_defaults.capabilities = vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, lsp_capabilities)
-
-      local t = require("legendary.toolbox")
-      local commands = {
-        [":LspRestart"] = {
-          description = "Restart any attached clients",
-        },
-        [":LspStart"] = {
-          description = "Start the client manually",
-        },
-        [":LspInfo"] = {
-          description = "Show attached clients",
-        },
-        [":LspUninstallAll"] = {
-          description = "Uninstall all servers",
-        },
-        [":Mason"] = {
-          description = "Open Mason",
-        },
-        [":MasonUninstallAll"] = {
-          description = "Uninstall all Mason servers",
-        },
-      }
-      local keymaps = {
-        ["gf"] = {
-          callback = function()
-            return t.lazy_required_fn("telescope.builtin", "diagnostics", {
-              layout_strategy = "center",
-              bufnr = 0,
-            })
-          end,
-          description = "Find diagnostics",
-        },
-        ["gq"] = {
-          callback = function(bufnr)
-            require("conform").format({ bufnr = bufnr })
-          end,
-          description = "Format buffer",
-        },
-        ["gr"] = {
-          callback = function()
-            t.lazy_required_fn("telescope.builtin", "lsp_references", {
-              layout_strategy = "center",
-            })
-          end,
-          description = "Find references",
-        },
-        ["gl"] = {
-          callback = "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
-          description = "Show line diagnostics",
-        },
-        ["K"] = {
-          callback = "<cmd>lua vim.lsp.buf.hover()<CR>",
-          description = "Show hover information",
-        },
-        ["<LocalLeader>p"] = {
-          callback = function()
-            t.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer")
-          end,
-          description = "Peek definition",
-        },
-        ["ga"] = {
-          callback = "<cmd>lua vim.lsp.buf.code_action()<CR>",
-          description = "Get code actions",
-        },
-        ["gs"] = {
-          callback = "<cmd>lua vim.lsp.buf.signature_help()<CR>",
-          description = "Get signature help",
-        },
-        ["<LocalLeader>rn"] = {
-          callback = "<cmd>lua vim.lsp.buf.rename()<CR>",
-          description = "Rename symbol",
-        },
-        ["["] = {
-          callback = "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>",
-          description = "Go to previous diagnostic",
-        },
-        ["]"] = {
-          callback = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
-          description = "Go to next diagnostic",
-        },
-      }
+      lspconfig_defaults.capabilities = vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, capabilities)
 
       -- Legendary.nvim
       local legendary = require("legendary")
-      -- TODO: Add Legendary keymaps
-
-      vim.iter(commands):each(function(command, value)
-        legendary.command({ command, description = value.description })
-      end)
+      local t = require("legendary.toolbox")
 
       local function autocmds(client, bufnr)
-        if client.supports_method("textDocument/documentHighlight") == false then
+        if not client.supports_method("textDocument/documentHighlight") then
           return
         end
-        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-          buffer = bufnr,
-          callback = vim.lsp.buf.document_highlight,
+        legendary.autocmds({
+          {
+            name = "LspOnAttachAutocmds",
+            clear = false,
+            {
+              { "CursorHold", "CursorHoldI" },
+              ":silent! lua vim.lsp.buf.document_highlight()",
+              opts = { buffer = bufnr },
+            },
+            {
+              "CursorMoved",
+              ":silent! lua vim.lsp.buf.clear_references()",
+              opts = { buffer = bufnr },
+            },
+          },
         })
-        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-          buffer = bufnr,
-          callback = vim.lsp.buf.clear_references,
+      end
+      local function commands(client, bufnr)
+        -- Only need to set these once!
+        if vim.g.lsp_commands then
+          return {}
+        end
+
+        legendary.commands({
+          {
+            ":LspRestart",
+            description = "Restart any attached clients",
+          },
+          {
+            ":LspStart",
+            description = "Start the client manually",
+          },
+          {
+            ":LspInfo",
+            description = "Show attached clients",
+          },
+          {
+            "LspInstallAll",
+            function()
+              for _, name in pairs(om.lsp.servers) do
+                vim.cmd("LspInstall " .. name)
+              end
+            end,
+            description = "Install all servers",
+          },
+          {
+            "LspUninstallAll",
+            description = "Uninstall all servers",
+          },
+          {
+            "LspLog",
+            function()
+              vim.cmd("edit " .. vim.lsp.get_log_path())
+            end,
+            description = "Show logs",
+          },
+        })
+
+        vim.g.lsp_commands = true
+      end
+      local function mappings(client, bufnr)
+        if
+          #vim.tbl_filter(function(keymap)
+            return (keymap.desc or ""):lower() == "rename symbol"
+          end, vim.api.nvim_buf_get_keymap(bufnr, "n")) > 0
+        then
+          return {}
+        end
+
+        legendary.keymaps({
+          itemgroup = "LSP",
+          icon = "",
+          description = "LSP related functionality",
+          keymaps = {
+            {
+              "gf",
+              t.lazy_required_fn("telescope.builtin", "diagnostics", {
+                layout_strategy = "center",
+                bufnr = 0,
+              }),
+              description = "Find diagnostics",
+              opts = { noremap = true, buffer = bufnr },
+            },
+            {
+              "gq",
+              function()
+                require("conform").format({ bufnr = bufnr })
+              end,
+              description = "Format",
+              opts = { buffer = bufnr },
+            },
+            {
+              "gr",
+              t.lazy_required_fn("telescope.builtin", "lsp_references", {
+                layout_strategy = "center",
+              }),
+              description = "Find references",
+              opts = { buffer = bufnr },
+            },
+            {
+              "gl",
+              "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
+              description = "Show line diagnostics",
+              opts = { buffer = bufnr },
+            },
+            {
+              "K",
+              "<cmd>lua vim.lsp.buf.hover<CR>",
+              description = "Show hover information",
+              opts = { buffer = bufnr },
+            },
+
+            {
+              "gd",
+              "<cmd>lua vim.lsp.buf.definition()<CR>",
+              description = "Go to definition",
+              opts = { buffer = bufnr },
+            },
+            {
+              "gi",
+              "<cmd>lua vim.lsp.buf.implementation()<CR>",
+              description = "Go to implementation",
+              opts = { buffer = bufnr },
+            },
+            {
+              "gt",
+              "<cmd>lua vim.lsp.buf.type_definition()<CR>",
+              description = "Go to type definition",
+              opts = { buffer = bufnr },
+            },
+            {
+              "<LocalLeader>p",
+              t.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer"),
+              description = "Peek definition",
+              opts = { buffer = bufnr },
+            },
+            {
+              "ga",
+              "<cmd>lua vim.lsp.buf.code_action()<CR>",
+              description = "Show code actions",
+              opts = { buffer = bufnr },
+            },
+            {
+              "gs",
+              "<cmd>lua vim.lsp.buf.signature_help()<CR>",
+              description = "Show signature help",
+              opts = { buffer = bufnr },
+            },
+            {
+              "<LocalLeader>rn",
+              "<cmd>lua vim.lsp.buf.rename()<CR>",
+              description = "Rename symbol",
+              opts = { buffer = bufnr },
+            },
+
+            {
+              "[",
+              "<cmd>lua vim.diagnostic.goto_prev()<CR>",
+              description = "Go to previous diagnostic item",
+              opts = { buffer = bufnr },
+            },
+            {
+              "]",
+              "<cmd>lua vim.diagnostic.goto_next()<CR>",
+              description = "Go to next diagnostic item",
+              opts = { buffer = bufnr },
+            },
+          },
         })
       end
 
@@ -231,25 +353,39 @@ return {
             return
           end
 
-          local opts = { buffer = event.buf }
+          local bufnr = event.buf
+          local opts = { buffer = bufnr }
 
-          autocmds(client, event.buf)
-          vim.iter(keymaps):each(function(key, value)
-            local mode = "n"
-            if value.mode then
-              mode = value.mode
-            end
-
-            local callback = value.callback
-            if type(callback) == "function" then
-              callback = function()
-                callback(event.buf)
-              end
-            end
-
-            vim.keymap.set(mode, key, value.callback, opts)
-          end)
+          autocmds(client, bufnr)
+          commands(client, bufnr)
+          mappings(client, bufnr)
         end,
+      })
+
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "bashls",
+          "cssls",
+          "dockerls",
+          "html",
+          "intelephense",
+          "jdtls",
+          "jsonls",
+          "lua_ls",
+          "pyright",
+          "ruby_lsp",
+          "vuels",
+          "yamlls",
+        },
+        handlers = {
+          -- this first function is the "default handler"
+          -- it applies to every language server without a "custom handler"
+          function(ls)
+            require("lspconfig")[ls].setup({
+              capabilities = capabilities,
+            })
+          end,
+        },
       })
 
       vim.diagnostic.config({
@@ -264,32 +400,6 @@ return {
         --   prefix = "",
         --   spacing = 0,
         -- },
-      })
-
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "bashls",
-          "cssls",
-          "dockerls",
-          -- "efm",
-          "html",
-          "intelephense",
-          "jdtls",
-          "jsonls",
-          "lua_ls",
-          "pyright",
-          "ruby_lsp",
-          -- "tailwindcss", -- Disabled due to high node CPU usage
-          "vuels",
-          "yamlls",
-        },
-        handlers = {
-          -- this first function is the "default handler"
-          -- it applies to every language server without a "custom handler"
-          function(server_name)
-            require("lspconfig")[server_name].setup({})
-          end,
-        },
       })
     end,
   },
