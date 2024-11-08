@@ -13,6 +13,20 @@ return {
       bigfile = { enabled = false },
       git = { enabled = false },
       gitbrowse = { enabled = false },
+      lazygit = {
+        theme = {
+          [241] = { fg = "Special" },
+          activeBorderColor = { fg = "String", bold = true },
+          cherryPickedCommitBgColor = { fg = "Identifier" },
+          cherryPickedCommitFgColor = { fg = "Function" },
+          defaultFgColor = { fg = "Normal" },
+          inactiveBorderColor = { fg = "FloatBorder" },
+          optionsTextColor = { fg = "Function" },
+          searchingActiveBorderColor = { fg = "String", bold = true },
+          selectedLineBgColor = { bg = "Visual" }, -- set to `default` to have no background colour
+          unstagedChangesColor = { fg = "DiagnosticError" },
+        },
+      },
       quickfile = { enabled = false },
       statuscolumn = { enabled = false },
       toggle = { enabled = false },
