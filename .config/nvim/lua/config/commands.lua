@@ -103,13 +103,6 @@ return legendary.commands({
     },
   },
   {
-    "Lazygit",
-    function()
-      om.open_term("lazygit", { size = { width = 1, height = 1 }, esc_esc = false })
-    end,
-    description = "Git terminal",
-  },
-  {
     ":New",
     ":enew",
     description = "New buffer",

@@ -4,18 +4,24 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
+      styles = {
+        lazygit = {
+          width = 0,
+          height = 0,
+        },
+      },
       bigfile = { enabled = false },
       git = { enabled = false },
       gitbrowse = { enabled = false },
       quickfile = { enabled = false },
       statuscolumn = { enabled = false },
-      terminal = { enabled = false },
       toggle = { enabled = false },
       win = { enabled = false },
     },
     init = function(config)
       local snacks = require("snacks")
-      require("legendary").keymaps({
+
+      local keymaps = {
         {
           "<C-c>",
           function()
@@ -24,8 +30,43 @@ return {
           hide = true,
           description = "Close Buffer",
         },
-        { "<Tab>", "<cmd>bnext<CR>", hide = true, description = "Next buffer", opts = { noremap = false } }, -- Heirline.nvim
-        { "<S-Tab>", "<cmd>bprev<CR>", hide = true, description = "Previous buffer", opts = { noremap = false } }, -- Heirline.nvim
+        {
+          "<C-x>",
+          function()
+            snacks.terminal.toggle()
+          end,
+          description = "Open terminal",
+          mode = { "n", "t" },
+        },
+        {
+          "<Esc>",
+          "<C-\\><C-n>",
+          description = "Escape means escape in the terminal",
+          hide = true,
+          mode = { "t" },
+          opts = { nowait = true },
+        },
+      }
+
+      for _, direction in ipairs({ "h", "j", "k", "l" }) do
+        table.insert(keymaps, {
+          "<C-" .. direction .. ">",
+          "<C-" .. direction .. ">",
+          description = "Navigate in direction " .. direction,
+          mode = { "t" },
+          opts = { nowait = true },
+        })
+      end
+
+      require("legendary").keymaps(keymaps)
+      require("legendary").commands({
+        {
+          "LazyGit",
+          function()
+            snacks.lazygit()
+          end,
+          description = "Open LazyGit in a floating window",
+        },
       })
     end,
   },

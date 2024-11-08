@@ -24,11 +24,14 @@ return {
       },
       bottom = {
         {
-          ft = "terminal",
-          title = "Terminal",
+          ft = "snacks_terminal",
           size = { height = om.on_big_screen() and 20 or 0.2 },
-          filter = function(buf)
-            return not vim.b[buf].lazyterm_cmd
+          title = "Terminal %{b:snacks_terminal.id}",
+          filter = function(_buf, win)
+            return vim.w[win].snacks_win
+              and vim.w[win].snacks_win.position == "bottom"
+              and vim.w[win].snacks_win.relative == "editor"
+              and not vim.w[win].trouble_preview
           end,
         },
         { ft = "qf", title = "QuickFix" },

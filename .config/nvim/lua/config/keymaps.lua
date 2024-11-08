@@ -41,14 +41,6 @@ return legendary.keymaps({
     description = "Quit neovim",
     { remap = true, silent = true },
   },
-  {
-    "<C-x>",
-    function()
-      om.open_term(nil, { cwd = nil })
-    end,
-    description = "Open terminal",
-    mode = { "n", "t" },
-  },
   { "<C-y>", "<cmd>%y+<CR>", hide = true, description = "Copy buffer" },
   {
     "<C-s>",
@@ -57,6 +49,9 @@ return legendary.keymaps({
     description = "Save buffer",
     mode = { "n", "i" },
   },
+
+  { "<Tab>", "<cmd>bnext<CR>", hide = true, description = "Next buffer", opts = { noremap = false } },
+  { "<S-Tab>", "<cmd>bprev<CR>", hide = true, description = "Previous buffer", opts = { noremap = false } },
 
   -- Editing words
   { "<LocalLeader>,", "<cmd>norm A,<CR>", hide = true, description = "Append comma" },

@@ -274,7 +274,6 @@ return {
       },
     },
   },
-  -- Highlight text when yanked
   {
     name = "HighlightYankedText",
     {
