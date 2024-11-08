@@ -17,8 +17,6 @@ ran_from_cmd_line = False
 # The order in which apps are changed
 apps = [
     "macos",
-    # "wallpaper",
-    # "wezterm",
     "starship",
     "neovim",
     "fish",
@@ -50,26 +48,6 @@ def app_macos(mode):
         config_file.write(contents)
 
 
-def app_wallpaper(mode):
-    if mode == "dark":
-        wallpaper = "dark.png"
-    else:
-        wallpaper = "light.png"
-
-    try:
-        script = f"""
-            tell application "System Events"
-                tell every desktop
-                    set picture to "{os.path.expanduser(wallpaper_path)}/{wallpaper}"
-                end tell
-            end tell
-            """
-
-        subprocess.run(["osascript", "-e", script])
-    except subprocess.CalledProcessError as e:
-        print(f"An error occurred: {e}")
-
-
 def app_starship(mode):
     """
     Change the prompt in the terminal
@@ -91,31 +69,6 @@ def app_starship(mode):
                 os.path.expanduser(starship_path + "/starship.toml"),
             ]
         )
-
-
-def app_wezterm(mode):
-    """
-    Change the theme in the terminal
-    """
-    config = wezterm_path + "/wezterm.lua"
-
-    # Open the neovim file
-    with open(os.path.expanduser(config), "r") as config_file:
-        wezterm_contents = config_file.read()
-
-    # Change the mode to ensure on a fresh startup, the color is remembered
-    if mode == "dark":
-        wezterm_contents = wezterm_contents.replace(
-            "onedarkpro_onelight", "onedarkpro_onedark"
-        )
-
-    if mode == "light":
-        wezterm_contents = wezterm_contents.replace(
-            "onedarkpro_onedark", "onedarkpro_onelight"
-        )
-
-    with open(os.path.expanduser(config), "w") as config_file:
-        config_file.write(wezterm_contents)
 
 
 def app_neovim(mode):
