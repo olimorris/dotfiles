@@ -5,24 +5,22 @@ return {
     priority = 10000,
     lazy = false,
     dependencies = "kkharji/sqlite.lua",
-    init = function()
-      require("legendary").keymaps({
-        {
-          "<C-p>",
-          require("legendary").find,
-          hide = true,
-          description = "Open Legendary",
-          mode = { "n", "v" },
-        },
-      })
-    end,
+    keys = {
+      {
+        "<C-p>",
+        function()
+          require("legendary").find()
+        end,
+        desc = "Open Legendary",
+      },
+    },
     config = function()
       require("legendary").setup({
         select_prompt = "Legendary",
         include_builtin = false,
         extensions = {
           codecompanion = false,
-          lazy_nvim = false,
+          lazy_nvim = true,
           which_key = false,
         },
         -- Load these with the plugin to ensure they are loaded before any Neovim events

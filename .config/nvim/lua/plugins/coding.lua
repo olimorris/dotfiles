@@ -126,57 +126,76 @@ return {
   {
     "ThePrimeagen/refactoring.nvim", -- Refactor code like Martin Fowler
     lazy = true,
-    init = function()
-      require("legendary").keymaps({
-        {
-          itemgroup = "Refactoring",
-          icon = "",
-          description = "Refactor code...",
-          keymaps = {
-            {
-              "<LocalLeader>re",
-              function()
-                require("telescope").extensions.refactoring.refactors()
-              end,
-              description = "Open Refactoring.nvim",
-              mode = { "n", "v", "x" },
-            },
-            {
-              "<LocalLeader>rd",
-              function()
-                require("refactoring").debug.printf({ below = false })
-              end,
-              description = "Insert Printf statement for debugging",
-            },
-            {
-              "<LocalLeader>rv",
-              {
-                n = function()
-                  require("refactoring").debug.print_var({ normal = true })
-                end,
-                x = function()
-                  require("refactoring").debug.print_var({})
-                end,
-              },
-              description = "Insert Print_Var statement for debugging",
-              mode = { "n", "v" },
-            },
-            {
-              "<LocalLeader>rc",
-              function()
-                require("refactoring").debug.cleanup()
-              end,
-              description = "Cleanup debug statements",
-            },
-          },
-        },
-      })
-    end,
+    keys = {
+      {
+        "<LocalLeader>re",
+        function()
+          require("telescope").extensions.refactoring.refactors()
+        end,
+        desc = "Refactoring.nvim: Open",
+        mode = { "n", "v", "x" },
+      },
+      {
+        "<LocalLeader>rd",
+        function()
+          require("refactoring").debug.printf({ below = false })
+        end,
+        desc = "Refactoring.nvim: Insert Printf statement for debugging",
+      },
+      {
+        "<LocalLeader>rv",
+        function()
+          require("refactoring").debug.print_var({})
+        end,
+        mode = { "v" },
+        desc = "Refactoring.nvim: Insert Print_Var statement for debugging",
+      },
+      {
+        "<LocalLeader>rv",
+        function()
+          require("refactoring").debug.print_var({ normal = true })
+        end,
+        desc = "Refactoring.nvim: Insert Print_Var statement for debugging",
+      },
+      {
+        "<LocalLeader>rc",
+        function()
+          require("refactoring").debug.cleanup()
+        end,
+        desc = "Refactoring.nvim: Cleanup debug statements",
+      },
+    },
     config = true,
   },
   {
     "zbirenbaum/copilot.lua", -- AI programming
     event = "InsertEnter",
+    keys = {
+      {
+        "<C-a>",
+        function()
+          require("copilot.suggestion").accept()
+        end,
+        desc = "Copilot: Accept suggestion",
+        mode = { "i" },
+      },
+      {
+        "<C-x>",
+        function()
+          require("copilot.suggestion").dismiss()
+        end,
+        desc = "Copilot: Dismiss suggestion",
+        mode = { "i" },
+      },
+      {
+        "<C-\\>",
+        function()
+          require("copilot.panel").open()
+        end,
+        desc = "Copilot: Show panel",
+        mode = { "n", "i" },
+      },
+    },
     init = function()
       require("legendary").commands({
         itemgroup = "Copilot",
@@ -187,37 +206,6 @@ return {
               require("copilot.suggestion").toggle_auto_trigger()
             end,
             description = "Toggle on/off for buffer",
-          },
-        },
-      })
-      require("legendary").keymaps({
-        itemgroup = "Copilot",
-        description = "Copilot suggestions...",
-        icon = "",
-        keymaps = {
-          {
-            "<C-a>",
-            function()
-              require("copilot.suggestion").accept()
-            end,
-            description = "Accept suggestion",
-            mode = { "i" },
-          },
-          {
-            "<C-x>",
-            function()
-              require("copilot.suggestion").dismiss()
-            end,
-            description = "Dismiss suggestion",
-            mode = { "i" },
-          },
-          {
-            "<C-\\>",
-            function()
-              require("copilot.panel").open()
-            end,
-            description = "Show Copilot panel",
-            mode = { "n", "i" },
           },
         },
       })
@@ -244,40 +232,31 @@ return {
       "suketa/nvim-dap-ruby", -- Debug Ruby
       "mfussenegger/nvim-dap-python", -- Debug Python
     },
-    init = function()
-      require("legendary").keymaps({
-        {
-          itemgroup = "Debug",
-          description = "Debugging functionality...",
-          icon = "",
-          keymaps = {
-            {
-              "<F1>",
-              "<cmd>lua require('dap').toggle_breakpoint()<CR>",
-              description = "Set breakpoint",
-            },
-            { "<F2>", "<cmd>lua require('dap').continue()<CR>", description = "Continue" },
-            { "<F3>", "<cmd>lua require('dap').step_into()<CR>", description = "Step into" },
-            { "<F4>", "<cmd>lua require('dap').step_over()<CR>", description = "Step over" },
-            {
-              "<F5>",
-              "<cmd>lua require('dap').repl.toggle({height = 6})<CR>",
-              description = "Toggle REPL",
-            },
-            { "<F6>", "<cmd>lua require('dap').repl.run_last()<CR>", description = "Run last" },
-            {
-              "<F9>",
-              function()
-                local _, dap = require("dap")
-                dap.disconnect()
-                require("dapui").close()
-              end,
-              description = "Stop",
-            },
-          },
-        },
-      })
-    end,
+    keys = {
+      {
+        "<F1>",
+        "<cmd>lua require('dap').toggle_breakpoint()<CR>",
+        desc = "Debug: Set breakpoint",
+      },
+      { "<F2>", "<cmd>lua require('dap').continue()<CR>", desc = "Debug: Continue" },
+      { "<F3>", "<cmd>lua require('dap').step_into()<CR>", desc = "Debug: Step into" },
+      { "<F4>", "<cmd>lua require('dap').step_over()<CR>", desc = "Debug: Step over" },
+      {
+        "<F5>",
+        "<cmd>lua require('dap').repl.toggle({height = 6})<CR>",
+        desc = "Debug: Toggle REPL",
+      },
+      { "<F6>", "<cmd>lua require('dap').repl.run_last()<CR>", desc = "Debug: Run last" },
+      {
+        "<F9>",
+        function()
+          local _, dap = require("dap")
+          dap.disconnect()
+          require("dapui").close()
+        end,
+        desc = "Debug: Stop",
+      },
+    },
     config = function()
       local dap = require("dap")
       require("dap-ruby").setup()
@@ -420,84 +399,74 @@ return {
       "olimorris/neotest-rspec",
       "olimorris/neotest-phpunit",
     },
-    init = function()
-      require("legendary").keymaps({
-        {
-          itemgroup = "Neotest",
-          icon = "ﭧ",
-          description = "Testing functionality...",
-          keymaps = {
-            -- Neotest plugin
-            {
-              "<LocalLeader>tn",
-              function()
-                require("neotest").run.run()
-              end,
-              description = "Test nearest",
-            },
-            {
-              "<LocalLeader>tf",
-              function()
-                require("neotest").run.run(vim.fn.expand("%"))
-              end,
-              description = "Test file",
-            },
-            {
-              "<LocalLeader>tl",
-              function()
-                require("neotest").run.run_last()
-              end,
-              description = "Run last test",
-            },
-            {
-              "<LocalLeader>ts",
-              function()
-                local neotest = require("neotest")
-                for _, adapter_id in ipairs(neotest.run.adapters()) do
-                  neotest.run.run({ suite = true, adapter = adapter_id })
-                end
-              end,
-              description = "Test suite",
-            },
-            {
-              "<LocalLeader>to",
-              function()
-                require("neotest").output.open({ short = true })
-              end,
-              description = "Open test output",
-            },
-            {
-              "<LocalLeader>twn",
-              function()
-                require("neotest").watch.toggle()
-              end,
-              description = "Watch nearest test",
-            },
-            {
-              "<LocalLeader>twf",
-              function()
-                require("neotest").watch.toggle({ vim.fn.expand("%") })
-              end,
-              description = "Watch file",
-            },
-            {
-              "<LocalLeader>twa",
-              function()
-                require("neotest").watch.toggle({ suite = true })
-              end,
-              description = "Watch all tests",
-            },
-            {
-              "<LocalLeader>twa",
-              function()
-                require("neotest").watch.stop()
-              end,
-              description = "Stop watching",
-            },
-          },
-        },
-      })
-    end,
+    keys = {
+      {
+        "<LocalLeader>tn",
+        function()
+          require("neotest").run.run()
+        end,
+        desc = "Neotest: Test nearest",
+      },
+      {
+        "<LocalLeader>tf",
+        function()
+          require("neotest").run.run(vim.fn.expand("%"))
+        end,
+        desc = "Neotest: Test file",
+      },
+      {
+        "<LocalLeader>tl",
+        function()
+          require("neotest").run.run_last()
+        end,
+        desc = "Neotest: Run last test",
+      },
+      {
+        "<LocalLeader>ts",
+        function()
+          local neotest = require("neotest")
+          for _, adapter_id in ipairs(neotest.run.adapters()) do
+            neotest.run.run({ suite = true, adapter = adapter_id })
+          end
+        end,
+        desc = "Neotest: Test suite",
+      },
+      {
+        "<LocalLeader>to",
+        function()
+          require("neotest").output.open({ short = true })
+        end,
+        desc = "Neotest: Open test output",
+      },
+      {
+        "<LocalLeader>twn",
+        function()
+          require("neotest").watch.toggle()
+        end,
+        desc = "Neotest: Watch nearest test",
+      },
+      {
+        "<LocalLeader>twf",
+        function()
+          require("neotest").watch.toggle({ vim.fn.expand("%") })
+        end,
+        desc = "Neotest: Watch file",
+      },
+      {
+        "<LocalLeader>twa",
+        function()
+          require("neotest").watch.toggle({ suite = true })
+        end,
+        desc = "Neotest: Watch all tests",
+      },
+      {
+        "<LocalLeader>twa",
+        function()
+          require("neotest").watch.stop()
+        end,
+        desc = "Neotest: Stop watching",
+      },
+    },
     config = function()
       require("neotest").setup({
         adapters = {

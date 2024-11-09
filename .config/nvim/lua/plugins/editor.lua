@@ -105,24 +105,22 @@ return {
   {
     "kevinhwang91/nvim-ufo", -- Better folds in Neovim
     dependencies = "kevinhwang91/promise-async",
-    init = function()
-      require("legendary").keymaps({
-        {
-          "zR",
-          function()
-            require("ufo").openAllFolds()
-          end,
-          description = "Open all folds",
-        },
-        {
-          "zM",
-          function()
-            require("ufo").closeAllFolds()
-          end,
-          description = "Close all folds",
-        },
-      })
-    end,
+    keys = {
+      {
+        "zR",
+        function()
+          require("ufo").openAllFolds()
+        end,
+        desc = "Open all folds",
+      },
+      {
+        "zM",
+        function()
+          require("ufo").closeAllFolds()
+        end,
+        desc = "Close all folds",
+      },
+    },
   },
   {
     "stevearc/oil.nvim", -- File manager
@@ -158,30 +156,28 @@ return {
         buflisted = false,
       },
     },
-    init = function()
-      require("legendary").keymaps({
-        {
-          "_",
-          function()
-            -- Stop me being dumb and opening a file explorer in openai.nvim
-            if vim.bo.buftype ~= "acwrite" then
-              require("oil").toggle_float(vim.fn.getcwd())
-            end
-          end,
-          description = "Open File Explorer",
-        },
-        {
-          "-",
-          function()
-            -- Stop me being dumb and opening a file explorer in openai.nvim
-            if vim.bo.buftype ~= "acwrite" then
-              require("oil").toggle_float()
-            end
-          end,
-          description = "Open File Explorer to current file",
-        },
-      })
-    end,
+    keys = {
+      {
+        "_",
+        function()
+          -- Stop me being dumb and opening a file explorer in openai.nvim
+          if vim.bo.buftype ~= "acwrite" then
+            require("oil").toggle_float(vim.fn.getcwd())
+          end
+        end,
+        desc = "Oil.nvim: Open File Explorer",
+      },
+      {
+        "-",
+        function()
+          -- Stop me being dumb and opening a file explorer in openai.nvim
+          if vim.bo.buftype ~= "acwrite" then
+            require("oil").toggle_float()
+          end
+        end,
+        desc = "Oil.nvim: Open File Explorer to current file",
+      },
+    },
   },
   {
     "stevearc/aerial.nvim", -- Toggled list of classes, methods etc in current file
@@ -222,27 +218,16 @@ return {
         TypeParameter = "󰊄 ",
       },
     },
-    init = function()
-      require("legendary").keymaps({
-        {
-          "<C-t>",
-          function()
-            require("aerial").toggle()
-          end,
-          mode = { "n", "x", "o" },
-          description = "Aerial toggle",
-        },
-      })
-    end,
+    keys = {
+      { "<C-t>", "<cmd>AerialToggle<CR>", mode = { "n", "x", "o" }, desc = "Aerial Toggle" },
+    },
   },
   {
     "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
     event = "BufEnter",
-    init = function()
-      require("legendary").keymaps({
-        { "<Leader>t", "<cmd>TodoTelescope<CR>", description = "Todo comments" },
-      })
-    end,
+    keys = {
+      { "<Leader>t", "<cmd>TodoTelescope<CR>", desc = "Todo comments" },
+    },
     opts = {
       signs = false,
       highlight = {

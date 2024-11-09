@@ -6,13 +6,11 @@ return {
       "nvim-lua/plenary.nvim",
       {
         "debugloop/telescope-undo.nvim", -- Visualise undotree
+        keys = {
+          { "<LocalLeader>u", "<cmd>Telescope undo<CR>", desc = "Undo tree using Telescope" },
+        },
         config = function()
           require("telescope").load_extension("undo")
-        end,
-        init = function()
-          require("legendary").keymaps({
-            { "<LocalLeader>u", "<cmd>Telescope undo<CR>", description = "Undo tree using Telescope" },
-          })
         end,
       },
       {
