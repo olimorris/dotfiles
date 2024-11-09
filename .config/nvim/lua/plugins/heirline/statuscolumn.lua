@@ -98,7 +98,7 @@ return {
         end,
         GitSigns = function(self, args)
           vim.defer_fn(function()
-            require("gitsigns").blame_line({ full = true })
+            require("snacks").git.blame_line()
           end, 100)
         end,
       },
