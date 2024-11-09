@@ -9,6 +9,9 @@ return {
           width = 0,
           height = 0,
         },
+        notification = {
+          wo = { wrap = true }, -- Wrap notifications
+        },
       },
       bigfile = { enabled = false },
       git = { enabled = false },
@@ -32,26 +35,41 @@ return {
       toggle = { enabled = false },
       win = { enabled = false },
     },
+    keys = {
+      {
+        "<C-c>",
+        function()
+          Snacks.bufdelete()
+        end,
+        desc = "Delete Buffer",
+      },
+      {
+        "<Leader>u",
+        function()
+          Snacks.notifier.hide()
+        end,
+        desc = "Dismiss All Notifications",
+      },
+      {
+        "<Leader>gb",
+        function()
+          Snacks.gitbrowse()
+        end,
+        desc = "Git Browse",
+      },
+      {
+        "<C-x>",
+        function()
+          Snacks.terminal.toggle()
+        end,
+        mode = { "n", "t" },
+        desc = "Toggle Terminal",
+      },
+    },
     init = function(config)
       local snacks = require("snacks")
 
       local keymaps = {
-        {
-          "<C-c>",
-          function()
-            snacks.bufdelete()
-          end,
-          hide = true,
-          description = "Close Buffer",
-        },
-        {
-          "<C-x>",
-          function()
-            snacks.terminal.toggle()
-          end,
-          description = "Open terminal",
-          mode = { "n", "t" },
-        },
         {
           "<Esc>",
           "<C-\\><C-n>",
