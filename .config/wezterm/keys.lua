@@ -1,15 +1,21 @@
 local wezterm = require("wezterm")
 local act = wezterm.action --[[@type function]]
 
-local mod = "SHIFT|SUPER"
+local mod = "LEADER"
 
 ---@param config table
 local function keys(config)
+  config.leader = {
+    key = "z",
+    mods = "CTRL",
+    timeout_milliseconds = 2000,
+  }
+
   config.keys = {
 
     -- Scrollback
-    { mods = mod, key = "k", action = act.ScrollByPage(-0.5) },
-    { mods = mod, key = "j", action = act.ScrollByPage(0.5) },
+    { key = "k", mods = "CTRL|SHIFT", action = act.ScrollByPage(-0.5) },
+    { key = "j", mods = "CTRL|SHIFT", action = act.ScrollByPage(0.5) },
 
     -- Get the keys working as expected
     { key = "\r", mods = "CTRL", action = act({ SendString = "\x1b[13;5u" }) },
@@ -18,6 +24,8 @@ local function keys(config)
     { key = "RightArrow", mods = "ALT", action = act({ SendString = "\x1b\x66" }) },
 
     { key = "d", mods = mod, action = act.ShowDebugOverlay },
+
+    { key = "w", mods = mod, action = act.ShowTabNavigator },
   }
 end
 
