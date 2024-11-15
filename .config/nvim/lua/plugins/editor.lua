@@ -13,9 +13,10 @@ return {
           wo = { wrap = true }, -- Wrap notifications
         },
       },
-      bigfile = { enabled = false },
-      git = { enabled = false },
-      gitbrowse = { enabled = false },
+      bigfile = { enabled = true },
+      bufdelete = { enabled = true },
+      notifier = { enabled = true },
+      terminal = { enabled = true },
       lazygit = {
         theme = {
           [241] = { fg = "Special" },
@@ -30,10 +31,6 @@ return {
           unstagedChangesColor = { fg = "DiagnosticError" },
         },
       },
-      quickfile = { enabled = false },
-      statuscolumn = { enabled = false },
-      toggle = { enabled = false },
-      win = { enabled = false },
     },
     keys = {
       {
