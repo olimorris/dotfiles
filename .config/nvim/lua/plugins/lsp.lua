@@ -36,30 +36,13 @@ return {
           completion = cmp.config.window.bordered(),
           documentation = cmp.config.window.bordered(),
         },
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
         mapping = cmp.mapping.preset.insert({
-          ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = false,
-          }),
-
-          -- Go to next placeholder in the snippet
-          ["<C-l>"] = cmp.mapping(function(fallback)
-            if luasnip.jumpable(1) then
-              luasnip.jump(1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          -- Go to previous placeholder in the snippet
-          ["<C-h>"] = cmp.mapping(function(fallback)
-            if luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-
-          -- Super tab
+          ["<CR>"] = cmp.mapping.confirm({ select = false }),
           ["<Tab>"] = cmp.mapping(function(fallback)
             local col = vim.fn.col(".") - 1
 
@@ -74,11 +57,27 @@ return {
             end
           end, { "i", "s" }),
 
-          -- Super shift tab
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item({ behavior = "select" })
             elseif luasnip.locally_jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+
+          -- Go to next placeholder in the snippet
+          ["<C-l>"] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(1) then
+              luasnip.jump(1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+          -- Go to previous placeholder in the snippet
+          ["<C-h>"] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(-1) then
               luasnip.jump(-1)
             else
               fallback()
