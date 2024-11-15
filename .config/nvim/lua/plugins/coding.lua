@@ -72,7 +72,9 @@ return {
         },
         display = {
           chat = {
-            render_headers = false,
+            show_references = true,
+            show_header_separator = false,
+            show_settings = false,
           },
           diff = {
             provider = "mini_diff",
