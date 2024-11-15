@@ -1,6 +1,13 @@
 -- Inspired by: https://github.com/folke/dot/blob/master/config/wezterm/tabs.lua
 local wezterm = require("wezterm")
 
+local function leader(window)
+  if window:leader_is_active() then
+    return " ! "
+  end
+  return ""
+end
+
 local function tabs(config)
   local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 
@@ -56,7 +63,7 @@ local function tabs(config)
       },
     },
     sections = {
-      tabline_a = { "" },
+      tabline_a = { leader },
       tabline_b = {},
       tabline_c = {},
       tab_active = { "index" .. "", { "process", padding = { left = 0, right = 1 } } },

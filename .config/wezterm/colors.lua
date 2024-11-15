@@ -10,6 +10,9 @@ local function get_color_scheme()
   local color = file:read("*a")
   file:close()
 
+  color = color:gsub("^%s*(.-)%s*$", "%1")
+  wezterm.log_info("Current color mode: " .. color)
+
   if color == "dark" then
     return "onedarkpro_onedark"
   end
@@ -17,9 +20,8 @@ local function get_color_scheme()
 end
 
 local function colors(config)
-  config.color_scheme_dirs = { wezterm.home_dir .. "/Code/Neovim/onedarkpro.nvim/extras/wezterm" }
+  config.color_scheme_dirs = { wezterm.home_dir .. "/.cache/nvim/onedarkpro_dotfiles/extras/wezterm" }
   config.color_scheme = get_color_scheme()
-  wezterm.add_to_config_reload_watch_list(config.color_scheme_dirs[1] .. "/" .. config.color_scheme .. ".toml")
 end
 
 return colors

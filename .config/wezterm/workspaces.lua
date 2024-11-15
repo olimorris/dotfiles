@@ -26,6 +26,8 @@ local function workspaces(config)
   wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(window, path, label)
     local workspace_state = resurrect.workspace_state
 
+    -- window:perform_action(wezterm.action.ReloadConfiguration, pane)
+
     workspace_state.restore_workspace(resurrect.load_state(label, "workspace"), {
       window = window,
       restore_text = true,
@@ -42,9 +44,36 @@ local function workspaces(config)
   table.insert(config.keys, { key = "w", mods = "CTRL", action = workspace_switcher.switch_workspace() })
   table.insert(config.keys, {
     key = "s",
-    mods = "ALT",
+    mods = "LEADER",
     action = wezterm.action_callback(function(win, pane)
+      wezterm.log_info("Saved workspace")
       resurrect.save_state(resurrect.workspace_state.get_workspace_state())
+    end),
+  })
+  table.insert(config.keys, {
+    key = "r",
+    mods = "LEADER",
+    action = wezterm.action_callback(function(win, pane)
+      resurrect.fuzzy_load(win, pane, function(id, label)
+        local type = string.match(id, "^([^/]+)") -- match before '/'
+        id = string.match(id, "([^/]+)$") -- match after '/'
+        id = string.match(id, "(.+)%..+$") -- remove file extention
+        local opts = {
+          relative = true,
+          restore_text = true,
+          on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+        }
+        if type == "workspace" then
+          local state = resurrect.load_state(id, "workspace")
+          resurrect.workspace_state.restore_workspace(state, opts)
+        elseif type == "window" then
+          local state = resurrect.load_state(id, "window")
+          resurrect.window_state.restore_window(pane:window(), state, opts)
+        elseif type == "tab" then
+          local state = resurrect.load_state(id, "tab")
+          resurrect.tab_state.restore_tab(pane:tab(), state, opts)
+        end
+      end)
     end),
   })
 end
