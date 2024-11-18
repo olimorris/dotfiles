@@ -48,7 +48,7 @@ return {
         desc = "Dismiss All Notifications",
       },
       {
-        "<Leader>gb",
+        "<LocalLeader>gb",
         function()
           Snacks.gitbrowse()
         end,
