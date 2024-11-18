@@ -3,8 +3,25 @@ return {
     "olimorris/onedarkpro.nvim",
     priority = 1000,
     opts = {
+      themes = {
+        vaporwave = "~/.config/nvim/lua/plugins/colors/vaporwave.lua",
+      },
       colors = {
-        dark = {
+        vaporwave = {
+          codeblock = "require('onedarkpro.helpers').lighten('bg', 2, 'vaporwave')",
+          statusline_bg = "require('onedarkpro.helpers').lighten('bg', 4, 'vaporwave')", -- gray
+          statuscolumn_border = "require('onedarkpro.helpers').lighten('bg', 4, 'vaporwave')", -- gray
+          ellipsis = "require('onedarkpro.helpers').lighten('bg', 4, 'vaporwave')", -- gray
+          telescope_prompt = "require('onedarkpro.helpers').darken('bg', 1, 'vaporwave')",
+          telescope_results = "require('onedarkpro.helpers').darken('bg', 4, 'vaporwave')",
+          telescope_preview = "require('onedarkpro.helpers').darken('bg', 6, 'vaporwave')",
+          telescope_selection = "require('onedarkpro.helpers').darken('bg', 8, 'vaporwave')",
+          copilot = "require('onedarkpro.helpers').darken('gray', 8, 'vaporwave')",
+          breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'vaporwave')",
+          local_highlight = "require('onedarkpro.helpers').lighten('bg', 4, 'vaporwave')",
+          light_gray = "require('onedarkpro.helpers').darken('gray', 7, 'vaporwave')",
+        },
+        onedark = {
           codeblock = "require('onedarkpro.helpers').lighten('bg', 2, 'onedark')",
           statusline_bg = "#2e323b", -- gray
           statuscolumn_border = "#4b5160", -- gray
@@ -172,7 +189,7 @@ return {
         VirtColumn = { fg = "${indentline}" },
       },
 
-      caching = true,
+      caching = false,
       cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
 
       plugins = {
@@ -208,7 +225,7 @@ return {
       if vim.o.background == "light" then
         vim.cmd([[colorscheme onelight]])
       else
-        vim.cmd([[colorscheme onedark]])
+        vim.cmd([[colorscheme vaporwave]])
       end
     end,
   },
