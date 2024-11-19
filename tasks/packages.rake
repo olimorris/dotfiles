@@ -63,10 +63,12 @@ namespace :install do
     section 'Installing Homebrew'
 
     run %( /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\" )
+    run %( echo >> /Users/$(whoami)/.zprofile)
+    run %( echo >> /Users/$(whoami)/.zprofile)
 
-    puts '~> Updating Homebrew directory permissions'
-    run %( sudo chown -R $(whoami) /usr/local/ )
-    run %( sudo chown -R $(whoami) /opt/homebrew/ )
+    # puts '~> Updating Homebrew directory permissions'
+    # run %( sudo chown -R $(whoami) /usr/local/ )
+    # run %( sudo chown -R $(whoami) /opt/homebrew/ )
 
     puts '~> Installing Homebrew taps'
     brew_taps.each do |tap|
