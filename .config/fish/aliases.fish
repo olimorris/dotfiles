@@ -77,8 +77,6 @@ alias essh='nvim ~/.ssh/config'
 alias chmodall='sudo chmod -R 0777'
 alias copyssh='pbcopy < ~/.ssh/$1'
 alias rk='pgrep kitty | xargs kill -SIGUSR1'
-alias dotbot='cd ~/.dotfiles && ./dotbot_install'
-alias dotup='cd ~/.dotfiles && git submodule update --remote dotbot'
 alias mssh='ruby ~/.dotfiles/commands/ssh.rb'
 alias sep='ruby ~/.dotfiles/commands/make_separator.rb'
 
