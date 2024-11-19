@@ -1,4 +1,4 @@
-FONT_PATH = File.expand_path('../misc/ui/fonts').gsub(/ /, '\ ')
+FONT_PATH = File.expand_path('misc/ui/fonts').gsub(/ /, '\ ')
 
 namespace :install do
   desc 'Make dotfiles/bin executable'
@@ -14,7 +14,8 @@ namespace :install do
 
     run %( echo $(which fish) | sudo tee -a /etc/shells )
     run %( chsh -s $(which fish) )
-    run %( curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher )
+
+    run %( curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher )
     run %( fisher list | fisher install )
   end
 
