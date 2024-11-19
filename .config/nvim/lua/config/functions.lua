@@ -141,6 +141,6 @@ function om.ToggleTheme(mode)
   if vim.o.background == "dark" then
     vim.cmd([[colorscheme onelight]])
   else
-    vim.cmd([[colorscheme onedark]])
+    vim.cmd([[colorscheme vaporwave]])
   end
 end
