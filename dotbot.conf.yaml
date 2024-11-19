@@ -16,6 +16,7 @@
     ~/.config/snippets: .config/snippets
     ~/.config/starship: .config/starship
     ~/.config/vivid: .config/vivid
+    ~/.config/wezterm: .config/wezterm
 
     # Launch Agents
     ~/Library/LaunchAgents/oli.cloud-backup.plist: LaunchAgents/oli.cloud-backup.plist

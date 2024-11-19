@@ -27,9 +27,7 @@
 !.config/zsh/**/*
 
 # Dotbot
-!dotbot/**/*
 !dotbot.conf.yaml
-!dotbot_install
 !dotbot_uninstall
 
 # Git

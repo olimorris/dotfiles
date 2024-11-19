@@ -59,7 +59,7 @@ namespace :install do
   task :dotfiles do
     section 'Using Dotbot to symlink dotfiles'
 
-    run %( ./dotbot_install )
+    run %( dotbot -c dotbot.conf.yaml )
   end
 end
 
@@ -71,16 +71,6 @@ namespace :uninstall do
   task :dotfiles do
     section 'Uninstall Dotbot and restoring dotfiles'
 
-    run %( ./dotbot_uninstall )
-  end
-end
-
-namespace :update do
-  desc 'Update Dotbot'
-  task :dotfiles do
-    section 'Updating Dotbot'
-
-    run %( ./dotbot_install )
-    run %( git submodule update --remote dotbot )
+    run %( python dotbot_uninstall )
   end
 end

@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-# Dotbot uninstall script
-# https://github.com/anishathalye/dotbot/wiki/Tips-and-Tricks#uninstall-script
 from __future__ import print_function
 
 import yaml
