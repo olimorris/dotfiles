@@ -26,6 +26,9 @@ done 2>/dev/null &
 # Disable automatically hiding menubar
 defaults write NSGlobalDomain _HIHideMenuBar -bool false
 
+# Show the analog clock in the menu bar
+defaults write com.apple.menuextra.clock IsAnalog -bool true
+
 # Set computer name (as done via System Preferences → Sharing)
 # sudo scutil --set ComputerName "Oli"
 # sudo scutil --set HostName "Oli"
