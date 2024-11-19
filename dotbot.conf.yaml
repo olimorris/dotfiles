@@ -11,6 +11,7 @@
     ~/.config/efm-langserver: .config/efm-langserver
     ~/.config/fish: .config/fish
     ~/.config/hammerspoon: .config/hammerspoon
+    ~/.config/mise: .config/mise
     ~/.config/nvim: .config/nvim
     ~/.config/rclone: .config/rclone
     ~/.config/snippets: .config/snippets
@@ -34,7 +35,6 @@
     ~/.gitignore_global: .config/git/.gitignore_global
     ~/.mackup: .config/mackup/.mackup
     ~/.mackup.cfg: .config/mackup/.mackup.cfg
-    ~/.mise.toml: .config/mise/.mise.toml
     ~/.profile: .config/bash/.profile
     ~/.pypirc: .config/.pypirc
     ~/.ssh: .config/ssh
