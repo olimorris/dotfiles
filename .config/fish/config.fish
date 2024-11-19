@@ -19,12 +19,12 @@ set fish_color_autosuggestion gray
 
 if [ "$macOS_Theme" = light ]
     set -x LS_COLORS "vivid generate $HOME/.config/vivid/onelight.yml"
-else if [ "$macOS_Theme" = dark ]
+else
     set -x LS_COLORS "vivid generate $HOME/.config/vivid/onedark.yml"
 end
 
 # Paths
-fish_add_path /opt/homebrew/bin/brew
+fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
 fish_add_path "$HOME/.cargo/bin"
 fish_add_path "$HOME/.dotfiles/bin"
