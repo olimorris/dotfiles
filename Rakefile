@@ -39,6 +39,10 @@ task :install do
   Rake::Task['install:brew_cask_packages'].invoke
   Rake::Task['install:brew_clean_up'].invoke
   Rake::Task['install:app_store'].invoke unless testing?
+
+  Rake::Task['install:servers'].invoke
+
+  # Packages
   Rake::Task['install:cargo'].invoke unless testing?
   Rake::Task['install:gems'].invoke unless testing?
   Rake::Task['install:npm'].invoke unless testing?
@@ -54,8 +58,6 @@ task :install do
   Rake::Task['install:fonts'].invoke
   Rake::Task['install:hammerspoon'].invoke
   Rake::Task['install:launch_agents'].invoke
-  Rake::Task['install:macos'].invoke
-  Rake::Task['install:servers'].invoke
 
   # Packages
   Rake::Task['install:gems'].invoke
@@ -66,6 +68,8 @@ task :install do
   Rake::Task['install:neovim'].invoke
   Rake::Task['install:rails'].invoke
   Rake::Task['install:vim'].invoke
+
+  Rake::Task['install:macos'].invoke
 end
 
 desc 'Update Everything'
@@ -80,9 +84,6 @@ task :update do
   Rake::Task['update:gems'].invoke
   Rake::Task['update:npm'].invoke
   Rake::Task['update:pip'].invoke
-
-  # Files
-  Rake::Task['update:dotfiles'].invoke
 
   # System
   Rake::Task['update:servers'].invoke
