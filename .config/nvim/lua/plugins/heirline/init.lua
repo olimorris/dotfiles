@@ -12,7 +12,7 @@ return {
 
           return conditions.buffer_matches({
             buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
-            filetype = { "alpha", "codecompanion", "oil", "lspinfo", "toggleterm" },
+            filetype = { "alpha", "codecompanion", "oil", "lspinfo", "snacks_dashboard", "toggleterm" },
           }, args.buf)
         end,
       },

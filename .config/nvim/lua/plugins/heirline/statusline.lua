@@ -684,6 +684,7 @@ return {
       "^neotest--summary$",
       "^neo--tree--popup$",
       "^NvimTree$",
+      "snacks_dashboard",
       "^toggleterm$",
     },
     force_inactive_filetypes = {

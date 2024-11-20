@@ -150,86 +150,133 @@ return {
     end,
   },
   {
-    "goolord/alpha-nvim", -- Dashboard for Neovim
-    priority = 5, -- Load after persisted.nvim
-    init = function()
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      styles = {
+        lazygit = {
+          width = 0,
+          height = 0,
+        },
+        notification = {
+          wo = { wrap = true }, -- Wrap notifications
+        },
+      },
+      bigfile = { enabled = true },
+      bufdelete = { enabled = true },
+      dashboard = {
+        enabled = true,
+        preset = {
+          keys = {
+            { icon = " ", key = "l", desc = "Load Session", action = ":lua require('persisted').load()" },
+            { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+            { icon = " ", key = "r", desc = "Recent Files", action = ":Telescope frecency workspace=CWD" },
+            { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+            { icon = "󱘣 ", key = "s", desc = "Search Files", action = ":lua Snacks.dashboard.pick('live_grep')" },
+            { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
+            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+          },
+        },
+        sections = {
+          {
+            section = "terminal",
+            cmd = "lolcat --seed=24 ~/.config/nvim/static/neovim.cat",
+            indent = -5,
+            height = 8,
+            width = 69,
+            padding = 1,
+          },
+          {
+            section = "keys",
+            indent = 1,
+            padding = 1,
+          },
+          { section = "startup" },
+        },
+      },
+      notifier = { enabled = true },
+      terminal = { enabled = true },
+      lazygit = {
+        theme = {
+          [241] = { fg = "Special" },
+          activeBorderColor = { fg = "String", bold = true },
+          cherryPickedCommitBgColor = { fg = "Identifier" },
+          cherryPickedCommitFgColor = { fg = "Function" },
+          defaultFgColor = { fg = "Normal" },
+          inactiveBorderColor = { fg = "FloatBorder" },
+          optionsTextColor = { fg = "Function" },
+          searchingActiveBorderColor = { fg = "String", bold = true },
+          selectedLineBgColor = { bg = "Visual" }, -- set to `default` to have no background colour
+          unstagedChangesColor = { fg = "DiagnosticError" },
+        },
+      },
+    },
+    keys = {
+      {
+        "<C-c>",
+        function()
+          Snacks.bufdelete()
+        end,
+        desc = "Delete Buffer",
+      },
+      {
+        "<Leader>u",
+        function()
+          Snacks.notifier.hide()
+        end,
+        desc = "Dismiss All Notifications",
+      },
+      {
+        "<LocalLeader>gb",
+        function()
+          Snacks.gitbrowse()
+        end,
+        desc = "Git Browse",
+      },
+      {
+        "<C-x>",
+        function()
+          Snacks.terminal.toggle()
+        end,
+        mode = { "n", "t" },
+        desc = "Toggle Terminal",
+      },
+    },
+    init = function(config)
+      local snacks = require("snacks")
+
+      local keymaps = {
+        {
+          "<Esc>",
+          "<C-\\><C-n>",
+          description = "Escape means escape in the terminal",
+          hide = true,
+          mode = { "t" },
+          opts = { nowait = true },
+        },
+      }
+
+      for _, direction in ipairs({ "h", "j", "k", "l" }) do
+        table.insert(keymaps, {
+          "<C-" .. direction .. ">",
+          "<C-" .. direction .. ">",
+          description = "Navigate in direction " .. direction,
+          mode = { "t" },
+          opts = { nowait = true },
+        })
+      end
+
+      require("legendary").keymaps(keymaps)
       require("legendary").commands({
         {
-          ":Alpha",
-          description = "Show the Alpha dashboard",
+          "LazyGit",
+          function()
+            snacks.lazygit()
+          end,
+          description = "Open LazyGit in a floating window",
         },
       })
-    end,
-    config = function()
-      local alpha = require("alpha")
-
-      require("alpha.term")
-      local dashboard = require("alpha.themes.dashboard")
-
-      -- Terminal header
-      dashboard.section.terminal.command = "cat | lolcat --seed=24 "
-        .. os.getenv("HOME")
-        .. "/.config/nvim/static/neovim.cat"
-      dashboard.section.terminal.width = 69
-      dashboard.section.terminal.height = 8
-
-      local function button(sc, txt, keybind, keybind_opts)
-        local b = dashboard.button(sc, txt, keybind, keybind_opts)
-        b.opts.hl = "AlphaButtonText"
-        b.opts.hl_shortcut = "AlphaButtonShortcut"
-        return b
-      end
-
-      dashboard.section.buttons.val = {
-        button("l", "   Load session", "<cmd>lua require('persisted').load()<CR>"),
-        button("n", "   New file", "<cmd>ene <BAR> startinsert <CR>"),
-        button("r", "   Recent files", "<cmd>Telescope frecency workspace=CWD<CR>"),
-        button("f", "   Find file", "<cmd>Telescope find_files hidden=true path_display=smart<CR>"),
-        button("s", "󱘣   Search files", "<cmd>Telescope live_grep path_display=smart<CR>"),
-        -- button("p", "   Projects", "<cmd>Telescope projects<CR>"),
-        button("u", "   Update plugins", "<cmd>lua require('lazy').sync()<CR>"),
-        button("q", "   Quit Neovim", "<cmd>qa!<CR>"),
-      }
-      dashboard.section.buttons.opts = {
-        spacing = 0,
-      }
-
-      -- Footer
-      local function footer()
-        local total_plugins = require("lazy").stats().count
-        local version = vim.version()
-        local nvim_version_info = "  Neovim v" .. version.major .. "." .. version.minor .. "." .. version.patch
-
-        return " " .. total_plugins .. " plugins" .. nvim_version_info
-      end
-
-      dashboard.section.footer.val = footer()
-      dashboard.section.footer.opts.hl = "AlphaFooter"
-
-      -- Layout
-      if om.on_big_screen() then
-        dashboard.config.layout = {
-          { type = "padding", val = 5 },
-          dashboard.section.terminal,
-          { type = "padding", val = 5 },
-          dashboard.section.buttons,
-          { type = "padding", val = 2 },
-          dashboard.section.footer,
-        }
-      else
-        dashboard.config.layout = {
-          { type = "padding", val = 1 },
-          dashboard.section.terminal,
-          { type = "padding", val = 2 },
-          dashboard.section.buttons,
-          { type = "padding", val = 1 },
-          dashboard.section.footer,
-        }
-      end
-
-      dashboard.config.opts.noautocmd = false
-
-      alpha.setup(dashboard.opts)
     end,
   },
 }

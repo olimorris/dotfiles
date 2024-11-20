@@ -99,19 +99,10 @@ return {
         AerialStructIcon = { fg = "${cyan}" },
         AerialVariableIcon = { fg = "${orange}" },
 
-        -- Alpha
-        AlphaHeader = {
-          fg = { dark = "${green}", light = "${red}" },
-        },
-        AlphaButtonText = {
-          fg = "${blue}",
-          bold = true,
-        },
-        AlphaButtonShortcut = {
-          fg = { dark = "${green}", light = "${yellow}" },
-          italic = true,
-        },
-        AlphaFooter = { fg = "${gray}", italic = true },
+        -- Dashboard
+        SnacksDashboardDesc = { fg = "${blue}", bold = true },
+        SnacksDashboardKey = { fg = "${orange}", bold = true, italic = true },
+        SnacksDashboardIcon = { fg = "${blue}" },
 
         -- Cmp
         CmpItemAbbrMatch = { fg = "${blue}", bold = true },
