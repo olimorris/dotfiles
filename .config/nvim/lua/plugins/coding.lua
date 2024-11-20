@@ -55,6 +55,13 @@ return {
         },
         strategies = {
           chat = {
+            keymaps = {
+              send = {
+                modes = {
+                  i = { "<C-CR>", "<C-s>" },
+                },
+              },
+            },
             roles = { llm = "CodeCompanion", user = "olimorris" },
             slash_commands = {
               ["buffer"] = {
