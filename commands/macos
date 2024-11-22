@@ -23,6 +23,16 @@ done 2>/dev/null &
 # General UI/UX                                                               #
 ###############################################################################
 
+# Disable Spotlight indexing
+sudo mdutil -a -i off
+
+# Disable Spotlight menu item
+sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes" "/System" "/Library" "/Applications" "/Network" "/Users" "/bin" "/cores" "/etc" "/opt" "/private" "/sbin" "/tmp" "/usr"
+sudo defaults write com.apple.Spotlight MenuItemHidden -bool true
+
+# Stop the Spotlight service
+sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist
+
 # Disable automatically hiding menubar
 defaults write NSGlobalDomain _HIHideMenuBar -bool false
 
@@ -30,10 +40,13 @@ defaults write NSGlobalDomain _HIHideMenuBar -bool false
 defaults write com.apple.menuextra.clock IsAnalog -bool true
 
 # Set computer name (as done via System Preferences → Sharing)
-# sudo scutil --set ComputerName "Oli"
-# sudo scutil --set HostName "Oli"
-# sudo scutil --set LocalHostName "Oli"
-# sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "Oli"
+echo "Please enter the desired name for the computer:"
+read computer_name
+
+sudo scutil --set ComputerName "$computer_name"
+sudo scutil --set HostName "$computer_name"
+sudo scutil --set LocalHostName "$computer_name"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$computer_name"
 
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
