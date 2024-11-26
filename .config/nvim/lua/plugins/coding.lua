@@ -12,6 +12,10 @@ return {
   },
   {
     "olimorris/codecompanion.nvim",
+    dependencies = {
+      { "echasnovski/mini.pick", config = true },
+      { "ibhagwan/fzf-lua", config = true },
+    },
     config = function()
       require("codecompanion").setup({
         adapters = {
@@ -43,6 +47,13 @@ return {
               env = {
                 api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
               },
+              schema = {
+                model = {
+                  default = function()
+                    return "o1-preview"
+                  end,
+                },
+              },
             })
           end,
           xai = function()
@@ -69,7 +80,17 @@ return {
                   provider = "telescope",
                 },
               },
+              ["help"] = {
+                opts = {
+                  provider = "telescope",
+                },
+              },
               ["file"] = {
+                opts = {
+                  provider = "telescope",
+                },
+              },
+              ["symbols"] = {
                 opts = {
                   provider = "telescope",
                 },
@@ -78,6 +99,9 @@ return {
           },
         },
         display = {
+          action_palette = {
+            provider = "default",
+          },
           chat = {
             show_references = true,
             show_header_separator = false,
