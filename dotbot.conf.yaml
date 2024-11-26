@@ -43,7 +43,3 @@
     ~/.vimrc: .config/vim/.vimrc
     ~/.vimrc.plugins: .config/vim/.vimrc.plugins
     ~/.local/share/fish/fish_history: .config/fish/fish_history
-
-
-- shell:
-    - [git submodule update --init --recursive, Installing submodules]
