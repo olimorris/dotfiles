@@ -1,1 +1,9 @@
+dotbot==1.20.1
+greenlet==3.1.1
+msgpack==1.1.0
+neovim-remote==2.5.1
+psutil==6.1.0
 pygame==2.6.1
+pynvim==0.5.2
+PyYAML==6.0.2
+setuptools==75.6.0

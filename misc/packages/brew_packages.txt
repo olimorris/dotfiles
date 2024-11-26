@@ -21,7 +21,6 @@ go
 gradle
 hledger
 httpie
-icu4c@75
 jython
 lazygit
 ledger

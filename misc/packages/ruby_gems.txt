@@ -102,6 +102,7 @@ tsort
 typeprof
 un
 unicode-display_width
+unicode-emoji
 uri
 weakref
 yaml
