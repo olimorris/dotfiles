@@ -10,8 +10,6 @@ end
 
 om.nightly = om.has("nvim-0.11")
 
-local terminals = {}
-
 ---Determine if you're on an external monitor
 ---@return boolean
 function om.on_big_screen()
