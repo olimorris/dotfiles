@@ -7,11 +7,11 @@ local function workspaces(config)
   resurrect.set_encryption({
     enable = true,
     method = "/opt/homebrew/bin/age",
-    private_key = wezterm.home_dir .. "/.dotfiles/.config/wezterm/encryption_key.txt",
+    private_key = wezterm.home_dir .. "/.config/wezterm/encryption_key.txt",
     public_key = "age1pdme0zrvsp4rphlfuc82lnfdm6gkyuakzajkp7veclk9qckz4ccsevud0w",
   })
-  resurrect.periodic_save()
-  resurrect.set_max_nlines(1000)
+  resurrect.periodic_save({ interval_seconds = 900 })
+  resurrect.set_max_nlines(200)
 
   workspace_switcher.workspace_formatter = function(label)
     return wezterm.format({
@@ -56,8 +56,8 @@ local function workspaces(config)
     action = wezterm.action_callback(function(win, pane)
       resurrect.fuzzy_load(win, pane, function(id, label)
         local type = string.match(id, "^([^/]+)") -- match before '/'
-        id = string.match(id, "([^/]+)$") -- match after '/'
-        id = string.match(id, "(.+)%..+$") -- remove file extention
+        id = string.match(id, "([^/]+)$")         -- match after '/'
+        id = string.match(id, "(.+)%..+$")        -- remove file extention
         local opts = {
           relative = true,
           restore_text = true,
