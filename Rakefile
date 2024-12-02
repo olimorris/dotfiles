@@ -109,3 +109,17 @@ task :uninstall do
 
   Rake::Task['uninstall:dotfiles'].invoke
 end
+
+desc "Sync'ing personal and work settings"
+task :work do
+    task :restore do
+      section "Cloud -> Work Mac"
+
+      Rake::Task['work:restore:files'].invoke
+    end
+    task :backup do
+      section "Work Mac -> Cloud"
+
+      Rake::Task['work:backup:files'].invoke
+    end
+end

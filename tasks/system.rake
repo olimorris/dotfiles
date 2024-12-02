@@ -12,11 +12,11 @@ namespace :install do
   task :fish do
     section 'Installing Fish shell and plugins'
 
-    run %( echo $(which fish) | sudo tee -a /etc/shells )
-    run %( chsh -s $(which fish) )
+    # run %( echo $(which fish) | sudo tee -a /etc/shells )
+    # run %( chsh -s $(which fish) )
 
     run %( curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher )
-    run %( fisher list | fisher install )
+    run %( fisher update )
   end
 
   desc 'Install fonts'
