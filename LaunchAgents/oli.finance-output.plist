@@ -4,24 +4,24 @@
 <dict>
 	<key>Disabled</key>
 	<false/>
-	<key>KeepAlive</key>
-	<true/>
 	<key>Label</key>
 	<string>oli.finance-output</string>
 	<key>Program</key>
 	<string>/Users/Oli/.dotfiles/bin/finance-output</string>
 	<key>RunAtLoad</key>
-	<true/>
+	<false/>
 	<key>StandardErrorPath</key>
 	<string>/Users/Oli/.finance-output-stderr.log</string>
 	<key>StandardOutPath</key>
 	<string>/Users/Oli/.finance-output-stdout.log</string>
 	<key>StartCalendarInterval</key>
-	<dict>
-		<key>Hour</key>
-		<integer>19</integer>
-		<key>Minute</key>
-		<integer>45</integer>
-	</dict>
+	<array>
+		<dict>
+			<key>Hour</key>
+			<integer>19</integer>
+			<key>Minute</key>
+			<integer>45</integer>
+		</dict>
+	</array>
 </dict>
 </plist>
