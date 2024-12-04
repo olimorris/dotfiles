@@ -1,6 +1,6 @@
 local hyper = Hyper
 local host = require("hs.host")
-local on_personal = host.names()[1] == "Oli"
+local on_personal = host.names()[1] == "olis-macbook-pro.local"
 
 ------------------------------- APP LAUNCH/TOGGLE ------------------------------
 --[[
