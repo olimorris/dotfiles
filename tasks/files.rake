@@ -18,7 +18,7 @@ namespace :backup do
     section 'Using RCLONE to backup files'
 
     dirs = {
-      '.dotfiles' => "#{ENV['STORAGE_FOLDER']}:dotfiles",
+      '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles",
       'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code",
       'OliDocs' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Documents",
       'Downloads' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Downloads",
