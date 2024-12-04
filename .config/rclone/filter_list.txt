@@ -13,8 +13,6 @@
 - .yarn/
 - __pycache__/
 - *.pyc
-- .env
-- .venv/
 - dist/
 - build/
 - .next/
