@@ -25,7 +25,7 @@ require("lazy").setup({
   dev = {
     path = "~/Code/Neovim",
     -- Only load my local plugins when we're on my machine
-    patterns = (jit.os == "OSX" and vim.fn.hostname() == "Oli") and { "olimorris" } or {},
+    patterns = (jit.os == "OSX") and { "olimorris" } or {},
   },
   checker = {
     enabled = true,
