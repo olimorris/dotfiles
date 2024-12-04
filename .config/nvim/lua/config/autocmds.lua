@@ -139,10 +139,12 @@ return {
     {
       { "VimEnter" },
       function()
-        local timer = vim.loop.new_timer()
-        timer:start(0, 120000, function()
-          om.GitRemoteSync()
-        end)
+        if _G.om.on_personal then
+          local timer = vim.loop.new_timer()
+          timer:start(0, 120000, function()
+            om.GitRemoteSync()
+          end)
+        end
       end,
       opts = {
         pattern = { "*" },
