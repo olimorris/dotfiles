@@ -1,6 +1,6 @@
 {
-  "Print table (safe)": {
+  "Print table": {
     "prefix": ["pp"],
-    "body": ["require('pl.pretty').dump($0)"]
+    "body": ["print(vim.inspect($0))"]
   }
 }
