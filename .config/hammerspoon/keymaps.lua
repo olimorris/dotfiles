@@ -1,4 +1,6 @@
 local hyper = Hyper
+local host = require("hs.host")
+local on_personal = host.names()[1] == "Oli"
 
 ------------------------------- APP LAUNCH/TOGGLE ------------------------------
 --[[
@@ -7,19 +9,27 @@ local hyper = Hyper
   this, a table can be passed which contains the app name followed by the filename
 ]]
 local apps = {
-  b = "Safari", -- Browser
   c = "Code", -- VS Code
   e = "Microsoft Excel",
   f = "Finder",
   g = "Google Chrome",
   n = "Bear", -- Notes
   o = "Notion", -- Life OS
-  p = "1Password",
   r = "Reminders",
   t = "WezTerm", -- Terminal
-  w = "Microsoft Word",
-  -- z = RESERVED
 }
+
+if on_personal then
+  apps.b = "Safari" -- Browser
+  apps.p = "1Password"
+  apps.w = "Microsoft Word"
+else
+  apps.b = "Google Chrome" -- Browser
+  apps.m = "Microsoft Outlook" -- Mail
+  apps.p = "Microsoft PowerPoint"
+  apps.w = "Windows App"
+  apps.z = "Zoom"
+end
 
 local LaunchOrToggle = function(key, app_name, app_filename)
   hs.hotkey.bind(hyper, key, function()
