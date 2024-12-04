@@ -1,21 +1,11 @@
 return {
   "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
   {
-    "echasnovski/mini.diff",
-    config = function()
-      local diff = require("mini.diff")
-      diff.setup({
-        -- Disabled by default
-        source = diff.gen_source.none(),
-      })
-    end,
-  },
-  {
-    "olimorris/codecompanion.nvim",
-    dependencies = {
-      { "echasnovski/mini.pick", config = true },
-      { "ibhagwan/fzf-lua", config = true },
-    },
+    "olimorris/codecompanion.nvim", -- The KING of AI programming
+    -- dependencies = {
+    --   { "echasnovski/mini.pick", config = true },
+    --   { "ibhagwan/fzf-lua", config = true },
+    -- },
     config = function()
       require("codecompanion").setup({
         adapters = {
@@ -72,6 +62,11 @@ return {
                   i = { "<C-CR>", "<C-s>" },
                 },
               },
+              completion = {
+                modes = {
+                  i = "<C-x>",
+                },
+              },
             },
             roles = { llm = "CodeCompanion", user = "olimorris" },
             slash_commands = {
@@ -112,7 +107,7 @@ return {
           },
         },
         opts = {
-          log_level = "DEBUG",
+          log_level = "TRACE",
         },
       })
     end,
@@ -148,7 +143,22 @@ return {
     end,
   },
   {
-    "folke/ts-comments.nvim",
+    "echasnovski/mini.test", -- Testing framework for Neovim
+    config = true,
+  },
+  {
+    "echasnovski/mini.diff", -- Inline and better diff over the default
+    config = function()
+      local diff = require("mini.diff")
+      diff.setup({
+        -- Disabled by default
+        source = diff.gen_source.none(),
+      })
+    end,
+  },
+
+  {
+    "folke/ts-comments.nvim", -- Enhance Neovim's native comments
     opts = {},
     event = "VeryLazy",
   },
