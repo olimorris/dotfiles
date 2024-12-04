@@ -6,7 +6,7 @@ namespace :work do
 
       dirs = {
         # '.dotfiles' => "#{ENV['STORAGE_FOLDER']}:dotfiles",
-        'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code",
+        'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code"
       }
 
       flag = ' -P' if args[:progress]
