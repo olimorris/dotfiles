@@ -31,12 +31,6 @@ source $HOME/.config/fish/functions.fish
 
 if status is-interactive
     load_env_vars ~/.env
-
-    # Cache zoxide init output
-    source ~/.cache/zoxide.fish 2>/dev/null; or begin
-        zoxide init fish > ~/.cache/zoxide.fish
-        source ~/.cache/zoxide.fish
-    end
-
+    zoxide init fish | source
     starship init fish | source
 end
