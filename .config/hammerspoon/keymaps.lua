@@ -9,7 +9,6 @@ local on_personal = host.names()[1] == "olis-macbook-pro.local"
   this, a table can be passed which contains the app name followed by the filename
 ]]
 local apps = {
-  c = "Code", -- VS Code
   e = "Microsoft Excel",
   f = "Finder",
   g = "Google Chrome",
@@ -20,10 +19,12 @@ local apps = {
 }
 
 if on_personal then
+  apps.c = "Code" -- VS Code
   apps.b = "Safari" -- Browser
   apps.p = "1Password"
   apps.w = "Microsoft Word"
 else
+  apps.c = "Teams" -- Chat
   apps.b = "Google Chrome" -- Browser
   apps.m = "Microsoft Outlook" -- Mail
   apps.p = "Microsoft PowerPoint"
