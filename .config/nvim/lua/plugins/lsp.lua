@@ -11,12 +11,13 @@ return {
     dependencies = {
       {
         "saghen/blink.cmp", -- Better completion
+        version = "*",
         lazy = false,
         dependencies = {
+          "giuxtaposition/blink-cmp-copilot",
           "rafamadriz/friendly-snippets",
           "L3MON4D3/LuaSnip",
         },
-        build = "cargo build --release",
         opts = {
           -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
           keymap = {
@@ -40,6 +41,10 @@ return {
           -- experimental auto-brackets support
           accept = { auto_brackets = { enabled = true } },
 
+          enabled = function()
+            return not vim.tbl_contains({ "DressingInput", "TelescopePrompt" }, vim.bo.filetype)
+          end,
+
           snippets = {
             expand = function(snippet)
               require("luasnip").lsp_expand(snippet)
@@ -58,15 +63,18 @@ return {
           -- experimental signature help support
           -- trigger = { signature_help = { enabled = true } }
           sources = {
-            compat = {},
             completion = {
-              enabled_providers = { "lsp", "path", "luasnip", "buffer", "codecompanion" },
+              enabled_providers = { "lsp", "path", "luasnip", "buffer", "copilot", "codecompanion" },
             },
             providers = {
               codecompanion = {
                 name = "CodeCompanion",
                 module = "codecompanion.providers.completion.blink",
                 enabled = true, -- Whether or not to enable the provider
+              },
+              copilot = {
+                name = "copilot",
+                module = "blink-cmp-copilot",
               },
             },
           },
