@@ -132,24 +132,6 @@ return {
     },
   },
   {
-    "lukas-reineke/indent-blankline.nvim", -- Show indentation lines
-    config = function()
-      require("ibl").setup({
-        indent = {
-          char = "│",
-        },
-        scope = {
-          highlight = "IblIndent",
-          show_end = false,
-          show_start = false,
-        },
-      })
-
-      local hooks = require("ibl.hooks")
-      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
-    end,
-  },
-  {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
@@ -195,6 +177,10 @@ return {
           { section = "startup" },
         },
       },
+      indent = {
+        enabled = true,
+        scope = { enabled = false },
+      },
       notifier = { enabled = true },
       terminal = { enabled = true },
       lazygit = {
@@ -221,9 +207,9 @@ return {
         desc = "Delete Buffer",
       },
       {
-        "<Leader>u",
+        "<Leader>h",
         function()
-          Snacks.notifier.hide()
+          Snacks.notifier.show_history()
         end,
         desc = "Dismiss All Notifications",
       },
