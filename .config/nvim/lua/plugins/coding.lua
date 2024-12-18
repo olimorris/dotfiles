@@ -78,6 +78,7 @@ return {
               ["help"] = {
                 opts = {
                   provider = "telescope",
+                  max_lines = 1000,
                 },
               },
               ["file"] = {
@@ -92,6 +93,7 @@ return {
               },
             },
           },
+          inline = { adapter = "copilot" },
         },
         display = {
           action_palette = {
@@ -254,9 +256,7 @@ return {
       })
     end,
     opts = {
-      panel = {
-        auto_refresh = true,
-      },
+      panel = { enabled = false },
       suggestion = {
         auto_trigger = true, -- Suggest as we start typing
         keymap = {
