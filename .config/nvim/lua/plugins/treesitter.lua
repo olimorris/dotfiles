@@ -6,6 +6,31 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
       {
         "JoosepAlviste/nvim-ts-context-commentstring", -- Smart commenting in multi language files - Enabled in Treesitter file
+        config = true,
+      },
+      {
+        "aaronik/treewalker.nvim", -- Navigate Tree-sitter nodes
+        keys = {
+          {
+            "<A-j>",
+            function()
+              require("treewalker").move_down()
+            end,
+            desc = "Treewalker: Down",
+            mode = { "n" },
+          },
+          {
+            "<A-k>",
+            function()
+              require("treewalker").move_up()
+            end,
+            desc = "Treewalker: Up",
+            mode = { "n" },
+          },
+        },
+        opts = {
+          highlight = true,
+        },
       },
       {
         "windwp/nvim-ts-autotag", -- Autoclose and autorename HTML and Vue tags
