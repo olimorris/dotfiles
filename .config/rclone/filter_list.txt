@@ -20,3 +20,4 @@
 - .Trash/
 - .Spotlight-V100/
 - .fseventsd/
+- .repro/
