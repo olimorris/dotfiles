@@ -4,82 +4,133 @@ local icons = {
   [vim.diagnostic.severity.INFO] = "",
   [vim.diagnostic.severity.HINT] = "",
 }
+
 return {
+  -- Completion
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/cmp-nvim-lua",
+      "lukas-reineke/cmp-under-comparator",
+    },
+    config = function()
+      local luasnip = require("luasnip")
+      require("luasnip.loaders.from_vscode").lazy_load()
+      vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
+      local cmp = require("cmp")
+      cmp.setup({
+        formatting = {
+          fields = { "abbr", "kind", "menu" },
+          format = require("lspkind").cmp_format({
+            mode = "symbol", -- show only symbol annotations
+            maxwidth = 50, -- prevent the popup from showing more than provided characters
+            ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
+          }),
+        },
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<CR>"] = cmp.mapping.confirm({ select = false }),
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            local col = vim.fn.col(".") - 1
+
+            if cmp.visible() then
+              cmp.select_next_item({ behavior = "select" })
+            elseif luasnip.expand_or_locally_jumpable() then
+              luasnip.expand_or_jump()
+            elseif col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
+              fallback()
+            else
+              cmp.complete()
+            end
+          end, { "i", "s" }),
+
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item({ behavior = "select" })
+            elseif luasnip.locally_jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+
+          -- Go to next placeholder in the snippet
+          ["<C-l>"] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(1) then
+              luasnip.jump(1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+          -- Go to previous placeholder in the snippet
+          ["<C-h>"] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+        }),
+        sources = {
+          { name = "luasnip", priority = 100, max_item_count = 5 },
+          { name = "nvim_lsp", priority = 90 },
+          { name = "path", priority = 20 },
+          { name = "buffer", priority = 10, keyword_length = 3, max_item_count = 8 },
+          { name = "nvim_lua" },
+          { name = "nvim_lsp_signature_help" },
+        },
+      })
+
+      cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = "path" },
+          {
+            name = "cmdline",
+            option = {
+              ignore_cmds = { "Man", "!" },
+            },
+          },
+        }),
+        sorting = {
+          comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.recently_used,
+            require("cmp-under-comparator").under,
+            cmp.config.compare.kind,
+          },
+        },
+      })
+
+      cmp.setup.cmdline("/", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = "buffer" },
+        },
+      })
+    end,
+  },
+
   -- LSP
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      {
-        "saghen/blink.cmp", -- Better completion
-        version = "*",
-        lazy = false,
-        dependencies = {
-          "giuxtaposition/blink-cmp-copilot",
-          "rafamadriz/friendly-snippets",
-          "L3MON4D3/LuaSnip",
-        },
-        opts = {
-          -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
-          keymap = {
-            preset = "enter",
-            ["<S-Tab>"] = { "select_prev", "fallback" },
-            ["<Tab>"] = { "select_next", "fallback" },
-            -- ["<CR>"] = { "accept", "fallback" },
-            -- ["<C-e>"] = { "hide", "fallback" },
-            -- ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-            -- ["<Tab>"] = { "snippet_forward", "fallback" },
-            -- ["<S-Tab>"] = { "snippet_backward", "fallback" },
-            -- ["<Up>"] = { "select_prev", "fallback" },
-            -- ["<Down>"] = { "select_next", "fallback" },
-            -- ["<C-b>"] = { "scroll_documentation_up", "fallback" },
-            -- ["<C-f>"] = { "scroll_documentation_down", "fallback" },
-          },
-
-          highlight = {
-            use_nvim_cmp_as_default = false,
-          },
-          -- experimental auto-brackets support
-          accept = { auto_brackets = { enabled = true } },
-
-          enabled = function()
-            return not vim.tbl_contains({ "DressingInput", "TelescopePrompt" }, vim.bo.filetype)
-          end,
-
-          snippets = {
-            expand = function(snippet)
-              require("luasnip").lsp_expand(snippet)
-            end,
-            active = function(filter)
-              if filter and filter.direction then
-                return require("luasnip").jumpable(filter.direction)
-              end
-              return require("luasnip").in_snippet()
-            end,
-            jump = function(direction)
-              require("luasnip").jump(direction)
-            end,
-          },
-
-          -- experimental signature help support
-          -- trigger = { signature_help = { enabled = true } }
-          sources = {
-            completion = {
-              enabled_providers = { "lsp", "path", "luasnip", "buffer", "copilot", "codecompanion" },
-            },
-            providers = {
-              codecompanion = {
-                name = "CodeCompanion",
-                module = "codecompanion.providers.completion.blink",
-                enabled = true, -- Whether or not to enable the provider
-              },
-              copilot = {
-                name = "copilot",
-                module = "blink-cmp-copilot",
-              },
-            },
-          },
-        },
-      },
+      { "hrsh7th/cmp-nvim-lsp" },
       {
         "williamboman/mason.nvim",
         build = function()
@@ -94,21 +145,19 @@ return {
       },
       { "williamboman/mason-lspconfig.nvim" },
     },
-    config = function(_, opts)
+    config = function()
       require("lspconfig.ui.windows").default_options.border = "single"
-      require("luasnip.loaders.from_vscode").lazy_load({ paths = { "~/.config/snippets" } })
+      vim.o.runtimepath = vim.o.runtimepath .. ",~/.dotfiles/.config/snippets"
 
       require("ufo").setup()
-      local has_blink, blink = pcall(require, "blink.cmp")
-      local capabilities =
-        vim.tbl_deep_extend("force", has_blink and blink.get_lsp_capabilities() or {}, opts.capabilities or {}, {
-          textDocument = {
-            foldingRange = {
-              dynamicRegistration = false,
-              lineFoldingOnly = true,
-            },
+      local capabilities = vim.tbl_deep_extend("force", require("cmp_nvim_lsp").default_capabilities(), {
+        textDocument = {
+          foldingRange = {
+            dynamicRegistration = false,
+            lineFoldingOnly = true,
           },
-        })
+        },
+      })
 
       local lspconfig_defaults = require("lspconfig").util.default_config
       lspconfig_defaults.capabilities = vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, capabilities)
@@ -353,6 +402,10 @@ return {
       })
     end,
   },
+
+  -- Code snippets
+  "L3MON4D3/LuaSnip",
+  "rafamadriz/friendly-snippets",
 
   -- Diagnostic signs
   {
