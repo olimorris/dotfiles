@@ -12,7 +12,7 @@ return {
     dependencies = {
       {
         "saghen/blink.cmp", -- Better completion
-        build = "cargo build --release",
+        version = "*",
         dependencies = {
           "giuxtaposition/blink-cmp-copilot",
           "rafamadriz/friendly-snippets",
@@ -50,8 +50,6 @@ return {
             end,
           },
 
-          -- experimental signature help support
-          -- trigger = { signature_help = { enabled = true } }
           sources = {
             default = { "lsp", "path", "luasnip", "buffer", "copilot", "codecompanion" },
             providers = {
