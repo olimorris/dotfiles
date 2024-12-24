@@ -46,7 +46,7 @@
 !misc/packages/**/*
 !tasks/**/*
 !tests/**/*
-!LaunchAgents/**/*
+!misc/LaunchAgents/**/*
 
 # Other files
 !.tool-versions

@@ -20,9 +20,9 @@
     ~/.config/wezterm: .config/wezterm
 
     # Launch Agents
-    ~/Library/LaunchAgents/oli.cloud-backup.plist: LaunchAgents/oli.cloud-backup.plist
-    ~/Library/LaunchAgents/oli.color-mode-notify.plist: LaunchAgents/oli.color-mode-notify.plist
-    ~/Library/LaunchAgents/oli.finance-output.plist: LaunchAgents/oli.finance-output.plist
+    ~/Library/LaunchAgents/oli.cloud-backup.plist: misc/LaunchAgents/oli.cloud-backup.plist
+    ~/Library/LaunchAgents/oli.color-mode-notify.plist: misc/LaunchAgents/oli.color-mode-notify.plist
+    ~/Library/LaunchAgents/oli.finance-output.plist: misc/LaunchAgents/oli.finance-output.plist
 
     # Others
     ~/.applescript: .config/applescript
