@@ -76,39 +76,52 @@ def app_neovim(mode):
     Change the Neovim color scheme
     """
     from pynvim import attach
+    import socket
 
     nvim_config = nvim_path + "/lua/config/options.lua"
 
-    # Open the neovim file
-    with open(os.path.expanduser(nvim_config), "r") as config_file:
-        nvim_contents = config_file.read()
+    # File operations with error handling
+    try:
+        with open(os.path.expanduser(nvim_config), "r") as config_file:
+            nvim_contents = config_file.read()
 
-    # Change the mode to ensure on a fresh startup, the color is remembered
-    if mode == "dark":
-        nvim_contents = nvim_contents.replace(
-            'vo.background = "light"', 'vo.background = "dark"'
+        if mode == "dark":
+            nvim_contents = nvim_contents.replace(
+                'vo.background = "light"', 'vo.background = "dark"'
+            )
+        if mode == "light":
+            nvim_contents = nvim_contents.replace(
+                'vo.background = "dark"', 'vo.background = "light"'
+            )
+
+        with open(os.path.expanduser(nvim_config), "w") as config_file:
+            config_file.write(nvim_contents)
+    except IOError as e:
+        print(f"Error accessing nvim config: {e}")
+        return
+
+    # Get the neovim servers with timeout
+    try:
+        servers = subprocess.run(
+            ["nvr", "--serverlist"], stdout=subprocess.PIPE, timeout=3
         )
+        servers = servers.stdout.splitlines()
+    except subprocess.TimeoutExpired:
+        print("Timeout while getting nvim server list")
+        return
+    except subprocess.SubprocessError as e:
+        print(f"Error getting nvim server list: {e}")
+        return
 
-    if mode == "light":
-        nvim_contents = nvim_contents.replace(
-            'vo.background = "dark"', 'vo.background = "light"'
-        )
-
-    with open(os.path.expanduser(nvim_config), "w") as config_file:
-        config_file.write(nvim_contents)
-
-    # Now begin changing our open Neovim instances
-
-    # Get the neovim servers using neovim-remote
-    servers = subprocess.run(["nvr", "--serverlist"], stdout=subprocess.PIPE)
-    servers = servers.stdout.splitlines()
-
-    # Loop through them and change the theme by calling our custom Lua code
+    # Loop through servers with timeout for each connection
     for server in servers:
         try:
+            socket.setdefaulttimeout(2)
             nvim = attach("socket", path=server)
             nvim.command("call v:lua.om.ToggleTheme('" + mode + "')")
-        except:
+            nvim.close()  # Important: close the connection
+        except Exception as e:
+            print(f"Error with nvim instance {server}: {e}")
             continue
 
     return
@@ -135,14 +148,16 @@ def get_mode():
     """
     Determine what mode macOS is currently in
     """
-    mode = subprocess.run(
-        ["defaults", "read", "-g", "AppleInterfaceStyle", ">/dev/null"],
-        capture_output=True,
-    )
-    if mode.returncode == 1:
-        return "light"
-    else:
+    try:
+        subprocess.run(
+            ["defaults", "read", "-g", "AppleInterfaceStyle"],
+            capture_output=True,
+            check=True,
+            timeout=5,
+        )
         return "dark"
+    except subprocess.CalledProcessError:
+        return "light"
 
 
 if __name__ == "__main__":
