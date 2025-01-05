@@ -3,7 +3,7 @@
 def get_reckon_command(input_file, choice)
   case choice
   when '1' # Monzo
-    "reckon -f #{input_file} -o output_monzo.journal -c £ -a Assets:Monzo --ignore-columns 1,4,5,6,8,10,11 --money-column 2 --contains-header 1 -t tokens.yaml -l transactions.journal"
+    "reckon -f #{input_file} -o output_monzo.journal -c £ -a Assets:Monzo --ignore-columns 1,4,5,6,8,10,11,12 --money-column 3 --date-column 2 --contains-header 1 -t tokens.yaml -l transactions.journal"
   when '2' # Amex
     "reckon -f #{input_file} -o output_amex.journal -i -c £ -a Liabilities:Amex --money-column 3 --date-column 1 --contains-header 1 -t tokens.yaml -l transactions.journal"
   else
