@@ -1,9 +1,14 @@
-dotbot==1.20.1
-greenlet==3.1.1
-msgpack==1.1.0
-neovim-remote==2.5.1
-psutil==6.1.0
-pygame==2.6.1
-pynvim==0.5.2
-PyYAML==6.0.2
-setuptools==75.6.0
+certifi==2024.12.14
+gpg==1.24.1
+numpy==2.2.1
+packaging==24.2
+PyQt6==6.7.1
+PyQt6-3D==6.7.0
+PyQt6-Charts==6.7.0
+PyQt6-DataVisualization==6.7.0
+PyQt6-NetworkAuth==6.7.0
+PyQt6-WebEngine==6.7.0
+PyQt6_sip==13.8.0
+pywatchman==2.0.0
+TBB==0.2
+wheel @ file:///opt/homebrew/Cellar/python%403.13/3.13.1/libexec/wheel-0.45.1-py3-none-any.whl#sha256=da46333d5dcbde6e20cf7e2f8fff9e9ce76e8c94dc4afd6fb95fc4bc2745fb5e
