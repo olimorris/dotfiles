@@ -4,6 +4,59 @@ local conceal_ns = vim.api.nvim_create_namespace("ConcealClassAttribute")
 ---REF: https://github.com/mrjones2014/legendary.nvim/blob/master/doc/table_structures/AUTOCMDS.md
 return {
   {
+    -- Watch for changes in ~/.color_mode
+    name = "ChangeColorScheme",
+    {
+      "VimEnter",
+      function()
+        local uv = vim.uv
+        local handle = uv.new_fs_event()
+
+        local path = vim.fn.expand("~/.color_mode")
+
+        local flags = {
+          watch_entry = false, -- true = when dir, watch dir inode, not dir content
+          stat = false, -- true = don't use inotify/kqueue but periodic check, not implemented
+          recursive = false, -- true = watch dirs inside dirs
+        }
+
+        local function set_mode(mode)
+          vim.opt.background = mode or "dark"
+
+          if mode == "light" then
+            vim.cmd([[colorscheme onelight]])
+          else
+            vim.cmd([[colorscheme vaporwave]])
+          end
+
+          local utils = require("heirline.utils")
+          utils.on_colorscheme(require("onedarkpro.helpers").get_colors())
+        end
+
+        local function read_file(file)
+          local fd = assert(uv.fs_open(file, "r", 438))
+          local stat = assert(uv.fs_fstat(fd))
+          local data = assert(uv.fs_read(fd, stat.size, 0))
+          assert(uv.fs_close(fd))
+
+          return vim.trim(data)
+        end
+
+        local event_cb = function(err, filename, events)
+          if not err then
+            vim.schedule(function()
+              local data = read_file(path)
+              set_mode(data)
+            end)
+          end
+        end
+
+        set_mode(read_file(path))
+        uv.fs_event_start(handle, path, flags, event_cb)
+      end,
+    },
+  },
+  {
     name = "ConcealAttributes",
     {
       { "BufEnter", "BufWritePost", "TextChanged", "InsertLeave" },
@@ -58,16 +111,6 @@ return {
   },
   {
     name = "Heirline",
-    {
-      "ColorScheme",
-      function()
-        local utils = require("heirline.utils")
-        utils.on_colorscheme(require("onedarkpro.helpers").get_colors())
-      end,
-      opts = {
-        pattern = { "*" },
-      },
-    },
     {
       "User",
       function(args)

@@ -18,7 +18,6 @@ ran_from_cmd_line = False
 apps = [
     "macos",
     "starship",
-    "neovim",
     "fish",
 ]
 
