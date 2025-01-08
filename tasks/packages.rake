@@ -117,6 +117,13 @@ namespace :install do
     end
   end
 
+  desc 'Install Rust'
+  task :rust do
+    section 'Installing Rust'
+
+    run %(curl https://sh.rustup.rs -sSf | sh)
+  end
+
   desc 'Install Rust Cargo'
   task :cargo do
     section 'Installing Rust Cargo'

@@ -43,6 +43,7 @@ task :install do
   Rake::Task['install:servers'].invoke
 
   # Packages
+  Rake::Task['install:rust'].invoke unless testing?
   Rake::Task['install:cargo'].invoke unless testing?
   Rake::Task['install:gems'].invoke unless testing?
   Rake::Task['install:npm'].invoke unless testing?
@@ -112,12 +113,12 @@ end
 
 desc "Sync'ing personal and work settings"
 task :work do
-    task :restore do
+    task :pull do
       section "Cloud -> Work Mac"
 
       Rake::Task['work:restore:files'].invoke
     end
-    task :backup do
+    task :push do
       section "Work Mac -> Cloud"
 
       Rake::Task['work:backup:files'].invoke
