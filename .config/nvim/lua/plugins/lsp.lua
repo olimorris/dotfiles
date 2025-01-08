@@ -380,10 +380,6 @@ return {
 
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "bashls",
-          "cssls",
-          "dockerls",
-          "html",
           "intelephense",
           "jdtls",
           "jsonls",
