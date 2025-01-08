@@ -1,36 +1,14 @@
-[filter "media"]
-	required = true
-	clean = git media clean %f
-	smudge = git media smudge %f
 [user]
 	name = Oli Morris
 	email = olimorris@users.noreply.github.com
-[core]
-	excludesfile = /Users/Oli/.gitignore_global
-	autocrlf = false
-	safecrlf = false
-	editor = code -n -w
-[push]
-	default = matching
-[filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-[pull]
-	rebase = false
-[init]
-	defaultBranch = main
-[delta]
-	line-numbers = true
 [alias]
 	pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
 [credential]
-	helper = 
 	helper = /usr/local/share/gcm-core/git-credential-manager
-[credential "https://dev.azure.com"]
+[credential "https://github.com"]
 	useHttpPath = true
+[core]
+	excludesfile = /Users/Oli/.gitignore_global
+	editor = nvim
+[init]
+	defaultBranch = main
