@@ -18,6 +18,29 @@ return {
         },
         version = "*",
         opts = {
+          sources = {
+            default = { "lsp", "path", "snippets", "buffer", "codecompanion" },
+            cmdline = {}, -- Disable sources for command-line mode
+            providers = {
+              lsp = {
+                min_keyword_length = 2, -- Number of characters to trigger porvider
+                score_offset = 0, -- Boost/penalize the score of the items
+              },
+              path = {
+                min_keyword_length = 0,
+              },
+              snippets = {
+                min_keyword_length = 1,
+                opts = {
+                  search_paths = { "~/.config/snippets" },
+                },
+              },
+              buffer = {
+                min_keyword_length = 5,
+                max_items = 5,
+              },
+            },
+          },
 
           appearance = {
             use_nvim_cmp_as_default = false,
@@ -35,9 +58,12 @@ return {
             },
 
             list = {
-              selection = function(ctx)
-                return ctx.mode == "cmdline" and "auto_insert" or "preselect"
-              end,
+              selection = {
+                preselect = false,
+                auto_insert = function(ctx)
+                  return ctx.mode == "cmdline" and "auto_insert" or "preselect"
+                end,
+              },
             },
 
             menu = {
@@ -116,41 +142,10 @@ return {
             enabled = true,
             window = { border = "rounded" },
           },
-
-          sources = {
-            default = { "lsp", "path", "snippets", "buffer", "codecompanion" },
-            cmdline = {}, -- Disable sources for command-line mode
-            providers = {
-              lsp = {
-                min_keyword_length = 2, -- Number of characters to trigger porvider
-                score_offset = 0, -- Boost/penalize the score of the items
-              },
-              path = {
-                min_keyword_length = 0,
-              },
-              snippets = {
-                min_keyword_length = 1,
-                opts = {
-                  search_paths = { "~/.config/snippets" },
-                },
-              },
-              buffer = {
-                min_keyword_length = 5,
-                max_items = 5,
-              },
-              codecompanion = {
-                name = "CodeCompanion",
-                module = "codecompanion.providers.completion.blink",
-              },
-            },
-          },
         },
       },
       {
         "williamboman/mason.nvim",
-        build = function()
-          pcall(vim.cmd, "MasonUpdate")
-        end,
         opts = {
           ui = {
             border = "single",
@@ -273,7 +268,7 @@ return {
             {
               "gq",
               function()
-                require("conform").format({ bufnr = bufnr })
+                require("conform").format({ async = true, bufnr = bufnr, lsp_format = "fallback" })
               end,
               description = "Format",
               opts = { buffer = bufnr },
@@ -370,7 +365,6 @@ return {
           end
 
           local bufnr = event.buf
-          local opts = { buffer = bufnr }
 
           autocmds(client, bufnr)
           commands(client, bufnr)
@@ -437,6 +431,8 @@ return {
   -- Formatting
   {
     "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
     opts = {
       format_on_save = {
         timeout_ms = 500,
@@ -448,7 +444,6 @@ return {
         javascript = { "prettier" },
         json = { "prettier" },
         lua = { "stylua" },
-        php = { "php-cs-fixer" },
         python = { "isort", "black" },
         ruby = { "rubocop" },
       },
