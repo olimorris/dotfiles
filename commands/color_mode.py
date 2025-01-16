@@ -2,10 +2,7 @@ import os
 import subprocess
 import sys
 
-nvim_path = "~/.config/nvim"
 starship_path = "~/.config/starship"
-wezterm_path = "~/.config/wezterm"
-wallpaper_path = "~/.dotfiles/misc/ui/wallpaper"
 
 # If we toggle dark mode via Alfred, we end up in a infinite loop. The dark-mode
 # binary changes the MacOS mode which in turn causes color-mode-notify to run
@@ -69,61 +66,6 @@ def app_starship(mode):
             ]
         )
 
-
-def app_neovim(mode):
-    """
-    Change the Neovim color scheme
-    """
-    from pynvim import attach
-    import socket
-
-    nvim_config = nvim_path + "/lua/config/options.lua"
-
-    # File operations with error handling
-    try:
-        with open(os.path.expanduser(nvim_config), "r") as config_file:
-            nvim_contents = config_file.read()
-
-        if mode == "dark":
-            nvim_contents = nvim_contents.replace(
-                'vo.background = "light"', 'vo.background = "dark"'
-            )
-        if mode == "light":
-            nvim_contents = nvim_contents.replace(
-                'vo.background = "dark"', 'vo.background = "light"'
-            )
-
-        with open(os.path.expanduser(nvim_config), "w") as config_file:
-            config_file.write(nvim_contents)
-    except IOError as e:
-        print(f"Error accessing nvim config: {e}")
-        return
-
-    # Get the neovim servers with timeout
-    try:
-        servers = subprocess.run(
-            ["nvr", "--serverlist"], stdout=subprocess.PIPE, timeout=3
-        )
-        servers = servers.stdout.splitlines()
-    except subprocess.TimeoutExpired:
-        print("Timeout while getting nvim server list")
-        return
-    except subprocess.SubprocessError as e:
-        print(f"Error getting nvim server list: {e}")
-        return
-
-    # Loop through servers with timeout for each connection
-    for server in servers:
-        try:
-            socket.setdefaulttimeout(2)
-            nvim = attach("socket", path=server)
-            nvim.command("call v:lua.om.ToggleTheme('" + mode + "')")
-            nvim.close()  # Important: close the connection
-        except Exception as e:
-            print(f"Error with nvim instance {server}: {e}")
-            continue
-
-    return
 
 
 def app_fish(mode):
