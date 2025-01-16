@@ -34,7 +34,9 @@ vb.tabstop = 4 -- Number of spaces in a tab
 
 -- Vim options
 vo.cmdheight = 0 -- Hide the command bar
-vo.clipboard = { "unnamedplus" } -- Use the system clipboard
+vim.schedule(function()
+  vo.clipboard = "unnamedplus" -- Use the system clipboard
+end)
 vo.completeopt = { "menuone", "noselect" } -- Completion opions for code completion
 vo.cursorlineopt = "screenline,number" -- Highlight the screen line of the cursor with CursorLine and the line number with CursorLineNr
 vo.emoji = false -- Turn off emojis
@@ -54,6 +56,11 @@ vo.foldenable = true
 
 vo.ignorecase = true -- Ignore case
 vo.laststatus = 3 -- Use global statusline
+
+-- Sets how Neovim will display certain whitespace characters in the editor
+vo.list = true
+vo.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
 vo.modelines = 1 -- Only use folding settings for this file
 vo.mouse = "a" -- Use the mouse in all modes
 vo.sessionoptions = { "buffers", "curdir", "folds", "resize", "tabpages", "winpos", "winsize" } -- Session options to store in the session
@@ -82,24 +89,25 @@ vo.splitbelow = true -- Put new windows below current
 vo.splitright = true -- Put new windows right of current
 vo.termguicolors = true -- True color support
 vo.textwidth = 120 -- Total allowed width on the screen
-vo.timeout = true -- This option and 'timeoutlen' determine the behavior when part of a mapped key sequence has been received. This is on by default but being explicit!
-vo.timeoutlen = 500 -- Time in milliseconds to wait for a mapped sequence to complete.
-vo.ttimeoutlen = 10 -- Time in milliseconds to wait for a key code sequence to complete
-vo.updatetime = 100 -- If in this many milliseconds nothing is typed, the swap file will be written to disk. Also used for CursorHold autocommand and set to 100 as per https://github.com/antoinemadec/FixCursorHold.nvim
+vo.timeoutlen = 300 -- Time in milliseconds to wait for a mapped sequence to complete
+vo.updatetime = 250 -- If in this many milliseconds nothing is typed, the swap file will be written to disk
 vo.wildmode = "list:longest" -- Command-line completion mode
 vo.wildignore = { "*/.git/*", "*/node_modules/*" } -- Ignore these files/folders
 
 -- Create folders for our backups, undos, swaps and sessions if they don't exist
-vim.cmd("silent call mkdir(stdpath('data').'/backups', 'p', '0700')")
-vim.cmd("silent call mkdir(stdpath('data').'/undos', 'p', '0700')")
-vim.cmd("silent call mkdir(stdpath('data').'/swaps', 'p', '0700')")
-vim.cmd("silent call mkdir(stdpath('data').'/sessions', 'p', '0700')")
+vim.schedule(function()
+  vim.cmd("silent call mkdir(stdpath('data').'/backups', 'p', '0700')")
+  vim.cmd("silent call mkdir(stdpath('data').'/undos', 'p', '0700')")
+  vim.cmd("silent call mkdir(stdpath('data').'/swaps', 'p', '0700')")
+  vim.cmd("silent call mkdir(stdpath('data').'/sessions', 'p', '0700')")
 
-vo.backupdir = vim.fn.stdpath("data") .. "/backups" -- Use backup files
-vo.directory = vim.fn.stdpath("data") .. "/swaps" -- Use Swap files
+  vo.backupdir = vim.fn.stdpath("data") .. "/backups" -- Use backup files
+  vo.directory = vim.fn.stdpath("data") .. "/swaps" -- Use Swap files
+  vo.undodir = vim.fn.stdpath("data") .. "/undos" -- Set the undo directory
+end)
+
 vo.undofile = true -- Maintain undo history between sessions
 vo.undolevels = 1000 -- Ensure we can undo a lot!
-vo.undodir = vim.fn.stdpath("data") .. "/undos" -- Set the undo directory
 
 -- Window options
 vw.colorcolumn = "80,120" -- Make a ruler at 80px and 120px
