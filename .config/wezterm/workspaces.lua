@@ -56,8 +56,8 @@ local function workspaces(config)
     action = wezterm.action_callback(function(win, pane)
       resurrect.fuzzy_load(win, pane, function(id, label)
         local type = string.match(id, "^([^/]+)") -- match before '/'
-        id = string.match(id, "([^/]+)$")         -- match after '/'
-        id = string.match(id, "(.+)%..+$")        -- remove file extention
+        id = string.match(id, "([^/]+)$") -- match after '/'
+        id = string.match(id, "(.+)%..+$") -- remove file extention
         local opts = {
           relative = true,
           restore_text = true,
