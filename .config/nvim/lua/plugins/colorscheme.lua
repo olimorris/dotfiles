@@ -210,14 +210,5 @@ return {
         -- highlight_inactive_windows = true,
       },
     },
-    config = function(_, opts)
-      require("onedarkpro").setup(opts)
-
-      if vim.o.background == "light" then
-        vim.cmd([[colorscheme onelight]])
-      else
-        vim.cmd([[colorscheme vaporwave]])
-      end
-    end,
   },
 }
