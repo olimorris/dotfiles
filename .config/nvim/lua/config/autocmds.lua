@@ -5,14 +5,15 @@ local conceal_ns = vim.api.nvim_create_namespace("ConcealClassAttribute")
 return {
   {
     -- Watch for changes in ~/.color_mode
-    name = "ChangeColorScheme",
+    -- REF: https://github.com/rktjmp/fwatch.nvim/blob/main/lua/fwatch.lua
+    name = "Colors",
     {
       "VimEnter",
       function()
         local uv = vim.uv
         local handle = uv.new_fs_event()
 
-        local path = vim.fn.expand("~/.color_mode")
+        local file_to_watch = "~/.color_mode"
 
         local flags = {
           watch_entry = false, -- true = when dir, watch dir inode, not dir content
@@ -20,8 +21,8 @@ return {
           recursive = false, -- true = watch dirs inside dirs
         }
 
-        local function set_mode(mode)
-          vim.opt.background = mode or "dark"
+        local function change_colors(mode)
+          -- vim.opt.background = mode or "dark"
 
           if mode == "light" then
             vim.cmd([[colorscheme onelight]])
@@ -33,7 +34,10 @@ return {
           utils.on_colorscheme(require("onedarkpro.helpers").get_colors())
         end
 
+        ---Read the contents of a given file
         local function read_file(file)
+          file = vim.fs.normalize(file)
+
           local fd = assert(uv.fs_open(file, "r", 438))
           local stat = assert(uv.fs_fstat(fd))
           local data = assert(uv.fs_read(fd, stat.size, 0))
@@ -42,17 +46,18 @@ return {
           return vim.trim(data)
         end
 
-        local event_cb = function(err, filename, events)
+        local event_cb = function(err, filename, _)
+          filename = vim.fs.normalize("~/" .. filename)
           if not err then
             vim.schedule(function()
-              local data = read_file(path)
-              set_mode(data)
+              local data = read_file(filename)
+              change_colors(data)
             end)
           end
         end
 
-        set_mode(read_file(path))
-        uv.fs_event_start(handle, path, flags, event_cb)
+        change_colors(read_file(file_to_watch))
+        uv.fs_event_start(handle, vim.fs.normalize(file_to_watch), flags, event_cb)
       end,
     },
   },
