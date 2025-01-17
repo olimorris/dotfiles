@@ -26,9 +26,10 @@ namespace :backup do
     }
 
     flag = ' -P' if args[:progress]
+    filter = ' --filter-from ~/.config/rclone/filter_list.txt'
 
     dirs.each do |local, remote|
-      run %( /opt/homebrew/bin/rclone sync ~/#{local} #{remote}#{flag} --filter-from ~/.config/rclone/filter_list.txt )
+      run %( /opt/homebrew/bin/rclone sync ~/#{local} #{remote}#{flag}#{filter} )
     end
   end
 end
