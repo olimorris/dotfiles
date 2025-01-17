@@ -1,4 +1,3 @@
-- Icon␍
 - .DS_Store
 - node_modules/
 - vendor/
@@ -21,3 +20,4 @@
 - .Spotlight-V100/
 - .fseventsd/
 - .repro/
+- .deps/
