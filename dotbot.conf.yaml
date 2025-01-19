@@ -9,6 +9,7 @@
 - link:
     # Config directory
     ~/.config/efm-langserver: .config/efm-langserver
+    ~/.config/espanso: .config/espanso
     ~/.config/fish: .config/fish
     ~/.config/hammerspoon: .config/hammerspoon
     ~/.config/mise: .config/mise
