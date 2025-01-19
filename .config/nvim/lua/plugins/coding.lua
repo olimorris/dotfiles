@@ -21,6 +21,7 @@ return {
               schema = {
                 model = {
                   default = "claude-3.5-sonnet",
+                  default = "o1-mini-2024-09-12",
                 },
                 max_tokens = {
                   default = 8192,
