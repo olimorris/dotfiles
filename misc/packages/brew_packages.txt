@@ -2,7 +2,6 @@ act
 age
 bats-core
 bob
-boost@1.85
 brew-cask-completion
 cmake
 code-minimap
@@ -17,7 +16,6 @@ fortune
 fzf
 gh
 git
-gl2ps
 glow
 go
 gradle
@@ -26,7 +24,6 @@ httpie
 jython
 lazygit
 ledger
-libgit2
 librsync
 libvterm
 lolcat
