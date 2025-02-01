@@ -32,14 +32,6 @@ local Filepath = {
     condition = function(self)
       return self.filepath ~= "."
     end,
-    on_click = {
-      callback = function(self)
-        require("telescope.builtin").find_files({
-          cwd = self.current_dir,
-        })
-      end,
-      name = "wb_path_click",
-    },
     flexible = 2,
     {
       provider = function(self)

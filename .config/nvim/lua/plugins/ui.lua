@@ -75,22 +75,6 @@ return {
         prompt_align = "center",
         win_options = { winblend = 0 },
       },
-      select = {
-        get_config = function(opts)
-          opts = opts or {}
-          local config = {
-            telescope = {
-              layout_config = {
-                width = 0.8,
-              },
-            },
-          }
-          if opts.kind == "legendary.nvim" then
-            config.telescope.sorter = require("telescope.sorters").fuzzy_with_index_bias({})
-          end
-          return config
-        end,
-      },
     },
   },
   {
@@ -153,7 +137,7 @@ return {
           keys = {
             { icon = " ", key = "l", desc = "Load Session", action = ":lua require('persisted').load()" },
             { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-            { icon = " ", key = "r", desc = "Recent Files", action = ":Telescope frecency workspace=CWD" },
+            { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
             { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
             { icon = "󱘣 ", key = "s", desc = "Search Files", action = ":lua Snacks.dashboard.pick('live_grep')" },
             { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
@@ -181,8 +165,6 @@ return {
         enabled = true,
         scope = { enabled = false },
       },
-      notifier = { enabled = true },
-      terminal = { enabled = true },
       lazygit = {
         theme = {
           [241] = { fg = "Special" },
@@ -197,6 +179,11 @@ return {
           unstagedChangesColor = { fg = "DiagnosticError" },
         },
       },
+      picker = {
+        enabled = true,
+      },
+      notifier = { enabled = true },
+      terminal = { enabled = true },
     },
     keys = {
       {
@@ -207,11 +194,52 @@ return {
         desc = "Delete Buffer",
       },
       {
+        "<C-f>",
+        function()
+          Snacks.picker.files()
+        end,
+        desc = "Find Files",
+      },
+      {
+        "<C-b>",
+        function()
+          Snacks.picker.buffers({
+            win = {
+              input = {
+                ["<C-c>"] = { "bufdelete", mode = { "n", "i" } },
+              },
+            },
+          })
+        end,
+        desc = "List Buffers",
+      },
+      {
+        "<C-g>",
+        function()
+          Snacks.picker.grep_buffers()
+        end,
+        desc = "Search Open Buffers",
+      },
+      {
+        "<Leader>g",
+        function()
+          Snacks.picker.grep()
+        end,
+        desc = "Search Files",
+      },
+      {
+        "<Leader><Leader>",
+        function()
+          Snacks.picker.recent()
+        end,
+        desc = "List Recent Files",
+      },
+      {
         "<Leader>h",
         function()
-          Snacks.notifier.show_history()
+          Snacks.picker.notifications()
         end,
-        desc = "Dismiss All Notifications",
+        desc = "Show Notifications",
       },
       {
         "<LocalLeader>gb",
@@ -219,6 +247,13 @@ return {
           Snacks.gitbrowse()
         end,
         desc = "Git Browse",
+      },
+      {
+        "<LocalLeader>u",
+        function()
+          Snacks.picker.undo()
+        end,
+        desc = "Undo History",
       },
       {
         "<C-x>",

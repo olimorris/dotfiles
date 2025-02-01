@@ -1,5 +1,19 @@
 return {
   "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
+  -- {
+  --   "PLAZMAMA/bunnyhop.nvim",
+  --   lazy = false,
+  --   keys = {
+  --     {
+  --       "<M-h>",
+  --       function()
+  --         require("bunnyhop").hop()
+  --       end,
+  --       desc = "[H]op to predicted location.",
+  --     },
+  --   },
+  --   opts = {},
+  -- },
   {
     "olimorris/codecompanion.nvim", -- The KING of AI programming
     -- dependencies = {
@@ -20,12 +34,18 @@ return {
             return require("codecompanion.adapters").extend("copilot", {
               schema = {
                 model = {
-                  default = "claude-3.5-sonnet",
-                  default = "o1-mini-2024-09-12",
+                  default = "o3-mini-2025-01-31",
                 },
                 max_tokens = {
                   default = 8192,
                 },
+              },
+            })
+          end,
+          deepseek = function()
+            return require("codecompanion.adapters").extend("deepseek", {
+              env = {
+                api_key = "cmd:op read op://personal/DeepSeek_API/credential --no-newline",
               },
             })
           end,
@@ -44,7 +64,7 @@ return {
               schema = {
                 model = {
                   default = function()
-                    return "o1-preview"
+                    return "gpt-4o"
                   end,
                 },
               },
@@ -59,6 +79,38 @@ return {
           end,
         },
         prompt_library = {
+          ["Docusaurus"] = {
+            strategy = "chat",
+            description = "Write documentation for me",
+            opts = {
+              index = 11,
+              is_slash_cmd = false,
+              auto_submit = false,
+              short_name = "docs",
+            },
+            references = {
+              {
+                type = "file",
+                path = {
+                  "doc/.vitepress/config.mjs",
+                  "lua/codecompanion/config.lua",
+                  "README.md",
+                },
+              },
+            },
+            prompts = {
+              {
+                role = "user",
+                content = [[I'm rewriting the documentation for my plugin CodeCompanion.nvim, as I'm moving to a vitepress website. Can you help me rewrite it?
+
+I'm sharing my vitepress config file so you have the context of how the documentation website is structured in the `sidebar` section of that file.
+
+I'm also sharing my `config.lua` file which I'm mapping to the `configuration` section of the sidebar.
+]],
+              },
+            },
+          },
+
           ["Test workflow"] = {
             strategy = "workflow",
             description = "Use a workflow to test the plugin",
@@ -161,6 +213,10 @@ return {
         },
         strategies = {
           chat = {
+            adapter = "copilot",
+            roles = {
+              user = "olimorris",
+            },
             keymaps = {
               send = {
                 modes = {
@@ -173,27 +229,42 @@ return {
                 },
               },
             },
-            roles = { llm = "CodeCompanion", user = "olimorris" },
             slash_commands = {
               ["buffer"] = {
                 opts = {
-                  provider = "telescope",
+                  provider = "snacks",
+                  keymaps = {
+                    modes = {
+                      i = "<C-b>",
+                    },
+                  },
                 },
               },
               ["help"] = {
                 opts = {
-                  provider = "telescope",
+                  provider = "snacks",
                   max_lines = 1000,
                 },
               },
               ["file"] = {
                 opts = {
-                  provider = "telescope",
+                  provider = "snacks",
                 },
               },
               ["symbols"] = {
                 opts = {
-                  provider = "telescope",
+                  provider = "snacks",
+                },
+              },
+            },
+            variables = {
+              ["my_var"] = {
+                callback = function()
+                  return "Your custom content here."
+                end,
+                description = "Explain what my_var does",
+                opts = {
+                  contains_code = false,
                 },
               },
             },
@@ -278,9 +349,9 @@ return {
     lazy = true,
     keys = {
       {
-        "<LocalLeader>re",
+        "<LocalLeader>rr",
         function()
-          require("telescope").extensions.refactoring.refactors()
+          require("refactoring").select_refactor()
         end,
         desc = "Refactoring.nvim: Open",
         mode = { "n", "v", "x" },

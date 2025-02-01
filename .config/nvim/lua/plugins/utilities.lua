@@ -16,7 +16,7 @@ return {
     },
     config = function()
       require("legendary").setup({
-        select_prompt = "Legendary",
+        -- select_prompt = "Legendary",
         include_builtin = false,
         extensions = {
           codecompanion = false,

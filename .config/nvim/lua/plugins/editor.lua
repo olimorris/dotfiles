@@ -123,7 +123,13 @@ return {
     "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
     event = "BufEnter",
     keys = {
-      { "<Leader>t", "<cmd>TodoTelescope<CR>", desc = "Todo comments" },
+      {
+        "<Leader>t",
+        function()
+          require("snacks").picker.todo_comments()
+        end,
+        desc = "Todo comments",
+      },
     },
     opts = {
       signs = false,
