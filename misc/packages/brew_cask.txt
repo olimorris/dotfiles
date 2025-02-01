@@ -4,7 +4,6 @@ anki
 appcleaner
 audacity
 betterdisplay
-cleanmymac
 cleanshot
 diffmerge
 discord
@@ -40,7 +39,6 @@ spotify
 steam
 superkey
 tableplus
-telegram
 textexpander
 typora
 visual-studio-code
@@ -48,4 +46,3 @@ vlc
 wezterm
 xscope
 zed
-zoom

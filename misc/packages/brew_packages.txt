@@ -24,6 +24,7 @@ httpie
 jython
 lazygit
 ledger
+libgit2@1.8
 librsync
 libvterm
 lolcat
@@ -53,6 +54,7 @@ starship
 subversion
 tree
 tree-sitter
+typos-cli
 universal-ctags
 vim
 vivid
