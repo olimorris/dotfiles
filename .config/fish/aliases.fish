@@ -23,7 +23,7 @@ alias up='cd ~/.dotfiles && rake sync'
 alias backup='cd ~/.dotfiles && rake backup'
 alias clean='ruby ~/.dotfiles/commands/clean_up.rb'
 alias icons='python ~/.dotfiles/commands/seticons.py'
-alias bf='cd ~/.dotfiles && rake backup:files\[true\]'
+alias bf='cd ~/.dotfiles && rake backup:files'
 alias cleanup='ruby ~/.dotfiles/commands/clean_up.rb ~/Downloads'
 
 # Fish
