@@ -1,25 +1,10 @@
 return {
   "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
-  -- {
-  --   "PLAZMAMA/bunnyhop.nvim",
-  --   lazy = false,
-  --   keys = {
-  --     {
-  --       "<M-h>",
-  --       function()
-  --         require("bunnyhop").hop()
-  --       end,
-  --       desc = "[H]op to predicted location.",
-  --     },
-  --   },
-  --   opts = {},
-  -- },
   {
     "olimorris/codecompanion.nvim", -- The KING of AI programming
-    -- dependencies = {
-    --   { "echasnovski/mini.pick", config = true },
-    --   { "ibhagwan/fzf-lua", config = true },
-    -- },
+      -- { "echasnovski/mini.pick", config = true },
+      -- { "ibhagwan/fzf-lua", config = true },
+    },
     config = function()
       require("codecompanion").setup({
         adapters = {
