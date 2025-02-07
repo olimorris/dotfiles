@@ -2,6 +2,8 @@ return {
   "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
   {
     "olimorris/codecompanion.nvim", -- The KING of AI programming
+    dependencies = {
+      "j-hui/fidget.nvim",
       -- { "echasnovski/mini.pick", config = true },
       -- { "ibhagwan/fzf-lua", config = true },
     },
@@ -303,6 +305,7 @@ I'm also sharing my `config.lua` file which I'm mapping to the `configuration` s
           },
         },
       })
+      require("plugins.codecompanion.spinner"):init()
     end,
   },
   {
