@@ -165,6 +165,7 @@ return {
         enabled = true,
         scope = { enabled = false },
       },
+      input = { enabled = true },
       lazygit = {
         theme = {
           [241] = { fg = "Special" },
