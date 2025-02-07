@@ -67,37 +67,6 @@ return {
       { "BufEnter", "BufWritePost", "TextChanged", "InsertLeave" },
       function()
         vim.opt.conceallevel = 2 -- Concealed text is completely hidden
-
-        local bufnr = vim.api.nvim_get_current_buf()
-
-        ---Conceal HTML class attributes. Ideal for big TailwindCSS class lists
-        ---Ref: https://gist.github.com/mactep/430449fd4f6365474bfa15df5c02d27b
-        local language_tree = vim.treesitter.get_parser(bufnr, "html")
-        local syntax_tree = language_tree:parse()
-        local root = syntax_tree[1]:root()
-
-        local query = [[
-        ((attribute
-          (attribute_name) @att_name (#eq? @att_name "class")
-          (quoted_attribute_value (attribute_value) @class_value) (#set! @class_value conceal "…")))
-        ]]
-
-        local ok, ts_query = pcall(vim.treesitter.query.parse, "html", query)
-        if not ok then
-          return print(vim.inspect(ts_query))
-        end
-
-        for _, captures, metadata in ts_query:iter_matches(root, bufnr, root:start(), root:end_(), { all = false }) do
-          local start_row, start_col, end_row, end_col = captures[2]:range()
-          -- This conditional prevents conceal leakage if the class attribute is erroneously formed
-          if (end_row - start_row) == 0 then
-            vim.api.nvim_buf_set_extmark(bufnr, conceal_ns, start_row, start_col, {
-              end_line = end_row,
-              end_col = end_col,
-              conceal = metadata[2].conceal,
-            })
-          end
-        end
       end,
       opts = {
         pattern = { "*.html" },
@@ -113,6 +82,13 @@ return {
       end,
       opts = { pattern = "CodeCompanionInlineFinished" },
     },
+    -- {
+    --   "User",
+    --   function(args)
+    --     print(vim.inspect(args))
+    --   end,
+    --   opts = { pattern = "CodeCompanionRequest*" },
+    -- },
   },
   {
     name = "Heirline",
@@ -329,6 +305,7 @@ return {
     {
       "TextYankPost",
       function()
+        print("Yanked!")
         vim.highlight.on_yank()
       end,
       opts = { pattern = "*" },
