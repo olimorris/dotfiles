@@ -258,10 +258,9 @@ return {
           keymaps = {
             {
               "gf",
-              t.lazy_required_fn("telescope.builtin", "diagnostics", {
-                layout_strategy = "center",
-                bufnr = 0,
-              }),
+              function()
+                require("snacks").picker.diagnostics_buffer()
+              end,
               description = "Find diagnostics",
               opts = { noremap = true, buffer = bufnr },
             },
@@ -275,9 +274,9 @@ return {
             },
             {
               "gr",
-              t.lazy_required_fn("telescope.builtin", "lsp_references", {
-                layout_strategy = "center",
-              }),
+              function()
+                require("snacks").picker.lsp_references()
+              end,
               description = "Find references",
               opts = { buffer = bufnr },
             },
@@ -296,7 +295,9 @@ return {
 
             {
               "gd",
-              "<cmd>lua vim.lsp.buf.definition()<CR>",
+              function()
+                require("snacks").picker.lsp_definitions()
+              end,
               description = "Go to definition",
               opts = { buffer = bufnr },
             },
