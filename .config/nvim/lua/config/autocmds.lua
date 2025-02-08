@@ -305,7 +305,6 @@ return {
     {
       "TextYankPost",
       function()
-        print("Yanked!")
         vim.highlight.on_yank()
       end,
       opts = { pattern = "*" },
