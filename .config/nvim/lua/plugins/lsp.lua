@@ -20,7 +20,7 @@ return {
         opts = {
           sources = {
             default = { "lsp", "path", "snippets", "buffer", "codecompanion" },
-            cmdline = {}, -- Disable sources for command-line mode
+            cmdline = { "cmdline" },
             providers = {
               lsp = {
                 min_keyword_length = 2, -- Number of characters to trigger porvider
