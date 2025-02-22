@@ -6,6 +6,8 @@
 - .config/fish/.tofish/**
 - .config/fish/completions/**
 - .config/fish/functions/**
+- .config/superwhisper/recordings/**
+- .config/superwhisper/models/**
 - *.log
 - .cache/
 - .npm/
