@@ -10,60 +10,63 @@ return {
     config = function()
       require("codecompanion").setup({
         adapters = {
-          anthropic = function()
-            return require("codecompanion.adapters").extend("anthropic", {
-              env = {
-                api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
+          anthropic = require("codecompanion.adapters").extend("anthropic", {
+            env = {
+              api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
+            },
+          }),
+          copilot = require("codecompanion.adapters").extend("copilot", {
+            schema = {
+              model = {
+                default = "claude-3.5-sonnet",
               },
-            })
-          end,
-          copilot = function()
-            return require("codecompanion.adapters").extend("copilot", {
-              schema = {
-                model = {
-                  default = "o3-mini-2025-01-31",
-                },
-                max_tokens = {
-                  default = 8192,
-                },
+            },
+          }),
+          deepseek = require("codecompanion.adapters").extend("deepseek", {
+            env = {
+              api_key = "cmd:op read op://personal/DeepSeek_API/credential --no-newline",
+            },
+          }),
+          gemini = require("codecompanion.adapters").extend("gemini", {
+            env = {
+              api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline",
+            },
+          }),
+          -- llama31 = require("codecompanion.adapters").extend("ollama", {
+          --   name = "llama31",
+          --   schema = {
+          --     model = {
+          --       default = "llama3.1:latest",
+          --     },
+          --     num_ctx = {
+          --       default = 20000,
+          --     },
+          --   },
+          -- }),
+          ollama = require("codecompanion.adapters").extend("ollama", {
+            schema = {
+              num_ctx = {
+                default = 20000,
               },
-            })
-          end,
-          deepseek = function()
-            return require("codecompanion.adapters").extend("deepseek", {
-              env = {
-                api_key = "cmd:op read op://personal/DeepSeek_API/credential --no-newline",
+            },
+          }),
+          openai = require("codecompanion.adapters").extend("openai", {
+            env = {
+              api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
+            },
+            schema = {
+              model = {
+                default = function()
+                  return "gpt-4o"
+                end,
               },
-            })
-          end,
-          gemini = function()
-            return require("codecompanion.adapters").extend("gemini", {
-              env = {
-                api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline",
-              },
-            })
-          end,
-          openai = function()
-            return require("codecompanion.adapters").extend("openai", {
-              env = {
-                api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
-              },
-              schema = {
-                model = {
-                  default = function()
-                    return "gpt-4o"
-                  end,
-                },
-              },
-            })
-          end,
-          xai = function()
-            return require("codecompanion.adapters").extend("xai", {
-              env = {
-                api_key = "cmd:op read op://personal/xAI_API/credential --no-newline",
-              },
-            })
-          end,
+            },
+          }),
+          xai = require("codecompanion.adapters").extend("xai", {
+            env = {
+              api_key = "cmd:op read op://personal/xAI_API/credential --no-newline",
+            },
+          }),
         },
         prompt_library = {
           ["Docusaurus"] = {
@@ -97,7 +100,6 @@ I'm also sharing my `config.lua` file which I'm mapping to the `configuration` s
               },
             },
           },
-
           ["Test workflow"] = {
             strategy = "workflow",
             description = "Use a workflow to test the plugin",
