@@ -48,7 +48,6 @@ Plug 'ap/vim-css-color'                     " Show Hex and RGB colors in CSS fil
 Plug 'tpope/vim-markdown'                   " Markdown support for Vim
 Plug 'jwalton512/vim-blade'                 " Laravel Blade support
 Plug 'StanAngeloff/php.vim'                 " PHP syntax support
-Plug 'hail2u/vim-css3-syntax'               " CSS syntax support
 Plug 'Chiel92/vim-autoformat'               " Auto code format
 Plug 'pangloss/vim-javascript'              " Javascript syntax highlighting
 " }}}
@@ -82,7 +81,6 @@ Plug 'mhinz/vim-startify'                   " A fancy start screen for Vim
 Plug 'joshdick/onedark.vim'
 Plug 'mkarmona/materialbox'
 Plug 'itchyny/lightline.vim'                " Lightline Status bar
-Plug 'trevordmiller/nova-vim'
 Plug 'farfanoide/vim-facebook'
 " }}}
 " }}}

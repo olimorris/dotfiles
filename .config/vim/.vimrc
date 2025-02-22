@@ -26,7 +26,7 @@ endif
 syntax on                                       " Enable syntax processing
 
 set background=dark                             " The background to be used in Vim
-colorscheme onedark
+colorscheme facebook
 
 set linespace=2                                 " Set the line height
 set encoding=utf8                               " Set encoding type
@@ -962,7 +962,7 @@ function! ChangeColorScheme() abort
 	    return
 	endif
     try
-        let g:lightline.colorscheme = 
+        let g:lightline.colorscheme =
                     \ substitute(substitute(color_schemes.lightline[next_scheme], '-', '_', 'g'), '256.*', '', '')
         call lightline#init()
         call lightline#colorscheme()
