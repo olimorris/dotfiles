@@ -77,6 +77,26 @@ return {
     },
   },
   {
+    "bassamsdata/namu.nvim",
+    keys = {
+      {
+        "<C-t>",
+        function()
+          require("namu.namu_symbols").show()
+        end,
+        mode = { "n", "x", "o" },
+        desc = "Show Namu",
+      },
+    },
+    opts = {
+      namu_symbols = {
+        enable = true,
+        options = {}, -- here you can configure namu
+      },
+      ui_select = { enable = false }, -- vim.ui.select() wrapper
+    },
+  },
+  {
     "stevearc/aerial.nvim", -- Toggled list of classes, methods etc in current file
     opts = {
       attach_mode = "global",
@@ -115,9 +135,9 @@ return {
         TypeParameter = "󰊄 ",
       },
     },
-    keys = {
-      { "<C-t>", "<cmd>AerialToggle<CR>", mode = { "n", "x", "o" }, desc = "Aerial Toggle" },
-    },
+    -- keys = {
+    --   { "<C-t>", "<cmd>AerialToggle<CR>", mode = { "n", "x", "o" }, desc = "Aerial Toggle" },
+    -- },
   },
   {
     "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
