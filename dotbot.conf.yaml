@@ -8,15 +8,18 @@
 
 - link:
     # Config directory
+    ~/.config/1password: .config/1password
     ~/.config/efm-langserver: .config/efm-langserver
     ~/.config/espanso: .config/espanso
     ~/.config/fish: .config/fish
     ~/.config/hammerspoon: .config/hammerspoon
+    ~/.config/lazygit: .config/lazygit
     ~/.config/mise: .config/mise
     ~/.config/nvim: .config/nvim
     ~/.config/rclone: .config/rclone
     ~/.config/snippets: .config/snippets
     ~/.config/starship: .config/starship
+    ~/.config/superwhisper: .config/superwhisper
     ~/.config/vivid: .config/vivid
     ~/.config/wezterm: .config/wezterm
 
