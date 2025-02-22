@@ -204,13 +204,7 @@ return {
       {
         "<C-b>",
         function()
-          Snacks.picker.buffers({
-            win = {
-              input = {
-                ["<C-c>"] = { "bufdelete", mode = { "n", "i" } },
-              },
-            },
-          })
+          Snacks.picker.buffers()
         end,
         desc = "List Buffers",
       },
