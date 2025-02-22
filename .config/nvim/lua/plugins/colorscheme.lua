@@ -67,6 +67,8 @@ return {
         CodeCompanionTokens = { fg = "${gray}", italic = true },
         CodeCompanionVirtualText = { fg = "${gray}", italic = true },
 
+        SnacksPickerDir = { fg = "${gray}", italic = true },
+
         ["@markup.raw.block.markdown"] = { bg = "${codeblock}" },
         ["@markup.quote.markdown"] = { italic = true, extend = true },
 
