@@ -60,18 +60,6 @@ return {
     },
   },
   {
-    "stevearc/dressing.nvim", -- Utilises Neovim UI hooks to manage inputs, selects etc
-    opts = {
-      input = {
-        default_prompt = "> ",
-        relative = "editor",
-        prefer_width = 50,
-        prompt_align = "center",
-        win_options = { winblend = 0 },
-      },
-    },
-  },
-  {
     "lewis6991/gitsigns.nvim", -- Git signs in the statuscolumn
     opts = {
       signs = {
