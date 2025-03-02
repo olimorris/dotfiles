@@ -18,7 +18,6 @@ return {
           telescope_selection = "require('onedarkpro.helpers').darken('bg', 8, 'vaporwave')",
           copilot = "require('onedarkpro.helpers').darken('gray', 8, 'vaporwave')",
           breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'vaporwave')",
-          local_highlight = "require('onedarkpro.helpers').lighten('bg', 4, 'vaporwave')",
           light_gray = "require('onedarkpro.helpers').darken('gray', 7, 'vaporwave')",
         },
         onedark = {
@@ -32,7 +31,6 @@ return {
           telescope_selection = "require('onedarkpro.helpers').darken('bg', 8, 'onedark')",
           copilot = "require('onedarkpro.helpers').darken('gray', 8, 'onedark')",
           breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'onedark')",
-          local_highlight = "require('onedarkpro.helpers').lighten('bg', 4, 'onedark')",
           light_gray = "require('onedarkpro.helpers').darken('gray', 7, 'onedark')",
         },
         light = {
@@ -50,7 +48,6 @@ return {
           telescope_selection = "require('onedarkpro.helpers').darken('bg', 9, 'onelight')",
           copilot = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
           breadcrumbs = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
-          local_highlight = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
           light_gray = "require('onedarkpro.helpers').lighten('gray', 10, 'onelight')",
         },
         rainbow = {
@@ -82,7 +79,6 @@ return {
         FloatBorder = { fg = "${gray}", bg = "${bg}" },
 
         CursorLineNr = { bg = "${bg}", fg = "${fg}", italic = true },
-        LocalHighlight = { bg = "${local_highlight}" },
         MatchParen = { fg = "${cyan}" },
         ModeMsg = { fg = "${gray}" }, -- Make command line text lighter
         Search = { bg = "${selection}", fg = "${yellow}", underline = true },
