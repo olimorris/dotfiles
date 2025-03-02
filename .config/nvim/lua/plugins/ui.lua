@@ -60,12 +60,6 @@ return {
     },
   },
   {
-    "tzachar/local-highlight.nvim", -- Highlight word under cursor throughout the visible buffer
-    opts = {
-      file_types = { "lua", "javascript", "python", "ruby" },
-    },
-  },
-  {
     "stevearc/dressing.nvim", -- Utilises Neovim UI hooks to manage inputs, selects etc
     opts = {
       input = {
