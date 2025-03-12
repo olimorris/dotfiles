@@ -30,7 +30,7 @@ return {
   },
   {
     "olimorris/persisted.nvim", -- Session management
-    lazy = true,
+    event = "BufReadPre",
     opts = {
       save_dir = Sessiondir .. "/",
       use_git_branch = true,
@@ -82,7 +82,7 @@ return {
             {
               ":Sessions",
               function()
-                vim.cmd([[Telescope persisted]])
+                require("persisted").select()
               end,
               description = "List sessions",
             },
