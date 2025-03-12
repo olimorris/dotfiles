@@ -34,3 +34,6 @@ if status is-interactive
     zoxide init fish | source
     starship init fish | source
 end
+
+# Created by `pipx` on 2025-03-04 09:33:21
+set PATH $PATH /Users/Oli/.local/bin
