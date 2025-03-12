@@ -612,6 +612,9 @@ I'm also sharing my `config.lua` file which I'm mapping to the `configuration` s
       {
         "<LocalLeader>tn",
         function()
+          if vim.bo.filetype == "lua" then
+            return require("mini.test").run_at_location()
+          end
           require("neotest").run.run()
         end,
         desc = "Neotest: Test nearest",
@@ -619,6 +622,9 @@ I'm also sharing my `config.lua` file which I'm mapping to the `configuration` s
       {
         "<LocalLeader>tf",
         function()
+          if vim.bo.filetype == "lua" then
+            return require("mini.test").run_file()
+          end
           require("neotest").run.run(vim.fn.expand("%"))
         end,
         desc = "Neotest: Test file",
@@ -633,6 +639,9 @@ I'm also sharing my `config.lua` file which I'm mapping to the `configuration` s
       {
         "<LocalLeader>ts",
         function()
+          if vim.bo.filetype == "lua" then
+            return require("mini.test").run()
+          end
           local neotest = require("neotest")
           for _, adapter_id in ipairs(neotest.run.adapters()) do
             neotest.run.run({ suite = true, adapter = adapter_id })
