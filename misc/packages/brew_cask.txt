@@ -31,7 +31,6 @@ postman
 raycast
 rectangle-pro
 reminders-menubar
-rode-central
 screenflow
 sketch
 slack
@@ -39,6 +38,7 @@ spotify
 steam
 superkey
 tableplus
+telegram
 textexpander
 typora
 visual-studio-code
