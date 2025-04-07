@@ -4,6 +4,7 @@ anki
 appcleaner
 audacity
 betterdisplay
+cleanmymac
 cleanshot
 diffmerge
 discord
