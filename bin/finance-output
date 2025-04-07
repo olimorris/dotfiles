@@ -4,7 +4,7 @@ export PATH="$HOME/.local/share/mise/shims:$PATH"
 
 . /Users/Oli/.env
 
-/opt/homebrew/bin/hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal --auto --forecast="this month".. bal "^(ass|liab)" --tree -H -M -b "1 month ago" -e "24 months" -O html >$FINANCES/generated.html
+/opt/homebrew/bin/hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal --auto --forecast="this month".. bal "^(ass|liab)" --tree -H -M -b "1 month ago" -e "36 months" -O html >$FINANCES/generated.html
 
 inputFile=$FINANCES/generated.html
 outputFile=$FINANCES/output.html
