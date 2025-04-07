@@ -45,6 +45,20 @@ return {
             },
           })
         end,
+        novita = function()
+          return require("codecompanion.adapters").extend("novita", {
+            env = {
+              api_key = "cmd:op read op://personal/Novita_API/credential --no-newline",
+            },
+            schema = {
+              model = {
+                default = function()
+                  return "meta-llama/llama-3.1-8b-instruct"
+                end,
+              },
+            },
+          })
+        end,
         ollama = function()
           return require("codecompanion.adapters").extend("ollama", {
             schema = {
