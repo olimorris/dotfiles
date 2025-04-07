@@ -62,6 +62,9 @@ return {
         ollama = function()
           return require("codecompanion.adapters").extend("ollama", {
             schema = {
+              model = {
+                default = "llama3.1:latest",
+              },
               num_ctx = {
                 default = 20000,
               },
@@ -70,6 +73,9 @@ return {
         end,
         openai = function()
           return require("codecompanion.adapters").extend("openai", {
+            opts = {
+              stream = true,
+            },
             env = {
               api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
             },
@@ -243,7 +249,6 @@ I'm also sharing my `config.lua` file which I'm mapping to the `configuration` s
           slash_commands = {
             ["buffer"] = {
               opts = {
-                provider = "snacks",
                 keymaps = {
                   modes = {
                     i = "<C-b>",
@@ -253,18 +258,7 @@ I'm also sharing my `config.lua` file which I'm mapping to the `configuration` s
             },
             ["help"] = {
               opts = {
-                provider = "snacks",
                 max_lines = 1000,
-              },
-            },
-            ["file"] = {
-              opts = {
-                provider = "snacks",
-              },
-            },
-            ["symbols"] = {
-              opts = {
-                provider = "snacks",
               },
             },
           },
