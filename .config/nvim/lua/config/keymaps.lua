@@ -10,6 +10,7 @@
   N.B. Leader keys are set in the options.lua file. This is so that lazy.nvim doesn't corrupt mappings
 ]]
 
+-- Legendary.nvim keymaps -----------------------------------------------------
 local ok, legendary = pcall(require, "legendary")
 if not ok then
   return
@@ -28,12 +29,6 @@ function SetupMultipleCursors()
 end
 
 return legendary.keymaps({
-  {
-    "'",
-    ":",
-    hide = true,
-    description = "Command mode",
-  },
   {
     "<C-q>",
     "<cmd>q<CR>",
