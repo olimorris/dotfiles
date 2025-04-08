@@ -340,13 +340,13 @@ return {
 
             {
               "[",
-              "<cmd>lua vim.diagnostic.goto_prev()<CR>",
+              "<cmd>lua vim.diagnostic.jump({count = -1, float = true})<CR>",
               description = "Go to previous diagnostic item",
               opts = { buffer = bufnr },
             },
             {
               "]",
-              "<cmd>lua vim.diagnostic.goto_next()<CR>",
+              "<cmd>lua vim.diagnostic.jump({count = 1, float = true})<CR>",
               description = "Go to next diagnostic item",
               opts = { buffer = bufnr },
             },
