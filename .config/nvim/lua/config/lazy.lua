@@ -73,5 +73,6 @@ vim.api.nvim_create_autocmd("User", {
   callback = function()
     require("config.commands")
     require("config.keymaps")
+    require("util")
   end,
 })
