@@ -319,7 +319,7 @@ I'm also sharing my `config.lua` file which I'm mapping to the `configuration` s
           },
         },
       })
-      require("plugins.codecompanion.spinner"):init()
+      require("plugins.custom.spinner"):init()
     end,
   },
   {
