@@ -162,9 +162,7 @@ return {
           unstagedChangesColor = { fg = "DiagnosticError" },
         },
       },
-      picker = {
-        enabled = true,
-      },
+      picker = { enabled = true },
       notifier = { enabled = true },
       terminal = { enabled = true },
     },
