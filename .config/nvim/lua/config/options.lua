@@ -66,10 +66,25 @@ vo.mouse = "a" -- Use the mouse in all modes
 vo.sessionoptions = { "buffers", "curdir", "folds", "resize", "tabpages", "winpos", "winsize" } -- Session options to store in the session
 vo.scrolloff = 5 -- Set the cursor 5 lines down instead of directly at the top of the file
 --[[
-  NOTE: don't store marks as they are currently broken in Neovim!
-  @credit: wincent
+  ShDa (viminfo for vim): session data history
+  --------------------------------------------
+  ! - Save and restore global variables (their names should be without lowercase letter).
+  ' - Specify the maximum number of marked files remembered. It also saves the jump list and the change list.
+  < - Maximum of lines saved for each register. All the lines are saved if this is not included, <0 to disable pessistent registers.
+  % - Save and restore the buffer list. You can specify the maximum number of buffer stored with a number.
+  / or : - Number of search patterns and entries from the command-line history saved. o.history is used if it’s not specified.
+  f - Store file (uppercase) marks, use 'f0' to disable.
+  s - Specify the maximum size of an item’s content in KiB (kilobyte).
+      For the viminfo file, it only applies to register.
+      For the shada file, it applies to all items except for the buffer list and header.
+  h - Disable the effect of 'hlsearch' when loading the shada file.
+
+  :oldfiles - all files with a mark in the shada file
+  :rshada   - read the shada file (:rviminfo for vim)
+  :wshada   - write the shada file (:wrviminfo for vim)
 ]]
-vo.shada = "!,'0,f0,<50,s10,h"
+vo.shada = [[!,'100,<0,f100,s100,h]]
+
 vo.shell = "/opt/homebrew/bin/fish"
 vo.shiftround = true -- Round indent
 vo.shortmess = {
