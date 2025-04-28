@@ -85,7 +85,15 @@ return {
           require("namu.namu_symbols").show()
         end,
         mode = { "n", "x", "o" },
-        desc = "Show Namu",
+        desc = "Show symbols in current file",
+      },
+      {
+        "<C-e>",
+        function()
+          require("namu.namu_workspace").show()
+        end,
+        mode = { "n", "x", "o" },
+        desc = "Show symbols in workspace",
       },
     },
     opts = {
