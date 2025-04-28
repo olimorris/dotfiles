@@ -45,6 +45,13 @@ return {
             },
           })
         end,
+        mistral = function()
+          return require("codecompanion.adapters").extend("mistral", {
+            env = {
+              api_key = "cmd:op read op://personal/Mistral_API/credential --no-newline",
+            },
+          })
+        end,
         novita = function()
           return require("codecompanion.adapters").extend("novita", {
             env = {
