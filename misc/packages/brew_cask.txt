@@ -1,5 +1,6 @@
 1password
 1password-cli
+aldente
 anki
 appcleaner
 audacity
@@ -25,6 +26,7 @@ ledger-live
 little-snitch
 monitorcontrol
 notion
+obs
 openemu
 pdf-expert
 pixelsnap
