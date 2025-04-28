@@ -1,5 +1,5 @@
 --[[
-  Mark / Bookmarks / Harpoon Replacement in c.60 LOC
+  Marks / Bookmarks / Harpoon Replacement in c.60 LOC
   Uses m{1-9} to set marks in a file and then '{1-9} to jump to them
 
   This is the combination of some awesome work over at:
