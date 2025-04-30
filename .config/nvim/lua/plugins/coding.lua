@@ -5,15 +5,30 @@ return {
     dependencies = {
       "j-hui/fidget.nvim",
       {
+        "ravitemer/mcphub.nvim", -- Manage MCP servers
+        cmd = "MCPHub",
+        build = "npm install -g mcp-hub@latest",
+        config = true,
+      },
+      {
         "Davidyz/VectorCode",
         version = "*",
         build = "pipx upgrade vectorcode",
-        dependencies = { "nvim-lua/plenary.nvim" },
       },
       -- { "echasnovski/mini.pick", config = true },
       -- { "ibhagwan/fzf-lua", config = true },
     },
     opts = {
+      extensions = {
+        mcphub = {
+          callback = "mcphub.extensions.codecompanion",
+          opts = {
+            make_vars = true,
+            make_slash_commands = true,
+            show_result_in_chat = true,
+          },
+        },
+      },
       adapters = {
         anthropic = function()
           return require("codecompanion.adapters").extend("anthropic", {

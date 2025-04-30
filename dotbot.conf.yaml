@@ -15,6 +15,7 @@
     ~/.config/hammerspoon: .config/hammerspoon
     ~/.config/lazygit: .config/lazygit
     ~/.config/mise: .config/mise
+    ~/.config/mcphub: .config/mcphub
     ~/.config/nvim: .config/nvim
     ~/.config/rclone: .config/rclone
     ~/.config/snippets: .config/snippets

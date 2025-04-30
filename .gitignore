@@ -14,6 +14,7 @@
 !.config/hammerspoon/**/*
 !.config/karabiner/karabiner.json
 !.config/mackup/**/*
+!.config/mcphub/**/*
 !.config/mise/**/*
 !.config/nix/**/*
 !.config/nvim/**/*
