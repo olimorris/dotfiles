@@ -3,9 +3,6 @@ return {
     "olimorris/onedarkpro.nvim",
     priority = 1000,
     opts = {
-      themes = {
-        vaporwave = "~/.config/nvim/lua/plugins/colors/vaporwave.lua",
-      },
       colors = {
         vaporwave = {
           codeblock = "require('onedarkpro.helpers').lighten('bg', 2, 'vaporwave')",
