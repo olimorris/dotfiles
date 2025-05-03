@@ -11,9 +11,10 @@ return {
         config = true,
       },
       {
-        "Davidyz/VectorCode",
+        "Davidyz/VectorCode", -- Index and search code in your repositories
         version = "*",
         build = "pipx upgrade vectorcode",
+        dependencies = { "nvim-lua/plenary.nvim" },
       },
       -- { "echasnovski/mini.pick", config = true },
       -- { "ibhagwan/fzf-lua", config = true },
@@ -26,6 +27,11 @@ return {
             make_vars = true,
             make_slash_commands = true,
             show_result_in_chat = true,
+          },
+        },
+        vectorcode = {
+          opts = {
+            add_tool = true,
           },
         },
       },
