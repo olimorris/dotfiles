@@ -15,8 +15,8 @@ return {
       "rrethy/nvim-treesitter-endwise", -- Automatically add end keywords for Ruby, Lua, Python, and more
       {
         "windwp/nvim-autopairs", -- Autopair plugin
+        event = "InsertEnter",
         opts = {
-          close_triple_quotes = true,
           check_ts = true,
           enable_moveright = true,
           fast_wrap = {
