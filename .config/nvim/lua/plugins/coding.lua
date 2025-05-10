@@ -258,11 +258,9 @@ return {
           },
           slash_commands = {
             ["buffer"] = {
-              opts = {
-                keymaps = {
-                  modes = {
-                    i = "<C-b>",
-                  },
+              keymaps = {
+                modes = {
+                  i = "<C-b>",
                 },
               },
             },
