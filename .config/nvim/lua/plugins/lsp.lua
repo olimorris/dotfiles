@@ -145,7 +145,7 @@ return {
         },
       },
       {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         opts = {
           ui = {
             border = "single",
@@ -153,7 +153,7 @@ return {
           },
         },
       },
-      { "williamboman/mason-lspconfig.nvim" },
+      { "mason-org/mason-lspconfig.nvim" },
     },
     config = function(_, opts)
       require("lspconfig.ui.windows").default_options.border = "single"
