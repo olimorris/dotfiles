@@ -4,6 +4,7 @@ return {
     "olimorris/codecompanion.nvim", -- The KING of AI programming
     dependencies = {
       "j-hui/fidget.nvim",
+      "ravitemer/codecompanion-history.nvim", -- Save and load conversation history
       {
         "ravitemer/mcphub.nvim", -- Manage MCP servers
         cmd = "MCPHub",
@@ -21,6 +22,18 @@ return {
     },
     opts = {
       extensions = {
+        history = {
+          enabled = true,
+          opts = {
+            keymap = "gh",
+            auto_generate_title = true,
+            continue_last_chat = false,
+            delete_on_clearing_chat = false,
+            picker = "snacks",
+            enable_logging = false,
+            dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
+          },
+        },
         mcphub = {
           callback = "mcphub.extensions.codecompanion",
           opts = {
