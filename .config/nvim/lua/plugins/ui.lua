@@ -163,6 +163,7 @@ return {
         },
       },
       picker = {
+        prompt = "> ",
         enabled = true,
         win = {
           input = {
