@@ -5,7 +5,7 @@ namespace :work do
       run %( /bin/date -u )
 
       dirs = {
-        # '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles",
+        '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles",
         'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code"
       }
 
