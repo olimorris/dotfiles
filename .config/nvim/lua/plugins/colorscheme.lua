@@ -9,10 +9,8 @@ return {
           statusline_bg = "require('onedarkpro.helpers').lighten('bg', 4, 'vaporwave')", -- gray
           statuscolumn_border = "require('onedarkpro.helpers').lighten('bg', 4, 'vaporwave')", -- gray
           ellipsis = "require('onedarkpro.helpers').lighten('bg', 4, 'vaporwave')", -- gray
-          telescope_prompt = "require('onedarkpro.helpers').darken('bg', 1, 'vaporwave')",
-          telescope_results = "require('onedarkpro.helpers').darken('bg', 4, 'vaporwave')",
-          telescope_preview = "require('onedarkpro.helpers').darken('bg', 6, 'vaporwave')",
-          telescope_selection = "require('onedarkpro.helpers').darken('bg', 8, 'vaporwave')",
+          picker_results = "require('onedarkpro.helpers').darken('bg', 4, 'vaporwave')",
+          picker_selection = "require('onedarkpro.helpers').darken('bg', 8, 'vaporwave')",
           copilot = "require('onedarkpro.helpers').darken('gray', 8, 'vaporwave')",
           breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'vaporwave')",
           light_gray = "require('onedarkpro.helpers').darken('gray', 7, 'vaporwave')",
@@ -22,10 +20,8 @@ return {
           statusline_bg = "#2e323b", -- gray
           statuscolumn_border = "#4b5160", -- gray
           ellipsis = "#808080", -- gray
-          telescope_prompt = "require('onedarkpro.helpers').darken('bg', 1, 'onedark')",
-          telescope_results = "require('onedarkpro.helpers').darken('bg', 4, 'onedark')",
-          telescope_preview = "require('onedarkpro.helpers').darken('bg', 6, 'onedark')",
-          telescope_selection = "require('onedarkpro.helpers').darken('bg', 8, 'onedark')",
+          picker_results = "require('onedarkpro.helpers').darken('bg', 4, 'onedark')",
+          picker_selection = "require('onedarkpro.helpers').darken('bg', 8, 'onedark')",
           copilot = "require('onedarkpro.helpers').darken('gray', 8, 'onedark')",
           breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'onedark')",
           light_gray = "require('onedarkpro.helpers').darken('gray', 7, 'onedark')",
@@ -39,10 +35,8 @@ return {
           git_add = "require('onedarkpro.helpers').get_preloaded_colors('onelight').green",
           git_change = "require('onedarkpro.helpers').get_preloaded_colors('onelight').yellow",
           git_delete = "require('onedarkpro.helpers').get_preloaded_colors('onelight').red",
-          telescope_prompt = "require('onedarkpro.helpers').darken('bg', 2, 'onelight')",
-          telescope_results = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
-          telescope_preview = "require('onedarkpro.helpers').darken('bg', 7, 'onelight')",
-          telescope_selection = "require('onedarkpro.helpers').darken('bg', 9, 'onelight')",
+          picker_results = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
+          picker_selection = "require('onedarkpro.helpers').darken('bg', 9, 'onelight')",
           copilot = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
           breadcrumbs = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
           light_gray = "require('onedarkpro.helpers').lighten('gray', 10, 'onelight')",
@@ -60,8 +54,6 @@ return {
       highlights = {
         CodeCompanionTokens = { fg = "${gray}", italic = true },
         CodeCompanionVirtualText = { fg = "${gray}", italic = true },
-
-        SnacksPickerDir = { fg = "${gray}", italic = true },
 
         ["@markup.raw.block.markdown"] = { bg = "${codeblock}" },
         ["@markup.quote.markdown"] = { italic = true, extend = true },
@@ -81,27 +73,10 @@ return {
         Search = { bg = "${selection}", fg = "${yellow}", underline = true },
         VimLogo = { fg = { dark = "#81b766", light = "#029632" } },
 
-        -- Aerial plugin
-        AerialClass = { fg = "${purple}", bold = true, italic = true },
-        AerialClassIcon = { fg = "${purple}" },
-        AerialConstructorIcon = { fg = "${yellow}" },
-        AerialEnumIcon = { fg = "${blue}" },
-        AerialFunctionIcon = { fg = "${blue}" },
-        AerialInterfaceIcon = { fg = "${orange}" },
-        AerialMethodIcon = { fg = "${green}" },
-        AerialObjectIcon = { fg = "${purple}" },
-        AerialPackageIcon = { fg = "${fg}" },
-        AerialStructIcon = { fg = "${cyan}" },
-        AerialVariableIcon = { fg = "${orange}" },
-
         -- Dashboard
         SnacksDashboardDesc = { fg = "${blue}", bold = true },
         SnacksDashboardKey = { fg = "${orange}", bold = true, italic = true },
         SnacksDashboardIcon = { fg = "${blue}" },
-
-        -- Cmp
-        CmpItemAbbrMatch = { fg = "${blue}", bold = true },
-        CmpItemAbbrMatchFuzzy = { fg = "${blue}", underline = true },
 
         -- Copilot
         CopilotSuggestion = { fg = "${copilot}", italic = true },
@@ -113,12 +88,6 @@ return {
 
         -- DAP UI
         DapUIBreakpointsCurrentLine = { fg = "${yellow}", bold = true },
-
-        -- Diagflow.nvim
-        DiagnosticFloatingError = { fg = "${red}", italic = true },
-        DiagnosticFloatingWarn = { fg = "${yellow}", italic = true },
-        DiagnosticFloatingHint = { fg = "${cyan}", italic = true },
-        DiagnosticFloatingInfo = { fg = "${blue}", italic = true },
 
         -- Heirline
         Heirline = { bg = "${statusline_bg}" },
@@ -139,37 +108,21 @@ return {
         -- Nvim UFO
         UfoFoldedEllipsis = { fg = "${yellow}" },
 
-        -- Telescope
-        TelescopeBorder = {
-          fg = "${telescope_results}",
-          bg = "${telescope_results}",
-        },
-        TelescopePromptPrefix = {
-          fg = "${purple}",
-        },
-        TelescopePromptBorder = {
-          fg = "${telescope_prompt}",
-          bg = "${telescope_prompt}",
-        },
-        TelescopePromptCounter = { fg = "${fg}" },
-        TelescopePromptNormal = { fg = "${fg}", bg = "${telescope_prompt}" },
-        TelescopePromptTitle = {
-          fg = "${telescope_prompt}",
-          bg = "${purple}",
-        },
-        TelescopePreviewTitle = {
-          fg = "${telescope_results}",
-          bg = "${green}",
-        },
-        TelescopeResultsTitle = {
-          fg = "${telescope_results}",
-          bg = "${telescope_results}",
-        },
-        TelescopeMatching = { fg = "${blue}" },
-        TelescopeNormal = { bg = "${telescope_results}" },
-        TelescopeSelection = { bg = "${telescope_selection}" },
-        TelescopePreviewNormal = { bg = "${telescope_preview}" },
-        TelescopePreviewBorder = { fg = "${telescope_preview}", bg = "${telescope_preview}" },
+        -- Snacks
+        SnacksPicker = { bg = "${picker_results}" },
+        SnacksPickerDir = { fg = "${gray}", italic = true },
+        SnacksPickerBorder = { fg = "${picker_results}", bg = "${picker_results}" },
+        SnacksPickerListCursorLine = { bg = "${picker_selection}" },
+        SnacksPickerPrompt = { bg = "${picker_results}", fg = "${purple}", bold = true },
+        SnacksPickerSelected = { bg = "${picker_results}", fg = "${orange}" },
+        SnacksPickerTitle = { bg = "${purple}", fg = "${picker_results}", bold = true },
+        SnacksPickerToggle = { bg = "${purple}", fg = "${picker_results}", italic = true },
+        SnacksPickerTotals = { bg = "${picker_results}", fg = "${purple}", bold = true },
+        SnacksPickerUnselected = { bg = "${picker_results}" },
+
+        SnacksPickerPreview = { bg = "${bg}" },
+        SnacksPickerPreviewBorder = { fg = "${bg}", bg = "${bg}" },
+        SnacksPickerPreviewTitle = { bg = "${green}", fg = "${bg}", bold = true },
 
         -- Virt Column
         VirtColumn = { fg = "${indentline}" },

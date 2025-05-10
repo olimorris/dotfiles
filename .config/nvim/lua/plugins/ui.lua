@@ -162,7 +162,26 @@ return {
           unstagedChangesColor = { fg = "DiagnosticError" },
         },
       },
-      picker = { enabled = true },
+      picker = {
+        enabled = true,
+        win = {
+          input = {
+            wo = {
+              foldcolumn = "0",
+            },
+          },
+          list = {
+            wo = {
+              foldcolumn = "0",
+            },
+          },
+          preview = {
+            wo = {
+              foldcolumn = "0",
+            },
+          },
+        },
+      },
       notifier = { enabled = true },
       terminal = { enabled = true },
     },
