@@ -269,6 +269,13 @@ return {
                 max_lines = 1000,
               },
             },
+            ["image"] = {
+              keymaps = {
+                modes = {
+                  i = "<C-i>",
+                },
+              },
+            },
           },
           tools = {
             opts = {
