@@ -50,7 +50,6 @@ ripgrep
 shfmt
 shunit2
 spring-io/tap/spring-boot
-starship
 subversion
 tree
 tree-sitter

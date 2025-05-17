@@ -21,7 +21,6 @@
 !.config/rclone/filter_list.txt
 !.config/snippets/**/*
 !.config/ssh/config
-!.config/starship/**/*
 !.config/vim/**/*
 !.config/vivid/**/*
 !.config/wezterm/**/*
