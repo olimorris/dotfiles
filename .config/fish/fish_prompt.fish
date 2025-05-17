@@ -12,11 +12,11 @@ function fish_prompt
     printf "%s%s%s" (set_color --bold $fish_color_keyword) $repo_name (set_color $fish_color_normal)
 
     if test -n "$branch"
-        printf " on %s %s" (set_color $fish_color_valid_path) $branch
+        printf " on %s %s" (set_color $fish_color_valid_path) $branch
         if test -n "$dirty"
             printf " %s✘" (set_color $fish_color_option)
         end
-        printf "%s" (set_color $fish_color_normal)
+        printf "%s" (set_color normal)
     end
 
     printf " %s󰁔 " (set_color $arrow_color)
