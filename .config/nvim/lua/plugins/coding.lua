@@ -3,7 +3,7 @@ return {
   {
     "olimorris/codecompanion.nvim", -- The KING of AI programming
     dependencies = {
-      "j-hui/fidget.nvim",
+      "j-hui/fidget.nvim", -- Display status
       "ravitemer/codecompanion-history.nvim", -- Save and load conversation history
       {
         "ravitemer/mcphub.nvim", -- Manage MCP servers
@@ -16,6 +16,20 @@ return {
         version = "*",
         build = "pipx upgrade vectorcode",
         dependencies = { "nvim-lua/plenary.nvim" },
+      },
+      {
+        "HakonHarnes/img-clip.nvim", -- Share images with the chat buffer
+        event = "VeryLazy",
+        cmd = "PasteImage",
+        opts = {
+          filetypes = {
+            codecompanion = {
+              prompt_for_file_name = false,
+              template = "[Image]($FILE_PATH)",
+              use_absolute_path = true,
+            },
+          },
+        },
       },
       -- { "echasnovski/mini.pick", config = true },
       -- { "ibhagwan/fzf-lua", config = true },
@@ -264,6 +278,13 @@ return {
                 },
               },
             },
+            ["fetch"] = {
+              keymaps = {
+                modes = {
+                  i = "<C-f>",
+                },
+              },
+            },
             ["help"] = {
               opts = {
                 max_lines = 1000,
@@ -274,6 +295,9 @@ return {
                 modes = {
                   i = "<C-i>",
                 },
+              },
+              opts = {
+                dirs = { "~/Documents/Screenshots" },
               },
             },
           },
