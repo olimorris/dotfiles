@@ -135,7 +135,7 @@ return {
             section = "terminal",
             cmd = "lolcat --seed=24 ~/.config/nvim/static/neovim.cat",
             indent = -5,
-            height = 8,
+            height = 9,
             width = 69,
             padding = 1,
           },
@@ -145,6 +145,12 @@ return {
             padding = 1,
           },
           { section = "startup" },
+        },
+      },
+      image = {
+        enabled = true,
+        img_dirs = {
+          "~/Documents/Screenshots/",
         },
       },
       indent = {
