@@ -1,5 +1,4 @@
 return {
-  "tpope/vim-sleuth", -- Automatically detects which indents should be used in the current buffer
   {
     "olimorris/codecompanion.nvim", -- The KING of AI programming
     dependencies = {

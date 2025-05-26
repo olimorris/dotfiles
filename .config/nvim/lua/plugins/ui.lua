@@ -1,6 +1,10 @@
 return {
   "nvim-tree/nvim-web-devicons",
   {
+    "nmac427/guess-indent.nvim", -- Automatically detects which indents should be used in the current buffer
+    opts = {},
+  },
+  {
     "MeanderingProgrammer/render-markdown.nvim", -- Make Markdown buffers look beautiful
     ft = { "markdown", "codecompanion" },
     opts = {
