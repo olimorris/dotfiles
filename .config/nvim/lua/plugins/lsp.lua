@@ -8,153 +8,20 @@ local icons = {
 return {
   -- LSP
   {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      {
-        "saghen/blink.cmp",
-        dependencies = {
-          "rafamadriz/friendly-snippets",
-          "onsails/lspkind.nvim",
-        },
-        version = "*",
-        opts = {
-          cmdline = { sources = { "cmdline" } },
-          sources = {
-            default = { "lsp", "path", "snippets", "buffer", "codecompanion" },
-            providers = {
-              lsp = {
-                min_keyword_length = 2, -- Number of characters to trigger porvider
-                score_offset = 0, -- Boost/penalize the score of the items
-              },
-              path = {
-                min_keyword_length = 0,
-              },
-              snippets = {
-                min_keyword_length = 1,
-                opts = {
-                  search_paths = { "~/.config/snippets" },
-                },
-              },
-              buffer = {
-                min_keyword_length = 5,
-                max_items = 5,
-              },
-            },
-          },
-
-          appearance = {
-            use_nvim_cmp_as_default = false,
-            nerd_font_variant = "mono",
-          },
-
-          completion = {
-            accept = { auto_brackets = { enabled = true } },
-
-            documentation = {
-              auto_show = true,
-              auto_show_delay_ms = 250,
-              treesitter_highlighting = true,
-              window = { border = "rounded" },
-            },
-
-            list = {
-              selection = {
-                preselect = false,
-                auto_insert = function(ctx)
-                  return ctx.mode == "cmdline" and "auto_insert" or "preselect"
-                end,
-              },
-            },
-
-            menu = {
-              border = "rounded",
-
-              cmdline_position = function()
-                if vim.g.ui_cmdline_pos ~= nil then
-                  local pos = vim.g.ui_cmdline_pos -- (1, 0)-indexed
-                  return { pos[1] - 1, pos[2] }
-                end
-                local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
-                return { vim.o.lines - height, 0 }
-              end,
-
-              draw = {
-                columns = {
-                  { "kind_icon", "label", gap = 1 },
-                  { "kind" },
-                },
-                components = {
-                  kind_icon = {
-                    text = function(item)
-                      local kind = require("lspkind").symbol_map[item.kind] or ""
-                      return kind .. " "
-                    end,
-                    highlight = "CmpItemKind",
-                  },
-                  label = {
-                    text = function(item)
-                      return item.label
-                    end,
-                    highlight = "CmpItemAbbr",
-                  },
-                  kind = {
-                    text = function(item)
-                      return item.kind
-                    end,
-                    highlight = "CmpItemKind",
-                  },
-                },
-              },
-            },
-          },
-
-          -- My super-TAB configuration
-          keymap = {
-            ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-            ["<C-e>"] = { "hide", "fallback" },
-            ["<CR>"] = { "accept", "fallback" },
-
-            ["<Tab>"] = {
-              function(cmp)
-                return cmp.select_next()
-              end,
-              "snippet_forward",
-              "fallback",
-            },
-            ["<S-Tab>"] = {
-              function(cmp)
-                return cmp.select_prev()
-              end,
-              "snippet_backward",
-              "fallback",
-            },
-
-            ["<Up>"] = { "select_prev", "fallback" },
-            ["<Down>"] = { "select_next", "fallback" },
-            ["<C-p>"] = { "select_prev", "fallback" },
-            ["<C-n>"] = { "select_next", "fallback" },
-            ["<C-up>"] = { "scroll_documentation_up", "fallback" },
-            ["<C-down>"] = { "scroll_documentation_down", "fallback" },
-          },
-
-          -- Experimental signature help support
-          signature = {
-            enabled = true,
-            window = { border = "rounded" },
-          },
-        },
+    "mason-org/mason.nvim",
+    opts = {
+      ui = {
+        border = "single",
+        width = 0.9,
       },
-      {
-        "mason-org/mason.nvim",
-        opts = {
-          ui = {
-            border = "single",
-            width = 0.9,
-          },
-        },
-      },
-      { "mason-org/mason-lspconfig.nvim" },
     },
+  },
+  {
+    "mason-org/mason-lspconfig.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
+    opts = {},
     config = function(_, opts)
       require("lspconfig.ui.windows").default_options.border = "single"
       -- require("luasnip.loaders.from_vscode").lazy_load({ paths = { "~/.config/snippets" } })
@@ -409,6 +276,142 @@ return {
         -- },
       })
     end,
+  },
+
+  -- Completion
+  {
+    "saghen/blink.cmp",
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+      "onsails/lspkind.nvim",
+    },
+    version = "*",
+    opts = {
+      cmdline = { sources = { "cmdline" } },
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer", "codecompanion" },
+        providers = {
+          lsp = {
+            min_keyword_length = 2, -- Number of characters to trigger porvider
+            score_offset = 0, -- Boost/penalize the score of the items
+          },
+          path = {
+            min_keyword_length = 0,
+          },
+          snippets = {
+            min_keyword_length = 1,
+            opts = {
+              search_paths = { "~/.config/snippets" },
+            },
+          },
+          buffer = {
+            min_keyword_length = 5,
+            max_items = 5,
+          },
+        },
+      },
+
+      appearance = {
+        use_nvim_cmp_as_default = false,
+        nerd_font_variant = "mono",
+      },
+
+      completion = {
+        accept = { auto_brackets = { enabled = true } },
+
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 250,
+          treesitter_highlighting = true,
+          window = { border = "rounded" },
+        },
+
+        list = {
+          selection = {
+            preselect = false,
+            auto_insert = function(ctx)
+              return ctx.mode == "cmdline" and "auto_insert" or "preselect"
+            end,
+          },
+        },
+
+        menu = {
+          border = "rounded",
+
+          cmdline_position = function()
+            if vim.g.ui_cmdline_pos ~= nil then
+              local pos = vim.g.ui_cmdline_pos -- (1, 0)-indexed
+              return { pos[1] - 1, pos[2] }
+            end
+            local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
+            return { vim.o.lines - height, 0 }
+          end,
+
+          draw = {
+            columns = {
+              { "kind_icon", "label", gap = 1 },
+              { "kind" },
+            },
+            components = {
+              kind_icon = {
+                text = function(item)
+                  local kind = require("lspkind").symbol_map[item.kind] or ""
+                  return kind .. " "
+                end,
+                highlight = "CmpItemKind",
+              },
+              label = {
+                text = function(item)
+                  return item.label
+                end,
+                highlight = "CmpItemAbbr",
+              },
+              kind = {
+                text = function(item)
+                  return item.kind
+                end,
+                highlight = "CmpItemKind",
+              },
+            },
+          },
+        },
+      },
+
+      -- My super-TAB configuration
+      keymap = {
+        ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+        ["<C-e>"] = { "hide", "fallback" },
+        ["<CR>"] = { "accept", "fallback" },
+
+        ["<Tab>"] = {
+          function(cmp)
+            return cmp.select_next()
+          end,
+          "snippet_forward",
+          "fallback",
+        },
+        ["<S-Tab>"] = {
+          function(cmp)
+            return cmp.select_prev()
+          end,
+          "snippet_backward",
+          "fallback",
+        },
+
+        ["<Up>"] = { "select_prev", "fallback" },
+        ["<Down>"] = { "select_next", "fallback" },
+        ["<C-p>"] = { "select_prev", "fallback" },
+        ["<C-n>"] = { "select_next", "fallback" },
+        ["<C-up>"] = { "scroll_documentation_up", "fallback" },
+        ["<C-down>"] = { "scroll_documentation_down", "fallback" },
+      },
+
+      -- Experimental signature help support
+      signature = {
+        enabled = true,
+        window = { border = "rounded" },
+      },
+    },
   },
 
   -- Diagnostic signs
