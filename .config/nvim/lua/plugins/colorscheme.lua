@@ -2,6 +2,7 @@ return {
   {
     "olimorris/onedarkpro.nvim",
     priority = 1000,
+    build = "make extras",
     opts = {
       colors = {
         vaporwave = {
