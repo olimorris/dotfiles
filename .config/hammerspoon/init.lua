@@ -1,11 +1,14 @@
---------------------------------- RELOAD CONFIG --------------------------------
+-- [[ Global Settings ]] ------------------------------------------------------
 Hyper = { "cmd", "alt", "ctrl" }
 
+hs.automaticallyCheckForUpdates(true)
+hs.menuIcon(true)
+hs.dockIcon(false)
+
+-- [[ Reload Configuration ]] -------------------------------------------------
 local notify = function()
   hs.notify.new({ title = "Hammerspoon", informativeText = "Config loaded" }):send()
 end
-
--- Use 0 to reload the configuration
 hs.hotkey.bind(Hyper, "0", function()
   notify()
   hs.reload()
@@ -24,10 +27,11 @@ local function reload_config(files)
   end
 end
 
--- reload the config every time it changes
+-- Reload the config every time it changes
 hs.pathwatcher.new(os.getenv("HOME") .. "/.dotfiles/.config/hammerspoon/", reload_config):start()
 
------------------------------------- MODULES -----------------------------------
+-- [[ Modules ]] --------------------------------------------------------------
 require("keymaps")
 require("zoom-killer")
 require("apple-music-spotify-redirect")
+require("windows")
