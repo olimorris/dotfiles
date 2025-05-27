@@ -39,6 +39,8 @@ return {
           enabled = true,
           opts = {
             keymap = "gh",
+            save_chat_keymap = "sc",
+            auto_save = false,
             auto_generate_title = true,
             continue_last_chat = false,
             delete_on_clearing_chat = false,
@@ -146,6 +148,13 @@ return {
           return require("codecompanion.adapters").extend("xai", {
             env = {
               api_key = "cmd:op read op://personal/xAI_API/credential --no-newline",
+            },
+          })
+        end,
+        tavily = function()
+          return require("codecompanion.adapters").extend("tavily", {
+            env = {
+              api_key = "cmd:op read op://personal/Tavily_API/credential --no-newline",
             },
           })
         end,
