@@ -11,8 +11,12 @@ hs.grid.setGrid("60x20")
 hs.grid.setMargins("0x0")
 
 -- [[ Constants ]] ------------------------------------------------------------
+DISPLAYS = {
+  internal = "Built-in Retina Display",
+  external = "DELL U3818DW",
+}
 
-local POSITIONS = {
+POSITIONS = {
   full = "0,0 60x20",
   halves = {
     left = "0,0 30x20",
@@ -45,13 +49,13 @@ hs.hotkey.bind(win_keys, "M", function()
 end)
 
 -- Halves
-hs.hotkey.bind(win_keys, "Left", function()
+hs.hotkey.bind(hyper, "Left", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.halves.left)
   end
 end)
-hs.hotkey.bind(win_keys, "Right", function()
+hs.hotkey.bind(hyper, "Right", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.halves.right)
@@ -79,15 +83,48 @@ hs.hotkey.bind(hyper, "3", function()
 end)
 
 -- Two-Thirds
-hs.hotkey.bind(hyper, "Left", function()
+hs.hotkey.bind(win_keys, "Left", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.twoThirds.left)
   end
 end)
-hs.hotkey.bind(hyper, "Right", function()
+hs.hotkey.bind(win_keys, "Right", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.twoThirds.right)
   end
+end)
+
+-- Move focused window to next screen
+local function moveAndResizeWindow(getDestinationScreenFn)
+  local win = hs.window.focusedWindow()
+  if win then
+    local destinationScreen = getDestinationScreenFn(win:screen())
+    if destinationScreen then
+      win:moveToScreen(destinationScreen)
+
+      -- After moving, get the screen the window is now on
+      local newScreenOfWindow = win:screen()
+
+      if newScreenOfWindow:name() == DISPLAYS.internal then
+        hs.grid.set(win, POSITIONS.full, newScreenOfWindow)
+      else
+        -- If not internal, set to half. Adjust POSITIONS.halves.left if needed.
+        hs.grid.set(win, POSITIONS.halves.left, newScreenOfWindow)
+      end
+    end
+  end
+end
+
+-- Move focused window to next screen
+hs.hotkey.bind(hyper, "Up", function()
+  moveAndResizeWindow(function(currentScreen)
+    return currentScreen:next()
+  end)
+end)
+hs.hotkey.bind(hyper, "Down", function()
+  moveAndResizeWindow(function(currentScreen)
+    return currentScreen:previous()
+  end)
 end)
