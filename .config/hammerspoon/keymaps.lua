@@ -1,7 +1,7 @@
 local hyper = Hyper
 local host = require("hs.host")
-local context = os.getenv("HAMMERSPOON_CONTEXT")
-local on_personal = (context ~= "work")
+local name = host.localizedName()
+local on_personal = (name:find("AAGB") == nil)
 
 ------------------------------- APP LAUNCH/TOGGLE ------------------------------
 --[[
