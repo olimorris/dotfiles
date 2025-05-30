@@ -82,13 +82,13 @@ hs.hotkey.bind(Hyper, "3", function()
 end)
 
 -- Two-Thirds
-hs.hotkey.bind(win_keys, "Left", function()
+hs.hotkey.bind(win_shift_keys, "Left", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.twoThirds.left)
   end
 end)
-hs.hotkey.bind(win_keys, "Right", function()
+hs.hotkey.bind(win_shift_keys, "Right", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.twoThirds.right)
