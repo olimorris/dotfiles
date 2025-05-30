@@ -1,4 +1,3 @@
-local hyper = Hyper
 local window = require("hs.window")
 
 -- [[ Key Bindings ]] ---------------------------------------------------------
@@ -49,13 +48,13 @@ hs.hotkey.bind(win_keys, "M", function()
 end)
 
 -- Halves
-hs.hotkey.bind(hyper, "Left", function()
+hs.hotkey.bind(Hyper, "Left", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.halves.left)
   end
 end)
-hs.hotkey.bind(hyper, "Right", function()
+hs.hotkey.bind(Hyper, "Right", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.halves.right)
@@ -63,19 +62,19 @@ hs.hotkey.bind(hyper, "Right", function()
 end)
 
 -- Thirds
-hs.hotkey.bind(hyper, "1", function()
+hs.hotkey.bind(Hyper, "1", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.thirds.left)
   end
 end)
-hs.hotkey.bind(hyper, "2", function()
+hs.hotkey.bind(Hyper, "2", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.thirds.center)
   end
 end)
-hs.hotkey.bind(hyper, "3", function()
+hs.hotkey.bind(Hyper, "3", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.thirds.right)
@@ -93,6 +92,20 @@ hs.hotkey.bind(win_keys, "Right", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.twoThirds.right)
+  end
+end)
+
+-- Center the application
+hs.hotkey.bind(win_keys, "C", function()
+  local win = hs.window.focusedWindow()
+  if win then
+    local winFrame = win:frame()
+    local screenFrame = win:screen():frame()
+
+    local newX = screenFrame.x + (screenFrame.w - winFrame.w) / 2
+    local newY = screenFrame.y + (screenFrame.h - winFrame.h) / 2
+
+    win:setTopLeft({ x = newX, y = newY })
   end
 end)
 
@@ -116,14 +129,12 @@ local function moveAndResizeWindow(getDestinationScreenFn)
     end
   end
 end
-
--- Move focused window to next screen
-hs.hotkey.bind(hyper, "Up", function()
+hs.hotkey.bind(Hyper, "Up", function()
   moveAndResizeWindow(function(currentScreen)
     return currentScreen:next()
   end)
 end)
-hs.hotkey.bind(hyper, "Down", function()
+hs.hotkey.bind(Hyper, "Down", function()
   moveAndResizeWindow(function(currentScreen)
     return currentScreen:previous()
   end)
