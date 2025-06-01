@@ -71,15 +71,6 @@ return {
             },
           })
         end,
-        copilot = function()
-          return require("codecompanion.adapters").extend("copilot", {
-            schema = {
-              model = {
-                default = "gemini-2.5-pro",
-              },
-            },
-          })
-        end,
         deepseek = function()
           return require("codecompanion.adapters").extend("deepseek", {
             env = {
@@ -119,7 +110,7 @@ return {
           return require("codecompanion.adapters").extend("ollama", {
             schema = {
               model = {
-                default = "llama3.1:latest",
+                default = "qwen3:latest",
               },
               num_ctx = {
                 default = 20000,
@@ -262,7 +253,10 @@ return {
       },
       strategies = {
         chat = {
-          adapter = "copilot",
+          adapter = {
+            name = "copilot",
+            model = "claude-sonnet-4",
+          },
           roles = {
             user = "olimorris",
           },
@@ -309,14 +303,13 @@ return {
               },
             },
           },
-          tools = {
-            opts = {
-              auto_submit_success = false,
-              auto_submit_errors = false,
-            },
+        },
+        inline = {
+          adapter = {
+            name = "copilot",
+            model = "gpt-4.1",
           },
         },
-        inline = { adapter = "copilot" },
       },
       display = {
         action_palette = {
