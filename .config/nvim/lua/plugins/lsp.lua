@@ -289,7 +289,7 @@ return {
     opts = {
       cmdline = { sources = { "cmdline" } },
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "codecompanion" },
+        default = { "lsp", "path", "snippets", "buffer" },
         providers = {
           lsp = {
             min_keyword_length = 2, -- Number of characters to trigger porvider
