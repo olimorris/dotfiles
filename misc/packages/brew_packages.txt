@@ -20,6 +20,7 @@ go
 gradle
 hledger
 httpie
+imagemagick
 jython
 lazygit
 ledger
@@ -42,6 +43,7 @@ pandoc
 php@8.1
 pinentry-mac
 pipx
+pngpaste
 postgresql@14
 pre-commit
 rclone
