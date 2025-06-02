@@ -328,35 +328,28 @@ return {
         log_level = "DEBUG",
       },
     },
+    keys = {
+      {
+        "<C-a>",
+        "<cmd>CodeCompanionActions<CR>",
+        desc = "Open the action palette",
+        mode = { "n", "v" },
+      },
+      {
+        "<Leader>a",
+        "<cmd>CodeCompanionChat Toggle<CR>",
+        desc = "Toggle a chat buffer",
+        mode = { "n", "v" },
+      },
+      {
+        "<LocalLeader>a",
+        "<cmd>CodeCompanionChat Add<CR>",
+        desc = "Add code to a chat buffer",
+        mode = { "v" },
+      },
+    },
     init = function()
       vim.cmd([[cab cc CodeCompanion]])
-      require("legendary").keymaps({
-        {
-          itemgroup = "CodeCompanion",
-          icon = "",
-          description = "Use the power of AI...",
-          keymaps = {
-            {
-              "<C-a>",
-              "<cmd>CodeCompanionActions<CR>",
-              description = "Open the action palette",
-              mode = { "n", "v" },
-            },
-            {
-              "<Leader>a",
-              "<cmd>CodeCompanionChat Toggle<CR>",
-              description = "Toggle a chat buffer",
-              mode = { "n", "v" },
-            },
-            {
-              "<LocalLeader>a",
-              "<cmd>CodeCompanionChat Add<CR>",
-              description = "Add code to a chat buffer",
-              mode = { "v" },
-            },
-          },
-        },
-      })
       require("plugins.custom.spinner"):init()
     end,
   },
@@ -458,17 +451,10 @@ return {
       },
     },
     init = function()
-      require("legendary").commands({
-        itemgroup = "Copilot",
-        commands = {
-          {
-            ":CopilotToggle",
-            function()
-              require("copilot.suggestion").toggle_auto_trigger()
-            end,
-            description = "Toggle on/off for buffer",
-          },
-        },
+      vim.api.nvim_create_user_command("CopilotToggle", function()
+        require("copilot.suggestion").toggle_auto_trigger()
+      end, {
+        desc = "Toggle Copilot suggestions for the current buffer",
       })
     end,
     opts = {
@@ -601,47 +587,21 @@ return {
         },
       },
     },
-    init = function()
-      require("legendary").commands({
-        {
-          itemgroup = "Overseer",
-          icon = "省",
-          description = "Task running functionality...",
-          commands = {
-            {
-              ":OverseerRun",
-              description = "Run a task from a template",
-            },
-            {
-              ":OverseerBuild",
-              description = "Open the task builder",
-            },
-            {
-              ":OverseerToggle",
-              description = "Toggle the Overseer window",
-            },
-          },
-        },
-      })
-      require("legendary").keymaps({
-        itemgroup = "Overseer",
-        keymaps = {
-          {
-            "<Leader>o",
-            function()
-              local overseer = require("overseer")
-              local tasks = overseer.list_tasks({ recent_first = true })
-              if vim.tbl_isempty(tasks) then
-                vim.notify("No tasks found", vim.log.levels.WARN)
-              else
-                overseer.run_action(tasks[1], "restart")
-              end
-            end,
-            description = "Run the last Overseer task",
-          },
-        },
-      })
-    end,
+    keys = {
+      {
+        "<Leader>o",
+        function()
+          local overseer = require("overseer")
+          local tasks = overseer.list_tasks({ recent_first = true })
+          if vim.tbl_isempty(tasks) then
+            vim.notify("No tasks found", vim.log.levels.WARN)
+          else
+            overseer.run_action(tasks[1], "restart")
+          end
+        end,
+        desc = "Run the last Overseer task",
+      },
+    },
   },
   {
     "nvim-neotest/neotest",

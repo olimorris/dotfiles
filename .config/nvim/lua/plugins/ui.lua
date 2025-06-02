@@ -82,14 +82,6 @@ return {
   {
     "NvChad/nvim-colorizer.lua", -- Highlight hex and rgb colors within Neovim
     cmd = "ColorizerToggle",
-    init = function()
-      require("legendary").commands({
-        {
-          ":ColorizerToggle",
-          description = "Colorizer toggle",
-        },
-      })
-    end,
     opts = {
       filetypes = {
         "css",
@@ -294,14 +286,11 @@ return {
       end
 
       require("legendary").keymaps(keymaps)
-      require("legendary").commands({
-        {
-          "LazyGit",
-          function()
-            snacks.lazygit()
-          end,
-          description = "Open LazyGit in a floating window",
-        },
+
+      vim.api.nvim_create_user_command("LazyGit", function()
+        snacks.lazygit()
+      end, {
+        desc = "Open LazyGit in a floating window",
       })
     end,
   },
@@ -323,31 +312,22 @@ return {
         jump_prev_row = { "<S-Enter>", mode = { "n", "v" } },
       },
     },
-    cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+    cmd = { "Csv", "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
     init = function()
-      local ok, legendary = pcall(require, "legendary")
-      if not ok then
-        return
-      end
-      local csvview = require("csvview")
-      return legendary.commands({
-        {
-          ":Csv",
-          function()
-            csvview.toggle(0, {
-              parser = {
-                delimiter = ",",
-                quote_char = '"',
-                comment_char = "#",
-              },
-              view = {
-                display_mode = "border",
-                header_lnum = 1,
-              },
-            })
-          end,
-          description = "Toggle CSV view",
-        },
+      vim.api.nvim_create_user_command("Csv", function()
+        require("csvview").toggle(0, {
+          parser = {
+            delimiter = ",",
+            quote_char = '"',
+            comment_char = "#",
+          },
+          view = {
+            display_mode = "border",
+            header_lnum = 1,
+          },
+        })
+      end, {
+        desc = "Toggle CSV view",
       })
     end,
   },
