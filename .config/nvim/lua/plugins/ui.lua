@@ -260,39 +260,21 @@ return {
         mode = { "n", "t" },
         desc = "Toggle Terminal",
       },
+      {
+        "<Leader>l",
+        function()
+          Snacks.lazygit()
+        end,
+        desc = "Open LazyGit",
+      },
+      {
+        "<Esc>",
+        "<C-\\><C-n>",
+        mode = "t",
+        desc = "Escape means escape",
+        nowait = true,
+      },
     },
-    init = function(config)
-      local snacks = require("snacks")
-
-      local keymaps = {
-        {
-          "<Esc>",
-          "<C-\\><C-n>",
-          description = "Escape means escape in the terminal",
-          hide = true,
-          mode = { "t" },
-          opts = { nowait = true },
-        },
-      }
-
-      for _, direction in ipairs({ "h", "j", "k", "l" }) do
-        table.insert(keymaps, {
-          "<C-" .. direction .. ">",
-          "<C-" .. direction .. ">",
-          description = "Navigate in direction " .. direction,
-          mode = { "t" },
-          opts = { nowait = true },
-        })
-      end
-
-      require("legendary").keymaps(keymaps)
-
-      vim.api.nvim_create_user_command("LazyGit", function()
-        snacks.lazygit()
-      end, {
-        desc = "Open LazyGit in a floating window",
-      })
-    end,
   },
   {
     "hat0uma/csvview.nvim", -- Make CSV files great again

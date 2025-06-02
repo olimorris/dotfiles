@@ -41,202 +41,93 @@ return {
       local lspconfig_defaults = require("lspconfig").util.default_config
       lspconfig_defaults.capabilities = vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, capabilities)
 
-      -- Legendary.nvim
-      local legendary = require("legendary")
-      local t = require("legendary.toolbox")
-
-      local function autocmds(client, bufnr)
-        if not client.supports_method("textDocument/documentHighlight") then
-          return
-        end
-        legendary.autocmds({
-          {
-            name = "LspOnAttachAutocmds",
-            clear = false,
-            {
-              { "CursorHold", "CursorHoldI" },
-              ":silent! lua vim.lsp.buf.document_highlight()",
-              opts = { buffer = bufnr },
-            },
-            {
-              "CursorMoved",
-              ":silent! lua vim.lsp.buf.clear_references()",
-              opts = { buffer = bufnr },
-            },
-          },
-        })
-      end
-      local function commands(client, bufnr)
-        -- Only need to set these once!
-        if vim.g.lsp_commands then
-          return {}
-        end
-
-        legendary.commands({
-          {
-            ":LspRestart",
-            description = "Restart any attached clients",
-          },
-          {
-            ":LspStart",
-            description = "Start the client manually",
-          },
-          {
-            ":LspInfo",
-            description = "Show attached clients",
-          },
-          {
-            "LspInstallAll",
-            function()
-              for _, name in pairs(om.lsp.servers) do
-                vim.cmd("LspInstall " .. name)
-              end
-            end,
-            description = "Install all servers",
-          },
-          {
-            "LspUninstallAll",
-            description = "Uninstall all servers",
-          },
-          {
-            "LspLog",
-            function()
-              vim.cmd("edit " .. vim.lsp.get_log_path())
-            end,
-            description = "Show logs",
-          },
-        })
-
-        vim.g.lsp_commands = true
-      end
-      local function mappings(client, bufnr)
-        if
-          #vim.tbl_filter(function(keymap)
-            return (keymap.desc or ""):lower() == "rename symbol"
-          end, vim.api.nvim_buf_get_keymap(bufnr, "n")) > 0
-        then
-          return {}
-        end
-
-        legendary.keymaps({
-          itemgroup = "LSP",
-          icon = "",
-          description = "LSP related functionality",
-          keymaps = {
-            {
-              "gf",
-              function()
-                require("snacks").picker.diagnostics_buffer()
-              end,
-              description = "Find diagnostics",
-              opts = { noremap = true, buffer = bufnr },
-            },
-            {
-              "gq",
-              function()
-                require("conform").format({ async = true, bufnr = bufnr, lsp_format = "fallback" })
-              end,
-              description = "Format",
-              opts = { buffer = bufnr },
-            },
-            {
-              "gr",
-              function()
-                require("snacks").picker.lsp_references()
-              end,
-              description = "Find references",
-              opts = { buffer = bufnr },
-            },
-            {
-              "gl",
-              "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
-              description = "Show line diagnostics",
-              opts = { buffer = bufnr },
-            },
-            {
-              "K",
-              "<cmd>lua vim.lsp.buf.hover<CR>",
-              description = "Show hover information",
-              opts = { buffer = bufnr },
-            },
-
-            {
-              "gd",
-              function()
-                require("snacks").picker.lsp_definitions()
-              end,
-              description = "Go to definition",
-              opts = { buffer = bufnr },
-            },
-            {
-              "gi",
-              "<cmd>lua vim.lsp.buf.implementation()<CR>",
-              description = "Go to implementation",
-              opts = { buffer = bufnr },
-            },
-            {
-              "gt",
-              "<cmd>lua vim.lsp.buf.type_definition()<CR>",
-              description = "Go to type definition",
-              opts = { buffer = bufnr },
-            },
-            {
-              "<LocalLeader>p",
-              t.lazy_required_fn("nvim-treesitter.textobjects.lsp_interop", "peek_definition_code", "@block.outer"),
-              description = "Peek definition",
-              opts = { buffer = bufnr },
-            },
-            {
-              "ga",
-              "<cmd>lua vim.lsp.buf.code_action()<CR>",
-              description = "Show code actions",
-              opts = { buffer = bufnr },
-            },
-            {
-              "gs",
-              "<cmd>lua vim.lsp.buf.signature_help()<CR>",
-              description = "Show signature help",
-              opts = { buffer = bufnr },
-            },
-            {
-              "<LocalLeader>rn",
-              "<cmd>lua vim.lsp.buf.rename()<CR>",
-              description = "Rename symbol",
-              opts = { buffer = bufnr },
-            },
-
-            {
-              "[",
-              "<cmd>lua vim.diagnostic.jump({count = -1, float = true})<CR>",
-              description = "Go to previous diagnostic item",
-              opts = { buffer = bufnr },
-            },
-            {
-              "]",
-              "<cmd>lua vim.diagnostic.jump({count = 1, float = true})<CR>",
-              description = "Go to next diagnostic item",
-              opts = { buffer = bufnr },
-            },
-          },
-        })
-      end
-
       -- LspAttach is where you enable features that only work
       -- if there is a language server active in the file
       vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
         desc = "LSP actions",
         callback = function(event)
-          local id = vim.tbl_get(event, "data", "client_id")
-          local client = id and vim.lsp.get_client_by_id(id)
-          if client == nil then
-            return
-          end
-
           local bufnr = event.buf
 
-          autocmds(client, bufnr)
-          commands(client, bufnr)
-          mappings(client, bufnr)
+          ---Shortcut function to map keys
+          ---@param keys string|table
+          ---@param func function|string
+          ---@param desc string
+          ---@param mode? string|table
+          ---@return nil
+          local map = function(keys, func, desc, mode)
+            mode = mode or "n"
+            vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+          end
+
+          map("gf", function()
+            Snacks.picker.diagnostics_buffer()
+          end, "Find Diagnostics")
+          map("gq", function()
+            require("conform").format({ async = true, bufnr = bufnr, lsp_format = "fallback" })
+          end, "Format")
+          map("gr", function()
+            Snacks.picker.lsp_references()
+          end, "Find References")
+          map("gd", function()
+            Snacks.picker.lsp_definitions()
+          end, "Go to definition")
+          map(
+            "gl",
+            "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
+            "Show Line Diagnostics"
+          )
+          map("K", "<cmd>lua vim.lsp.buf.hover<CR>", "Show hover information")
+          map("gI", function()
+            Snacks.picker.lsp_implementations()
+          end, "Go to [I]mplementation")
+          map("gy", function()
+            Snacks.picker.lsp_type_definitions()
+          end, "Go to T[y]pe Definition")
+          map("ga", vim.lsp.buf.code_action, "[G]oto Code [A]ction", { "n", "x" })
+          map("grn", vim.lsp.buf.rename, "[R]e[n]ame")
+          map("[", function()
+            vim.diagnostic.jump({ count = -1, float = true })
+          end, "Go to previous diagnostic item")
+          map("]", function()
+            vim.diagnostic.jump({ count = 1, float = true })
+          end, "Go to next diagnostic item")
+
+          -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
+          ---@param client vim.lsp.Client
+          ---@param method vim.lsp.protocol.Method
+          ---@param bufnr? integer some lsp support methods only in specific files
+          ---@return boolean
+          local function client_supports_method(client, method, bufnr)
+            return client:supports_method(method, bufnr)
+          end
+
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if
+            client
+            and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf)
+          then
+            local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
+            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+              buffer = event.buf,
+              group = highlight_augroup,
+              callback = vim.lsp.buf.document_highlight,
+            })
+
+            vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+              buffer = event.buf,
+              group = highlight_augroup,
+              callback = vim.lsp.buf.clear_references,
+            })
+
+            vim.api.nvim_create_autocmd("LspDetach", {
+              group = vim.api.nvim_create_augroup("lsp-detach", { clear = true }),
+              callback = function(event2)
+                vim.lsp.buf.clear_references()
+                vim.api.nvim_clear_autocmds({ group = "lsp-highlight", buffer = event2.buf })
+              end,
+            })
+          end
         end,
       })
 
