@@ -17,6 +17,17 @@ function om.on_big_screen()
   return vim.o.columns > 150 and vim.o.lines >= 40
 end
 
+---Set a keymap in Neovim
+---@param lhs string The left-hand side of the keymap (the key combination)
+---@param rhs string|function The right-hand side of the keymap (the command to execute)
+---@param mode string The mode in which the keymap should be set (e.g., "n" for normal mode)
+---@param opts? table Optional parameters for the keymap, such as silent or noremap
+---@return nil
+function om.set_keymaps(lhs, rhs, mode, opts)
+  opts = opts or {}
+  vim.keymap.set(mode, lhs, rhs, opts)
+end
+
 ---Create a user command in Neovim
 ---@param name string The name of the command
 ---@param command string|function The command to execute, can be a string or a function

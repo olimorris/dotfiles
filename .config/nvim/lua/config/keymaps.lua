@@ -5,16 +5,9 @@
         1) Ctrl - Used for your most frequent and easy to remember keymaps
         2) Local Leader - Used for commands related to window or filetype/buffer options
         3) Leader - Used for commands that are global or span Neovim
-    * I use legendary.nvim to set all of my mapping and display them in a floating window
 
   N.B. Leader keys are set in the options.lua file. This is so that lazy.nvim doesn't corrupt mappings
 ]]
-
--- Legendary.nvim keymaps -----------------------------------------------------
-local ok, legendary = pcall(require, "legendary")
-if not ok then
-  return
-end
 
 -- Functions for multiple cursors
 vim.g.mc = vim.api.nvim_replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]], true, true, true)
@@ -28,131 +21,156 @@ function SetupMultipleCursors()
   )
 end
 
-return legendary.keymaps({
+local keymaps = {
   {
     "<C-q>",
     "<cmd>q<CR>",
-    hide = true,
-    description = "Quit neovim",
-    { remap = true, silent = true },
+    mode = "n",
+    opts = { remap = true, silent = true, desc = "Quit neovim" },
   },
-  { "<C-y>", "<cmd>%y+<CR>", hide = true, description = "Copy buffer" },
+  { "<C-y>", "<cmd>%y+<CR>", mode = "n", opts = { desc = "Copy buffer" } },
   {
     "<C-s>",
     "<cmd>silent write<CR>",
-    hide = true,
-    description = "Save buffer",
-    mode = { "n", "i" },
+    mode = "n",
+    opts = { desc = "Save buffer" },
+  },
+  {
+    "<C-s>",
+    "<cmd>silent write<CR>",
+    mode = "i",
+    opts = { desc = "Save buffer" },
   },
 
-  { "<Tab>", "<cmd>bnext<CR>", hide = true, description = "Next buffer", opts = { noremap = false } },
-  { "<S-Tab>", "<cmd>bprev<CR>", hide = true, description = "Previous buffer", opts = { noremap = false } },
+  { "<Tab>", "<cmd>bnext<CR>", mode = "n", opts = { noremap = false, desc = "Next buffer" } },
+  { "<S-Tab>", "<cmd>bprev<CR>", mode = "n", opts = { noremap = false, desc = "Previous buffer" } },
 
   -- Editing words
-  { "<LocalLeader>,", "<cmd>norm A,<CR>", hide = true, description = "Append comma" },
-  { "<LocalLeader>;", "<cmd>norm A;<CR>", hide = true, description = "Append semicolon" },
+  { "<LocalLeader>,", "<cmd>norm A,<CR>", mode = "n", opts = { desc = "Append comma" } },
+  { "<LocalLeader>;", "<cmd>norm A;<CR>", mode = "n", opts = { desc = "Append semicolon" } },
 
+  -- Wrap text
   {
-    itemgroup = "Wrap text",
-    icon = "",
-    description = "Wrapping text functionality",
-    keymaps = {
-      {
-        "<LocalLeader>(",
-        { n = [[ciw(<c-r>")<esc>]], v = [[c(<c-r>")<esc>]] },
-        description = "Wrap text in brackets ()",
-      },
-      {
-        "<LocalLeader>[",
-        { n = [[ciw[<c-r>"]<esc>]], v = [[c[<c-r>"]<esc>]] },
-        description = "Wrap text in square braces []",
-      },
-      {
-        "<LocalLeader>{",
-        { n = [[ciw{<c-r>"}<esc>]], v = [[c{<c-r>"}<esc>]] },
-        description = "Wrap text in curly braces {}",
-      },
-      {
-        '<LocalLeader>"',
-        { n = [[ciw"<c-r>""<esc>]], v = [[c"<c-r>""<esc>]] },
-        description = 'Wrap text in quotes ""',
-      },
-    },
+    "<LocalLeader>(",
+    [[ciw(<c-r>")<esc>]],
+    mode = "n",
+    opts = { desc = "Wrap text in brackets ()" },
+  },
+  {
+    "<LocalLeader>(",
+    [[c(<c-r>")<esc>]],
+    mode = "v",
+    opts = { desc = "Wrap text in brackets ()" },
+  },
+  {
+    "<LocalLeader>[",
+    [[ciw[<c-r>"]<esc>]],
+    mode = "n",
+    opts = { desc = "Wrap text in square braces []" },
+  },
+  {
+    "<LocalLeader>[",
+    [[c[<c-r>"]<esc>]],
+    mode = "v",
+    opts = { desc = "Wrap text in square braces []" },
+  },
+  {
+    "<LocalLeader>{",
+    [[ciw{<c-r>"}<esc>]],
+    mode = "n",
+    opts = { desc = "Wrap text in curly braces {}" },
+  },
+  {
+    "<LocalLeader>{",
+    [[c{<c-r>"}<esc>]],
+    mode = "v",
+    opts = { desc = "Wrap text in curly braces {}" },
+  },
+  {
+    '<LocalLeader>"',
+    [[ciw"<c-r>""<esc>]],
+    mode = "n",
+    opts = { desc = 'Wrap text in quotes ""' },
+  },
+  {
+    '<LocalLeader>"',
+    [[c"<c-r>""<esc>]],
+    mode = "v",
+    opts = { desc = 'Wrap text in quotes ""' },
   },
 
+  -- Find and replace
   {
-    itemgroup = "Find and Replace",
-    icon = "",
-    description = "Find and replace within the buffer",
-    keymaps = {
-      {
-        "<LocalLeader>fw",
-        [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
-        description = "Replace cursor words in buffer",
-      },
-      { "<LocalLeader>fl", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], description = "Replace cursor words in line" },
-      -- {
-      --   "<LocalLeader>f",
-      --   ":s/{search}/{replace}/g",
-      --   description = "Find and Replace (buffer)",
-      --   mode = { "n", "v" },
-      --   opts = { silent = false },
-      -- },
-    },
+    "<LocalLeader>fw",
+    [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
+    mode = "n",
+    opts = { desc = "Replace cursor words in buffer" },
+  },
+  {
+    "<LocalLeader>fl",
+    [[:s/\<<C-r>=expand("<cword>")<CR>\>/]],
+    mode = "n",
+    opts = { desc = "Replace cursor words in line" },
   },
 
   -- Working with lines
-  { "B", "^", hide = true, description = "Beginning of a line", mode = { "n", "v" } },
-  { "E", "$", hide = true, description = "End of a line", mode = { "n", "v" } },
-  { "<CR>", "o<Esc>", hide = true, description = "Insert blank line below" },
-  { "<S-CR>", "O<Esc>", hide = true, description = "Insert blank line above" },
+  { "B", "^", mode = "n", opts = { desc = "Beginning of a line" } },
+  { "B", "^", mode = "v", opts = { desc = "Beginning of a line" } },
+  { "E", "$", mode = "n", opts = { desc = "End of a line" } },
+  { "E", "$", mode = "v", opts = { desc = "End of a line" } },
+  { "<CR>", "o<Esc>", mode = "n", opts = { desc = "Insert blank line below" } },
+  { "<S-CR>", "O<Esc>", mode = "n", opts = { desc = "Insert blank line above" } },
 
   -- Moving lines
   {
     "<A-k>",
-    {
-      n = ":m .-2<CR>==",
-      v = ":m '<-2<CR>gv=gv",
-    },
-    hide = true,
-    description = "Move selection up",
-    opts = { silent = true },
+    ":m .-2<CR>==",
+    mode = "n",
+    opts = { silent = true, desc = "Move selection up" },
+  },
+  {
+    "<A-k>",
+    ":m '<-2<CR>gv=gv",
+    mode = "v",
+    opts = { silent = true, desc = "Move selection up" },
   },
   {
     "<A-j>",
-    hide = true,
-    {
-      n = ":m .+1<CR>==",
-      v = ":m '>+1<CR>gv=gv",
-    },
-    description = "Move selection down",
-    opts = { silent = true },
+    ":m .+1<CR>==",
+    mode = "n",
+    opts = { silent = true, desc = "Move selection down" },
+  },
+  {
+    "<A-j>",
+    ":m '>+1<CR>gv=gv",
+    mode = "v",
+    opts = { silent = true, desc = "Move selection down" },
   },
 
   -- Splits
-  { "<LocalLeader>sv", "<cmd>vsplit<CR>", description = "Split: Create Vertical" },
-  { "<LocalLeader>sh", "<cmd>split<CR>", description = "Split: Create Horizontal" },
-  { "<LocalLeader>sc", "<cmd>wincmd q<CR>", description = "Split: Close" },
-  { "<LocalLeader>so", "<cmd>wincmd o<CR>", description = "Split: Close all but current" },
-  { "<C-k>", "<cmd>wincmd k<CR>", description = "Split: Move up" },
-  { "<C-j>", "<cmd>wincmd j<CR>", description = "Split: Move down" },
-  { "<C-h>", "<cmd>wincmd h<CR>", description = "Split: Move left" },
-  { "<C-l>", "<cmd>wincmd l<CR>", description = "Split: Move right" },
+  { "<LocalLeader>sv", "<cmd>vsplit<CR>", mode = "n", opts = { desc = "Split: Create Vertical" } },
+  { "<LocalLeader>sh", "<cmd>split<CR>", mode = "n", opts = { desc = "Split: Create Horizontal" } },
+  { "<LocalLeader>sc", "<cmd>wincmd q<CR>", mode = "n", opts = { desc = "Split: Close" } },
+  { "<LocalLeader>so", "<cmd>wincmd o<CR>", mode = "n", opts = { desc = "Split: Close all but current" } },
+  { "<C-k>", "<cmd>wincmd k<CR>", mode = "n", opts = { desc = "Split: Move up" } },
+  { "<C-j>", "<cmd>wincmd j<CR>", mode = "n", opts = { desc = "Split: Move down" } },
+  { "<C-h>", "<cmd>wincmd h<CR>", mode = "n", opts = { desc = "Split: Move left" } },
+  { "<C-l>", "<cmd>wincmd l<CR>", mode = "n", opts = { desc = "Split: Move right" } },
 
   -- Surrounds
-  { "(", { x = "S)" }, hide = true, description = "Surround with ()'s", opts = { remap = true } },
-  { ")", { x = "S)" }, hide = true, description = "Surround with ()'s", opts = { remap = true } },
-  { "{", { x = "S}" }, hide = true, description = "Surround with {}'s", opts = { remap = true } },
-  { "}", { x = "S}" }, hide = true, description = "Surround with {}'s", opts = { remap = true } },
-  { "[", { x = "S]" }, hide = true, description = "Surround with []'s", opts = { remap = true } },
-  { "]", { x = "S]" }, hide = true, description = "Surround with []'s", opts = { remap = true } },
+  { "(", "S)", mode = "x", opts = { remap = true, desc = "Surround with ()'s" } },
+  { ")", "S)", mode = "x", opts = { remap = true, desc = "Surround with ()'s" } },
+  { "{", "S}", mode = "x", opts = { remap = true, desc = "Surround with {}'s" } },
+  { "}", "S}", mode = "x", opts = { remap = true, desc = "Surround with {}'s" } },
+  { "[", "S]", mode = "x", opts = { remap = true, desc = "Surround with []'s" } },
+  { "]", "S]", mode = "x", opts = { remap = true, desc = "Surround with []'s" } },
 
   -- Misc
-  { "<Esc>", "<cmd>:noh<CR>", description = "Clear searches" },
-  { "<S-w>", "<cmd>set winbar=<CR>", description = "Hide WinBar" },
-  { "<LocalLeader>U", "gUiw`", description = "Capitalize word" },
-  { ">", ">gv", hide = true, description = "Indent", mode = { "v" } },
-  { "<", "<gv", hide = true, description = "Outdent", mode = { "v" } },
+  { "<Esc>", "<cmd>:noh<CR>", mode = "n", opts = { desc = "Clear searches" } },
+  { "<S-w>", "<cmd>set winbar=<CR>", mode = "n", opts = { desc = "Hide WinBar" } },
+  { "<LocalLeader>U", "gUiw`", mode = "n", opts = { desc = "Capitalize word" } },
+  { ">", ">gv", mode = "v", opts = { desc = "Indent" } },
+  { "<", "<gv", mode = "v", opts = { desc = "Outdent" } },
 
   -- Multiple Cursors
   -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
@@ -163,50 +181,60 @@ return legendary.keymaps({
   -- 3. Hit cn, type the new word, then go back to Normal mode;
   -- 4. Hit `.` n-1 times, where n is the number of replacements.
   {
-    itemgroup = "Multiple Cursors",
-    icon = "",
-    description = "Working with multiple cursors",
-    keymaps = {
-      {
-        "cn",
-        {
-          n = { "*``cgn" },
-          x = { [[g:mc . "``cgn"]], opts = { expr = true } },
-        },
-        description = "Inititiate",
-      },
-      {
-        "cN",
-        {
-          n = { "*``cgN" },
-          x = { [[g:mc . "``cgN"]], opts = { expr = true } },
-        },
-        description = "Inititiate (in backwards direction)",
-      },
-
-      -- 1. Position the cursor over a word; alternatively, make a selection.
-      -- 2. Hit cq to start recording the macro.
-      -- 3. Once you are done with the macro, go back to normal mode.
-      -- 4. Hit Enter to repeat the macro over search matches.
-      {
-        "cq",
-        {
-          n = { [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>*``qz]] },
-          x = { [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . g:mc . "``qz"]], opts = { expr = true } },
-        },
-        description = "Inititiate with macros",
-      },
-      {
-        "cQ",
-        {
-          n = { [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>#``qz]] },
-          x = {
-            [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
-            opts = { expr = true },
-          },
-        },
-        description = "Inititiate with macros (in backwards direction)",
-      },
-    },
+    "cn",
+    "*``cgn",
+    mode = "n",
+    opts = { desc = "Initiate multiple cursors" },
   },
-})
+  {
+    "cn",
+    [[g:mc . "``cgn"]],
+    mode = "x",
+    opts = { expr = true, desc = "Initiate multiple cursors" },
+  },
+  {
+    "cN",
+    "*``cgN",
+    mode = "n",
+    opts = { desc = "Initiate multiple cursors (backwards)" },
+  },
+  {
+    "cN",
+    [[g:mc . "``cgN"]],
+    mode = "x",
+    opts = { expr = true, desc = "Initiate multiple cursors (backwards)" },
+  },
+
+  -- 1. Position the cursor over a word; alternatively, make a selection.
+  -- 2. Hit cq to start recording the macro.
+  -- 3. Once you are done with the macro, go back to normal mode.
+  -- 4. Hit Enter to repeat the macro over search matches.
+  {
+    "cq",
+    [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>*``qz]],
+    mode = "n",
+    opts = { desc = "Initiate multiple cursors with macros" },
+  },
+  {
+    "cq",
+    [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . g:mc . "``qz"]],
+    mode = "x",
+    opts = { expr = true, desc = "Initiate multiple cursors with macros" },
+  },
+  {
+    "cQ",
+    [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>#``qz]],
+    mode = "n",
+    opts = { desc = "Initiate multiple cursors with macros (backwards)" },
+  },
+  {
+    "cQ",
+    [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
+    mode = "x",
+    opts = { expr = true, desc = "Initiate multiple cursors with macros (backwards)" },
+  },
+}
+
+for _, keymap in ipairs(keymaps) do
+  om.set_keymaps(keymap[1], keymap[2], keymap.mode or "n", keymap.opts)
+end
