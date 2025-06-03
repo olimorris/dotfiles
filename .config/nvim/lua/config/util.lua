@@ -29,3 +29,21 @@ function om.create_user_command(name, command, desc, opts)
     nargs = opts and opts.nargs or 0,
   })
 end
+
+---Create an autocommand in Neovim
+---@param autocmd table A table containing the autocmd event and the command to execute
+---@param augroup string The name of the augroup to which this autocmd belongs
+---@param callback function|nil A callback function to execute when the autocmd is triggered
+---@param opts table Optional parameters for the autocmd, such as pattern
+---@return nil
+function om.create_autocmd(autocmd, augroup, callback, opts)
+  opts = opts or {}
+
+  vim.api.nvim_create_autocmd(autocmd[1], {
+    group = augroup,
+    pattern = opts.pattern or "*",
+    callback = type(autocmd[2]) == "function" and autocmd[2] or function()
+      vim.cmd(autocmd[2])
+    end,
+  })
+end

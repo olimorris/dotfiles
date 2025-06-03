@@ -66,6 +66,7 @@ require("lazy").setup({
 
 -- Load functions next as our plugins and autocmds require them
 require("config.functions")
+require("config.autocmds")
 
 -- Autocmds and keymaps can be loaded, lazily, after plugins
 vim.api.nvim_create_autocmd("User", {

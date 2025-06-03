@@ -1,8 +1,4 @@
-local conceal_ns = vim.api.nvim_create_namespace("ConcealClassAttribute")
-
----Use Legendary.nvim to create autocmds
----REF: https://github.com/mrjones2014/legendary.nvim/blob/master/doc/table_structures/AUTOCMDS.md
-return {
+local autocmds = {
   {
     -- Watch for changes in ~/.color_mode
     -- REF: https://github.com/rktjmp/fwatch.nvim/blob/main/lua/fwatch.lua
@@ -319,3 +315,14 @@ return {
     },
   },
 }
+
+for _, group in ipairs(autocmds) do
+  local group_name = group.name
+  local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
+
+  for _, autocmd in ipairs(group) do
+    om.create_autocmd(autocmd, augroup, autocmd[2], {
+      pattern = autocmd.opts and autocmd.opts.pattern or "*",
+    })
+  end
+end
