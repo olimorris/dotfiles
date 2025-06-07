@@ -39,7 +39,13 @@ namespace :backup do
     section 'Backing up NPM files'
 
     run %( npm -g upgrade )
-    run %( npm list --global --parseable --depth=0 | sed '1d' | awk '\{gsub\(/\\/.*\\//,"",$1\); print\}' \> #{NPM_FILE} )
+
+    # Check if npm command succeeds before redirecting
+    if system('npm list --global --parseable --depth=0 >/dev/null 2>&1')
+      run %( npm list --global --parseable --depth=0 | sed '1d' | awk '\{gsub\(/\\/.*\\//,"",$1\); print\}' \> #{NPM_FILE} )
+    else
+      puts 'Warning: npm list command failed, skipping backup'
+    end
   end
 
   desc 'Backup PIP files'

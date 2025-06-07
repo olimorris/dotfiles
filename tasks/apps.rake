@@ -6,7 +6,7 @@ namespace :install do
     unless testing?
       run %( bob install stable )
       run %( bob install nightly )
-      run %( bob use nightly )
+      # run %( bob use nightly )
       # time = Time.new.strftime('%s')
       # run %( git clone --depth 1 --branch nightly https://github.com/neovim/neovim ~/.neovim/#{time} )
       # run %( rm -rf /opt/homebrew/bin/nvim )
