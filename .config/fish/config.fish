@@ -25,5 +25,7 @@ source $HOME/.config/fish/fish_prompt.fish
 
 if status is-interactive
     load_env_vars ~/.env
-    zoxide init fish | source
+    mise activate fish | source
+    zoxide init --cmd dot fish | source
 end
+
