@@ -8,7 +8,7 @@ set -x HOMEBREW_NO_ANALYTICS 1
 set -x GOPATH "$HOME/.go"
 
  # Paths
-fish_add_path -p /opt/homebrew/sbin /opt/homebrew/bin "$HOME/.cargo/bin" "$HOME/.dotfiles/bin" "$HOME/.local/share/nvim/mason/bin" "$HOME/.local/share/bob/nvim-bin" "$HOME/.local/bin" "$GOPATH/bin"
+fish_add_path -p "$(brew --prefix rustup)/bin" "$(brew --prefix)/bin" "$HOME/.cargo/bin" "$HOME/.dotfiles/bin" "$HOME/.local/share/nvim/mason/bin" "$HOME/.local/share/bob/nvim-bin" "$HOME/.local/bin" "$GOPATH/bin"
 
 set -gx macOS_Theme (string trim (cat ~/.color_mode))
 switch $macOS_Theme
