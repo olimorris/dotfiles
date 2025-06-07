@@ -1,6 +1,7 @@
 return {
   {
     "olimorris/codecompanion.nvim", -- The KING of AI programming
+    cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions" },
     dependencies = {
       "j-hui/fidget.nvim", -- Display status
       "ravitemer/codecompanion-history.nvim", -- Save and load conversation history
@@ -41,7 +42,7 @@ return {
             keymap = "gh",
             save_chat_keymap = "sc",
             auto_save = false,
-            auto_generate_title = true,
+            auto_generate_title = false,
             continue_last_chat = false,
             delete_on_clearing_chat = false,
             picker = "snacks",
