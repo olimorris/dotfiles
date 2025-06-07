@@ -1,5 +1,6 @@
 [tools]
 lua = '5.4'
+node = "latest"
 nodejs = '22'
-python = ['3', '2.7.18']
+python = "latest"
 ruby = '3.2.0'
