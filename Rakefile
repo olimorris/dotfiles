@@ -20,6 +20,7 @@ task :backup do
   Rake::Task['backup:gems'].invoke
   Rake::Task['backup:npm'].invoke
   Rake::Task['backup:pip'].invoke
+  Rake::Task['backup:fish'].invoke
 
   # Files
   Rake::Task['backup:app_config'].invoke
@@ -48,6 +49,7 @@ task :install do
   Rake::Task['install:gems'].invoke unless testing?
   Rake::Task['install:npm'].invoke unless testing?
   Rake::Task['install:pip'].invoke unless testing?
+  Rake::Task['install:fish'].invoke unless testing?
 
   # Files
   Rake::Task['install:app_config'].invoke
@@ -85,6 +87,7 @@ task :update do
   Rake::Task['update:gems'].invoke
   Rake::Task['update:npm'].invoke
   Rake::Task['update:pip'].invoke
+  Rake::Task['update:fish'].invoke
 
   # System
   Rake::Task['update:servers'].invoke
@@ -113,27 +116,26 @@ end
 
 desc "Sync'ing personal and work settings"
 task :work do
-    task :pull do
-      section "Cloud -> Mac"
+  task :pull do
+    section 'Cloud -> Mac'
 
-      Rake::Task['work:restore:files'].invoke
+    Rake::Task['work:restore:files'].invoke
 
-      # Install packages
-      Rake::Task['install:brew_packages'].invoke
-      Rake::Task['install:brew_cask_packages'].invoke
-      Rake::Task['install:brew_clean_up'].invoke
-      Rake::Task['install:gems'].invoke unless testing?
-      Rake::Task['install:npm'].invoke unless testing?
-      Rake::Task['install:pip'].invoke unless testing?
+    # Install packages
+    Rake::Task['install:brew_packages'].invoke
+    Rake::Task['install:brew_cask_packages'].invoke
+    Rake::Task['install:brew_clean_up'].invoke
+    Rake::Task['install:gems'].invoke unless testing?
+    Rake::Task['install:npm'].invoke unless testing?
+    Rake::Task['install:pip'].invoke unless testing?
 
-      # App config
-      Rake::Task['install:app_config'].invoke
-      Rake::Task['install:dotfiles'].invoke
+    # App config
+    Rake::Task['install:app_config'].invoke
+    Rake::Task['install:dotfiles'].invoke
+  end
+  task :push do
+    section 'Mac -> Cloud'
 
-    end
-    task :push do
-      section "Mac -> Cloud"
-
-      Rake::Task['work:backup:files'].invoke
-    end
+    Rake::Task['work:backup:files'].invoke
+  end
 end

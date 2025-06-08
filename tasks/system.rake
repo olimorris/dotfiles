@@ -8,17 +8,6 @@ namespace :install do
     run %( chmod -R +x ~/.dotfiles/bin/ )
   end
 
-  desc 'Install Fish shell'
-  task :fish do
-    section 'Installing Fish shell and plugins'
-
-    # run %( echo $(which fish) | sudo tee -a /etc/shells )
-    # run %( chsh -s $(which fish) )
-
-    run %( curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher )
-    run %( fisher update )
-  end
-
   desc 'Install fonts'
   task :fonts do
     section 'Installing fonts'

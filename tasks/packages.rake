@@ -6,6 +6,7 @@ GEMS_FILE = File.expand_path('../misc/packages/ruby_gems.txt', __dir__).gsub(/ /
 MAS_FILE = File.expand_path('../misc/packages/app_store.txt', __dir__).gsub(/ /, '\ ')
 NPM_FILE = File.expand_path('../misc/packages/npm_packages.txt', __dir__).gsub(/ /, '\ ')
 PIP_FILE = File.expand_path('../misc/packages/python_pip.txt', __dir__).gsub(/ /, '\ ')
+FISHER_FILE = File.expand_path('../misc/packages/fisher_plugins.txt', __dir__).gsub(/ /, '\ ')
 
 # HEAD_ONLY_FORMULAS = %w( neovim )
 HEAD_ONLY_FORMULAS = ''
@@ -53,6 +54,13 @@ namespace :backup do
     section 'Backing up PIP files'
 
     run %( pip3 freeze \> #{PIP_FILE} )
+  end
+
+  desc 'Backup Fish plugins'
+  task :fish do
+    section 'Backing up Fish plugins'
+
+    run %( fish -c "fisher list" \> #{FISHER_FILE} )
   end
 end
 
@@ -159,6 +167,14 @@ namespace :install do
 
     run %( pip3 install -r #{PIP_FILE} )
   end
+
+  desc 'Install Fish plugins'
+  task :fish do
+    section 'Installing Fish plugins'
+
+    run %( curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher )
+    run %( fish -c "fisher install (cat #{FISHER_FILE} | string split '\\n')" )
+  end
 end
 
 namespace :update do
@@ -174,7 +190,7 @@ namespace :update do
   task :fish do
     section 'Updating Fish plugins'
 
-    run %( fisher update )
+    run %( fish -c "fisher update" )
   end
 
   desc 'Update Ruby Gems'
