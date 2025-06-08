@@ -1,4 +1,0 @@
-jorgebucaran/fisher
-laughedelic/fish_logo
-patrickf1/fzf.fish
-jorgebucaran/replay.fish
