@@ -51,47 +51,47 @@ return {
 
           ---Shortcut function to map keys
           ---@param keys string|table
-          ---@param func function|string
           ---@param desc string
+          ---@param func function|string
           ---@param mode? string|table
           ---@return nil
-          local map = function(keys, func, desc, mode)
+          local map = function(keys, desc, func, mode)
             mode = mode or "n"
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
 
-          map("gf", function()
+          map("gf", "Find Diagnostics", function()
             Snacks.picker.diagnostics_buffer()
-          end, "Find Diagnostics")
-          map("gq", function()
+          end)
+          map("gq", "Format", function()
             require("conform").format({ async = true, bufnr = bufnr, lsp_format = "fallback" })
-          end, "Format")
-          map("gr", function()
+          end)
+          map("gr", "Find References", function()
             Snacks.picker.lsp_references()
-          end, "Find References")
-          map("gd", function()
+          end)
+          map("gd", "Go to definition", function()
             Snacks.picker.lsp_definitions()
-          end, "Go to definition")
+          end)
           map(
             "gl",
-            "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>",
-            "Show Line Diagnostics"
+            "Show Line Diagnostics",
+            "<cmd>lua vim.diagnostic.open_float(0, { border = 'single', source = 'always' })<CR>"
           )
-          map("K", "<cmd>lua vim.lsp.buf.hover<CR>", "Show hover information")
-          map("gI", function()
+          map("K", "Show hover information", "<cmd>lua vim.lsp.buf.hover<CR>")
+          map("gI", "Go to [I]mplementation", function()
             Snacks.picker.lsp_implementations()
-          end, "Go to [I]mplementation")
-          map("gy", function()
+          end)
+          map("gy", "Go to T[y]pe Definition", function()
             Snacks.picker.lsp_type_definitions()
-          end, "Go to T[y]pe Definition")
-          map("ga", vim.lsp.buf.code_action, "[G]oto Code [A]ction", { "n", "x" })
-          map("grn", vim.lsp.buf.rename, "[R]e[n]ame")
-          map("[", function()
+          end)
+          map("ga", "[G]oto Code [A]ction", vim.lsp.buf.code_action, { "n", "x" })
+          map("grn", "[R]e[n]ame", vim.lsp.buf.rename)
+          map("[", "Go to previous diagnostic item", function()
             vim.diagnostic.jump({ count = -1, float = true })
-          end, "Go to previous diagnostic item")
-          map("]", function()
+          end)
+          map("]", "Go to next diagnostic item", function()
             vim.diagnostic.jump({ count = 1, float = true })
-          end, "Go to next diagnostic item")
+          end)
 
           -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
           ---@param client vim.lsp.Client
