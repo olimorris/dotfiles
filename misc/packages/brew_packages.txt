@@ -2,13 +2,13 @@ act
 age
 bats-core
 bob
-brew-cask-completion
 code-minimap
 composer
 dark-mode
 dash
 docker
 fd
+ffmpeg
 fish
 flux
 fortune
@@ -17,11 +17,9 @@ gh
 git
 glow
 go
-gradle
 hledger
 httpie
 imagemagick
-jython
 lazygit
 ledger
 librsync
@@ -30,14 +28,11 @@ lolcat
 luajit
 mackup
 mas
-maven
 mise
 most
 mvfst
-neofetch
 ninja
 node
-opencv
 ossp-uuid
 pandoc
 php@8.1
@@ -49,6 +44,7 @@ pre-commit
 rclone
 reattach-to-user-namespace
 ripgrep
+rust
 shfmt
 shunit2
 spring-io/tap/spring-boot
@@ -59,6 +55,7 @@ typos-cli
 universal-ctags
 vim
 vivid
+vtk
 watchman
 wget
 yarn

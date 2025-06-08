@@ -1,4 +1,2 @@
-homebrew/cask-fonts
-homebrew/services
 microsoft/git
 spring-io/tap
