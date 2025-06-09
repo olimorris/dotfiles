@@ -32,11 +32,9 @@ return {
       end,
     },
     init = function()
-      vim.api.nvim_create_user_command("Sessions", function()
+      om.create_user_command("Sessions", "List Sessions", function()
         require("persisted").select()
-      end, {
-        desc = "List Sessions",
-      })
+      end)
     end,
   },
   {

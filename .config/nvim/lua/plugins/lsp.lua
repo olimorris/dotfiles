@@ -43,7 +43,7 @@ return {
 
       -- LspAttach is where you enable features that only work
       -- if there is a language server active in the file
-      vim.api.nvim_create_autocmd("LspAttach", {
+      om.create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
         desc = "LSP actions",
         callback = function(event)
@@ -108,19 +108,18 @@ return {
             and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf)
           then
             local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
-            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+
+            om.create_autocmd({ "CursorHold", "CursorHoldI" }, {
               buffer = event.buf,
-              group = highlight_augroup,
               callback = vim.lsp.buf.document_highlight,
-            })
-
-            vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-              buffer = event.buf,
               group = highlight_augroup,
-              callback = vim.lsp.buf.clear_references,
             })
-
-            vim.api.nvim_create_autocmd("LspDetach", {
+            om.create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+              buffer = event.buf,
+              callback = vim.lsp.buf.clear_references,
+              group = highlight_augroup,
+            })
+            om.create_autocmd("LspDetach", {
               group = vim.api.nvim_create_augroup("lsp-detach", { clear = true }),
               callback = function(event2)
                 vim.lsp.buf.clear_references()

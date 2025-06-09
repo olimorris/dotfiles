@@ -296,7 +296,7 @@ return {
     },
     cmd = { "Csv", "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
     init = function()
-      vim.api.nvim_create_user_command("Csv", function()
+      om.create_user_command("Csv", "Toggle CSV view", function()
         require("csvview").toggle(0, {
           parser = {
             delimiter = ",",
@@ -308,9 +308,7 @@ return {
             header_lnum = 1,
           },
         })
-      end, {
-        desc = "Toggle CSV view",
-      })
+      end)
     end,
   },
 }

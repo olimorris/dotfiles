@@ -321,7 +321,9 @@ for _, group in ipairs(autocmds) do
   local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
 
   for _, autocmd in ipairs(group) do
-    om.create_autocmd(autocmd, augroup, autocmd[2], {
+    om.create_autocmd(autocmd[1], {
+      group = augroup,
+      callback = autocmd[2],
       pattern = autocmd.opts and autocmd.opts.pattern or "*",
     })
   end
