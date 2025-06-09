@@ -42,7 +42,7 @@ return {
             keymap = "gh",
             save_chat_keymap = "sc",
             auto_save = false,
-            auto_generate_title = false,
+            auto_generate_title = true,
             continue_last_chat = false,
             delete_on_clearing_chat = false,
             picker = "snacks",
@@ -452,11 +452,9 @@ return {
       },
     },
     init = function()
-      vim.api.nvim_create_user_command("CopilotToggle", function()
+      om.create_user_command("Copilot", "Toggle Copilot suggestions", function()
         require("copilot.suggestion").toggle_auto_trigger()
-      end, {
-        desc = "Toggle Copilot suggestions for the current buffer",
-      })
+      end)
     end,
     opts = {
       panel = { enabled = false },
