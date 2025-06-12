@@ -5,8 +5,8 @@ namespace :work do
       run %( /bin/date -u )
 
       dirs = {
-        '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles",
-        'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code"
+        '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles"
+        # 'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code"
       }
 
       flag = ' -P' if args[:progress]
@@ -24,8 +24,8 @@ namespace :work do
       run %( /bin/date -u )
 
       dirs = {
-        '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles",
-        'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code"
+        '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles"
+        # 'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code"
       }
 
       flag = ' -P' if args[:progress]
