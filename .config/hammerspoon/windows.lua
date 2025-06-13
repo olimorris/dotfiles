@@ -35,6 +35,30 @@ POSITIONS = {
     medium = "12,1 36x18",
     small = "16,2 28x16",
   },
+  p1080 = function(opts)
+    opts = opts or {}
+    local chromeOffset = opts.chrome and 87 or 0
+
+    local dellScreen = nil
+    for _, screen in pairs(hs.screen.allScreens()) do
+      if screen:name() == DISPLAYS.external then
+        dellScreen = screen
+        break
+      end
+    end
+
+    if dellScreen then
+      local screenFrame = dellScreen:frame()
+      return hs.geometry.rect(
+        screenFrame.x + 25,
+        screenFrame.y + 25, -- Keep Y position consistent
+        1920,
+        1080 + chromeOffset -- Just extend height for Chrome
+      )
+    else
+      return hs.geometry.rect(25, 25, 1920, 1080 + chromeOffset)
+    end
+  end,
 }
 
 -- [[ Window Management ]] -----------------------------------------------------
@@ -78,6 +102,20 @@ hs.hotkey.bind(Hyper, "3", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.thirds.right)
+  end
+end)
+
+hs.hotkey.bind(Hyper, "4", function()
+  local win = hs.window.focusedWindow()
+  if win then
+    win:setFrame(POSITIONS.p1080())
+  end
+end)
+
+hs.hotkey.bind(Hyper, "5", function()
+  local win = hs.window.focusedWindow()
+  if win then
+    win:setFrame(POSITIONS.p1080({ chrome = true }))
   end
 end)
 
