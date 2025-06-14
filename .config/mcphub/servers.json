@@ -12,10 +12,9 @@
     "github.com/tavily-ai/tavily-mcp": {
       "args": ["-y", "tavily-mcp@0.1.4"],
       "env": {
-        "TAVILY_API_KEY": "$:op read op://personal/Tavily_API/credential --no-newline"
+        "TAVILY_API_KEY": "${cmd: op read op://personal/Tavily_API/credential --no-newline}"
       },
       "command": "npx"
     }
   }
 }
-
