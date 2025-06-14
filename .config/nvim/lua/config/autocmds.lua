@@ -78,6 +78,13 @@ local autocmds = {
       end,
       opts = { pattern = "CodeCompanionInlineFinished" },
     },
+    {
+      "User",
+      function(args)
+        vim.treesitter.start(args.data.bufnr, "markdown")
+      end,
+      opts = { pattern = "CodeCompanionChatCreated" },
+    },
     -- {
     --   "User",
     --   function(args)
