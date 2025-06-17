@@ -454,9 +454,9 @@ local Session = {
   {
     provider = function(self)
       if vim.g.persisting then
-        return "   "
+        return " 󰅠  "
       end
-      return "   "
+      return " 󰅣  "
     end,
     hl = { fg = "gray", bg = "statusline_bg" },
     update = {
@@ -608,7 +608,7 @@ local Lazy = {
     end),
   },
   provider = function()
-    return "  " .. require("lazy.status").updates() .. " "
+    return " 󰚰 " .. require("lazy.status").updates() .. " "
   end,
   on_click = {
     callback = function()

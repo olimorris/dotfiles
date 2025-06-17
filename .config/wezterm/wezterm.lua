@@ -16,9 +16,9 @@ config.front_end = "WebGpu"
 config.cursor_blink_ease_in = "Constant"
 config.cursor_blink_ease_out = "Constant"
 
-config.font = wezterm.font("Operator Mono", {
+config.font = wezterm.font("OperatorMono Nerd Font", {
   stretch = "Normal",
-  weight = "Book",
+  weight = "Medium",
 })
 config.font_size = 21
 
