@@ -10,9 +10,9 @@ local on_personal = (name:find("AAGB") == nil)
   this, a table can be passed which contains the app name followed by the filename
 ]]
 local apps = {
+  a = "Anki",
   e = "Microsoft Excel",
   f = "Finder",
-  g = "Google Chrome",
   n = "Bear", -- Notes
   o = "Notion", -- Life OS
   r = "Reminders",
