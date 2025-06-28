@@ -32,7 +32,7 @@ local function tabs(config)
         left = "",
         right = "",
       },
-      color_overrides = {
+      theme_overrides = {
         normal_mode = {
           a = { fg = colors.background, bg = colors.ansi[5] },
           b = { fg = colors.indexed[59], bg = colors.background },
