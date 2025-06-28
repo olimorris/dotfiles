@@ -90,4 +90,11 @@ namespace :update do
 
     run %( mise upgrade )
   end
+
+  desc 'Update Wezterm Plugins'
+  task :wezterm do
+    section 'Updating Wezterm Plugins'
+
+    run %( wezterm cli spawn --cwd . -- lua -e "require('wezterm').plugin.update_all()" ) unless testing?
+  end
 end

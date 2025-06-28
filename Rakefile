@@ -91,6 +91,7 @@ task :update do
 
   # System
   Rake::Task['update:servers'].invoke
+  Rake::Task['update:wezterm'].invoke
 
   # Apps
   Rake::Task['update:neovim'].invoke
