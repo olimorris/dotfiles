@@ -3,32 +3,46 @@ return {
     "nvim-treesitter/nvim-treesitter", -- Smarter code understanding like syntax Highlight and navigation
     lazy = false,
     branch = "main",
-    build = ":TSUpdate",
-    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-    config = function()
-      require("nvim-treesitter").install({
-        "c",
-        "cpp",
-        "cmake",
-        "diff",
-        "gitcommit",
-        "gitignore",
-        "go",
-        "html",
-        "json",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "php",
-        "python",
-        "ruby",
-        "rust",
-        "toml",
-        "vim",
-        "vimdoc",
-        "vue",
-        "yaml",
+    build = {
+      function()
+        require("nvim-treesitter").install({
+          "c",
+          "cmake",
+          "cpp",
+          "csv",
+          "diff",
+          "gitcommit",
+          "gitignore",
+          "go",
+          "fish",
+          "html",
+          "json",
+          "ledger",
+          "lua",
+          "markdown",
+          "markdown_inline",
+          "php",
+          "python",
+          "ruby",
+          "rust",
+          "toml",
+          "vim",
+          "vimdoc",
+          "vue",
+          "yaml",
+        })
+        require("nvim-treesitter").update()
+      end,
+    },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+          local filetype = args.match
+          local lang = vim.treesitter.language.get_lang(filetype)
+          if vim.treesitter.language.add(lang) then
+            vim.treesitter.start()
+          end
+        end,
       })
     end,
   },
