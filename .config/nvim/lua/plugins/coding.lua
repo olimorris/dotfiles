@@ -320,6 +320,9 @@ return {
           -- show_references = true,
           -- show_header_separator = false,
           -- show_settings = false,
+          icons = {
+            tool_success = "󰸞",
+          },
         },
         diff = {
           provider = "mini_diff",
