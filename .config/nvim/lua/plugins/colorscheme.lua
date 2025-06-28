@@ -53,6 +53,9 @@ return {
         },
       },
       highlights = {
+        CodeCompanionChatIcon = { fg = "${green}" },
+        CodeCompanionChatToolFailure = { fg = "${gray}", italic = true },
+        CodeCompanionChatToolSuccess = { fg = "${gray}", bg = "NONE", italic = true },
         CodeCompanionTokens = { fg = "${gray}", italic = true },
         CodeCompanionVirtualText = { fg = "${gray}", italic = true },
 
