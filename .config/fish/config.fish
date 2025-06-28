@@ -23,6 +23,11 @@ source $HOME/.config/fish/aliases.fish
 source $HOME/.config/fish/functions.fish
 source $HOME/.config/fish/fish_prompt.fish
 
+
+# History configuration
+set -g fish_history_limit 10000
+set -g fish_history_save_on_exit true
+
 if status is-interactive
     load_env_vars ~/.env
     mise activate fish | source
