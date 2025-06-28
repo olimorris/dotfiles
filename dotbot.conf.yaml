@@ -42,7 +42,6 @@
     ~/.profile: .config/bash/.profile
     ~/.pypirc: .config/.pypirc
     ~/.ssh: .config/ssh
-    ~/.tofish: .config/fish/.tofish
     ~/.vim/custom_snippets: .config/vim/custom_snippets
     ~/.vimrc: .config/vim/.vimrc
     ~/.vimrc.plugins: .config/vim/.vimrc.plugins
