@@ -14,11 +14,18 @@ return {
       -- { "ibhagwan/fzf-lua", config = true },
     },
     opts = {
+      ---@module "codecompanion"
+      ---@type CodeCompanion.Config
       adapters = {
         anthropic = function()
           return require("codecompanion.adapters").extend("anthropic", {
             env = {
               api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
+            },
+            schema = {
+              extended_thinking = {
+                default = true,
+              },
             },
           })
         end,
@@ -36,7 +43,14 @@ return {
             },
           })
         end,
+        jina = function()
+          return require("codecompanion.adapters").extend("jina", {
             env = {
+              api_key = "cmd:op read op://personal/Jina_API/credential --no-newline",
+            },
+          })
+        end,
+
         mistral = function()
           return require("codecompanion.adapters").extend("mistral", {
             env = {
@@ -207,7 +221,7 @@ return {
         chat = {
           adapter = {
             name = "copilot",
-            model = "claude-sonnet-4",
+            model = "gpt-4.1",
           },
           roles = {
             user = "olimorris",
