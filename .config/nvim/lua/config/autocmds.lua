@@ -124,7 +124,7 @@ local autocmds = {
         -- Disable automatic session saving
         require("persisted").stop()
       end,
-      opts = { pattern = "PersistedTelescopeLoadPre" },
+      opts = { pattern = "PersistedSelectPre" },
     },
     {
       "User",
