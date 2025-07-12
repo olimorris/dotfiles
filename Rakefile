@@ -20,7 +20,6 @@ task :backup do
   Rake::Task['backup:gems'].invoke
   Rake::Task['backup:npm'].invoke
   Rake::Task['backup:pip'].invoke
-  Rake::Task['backup:fish'].invoke
 
   # Files
   Rake::Task['backup:app_config'].invoke
@@ -87,7 +86,6 @@ task :update do
   Rake::Task['update:gems'].invoke
   Rake::Task['update:npm'].invoke
   Rake::Task['update:pip'].invoke
-  Rake::Task['update:fish'].invoke
 
   # System
   Rake::Task['update:servers'].invoke
