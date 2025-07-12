@@ -5,12 +5,13 @@ bob
 code-minimap
 composer
 dark-mode
-dash
+dash-shell
 docker
 fd
 ffmpeg
 fish
 flux
+fontforge
 fortune
 fzf
 gh
@@ -18,7 +19,6 @@ git
 glow
 go
 hledger
-httpie
 imagemagick
 lazygit
 ledger
@@ -40,7 +40,6 @@ pinentry-mac
 pipx
 pngpaste
 postgresql@14
-pre-commit
 rclone
 reattach-to-user-namespace
 ripgrep
