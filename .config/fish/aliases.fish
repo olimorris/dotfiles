@@ -46,10 +46,10 @@ alias nah='git reset --hard && git clean -df'
 alias gfix='git rm -r --cached . && git add .'
 
 # hledger
-alias hf='hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal --auto'
-alias hfs='hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal --forecast="this month".. --auto bal "^(ass|liab)" --tree -H -e "1 month"'
-alias hb='hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal bal -M --tree --budget expenses'
-alias hg='hledger-forecast generate -t $FINANCES/transactions.journal -f $FINANCES/forecast.csv -o $FINANCES/forecast.journal --force'
+alias hf='hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal --auto'
+alias hfs='hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal --forecast="this month".. --auto bal "^(ass|liab)" --tree -H -e "1 month"'
+alias hb='hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal bal -M --tree --budget expenses -b "1 month ago" -e "2 months"'
+alias hg='hledger-forecast generate -t $FINANCES/actuals.journal -f $FINANCES/forecast.csv -o $FINANCES/forecast.journal --force'
 alias hs='hledger-forecast summarize -f $FINANCES/forecast.csv'
 
 # Homebrew
