@@ -43,14 +43,6 @@ return {
             },
           })
         end,
-        jina = function()
-          return require("codecompanion.adapters").extend("jina", {
-            env = {
-              api_key = "cmd:op read op://personal/Jina_API/credential --no-newline",
-            },
-          })
-        end,
-
         mistral = function()
           return require("codecompanion.adapters").extend("mistral", {
             env = {
