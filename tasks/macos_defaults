@@ -3,9 +3,8 @@
 # ~/.macos — https://mths.be/macos
 # Last sync was of SHA ea68bda on Oct 12, 2020
 
-# Close any open System Preferences panes, to prevent them from overriding
-# settings we’re about to change
-osascript -e 'tell application "System Preferences" to quit'
+# Close any open System Preferences panes, to prevent them from overriding settings we’re about to change
+# osascript -e 'tell application "System Preferences" to quit'
 
 # Ask for the administrator password upfront if we're not in test mode
 if [[ -z $TEST_ENV ]]; then
