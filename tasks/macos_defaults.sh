@@ -33,9 +33,6 @@ sudo defaults write com.apple.Spotlight MenuItemHidden -bool true
 # Stop the Spotlight service
 sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist
 
-# Disable automatically hiding menubar
-defaults write NSGlobalDomain _HIHideMenuBar -bool false
-
 # Show the analog clock in the menu bar
 defaults write com.apple.menuextra.clock IsAnalog -bool true
 
@@ -438,6 +435,9 @@ defaults write com.apple.dock dashboard-in-overlay -bool true
 
 # Don’t automatically rearrange Spaces based on most recent use
 defaults write com.apple.dock mru-spaces -bool false
+
+# Fade transition between Spaces instead of using movement.
+defaults write com.apple.universalaccess reduceMotion -bool true
 
 # Remove the auto-hiding Dock delay
 defaults write com.apple.dock autohide-delay -float 0.5
