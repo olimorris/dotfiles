@@ -44,7 +44,7 @@ namespace :install do
   task :macos do
     section 'Installing macOS Configurations'
 
-    run %( sh ./tasks/macos_defaults )
+    run %( sh ./commands/macos )
   end
 
   desc 'Install Servers'
