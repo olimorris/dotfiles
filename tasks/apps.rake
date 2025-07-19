@@ -14,6 +14,9 @@ namespace :install do
       # run %( rm -rf /usr/local/share/nvim )
       # run %( \(cd ~/.neovim/#{time} && make CMAKE_BUILD_TYPE=RelWithDebInfo && make install\) )
       # run %( ln -s ~/.neovim/#{time} ~/.neovim/latest )
+
+      # Ensure we have the colors setup
+      run %( nvim --headless +'OneDarkProExtras' +qall)
     end
   end
 

@@ -1,5 +1,4 @@
 local wezterm = require("wezterm")
-local config = wezterm.config_builder()
 
 local function scheme_for_appearance()
   local appearance = wezterm.gui.get_appearance()
