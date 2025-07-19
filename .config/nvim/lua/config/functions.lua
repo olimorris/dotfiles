@@ -132,15 +132,3 @@ function om.ToggleLineNumbers()
     vim.wo.relativenumber = true
   end
 end
-
-function om.ToggleTheme(mode)
-  if vim.o.background == mode then
-    return
-  end
-
-  if vim.o.background == "dark" then
-    vim.cmd([[colorscheme onelight]])
-  else
-    vim.cmd([[colorscheme vaporwave]])
-  end
-end

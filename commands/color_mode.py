@@ -23,7 +23,7 @@ def app_macos(mode):
     """
     Change the macOS environment
     """
-    path_to_file = "~/.color_mode"
+    path_to_file = "/tmp/oli-theme"
 
     # Open the color_mode file
     with open(os.path.expanduser(path_to_file), "r") as config_file:

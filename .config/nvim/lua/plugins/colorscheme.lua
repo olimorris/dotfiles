@@ -162,5 +162,31 @@ return {
         -- highlight_inactive_windows = true,
       },
     },
+    init = function()
+      local function change_theme(mode, theme)
+        vim.cmd("set background=" .. mode)
+        vim.cmd("colorscheme " .. theme)
+      end
+
+      function om.ToggleTheme(mode)
+        local themes = {
+          dark = "vaporwave",
+          light = "onelight",
+        }
+
+        if mode then
+          change_theme(mode, themes[mode])
+        else
+          if vim.o.background == "dark" then
+            change_theme("light", themes.light)
+          else
+            change_theme("dark", themes.dark)
+          end
+        end
+
+        local utils = require("heirline.utils")
+        utils.on_colorscheme(require("onedarkpro.helpers").get_colors())
+      end
+    end,
   },
 }

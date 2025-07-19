@@ -7,9 +7,8 @@ local autocmds = {
       "VimEnter",
       function()
         local uv = vim.uv
-        local handle = uv.new_fs_event()
 
-        local file_to_watch = "~/.color_mode"
+        local file_to_watch = "/tmp/oli-theme"
 
         local flags = {
           watch_entry = false, -- true = when dir, watch dir inode, not dir content
@@ -17,43 +16,39 @@ local autocmds = {
           recursive = false, -- true = watch dirs inside dirs
         }
 
-        local function change_colors(mode)
-          -- vim.opt.background = mode or "dark"
-
-          if mode == "light" then
-            vim.cmd([[colorscheme onelight]])
-          else
-            vim.cmd([[colorscheme vaporwave]])
-          end
-
-          local utils = require("heirline.utils")
-          utils.on_colorscheme(require("onedarkpro.helpers").get_colors())
-        end
-
         ---Read the contents of a given file
         local function read_file(file)
-          file = vim.fs.normalize(file)
-
-          local fd = assert(uv.fs_open(file, "r", 438))
-          local stat = assert(uv.fs_fstat(fd))
-          local data = assert(uv.fs_read(fd, stat.size, 0))
-          assert(uv.fs_close(fd))
-
-          return vim.trim(data)
+          local fd = uv.fs_open(file, "r", 438)
+          if not fd then
+            return nil
+          end
+          local stat = uv.fs_fstat(fd)
+          local data = stat and uv.fs_read(fd, stat.size, 0) or nil
+          uv.fs_close(fd)
+          return data and vim.trim(data) or nil
         end
 
+        ---Set the theme based on the contents of the file
+        local function set_theme()
+          local ok, theme = pcall(read_file, file_to_watch)
+          if ok and (theme == "dark" or theme == "light") then
+            om.ToggleTheme(theme)
+          else
+            om.ToggleTheme(vim.o.background)
+          end
+        end
+
+        ---Callback function for file change events
         local event_cb = function(err, filename, _)
-          filename = vim.fs.normalize("~/" .. filename)
-          if not err then
+          if not err and filename and uv.fs_stat(file_to_watch) then
             vim.schedule(function()
-              local data = read_file(filename)
-              change_colors(data)
+              set_theme()
             end)
           end
         end
 
-        change_colors(read_file(file_to_watch))
-        uv.fs_event_start(handle, vim.fs.normalize(file_to_watch), flags, event_cb)
+        set_theme() -- Set the initial theme
+        uv.fs_event_start(uv.new_fs_event(), file_to_watch, flags, event_cb)
       end,
     },
   },
