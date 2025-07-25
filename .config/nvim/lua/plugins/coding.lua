@@ -58,7 +58,7 @@ return {
             schema = {
               model = {
                 default = function()
-                  return "meta-llama/llama-3.1-8b-instruct"
+                  return "qwen/qwen3-coder-480b-a35b-instruct"
                 end,
               },
             },
