@@ -4,7 +4,13 @@ export PATH="$HOME/.local/share/mise/shims:$PATH"
 
 . /Users/Oli/.env
 
-/opt/homebrew/bin/hledger -f $FINANCES/transactions.journal -f $FINANCES/forecast.journal --auto --forecast="this month".. bal "^(ass|liab)" --tree -H -M -b "1 month ago" -e "36 months" -O html >$FINANCES/generated.html
+# Generate the budget report
+/opt/homebrew/bin/hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal bal -M --tree --budget expenses -b "1 month ago " -e "2 months" -O html >$FINANCES/budget.html
+cp $FINANCES/budget.html /Users/Oli/Documents/Finances/budget.html
+rm $FINANCES/budget.html
+
+# Generate the forecast report
+/opt/homebrew/bin/hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal --auto --forecast="this month".. bal "^(ass|liab)" --tree -H -M -b "1 month ago" -e "36 months" -O html >$FINANCES/generated.html
 
 inputFile=$FINANCES/generated.html
 outputFile=$FINANCES/output.html
@@ -29,5 +35,6 @@ cat $inputFile >>$outputFile
 echo '</body>
 </html>' >>$outputFile
 
-cp $outputFile /Users/Oli/Documents/finances.html
+cp $outputFile /Users/Oli/Documents/Finances/forecast.html
 rm $inputFile
+rm $outputFile
