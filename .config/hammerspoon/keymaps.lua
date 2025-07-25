@@ -17,19 +17,19 @@ local apps = {
   o = "Notion", -- Life OS
   r = "Reminders",
   t = "WezTerm", -- Terminal
+  v = "UTM", -- Virtual Machine
+  --w = RESERVED
 }
 
 if on_personal then
   apps.c = "Code" -- VS Code
   apps.b = "Safari" -- Browser
   apps.p = "1Password"
-  apps.w = "Microsoft Word"
 else
   apps.c = "Teams" -- Chat
   apps.b = "Google Chrome" -- Browser
   apps.m = "Microsoft Outlook" -- Mail
   apps.p = "Microsoft PowerPoint"
-  apps.w = "Windows App"
   apps.z = "Zoom"
 end
 
@@ -66,3 +66,8 @@ for key, app_name in pairs(apps) do
     LaunchOrToggle(key, app_name)
   end
 end
+
+-------------------------------------OTHERS-------------------------------------
+hs.hotkey.bind(hyper, "H", function()
+  hs.hints.windowHints()
+end)

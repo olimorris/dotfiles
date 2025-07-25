@@ -1,5 +1,26 @@
 local window = require("hs.window")
 
+-- Move focused window to next screen
+local function moveAndResizeWindow(getDestinationScreenFn)
+  local win = hs.window.focusedWindow()
+  if win then
+    local destinationScreen = getDestinationScreenFn(win:screen())
+    if destinationScreen then
+      win:moveToScreen(destinationScreen)
+
+      -- After moving, get the screen the window is now on
+      local newScreenOfWindow = win:screen()
+
+      if newScreenOfWindow:name() == DISPLAYS.internal then
+        hs.grid.set(win, POSITIONS.full, newScreenOfWindow)
+      else
+        -- If not internal, set to half. Adjust POSITIONS.halves.left if needed.
+        hs.grid.set(win, POSITIONS.halves.left, newScreenOfWindow)
+      end
+    end
+  end
+end
+
 -- [[ Key Bindings ]] ---------------------------------------------------------
 local win_keys = { "alt" }
 local win_shift_keys = { "alt", "shift" }
@@ -64,21 +85,31 @@ POSITIONS = {
 -- [[ Window Management ]] -----------------------------------------------------
 
 -- Maximize the focused window
-hs.hotkey.bind(win_keys, "M", function()
+hs.hotkey.bind({ "alt" }, "m", function()
   local win = hs.window.focusedWindow()
   if win then
     win:maximize()
   end
 end)
 
+-- Modal Window Management
+local modal = hs.hotkey.modal.new(Hyper, "W")
+
+function modal:entered()
+  hs.alert.show("Window Mode")
+end
+function modal:exited()
+  hs.alert.closeAll()
+end
+
 -- Halves
-hs.hotkey.bind(Hyper, "Left", function()
+modal:bind({}, "h", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.halves.left)
   end
 end)
-hs.hotkey.bind(Hyper, "Right", function()
+modal:bind({}, "l", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.halves.right)
@@ -86,94 +117,65 @@ hs.hotkey.bind(Hyper, "Right", function()
 end)
 
 -- Thirds
-hs.hotkey.bind(Hyper, "1", function()
+modal:bind({}, "1", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.thirds.left)
   end
 end)
-hs.hotkey.bind(Hyper, "2", function()
+modal:bind({}, "2", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.thirds.center)
   end
 end)
-hs.hotkey.bind(Hyper, "3", function()
+modal:bind({}, "3", function()
   local win = hs.window.focusedWindow()
   if win then
     hs.grid.set(win, POSITIONS.thirds.right)
   end
 end)
-
-hs.hotkey.bind(Hyper, "4", function()
+modal:bind({}, "4", function()
   local win = hs.window.focusedWindow()
   if win then
     win:setFrame(POSITIONS.p1080())
   end
 end)
-
-hs.hotkey.bind(Hyper, "5", function()
+modal:bind({}, "5", function()
   local win = hs.window.focusedWindow()
   if win then
     win:setFrame(POSITIONS.p1080({ chrome = true }))
   end
 end)
 
--- Two-Thirds
-hs.hotkey.bind(win_shift_keys, "Left", function()
-  local win = hs.window.focusedWindow()
-  if win then
-    hs.grid.set(win, POSITIONS.twoThirds.left)
-  end
-end)
-hs.hotkey.bind(win_shift_keys, "Right", function()
-  local win = hs.window.focusedWindow()
-  if win then
-    hs.grid.set(win, POSITIONS.twoThirds.right)
-  end
-end)
-
--- Center the application
-hs.hotkey.bind(win_keys, "C", function()
+-- Center
+modal:bind({}, "c", function()
   local win = hs.window.focusedWindow()
   if win then
     local winFrame = win:frame()
     local screenFrame = win:screen():frame()
-
     local newX = screenFrame.x + (screenFrame.w - winFrame.w) / 2
     local newY = screenFrame.y + (screenFrame.h - winFrame.h) / 2
-
     win:setTopLeft({ x = newX, y = newY })
   end
 end)
 
--- Move focused window to next screen
-local function moveAndResizeWindow(getDestinationScreenFn)
-  local win = hs.window.focusedWindow()
-  if win then
-    local destinationScreen = getDestinationScreenFn(win:screen())
-    if destinationScreen then
-      win:moveToScreen(destinationScreen)
-
-      -- After moving, get the screen the window is now on
-      local newScreenOfWindow = win:screen()
-
-      if newScreenOfWindow:name() == DISPLAYS.internal then
-        hs.grid.set(win, POSITIONS.full, newScreenOfWindow)
-      else
-        -- If not internal, set to half. Adjust POSITIONS.halves.left if needed.
-        hs.grid.set(win, POSITIONS.halves.left, newScreenOfWindow)
-      end
-    end
-  end
-end
-hs.hotkey.bind(Hyper, "Up", function()
+-- Move to next/previous screen
+modal:bind({}, "j", function()
   moveAndResizeWindow(function(currentScreen)
     return currentScreen:next()
   end)
 end)
-hs.hotkey.bind(Hyper, "Down", function()
+modal:bind({}, "k", function()
   moveAndResizeWindow(function(currentScreen)
     return currentScreen:previous()
   end)
+end)
+
+-- Exit modal
+modal:bind({}, "escape", function()
+  modal:exit()
+end)
+modal:bind({}, "q", function()
+  modal:exit()
 end)
