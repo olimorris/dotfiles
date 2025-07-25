@@ -3,7 +3,7 @@ local progress = require("fidget.progress")
 local M = {}
 
 function M:init()
-  local group = vim.api.nvim_create_augroup("CodeCompanionFidgetHooks", {})
+  local group = vim.api.nvim_create_augroup("dotfiles.codecompanion.spinner", {})
 
   om.create_autocmd({ "User" }, {
     pattern = "CodeCompanionRequestStarted",
@@ -45,12 +45,12 @@ function M:create_progress_handle(request)
     title = "",
     message = "  Sending...",
     lsp_client = {
-      name = M:llm_role_title(request.data.adapter),
+      name = M:format(request.data.adapter),
     },
   })
 end
 
-function M:llm_role_title(adapter)
+function M:format(adapter)
   local parts = {}
   table.insert(parts, adapter.formatted_name)
   if adapter.model and adapter.model ~= "" then
