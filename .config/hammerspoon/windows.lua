@@ -23,7 +23,6 @@ end
 
 -- [[ Key Bindings ]] ---------------------------------------------------------
 local win_keys = { "alt" }
-local win_shift_keys = { "alt", "shift" }
 
 -- [[ Settings ] --------------------------------------------------------------
 window.animationDuration = 0.0
@@ -85,7 +84,7 @@ POSITIONS = {
 -- [[ Window Management ]] -----------------------------------------------------
 
 -- Maximize the focused window
-hs.hotkey.bind({ "alt" }, "m", function()
+hs.hotkey.bind(win_keys, "m", function()
   local win = hs.window.focusedWindow()
   if win then
     win:maximize()
