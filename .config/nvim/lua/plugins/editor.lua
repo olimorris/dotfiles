@@ -57,20 +57,14 @@ return {
       {
         "_",
         function()
-          -- Stop me being dumb and opening a file explorer in openai.nvim
-          if vim.bo.buftype ~= "acwrite" then
-            require("oil").toggle_float(vim.fn.getcwd())
-          end
+          require("oil").toggle_float(vim.fn.getcwd())
         end,
         desc = "Oil.nvim: Open File Explorer",
       },
       {
         "-",
         function()
-          -- Stop me being dumb and opening a file explorer in openai.nvim
-          if vim.bo.buftype ~= "acwrite" then
-            require("oil").toggle_float()
-          end
+          require("oil").toggle_float()
         end,
         desc = "Oil.nvim: Open File Explorer to current file",
       },
