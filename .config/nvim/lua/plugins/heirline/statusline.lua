@@ -508,9 +508,9 @@ local CodeCompanionAgent = {
     "User",
     pattern = "CodeCompanionAgent*",
     callback = function(self, args)
-      if args.match == "CodeCompanionAgentStarted" then
+      if args.match == "CodeCompanionToolsStarted" then
         self.processing = true
-      elseif args.match == "CodeCompanionAgentFinished" then
+      elseif args.match == "CodeCompanionToolsFinished" then
         self.processing = false
       end
       vim.cmd("redrawstatus")
