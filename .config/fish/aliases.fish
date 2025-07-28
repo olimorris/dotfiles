@@ -104,10 +104,9 @@ alias tf='vendor/bin/phpunit --filter='
 alias phplogs='sudo tail -f /usr/local/var/log/* /usr/local/var/log/nginx/* ~/.valet/Log/* /usr/local/opt/php71/var/log/*'
 
 # Python
-alias jup='jupyter notebook'
+alias jp='jupyter notebook'
 alias pipb='pip freeze > ~/.dotfiles/PIP.txt'
 alias pipi='pip install -r ~/.dotfiles/PIP.txt'
-alias jupr="jupyter notebook --NotebookApp.allow_origin='https://colab.research.google.com' --port=9090 --no-browser"
 alias pypiu_test='rm -rf dist/* && python3 -m build && python3 -m twine upload --repository testpypi dist/*'
 alias pypiu='rm -rf dist/* && python3 -m build && python3 -m twine upload dist/*'
 
