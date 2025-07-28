@@ -1,5 +1,9 @@
 return {
   {
+    "lervag/vimtex", -- LaTeX support for Neovim
+    lazy = false, -- NEVER lazy load
+  },
+  {
     "kevinhwang91/nvim-ufo", -- Better folds in Neovim
     dependencies = "kevinhwang91/promise-async",
     keys = {
