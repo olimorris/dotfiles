@@ -8,7 +8,7 @@ set -x HOMEBREW_NO_ANALYTICS 1
 set -x GOPATH "$HOME/.go"
 
  # Paths
-fish_add_path -p "$(brew --prefix rustup)/bin" "$(brew --prefix)/bin" "$HOME/.cargo/bin" "$HOME/.dotfiles/bin" "$HOME/.local/share/nvim/mason/bin" "$HOME/.local/share/bob/nvim-bin" "$HOME/.local/bin" "$GOPATH/bin"
+fish_add_path -p "$(brew --prefix rustup)/bin" "$(brew --prefix)/bin" "$HOME/.cargo/bin" "$HOME/.dotfiles/bin" "$HOME/.local/share/nvim/mason/bin" "$HOME/.local/share/bob/nvim-bin" "$HOME/.local/bin" "$GOPATH/bin" "/Library/TeX/texbin"
 
 function theme
   set -f VARIANT "$(cat /tmp/oli-theme)"
@@ -36,6 +36,6 @@ if status is-interactive
     load_env_vars ~/.env
     theme
     mise activate fish | source
-    zoxide init --cmd dot fish | source
+    zoxide init fish | source
 end
 
