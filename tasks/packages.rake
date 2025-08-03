@@ -52,7 +52,7 @@ namespace :backup do
   task :pip do
     section 'Backing up PIP files'
 
-    run %( pip3 freeze \> #{PIP_FILE} )
+    run %( pip freeze \> #{PIP_FILE} )
   end
 end
 
@@ -157,7 +157,7 @@ namespace :install do
   task :pip do
     section 'Installing PIP files'
 
-    run %( pip3 install -r #{PIP_FILE} )
+    run %( pip install -r #{PIP_FILE} )
   end
 
   desc 'Install Fish plugins'
@@ -204,10 +204,8 @@ namespace :update do
     section 'Updating PIP files'
 
     begin
-      run %( pip3 install --upgrade pip )
-      run %( pip3 freeze \> #{PIP_FILE} )
-      find_replace(PIP_FILE, '==', '>=')
-      run %( pip3 install -r #{PIP_FILE} --upgrade )
+      run %( pip install --upgrade pip )
+      run %( pip install -r #{PIP_FILE} --upgrade )
     rescue StandardError
       puts 'PIP update failed'
     end
