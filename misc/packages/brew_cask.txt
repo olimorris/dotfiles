@@ -19,6 +19,7 @@ itsycal
 jordanbaird-ice
 launchcontrol
 little-snitch
+mactex
 mitmproxy
 monitorcontrol
 notion
@@ -39,6 +40,7 @@ tableplus
 telegram
 textexpander
 typora
+utm
 visual-studio-code
 vlc
 wezterm
