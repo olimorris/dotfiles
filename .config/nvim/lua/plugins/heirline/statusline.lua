@@ -448,7 +448,7 @@ local Session = {
   condition = function(self)
     return not conditions.buffer_matches({
       filetype = self.filetypes,
-    })
+    }) and package.loaded.persisted
   end,
   RightSlantStart,
   {
@@ -477,6 +477,9 @@ local Session = {
 }
 
 local CodeCompanion = {
+  condition = function()
+    return package.loaded.codecompanion
+  end,
   static = {
     processing = false,
   },
@@ -501,6 +504,9 @@ local CodeCompanion = {
   },
 }
 local CodeCompanionAgent = {
+  condition = function()
+    return package.loaded.codecompanion
+  end,
   static = {
     processing = false,
   },
