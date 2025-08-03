@@ -312,8 +312,9 @@ You must:
           -- show_header_separator = false,
           -- show_settings = false,
           icons = {
-            tool_success = "󰸞",
+            tool_success = "󰸞 ",
           },
+          fold_context = true,
         },
         diff = {
           provider = "mini_diff",
