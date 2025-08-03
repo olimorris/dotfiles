@@ -4,3 +4,6 @@ node = "latest"
 nodejs = '22'
 python = "latest"
 ruby = '3.2.0'
+
+[settings]
+idiomatic_version_file_enable_tools = ["node"]
