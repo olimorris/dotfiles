@@ -51,6 +51,9 @@ local Filepath = {
 }
 
 local FileIcon = {
+  condition = function()
+    return package.loaded["nvim-web-devicons"]
+  end,
   init = function(self)
     self.icon, self.icon_color =
       require("nvim-web-devicons").get_icon_color_by_filetype(vim.bo.filetype, { default = true })
@@ -141,6 +144,9 @@ local FileFlags = {
 -- Inspired by:
 -- https://github.com/eli-front/nvim-config/blob/5a225e1e6de3d6f1bdca2025602c3e7a4917e31b/lua/elifront/utils/status/init.lua#L32
 local Symbols = {
+  condition = function()
+    return package.loaded.aerial
+  end,
   init = function(self)
     self.symbols = require("aerial").get_location(true) or {}
   end,
