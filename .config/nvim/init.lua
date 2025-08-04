@@ -13,13 +13,15 @@ vim.pack.add({
   { src = "https://github.com/kevinhwang91/promise-async" },
   { src = "https://github.com/nvim-tree/nvim-web-devicons" },
 
-  -- Tree-sitter should come high up
+  -- Tree-sitter
 
-  -- Followed by LSP and completion
-  { src = "https://github.com/neovim/nvim-lspconfig" },
+  -- LSP and completion
   { src = "https://github.com/mason-org/mason.nvim" },
+  { src = "https://github.com/stevearc/conform.nvim" },
+  { src = "https://github.com/neovim/nvim-lspconfig" },
+  { src = "https://github.com/rafamadriz/friendly-snippets" },
+  { src = "https://github.com/ivanjermakov/troublesum.nvim" },
   { src = "https://github.com/mason-org/mason-lspconfig.nvim" },
-  { src = "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim" },
   {
     src = "https://github.com/saghen/blink.cmp",
     version = vim.version.range("1.*"),
@@ -61,7 +63,7 @@ vim.pack.add({
 
 local opts = { noremap = true, silent = true }
 
-require("config.plugins.lsp")
+require("plugins.lsp")
 
 -- CodeCompanion.nvim
 require("codecompanion").setup({
@@ -404,7 +406,7 @@ You must:
     log_level = "DEBUG",
   },
 })
-require("plugins.custom.spinner"):init()
+require("utils.spinner"):init()
 om.set_keymaps("<C-a>", "<cmd>CodeCompanionActions<CR>", { "n", "v" }, opts)
 om.set_keymaps("<Leader>a", "<cmd>CodeCompanionChat Toggle<CR>", { "n", "v" }, opts)
 om.set_keymaps("<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>", { "v" }, opts)
@@ -438,9 +440,9 @@ require("nvim-surround").setup()
 
 -- Heirline.nvim
 require("heirline").setup({
-  winbar = require("plugins.heirline.winbar"),
-  statusline = require("plugins.heirline.statusline"),
-  statuscolumn = require("plugins.heirline.statuscolumn"),
+  winbar = require("plugins.winbar"),
+  statusline = require("plugins.statusline"),
+  statuscolumn = require("plugins.statuscolumn"),
   opts = {
     disable_winbar_cb = function(args)
       local conditions = require("heirline.conditions")
@@ -586,17 +588,6 @@ require("onedarkpro").setup({
   caching = false,
   cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
 
-  plugins = {
-    barbar = false,
-    lsp_saga = false,
-    marks = false,
-    polygot = false,
-    startify = false,
-    telescope = false,
-    trouble = false,
-    vim_ultest = false,
-    which_key = false,
-  },
   styles = {
     tags = "italic",
     methods = "bold",
