@@ -10,7 +10,6 @@ require("workspaces")(config)
 
 wezterm.log_info("Reloading")
 
---wezterm.add_to_config_reload_watch_list(wezterm.home_dir .. "/.color_mode")
 config.automatically_reload_config = true
 
 -- Graphics config
@@ -33,7 +32,7 @@ config.mouse_bindings = {
     action = "OpenLinkAtMouseCursor",
   },
 }
-config.window_close_confirmation = "NeverPrompt"
+config.window_close_confirmation = "AlwaysPrompt"
 config.window_decorations = "RESIZE"
 config.window_padding = {
   left = 5,
