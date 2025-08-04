@@ -91,6 +91,18 @@ hs.hotkey.bind(win_keys, "m", function()
   end
 end)
 
+-- Center
+hs.hotkey.bind(win_keys, "c", function()
+  local win = hs.window.focusedWindow()
+  if win then
+    local winFrame = win:frame()
+    local screenFrame = win:screen():frame()
+    local newX = screenFrame.x + (screenFrame.w - winFrame.w) / 2
+    local newY = screenFrame.y + (screenFrame.h - winFrame.h) / 2
+    win:setTopLeft({ x = newX, y = newY })
+  end
+end)
+
 -- Modal Window Management
 local modal = hs.hotkey.modal.new(Hyper, "W")
 
@@ -144,18 +156,6 @@ modal:bind({}, "5", function()
   local win = hs.window.focusedWindow()
   if win then
     win:setFrame(POSITIONS.p1080({ chrome = true }))
-  end
-end)
-
--- Center
-modal:bind({}, "c", function()
-  local win = hs.window.focusedWindow()
-  if win then
-    local winFrame = win:frame()
-    local screenFrame = win:screen():frame()
-    local newX = screenFrame.x + (screenFrame.w - winFrame.w) / 2
-    local newY = screenFrame.y + (screenFrame.h - winFrame.h) / 2
-    win:setTopLeft({ x = newX, y = newY })
   end
 end)
 
