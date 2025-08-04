@@ -584,6 +584,9 @@ local Overseer = {
 
 local Dap = {
   condition = function()
+    if not package.loaded.dap then
+      return false
+    end
     local session = require("dap").session()
     return session ~= nil
   end,
@@ -602,6 +605,9 @@ local Dap = {
 -- Show plugin updates available from lazy.nvim
 local Lazy = {
   condition = function(self)
+    if not package.loaded.lazy then
+      return false
+    end
     return not conditions.buffer_matches({
       filetype = self.filetypes,
     }) and require("lazy.status").has_updates()

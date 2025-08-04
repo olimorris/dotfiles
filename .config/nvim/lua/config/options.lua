@@ -102,6 +102,7 @@ vo.smartcase = true -- Don't ignore case with capitals
 vo.smoothscroll = true -- Smoother scrolling
 vo.splitbelow = true -- Put new windows below current
 vo.splitright = true -- Put new windows right of current
+vim.opt.splitkeep = "screen"
 vo.termguicolors = true -- True color support
 vo.textwidth = 120 -- Total allowed width on the screen
 vo.timeoutlen = 300 -- Time in milliseconds to wait for a mapped sequence to complete
