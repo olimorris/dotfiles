@@ -16,6 +16,14 @@ vim.pack.add({
   -- Tree-sitter should come high up
 
   -- Followed by LSP and completion
+  { src = "https://github.com/neovim/nvim-lspconfig" },
+  { src = "https://github.com/mason-org/mason.nvim" },
+  { src = "https://github.com/mason-org/mason-lspconfig.nvim" },
+  { src = "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim" },
+  {
+    src = "https://github.com/saghen/blink.cmp",
+    version = vim.version.range("1.*"),
+  },
 
   -- Colorscheme
   { src = "file:///Users/Oli/Code/Neovim/onedarkpro.nvim" },
@@ -52,6 +60,8 @@ vim.pack.add({
 --=============================================================================
 
 local opts = { noremap = true, silent = true }
+
+require("config.plugins.lsp")
 
 -- CodeCompanion.nvim
 require("codecompanion").setup({

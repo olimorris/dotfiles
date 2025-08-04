@@ -1,3 +1,79 @@
+require("mason").setup()
+require("mason-lspconfig").setup()
+require("mason-tool-installer").setup({
+  ensure_installed = {
+    "intelephense",
+    "jdtls",
+    "jsonls",
+    "lua_ls",
+    "pyright",
+    "ruby_lsp",
+    "vuels",
+    "yamlls",
+    "stylua",
+  },
+})
+require("blink.cmp").setup({
+  keymap = {
+    ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+    ["<C-e>"] = { "hide", "fallback" },
+    ["<CR>"] = { "accept", "fallback" },
+
+    ["<Tab>"] = {
+      function(cmp)
+        return cmp.select_next()
+      end,
+      "snippet_forward",
+      "fallback",
+    },
+    ["<S-Tab>"] = {
+      function(cmp)
+        return cmp.select_prev()
+      end,
+      "snippet_backward",
+      "fallback",
+    },
+
+    ["<Up>"] = { "select_prev", "fallback" },
+    ["<Down>"] = { "select_next", "fallback" },
+    ["<C-p>"] = { "select_prev", "fallback" },
+    ["<C-n>"] = { "select_next", "fallback" },
+    ["<C-up>"] = { "scroll_documentation_up", "fallback" },
+    ["<C-down>"] = { "scroll_documentation_down", "fallback" },
+  },
+})
+
+local capabilities = require("blink.cmp").get_lsp_capabilities({
+  workspace = {
+    didChangeWatchedFiles = {
+      dynamicRegistration = true, -- needs fswatch on linux
+      relativePatternSupport = true,
+    },
+  },
+}, true)
+
+vim.lsp.config("lua_ls", {
+  settings = {
+    Lua = {
+      runtime = {
+        version = "LuaJIT",
+      },
+      diagnostics = {
+        globals = {
+          "vim",
+          "require",
+        },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+})
+
 local icons = {
   [vim.diagnostic.severity.ERROR] = "",
   [vim.diagnostic.severity.WARN] = "",
@@ -118,39 +194,6 @@ return {
         },
 
         -- My super-TAB configuration
-        keymap = {
-          ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-          ["<C-e>"] = { "hide", "fallback" },
-          ["<CR>"] = { "accept", "fallback" },
-
-          ["<Tab>"] = {
-            function(cmp)
-              return cmp.select_next()
-            end,
-            "snippet_forward",
-            "fallback",
-          },
-          ["<S-Tab>"] = {
-            function(cmp)
-              return cmp.select_prev()
-            end,
-            "snippet_backward",
-            "fallback",
-          },
-
-          ["<Up>"] = { "select_prev", "fallback" },
-          ["<Down>"] = { "select_next", "fallback" },
-          ["<C-p>"] = { "select_prev", "fallback" },
-          ["<C-n>"] = { "select_next", "fallback" },
-          ["<C-up>"] = { "scroll_documentation_up", "fallback" },
-          ["<C-down>"] = { "scroll_documentation_down", "fallback" },
-        },
-
-        -- Experimental signature help support
-        signature = {
-          enabled = true,
-          window = { border = "rounded" },
-        },
       },
     },
     {
@@ -287,16 +330,7 @@ return {
     })
 
     require("mason-lspconfig").setup({
-      ensure_installed = {
-        "intelephense",
-        "jdtls",
-        "jsonls",
-        "lua_ls",
-        "pyright",
-        "ruby_lsp",
-        "vuels",
-        "yamlls",
-      },
+      ensure_installed = {},
       handlers = {
         -- this first function is the "default handler"
         -- it applies to every language server without a "custom handler"
