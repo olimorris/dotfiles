@@ -6,6 +6,9 @@ vim.pack.add({
   { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", branch = "main" },
 })
 
+--=============================================================================
+-- Plugin Setup
+--=============================================================================
 require("nvim-autopairs").setup({
   disable_filetype = { "codecompanion" },
 })
@@ -39,7 +42,6 @@ vim.api.nvim_create_autocmd("PackChanged", {
     vim.cmd("TSUpdate")
   end,
 })
-
 vim.api.nvim_create_autocmd("FileType", {
   callback = function(args)
     local filetype = args.match

@@ -9,6 +9,9 @@ vim.pack.add({
   { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
 })
 
+--=============================================================================
+-- Plugin Setup
+--=============================================================================
 require("heirline").setup({
   winbar = require("plugins.ui.winbar"),
   statusline = require("plugins.ui.statusline"),

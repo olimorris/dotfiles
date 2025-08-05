@@ -4,8 +4,9 @@ vim.pack.add({
   { src = "https://github.com/echasnovski/mini.diff" },
   { src = "https://github.com/kylechui/nvim-surround" },
   { src = "https://github.com/zbirenbaum/copilot.lua" },
-  { src = "file:///Users/Oli/Code/Neovim/codecompanion.nvim" },
 })
+
+vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/codecompanion.nvim"))
 
 -- CodeCompanion.nvim
 require("codecompanion").setup({

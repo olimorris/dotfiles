@@ -12,6 +12,9 @@ vim.pack.add({
   },
 })
 
+--=============================================================================
+-- Static
+--=============================================================================
 local icons = {
   [vim.diagnostic.severity.ERROR] = "",
   [vim.diagnostic.severity.WARN] = "",
@@ -19,6 +22,9 @@ local icons = {
   [vim.diagnostic.severity.HINT] = "",
 }
 
+--=============================================================================
+-- Plugin Setup
+--=============================================================================
 require("troublesum").setup({
   enabled = function()
     local ft = vim.bo.filetype
@@ -116,8 +122,8 @@ require("blink.cmp").setup({
     ["<C-down>"] = { "scroll_documentation_down", "fallback" },
   },
 })
-
 require("ufo").setup()
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 local has_blink, blink = pcall(require, "blink.cmp")
 capabilities = vim.tbl_deep_extend("force", capabilities, has_blink and blink.get_lsp_capabilities() or {}, {
@@ -126,6 +132,34 @@ capabilities = vim.tbl_deep_extend("force", capabilities, has_blink and blink.ge
       dynamicRegistration = false,
       lineFoldingOnly = true,
     },
+  },
+})
+
+require("mason").setup({
+  ui = {
+    border = "single",
+    width = 0.9,
+  },
+})
+require("mason-lspconfig").setup({
+  ensure_installed = {
+    "intelephense",
+    "jdtls",
+    "jsonls",
+    "lua_ls",
+    "pyright",
+    "ruby_lsp",
+    "vuels",
+    "yamlls",
+  },
+  handlers = {
+    -- this first function is the "default handler"
+    -- it applies to every language server without a "custom handler"
+    function(ls)
+      require("lspconfig")[ls].setup({
+        capabilities = capabilities,
+      })
+    end,
   },
 })
 
@@ -203,34 +237,6 @@ om.create_autocmd("LspAttach", {
       })
     end
   end,
-})
-
-require("mason").setup({
-  ui = {
-    border = "single",
-    width = 0.9,
-  },
-})
-require("mason-lspconfig").setup({
-  ensure_installed = {
-    "intelephense",
-    "jdtls",
-    "jsonls",
-    "lua_ls",
-    "pyright",
-    "ruby_lsp",
-    "vuels",
-    "yamlls",
-  },
-  handlers = {
-    -- this first function is the "default handler"
-    -- it applies to every language server without a "custom handler"
-    function(ls)
-      require("lspconfig")[ls].setup({
-        capabilities = capabilities,
-      })
-    end,
-  },
 })
 
 vim.diagnostic.config({

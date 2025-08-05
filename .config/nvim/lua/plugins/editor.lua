@@ -3,9 +3,12 @@ vim.pack.add({
   { src = "https://github.com/kevinhwang91/nvim-bqf" },
   { src = "https://github.com/stevearc/aerial.nvim" },
   { src = "https://github.com/bassamsdata/namu.nvim" },
-  { src = "file:///Users/Oli/Code/Neovim/persisted.nvim" },
 })
+vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/persisted.nvim"))
 
+--=============================================================================
+-- Plugin Setup
+--=============================================================================
 require("oil").setup({
   default_file_explorer = false,
   delete_to_trash = true,
