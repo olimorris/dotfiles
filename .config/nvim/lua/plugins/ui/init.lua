@@ -1,7 +1,7 @@
 vim.pack.add({
-  { src = "https://github.com/rebelot/heirline.nvim" },
   { src = "https://github.com/folke/edgy.nvim" },
   { src = "https://github.com/folke/snacks.nvim" },
+  { src = "https://github.com/rebelot/heirline.nvim" },
   { src = "https://github.com/lewis6991/gitsigns.nvim" },
   { src = "https://github.com/folke/todo-comments.nvim" },
   { src = "https://github.com/nmac427/guess-indent.nvim" },
@@ -36,6 +36,7 @@ require("todo-comments").setup({
 })
 
 require("guess-indent").setup({})
+
 require("render-markdown").setup({
   completions = { blink = { enabled = true } },
   file_types = { "codecompanion", "markdown" },
@@ -95,10 +96,12 @@ require("edgy").setup({
     { ft = "oil", title = "File Explorer", size = { width = 0.3 } },
   },
 })
+
 require("virt-column").setup({
   char = "│",
   highlight = "VirtColumn",
 })
+
 require("gitsigns").setup({
   signs = {
     add = { text = "│" },
@@ -112,6 +115,7 @@ require("gitsigns").setup({
   numhl = false,
   linehl = false,
 })
+
 require("snacks").setup({
   styles = {
     lazygit = {
@@ -271,4 +275,5 @@ end, "n", opts)
 om.set_keymaps("<Leader>l", function()
   Snacks.lazygit()
 end, "n", opts)
+
 om.set_keymaps("<Esc>", "<C-\\><C-n>", "t", vim.list_extend(opts, { nowait = true }))

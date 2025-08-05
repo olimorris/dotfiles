@@ -295,6 +295,9 @@ You must:
               i = "<C-b>",
             },
           },
+          opts = {
+            provider = "snacks",
+          },
         },
         ["fetch"] = {
           keymaps = {

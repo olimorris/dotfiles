@@ -186,3 +186,17 @@ function om.ToggleTheme(mode)
   local utils = require("heirline.utils")
   utils.on_colorscheme(require("onedarkpro.helpers").get_colors())
 end
+
+--=============================================================================
+-- Autocommands
+--=============================================================================
+om.create_autocmd("User", {
+  pattern = "OneDarkProRefreshedCache",
+  callback = function(args)
+    print(vim.inspect(args))
+    require("onedarkpro.extra").setup({ silent = true, user_config = true })
+    vim.notify("Built OneDarkPro extras", vim.log.levels.INFO, {
+      title = "Dotfiles",
+    })
+  end,
+})
