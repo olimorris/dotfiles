@@ -1,44 +1,11 @@
---=============================================================================
--- Plugins
---=============================================================================
 vim.pack.add({
-  -- LSP and completion
-  { src = "https://github.com/mason-org/mason.nvim" },
-  { src = "https://github.com/stevearc/conform.nvim" },
-  { src = "https://github.com/neovim/nvim-lspconfig" },
-  { src = "https://github.com/rafamadriz/friendly-snippets" },
-  { src = "https://github.com/ivanjermakov/troublesum.nvim" },
-  { src = "https://github.com/mason-org/mason-lspconfig.nvim" },
-  {
-    src = "https://github.com/saghen/blink.cmp",
-    version = vim.version.range("1.*"),
-  },
-
-  -- Coding plugins
   { src = "https://github.com/j-hui/fidget.nvim" },
   { src = "https://github.com/echasnovski/mini.test" },
   { src = "https://github.com/echasnovski/mini.diff" },
   { src = "https://github.com/kylechui/nvim-surround" },
   { src = "https://github.com/zbirenbaum/copilot.lua" },
   { src = "file:///Users/Oli/Code/Neovim/codecompanion.nvim" },
-
-  -- Editor functionality
-  { src = "https://github.com/stevearc/oil.nvim" },
-  { src = "https://github.com/kevinhwang91/nvim-bqf" },
-  { src = "https://github.com/kevinhwang91/nvim-ufo" },
-  { src = "https://github.com/stevearc/aerial.nvim" },
-  { src = "https://github.com/bassamsdata/namu.nvim" },
-  { src = "file:///Users/Oli/Code/Neovim/persisted.nvim" },
 })
-
---=============================================================================
--- Plugin Configuration
---=============================================================================
-
-local opts = { noremap = true, silent = true }
-
-require("plugins.lsp")
---require("plugins.tree-sitter")
 
 -- CodeCompanion.nvim
 require("codecompanion").setup({
@@ -382,10 +349,6 @@ You must:
   },
 })
 require("utils.spinner"):init()
-om.set_keymaps("<C-a>", "<cmd>CodeCompanionActions<CR>", { "n", "v" }, opts)
-om.set_keymaps("<Leader>a", "<cmd>CodeCompanionChat Toggle<CR>", { "n", "v" }, opts)
-om.set_keymaps("<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>", { "v" }, opts)
-vim.cmd([[cab cc CodeCompanion]])
 
 require("copilot").setup({
   panel = { enabled = false },
@@ -397,12 +360,6 @@ require("copilot").setup({
     },
   },
 })
-om.set_keymaps("<C-a>", function()
-  require("copilot.suggestion").accept()
-end, "i", opts)
-om.set_keymaps("<C-x>", function()
-  require("copilot.suggestion").dismiss()
-end, "i", opts)
 
 -- Mini.diff
 local diff = require("mini.diff")
@@ -413,87 +370,19 @@ diff.setup({
 
 require("nvim-surround").setup()
 
-require("oil").setup({
-  default_file_explorer = false,
-  delete_to_trash = true,
-  skip_confirm_for_simple_edits = true,
-  float = {
-    border = "none",
-  },
-  is_always_hidden = function(name, bufnr)
-    return name == ".."
-  end,
-  keymaps = {
-    ["<C-c>"] = false,
-    ["q"] = "actions.close",
-    [">"] = "actions.toggle_hidden",
-    ["<C-y>"] = "actions.copy_entry_path",
-    ["gd"] = {
-      desc = "Toggle detail view",
-      callback = function()
-        local oil = require("oil")
-        local config = require("oil.config")
-        if #config.columns == 1 then
-          oil.set_columns({ "icon", "permissions", "size", "mtime" })
-        else
-          oil.set_columns({ "icon" })
-        end
-      end,
-    },
-  },
-  buf_options = {
-    buflisted = false,
-  },
-})
-om.set_keymaps("_", function()
-  require("oil").toggle_float(vim.fn.getcwd())
-end, "n", opts)
-om.set_keymaps("-", function()
-  require("oil").toggle_float()
-end, "n", opts)
+--=============================================================================
+-- Keymaps
+--=============================================================================
+local opts = { noremap = true, silent = true }
 
-require("namu").setup({
-  namu_symbols = {
-    enable = true,
-    options = {}, -- here you can configure namu
-  },
-  ui_select = { enable = false }, -- vim.ui.select() wrapper
-})
-om.set_keymaps("<C-t>", function()
-  require("namu.namu_symbols").show()
-end, { "n", "x", "o" }, opts)
-om.set_keymaps("<C-e>", function()
-  require("namu.namu_workspace").show()
-end, { "n", "x", "o" }, opts)
+om.set_keymaps("<C-a>", "<cmd>CodeCompanionActions<CR>", { "n", "v" }, opts)
+om.set_keymaps("<Leader>a", "<cmd>CodeCompanionChat Toggle<CR>", { "n", "v" }, opts)
+om.set_keymaps("<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>", { "v" }, opts)
+vim.cmd([[cab cc CodeCompanion]])
 
-require("persisted").setup({
-  save_dir = Sessiondir .. "/",
-  use_git_branch = true,
-  autosave = true,
-  -- autoload = true,
-  -- allowed_dirs = {
-  --   "~/Code",
-  -- },
-  -- on_autoload_no_session = function()
-  --   return vim.notify("No session found", vim.log.levels.WARN)
-  -- end,
-  should_save = function()
-    local excluded_filetypes = {
-      "alpha",
-      "oil",
-      "lazy",
-      "",
-    }
-
-    for _, filetype in ipairs(excluded_filetypes) do
-      if vim.bo.filetype == filetype then
-        return false
-      end
-    end
-
-    return true
-  end,
-})
-om.create_user_command("Sessions", "List Sessions", function()
-  require("persisted").select()
-end)
+om.set_keymaps("<C-a>", function()
+  require("copilot.suggestion").accept()
+end, "i", opts)
+om.set_keymaps("<C-x>", function()
+  require("copilot.suggestion").dismiss()
+end, "i", opts)

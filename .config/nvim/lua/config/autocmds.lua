@@ -51,6 +51,17 @@ local autocmds = {
         uv.fs_event_start(uv.new_fs_event(), file_to_watch, flags, event_cb)
       end,
     },
+    {
+      "User",
+      function(args)
+        print(vim.inspect(args))
+        require("onedarkpro.extra").setup({ silent = true, user_config = true })
+        vim.notify("Built OneDarkPro extras", vim.log.levels.INFO, {
+          title = "Dotfiles",
+        })
+      end,
+      opts = { pattern = "OneDarkPro*" },
+    },
   },
   {
     name = "ConcealAttributes",

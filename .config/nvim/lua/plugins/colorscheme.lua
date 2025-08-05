@@ -151,6 +151,10 @@ require("onedarkpro").setup({
   },
 })
 
+--=============================================================================
+-- Functions
+--=============================================================================
+
 ---Helper function to change the theme based on mode
 ---@param mode string The mode to set the theme for ("dark" or "light")
 ---@param theme string The name of the theme to apply
