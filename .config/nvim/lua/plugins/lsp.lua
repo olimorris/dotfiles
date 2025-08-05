@@ -207,7 +207,6 @@ require("mason-lspconfig").setup({
     "ruby_lsp",
     "vuels",
     "yamlls",
-    "stylua",
   },
   handlers = {
     -- this first function is the "default handler"

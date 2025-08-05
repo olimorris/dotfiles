@@ -1,7 +1,7 @@
 --=============================================================================
 -- Set the stuff that must come before anything else
 --=============================================================================
-require("config.utils")
+require("utils")
 require("config.options")
 
 --=============================================================================
@@ -14,6 +14,11 @@ vim.pack.add({
   { src = "https://github.com/nvim-tree/nvim-web-devicons" },
 
   -- Tree-sitter
+  { src = "https://github.com/windwp/nvim-autopairs" },
+  { src = "https://github.com/windwp/nvim-ts-autotag" },
+  { src = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring" },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter", branch = "main" },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", branch = "main" },
 
   -- LSP and completion
   { src = "https://github.com/mason-org/mason.nvim" },
@@ -64,6 +69,7 @@ vim.pack.add({
 local opts = { noremap = true, silent = true }
 
 require("plugins.lsp")
+--require("plugins.tree-sitter")
 
 -- CodeCompanion.nvim
 require("codecompanion").setup({
@@ -696,11 +702,8 @@ end, "n", opts)
 
 require("guess-indent").setup({})
 require("render-markdown").setup({
-  render_modes = true,
-  sign = {
-    enabled = false,
-  },
   completions = { blink = { enabled = true } },
+  file_types = { "codecompanion", "markdown" },
   overrides = {
     filetype = {
       codecompanion = {
@@ -719,6 +722,8 @@ require("render-markdown").setup({
       },
     },
   },
+  render_modes = true,
+  sign = { enabled = false },
 })
 require("edgy").setup({
   animate = { enabled = false },
@@ -959,7 +964,6 @@ end)
 --=============================================================================
 -- Setup the rest of the config
 --=============================================================================
-require("utils")
 require("config.keymaps")
 require("config.autocmds")
 require("config.commands")
