@@ -10,6 +10,7 @@ function om.has(feature)
   return vim.fn.has(feature) > 0
 end
 
+om.home = os.getenv("HOME")
 om.nightly = om.has("nvim-0.12")
 om.on_personal = vim.fn.getenv("USER") == "Oli"
 
