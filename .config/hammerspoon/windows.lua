@@ -37,6 +37,14 @@ DISPLAYS = {
 
 POSITIONS = {
   full = "0,0 60x20",
+  golden = {
+    left = "0,0 36x20", -- 60% left
+    right = "24,0 36x20", -- 60% right (starts at 24, which is 60-36)
+  },
+  goldenRemainder = {
+    left = "36,0 24x20", -- 40% on the right (starts after golden left)
+    right = "0,0 24x20", -- 40% on the left (starts at 0)
+  },
   halves = {
     left = "0,0 30x20",
     right = "30,0 30x20",
@@ -127,7 +135,50 @@ modal:bind({}, "l", function()
   end
 end)
 
+-- Golden ratio
+modal:bind({}, "[", function()
+  local win = hs.window.focusedWindow()
+  if not win then
+    return
+  end
+  local cell = hs.grid.get(win)
+  if cell.x == 0 and cell.w == 36 then
+    -- Currently golden left, move to golden right
+    hs.grid.set(win, POSITIONS.golden.right)
+  else
+    -- Otherwise, move to golden left
+    hs.grid.set(win, POSITIONS.golden.left)
+  end
+end)
+modal:bind({}, "]", function()
+  local win = hs.window.focusedWindow()
+  if not win then
+    return
+  end
+  local cell = hs.grid.get(win)
+  if cell.x == 36 and cell.w == 24 then
+    -- Currently remainder left, move to right
+    hs.grid.set(win, POSITIONS.goldenRemainder.right)
+  else
+    -- Otherwise, move to left
+    hs.grid.set(win, POSITIONS.goldenRemainder.left)
+  end
+end)
+
 -- Thirds
+modal:bind({}, ",", function()
+  local win = hs.window.focusedWindow()
+  if win then
+    hs.grid.set(win, POSITIONS.twoThirds.left)
+  end
+end)
+modal:bind({}, ".", function()
+  local win = hs.window.focusedWindow()
+  if win then
+    hs.grid.set(win, POSITIONS.twoThirds.right)
+  end
+end)
+
 modal:bind({}, "1", function()
   local win = hs.window.focusedWindow()
   if win then
