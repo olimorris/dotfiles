@@ -162,7 +162,9 @@ require("snacks").setup({
         text = {
           { "⚡️ Neovim loaded ", hl = "SnacksDashboardFooterText" },
           { tostring(#vim.pack.get() + 3), hl = "SnacksDashboardFooterEmphasis" },
-          { " plugins", hl = "SnacksDashboardFooterText" },
+          { " plugins in ", hl = "SnacksDashboardFooterText" },
+          { tostring(math.floor((vim.uv.hrtime() - om.nvim_start_time) / 1e6)), hl = "SnacksDashboardFooterEmphasis" },
+          { " ms", hl = "SnacksDashboardFooterText" },
         },
       },
     },

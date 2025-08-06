@@ -12,6 +12,7 @@ end
 
 om.home = os.getenv("HOME")
 om.nightly = om.has("nvim-0.12")
+om.nvim_start_time = vim.uv.hrtime()
 om.on_personal = vim.fn.getenv("USER") == "Oli"
 
 ---Determine if you're on an external monitor
