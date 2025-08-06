@@ -160,7 +160,9 @@ require("snacks").setup({
       {
         align = "center",
         text = {
-          { " " .. tostring(#vim.pack.get() + 3) .. " plugins installed", hl = "SnacksDashboardFooterText" },
+          { "⚡️ Neovim loaded ", hl = "SnacksDashboardFooterText" },
+          { tostring(#vim.pack.get() + 3), hl = "SnacksDashboardFooterEmphasis" },
+          { " plugins", hl = "SnacksDashboardFooterText" },
         },
       },
     },
