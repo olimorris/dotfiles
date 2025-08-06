@@ -135,3 +135,24 @@ vw.number = true -- Set the absolute number
 vw.relativenumber = true -- Set the relative number
 vw.signcolumn = "yes" -- Show information next to the line numbers
 vw.wrap = false -- Do not display text over multiple lines
+
+-- Disable some plugins that are not needed
+local disabled_plugins = {
+  "gzip",
+  "matchparen",
+  "netrwPlugin",
+  "rplugin",
+  "tarPlugin",
+  "tohtml",
+  "tutor",
+  "zipPlugin",
+  "getscript",
+  "vimball",
+  "logiPat",
+  "rrhelper",
+  "python_provider",
+}
+vim.iter(disabled_plugins):each(function(p)
+  local loaded = "loaded_" .. p
+  vim.g[loaded] = 1
+end)
