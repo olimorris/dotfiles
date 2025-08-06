@@ -78,6 +78,7 @@ require("onedarkpro").setup({
     SnacksDashboardDesc = { fg = "${blue}", bold = true },
     SnacksDashboardKey = { fg = "${orange}", bold = true, italic = true },
     SnacksDashboardIcon = { fg = "${blue}" },
+    SnacksDashboardFooterText = { fg = "${gray}", italic = true },
 
     -- Copilot
     CopilotSuggestion = { fg = "${copilot}", italic = true },

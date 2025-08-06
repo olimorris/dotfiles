@@ -140,7 +140,6 @@ require("snacks").setup({
         { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
         { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
         { icon = "󱘣 ", key = "s", desc = "Search Files", action = ":lua Snacks.dashboard.pick('live_grep')" },
-        { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
         { icon = " ", key = "q", desc = "Quit", action = ":qa" },
       },
     },
@@ -158,7 +157,12 @@ require("snacks").setup({
         indent = 1,
         padding = 1,
       },
-      -- { section = "startup" },
+      {
+        align = "center",
+        text = {
+          { " " .. tostring(#vim.pack.get() + 3) .. " plugins installed", hl = "SnacksDashboardFooterText" },
+        },
+      },
     },
   },
   image = {
