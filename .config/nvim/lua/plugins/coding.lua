@@ -1,9 +1,9 @@
 vim.pack.add({
-  { src = "https://github.com/j-hui/fidget.nvim" },
-  { src = "https://github.com/echasnovski/mini.test" },
-  { src = "https://github.com/echasnovski/mini.diff" },
-  { src = "https://github.com/kylechui/nvim-surround" },
-  { src = "https://github.com/zbirenbaum/copilot.lua" },
+  gh("j-hui/fidget.nvim"),
+  gh("echasnovski/mini.test"),
+  gh("echasnovski/mini.diff"),
+  gh("kylechui/nvim-surround"),
+  gh("zbirenbaum/copilot.lua"),
 })
 
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/codecompanion.nvim"))

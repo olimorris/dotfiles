@@ -3,6 +3,16 @@ local api = vim.api
 -- Set the global namespace
 _G.om = {}
 
+om.home = os.getenv("HOME")
+om.nvim_start_time = vim.uv.hrtime()
+om.on_personal = vim.fn.getenv("USER") == "Oli"
+
+---Return the GitHub URL for a given plugin
+---@param plugin string
+function _G.gh(plugin)
+  return "https://github.com/" .. plugin
+end
+
 ---Check if a certain feature/version/commit exists in nvim
 ---@param feature string
 ---@return boolean
@@ -10,10 +20,7 @@ function om.has(feature)
   return vim.fn.has(feature) > 0
 end
 
-om.home = os.getenv("HOME")
 om.nightly = om.has("nvim-0.12")
-om.nvim_start_time = vim.uv.hrtime()
-om.on_personal = vim.fn.getenv("USER") == "Oli"
 
 ---Determine if you're on an external monitor
 ---@return boolean

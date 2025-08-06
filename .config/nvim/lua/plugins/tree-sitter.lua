@@ -1,9 +1,9 @@
 vim.pack.add({
-  { src = "https://github.com/windwp/nvim-autopairs" },
-  { src = "https://github.com/windwp/nvim-ts-autotag" },
-  { src = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring" },
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter", branch = "main" },
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", branch = "main" },
+  gh("windwp/nvim-autopairs"),
+  gh("windwp/nvim-ts-autotag"),
+  gh("JoosepAlviste/nvim-ts-context-commentstring"),
+  { src = gh("nvim-treesitter/nvim-treesitter"), branch = "main" },
+  { src = gh("nvim-treesitter/nvim-treesitter-textobjects"), branch = "main" },
 })
 
 --=============================================================================

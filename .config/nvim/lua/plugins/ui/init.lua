@@ -1,12 +1,12 @@
 vim.pack.add({
-  { src = "https://github.com/folke/edgy.nvim" },
-  { src = "https://github.com/folke/snacks.nvim" },
-  { src = "https://github.com/rebelot/heirline.nvim" },
-  { src = "https://github.com/lewis6991/gitsigns.nvim" },
-  { src = "https://github.com/folke/todo-comments.nvim" },
-  { src = "https://github.com/nmac427/guess-indent.nvim" },
-  { src = "https://github.com/lukas-reineke/virt-column.nvim" },
-  { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+  gh("folke/edgy.nvim"),
+  gh("folke/snacks.nvim"),
+  gh("rebelot/heirline.nvim"),
+  gh("lewis6991/gitsigns.nvim"),
+  gh("folke/todo-comments.nvim"),
+  gh("nmac427/guess-indent.nvim"),
+  gh("lukas-reineke/virt-column.nvim"),
+  gh("MeanderingProgrammer/render-markdown.nvim"),
 })
 
 --=============================================================================

@@ -1,13 +1,13 @@
 vim.pack.add({
-  { src = "https://github.com/mason-org/mason.nvim" },
-  { src = "https://github.com/stevearc/conform.nvim" },
-  { src = "https://github.com/kevinhwang91/nvim-ufo" },
-  { src = "https://github.com/neovim/nvim-lspconfig" },
-  { src = "https://github.com/rafamadriz/friendly-snippets" },
-  { src = "https://github.com/ivanjermakov/troublesum.nvim" },
-  { src = "https://github.com/mason-org/mason-lspconfig.nvim" },
+  gh("mason-org/mason.nvim"),
+  gh("stevearc/conform.nvim"),
+  gh("kevinhwang91/nvim-ufo"),
+  gh("neovim/nvim-lspconfig"),
+  gh("rafamadriz/friendly-snippets"),
+  gh("ivanjermakov/troublesum.nvim"),
+  gh("mason-org/mason-lspconfig.nvim"),
   {
-    src = "https://github.com/saghen/blink.cmp",
+    src = gh("saghen/blink.cmp"),
     version = vim.version.range("1.*"),
   },
 })

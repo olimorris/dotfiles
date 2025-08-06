@@ -1,8 +1,8 @@
 vim.pack.add({
-  { src = "https://github.com/stevearc/oil.nvim" },
-  { src = "https://github.com/kevinhwang91/nvim-bqf" },
-  { src = "https://github.com/stevearc/aerial.nvim" },
-  { src = "https://github.com/bassamsdata/namu.nvim" },
+  gh("stevearc/oil.nvim"),
+  gh("kevinhwang91/nvim-bqf"),
+  gh("stevearc/aerial.nvim"),
+  gh("bassamsdata/namu.nvim"),
 })
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/persisted.nvim"))
 
