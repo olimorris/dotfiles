@@ -102,6 +102,7 @@ vo.smartcase = true -- Don't ignore case with capitals
 vo.smoothscroll = true -- Smoother scrolling
 vo.splitbelow = true -- Put new windows below current
 vo.splitright = true -- Put new windows right of current
+vim.opt.splitkeep = "screen"
 vo.termguicolors = true -- True color support
 vo.textwidth = 120 -- Total allowed width on the screen
 vo.timeoutlen = 300 -- Time in milliseconds to wait for a mapped sequence to complete
@@ -134,3 +135,24 @@ vw.number = true -- Set the absolute number
 vw.relativenumber = true -- Set the relative number
 vw.signcolumn = "yes" -- Show information next to the line numbers
 vw.wrap = false -- Do not display text over multiple lines
+
+-- Disable some plugins that are not needed
+local disabled_plugins = {
+  "gzip",
+  "matchparen",
+  "netrwPlugin",
+  "rplugin",
+  "tarPlugin",
+  "tohtml",
+  "tutor",
+  "zipPlugin",
+  "getscript",
+  "vimball",
+  "logiPat",
+  "rrhelper",
+  "python_provider",
+}
+vim.iter(disabled_plugins):each(function(p)
+  local loaded = "loaded_" .. p
+  vim.g[loaded] = 1
+end)

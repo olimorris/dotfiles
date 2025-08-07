@@ -1,170 +1,106 @@
-return {
-  {
-    "lervag/vimtex", -- LaTeX support for Neovim
-    lazy = false, -- NEVER lazy load
+vim.pack.add({
+  gh("stevearc/oil.nvim"),
+  gh("kevinhwang91/nvim-bqf"),
+  gh("stevearc/aerial.nvim"),
+  gh("bassamsdata/namu.nvim"),
+})
+vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/persisted.nvim"))
+
+--=============================================================================
+-- Plugin Setup
+--=============================================================================
+require("oil").setup({
+  default_file_explorer = false,
+  delete_to_trash = true,
+  skip_confirm_for_simple_edits = true,
+  float = {
+    border = "none",
   },
-  {
-    "kevinhwang91/nvim-ufo", -- Better folds in Neovim
-    dependencies = "kevinhwang91/promise-async",
-    keys = {
-      {
-        "zR",
-        function()
-          require("ufo").openAllFolds()
-        end,
-        desc = "Open all folds",
-      },
-      {
-        "zM",
-        function()
-          require("ufo").closeAllFolds()
-        end,
-        desc = "Close all folds",
-      },
-    },
-  },
-  {
-    "stevearc/oil.nvim", -- File manager
-    opts = {
-      default_file_explorer = false,
-      delete_to_trash = true,
-      skip_confirm_for_simple_edits = true,
-      float = {
-        border = "none",
-      },
-      is_always_hidden = function(name, bufnr)
-        return name == ".."
+  is_always_hidden = function(name, bufnr)
+    return name == ".."
+  end,
+  keymaps = {
+    ["<C-c>"] = false,
+    ["q"] = "actions.close",
+    [">"] = "actions.toggle_hidden",
+    ["<C-y>"] = "actions.copy_entry_path",
+    ["gd"] = {
+      desc = "Toggle detail view",
+      callback = function()
+        local oil = require("oil")
+        local config = require("oil.config")
+        if #config.columns == 1 then
+          oil.set_columns({ "icon", "permissions", "size", "mtime" })
+        else
+          oil.set_columns({ "icon" })
+        end
       end,
-      keymaps = {
-        ["<C-c>"] = false,
-        ["q"] = "actions.close",
-        [">"] = "actions.toggle_hidden",
-        ["<C-y>"] = "actions.copy_entry_path",
-        ["gd"] = {
-          desc = "Toggle detail view",
-          callback = function()
-            local oil = require("oil")
-            local config = require("oil.config")
-            if #config.columns == 1 then
-              oil.set_columns({ "icon", "permissions", "size", "mtime" })
-            else
-              oil.set_columns({ "icon" })
-            end
-          end,
-        },
-      },
-      buf_options = {
-        buflisted = false,
-      },
-    },
-    keys = {
-      {
-        "_",
-        function()
-          require("oil").toggle_float(vim.fn.getcwd())
-        end,
-        desc = "Oil.nvim: Open File Explorer",
-      },
-      {
-        "-",
-        function()
-          require("oil").toggle_float()
-        end,
-        desc = "Oil.nvim: Open File Explorer to current file",
-      },
     },
   },
-  {
-    "bassamsdata/namu.nvim",
-    keys = {
-      {
-        "<C-t>",
-        function()
-          require("namu.namu_symbols").show()
-        end,
-        mode = { "n", "x", "o" },
-        desc = "Show symbols in current file",
-      },
-      {
-        "<C-e>",
-        function()
-          require("namu.namu_workspace").show()
-        end,
-        mode = { "n", "x", "o" },
-        desc = "Show symbols in workspace",
-      },
-    },
-    opts = {
-      namu_symbols = {
-        enable = true,
-        options = {}, -- here you can configure namu
-      },
-      ui_select = { enable = false }, -- vim.ui.select() wrapper
-    },
+  buf_options = {
+    buflisted = false,
   },
-  {
-    "stevearc/aerial.nvim", -- Toggled list of classes, methods etc in current file
-    opts = {
-      attach_mode = "global",
-      close_on_select = true,
-      layout = {
-        min_width = 30,
-        default_direction = "prefer_right",
-      },
-      -- Use nvim-navic icons
-      icons = {
-        File = "󰈙 ",
-        Module = " ",
-        Namespace = "󰌗 ",
-        Package = " ",
-        Class = "󰌗 ",
-        Method = "󰆧 ",
-        Property = " ",
-        Field = " ",
-        Constructor = " ",
-        Enum = "󰕘",
-        Interface = "󰕘",
-        Function = "󰊕 ",
-        Variable = "󰆧 ",
-        Constant = "󰏿 ",
-        String = "󰀬 ",
-        Number = "󰎠 ",
-        Boolean = "◩ ",
-        Array = "󰅪 ",
-        Object = "󰅩 ",
-        Key = "󰌋 ",
-        Null = "󰟢 ",
-        EnumMember = " ",
-        Struct = "󰌗 ",
-        Event = " ",
-        Operator = "󰆕 ",
-        TypeParameter = "󰊄 ",
-      },
-    },
-    -- keys = {
-    --   { "<C-t>", "<cmd>AerialToggle<CR>", mode = { "n", "x", "o" }, desc = "Aerial Toggle" },
-    -- },
+})
+
+require("namu").setup({
+  namu_symbols = {
+    enable = true,
+    options = {}, -- here you can configure namu
   },
-  {
-    "folke/todo-comments.nvim", -- Highlight and search for todo comments within the codebase
-    event = "BufEnter",
-    keys = {
-      {
-        "<Leader>t",
-        function()
-          require("snacks").picker.todo_comments()
-        end,
-        desc = "Todo comments",
-      },
-    },
-    opts = {
-      signs = false,
-      highlight = {
-        keyword = "bg",
-      },
-      keywords = {
-        FIX = { icon = " " }, -- Custom fix icon
-      },
-    },
-  },
-}
+  ui_select = { enable = false }, -- vim.ui.select() wrapper
+})
+
+require("persisted").setup({
+  save_dir = Sessiondir .. "/",
+  use_git_branch = true,
+  autosave = true,
+  -- autoload = true,
+  -- allowed_dirs = {
+  --   "~/Code",
+  -- },
+  -- on_autoload_no_session = function()
+  --   return vim.notify("No session found", vim.log.levels.WARN)
+  -- end,
+  should_save = function()
+    local excluded_filetypes = {
+      "alpha",
+      "oil",
+      "lazy",
+      "",
+    }
+
+    for _, filetype in ipairs(excluded_filetypes) do
+      if vim.bo.filetype == filetype then
+        return false
+      end
+    end
+
+    return true
+  end,
+})
+
+--=============================================================================
+-- Keymaps
+--=============================================================================
+local opts = { noremap = true, silent = true }
+
+om.set_keymaps("_", function()
+  require("oil").toggle_float(vim.fn.getcwd())
+end, "n", opts)
+om.set_keymaps("-", function()
+  require("oil").toggle_float()
+end, "n", opts)
+
+om.set_keymaps("<C-t>", function()
+  require("namu.namu_symbols").show()
+end, { "n", "x", "o" }, opts)
+om.set_keymaps("<C-e>", function()
+  require("namu.namu_workspace").show()
+end, { "n", "x", "o" }, opts)
+
+--=============================================================================
+-- Commands
+--=============================================================================
+om.create_user_command("Sessions", "List Sessions", function()
+  require("persisted").select()
+end)

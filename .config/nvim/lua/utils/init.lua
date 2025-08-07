@@ -3,6 +3,16 @@ local api = vim.api
 -- Set the global namespace
 _G.om = {}
 
+om.home = os.getenv("HOME")
+om.nvim_start_time = vim.uv.hrtime()
+om.on_personal = vim.fn.getenv("USER") == "Oli"
+
+---Return the GitHub URL for a given plugin
+---@param plugin string
+function _G.gh(plugin)
+  return "https://github.com/" .. plugin
+end
+
 ---Check if a certain feature/version/commit exists in nvim
 ---@param feature string
 ---@return boolean
@@ -11,7 +21,6 @@ function om.has(feature)
 end
 
 om.nightly = om.has("nvim-0.12")
-om.on_personal = vim.fn.getenv("USER") == "Oli"
 
 ---Determine if you're on an external monitor
 ---@return boolean
@@ -22,7 +31,7 @@ end
 ---Set a keymap in Neovim
 ---@param lhs string The left-hand side of the keymap (the key combination)
 ---@param rhs string|function The right-hand side of the keymap (the command to execute)
----@param mode string The mode in which the keymap should be set (e.g., "n" for normal mode)
+---@param mode string|string[] The mode in which the keymap should be set (e.g., "n" for normal mode)
 ---@param opts? table Optional parameters for the keymap, such as silent or noremap
 ---@return nil
 function om.set_keymaps(lhs, rhs, mode, opts)
@@ -34,7 +43,7 @@ end
 ---@param name string The name of the command
 ---@param desc string A description of the command
 ---@param command string|function The command to execute, can be a string or a function
----@param opts table Optional parameters for the command, such as nargs
+---@param opts? table Optional parameters for the command, such as nargs
 ---@return nil
 function om.create_user_command(name, desc, command, opts)
   api.nvim_create_user_command(name, command, {
@@ -45,7 +54,7 @@ end
 
 ---Create an autocommand in Neovim
 ---@param autocmd string|table The autocmd event(s) to trigger the command
----@param opts {group: string, buffer: number, pattern: string, callback: function|string} Optional parameters for the autocmd
+---@param opts {group: string, buffer: number, pattern: string|table, callback: function|string} Optional parameters for the autocmd
 ---@return nil
 function om.create_autocmd(autocmd, opts)
   opts = opts or {}
@@ -58,9 +67,16 @@ function om.create_autocmd(autocmd, opts)
   api.nvim_create_autocmd(autocmd, {
     group = opts.group,
     buffer = opts.buffer,
-    pattern = opts.pattern,
+    pattern = type(opts.pattern) == "string" and { opts.pattern } or opts.pattern,
     callback = type(opts.callback) == "function" and opts.callback or function()
       vim.cmd(opts.callback)
     end,
   })
+end
+
+local utils = {
+  "marks",
+}
+for _, util in ipairs(utils) do
+  pcall(require, "utils." .. util)
 end
