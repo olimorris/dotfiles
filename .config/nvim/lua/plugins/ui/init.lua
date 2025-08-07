@@ -140,6 +140,14 @@ require("snacks").setup({
         { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
         { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
         { icon = "󱘣 ", key = "s", desc = "Search Files", action = ":lua Snacks.dashboard.pick('live_grep')" },
+        {
+          icon = "󰚰",
+          key = "U",
+          desc = "Update Plugins",
+          action = function()
+            vim.pack.update()
+          end,
+        },
         { icon = " ", key = "q", desc = "Quit", action = ":qa" },
       },
     },
