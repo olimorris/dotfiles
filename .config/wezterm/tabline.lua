@@ -19,7 +19,7 @@ local function tabs(config)
 
   tabline.setup({
     options = {
-      icons_enabled = false,
+      icons_enabled = true,
       component_separators = {
         left = "",
         right = "",
@@ -66,9 +66,37 @@ local function tabs(config)
       tabline_a = { leader },
       tabline_b = {},
       tabline_c = {},
-      tab_active = { "index" .. "", { "process", padding = { left = 0, right = 1 } } },
-      tab_inactive = { "index", { "process", padding = { left = 0, right = 1 } } },
-      tabline_x = { "ram", "cpu", "battery", "datetime" },
+      tab_active = {
+        "index",
+        {
+          "process",
+          icons_enabled = false,
+          padding = { left = 0, right = 1 },
+        },
+      },
+      tab_inactive = {
+        "index",
+        {
+          "process",
+          icons_enabled = false,
+          padding = { left = 0, right = 1 },
+        },
+      },
+      tabline_x = {
+        { "ram", icons_enabled = false },
+        { "cpu", icons_enabled = false },
+        {
+          "battery",
+          battery_to_icon = {
+            empty = { wezterm.nerdfonts.fa_battery_empty, color = { fg = colors.ansi[2] } },
+            quarter = wezterm.nerdfonts.fa_battery_quarter,
+            half = wezterm.nerdfonts.fa_battery_half,
+            three_quarters = wezterm.nerdfonts.fa_battery_three_quarters,
+            full = wezterm.nerdfonts.fa_battery_full,
+          },
+        },
+        { "datetime", icons_enabled = false },
+      },
       tabline_y = {},
       tabline_z = {},
     },
