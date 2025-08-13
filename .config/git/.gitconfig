@@ -10,5 +10,23 @@
 [core]
 	excludesfile = /Users/Oli/.gitignore_global
 	editor = nvim
+	pager = delta
 [init]
 	defaultBranch = main
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true  # use n and N to move between diff sections
+	dark = true      # or light = true, or omit for auto-detection
+
+[merge]
+	conflictStyle = zdiff3
+	tool = delta
+
+[mergetool "delta"]
+	cmd = delta --color-only --diff-so-fancy \"$LOCAL\" \"$REMOTE\"
+
+[diff]
+	tool = delta
