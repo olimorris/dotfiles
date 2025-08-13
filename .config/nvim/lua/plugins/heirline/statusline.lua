@@ -18,6 +18,10 @@ local RightSlantEnd = {
   hl = { fg = "bg", bg = "statusline_bg" },
 }
 
+local IsCodeCompanion = function()
+  return package.loaded.codecompanion and vim.bo.filetype == "codecompanion"
+end
+
 local VimMode = {
   init = function(self)
     self.mode = vim.fn.mode(1)
@@ -185,7 +189,7 @@ local FileBlock = {
   condition = function(self)
     return not conditions.buffer_matches({
       filetype = self.filetypes,
-    })
+    }) and not IsCodeCompanion()
   end,
 }
 
@@ -353,6 +357,87 @@ local LspAttached = {
   },
 }
 
+local CodeCompanionCurrentContext = {
+  static = {
+    enabled = true,
+  },
+  condition = function(self)
+    return IsCodeCompanion() and _G.codecompanion_current_context ~= nil and self.enabled
+  end,
+  provider = function()
+    local bufname = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(_G.codecompanion_current_context), ":t")
+    return "[  " .. bufname .. " ] "
+  end,
+  hl = { fg = "gray", bg = "bg" },
+  update = {
+    "User",
+    pattern = { "CodeCompanionRequest*", "CodeCompanionContextChanged" },
+    callback = vim.schedule_wrap(function(self, args)
+      if args.match == "CodeCompanionRequestStarted" then
+        self.enabled = false
+      elseif args.match == "CodeCompanionRequestFinished" then
+        self.enabled = true
+      end
+      vim.cmd("redrawstatus")
+    end),
+  },
+}
+
+local CodeCompanionStats = {
+  condition = function(self)
+    return IsCodeCompanion()
+  end,
+  static = {
+    chat_metadata = {},
+  },
+  init = function(self)
+    local bufnr = vim.api.nvim_get_current_buf()
+    self.chat_metadata = _G.codecompanion_chat_metadata[bufnr]
+  end,
+  -- Tokens block
+  {
+    condition = function(self)
+      return self.chat_metadata.tokens > 0
+    end,
+    RightSlantStart,
+    {
+      provider = function(self)
+        return "   " .. self.chat_metadata.tokens .. " "
+      end,
+      hl = { fg = "gray", bg = "statusline_bg" },
+      update = {
+        "User",
+        pattern = { "CodeCompanionChatOpened", "CodeCompanionRequestFinished" },
+        callback = vim.schedule_wrap(function()
+          vim.cmd("redrawstatus")
+        end),
+      },
+    },
+    RightSlantEnd,
+  },
+  -- Cycles block
+  {
+    condition = function(self)
+      return self.chat_metadata.cycles > 0
+    end,
+    RightSlantStart,
+    {
+      provider = function(self)
+        return "  " .. self.chat_metadata.cycles .. " "
+      end,
+      hl = { fg = "gray", bg = "statusline_bg" },
+      update = {
+        "User",
+        pattern = { "CodeCompanionChatOpened", "CodeCompanionRequestFinished" },
+        callback = vim.schedule_wrap(function()
+          vim.cmd("redrawstatus")
+        end),
+      },
+    },
+    RightSlantEnd,
+  },
+}
+
 ---Return the current line number as a % of total lines and the total lines in the file
 local Ruler = {
   condition = function(self)
@@ -446,9 +531,10 @@ local SearchResults = {
 ---Return the status of the current session
 local Session = {
   condition = function(self)
+    local bufnr = 0
     return not conditions.buffer_matches({
       filetype = self.filetypes,
-    }) and package.loaded.persisted
+    }) and package.loaded.persisted and not IsCodeCompanion()
   end,
   RightSlantStart,
   {
@@ -604,7 +690,7 @@ local Lazy = {
   condition = function(self)
     return not conditions.buffer_matches({
       filetype = self.filetypes,
-    }) and require("lazy.status").has_updates()
+    }) and require("lazy.status").has_updates() and not IsCodeCompanion()
   end,
   update = {
     "User",
@@ -632,6 +718,9 @@ local FileIcon = {
     local extension = vim.fn.fnamemodify(filename, ":e")
     self.icon, self.icon_color = require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
   end,
+  condition = function()
+    return not IsCodeCompanion()
+  end,
   provider = function(self)
     return self.icon and (" " .. self.icon .. " ")
   end,
@@ -657,6 +746,8 @@ local FileType = {
   hl = { fg = "gray", bg = "statusline_bg" },
 }
 
+local FileTypeCondition = {}
+
 local FileType = utils.insert(FileBlock, RightSlantStart, FileIcon, FileType, RightSlantEnd)
 
 --- Return information on the current file's encoding
@@ -664,7 +755,7 @@ local FileEncoding = {
   condition = function(self)
     return not conditions.buffer_matches({
       filetype = self.filetypes,
-    })
+    }) and not IsCodeCompanion()
   end,
   RightSlantStart,
   {
@@ -727,6 +818,8 @@ return {
     Session,
     MacroRecording,
     SearchResults,
+    CodeCompanionCurrentContext,
+    CodeCompanionStats,
     Ruler,
   },
 }
