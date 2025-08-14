@@ -17,14 +17,14 @@ local apps = {
   o = "Notion", -- Life OS
   r = "Reminders",
   t = "WezTerm", -- Terminal
-  v = "UTM", -- Virtual Machine
   --w = RESERVED
 }
 
 if on_personal then
   apps.c = "Code" -- VS Code
   apps.b = "Safari" -- Browser
-  apps.p = "1Password"
+  apps.p = "Preview"
+  apps["["] = "1Password" -- It's next to P...
 else
   apps.c = "Teams" -- Chat
   apps.b = "Google Chrome" -- Browser
