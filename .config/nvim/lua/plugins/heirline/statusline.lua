@@ -357,33 +357,7 @@ local LspAttached = {
   },
 }
 
-local CodeCompanionCurrentContext = {
-  static = {
-    enabled = true,
-  },
-  condition = function(self)
-    return IsCodeCompanion() and _G.codecompanion_current_context ~= nil and self.enabled
-  end,
-  provider = function()
-    local bufname = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(_G.codecompanion_current_context), ":t")
-    return "[  " .. bufname .. " ] "
-  end,
-  hl = { fg = "gray", bg = "bg" },
-  update = {
-    "User",
-    pattern = { "CodeCompanionRequest*", "CodeCompanionContextChanged" },
-    callback = vim.schedule_wrap(function(self, args)
-      if args.match == "CodeCompanionRequestStarted" then
-        self.enabled = false
-      elseif args.match == "CodeCompanionRequestFinished" then
-        self.enabled = true
-      end
-      vim.cmd("redrawstatus")
-    end),
-  },
-}
-
-local CodeCompanionStats = {
+local CodeCompanionChatBuffer = {
   condition = function(self)
     return IsCodeCompanion()
   end,
@@ -392,33 +366,67 @@ local CodeCompanionStats = {
   },
   init = function(self)
     local bufnr = vim.api.nvim_get_current_buf()
-    self.chat_metadata = _G.codecompanion_chat_metadata[bufnr]
+    if _G.codecompanion_chat_metadata then
+      self.chat_metadata = _G.codecompanion_chat_metadata[bufnr]
+    end
   end,
+  update = {
+    "User",
+    pattern = {
+      "CodeCompanionChatModel",
+      "CodeCompanionChatOpened",
+      "CodeCompanionRequest*",
+      "CodeCompanionContextChanged",
+    },
+    callback = vim.schedule_wrap(function()
+      vim.cmd("redrawstatus")
+    end),
+  },
+  -- Current Context
+  {
+    condition = function(self)
+      return _G.codecompanion_current_context ~= nil and not _G.codecompanion_processing
+    end,
+    provider = function()
+      local bufname = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(_G.codecompanion_current_context), ":t")
+      return "[  " .. bufname .. " ] "
+    end,
+    hl = { fg = "gray", bg = "bg" },
+  },
+  -- Model block
+  {
+    condition = function(self)
+      return self.chat_metadata
+        and self.chat_metadata.adapter
+        and self.chat_metadata.adapter.model
+        and not _G.codecompanion_processing
+    end,
+    {
+      provider = function(self)
+        return "  " .. self.chat_metadata.adapter.model .. " "
+      end,
+      hl = { fg = "gray", bg = "bg" },
+    },
+  },
+
   -- Tokens block
   {
     condition = function(self)
-      return self.chat_metadata.tokens > 0
+      return self.chat_metadata and self.chat_metadata.tokens and self.chat_metadata.tokens > 0
     end,
     RightSlantStart,
     {
       provider = function(self)
-        return "   " .. self.chat_metadata.tokens .. " "
+        return " 󰔖 " .. self.chat_metadata.tokens .. " "
       end,
       hl = { fg = "gray", bg = "statusline_bg" },
-      update = {
-        "User",
-        pattern = { "CodeCompanionChatOpened", "CodeCompanionRequestFinished" },
-        callback = vim.schedule_wrap(function()
-          vim.cmd("redrawstatus")
-        end),
-      },
     },
     RightSlantEnd,
   },
   -- Cycles block
   {
     condition = function(self)
-      return self.chat_metadata.cycles > 0
+      return self.chat_metadata and self.chat_metadata.cycles and self.chat_metadata.cycles > 0
     end,
     RightSlantStart,
     {
@@ -426,13 +434,6 @@ local CodeCompanionStats = {
         return "  " .. self.chat_metadata.cycles .. " "
       end,
       hl = { fg = "gray", bg = "statusline_bg" },
-      update = {
-        "User",
-        pattern = { "CodeCompanionChatOpened", "CodeCompanionRequestFinished" },
-        callback = vim.schedule_wrap(function()
-          vim.cmd("redrawstatus")
-        end),
-      },
     },
     RightSlantEnd,
   },
@@ -562,7 +563,7 @@ local Session = {
   RightSlantEnd,
 }
 
-local CodeCompanion = {
+local CodeCompanionRequest = {
   condition = function()
     return package.loaded.codecompanion
   end,
@@ -575,8 +576,10 @@ local CodeCompanion = {
     callback = function(self, args)
       if args.match == "CodeCompanionRequestStarted" then
         self.processing = true
+        _G.codecompanion_processing = true
       elseif args.match == "CodeCompanionRequestFinished" then
         self.processing = false
+        _G.codecompanion_processing = false
       end
       vim.cmd("redrawstatus")
     end,
@@ -589,7 +592,7 @@ local CodeCompanion = {
     hl = { fg = "yellow" },
   },
 }
-local CodeCompanionAgent = {
+local CodeCompanionTools = {
   condition = function()
     return package.loaded.codecompanion
   end,
@@ -598,7 +601,7 @@ local CodeCompanionAgent = {
   },
   update = {
     "User",
-    pattern = "CodeCompanionAgent*",
+    pattern = "CodeCompanionTools*",
     callback = function(self, args)
       if args.match == "CodeCompanionToolsStarted" then
         self.processing = true
@@ -808,8 +811,8 @@ return {
     LspAttached,
     -- LspDiagnostics,
     { provider = "%=" },
-    CodeCompanionAgent,
-    CodeCompanion,
+    CodeCompanionTools,
+    CodeCompanionRequest,
     Overseer,
     Dap,
     Lazy,
@@ -818,8 +821,7 @@ return {
     Session,
     MacroRecording,
     SearchResults,
-    CodeCompanionCurrentContext,
-    CodeCompanionStats,
+    CodeCompanionChatBuffer,
     Ruler,
   },
 }
