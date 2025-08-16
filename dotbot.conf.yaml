@@ -17,6 +17,7 @@
     ~/.config/mise: .config/mise
     ~/.config/mcphub: .config/mcphub
     ~/.config/nvim: .config/nvim
+    ~/.config/nvim-new: .config/nvim-new
     ~/.config/rclone: .config/rclone
     ~/.config/snippets: .config/snippets
     ~/.config/superwhisper: .config/superwhisper
