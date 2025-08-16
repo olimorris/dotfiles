@@ -1,3 +1,5 @@
+alias nn='NVIM_APPNAME=nvim-new nvim'
+
 # Docker
 alias dl='docker ps'
 alias dc='docker-compose'
