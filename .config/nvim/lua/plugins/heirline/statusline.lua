@@ -615,7 +615,7 @@ local CodeCompanionTools = {
     condition = function(self)
       return self.processing
     end,
-    provider = "󱙺 ",
+    provider = " 󱙺  ",
     hl = { fg = "green" },
   },
 }
@@ -820,8 +820,8 @@ return {
     -- FileEncoding,
     Session,
     MacroRecording,
-    SearchResults,
     CodeCompanionChatBuffer,
+    SearchResults,
     Ruler,
   },
 }
