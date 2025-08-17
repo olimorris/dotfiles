@@ -16,12 +16,8 @@ return {
     end,
     config = function()
       require("nvim-treesitter").install({
-        "c",
-        "cmake",
-        "cpp",
         "csv",
         "diff",
-        "gitcommit",
         "gitignore",
         "go",
         "fish",
@@ -41,7 +37,6 @@ return {
         "vue",
         "yaml",
       })
-      require("nvim-treesitter").update()
     end,
   },
   {
