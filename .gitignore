@@ -18,6 +18,7 @@
 !.config/mise/**/*
 !.config/nix/**/*
 !.config/nvim/**/*
+!.config/nvim-new/**/*
 !.config/rclone/filter_list.txt
 !.config/snippets/**/*
 !.config/ssh/config
@@ -60,7 +61,6 @@
 # Config
 .config/nvim/plugin
 .config/wezterm/encryption_key.txt
-.config/nvim-new
 
 # Fish
 .config/fish/fish_variables

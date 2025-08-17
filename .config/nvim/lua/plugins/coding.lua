@@ -4,12 +4,6 @@ return {
     cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions" },
     dependencies = {
       "j-hui/fidget.nvim", -- Display status
-      {
-        "Davidyz/VectorCode", -- Index and search code in your repositories
-        version = "*",
-        build = "pipx upgrade vectorcode",
-        dependencies = { "nvim-lua/plenary.nvim" },
-      },
       -- { "echasnovski/mini.pick", config = true },
       -- { "ibhagwan/fzf-lua", config = true },
     },

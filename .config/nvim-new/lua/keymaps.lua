@@ -1,0 +1,236 @@
+local keymap = vim.keymap.set --[[@type function]]
+local opts = { noremap = true, silent = true }
+
+keymap("n", "<C-q>", "<cmd>q<CR>", { remap = true, silent = true, desc = "Quit neovim" })
+keymap("n", "<C-y>", "<cmd>%y+<CR>", { desc = "Copy buffer" })
+keymap("n", "<C-s>", "<cmd>silent write<CR>", { desc = "Save buffer" })
+keymap("i", "<C-s>", "<cmd>silent write<CR>", { desc = "Save buffer" })
+
+keymap("n", "<Tab>", "<cmd>bnext<CR>", { noremap = false, desc = "Next buffer" })
+keymap("n", "<S-Tab>", "<cmd>bprev<CR>", { noremap = false, desc = "Previous buffer" })
+
+-- Movement
+keymap("n", "E", "$", { desc = "End of a line" })
+keymap("v", "E", "$", { desc = "End of a line" })
+keymap("n", "B", "^", { desc = "Beginning of a line" })
+keymap("v", "B", "^", { desc = "Beginning of a line" })
+
+-- Editing words
+keymap("n", "<LocalLeader>,", "<cmd>norm A,<CR>", { desc = "Append comma" })
+keymap("n", "<LocalLeader>;", "<cmd>norm A;<CR>", { desc = "Append semicolon" })
+
+-- Wrap text
+keymap("n", "<LocalLeader>(", [[ciw(<c-r>")<esc>]], { desc = "Wrap text in brackets ()" })
+keymap("v", "<LocalLeader>(", [[c(<c-r>")<esc>]], { desc = "Wrap text in brackets ()" })
+keymap("n", "<LocalLeader>[", [[ciw[<c-r>"]<esc>]], { desc = "Wrap text in square braces []" })
+keymap("v", "<LocalLeader>[", [[c[<c-r>"]<esc>]], { desc = "Wrap text in square braces []" })
+keymap("n", "<LocalLeader>{", [[ciw{<c-r>"}<esc>]], { desc = "Wrap text in curly braces {}" })
+keymap("v", "<LocalLeader>{", [[c{<c-r>"}<esc>]], { desc = "Wrap text in curly braces {}" })
+keymap("n", '<LocalLeader>"', [[ciw"<c-r>""<esc>]], { desc = 'Wrap text in quotes ""' })
+keymap("v", '<LocalLeader>"', [[c"<c-r>""<esc>]], { desc = 'Wrap text in quotes ""' })
+
+-- Find and replace
+keymap("n", "<LocalLeader>fw", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
+  { desc = "Replace cursor words in buffer" })
+keymap("n", "<LocalLeader>fl", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], { desc = "Replace cursor words in line" })
+
+-- Working with lines
+keymap("n", "<CR>", "o<Esc>", { desc = "Insert blank line below" })
+keymap("n", "<S-CR>", "O<Esc>", { desc = "Insert blank line above" })
+
+-- Splits
+keymap("n", "<Leader>\\", "<cmd>vsplit<CR>", { desc = "Split: Create Vertical" })
+keymap("n", "<Leader>-", "<cmd>split<CR>", { desc = "Split: Create Horizontal" })
+keymap("n", "<Leader>sc", "<cmd>wincmd q<CR>", { desc = "Split: Close" })
+keymap("n", "<Leader>so", "<cmd>wincmd o<CR>", { desc = "Split: Close all but current" })
+keymap("n", "<C-k>", "<cmd>wincmd k<CR>", { desc = "Split: Move up" })
+keymap("n", "<C-j>", "<cmd>wincmd j<CR>", { desc = "Split: Move down" })
+keymap("n", "<C-h>", "<cmd>wincmd h<CR>", { desc = "Split: Move left" })
+keymap("n", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Split: Move right" })
+
+-- Surrounds
+keymap("x", "(", "S)", { remap = true, desc = "Surround with ()'s" })
+keymap("x", ")", "S)", { remap = true, desc = "Surround with ()'s" })
+keymap("x", "{", "S}", { remap = true, desc = "Surround with {}'s" })
+keymap("x", "}", "S}", { remap = true, desc = "Surround with {}'s" })
+keymap("x", "[", "S]", { remap = true, desc = "Surround with []'s" })
+keymap("x", "]", "S]", { remap = true, desc = "Surround with []'s" })
+
+-- Misc
+keymap("n", "<Esc>", "<cmd>:noh<CR>", { desc = "Clear searches" })
+keymap("v", ">", ">gv", { desc = "Indent" })
+keymap("v", "<", "<gv", { desc = "Outdent" })
+
+-- Pack
+keymap("n", "<leader>ps", function() vim.pack.update() end, { desc = "Update plugins" })
+
+-- LSP
+keymap("n", "gq", function() vim.lsp.buf.format() end, { desc = "Format" })
+keymap("n", "gd", function() vim.lsp.buf.definition() end, { desc = "Go to definition", noremap = true, silent = true })
+keymap("n","[",  function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = "Go to previous diagnostic item" })
+keymap("n","]",  function() vim.diagnostic.jump({ count = 1, float = true }) end, { desc = "Go to next diagnostic item" })
+
+-- Tree-sitter
+keymap({ "x", "o" }, "af", function()
+  require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+end, { desc = "Select around function" })
+
+keymap({ "x", "o" }, "if", function()
+  require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+end, { desc = "Select inside function" })
+
+keymap({ "x", "o" }, "ac", function()
+  require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
+end, { desc = "Select around class" })
+
+keymap({ "x", "o" }, "ic", function()
+  require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
+end, { desc = "Select inside class" })
+
+keymap({ "x", "o" }, "as", function()
+  require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "locals")
+end, { desc = "Select local scope" })
+
+-- CodeCompanion
+keymap({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<CR>")
+keymap({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<CR>")
+keymap("v", "<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>")
+
+-- Copilot
+keymap("i", "<C-a>", function() require("copilot.suggestion").accept() end)
+keymap("i", "<C-x>", function() require("copilot.suggestion").dismiss() end)
+
+-- Snacks
+keymap("n", "<Leader>t", function() require("snacks").picker.todo_comments() end, opts)
+keymap({ "n", "t" }, "<C-x>", function() Snacks.terminal.toggle() end, opts)
+keymap("n", "<C-c>", function() Snacks.bufdelete() end, opts)
+keymap("n", "<C-f>", function() Snacks.picker.files({ hidden = true }) end, opts)
+keymap("n", "<C-b>", function() Snacks.picker.buffers() end, opts)
+keymap("n", "<C-g>", function() Snacks.picker.grep_buffers() end, opts)
+keymap("n", "<Leader>g", function() Snacks.picker.grep() end, opts)
+keymap("n", "<Leader><Leader>", function() Snacks.picker.recent() end, opts)
+keymap("n", "<Leader>h", function() Snacks.picker.notifications() end, opts)
+keymap("n", "<LocalLeader>gb", function() Snacks.gitbrowse() end, opts)
+keymap("n", "<LocalLeader>u", function() Snacks.picker.undo() end, opts)
+keymap("n", "<Leader>l", function() Snacks.lazygit() end, opts)
+
+keymap("t", "<Esc>", "<C-\\><C-n>", vim.tbl_extend("force", opts, { nowait = true, desc = "Exit terminal mode" }))
+
+-- Oil
+keymap("n", "_", function() require("oil").toggle_float(vim.fn.getcwd()) end, opts)
+keymap("n", "-", function() require("oil").toggle_float() end, opts)
+
+-- Namu
+keymap({ "n", "x", "o" }, "<C-t>", function() require("namu.namu_symbols").show() end, opts)
+keymap({ "n", "x", "o" }, "<C-e>", function() require("namu.namu_workspace").show() end, opts)
+
+-- Multiple Cursors
+-- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
+-- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
+
+vim.g.mc = vim.api.nvim_replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]], true, true, true)
+
+function SetupMultipleCursors()
+  keymap(
+    "n",
+    "<Enter>",
+    [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]],
+    { remap = true, silent = true }
+  )
+end
+
+-- 1. Position the cursor anywhere in the word you wish to change;
+-- 2. Or, visually make a selection;
+-- 3. Hit cn, type the new word, then go back to Normal mode;
+-- 4. Hit `.` n-1 times, where n is the number of replacements.
+keymap("n", "cn", "*``cgn", { desc = "Initiate multiple cursors" })
+keymap("x", "cn", [[g:mc . "``cgn"]], { expr = true, desc = "Initiate multiple cursors" })
+keymap("n", "cN", "*``cgN", { desc = "Initiate multiple cursors (backwards)" })
+keymap("x", "cN", [[g:mc . "``cgN"]], { expr = true, desc = "Initiate multiple cursors (backwards)" })
+
+-- 1. Position the cursor over a word; alternatively, make a selection.
+-- 2. Hit cq to start recording the macro.
+-- 3. Once you are done with the macro, go back to normal mode.
+-- 4. Hit Enter to repeat the macro over search matches.
+keymap("n", "cq", [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>*``qz]],
+  { desc = "Initiate multiple cursors with macros" })
+keymap("x", "cq", [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . g:mc . "``qz"]],
+  { expr = true, desc = "Initiate multiple cursors with macros" })
+keymap("n", "cQ", [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>#``qz]],
+  { desc = "Initiate multiple cursors with macros (backwards)" })
+keymap("x", "cQ", [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
+  { expr = true, desc = "Initiate multiple cursors with macros (backwards)" })
+
+--[[
+  Marks / Bookmarks / Harpoon Replacement in c.60 LOC
+  Uses m{1-9} to set marks in a file and then '{1-9} to jump to them
+
+  This is the combination of some awesome work over at:
+  https://github.com/neovim/neovim/discussions/33335
+
+  I then borrowed some simplification ideas from:
+  https://github.com/LJFRIESE/nvim/blob/master/lua/config/autocmds.lua#L196-L340
+--]]
+
+-- Convert a mark number (1-9) to its corresponding character (A-I)
+local function mark2char(mark)
+  if mark:match("[1-9]") then
+    return string.char(mark + 64)
+  end
+  return mark
+end
+
+-- List bookmarks in the session
+local function list_marks()
+  local snacks = require("snacks")
+  return snacks.picker.marks({
+    transform = function(item)
+      if item.label and item.label:match("^[A-I]$") and item then
+        item.label = "" .. string.byte(item.label) - string.byte("A") + 1 .. ""
+        return item
+      end
+      return false
+    end,
+  })
+end
+
+-- Add Marks ------------------------------------------------------------------
+keymap("n", "m", function()
+  local mark = vim.fn.getcharstr()
+  local char = mark2char(mark)
+  vim.cmd("mark " .. char)
+  if mark:match("[1-9]") then
+    vim.notify("Added mark " .. mark, vim.log.levels.INFO, { title = "Marks" })
+  else
+    vim.fn.feedkeys("m" .. mark, "n")
+  end
+end, { desc = "Add mark" })
+
+-- Go To Marks ----------------------------------------------------------------
+keymap("n", "'", function()
+  local mark = vim.fn.getcharstr()
+  local char = mark2char(mark)
+  local mark_pos = vim.api.nvim_get_mark(char, {})
+  if mark_pos[1] == 0 then
+    return vim.notify("No mark at " .. mark, vim.log.levels.WARN, { title = "Marks" })
+  end
+
+  vim.fn.feedkeys("'" .. mark2char(mark), "n")
+end, { desc = "Go to mark" })
+
+-- List Marks -----------------------------------------------------------------
+keymap("n", "<Leader>mm", function()
+  list_marks()
+end, { desc = "List marks" })
+
+-- Delete Marks ---------------------------------------------------------------
+keymap("n", "<Leader>md", function()
+  local mark = vim.fn.getcharstr()
+  vim.api.nvim_del_mark(mark2char(mark))
+  vim.notify("Deleted mark " .. mark, vim.log.levels.INFO, { title = "Marks" })
+end, { desc = "Delete mark" })
+
+keymap("n", "<Leader>mD", function()
+  vim.cmd("delmarks A-I")
+  vim.notify("Deleted all marks", vim.log.levels.INFO, { title = "Marks" })
+end, { desc = "Delete all marks" })
