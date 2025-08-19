@@ -12,7 +12,7 @@ require("todo-comments").setup({
 
 require("render-markdown").setup({
   completions = { blink = { enabled = true } },
-  file_types = { "codecompanion", "markdown" },
+  file_types = { "codecompanion", "markdown", "nvim-pack" },
   overrides = {
     filetype = {
       codecompanion = {
@@ -115,7 +115,7 @@ require("snacks").setup({
           key = "U",
           desc = "Update Plugins",
           action = function()
-            vim.pack.update()
+            vim.cmd("PackSync")
           end,
         },
         { icon = " ", key = "q", desc = "Quit", action = ":qa" },
@@ -135,19 +135,48 @@ require("snacks").setup({
         indent = 1,
         padding = 1,
       },
-      {
-        align = "center",
-        text = {
-          { "⚡️ Neovim loaded ", hl = "SnacksDashboardFooterText" },
-          { tostring(#vim.pack.get() + 3), hl = "SnacksDashboardFooterEmphasis" },
-          { " plugins in ", hl = "SnacksDashboardFooterText" },
-          {
-            string.format("%.2f", (vim.uv.hrtime() - om.nvim_start_time) / 1e6),
-            hl = "SnacksDashboardFooterEmphasis",
+      function()
+        local plugins = vim.pack.get()
+        local active_count = #vim
+          .iter(plugins)
+          :filter(function(plugin)
+            return plugin.active
+          end)
+          :totable()
+        return {
+          align = "center",
+          text = {
+            { "⚡️ Neovim loaded ", hl = "SnacksDashboardFooterText" },
+            { tostring(active_count + 3) .. "/" .. tostring(#plugins + 3), hl = "SnacksDashboardFooterEmphasis" },
+            { " plugins in ", hl = "SnacksDashboardFooterText" },
+            {
+              string.format("%.2fms", (vim.uv.hrtime() - om.nvim_start_time) / 1e6),
+              hl = "SnacksDashboardFooterEmphasis",
+            },
           },
-          { " ms", hl = "SnacksDashboardFooterText" },
-        },
-      },
+        }
+      end,
+      function()
+        local version = vim.version()
+        local version_string = string.format(
+          "v%d.%d.%d%s%s",
+          version.major,
+          version.minor,
+          version.patch,
+          version.prerelease and ("-" .. version.prerelease) or "",
+          version.build and ("-" .. version.build) or ""
+        )
+
+        return {
+          align = "center",
+          text = {
+            {
+              version_string,
+              hl = "SnacksDashboardFooterVersion",
+            },
+          },
+        }
+      end,
     },
   },
   image = {

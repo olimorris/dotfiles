@@ -14,39 +14,42 @@ keymap("n", "E", "$", { desc = "End of a line" })
 keymap("v", "E", "$", { desc = "End of a line" })
 keymap("n", "B", "^", { desc = "Beginning of a line" })
 keymap("v", "B", "^", { desc = "Beginning of a line" })
+keymap("n", "<A-k>", ":m .-2<CR>==", { desc = "Move selection up", silent = true })
+keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up", silent = true })
+keymap("n", "<A-j>", ":m .+1<CR>==", { desc = "Move selection down", silent = true })
+keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down", silent = true })
 
 -- Editing words
 keymap("n", "<LocalLeader>,", "<cmd>norm A,<CR>", { desc = "Append comma" })
 keymap("n", "<LocalLeader>;", "<cmd>norm A;<CR>", { desc = "Append semicolon" })
 
 -- Wrap text
-keymap("n", "<LocalLeader>(", [[ciw(<c-r>")<esc>]], { desc = "Wrap text in brackets ()" })
-keymap("v", "<LocalLeader>(", [[c(<c-r>")<esc>]], { desc = "Wrap text in brackets ()" })
-keymap("n", "<LocalLeader>[", [[ciw[<c-r>"]<esc>]], { desc = "Wrap text in square braces []" })
-keymap("v", "<LocalLeader>[", [[c[<c-r>"]<esc>]], { desc = "Wrap text in square braces []" })
-keymap("n", "<LocalLeader>{", [[ciw{<c-r>"}<esc>]], { desc = "Wrap text in curly braces {}" })
-keymap("v", "<LocalLeader>{", [[c{<c-r>"}<esc>]], { desc = "Wrap text in curly braces {}" })
-keymap("n", '<LocalLeader>"', [[ciw"<c-r>""<esc>]], { desc = 'Wrap text in quotes ""' })
 keymap("v", '<LocalLeader>"', [[c"<c-r>""<esc>]], { desc = 'Wrap text in quotes ""' })
+keymap("n", '<LocalLeader>"', [[ciw"<c-r>""<esc>]], { desc = 'Wrap text in quotes ""' })
+keymap("v", "<LocalLeader>(", [[c(<c-r>")<esc>]], { desc = "Wrap text in brackets ()" })
+keymap("n", "<LocalLeader>(", [[ciw(<c-r>")<esc>]], { desc = "Wrap text in brackets ()" })
+keymap("v", "<LocalLeader>{", [[c{<c-r>"}<esc>]], { desc = "Wrap text in curly braces {}" })
+keymap("n", "<LocalLeader>{", [[ciw{<c-r>"}<esc>]], { desc = "Wrap text in curly braces {}" })
+keymap("v", "<LocalLeader>[", [[c[<c-r>"]<esc>]], { desc = "Wrap text in square braces []" })
+keymap("n", "<LocalLeader>[", [[ciw[<c-r>"]<esc>]], { desc = "Wrap text in square braces []" })
 
 -- Find and replace
-keymap("n", "<LocalLeader>fw", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
-  { desc = "Replace cursor words in buffer" })
 keymap("n", "<LocalLeader>fl", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], { desc = "Replace cursor words in line" })
+keymap("n", "<LocalLeader>fw", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], { desc = "Replace cursor words in buffer" })
 
 -- Working with lines
 keymap("n", "<CR>", "o<Esc>", { desc = "Insert blank line below" })
 keymap("n", "<S-CR>", "O<Esc>", { desc = "Insert blank line above" })
 
 -- Splits
-keymap("n", "<Leader>\\", "<cmd>vsplit<CR>", { desc = "Split: Create Vertical" })
 keymap("n", "<Leader>-", "<cmd>split<CR>", { desc = "Split: Create Horizontal" })
-keymap("n", "<Leader>sc", "<cmd>wincmd q<CR>", { desc = "Split: Close" })
-keymap("n", "<Leader>so", "<cmd>wincmd o<CR>", { desc = "Split: Close all but current" })
+keymap("n", "<Leader>\\", "<cmd>vsplit<CR>", { desc = "Split: Create Vertical" })
 keymap("n", "<C-k>", "<cmd>wincmd k<CR>", { desc = "Split: Move up" })
 keymap("n", "<C-j>", "<cmd>wincmd j<CR>", { desc = "Split: Move down" })
 keymap("n", "<C-h>", "<cmd>wincmd h<CR>", { desc = "Split: Move left" })
 keymap("n", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Split: Move right" })
+keymap("n", "<Leader>sc", "<cmd>wincmd q<CR>", { desc = "Split: Close" })
+keymap("n", "<Leader>so", "<cmd>wincmd o<CR>", { desc = "Split: Close all but current" })
 
 -- Surrounds
 keymap("x", "(", "S)", { remap = true, desc = "Surround with ()'s" })
@@ -57,36 +60,70 @@ keymap("x", "[", "S]", { remap = true, desc = "Surround with []'s" })
 keymap("x", "]", "S]", { remap = true, desc = "Surround with []'s" })
 
 -- Misc
-keymap("n", "<Esc>", "<cmd>:noh<CR>", { desc = "Clear searches" })
 keymap("v", ">", ">gv", { desc = "Indent" })
 keymap("v", "<", "<gv", { desc = "Outdent" })
+keymap("n", "<Esc>", "<cmd>:noh<CR>", { desc = "Clear searches" })
 
 -- Pack
-keymap("n", "<leader>ps", function() vim.pack.update() end, { desc = "Update plugins" })
+keymap("n", "<leader>ps", function()
+  vim.cmd("PackSync")
+end, { desc = "Sync plugins" })
 
 -- LSP
-keymap("n", "gq", function() vim.lsp.buf.format() end, { desc = "Format" })
-keymap("n", "gd", function() vim.lsp.buf.definition() end, { desc = "Go to definition", noremap = true, silent = true })
-keymap("n","[",  function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = "Go to previous diagnostic item" })
-keymap("n","]",  function() vim.diagnostic.jump({ count = 1, float = true }) end, { desc = "Go to next diagnostic item" })
+keymap("n", "gq", function()
+  require("conform").format({ async = true, lsp_format = "fallback" })
+end, { desc = "Format" })
+keymap("n", "gd", function()
+  Snacks.picker.lsp_definitions()
+end, { desc = "Go to definition", noremap = true, silent = true })
+keymap("n", "gr", function()
+  Snacks.picker.lsp_references()
+end, { desc = "Find references", noremap = true, silent = true })
+keymap("n", "gf", function()
+  Snacks.picker.diagnostics_buffer()
+end, { desc = "Find diagonostics", noremap = true, silent = true })
+keymap("n", "[", function()
+  vim.diagnostic.jump({ count = -1, float = true })
+end, { desc = "Go to previous diagnostic item" })
+keymap("n", "]", function()
+  vim.diagnostic.jump({ count = 1, float = true })
+end, { desc = "Go to next diagnostic item" })
+
+-- Testing
+keymap("n", "<LocalLeader>tn", function()
+  if vim.bo.filetype == "lua" then
+    return require("mini.test").run_at_location()
+  end
+end, { desc = "Run test at location", nowait = true })
+keymap("n", "<LocalLeader>tf", function()
+  if vim.bo.filetype == "lua" then
+    return require("mini.test").run_file()
+  end
+end, { desc = "Run tests in file", nowait = true })
+keymap("n", "<LocalLeader>tl", function()
+  if vim.bo.filetype == "lua" then
+    return require("mini.test").run_last()
+  end
+end, { desc = "Run all tests", nowait = true })
+keymap("n", "<LocalLeader>ts", function()
+  if vim.bo.filetype == "lua" then
+    return require("mini.test").run_suite()
+  end
+end, { desc = "Run tests in suite", nowait = true })
 
 -- Tree-sitter
 keymap({ "x", "o" }, "af", function()
   require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
 end, { desc = "Select around function" })
-
 keymap({ "x", "o" }, "if", function()
   require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
 end, { desc = "Select inside function" })
-
 keymap({ "x", "o" }, "ac", function()
   require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
 end, { desc = "Select around class" })
-
 keymap({ "x", "o" }, "ic", function()
   require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
 end, { desc = "Select inside class" })
-
 keymap({ "x", "o" }, "as", function()
   require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "locals")
 end, { desc = "Select local scope" })
@@ -97,32 +134,68 @@ keymap({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<CR>")
 keymap("v", "<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>")
 
 -- Copilot
-keymap("i", "<C-a>", function() require("copilot.suggestion").accept() end)
-keymap("i", "<C-x>", function() require("copilot.suggestion").dismiss() end)
+keymap("i", "<C-a>", function()
+  require("copilot.suggestion").accept()
+end)
+keymap("i", "<C-x>", function()
+  require("copilot.suggestion").dismiss()
+end)
 
 -- Snacks
-keymap("n", "<Leader>t", function() require("snacks").picker.todo_comments() end, opts)
-keymap({ "n", "t" }, "<C-x>", function() Snacks.terminal.toggle() end, opts)
-keymap("n", "<C-c>", function() Snacks.bufdelete() end, opts)
-keymap("n", "<C-f>", function() Snacks.picker.files({ hidden = true }) end, opts)
-keymap("n", "<C-b>", function() Snacks.picker.buffers() end, opts)
-keymap("n", "<C-g>", function() Snacks.picker.grep_buffers() end, opts)
-keymap("n", "<Leader>g", function() Snacks.picker.grep() end, opts)
-keymap("n", "<Leader><Leader>", function() Snacks.picker.recent() end, opts)
-keymap("n", "<Leader>h", function() Snacks.picker.notifications() end, opts)
-keymap("n", "<LocalLeader>gb", function() Snacks.gitbrowse() end, opts)
-keymap("n", "<LocalLeader>u", function() Snacks.picker.undo() end, opts)
-keymap("n", "<Leader>l", function() Snacks.lazygit() end, opts)
+keymap("n", "<Leader>t", function()
+  require("snacks").picker.todo_comments()
+end, opts)
+keymap({ "n", "t" }, "<C-x>", function()
+  Snacks.terminal.toggle()
+end, opts)
+keymap("n", "<C-c>", function()
+  Snacks.bufdelete()
+end, opts)
+keymap("n", "<C-f>", function()
+  Snacks.picker.files({ hidden = true })
+end, opts)
+keymap("n", "<C-b>", function()
+  Snacks.picker.buffers()
+end, opts)
+keymap("n", "<C-g>", function()
+  Snacks.picker.grep_buffers()
+end, opts)
+keymap("n", "<Leader>g", function()
+  Snacks.picker.grep()
+end, opts)
+keymap("n", "<Leader><Leader>", function()
+  Snacks.picker.recent()
+end, opts)
+keymap("n", "<Leader>h", function()
+  Snacks.picker.notifications()
+end, opts)
+keymap("n", "<LocalLeader>gb", function()
+  Snacks.gitbrowse()
+end, opts)
+keymap("n", "<LocalLeader>u", function()
+  Snacks.picker.undo()
+end, opts)
+keymap("n", "<Leader>l", function()
+  Snacks.lazygit()
+end, opts)
 
 keymap("t", "<Esc>", "<C-\\><C-n>", vim.tbl_extend("force", opts, { nowait = true, desc = "Exit terminal mode" }))
 
 -- Oil
-keymap("n", "_", function() require("oil").toggle_float(vim.fn.getcwd()) end, opts)
-keymap("n", "-", function() require("oil").toggle_float() end, opts)
+keymap("n", "_", function()
+  require("oil").toggle_float(vim.fn.getcwd())
+end, opts)
+keymap("n", "-", function()
+  require("oil").toggle_float()
+end, opts)
 
 -- Namu
-keymap({ "n", "x", "o" }, "<C-t>", function() require("namu.namu_symbols").show() end, opts)
-keymap({ "n", "x", "o" }, "<C-e>", function() require("namu.namu_workspace").show() end, opts)
+keymap({ "n", "x", "o" }, "<C-t>", function()
+  require("namu.namu_symbols").show()
+end, opts)
+keymap({ "n", "x", "o" }, "<C-e>", function()
+  require("namu.namu_workspace").show()
+end, opts)
 
 -- Multiple Cursors
 -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
@@ -152,14 +225,30 @@ keymap("x", "cN", [[g:mc . "``cgN"]], { expr = true, desc = "Initiate multiple c
 -- 2. Hit cq to start recording the macro.
 -- 3. Once you are done with the macro, go back to normal mode.
 -- 4. Hit Enter to repeat the macro over search matches.
-keymap("n", "cq", [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>*``qz]],
-  { desc = "Initiate multiple cursors with macros" })
-keymap("x", "cq", [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . g:mc . "``qz"]],
-  { expr = true, desc = "Initiate multiple cursors with macros" })
-keymap("n", "cQ", [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>#``qz]],
-  { desc = "Initiate multiple cursors with macros (backwards)" })
-keymap("x", "cQ", [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
-  { expr = true, desc = "Initiate multiple cursors with macros (backwards)" })
+keymap(
+  "n",
+  "cq",
+  [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>*``qz]],
+  { desc = "Initiate multiple cursors with macros" }
+)
+keymap(
+  "x",
+  "cq",
+  [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . g:mc . "``qz"]],
+  { expr = true, desc = "Initiate multiple cursors with macros" }
+)
+keymap(
+  "n",
+  "cQ",
+  [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>#``qz]],
+  { desc = "Initiate multiple cursors with macros (backwards)" }
+)
+keymap(
+  "x",
+  "cQ",
+  [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
+  { expr = true, desc = "Initiate multiple cursors with macros (backwards)" }
+)
 
 --[[
   Marks / Bookmarks / Harpoon Replacement in c.60 LOC

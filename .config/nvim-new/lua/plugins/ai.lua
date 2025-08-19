@@ -1,120 +1,100 @@
 require("codecompanion").setup({
   adapters = {
-    anthropic = function()
-      return require("codecompanion.adapters").extend("anthropic", {
-        env = {
-          api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
-        },
-        schema = {
-          extended_thinking = {
-            default = true,
-          },
-        },
-      })
-    end,
-    deepseek = function()
-      return require("codecompanion.adapters").extend("deepseek", {
-        env = {
-          api_key = "cmd:op read op://personal/DeepSeek_API/credential --no-newline",
-        },
-      })
-    end,
-    gemini = function()
-      return require("codecompanion.adapters").extend("gemini", {
-        env = {
-          api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline",
-        },
-      })
-    end,
-    mistral = function()
-      return require("codecompanion.adapters").extend("mistral", {
-        env = {
-          api_key = "cmd:op read op://personal/Mistral_API/credential --no-newline",
-        },
-      })
-    end,
-    novita = function()
-      return require("codecompanion.adapters").extend("novita", {
-        env = {
-          api_key = "cmd:op read op://personal/Novita_API/credential --no-newline",
-        },
-        schema = {
-          model = {
-            default = function()
-              return "qwen/qwen3-coder-480b-a35b-instruct"
-            end,
-          },
-        },
-      })
-    end,
-    ollama = function()
-      return require("codecompanion.adapters").extend("ollama", {
-        schema = {
-          model = {
-            default = "qwen3:latest",
-          },
-          num_ctx = {
-            default = 20000,
-          },
-        },
-      })
-    end,
-    openai = function()
-      return require("codecompanion.adapters").extend("openai", {
-        opts = {
-          stream = true,
-        },
-        env = {
-          api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
-        },
-        schema = {
-          model = {
-            default = function()
-              return "gpt-4.1"
-            end,
-          },
-        },
-      })
-    end,
-    xai = function()
-      return require("codecompanion.adapters").extend("xai", {
-        env = {
-          api_key = "cmd:op read op://personal/xAI_API/credential --no-newline",
-        },
-      })
-    end,
-    tavily = function()
-      return require("codecompanion.adapters").extend("tavily", {
-        env = {
-          api_key = "cmd:op read op://personal/Tavily_API/credential --no-newline",
-        },
-      })
-    end,
-    acp = {
-      codex = function()
-        return require("codecompanion.adapters").extend("codex", {
-          command = {
-            "cargo",
-            "run",
-            "--bin",
-            "codex",
-            "--manifest-path",
-            "${manifest_path}",
-            "mcp",
-          },
+    http = {
+      anthropic = function()
+        return require("codecompanion.adapters").extend("anthropic", {
           env = {
-            -- api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
-            manifest_path = "/Users/Oli/Code/Neovim/codex/codex-rs/Cargo.toml",
+            api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
+          },
+          schema = {
+            extended_thinking = {
+              default = true,
+            },
           },
         })
       end,
+      deepseek = function()
+        return require("codecompanion.adapters").extend("deepseek", {
+          env = {
+            api_key = "cmd:op read op://personal/DeepSeek_API/credential --no-newline",
+          },
+        })
+      end,
+      gemini = function()
+        return require("codecompanion.adapters").extend("gemini", {
+          env = {
+            api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline",
+          },
+        })
+      end,
+      mistral = function()
+        return require("codecompanion.adapters").extend("mistral", {
+          env = {
+            api_key = "cmd:op read op://personal/Mistral_API/credential --no-newline",
+          },
+        })
+      end,
+      novita = function()
+        return require("codecompanion.adapters").extend("novita", {
+          env = {
+            api_key = "cmd:op read op://personal/Novita_API/credential --no-newline",
+          },
+          schema = {
+            model = {
+              default = function()
+                return "qwen/qwen3-coder-480b-a35b-instruct"
+              end,
+            },
+          },
+        })
+      end,
+      ollama = function()
+        return require("codecompanion.adapters").extend("ollama", {
+          schema = {
+            model = {
+              default = "qwen3:latest",
+            },
+            num_ctx = {
+              default = 20000,
+            },
+          },
+        })
+      end,
+      openai = function()
+        return require("codecompanion.adapters").extend("openai", {
+          opts = {
+            stream = true,
+          },
+          env = {
+            api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
+          },
+          schema = {
+            model = {
+              default = function()
+                return "gpt-4.1"
+              end,
+            },
+          },
+        })
+      end,
+      xai = function()
+        return require("codecompanion.adapters").extend("xai", {
+          env = {
+            api_key = "cmd:op read op://personal/xAI_API/credential --no-newline",
+          },
+        })
+      end,
+      tavily = function()
+        return require("codecompanion.adapters").extend("tavily", {
+          env = {
+            api_key = "cmd:op read op://personal/Tavily_API/credential --no-newline",
+          },
+        })
+      end,
+    },
+    acp = {
       gemini_cli = function()
         return require("codecompanion.adapters").extend("gemini_cli", {
-          command = {
-            "node",
-            "/Users/Oli/Code/Neovim/gemini-cli/packages/cli",
-            "--experimental-acp",
-          },
           env = {
             GEMINI_API_KEY = "cmd:op read op://personal/Gemini_API/credential --no-newline",
           },
@@ -167,8 +147,7 @@ You must:
         {
           {
             role = "user",
-            content =
-            "Generate a Python class for managing a book library with methods for adding, removing, and searching books",
+            content = "Generate a Python class for managing a book library with methods for adding, removing, and searching books",
             opts = {
               auto_submit = false,
             },
@@ -297,8 +276,14 @@ You must:
             },
           },
         },
+        ["file"] = {
+          opts = {
+            provider = "snacks",
+          },
+        },
         ["help"] = {
           opts = {
+            provider = "snacks",
             max_lines = 1000,
           },
         },

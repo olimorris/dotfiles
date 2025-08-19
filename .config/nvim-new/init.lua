@@ -7,48 +7,52 @@ om.on_big_screen = vim.o.columns > 150 and vim.o.lines >= 40
 -- Local plugins
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/persisted.nvim"))
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim"))
+vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim/after"))
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/codecompanion.nvim"))
 
-vim.pack.add({
-    -- Dependencies
-    "https://github.com/nvim-lua/plenary.nvim",
-    "https://github.com/kevinhwang91/promise-async",
-    "https://github.com/nvim-tree/nvim-web-devicons",
+om.plugins = {
+  -- Dependencies
+  "https://github.com/nvim-lua/plenary.nvim",
+  "https://github.com/kevinhwang91/promise-async",
+  "https://github.com/nvim-tree/nvim-web-devicons",
 
-    -- AI
-    "https://github.com/zbirenbaum/copilot.lua",
+  -- AI
+  "https://github.com/zbirenbaum/copilot.lua",
 
-    -- UI and Statusline
-    "https://github.com/folke/edgy.nvim",
-    "https://github.com/folke/snacks.nvim",
-    "https://github.com/j-hui/fidget.nvim",
-    "https://github.com/rebelot/heirline.nvim",
-    "https://github.com/lewis6991/gitsigns.nvim",
-    "https://github.com/folke/todo-comments.nvim",
-    "https://github.com/nmac427/guess-indent.nvim",
-    "https://github.com/lukas-reineke/virt-column.nvim",
-    "https://github.com/MeanderingProgrammer/render-markdown.nvim",
+  -- UI and Statusline
+  "https://github.com/folke/edgy.nvim",
+  "https://github.com/folke/snacks.nvim",
+  "https://github.com/j-hui/fidget.nvim",
+  "https://github.com/rebelot/heirline.nvim",
+  "https://github.com/lewis6991/gitsigns.nvim",
+  "https://github.com/folke/todo-comments.nvim",
+  "https://github.com/nmac427/guess-indent.nvim",
+  "https://github.com/lukas-reineke/virt-column.nvim",
+  "https://github.com/MeanderingProgrammer/render-markdown.nvim",
 
-    -- LSP
-    "https://github.com/mason-org/mason.nvim",
-    "https://github.com/kevinhwang91/nvim-ufo",
-    "https://github.com/ivanjermakov/troublesum.nvim",
+  -- LSP
+  "https://github.com/mason-org/mason.nvim",
+  "https://github.com/kevinhwang91/nvim-ufo",
+  "https://github.com/stevearc/conform.nvim",
+  "https://github.com/ivanjermakov/troublesum.nvim",
 
-    -- Editor
-    "https://github.com/stevearc/oil.nvim",
-    "https://github.com/stevearc/aerial.nvim",
-    "https://github.com/bassamsdata/namu.nvim",
+  -- Editor
+  "https://github.com/stevearc/oil.nvim",
+  "https://github.com/stevearc/aerial.nvim",
+  "https://github.com/echasnovski/mini.test",
+  "https://github.com/bassamsdata/namu.nvim",
 
-    -- Completion
-    "https://github.com/rafamadriz/friendly-snippets",
-    { src = "https://github.com/saghen/blink.cmp",                            version = vim.version.range("^1") },
+  -- Completion
+  "https://github.com/rafamadriz/friendly-snippets",
+  { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("^1") },
 
-    -- Tree-sitter
-    "https://github.com/windwp/nvim-autopairs",
-    { src = "https://github.com/nvim-treesitter/nvim-treesitter",             version = "main" },
-    { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main" },
+  -- Tree-sitter
+  "https://github.com/windwp/nvim-autopairs",
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main" },
+}
 
-})
+vim.pack.add(om.plugins)
 
 require("config")
 require("keymaps")
@@ -56,11 +60,12 @@ require("autocmds")
 require("commands")
 require("functions")
 
+require("plugins.lsp")
+require("plugins.completion")
+require("plugins.treesitter")
+
 require("plugins.ai")
 require("plugins.ui")
-require("plugins.lsp")
 require("plugins.editor")
-require("plugins.completion")
 require("plugins.statusline")
 require("plugins.colorscheme")
-require("plugins.tree-sitter")

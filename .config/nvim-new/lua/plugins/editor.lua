@@ -39,6 +39,8 @@ require("namu").setup({
   ui_select = { enable = false }, -- vim.ui.select() wrapper
 })
 
+require("mini.test").setup()
+
 require("persisted").setup({
   save_dir = Sessiondir .. "/",
   use_git_branch = true,

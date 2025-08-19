@@ -1,25 +1,32 @@
 local ts = require("nvim-treesitter")
-ts.setup({
-  install_dir = vim.fn.stdpath("data") .. "/site",
-})
 
 local ensure_installed = {
+  "css",
+  "csv",
   "diff",
   "gitcommit",
   "gitignore",
   "go",
   "fish",
   "html",
+  "javascript",
   "json",
+  "latex",
   "ledger",
   "lua",
   "markdown",
   "markdown_inline",
+  "norg",
   "php",
   "python",
+  "regex",
   "ruby",
   "rust",
+  "scss",
+  "svelte",
   "toml",
+  "tsx",
+  "typst",
   "vim",
   "vimdoc",
   "vue",
@@ -41,17 +48,10 @@ vim.api.nvim_create_autocmd("PackChanged", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "lua" },
   group = vim.api.nvim_create_augroup("dotfiles.treesitter", { clear = true }),
-  callback = function(args)
-    local filetype = args.match
-    local lang = vim.treesitter.language.get_lang(filetype)
-    if not lang then
-      return
-    end
-
-    if vim.treesitter.language.add(lang) then
-      vim.treesitter.start(args.buf)
-    end
+  callback = function()
+    vim.treesitter.start()
   end,
 })
 

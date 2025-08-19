@@ -31,6 +31,29 @@ end, { desc = "Git sync remote repo" })
 
 command("New", ":enew", { desc = "New buffer" })
 
+command("PackSync", function()
+  local plugins = {}
+  for _, plugin in ipairs(om.plugins) do
+    if type(plugin) == "string" then
+      plugins[plugin] = true
+    elseif type(plugin) == "table" and plugin.src then
+      plugins[plugin.src] = true
+    end
+  end
+
+  local to_delete = {}
+  for _, plugin in ipairs(vim.pack.get()) do
+    local src = plugin.spec and plugin.spec.src
+    if src and not plugins[src] then
+      table.insert(to_delete, plugin.spec.name)
+    end
+  end
+
+  vim.pack.del(to_delete)
+  vim.pack.add(om.plugins)
+  vim.pack.update()
+end, { desc = "Sync plugins" })
+
 command("Snippets", function()
   om.EditSnippet()
 end, { desc = "Edit Snippets" })
