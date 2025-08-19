@@ -385,7 +385,9 @@ local CodeCompanionChatBuffer = {
   -- Current Context
   {
     condition = function(self)
-      return _G.codecompanion_current_context ~= nil and not _G.codecompanion_processing
+      return _G.codecompanion_current_context ~= nil
+        and not _G.codecompanion_processing
+        and vim.api.nvim_buf_is_valid(_G.codecompanion_current_context)
     end,
     provider = function()
       local bufname = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(_G.codecompanion_current_context), ":t")
