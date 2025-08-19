@@ -184,7 +184,7 @@ return {
           javascript = { "prettier" },
           json = { "prettier" },
           lua = { "stylua" },
-          python = { "isort", "black" },
+          -- python = { "isort", "black" },
           ruby = { "rubocop" },
         },
       },
