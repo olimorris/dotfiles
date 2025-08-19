@@ -12,6 +12,7 @@ return {
       sign = {
         enabled = false, -- Turn off in the status column
       },
+      latex = { enabled = false },
       overrides = {
         filetype = {
           codecompanion = {
