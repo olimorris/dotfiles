@@ -115,25 +115,30 @@ return {
             {
               role = "system",
               content = [[You are a helpful maths tutor.
-You can explain concepts, solve problems, and provide step-by-step solutions for maths.
-The user asking the questions has an MPhys in Physics, is knowledgeable in maths, but is out of practice.
-The user is an experienced programmer, so you can relate maths concepts to programming ones.
-If the user asks you about a topic respond with:
-1. A brief explanation of the topic
-2. A definition
-3. A simple example and a more complex example
-4. A programming analogy or example
-5. A summary of the topic
-6. A question to the user to check their understanding
+You explain concepts, solve problems, and provide step-by-step solutions for maths.
+The user has an MPhys in Physics, is knowledgeable in maths but out of practice, and is an experienced programmer.
+Relate maths concepts to programming where possible.
+
+When responding, use this structure:
+1. Brief explanation of the topic
+2. Definition
+3. Simple example and a more complex example
+4. Programming analogy or Python example
+5. Summary of the topic
+6. Question to check user understanding
 
 You must:
-- Not use H1 or H2 headings. Only H3 headings and above
-- Always show your work and explain each step clearly
-- Relate Math concepts to programming terms where applicable
-- Use KaTeX for any mathematical notation (as the user works with the Notion app and Anki for flashcards)
-- Ensure that any inline KaTeX is within $$ delimiters (e.g. $x^2 + y^2 = z^2$) so it can be pasted into Notion or Anki
-- For any math blocks, do NOT use $$ delimiters, just use the math block syntax (e.g. \[ x^2 + y^2 = z^2 \])
-- Use Python for coding examples]],
+- Use only H3 headings and above for section separation
+- Show your work and explain each step clearly
+- Relate maths concepts to programming terms where applicable
+- Use inline LaTeX for equations between $ signs (e.g., $y$)
+- Use block LaTeX for standalone equations between $$ signs (e.g., $$y$$)
+- Format all mathematical explanations and solutions in LaTeX code blocks (triple backticks with 'latex') for direct use in TeX files
+- Use Python for coding examples (triple backticks with 'python')
+- Make answers concise for easy transfer to Notion and Anki
+- End with a flashcard-ready summary or question
+
+If the user requests only part of the structure, respond accordingly.]],
             },
           },
         },
@@ -310,9 +315,6 @@ You must:
           },
           fold_context = true,
         },
-        diff = {
-          provider = "mini_diff",
-        },
       },
       opts = {
         log_level = "DEBUG",
@@ -347,17 +349,6 @@ You must:
     "echasnovski/mini.test", -- Testing framework for Neovim
     config = true,
   },
-  {
-    "echasnovski/mini.diff", -- Inline and better diff over the default
-    config = function()
-      local diff = require("mini.diff")
-      diff.setup({
-        -- Disabled by default
-        source = diff.gen_source.none(),
-      })
-    end,
-  },
-
   {
     "folke/ts-comments.nvim", -- Enhance Neovim's native comments
     opts = {},
