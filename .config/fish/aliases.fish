@@ -1,8 +1,8 @@
-alias dot='dotbot -c dotbot.conf.yaml'
-
 # Dotfiles
+alias dot='cd ~/.dotfiles'
 alias ed='nvim ~/.dotfiles'
 alias up='cd ~/.dotfiles && rake sync'
+alias dotbot='dotbot -c dotbot.conf.yaml'
 alias backup='cd ~/.dotfiles && rake backup'
 alias bf='cd ~/.dotfiles && rake backup:files'
 alias cleanup='ruby ~/.dotfiles/commands/clean_up.rb ~/Downloads'
