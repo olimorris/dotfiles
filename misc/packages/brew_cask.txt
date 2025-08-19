@@ -43,6 +43,6 @@ typora
 utm
 visual-studio-code
 vlc
-wezterm
+wezterm@nightly
 xscope
 zed

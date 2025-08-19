@@ -7,9 +7,11 @@ composer
 dark-mode
 dash-shell
 docker
+dotbot
 fd
 ffmpeg
 fish
+flow
 flux
 fontforge
 fortune
@@ -17,6 +19,7 @@ fzf
 gemini-cli
 gh
 git
+git-delta
 glow
 go
 hledger
@@ -50,6 +53,7 @@ spring-io/tap/spring-boot
 subversion
 tree
 tree-sitter
+tree-sitter-cli
 typos-cli
 universal-ctags
 vim
