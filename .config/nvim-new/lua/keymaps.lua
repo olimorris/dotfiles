@@ -1,11 +1,13 @@
 local keymap = vim.keymap.set --[[@type function]]
 local opts = { noremap = true, silent = true }
 
-keymap("n", "<C-q>", "<cmd>q<CR>", { remap = true, silent = true, desc = "Quit neovim" })
+keymap("n", "<C-q>", "<cmd>q<CR>", { silent = true, desc = "Quit Neovim" })
+keymap("t", "<Esc>", "<C-\\><C-n>", vim.tbl_extend("force", opts, { nowait = true, desc = "Exit terminal mode" }))
+
+-- Buffers
 keymap("n", "<C-y>", "<cmd>%y+<CR>", { desc = "Copy buffer" })
 keymap("n", "<C-s>", "<cmd>silent write<CR>", { desc = "Save buffer" })
 keymap("i", "<C-s>", "<cmd>silent write<CR>", { desc = "Save buffer" })
-
 keymap("n", "<Tab>", "<cmd>bnext<CR>", { noremap = false, desc = "Next buffer" })
 keymap("n", "<S-Tab>", "<cmd>bprev<CR>", { noremap = false, desc = "Previous buffer" })
 
@@ -178,8 +180,6 @@ end, opts)
 keymap("n", "<Leader>l", function()
   Snacks.lazygit()
 end, opts)
-
-keymap("t", "<Esc>", "<C-\\><C-n>", vim.tbl_extend("force", opts, { nowait = true, desc = "Exit terminal mode" }))
 
 -- Oil
 keymap("n", "_", function()
