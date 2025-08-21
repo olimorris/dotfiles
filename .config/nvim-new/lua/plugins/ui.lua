@@ -89,6 +89,7 @@ require("gitsigns").setup({
   linehl = false,
 })
 
+local end_time
 require("snacks").setup({
   styles = {
     lazygit = {
@@ -136,6 +137,9 @@ require("snacks").setup({
         padding = 1,
       },
       function()
+        if not end_time then
+          end_time = vim.loop.hrtime()
+        end
         local plugins = vim.pack.get()
         local active_count = #vim
           .iter(plugins)
@@ -150,7 +154,7 @@ require("snacks").setup({
             { tostring(active_count + 3) .. "/" .. tostring(#plugins + 3), hl = "SnacksDashboardFooterEmphasis" },
             { " plugins in ", hl = "SnacksDashboardFooterText" },
             {
-              string.format("%.2fms", (vim.uv.hrtime() - om.nvim_start_time) / 1e6),
+              string.format("%.2fms", (end_time - om.nvim_start_time) / 1e6),
               hl = "SnacksDashboardFooterEmphasis",
             },
           },
