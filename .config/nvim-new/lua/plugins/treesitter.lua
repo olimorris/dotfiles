@@ -47,6 +47,7 @@ vim.api.nvim_create_autocmd("FileType", {
       "prompt",
       "snacks_dashboard",
       "snacks_input",
+      "snacks_picker_input",
     }
 
     if vim.tbl_contains(ignored_fts, args.match) then
