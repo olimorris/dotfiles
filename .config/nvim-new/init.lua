@@ -1,13 +1,13 @@
 _G.om = {}
-om.nvim_start_time = vim.uv.hrtime()
 om.home = os.getenv("HOME")
+om.nvim_start_time = vim.uv.hrtime()
 om.on_personal = vim.fn.getenv("USER") == "Oli"
 om.on_big_screen = vim.o.columns > 150 and vim.o.lines >= 40
 
 -- Local plugins
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/persisted.nvim"))
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim"))
-vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim/after"))
+vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim/after")) -- Needed for TS queries
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/codecompanion.nvim"))
 
 om.plugins = {
@@ -60,13 +60,3 @@ require("keymaps")
 require("autocmds")
 require("commands")
 require("functions")
-
--- require("plugins.lsp")
--- require("plugins.completion")
--- require("plugins.treesitter")
---
--- require("plugins.ai")
--- require("plugins.ui")
--- require("plugins.editor")
--- require("plugins.statusline")
--- require("plugins.colorscheme")
