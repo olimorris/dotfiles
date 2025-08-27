@@ -11,6 +11,15 @@ return {
       ---@module "codecompanion"
       ---@type CodeCompanion.Config
       adapters = {
+        acp = {
+          gemini_cli = function()
+            return require("codecompanion.adapters").extend("gemini_cli", {
+              env = {
+                GEMINI_API_KEY = "cmd:op read op://personal/Gemini_API/credential --no-newline",
+              },
+            })
+          end,
+        },
         anthropic = function()
           return require("codecompanion.adapters").extend("anthropic", {
             env = {
