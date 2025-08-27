@@ -50,8 +50,8 @@ keymap("n", "<C-k>", "<cmd>wincmd k<CR>", { desc = "Split: Move up" })
 keymap("n", "<C-j>", "<cmd>wincmd j<CR>", { desc = "Split: Move down" })
 keymap("n", "<C-h>", "<cmd>wincmd h<CR>", { desc = "Split: Move left" })
 keymap("n", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Split: Move right" })
-keymap("n", "<Leader>sc", "<cmd>wincmd q<CR>", { desc = "Split: Close" })
-keymap("n", "<Leader>so", "<cmd>wincmd o<CR>", { desc = "Split: Close all but current" })
+keymap("n", "<Leader>c", "<cmd>wincmd q<CR>", { desc = "Split: Close" })
+keymap("n", "<Leader>s", "<cmd>wincmd o<CR>", { desc = "Split: Close all but current" })
 
 -- Surrounds
 keymap("x", "(", "S)", { remap = true, desc = "Surround with ()'s" })

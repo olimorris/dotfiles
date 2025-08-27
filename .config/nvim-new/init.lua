@@ -48,6 +48,7 @@ om.plugins = {
 
   -- Tree-sitter
   "https://github.com/windwp/nvim-autopairs",
+  "https://github.com/RRethy/nvim-treesitter-endwise",
   { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main" },
 }
@@ -60,12 +61,12 @@ require("autocmds")
 require("commands")
 require("functions")
 
-require("plugins.lsp")
-require("plugins.completion")
-require("plugins.treesitter")
-
-require("plugins.ai")
-require("plugins.ui")
-require("plugins.editor")
-require("plugins.statusline")
-require("plugins.colorscheme")
+-- require("plugins.lsp")
+-- require("plugins.completion")
+-- require("plugins.treesitter")
+--
+-- require("plugins.ai")
+-- require("plugins.ui")
+-- require("plugins.editor")
+-- require("plugins.statusline")
+-- require("plugins.colorscheme")

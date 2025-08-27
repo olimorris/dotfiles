@@ -41,6 +41,8 @@ require("namu").setup({
 
 require("mini.test").setup()
 
+require("aerial").setup()
+
 require("persisted").setup({
   save_dir = Sessiondir .. "/",
   use_git_branch = true,

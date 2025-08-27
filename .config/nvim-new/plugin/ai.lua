@@ -319,9 +319,6 @@ You must:
       },
       fold_context = true,
     },
-    diff = {
-      provider = "mini_diff",
-    },
   },
   opts = {
     log_level = "DEBUG",
