@@ -8,7 +8,7 @@ local icons = {
 require("mason").setup()
 
 vim.lsp.enable({
-  "copilot",
+  "jsonls",
   "lua_ls",
 })
 vim.diagnostic.config({
