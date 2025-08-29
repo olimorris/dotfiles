@@ -318,6 +318,17 @@ You must:
         tool_success = "󰸞 ",
       },
       fold_context = true,
+      child_window = {
+        opts = {
+          wrap = true,
+        },
+      },
+      -- You can also extend/override the child_window options for a diff
+      diff_window = {
+        opts = {
+          number = true,
+        },
+      },
     },
   },
   opts = {
