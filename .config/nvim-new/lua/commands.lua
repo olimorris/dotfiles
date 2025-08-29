@@ -13,12 +13,12 @@ command("CopyMessage", function()
 end, { desc = "Copy message output" })
 
 command("FindAndReplace", function(opts)
-  api.nvim_command(string.format("silent cdo s/%s/%s", opts.fargs[1], opts.fargs[2]))
-  api.nvim_command("silent cfdo update")
+  vim.api.nvim_command(string.format("silent cdo s/%s/%s", opts.fargs[1], opts.fargs[2]))
+  vim.api.nvim_command("silent cfdo update")
 end, { desc = "Find and Replace (after quickfix)", nargs = "*" })
 
 command("FindAndReplaceUndo", function(opts)
-  api.nvim_command("silent cdo undo")
+  vim.api.nvim_command("silent cdo undo")
 end, { desc = "Undo Find and Replace" })
 
 command("GitBranchList", function()
