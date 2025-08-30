@@ -23,7 +23,7 @@ local apps = {
 if on_personal then
   apps.c = "Code" -- VS Code
   apps.b = "Safari" -- Browser
-  apps.p = "Preview"
+  apps.p = "Foxit PDF Reader"
   apps["["] = "1Password" -- It's next to P...
 else
   apps.c = "Teams" -- Chat
