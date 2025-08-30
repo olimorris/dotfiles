@@ -107,6 +107,10 @@ require("codecompanion").setup({
       strategy = "chat",
       description = "Chat with your personal maths tutor",
       opts = {
+        adapter = {
+          name = "copilot",
+          model = "gpt-4.1",
+        },
         index = 4,
         ignore_system_prompt = true,
         intro_message = "Welcome to your lesson! How may I help you today? ",
@@ -241,7 +245,7 @@ You must:
     chat = {
       adapter = {
         name = "copilot",
-        model = "gpt-4.1",
+        model = "gpt-5-mini",
       },
       roles = {
         user = "olimorris",
