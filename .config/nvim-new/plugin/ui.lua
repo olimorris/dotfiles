@@ -70,11 +70,6 @@ require("edgy").setup({
   },
 })
 
-require("virt-column").setup({
-  char = "│",
-  highlight = "VirtColumn",
-})
-
 require("gitsigns").setup({
   signs = {
     add = { text = "│" },

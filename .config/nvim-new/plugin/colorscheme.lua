@@ -125,9 +125,6 @@ require("onedarkpro").setup({
     SnacksPickerPreview = { bg = "${bg}" },
     SnacksPickerPreviewBorder = { fg = "${bg}", bg = "${bg}" },
     SnacksPickerPreviewTitle = { bg = "${green}", fg = "${bg}", bold = true },
-
-    -- Virt Column
-    VirtColumn = { fg = "${indentline}" },
   },
 
   caching = false,
