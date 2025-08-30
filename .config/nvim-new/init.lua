@@ -40,7 +40,7 @@ om.plugins = {
   -- Editor
   "https://github.com/stevearc/oil.nvim",
   "https://github.com/stevearc/aerial.nvim",
-  "https://github.com/echasnovski/mini.test",
+  "https://github.com/nvim-mini/mini.test",
   "https://github.com/bassamsdata/namu.nvim",
 
   -- Completion
