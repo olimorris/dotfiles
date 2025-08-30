@@ -310,9 +310,6 @@ local function statuscolumn()
             ["Neotest.*"] = function(self, args)
               require("neotest").run.run()
             end,
-            ["Debug.*"] = function(self, args)
-              require("dap").continue()
-            end,
             ["Diagnostic.*"] = function(self, args)
               vim.diagnostic.open_float()
             end,
@@ -320,9 +317,6 @@ local function statuscolumn()
               vim.lsp.buf.code_action()
             end,
           },
-          Dap = function(self, args)
-            require("dap").toggle_breakpoint()
-          end,
           Fold = function(args)
             local line = args.mousepos.line
             if fn.foldlevel(line) <= fn.foldlevel(line - 1) then
@@ -368,12 +362,12 @@ local function statuscolumn()
       -- Line Numbers
       {
         provider = "%=%4{v:virtnum ? '' : &nu ? (&rnu && v:relnum ? v:relnum : v:lnum) . ' ' : ''}",
-        on_click = {
-          name = "sc_linenumber_click",
-          callback = function(self, ...)
-            self.handlers.Dap(self.click_args(self, ...))
-          end,
-        },
+        -- on_click = {
+        --   name = "sc_linenumber_click",
+        --   callback = function(self, ...)
+        --     self.handlers.Dap(self.click_args(self, ...))
+        --   end,
+        -- },
       },
       -- Folds
       {
@@ -952,84 +946,6 @@ local function statusline()
     }
   end
 
-  local Overseer = {
-    condition = function()
-      return package.loaded.overseer
-    end,
-    init = function(self)
-      local tasks = require("overseer.task_list").list_tasks({ unique = true })
-      local tasks_by_status = require("overseer.util").tbl_group_by(tasks, "status")
-      self.tasks = tasks_by_status
-    end,
-    static = {
-      symbols = {
-        ["CANCELED"] = "  ",
-        ["FAILURE"] = "  ",
-        ["RUNNING"] = " 省",
-        ["SUCCESS"] = "  ",
-      },
-      colors = {
-        ["CANCELED"] = "gray",
-        ["FAILURE"] = "red",
-        ["RUNNING"] = "yellow",
-        ["SUCCESS"] = "green",
-      },
-    },
-    OverseerTasksForStatus("CANCELED"),
-    OverseerTasksForStatus("RUNNING"),
-    OverseerTasksForStatus("SUCCESS"),
-    OverseerTasksForStatus("FAILURE"),
-    on_click = {
-      callback = function()
-        require("neotest").run.run_last()
-      end,
-      name = "sl_overseer_click",
-    },
-  }
-
-  local Dap = {
-    condition = function()
-      local session = require("dap").session()
-      return session ~= nil
-    end,
-    provider = function()
-      return "  "
-    end,
-    on_click = {
-      callback = function()
-        require("dap").continue()
-      end,
-      name = "sl_dap_click",
-    },
-    hl = { fg = "red" },
-  }
-
-  -- Show plugin updates available from lazy.nvim
-  local Lazy = {
-    condition = function(self)
-      return not conditions.buffer_matches({
-        filetype = self.filetypes,
-      }) and require("lazy.status").has_updates() and not IsCodeCompanion()
-    end,
-    update = {
-      "User",
-      pattern = "LazyCheck",
-      callback = vim.schedule_wrap(function()
-        vim.cmd("redrawstatus")
-      end),
-    },
-    provider = function()
-      return " 󰚰 " .. require("lazy.status").updates() .. " "
-    end,
-    on_click = {
-      callback = function()
-        require("lazy").update()
-      end,
-      name = "sl_plugins_click",
-    },
-    hl = { fg = "gray" },
-  }
-
   --- Return information on the current buffers filetype
   local FileIcon = {
     init = function(self)
@@ -1065,30 +981,7 @@ local function statusline()
     hl = { fg = "gray", bg = "statusline_bg" },
   }
 
-  local FileTypeCondition = {}
-
-  local FileType = utils.insert(FileBlock, RightSlantStart, FileIcon, FileType, RightSlantEnd)
-
-  --- Return information on the current file's encoding
-  local FileEncoding = {
-    condition = function(self)
-      return not conditions.buffer_matches({
-        filetype = self.filetypes,
-      }) and not IsCodeCompanion()
-    end,
-    RightSlantStart,
-    {
-      provider = function()
-        local enc = (vim.bo.fenc ~= "" and vim.bo.fenc) or vim.o.enc -- :h 'enc'
-        return " " .. enc .. " "
-      end,
-      hl = {
-        fg = "gray",
-        bg = "statusline_bg",
-      },
-    },
-    RightSlantEnd,
-  }
+  FileType = utils.insert(FileBlock, RightSlantStart, FileIcon, FileType, RightSlantEnd)
 
   return {
     static = {
