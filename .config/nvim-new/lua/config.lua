@@ -47,7 +47,9 @@ vo.foldlevel = 99 -- Using ufo provider need a large value, feel free to decreas
 vo.foldlevelstart = 99
 -- vo.foldenable = true
 
--- vo.ignorecase = true -- Ignore case
+vo.smartcase = true -- Switch to case-sensitive when there is a capital letter in the search
+vo.ignorecase = true -- Ignore case when searching
+
 vo.laststatus = 3 -- Use global statusline
 
 -- Sets how Neovim will display certain whitespace characters in the editor
