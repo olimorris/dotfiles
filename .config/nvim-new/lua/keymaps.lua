@@ -132,7 +132,10 @@ end, { desc = "Select local scope" })
 
 -- CodeCompanion
 keymap({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<CR>")
-keymap({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<CR>")
+keymap({ "n", "v" }, "<Leader>a", function()
+  -- _G.cc_start_time = vim.uv.hrtime()
+  require("codecompanion").toggle()
+end)
 keymap("v", "<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>")
 
 -- Copilot

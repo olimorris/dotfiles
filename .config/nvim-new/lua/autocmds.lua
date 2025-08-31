@@ -166,3 +166,11 @@ autocmd("TextYankPost", {
     vim.highlight.on_yank()
   end,
 })
+
+-- autocmd("User", {
+--   pattern = "CodeCompanionChatOpened",
+--   callback = function()
+--     local end_time = vim.uv.hrtime() - _G.cc_start_time
+--     print("Chat opened after " .. end_time / 1e6 .. " ms")
+--   end,
+-- })

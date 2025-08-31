@@ -95,6 +95,9 @@ require("codecompanion").setup({
     acp = {
       gemini_cli = function()
         return require("codecompanion.adapters").extend("gemini_cli", {
+          defaults = {
+            auth_method = "gemini-api-key", -- One of: "gemini-api-key" | "oauth-personal" | | "vertex-ai"
+          },
           env = {
             GEMINI_API_KEY = "cmd:op read op://personal/Gemini_API/credential --no-newline",
           },
