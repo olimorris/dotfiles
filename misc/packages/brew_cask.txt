@@ -9,6 +9,7 @@ cleanshot
 discord
 espanso
 font-dejavu-sans-mono-for-powerline
+foxitreader
 git-credential-manager
 git-credential-manager-core
 google-chrome

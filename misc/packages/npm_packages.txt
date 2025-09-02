@@ -1,3 +1,6 @@
+claude-code
+gemini-cli
 mermaid-cli
+claude-code-acp
 corepack
 npm

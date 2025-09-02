@@ -46,4 +46,3 @@
     ~/.vim/custom_snippets: .config/vim/custom_snippets
     ~/.vimrc: .config/vim/.vimrc
     ~/.vimrc.plugins: .config/vim/.vimrc.plugins
-    ~/.local/share/fish/fish_history: .config/fish/fish_history
