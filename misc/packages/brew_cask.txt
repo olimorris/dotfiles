@@ -39,11 +39,9 @@ steam
 superkey
 tableplus
 telegram
-textexpander
 typora
 utm
 visual-studio-code
 vlc
 wezterm@nightly
-xscope
 zed

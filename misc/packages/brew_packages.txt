@@ -11,7 +11,6 @@ dotbot
 fd
 ffmpeg
 fish
-flow
 flux
 fontforge
 fortune
