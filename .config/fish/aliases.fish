@@ -1,27 +1,28 @@
 # Dotfiles
 alias dot='cd ~/.dotfiles'
 alias ed='nvim ~/.dotfiles'
+alias db='dotbot -c dotbot.conf.yaml'
 alias up='cd ~/.dotfiles && rake sync'
-alias dotbot='dotbot -c dotbot.conf.yaml'
 alias backup='cd ~/.dotfiles && rake backup'
 alias bf='cd ~/.dotfiles && rake backup:files'
 alias cleanup='ruby ~/.dotfiles/commands/clean_up.rb ~/Downloads'
 
 # Fish
-alias fi='fisher install'
 alias fl='fisher list'
 alias fu='fisher update'
 alias fr='fisher remove'
+alias fi='fisher install'
 
 # Git
 alias lg='lazygit'
 
 # hledger
-alias hf='hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal --auto'
-alias hfs='hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal --forecast="this month".. --auto bal "^(ass|liab)" --tree -H -e "1 month"'
-alias hb='hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal bal -M --tree --budget expenses -b "1 month ago" -e "2 months"'
-alias hg='hledger-forecast generate -t $FINANCES/actuals.journal -f $FINANCES/forecast.csv -o $FINANCES/forecast.journal --force'
 alias hs='hledger-forecast summarize -f $FINANCES/forecast.csv'
+alias hfu='hledger-ui -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal'
+alias hf='hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal --auto'
+alias hg='hledger-forecast generate -t $FINANCES/actuals.journal -f $FINANCES/forecast.csv -o $FINANCES/forecast.journal --force'
+alias hb='hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal bal -M --tree --budget expenses -b "1 month ago" -e "2 months"'
+alias hfs='hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal --forecast="this month".. --auto bal "^(ass|liab)" --tree -H -e "1 month"'
 
 # Homebrew
 alias bl='brew list'
@@ -52,8 +53,8 @@ alias nn='NVIM_APPNAME=nvim-new nvim'
 alias jp='jupyter notebook'
 alias pipb='pip freeze > ~/.dotfiles/PIP.txt'
 alias pipi='pip install -r ~/.dotfiles/PIP.txt'
-alias pypiu_test='rm -rf dist/* && python3 -m build && python3 -m twine upload --repository testpypi dist/*'
 alias pypiu='rm -rf dist/* && python3 -m build && python3 -m twine upload dist/*'
+alias pypiu_test='rm -rf dist/* && python3 -m build && python3 -m twine upload --repository testpypi dist/*'
 
 # Shell
 alias c='clear'
@@ -66,7 +67,7 @@ alias ..='cd ..'
 alias bk='cd -'
 alias home='cd ~'
 alias ...='cd ../..'
-alias desk='cd ~/Desktop'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
 alias ze='zoxide edit'
+alias ....='cd ../../..'
+alias desk='cd ~/Desktop'
+alias .....='cd ../../../..'
