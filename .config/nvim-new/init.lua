@@ -32,16 +32,17 @@ om.plugins = {
 
   -- LSP
   "https://github.com/mason-org/mason.nvim",
+  "https://github.com/neovim/nvim-lspconfig",
   "https://github.com/kevinhwang91/nvim-ufo",
   "https://github.com/stevearc/conform.nvim",
-  "https://github.com/neovim/nvim-lspconfig",
   "https://github.com/ivanjermakov/troublesum.nvim",
 
   -- Editor
   "https://github.com/stevearc/oil.nvim",
-  "https://github.com/stevearc/aerial.nvim",
   "https://github.com/nvim-mini/mini.test",
+  "https://github.com/stevearc/aerial.nvim",
   "https://github.com/bassamsdata/namu.nvim",
+  "https://github.com/stevearc/overseer.nvim",
 
   -- Completion
   "https://github.com/rafamadriz/friendly-snippets",

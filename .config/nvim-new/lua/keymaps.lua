@@ -192,13 +192,11 @@ keymap("n", "-", function()
   require("oil").toggle_float()
 end, opts)
 
--- Namu
-keymap({ "n", "x", "o" }, "<C-t>", function()
-  require("namu.namu_symbols").show()
-end, opts)
-keymap({ "n", "x", "o" }, "<C-e>", function()
-  require("namu.namu_workspace").show()
-end, opts)
+-- Overseer
+keymap("n", "<LocalLeader>r", "<cmd>OverseerRun<cr>", opts)
+
+-- Aerial
+keymap("n", "<C-t>", "<cmd>AerialToggle float<CR>", opts)
 
 -- Multiple Cursors
 -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/

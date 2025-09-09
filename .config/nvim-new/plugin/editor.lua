@@ -31,17 +31,15 @@ require("oil").setup({
   },
 })
 
-require("namu").setup({
-  namu_symbols = {
-    enable = true,
-    options = {}, -- here you can configure namu
-  },
-  ui_select = { enable = false }, -- vim.ui.select() wrapper
-})
-
 require("mini.test").setup()
 
-require("aerial").setup()
+require("aerial").setup({
+  autojump = true,
+  close_on_select = true,
+  layout = {
+    min_width = 30,
+  },
+})
 
 require("persisted").setup({
   save_dir = Sessiondir .. "/",
@@ -70,4 +68,27 @@ require("persisted").setup({
 
     return true
   end,
+})
+
+local overseer = require("overseer")
+overseer.setup({
+  templates = {
+    "builtin",
+    "vscode",
+  },
+})
+
+overseer.register_template({
+  name = "Python: Run File",
+  builder = function()
+    local file = vim.fn.expand("%:p")
+    return {
+      cmd = { "python" },
+      args = { file },
+      components = { { "open_output", direction = "dock", focus = true }, "default" },
+    }
+  end,
+  condition = {
+    filetype = { "python" },
+  },
 })

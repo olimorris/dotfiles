@@ -997,7 +997,6 @@ local function statusline()
         "^toggleterm$",
       },
       force_inactive_filetypes = {
-        "^aerial$",
         "^alpha$",
         "^chatgpt$",
         "^frecency$",

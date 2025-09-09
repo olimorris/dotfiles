@@ -103,6 +103,13 @@ require("codecompanion").setup({
           },
         })
       end,
+      claude_code = function()
+        return require("codecompanion.adapters").extend("claude_code", {
+          env = {
+            CLAUDE_CODE_OAUTH_TOKEN = "cmd:op read op://personal/Claude_Code_OAuth/credential --no-newline",
+          },
+        })
+      end,
     },
   },
   prompt_library = {
@@ -148,6 +155,7 @@ You must:
       strategy = "workflow",
       description = "Use a workflow to test the plugin",
       opts = {
+        adapter = "openai",
         index = 4,
       },
       prompts = {
@@ -320,10 +328,7 @@ You must:
     chat = {
       -- show_references = true,
       -- show_header_separator = false,
-      -- show_settings = false,
-      icons = {
-        tool_success = "󰸞 ",
-      },
+      -- show_settings = true,
       fold_context = true,
       child_window = {
         opts = {
