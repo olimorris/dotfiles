@@ -30,6 +30,7 @@ else
   apps.b = "Google Chrome" -- Browser
   apps.m = "Microsoft Outlook" -- Mail
   apps.p = "Microsoft PowerPoint"
+  apps.r = "Microsoft To Do"
   apps.z = "Zoom"
 end
 
