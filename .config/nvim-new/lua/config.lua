@@ -45,7 +45,7 @@ vo.fillchars = {
 vo.foldcolumn = "1" -- Show the fold column
 vo.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vo.foldlevelstart = 99
--- vo.foldenable = true
+vo.foldenable = true
 
 vo.smartcase = true -- Switch to case-sensitive when there is a capital letter in the search
 vo.ignorecase = true -- Ignore case when searching
