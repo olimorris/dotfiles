@@ -1,6 +1,25 @@
-claude-code
-gemini-cli
-mermaid-cli
-claude-code-acp
-corepack
-npm
+{
+  "name": "lib",
+  "dependencies": {
+    "@anthropic-ai/claude-code": {
+      "version": "1.0.113",
+      "overridden": false
+    },
+    "@google/gemini-cli": {
+      "version": "0.4.1",
+      "overridden": false
+    },
+    "@zed-industries/claude-code-acp": {
+      "version": "0.4.0",
+      "overridden": false
+    },
+    "corepack": {
+      "version": "0.34.0",
+      "overridden": false
+    },
+    "npm": {
+      "version": "10.9.3",
+      "overridden": false
+    }
+  }
+}

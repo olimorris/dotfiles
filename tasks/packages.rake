@@ -1,3 +1,5 @@
+require 'json'
+
 BREW_TAPS_FILE = File.expand_path('../misc/packages/brew_taps.txt', __dir__).gsub(/ /, '\ ')
 BREW_PACKAGES_FILE = File.expand_path('../misc/packages/brew_packages.txt', __dir__).gsub(/ /, '\ ')
 BREW_CASK_PACKAGES_FILE = File.expand_path('../misc/packages/brew_cask.txt', __dir__).gsub(/ /, '\ ')
@@ -39,8 +41,9 @@ namespace :backup do
     section 'Backing up NPM files'
 
     # Check if npm command succeeds before redirecting
-    if system('npm list --global --parseable --depth=0 >/dev/null 2>&1')
-      run %( npm list --global --parseable --depth=0 | sed '1d' | awk '\{gsub\(/\\/.*\\//,"",$1\); print\}' \> #{NPM_FILE} )
+    if system('npm ls --global --depth=0 --json >/dev/null 2>&1')
+      run %( npm ls --global --depth=0 --json > #{NPM_FILE} )
+      run %( npm prefix -g > #{NPM_FILE}.prefix )
     else
       puts 'Warning: npm list command failed, skipping backup'
     end
@@ -150,7 +153,28 @@ namespace :install do
   task :npm do
     section 'Installing NPM files'
 
-    run %( xargs npm install --global \< #{NPM_FILE} )
+    unless File.exist?(NPM_FILE)
+      puts "No npm backup file found at #{NPM_FILE}"
+      next
+    end
+
+    begin
+      data = JSON.parse(File.read(NPM_FILE))
+      deps = data.fetch('dependencies', {})
+      if deps.empty?
+        puts 'No global packages listed in npm backup'
+      else
+        deps.each do |name, info|
+          # Skip npm itself to avoid changing the running npm while installing
+          next if name == 'npm'
+
+          version = info && info['version'] ? "@#{info['version']}" : ''
+          run %( npm install -g #{name}#{version} )
+        end
+      end
+    rescue StandardError => e
+      puts "Failed to parse #{NPM_FILE}: #{e}"
+    end
   end
 
   desc 'Install PIP files'
