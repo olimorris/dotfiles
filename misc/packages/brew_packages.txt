@@ -1,7 +1,6 @@
 act
 age
 bats-core
-bob
 code-minimap
 composer
 dark-mode

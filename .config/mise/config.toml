@@ -4,6 +4,7 @@ node = "22.18.0"
 nodejs = '22'
 python = "3.13.5"
 ruby = '3.2.0'
+"asdf:richin13/asdf-neovim" = "nightly"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]

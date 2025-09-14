@@ -4,9 +4,6 @@ namespace :install do
     section 'Installing Neovim'
 
     unless testing?
-      run %( bob install stable )
-      run %( bob install nightly )
-      run %( bob use nightly )
       # time = Time.new.strftime('%s')
       # run %( git clone --depth 1 --branch nightly https://github.com/neovim/neovim ~/.neovim/#{time} )
       # run %( rm -rf /opt/homebrew/bin/nvim )
@@ -48,7 +45,6 @@ namespace :update do
     section 'Updating Neovim'
 
     unless testing?
-      run %( bob update )
       # run %( rm ~/.neovim/backup )
       # run %( mv ~/.neovim/latest ~/.neovim/backup )
       # Rake::Task['install:neovim'].invoke
@@ -83,7 +79,6 @@ namespace :rollback do
     section 'Rolling back Neovim'
 
     unless testing?
-      run %( bob rollback )
       # run %( rm -rf /usr/local/bin/nvim )
       # run %( rm -rf /opt/homebrew/bin/nvim )
       #
@@ -103,7 +98,6 @@ namespace :uninstall do
     section 'Uninstalling Neovim'
 
     unless testing?
-      run %( bob erase )
       # run %( rm ~/.neovim/backup )
       # run %( mv ~/.neovim/latest ~/.neovim/backup )
       # run %( rm -rf /usr/local/bin/nvim )
