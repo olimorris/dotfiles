@@ -41,7 +41,6 @@ om.plugins = {
   "https://github.com/stevearc/oil.nvim",
   "https://github.com/nvim-mini/mini.test",
   "https://github.com/stevearc/aerial.nvim",
-  "https://github.com/bassamsdata/namu.nvim",
   "https://github.com/stevearc/overseer.nvim",
 
   -- Completion
