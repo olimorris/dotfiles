@@ -34,6 +34,7 @@ config.mouse_bindings = {
 }
 config.window_close_confirmation = "AlwaysPrompt"
 config.window_decorations = "RESIZE"
+config.window_background_opacity = 1.0
 config.window_padding = {
   left = 5,
   right = 5,
