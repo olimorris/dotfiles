@@ -123,6 +123,7 @@ require("codecompanion").setup({
         },
         index = 4,
         ignore_system_prompt = true,
+        default_memory = "maths",
         intro_message = "Welcome to your lesson! How may I help you today? ",
       },
       prompts = {
@@ -340,6 +341,13 @@ You must:
         opts = {
           number = true,
         },
+      },
+    },
+  },
+  memory = {
+    opts = {
+      chat = {
+        enabled = true,
       },
     },
   },
