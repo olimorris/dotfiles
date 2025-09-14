@@ -289,10 +289,8 @@ return {
     require("mason-lspconfig").setup({
       ensure_installed = {
         "intelephense",
-        "jdtls",
         "jsonls",
         "lua_ls",
-        "pyright",
         "ruby_lsp",
         "vuels",
         "yamlls",
