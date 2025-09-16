@@ -12,7 +12,7 @@ require("oil").setup({
     ["<C-c>"] = false,
     ["q"] = "actions.close",
     [">"] = "actions.toggle_hidden",
-    ["<C-y>"] = "actions.copy_entry_path",
+    ["Y"] = { "actions.yank_entry", opts = { modify = ":~" } },
     ["gd"] = {
       desc = "Toggle detail view",
       callback = function()
