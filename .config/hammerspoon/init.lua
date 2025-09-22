@@ -31,8 +31,7 @@ end
 hs.pathwatcher.new(os.getenv("HOME") .. "/.dotfiles/.config/hammerspoon/", reload_config):start()
 
 -- [[ Modules ]] --------------------------------------------------------------
-require("apple-music-spotify-redirect")
-require("keymaps")
-require("windows")
-require("zoom-killer")
 require("Spoons")
+require("keymaps")
+require("layout")
+require("windows")
