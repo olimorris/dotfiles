@@ -17,15 +17,6 @@ namespace :install do
     end
   end
 
-  # As per:
-  # https://blog.backtick.consulting/neovims-built-in-lsp-with-ruby-and-rails/
-  desc 'Install Rails YARD directives'
-  task :rails do
-    section 'Installing Rails YARD directives'
-
-    run %( git clone https://gist.github.com/castwide/28b349566a223dfb439a337aea29713e ~/.dotfiles/misc/enhance-rails-intellisense-in-solargraph )
-  end
-
   desc 'Install Vim plugins'
   task :vim do
     section 'Installing Vim plugins'
@@ -57,13 +48,6 @@ namespace :update do
   #
   #   run %( nvim --headless "+Lazy! sync" +qa )
   # end
-
-  desc 'Update Rails YARD directives'
-  task :rails do
-    section 'Updating Rails YARD directives'
-
-    run %( git -C ~/.dotfiles/misc/enhance-rails-intellisense-in-solargraph pull )
-  end
 
   desc 'Update Vim plugins'
   task :vim do

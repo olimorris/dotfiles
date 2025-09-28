@@ -51,10 +51,7 @@ namespace :install do
   task :servers do
     section 'Installing servers'
 
-    unless testing?
-      run %( mise use --global lua@latest )
-      run %( mise install )
-    end
+    run %( mise install ) unless testing?
   end
 end
 
