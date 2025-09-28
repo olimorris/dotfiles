@@ -1,7 +1,4 @@
 local hyper = Hyper
-local host = require("hs.host")
-local name = host.localizedName()
-local on_personal = (name:find("AAGB") == nil)
 
 ------------------------------- APP LAUNCH/TOGGLE ------------------------------
 --[[
@@ -20,8 +17,8 @@ local apps = {
   --w = RESERVED
 }
 
-if on_personal then
-  apps.c = "Code" -- VS Code
+if OnPersonal then
+  apps.c = "Visual Studio Code" -- VS Code
   apps.b = "Safari" -- Browser
   apps.p = "Foxit PDF Reader"
   apps["["] = "1Password" -- It's next to P...
@@ -36,7 +33,7 @@ end
 
 local LaunchOrToggle = function(key, app_name, app_filename)
   hs.hotkey.bind(hyper, key, function()
-    local app = hs.application.find(app_name)
+    local app = hs.application.get(app_name)
     -- Toggle - show
     local awin = nil
     if app then

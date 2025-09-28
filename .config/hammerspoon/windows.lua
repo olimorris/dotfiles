@@ -5,8 +5,6 @@ local win_keys = { "alt" }
 
 -- [[ Settings ] --------------------------------------------------------------
 window.animationDuration = 0.0
-hs.grid.setGrid("6x4")
-hs.grid.setMargins("0x0")
 
 -- [[ Constants ]] ------------------------------------------------------------
 local POSITIONS = {
@@ -34,21 +32,21 @@ local POSITIONS = {
 }
 
 -- Simplified: Move focused window to a destination screen and apply a simple layout.
-local function moveAndResizeWindow(getDestinationScreenFn)
+local function moveAndResizeWindow(destination_screen_fn)
   local win = hs.window.focusedWindow()
   if not win then
     return
   end
 
-  local destinationScreen = getDestinationScreenFn(win:screen())
-  if not destinationScreen then
+  local destination_screen = destination_screen_fn(win:screen())
+  if not destination_screen then
     return
   end
 
-  win:moveToScreen(destinationScreen)
+  win:moveToScreen(destination_screen)
 
   -- Apply a simple default layout (left half on destination screen)
-  hs.grid.set(win, POSITIONS.halves.left, destinationScreen)
+  hs.grid.set(win, POSITIONS.halves.left, destination_screen)
 end
 
 -- [[ Window Management ]] -----------------------------------------------------
