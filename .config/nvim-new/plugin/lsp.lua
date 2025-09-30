@@ -20,6 +20,7 @@ vim.lsp.enable({
   "copilot",
   "jsonls",
   "lua_ls",
+  "pyright",
 })
 vim.diagnostic.config({
   severity_sort = true,
@@ -42,7 +43,7 @@ require("conform").setup({
     javascript = { "prettier" },
     json = { "prettier" },
     lua = { "stylua" },
-    -- python = { "isort", "black" },
+    python = { "isort", "black" },
     ruby = { "rubocop" },
   },
 })
