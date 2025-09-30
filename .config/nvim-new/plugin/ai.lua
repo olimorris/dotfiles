@@ -198,16 +198,99 @@ When the user asks you to solve a problem, you must follow this exact interactio
 - **One Step at a Time:** Never explain more than one part of the problem in a single response.
 - **Always Wait:** Your default behavior is to wait for the user. Always end your turn by asking a question and explicitly stating you are waiting.
 - **No H1/H2 Headings:** Only use H3 headings and below.
-- **Show Your Work:** Explain your reasoning for each step.]],
+- **Show Your Work:** Explain your reasoning for each step.
+- **Override:** If the user responds with `override` at any point, you may provide the full solution immediately.]],
         },
       },
     },
+    ["Chain-of-Thought"] = {
+      strategy = "workflow",
+      description = "Use a CoT workflow to plan and write code",
+      opts = {
+        adapter = {
+          name = "copilot",
+          model = "gpt-5",
+        },
+      },
+      prompts = {
+        {
+          {
+            role = "user",
+            content = [[DO NOT WRITE ANY CODE YET.
 
+Your task is to act as an expert software architect and create a comprehensive implementation plan.
+
+First, think step-by-step. Then, provide a detailed pseudocode plan that outlines the solution.
+
+Your plan should include:
+1.  A high-level summary of the proposed approach.
+2.  A breakdown of the required logic into sequential steps.
+3.  Identification of any new functions, classes, or components that should be created.
+4.  Consideration of how the changes will interact with existing code.
+5.  A list of potential edge cases and error conditions to handle.
+
+<!-- Be sure to share any relevant files -->
+<!-- Your task here -->]],
+            opts = {
+              auto_submit = false,
+            },
+          },
+        },
+        {
+          {
+            role = "user",
+            content = [[Now, act as a senior technical lead reviewing the previous plan. Your goal is to refine it into a final, highly-detailed specification that another AI can implement flawlessly.
+
+Critically evaluate the plan by answering the following questions:
+1.  What are the strengths and weaknesses of the proposed approach?
+2.  Are there any alternative approaches? If so, what are their trade-offs?
+3.  What potential risks, edge cases, or dependencies did the initial plan miss?
+4.  How can the pseudocode be made more specific and closer to the target language's syntax and conventions?
+
+After your analysis, provide a final, revised pseudocode plan. This new plan should incorporate your improvements, be extremely detailed, and leave no room for ambiguity.]],
+            opts = {
+              adapter = {
+                name = "copilot",
+                model = "claude-sonnet-4",
+              },
+              auto_submit = true,
+            },
+          },
+        },
+        {
+          {
+            role = "user",
+            content = [[Your task is to write the code based on the final implementation plan that we discussed. Adhere strictly to the plan and do not introduce any new logic.
+
+**Instructions:**
+1.  Implement the plan.
+2.  Generate only the code. Do not include explanations or conversational text.
+3.  Use Markdown code blocks for the code (use 4 backticks instead of 3)
+4.  If you are modifying an existing file, include a comment with its path (e.g., `// filepath: src/utils/helpers.js`).
+5.  Use comments like `// ...existing code...` to indicate where the new code should be placed within existing files.
+
+**IMPORTANT:**
+- Follow the plan exactly.
+- Ensure comments are correct for the programming language.]],
+            opts = {
+              adapter = {
+                name = "copilot",
+                model = "gpt-4.1",
+              },
+              auto_submit = true,
+            },
+          },
+        },
+      },
+    },
     ["Test workflow"] = {
       strategy = "workflow",
       description = "Use a workflow to test the plugin",
       opts = {
-        adapter = "openai",
+        adapter = {
+          name = "copilot",
+          model = "gpt-4.1",
+        },
         index = 4,
       },
       prompts = {
@@ -238,69 +321,69 @@ When the user asks you to solve a problem, you must follow this exact interactio
             },
           },
         },
-        {
-          {
-            role = "user",
-            content = "Write a recursive algorithm to balance a binary search tree in Java",
-            opts = {
-              auto_submit = true,
-            },
-          },
-        },
-        {
-          {
-            role = "user",
-            content = "Generate a comprehensive regex pattern to validate email addresses with explanations",
-            opts = {
-              auto_submit = true,
-            },
-          },
-        },
-        {
-          {
-            role = "user",
-            content = "Create a Rust struct and implementation for a thread-safe message queue",
-            opts = {
-              auto_submit = true,
-            },
-          },
-        },
-        {
-          {
-            role = "user",
-            content = "Write a GitHub Actions workflow file for CI/CD with multiple stages",
-            opts = {
-              auto_submit = true,
-            },
-          },
-        },
-        {
-          {
-            role = "user",
-            content = "Create SQL queries for a complex database schema with joins across 4 tables",
-            opts = {
-              auto_submit = true,
-            },
-          },
-        },
-        {
-          {
-            role = "user",
-            content = "Write a Lua configuration for Neovim with custom keybindings and plugins",
-            opts = {
-              auto_submit = true,
-            },
-          },
-        },
-        {
-          {
-            role = "user",
-            content = "Generate documentation in JSDoc format for a complex JavaScript API client",
-            opts = {
-              auto_submit = true,
-            },
-          },
-        },
+        -- {
+        --   {
+        --     role = "user",
+        --     content = "Write a recursive algorithm to balance a binary search tree in Java",
+        --     opts = {
+        --       auto_submit = true,
+        --     },
+        --   },
+        -- },
+        -- {
+        --   {
+        --     role = "user",
+        --     content = "Generate a comprehensive regex pattern to validate email addresses with explanations",
+        --     opts = {
+        --       auto_submit = true,
+        --     },
+        --   },
+        -- },
+        -- {
+        --   {
+        --     role = "user",
+        --     content = "Create a Rust struct and implementation for a thread-safe message queue",
+        --     opts = {
+        --       auto_submit = true,
+        --     },
+        --   },
+        -- },
+        -- {
+        --   {
+        --     role = "user",
+        --     content = "Write a GitHub Actions workflow file for CI/CD with multiple stages",
+        --     opts = {
+        --       auto_submit = true,
+        --     },
+        --   },
+        -- },
+        -- {
+        --   {
+        --     role = "user",
+        --     content = "Create SQL queries for a complex database schema with joins across 4 tables",
+        --     opts = {
+        --       auto_submit = true,
+        --     },
+        --   },
+        -- },
+        -- {
+        --   {
+        --     role = "user",
+        --     content = "Write a Lua configuration for Neovim with custom keybindings and plugins",
+        --     opts = {
+        --       auto_submit = true,
+        --     },
+        --   },
+        -- },
+        -- {
+        --   {
+        --     role = "user",
+        --     content = "Generate documentation in JSDoc format for a complex JavaScript API client",
+        --     opts = {
+        --       auto_submit = true,
+        --     },
+        --   },
+        -- },
       },
     },
   },
@@ -382,17 +465,6 @@ When the user asks you to solve a problem, you must follow this exact interactio
       -- show_header_separator = false,
       -- show_settings = true,
       fold_context = true,
-      child_window = {
-        opts = {
-          wrap = true,
-        },
-      },
-      -- You can also extend/override the child_window options for a diff
-      diff_window = {
-        opts = {
-          number = true,
-        },
-      },
     },
   },
   memory = {
