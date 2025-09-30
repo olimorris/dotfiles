@@ -106,7 +106,7 @@ require("codecompanion").setup({
       claude_code = function()
         return require("codecompanion.adapters").extend("claude_code", {
           env = {
-            CLAUDE_CODE_OAUTH_TOKEN = "cmd:op read op://personal/Claude_Code_OAuth/credential --no-newline",
+            ANTHROPIC_API_KEY = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
           },
         })
       end,
