@@ -29,8 +29,6 @@ om.plugins = {
 
   -- LSP
   "https://github.com/mason-org/mason.nvim",
-  "https://github.com/neovim/nvim-lspconfig",
-  "https://github.com/kevinhwang91/nvim-ufo",
   "https://github.com/stevearc/conform.nvim",
   "https://github.com/ivanjermakov/troublesum.nvim",
 

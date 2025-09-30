@@ -8,20 +8,12 @@ local icons = {
 require("mason").setup()
 
 vim.lsp.inline_completion.enable()
-vim.lsp.config("copilot", {
-  settings = {
-    telemetry = {
-      telemetryLevel = "off",
-    },
-  },
-})
-
 vim.lsp.enable({
   "copilot",
-  "jsonls",
   "lua_ls",
   "pyright",
 })
+
 vim.diagnostic.config({
   severity_sort = true,
   signs = {
@@ -45,18 +37,6 @@ require("conform").setup({
     lua = { "stylua" },
     python = { "isort", "black" },
     ruby = { "rubocop" },
-  },
-})
-
-require("ufo").setup()
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-local has_blink, blink = pcall(require, "blink.cmp")
-capabilities = vim.tbl_deep_extend("force", capabilities, has_blink and blink.get_lsp_capabilities() or {}, {
-  textDocument = {
-    foldingRange = {
-      dynamicRegistration = false,
-      lineFoldingOnly = true,
-    },
   },
 })
 
