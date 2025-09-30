@@ -135,13 +135,16 @@ keymap({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<CR>")
 keymap({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<CR>")
 keymap("v", "<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>")
 
--- Copilot
+-- Inline completions
 keymap("i", "<C-a>", function()
-  require("copilot.suggestion").accept()
-end)
-keymap("i", "<C-x>", function()
-  require("copilot.suggestion").dismiss()
-end)
+  if not vim.lsp.inline_completion.get() then
+    return "<C-a>"
+  end
+end, {
+  expr = true,
+  replace_keycodes = true,
+  desc = "Get the current inline completion",
+})
 
 -- Snacks
 keymap("n", "<Leader>t", function()

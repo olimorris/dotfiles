@@ -7,7 +7,17 @@ local icons = {
 
 require("mason").setup()
 
+vim.lsp.inline_completion.enable()
+vim.lsp.config("copilot", {
+  settings = {
+    telemetry = {
+      telemetryLevel = "off",
+    },
+  },
+})
+
 vim.lsp.enable({
+  "copilot",
   "jsonls",
   "lua_ls",
 })

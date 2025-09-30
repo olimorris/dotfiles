@@ -474,14 +474,3 @@ local function codecompanion_spinner()
 end
 
 codecompanion_spinner()
-
-require("copilot").setup({
-  panel = { enabled = false },
-  suggestion = {
-    auto_trigger = true, -- Suggest as we start typing
-    keymap = {
-      accept_word = "<C-l>",
-      accept_line = "<C-j>",
-    },
-  },
-})
