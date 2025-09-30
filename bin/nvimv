@@ -1,0 +1,273 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+#             _
+#  _ ____   _(_)_ __ _____   __
+# | '_ \ \ / / | '_ ` _ \ \ / /
+# | | | \ V /| | | | | | \ V /
+# |_| |_|\_/ |_|_| |_| |_|\_/
+#
+# Dependencies: curl, jq, git, make, cmake
+
+_print_help() {
+	cat <<EOF
+Usage: nvimv [options] [command]
+
+Options:
+  -h, --help  Show this help message
+
+Commands:
+  env             [TAG] Print environment variables for the given tag
+  exec|x          [TAG] Execute nvim with the given tag
+  install|i       [TAG] Install the given tag
+  upgrade|up      [TAG] Upgrade the given tag
+  use|u           [TAG] Use the given tag
+  remove|rm       [TAG] Remove the given tag
+
+  dirs            Print the directories in use by the script
+  list|ls         List all installed tags
+  list-remote|lsr List all available tags
+EOF
+}
+
+PREFIX="${PREFIX:-$HOME/.local}"
+INSTALL_DIR="$PREFIX/bin"
+DATA_DIR="${XDG_DATA_HOME:-$PREFIX/share}/nvimv"
+
+_print_env() {
+	tag=$1
+	tag=$(echo "$tag" | sed 's/^v//')
+
+	case "$tag" in
+	git_*)
+		base_dir="$DATA_DIR/tags/$tag"
+		echo "export VIMRUNTIME=\"$base_dir/runtime\""
+		echo "export PATH=\"$base_dir/build/bin:\$PATH\""
+		;;
+	*)
+		base_dir="$DATA_DIR/tags/$tag"
+		extracted_dir="$(find "$base_dir" -mindepth 1 -maxdepth 1 -type d | head -n 1)"
+		echo "export VIMRUNTIME=\"$extracted_dir/share/nvim/runtime\""
+		echo "export PATH=\"$extracted_dir/bin:\$PATH\""
+		;;
+	esac
+}
+
+_print_shim() {
+	tag=$1
+	tag=$(echo "$tag" | sed 's/^v//')
+
+	cat <<EOF
+#!/usr/bin/env bash
+$(_print_env "$tag")
+exec nvim "\$@"
+EOF
+}
+
+_download_tag() {
+	tag="$1"
+
+	# Check if this is a git spec
+	case "$tag" in
+	git_*)
+		commit_ish="${tag#git_}"
+		base_dir="$DATA_DIR/tags/$tag"
+
+		# Clone the repo if it doesn't exist, otherwise fetch
+		if [ ! -d "$base_dir" ]; then
+			git clone https://github.com/neovim/neovim.git "$base_dir"
+		fi
+
+		cd "$base_dir"
+		git fetch
+		git checkout "$commit_ish"
+
+		# Build neovim
+		make CMAKE_BUILD_TYPE=Release
+
+		cd - >/dev/null
+		return
+		;;
+	*)
+		# Download a pre-built release:
+		tag=$(list_remote | grep $tag)
+		tag=$(echo "$tag" | sed 's/^v//')
+
+		# Filter on tag_name:
+		rel_inf=$(curl -sSL 'https://api.github.com/repos/neovim/neovim/releases' | jq -r "[.[] | select(.tag_name | contains(\"$tag\"))] | first")
+
+		# Filter for matching platform:
+		case $(uname -s) in
+		Linux)
+			rel_inf=$(echo "$rel_inf" | jq -r '[.assets[] | select(.name | contains("linux"))]')
+			;;
+		Darwin)
+			rel_inf=$(echo "$rel_inf" | jq -r '[.assets[] | select(.name | contains("mac"))]')
+			;;
+		esac
+
+		# Filter on machine architecture:
+		case $(uname -m) in
+		x86_64)
+			rel_inf=$(echo "$rel_inf" | jq -r '[.[] | select((.name | contains("64")) and (.name | contains("arm") | not))]')
+			;;
+		aarch64)
+			rel_inf=$(echo "$rel_inf" | jq -r '[.[] | select(.name | contains("arm64"))]')
+			;;
+		armv7l)
+			rel_inf=$(echo "$rel_inf" | jq -r '[.[] | select((.name | contains("arm")) and (.name | contains("64") | not))]')
+			;;
+		esac
+
+		asset=$(echo "$rel_inf" | jq '[.[] | select(.name | (endswith("sum") or endswith("appimage") or endswith("zsync")) | not)] | first')
+
+		# Download and extract:
+		base_dir="$DATA_DIR/tags/$tag"
+		tar_name="$(echo "$asset" | jq -r '.name')"
+		mkdir -p "$base_dir"
+		cd "$base_dir"
+		curl -LO "$(echo "$asset" | jq -r '.browser_download_url')"
+
+		tar -xf "$tar_name"
+		rm -f "$tar_name"
+		extracted_dir="$(find $PWD -mindepth 1 -maxdepth 1 -type d | head -n 1)"
+
+		cd - >/dev/null
+		;;
+	esac
+}
+
+list_local() {
+	if [ ! -d "$DATA_DIR/tags" ]; then
+		return
+	fi
+	find "$DATA_DIR/tags" -mindepth 1 -maxdepth 1 -type d | xargs -n 1 basename
+}
+
+list_remote() {
+	curl -sSL 'https://api.github.com/repos/neovim/neovim/releases' | jq -r '.[].tag_name'
+}
+
+install_tag() {
+	tag=$1
+	tag=$(echo "$tag" | sed 's/^v//')
+	if list_local | grep -F "$tag" >/dev/null; then
+		echo "'$tag' is already installed"
+		exit 1
+	fi
+	_download_tag "$tag"
+}
+
+upgrade_tag() {
+	tag=$1
+	tag=$(echo "$tag" | sed 's/^v//')
+	if ! list_local | grep -F "$tag" >/dev/null; then
+		echo "'$tag' is not installed"
+		exit 1
+	fi
+
+	case "$tag" in
+	git_*)
+		echo "Cannot upgrade git tags. Use 'remove' then 'install' instead."
+		exit 1
+		;;
+	esac
+
+	_download_tag "$tag"
+}
+
+use_tag() {
+	tag=$1
+	tag=$(echo "$tag" | sed 's/^v//')
+
+	base_dir="$DATA_DIR/tags/$tag"
+	if test ! -d "$base_dir"; then
+		mkdir -p "$base_dir"
+		install_tag $tag
+	fi
+
+	_print_shim "$tag" >"$INSTALL_DIR/nvim"
+	chmod +x "$INSTALL_DIR/nvim"
+}
+
+if test $# -eq 0; then
+	_print_help
+	exit 1
+fi
+
+subcommand=$1
+shift
+case "$subcommand" in
+--help | -h | h | help)
+	_print_help
+	exit 0
+	;;
+env)
+	if [[ $# -eq 0 ]]; then
+		_print_help
+		exit 1
+	fi
+	tag=$1
+	shift
+	_print_env "$tag"
+	;;
+dirs)
+	echo "PREFIX=$PREFIX"
+	echo "INSTALL_DIR=$INSTALL_DIR"
+	echo "DATA_DIR=$DATA_DIR"
+	;;
+exec | x)
+	if [[ $# -eq 0 ]]; then
+		_print_help
+		exit 1
+	fi
+	tag=$1
+	shift
+	eval "$(_print_env "$tag")"
+	nvim "$@"
+	;;
+list | ls)
+	list_local
+	;;
+list-remote | ls-remote | lsr)
+	list_remote $@
+	;;
+install | i)
+	if [[ $# -eq 0 ]]; then
+		_print_help
+		exit 1
+	fi
+	install_tag $@
+	;;
+upgrade | up)
+	if [[ $# -eq 0 ]]; then
+		_print_help
+		exit 1
+	fi
+	upgrade_tag $@
+	;;
+use | u)
+	if [[ $# -eq 0 ]]; then
+		_print_help
+		exit 1
+	fi
+	use_tag $@
+	;;
+remove | rm)
+	if [[ $# -eq 0 ]]; then
+		_print_help
+		exit 1
+	fi
+	tag=$1
+	tag=$(echo "$tag" | sed 's/^v//')
+	shift
+	base_dir="$DATA_DIR/tags/$tag"
+	if test -d "$base_dir"; then
+		rm -rf "$base_dir"
+	fi
+	;;
+*)
+	echo "Unknown command: $subcommand"
+	exit 1
+	;;
+esac
