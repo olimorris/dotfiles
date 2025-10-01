@@ -3,7 +3,6 @@
 aldente
 alfred
 anki
-appcleaner
 audacity
 cleanshot
 discord
@@ -27,6 +26,7 @@ notion
 obs
 openemu
 pdf-expert
+pearcleaner
 pixelsnap
 postman
 raycast

@@ -14,6 +14,7 @@ build==1.2.2.post1
 CacheControl==0.14.3
 certifi==2025.7.9
 cffi==1.17.1
+cfgv==3.4.0
 charset-normalizer==3.4.2
 cleo==2.1.0
 click==8.2.1
@@ -35,6 +36,7 @@ fqdn==1.5.1
 h11==0.16.0
 httpcore==1.0.9
 httpx==0.28.1
+identify==2.6.14
 idna==3.10
 iniconfig==2.1.0
 installer==0.7.0
@@ -74,6 +76,7 @@ nbclient==0.10.2
 nbconvert==7.16.6
 nbformat==5.10.4
 nest-asyncio==1.6.0
+nodeenv==1.9.1
 notebook==7.4.5
 notebook_shim==0.2.4
 numpy==2.3.2
