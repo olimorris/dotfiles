@@ -10,7 +10,8 @@
 
 <p align="center">
 My macOS dotfiles. Installation instructions are my own<br><br>
-Regular Neovim tweaks. Occasional workflow tips worth stealing :smile:
+Regular Neovim tweaks. Occasional workflow tips worth stealing :smile:<br><br>
+My current Neovim config can be found <a href="https://github.com/olimorris/dotfiles/tree/main/.config/nvim-new">here</a>
 </p>
 
 ## :computer: Setting up a new Mac
