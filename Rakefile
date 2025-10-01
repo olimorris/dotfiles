@@ -67,8 +67,8 @@ task :install do
   Rake::Task['install:pip'].invoke
 
   # Apps
-  Rake::Task['install:neovim'].invoke
   Rake::Task['install:vim'].invoke
+  Rake::Task['install:neovim'].invoke
 
   Rake::Task['install:macos'].invoke
 end
@@ -88,11 +88,11 @@ task :update do
 
   # System
   Rake::Task['update:servers'].invoke
-  Rake::Task['update:wezterm'].invoke
 
   # Apps
-  Rake::Task['update:neovim'].invoke
   Rake::Task['update:vim'].invoke
+  Rake::Task['update:neovim'].invoke
+  Rake::Task['update:wezterm'].invoke
 end
 
 desc 'Sync Everything'
