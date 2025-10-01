@@ -68,7 +68,6 @@ task :install do
 
   # Apps
   Rake::Task['install:neovim'].invoke
-  Rake::Task['install:rails'].invoke
   Rake::Task['install:vim'].invoke
 
   Rake::Task['install:macos'].invoke
@@ -93,7 +92,6 @@ task :update do
 
   # Apps
   Rake::Task['update:neovim'].invoke
-  Rake::Task['update:rails'].invoke
   Rake::Task['update:vim'].invoke
 end
 
