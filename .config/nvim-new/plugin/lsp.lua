@@ -12,6 +12,7 @@ vim.lsp.enable({
   "copilot",
   "lua_ls",
   "pyright",
+  "ruby_lsp",
 })
 
 vim.diagnostic.config({
