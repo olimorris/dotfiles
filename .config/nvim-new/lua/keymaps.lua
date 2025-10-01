@@ -66,6 +66,8 @@ keymap("v", ">", ">gv", { desc = "Indent" })
 keymap("v", "<", "<gv", { desc = "Outdent" })
 keymap("n", "<Esc>", "<cmd>:noh<CR>", { desc = "Clear searches" })
 
+keymap("n", "<Leader>rt", "<cmd>restart<CR>", { desc = "Restart Neovim" })
+
 -- Pack
 keymap("n", "<leader>ps", function()
   vim.cmd("PackSync")
@@ -136,9 +138,9 @@ keymap({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<CR>")
 keymap("v", "<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>")
 
 -- Inline completions
-keymap("i", "<C-a>", function()
+keymap("i", "<Tab>", function()
   if not vim.lsp.inline_completion.get() then
-    return "<C-a>"
+    return "<Tab>"
   end
 end, {
   expr = true,
