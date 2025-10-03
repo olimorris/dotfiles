@@ -49,6 +49,7 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 
     local ignored_fts = {
+      "codecompanion",
       "prompt",
       "snacks_dashboard",
       "snacks_input",
