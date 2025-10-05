@@ -138,9 +138,9 @@ keymap({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<CR>")
 keymap("v", "<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>")
 
 -- Inline completions
-keymap("i", "<Tab>", function()
+keymap("i", "<C-a>", function()
   if not vim.lsp.inline_completion.get() then
-    return "<Tab>"
+    return "<C-a>"
   end
 end, {
   expr = true,
