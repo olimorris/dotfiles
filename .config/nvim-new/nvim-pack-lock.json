@@ -1,0 +1,107 @@
+{
+  "plugins": {
+    "aerial.nvim": {
+      "rev": "5e687b5",
+      "src": "https://github.com/stevearc/aerial.nvim"
+    },
+    "blink.cmp": {
+      "rev": "327fff9",
+      "src": "https://github.com/saghen/blink.cmp",
+      "version": "1.0.0 - 2.0.0"
+    },
+    "conform.nvim": {
+      "rev": "9d859cb",
+      "src": "https://github.com/stevearc/conform.nvim"
+    },
+    "edgy.nvim": {
+      "rev": "7e8dedc",
+      "src": "https://github.com/folke/edgy.nvim"
+    },
+    "fidget.nvim": {
+      "rev": "3f54759",
+      "src": "https://github.com/j-hui/fidget.nvim"
+    },
+    "friendly-snippets": {
+      "rev": "572f566",
+      "src": "https://github.com/rafamadriz/friendly-snippets"
+    },
+    "gitsigns.nvim": {
+      "rev": "1ee5c1f",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "guess-indent.nvim": {
+      "rev": "84a4987",
+      "src": "https://github.com/nmac427/guess-indent.nvim"
+    },
+    "heirline.nvim": {
+      "rev": "fae936a",
+      "src": "https://github.com/rebelot/heirline.nvim"
+    },
+    "mason.nvim": {
+      "rev": "ad7146a",
+      "src": "https://github.com/mason-org/mason.nvim"
+    },
+    "mini.test": {
+      "rev": "051c5f1",
+      "src": "https://github.com/nvim-mini/mini.test"
+    },
+    "nvim-autopairs": {
+      "rev": "23320e7",
+      "src": "https://github.com/windwp/nvim-autopairs"
+    },
+    "nvim-treesitter": {
+      "rev": "01ced749",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
+      "version": "'main'"
+    },
+    "nvim-treesitter-endwise": {
+      "rev": "a61a9de",
+      "src": "https://github.com/RRethy/nvim-treesitter-endwise"
+    },
+    "nvim-treesitter-textobjects": {
+      "rev": "1b2d85d",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+      "version": "'main'"
+    },
+    "nvim-web-devicons": {
+      "rev": "b8221e4",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons"
+    },
+    "oil.nvim": {
+      "rev": "919e155",
+      "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "overseer.nvim": {
+      "rev": "fe7b2f9",
+      "src": "https://github.com/stevearc/overseer.nvim"
+    },
+    "plenary.nvim": {
+      "rev": "b9fd522",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "promise-async": {
+      "rev": "119e896",
+      "src": "https://github.com/kevinhwang91/promise-async"
+    },
+    "render-markdown.nvim": {
+      "rev": "7e6af36",
+      "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
+    },
+    "snacks.nvim": {
+      "rev": "bfe8c26",
+      "src": "https://github.com/folke/snacks.nvim"
+    },
+    "todo-comments.nvim": {
+      "rev": "304a8d2",
+      "src": "https://github.com/folke/todo-comments.nvim"
+    },
+    "troublesum.nvim": {
+      "rev": "b00301b",
+      "src": "https://github.com/ivanjermakov/troublesum.nvim"
+    },
+    "virt-column.nvim": {
+      "rev": "b87e3e0",
+      "src": "https://github.com/lukas-reineke/virt-column.nvim"
+    }
+  }
+}
