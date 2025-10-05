@@ -28,6 +28,14 @@ require("blink.cmp").setup({
       auto_show = true,
       auto_show_delay_ms = 200,
     },
+    list = {
+      selection = {
+        preselect = false,
+        auto_insert = function(ctx)
+          return ctx.mode == "cmdline"
+        end,
+      },
+    },
   },
 
   cmdline = { sources = { "cmdline" } },
