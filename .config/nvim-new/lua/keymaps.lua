@@ -12,10 +12,8 @@ keymap("n", "<Tab>", "<cmd>bnext<CR>", { noremap = false, desc = "Next buffer" }
 keymap("n", "<S-Tab>", "<cmd>bprev<CR>", { noremap = false, desc = "Previous buffer" })
 
 -- Movement
-keymap("n", "E", "$", { desc = "End of a line" })
-keymap("v", "E", "$", { desc = "End of a line" })
-keymap("n", "B", "^", { desc = "Beginning of a line" })
-keymap("v", "B", "^", { desc = "Beginning of a line" })
+keymap({ "n", "x", "o" }, "<S-h>", "^", { noremap = true, silent = true, desc = "Move to first non-blank in line" })
+keymap({ "n", "x", "o" }, "<S-l>", "g_", { noremap = true, silent = true, desc = "Move to last non-blank in line" })
 keymap("n", "<A-k>", ":m .-2<CR>==", { desc = "Move selection up", silent = true })
 keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up", silent = true })
 keymap("n", "<A-j>", ":m .+1<CR>==", { desc = "Move selection down", silent = true })
