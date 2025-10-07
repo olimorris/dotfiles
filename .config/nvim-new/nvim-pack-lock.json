@@ -13,6 +13,10 @@
       "rev": "9d859cb",
       "src": "https://github.com/stevearc/conform.nvim"
     },
+    "copilot.lua": {
+      "rev": "30b98a4",
+      "src": "https://github.com/zbirenbaum/copilot.lua"
+    },
     "edgy.nvim": {
       "rev": "7e8dedc",
       "src": "https://github.com/folke/edgy.nvim"
