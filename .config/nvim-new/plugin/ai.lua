@@ -62,18 +62,15 @@ require("codecompanion").setup({
       end,
       openai = function()
         return require("codecompanion.adapters").extend("openai", {
-          opts = {
-            stream = true,
-          },
           env = {
             api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
           },
-          schema = {
-            model = {
-              default = function()
-                return "gpt-4.1"
-              end,
-            },
+        })
+      end,
+      openai_responses = function()
+        return require("codecompanion.adapters").extend("openai_responses", {
+          env = {
+            api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
           },
         })
       end,
@@ -103,16 +100,61 @@ require("codecompanion").setup({
           },
         })
       end,
+      codex = function()
+        return require("codecompanion.adapters").extend("codex", {
+          env = {
+            OPENAI_API_KEY = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
+          },
+        })
+      end,
       claude_code = function()
         return require("codecompanion.adapters").extend("claude_code", {
           env = {
-            ANTHROPIC_API_KEY = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
+            ANTHROPIC_API_KEY = "cmd:op read op://personal/Claude_Code_API/credential --no-newline",
           },
         })
       end,
     },
   },
   prompt_library = {
+    ["Blog Image Generator"] = {
+      strategy = "chat",
+      description = "Create a prompt for generating blog images",
+      opts = {
+        adapter = {
+          name = "copilot",
+          model = "claude-haiku-4.5",
+        },
+        index = 4,
+        ignore_system_prompt = true,
+        intro_message = "Please share the blog post ",
+        auto_submit = true,
+      },
+      prompts = {
+        {
+          role = "user",
+          content = [[You are an expert visual conceptualizer and art director who specializes in minimalist idea illustrations, like those by Darius Foroux, Visualize Value, and Sketchplanations.
+
+I will give you a blog post (or any piece of writing). Your task is to read and deeply understand it, identify its core message or metaphor, and then create a prompt for an image generator (such as DALL·E, Midjourney, or Ideogram) that will produce a single symbolic image representing that core idea. If multiple metaphors come to mind, pick the one that is simplest to represent visually and would be instantly understandable even without words.
+
+Follow these rules when generating the image prompt:
+
+1. Style: minimalist hand-drawn black line art on a white background.
+2. Color: optional pastel accent colors (no more than 1–2).
+3. Composition: clean, balanced, lots of negative space.
+4. Mood: calm, reflective, conceptual — should feel smart and simple.
+5. Text: no text, no words, no titles — purely visual symbolism.
+6. Imagery guidance: use simple shapes, arrows, motion lines, trees, ladders, balances, atoms, roots, or geometric metaphors to express abstract ideas like productivity, growth, focus, or time.
+7. Output format: one concise paragraph describing the scene and style, written as a direct prompt you could paste into an image-generation model.
+
+Your output should look like this:
+“A minimalist hand-drawn black line illustration on a white background showing a small tree with deep roots forming the shape of a brain, symbolizing growth from knowledge. One soft pastel green accent color for the leaves. No text.”
+
+Now read this text and produce that image prompt:
+#{buffer}]],
+        },
+      },
+    },
     ["Maths tutor"] = {
       strategy = "chat",
       description = "Chat with your personal maths tutor",
@@ -391,7 +433,7 @@ After your analysis, provide a final, revised pseudocode plan. This new plan sho
     chat = {
       adapter = {
         name = "copilot",
-        model = "gpt-5-mini",
+        model = "claude-haiku-4.5",
       },
       roles = {
         user = "olimorris",
@@ -464,7 +506,15 @@ After your analysis, provide a final, revised pseudocode plan. This new plan sho
       -- show_references = true,
       -- show_header_separator = false,
       -- show_settings = true,
+      show_reasoning = false,
       fold_context = true,
+    },
+    diff = {
+      provider_opts = {
+        inline = {
+          layout = "buffer",
+        },
+      },
     },
   },
   memory = {

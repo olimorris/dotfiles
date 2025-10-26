@@ -25,6 +25,7 @@ autocmd("User", {
     vim.lsp.buf.format()
   end,
 })
+
 autocmd("User", {
   group = cc,
   pattern = "CodeCompanionChatCreated",

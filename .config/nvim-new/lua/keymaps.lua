@@ -192,10 +192,10 @@ end, opts)
 
 -- Oil
 keymap("n", "_", function()
-  require("oil").toggle_float(vim.fn.getcwd())
+  require("oil").open_float(vim.fn.getcwd())
 end, opts)
 keymap("n", "-", function()
-  require("oil").toggle_float()
+  require("oil").open_float()
 end, opts)
 
 -- Overseer

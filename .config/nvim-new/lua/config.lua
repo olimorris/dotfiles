@@ -132,6 +132,14 @@ vw.relativenumber = true -- Set the relative number
 vw.wrap = false -- Do not display text over multiple lines
 
 -- Disable some plugins that are not needed
+local enabled_plugins = {
+  "nvim.difftool",
+  -- "nvim.undotree",
+}
+vim.iter(enabled_plugins):each(function(p)
+  vim.cmd.packadd(p)
+end)
+
 local disabled_plugins = {
   "gzip",
   "matchparen",
@@ -147,6 +155,7 @@ local disabled_plugins = {
   "rrhelper",
   "python_provider",
 }
+
 vim.iter(disabled_plugins):each(function(p)
   local loaded = "loaded_" .. p
   vim.g[loaded] = 1

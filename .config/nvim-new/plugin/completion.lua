@@ -30,10 +30,10 @@ require("blink.cmp").setup({
     },
     list = {
       selection = {
-        preselect = false,
-        auto_insert = function(ctx)
-          return ctx.mode == "cmdline"
+        preselect = function(ctx)
+          return not require("blink.cmp").snippet_active({ direction = 1 })
         end,
+        auto_insert = false,
       },
     },
   },

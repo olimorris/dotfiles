@@ -7,7 +7,7 @@ local icons = {
 
 require("mason").setup()
 
-vim.lsp.inline_completion.enable()
+-- vim.lsp.inline_completion.enable()
 vim.lsp.enable({
   "lua_ls",
   "pyright",

@@ -1,13 +1,9 @@
 require("oil").setup({
-  default_file_explorer = false,
   delete_to_trash = true,
   skip_confirm_for_simple_edits = true,
   float = {
-    border = "none",
+    border = "single",
   },
-  is_always_hidden = function(name, bufnr)
-    return name == ".."
-  end,
   keymaps = {
     ["<C-c>"] = false,
     ["q"] = "actions.close",
@@ -25,9 +21,6 @@ require("oil").setup({
         end
       end,
     },
-  },
-  buf_options = {
-    buflisted = false,
   },
 })
 

@@ -65,9 +65,7 @@ require("edgy").setup({
     { title = "Neotest Output", ft = "neotest-output-panel", size = { height = 15 } },
   },
   right = {
-    -- { ft = "aerial", title = "Symbols", size = { width = 0.3 } },
-    { ft = "neotest-summary", title = "Neotest Summary", size = { width = 0.3 } },
-    { ft = "oil", title = "File Explorer", size = { width = 0.3 } },
+    -- { ft = "oil", title = "File Explorer", size = { width = 0.3 } },
   },
 })
 

@@ -275,7 +275,7 @@ local function statuscolumn()
       condition = function()
         return not conditions.buffer_matches({
           buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
-          filetype = { "alpha", "codecompanion", "harpoon", "oil", "lspinfo", "snacks_dashboard", "toggleterm" },
+          filetype = { "alpha", "harpoon", "oil", "lspinfo", "snacks_dashboard", "toggleterm" },
         })
       end,
       static = {
@@ -1039,7 +1039,7 @@ require("heirline").setup({
 
       return conditions.buffer_matches({
         buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
-        filetype = { "alpha", "codecompanion", "oil", "lspinfo", "snacks_dashboard", "toggleterm" },
+        filetype = { "alpha", "oil", "lspinfo", "snacks_dashboard", "toggleterm" },
       }, args.buf)
     end,
   },
