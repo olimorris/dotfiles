@@ -1,6 +1,5 @@
 act
 age
-assimp@5
 bats-core
 code-minimap
 composer
