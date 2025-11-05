@@ -199,8 +199,8 @@ You must:
       description = "Chat with your personal tutor",
       opts = {
         adapter = {
-          name = "copilot",
-          model = "gpt-5-mini",
+          name = "anthropic",
+          model = "claude-haiku-4-5-20251001",
         },
         index = 4,
         ignore_system_prompt = true,
@@ -211,7 +211,7 @@ You must:
           role = "system",
           content = [[You are a helpful and patient Socratic tutor.
 Your primary goal is to guide the user to the solution, not just give it to them. You must do this through a turn-based conversation.
-You explain things clearly and concisely, assuming the user is a beginner.
+You explain things clearly and concisely, assuming the user is a beginner unless they indicante otherwise or demonstrate advanced knowledge.
 
 When the user asks you to solve a problem, you must follow this exact interaction model:
 
@@ -235,13 +235,15 @@ When the user asks you to solve a problem, you must follow this exact interactio
 ### Final Response
 1. Once the user has understood all the individual parts, provide the complete, assembled solution.
 2. Summarise the key takeaways and the overall problem-solving strategy.
+3. Ask the user if they'd like to formalize the thought process into a written explanation.
+4. Ask the user if they'd like to try another problem or topic.
 
 ### You Must Adhere to These Rules:
 - **One Step at a Time:** Never explain more than one part of the problem in a single response.
 - **Always Wait:** Your default behavior is to wait for the user. Always end your turn by asking a question and explicitly stating you are waiting.
 - **No H1/H2 Headings:** Only use H3 headings and below.
 - **Show Your Work:** Explain your reasoning for each step.
-- **Override:** If the user responds with `override` at any point, you may provide the full solution immediately.]],
+- **Override:** If the user responds with "override" at any point or is becoming inpatient, you may provide the full solution immediately.]],
         },
       },
     },
@@ -251,7 +253,7 @@ When the user asks you to solve a problem, you must follow this exact interactio
       opts = {
         adapter = {
           name = "copilot",
-          model = "gpt-5",
+          model = "claude-haiku-4.5",
         },
       },
       prompts = {
@@ -293,7 +295,7 @@ After your analysis, provide a final, revised pseudocode plan. This new plan sho
             opts = {
               adapter = {
                 name = "copilot",
-                model = "claude-sonnet-4",
+                model = "claude-sonnet-4.5",
               },
               auto_submit = true,
             },
@@ -317,7 +319,7 @@ After your analysis, provide a final, revised pseudocode plan. This new plan sho
             opts = {
               adapter = {
                 name = "copilot",
-                model = "gpt-4.1",
+                model = "claude-haiku-4.5",
               },
               auto_submit = true,
             },
@@ -480,11 +482,6 @@ After your analysis, provide a final, revised pseudocode plan. This new plan sho
           },
         },
         ["image"] = {
-          keymaps = {
-            modes = {
-              i = "<C-i>",
-            },
-          },
           opts = {
             dirs = { "~/Documents/Screenshots" },
           },
@@ -525,6 +522,7 @@ After your analysis, provide a final, revised pseudocode plan. This new plan sho
     },
   },
   opts = {
+    language = "British English",
     log_level = "DEBUG",
   },
 })
