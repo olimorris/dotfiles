@@ -60,9 +60,6 @@ require("onedarkpro").setup({
     EdgyNormal = { bg = "${bg}" },
     EdgyTitle = { fg = "${purple}", bold = true },
 
-    EyelinerPrimary = { fg = "${green}" },
-    EyelinerSecondary = { fg = "${blue}" },
-
     NormalFloat = { bg = "${bg}" }, -- Set the terminal background to be the same as the editor
     FloatBorder = { fg = "${gray}", bg = "${bg}" },
 

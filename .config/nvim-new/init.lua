@@ -36,10 +36,12 @@ om.plugins = {
   "https://github.com/ivanjermakov/troublesum.nvim",
 
   -- Editor
+  "https://github.com/lervag/vimtex",
   "https://github.com/stevearc/oil.nvim",
   "https://github.com/nvim-mini/mini.test",
   "https://github.com/stevearc/aerial.nvim",
   "https://github.com/stevearc/overseer.nvim",
+  "https://github.com/kylechui/nvim-surround",
 
   -- Completion
   "https://github.com/rafamadriz/friendly-snippets",

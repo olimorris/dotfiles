@@ -14,7 +14,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "copilot.lua": {
-      "rev": "7fe314f",
+      "rev": "93adf98",
       "src": "https://github.com/zbirenbaum/copilot.lua"
     },
     "edgy.nvim": {
@@ -53,8 +53,12 @@
       "rev": "7a2c97c",
       "src": "https://github.com/windwp/nvim-autopairs"
     },
+    "nvim-surround": {
+      "rev": "fcfa7e0",
+      "src": "https://github.com/kylechui/nvim-surround"
+    },
     "nvim-treesitter": {
-      "rev": "98fe644c",
+      "rev": "645f42e8",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
@@ -92,7 +96,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "snacks.nvim": {
-      "rev": "4d0d855",
+      "rev": "e2c1c52",
       "src": "https://github.com/folke/snacks.nvim"
     },
     "todo-comments.nvim": {
@@ -102,6 +106,10 @@
     "troublesum.nvim": {
       "rev": "b00301b",
       "src": "https://github.com/ivanjermakov/troublesum.nvim"
+    },
+    "vimtex": {
+      "rev": "be9deac3",
+      "src": "https://github.com/lervag/vimtex"
     },
     "virt-column.nvim": {
       "rev": "b87e3e0",

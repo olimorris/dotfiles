@@ -1,3 +1,5 @@
+require("nvim-surround").setup()
+
 require("oil").setup({
   delete_to_trash = true,
   skip_confirm_for_simple_edits = true,
@@ -85,3 +87,11 @@ overseer.register_template({
     filetype = { "python" },
   },
 })
+
+-- VimTeX
+vim.g.vimtex_view_method = "zathura"
+vim.g.tex_flavor = "latex"
+vim.g.vimtex_view_method = "skim"
+vim.g.vimtex_quickfix_enabled = 0
+-- compile on filesave
+vim.cmd("autocmd! BufWritePost *.tex VimtexCompile")
