@@ -8,13 +8,14 @@ cleanshot
 discord
 espanso
 font-dejavu-sans-mono-for-powerline
-foxitreader
 git-credential-manager
 git-credential-manager-core
 google-chrome
 hammerspoon
 hazel
 imageoptim
+imaging-edge
+inkscape
 itsycal
 jordanbaird-ice
 launchcontrol
@@ -25,12 +26,9 @@ monitorcontrol
 notion
 obs
 openemu
-pdf-expert
 pearcleaner
 pixelsnap
 postman
-raycast
-rectangle-pro
 reminders-menubar
 screenflow
 sketch
@@ -40,6 +38,7 @@ superkey
 tableplus
 telegram
 typora
+updf
 utm
 visual-studio-code
 vlc
