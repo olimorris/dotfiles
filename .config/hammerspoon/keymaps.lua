@@ -20,7 +20,7 @@ local apps = {
 if OnPersonal then
   apps.c = "Visual Studio Code" -- VS Code
   apps.b = "Safari" -- Browser
-  apps.p = "Foxit PDF Reader"
+  apps.p = "UPDF"
   apps["["] = "1Password" -- It's next to P...
 else
   apps.c = "Teams" -- Chat
