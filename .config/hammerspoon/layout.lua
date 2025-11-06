@@ -36,9 +36,14 @@ end
 ---Process a single app in the layout
 ---@param app_name string Name of the application
 ---@param grid_settings string Grid settings
----@param opts table Options (focus, moveToScreen)
+---@param opts table Options (focus, moveToScreen, onlyIfOpen)
 ---@return nil
 local function processApp(app_name, grid_settings, opts)
+  -- Check if app should only be processed if open
+  if opts.onlyIfOpen and not hs.application.get(app_name) then
+    return
+  end
+
   -- Always ensure app is launched
   hs.application.launchOrFocus(app_name)
 
@@ -75,7 +80,7 @@ end
 ---Define a layout and assign it to a hotkey
 ---@param name string Name of the layout
 ---@param key number Hotkey to trigger the layout (1-9)
----@param layout {app: string, grid_settings: string, opts: { focus?: boolean, moveToMonitor?: boolean }}[] List of applications and their grid settings
+---@param layout {app: string, grid_settings: string, opts: { focus?: boolean, moveToMonitor?: boolean, onlyIfOpen?: boolean }}[] List of applications and their grid settings
 ---@return nil
 local function defineLayout(name, key, layout)
   hs.hotkey.bind(Hyper, tostring(key), function()
@@ -110,5 +115,6 @@ defineLayout("Study", 2, {
   { "Spotify", "0,0 1.75x4", { moveToScreen = "monitor" } },
   { "Safari", "1.75,0 2.5x4", { focus = true, moveToScreen = "monitor" } },
   { "Notion", "4.25,0 1.75x4", { moveToScreen = "monitor" } },
+  { "UPDF", "4.25,0 1.75x4", { onlyIfOpen = true, moveToScreen = "monitor" } },
   { "WezTerm", "0,0 6x4", { moveToScreen = "laptop" } },
 })
