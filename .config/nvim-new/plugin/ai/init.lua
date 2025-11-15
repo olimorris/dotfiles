@@ -434,6 +434,13 @@ After your analysis, provide a final, revised pseudocode plan. This new plan sho
       },
     },
   },
+  interactions = {
+    background = {
+      chat = {
+        opts = { enabled = true },
+      },
+    },
+  },
   strategies = {
     chat = {
       adapter = {
@@ -488,6 +495,12 @@ After your analysis, provide a final, revised pseudocode plan. This new plan sho
           opts = {
             dirs = { "~/Documents/Screenshots" },
           },
+        },
+      },
+      tools = {
+        ["math"] = {
+          description = "Calculate mathematical expressions, derivatives, integrals, and solve equations.",
+          callback = "~/.dotfiles/.config/nvim-new/plugin/ai/tools/math.lua",
         },
       },
     },
@@ -597,14 +610,3 @@ local function codecompanion_spinner()
 end
 
 codecompanion_spinner()
-
-require("copilot").setup({
-  panel = { enabled = false },
-  suggestion = {
-    auto_trigger = true, -- Suggest as we start typing
-    keymap = {
-      accept_word = "<C-l>",
-      accept_line = "<C-j>",
-    },
-  },
-})
