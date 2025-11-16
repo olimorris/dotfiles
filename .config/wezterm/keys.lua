@@ -5,13 +5,19 @@ local mod = "LEADER"
 
 ---@param config table
 local function keys(config)
+  -- Leader is Ctrl+z
   config.leader = {
-    key = "z",
     mods = "CTRL",
+    key = "z",
     timeout_milliseconds = 2000,
   }
 
   config.keys = {
+
+    -- { key = "w", mods = mod, action = act.ShowTabNavigator },
+
+    -- Close pane
+    { key = "w", mods = mod, action = act.CloseCurrentTab({ confirm = true }) },
 
     -- Scrollback
     { key = "k", mods = "CTRL|SHIFT", action = act.ScrollByPage(-0.5) },
@@ -24,8 +30,6 @@ local function keys(config)
     { key = "RightArrow", mods = "ALT", action = act({ SendString = "\x1b\x66" }) },
 
     { key = "d", mods = mod, action = act.ShowDebugOverlay },
-
-    { key = "w", mods = mod, action = act.ShowTabNavigator },
   }
 end
 
