@@ -15,7 +15,7 @@ require("blink.cmp").setup({
     ["<C-f>"] = { "scroll_documentation_up", "fallback" },
     ["<C-l>"] = { "snippet_forward", "fallback" },
     ["<C-h>"] = { "snippet_backward", "fallback" },
-    -- ["<C-e>"] = { "hide" },
+    ["<C-e>"] = { "hide" },
   },
 
   appearance = {

@@ -16,9 +16,6 @@ om.plugins = {
   "https://github.com/kevinhwang91/promise-async",
   "https://github.com/nvim-tree/nvim-web-devicons",
 
-  -- AI
-  "https://github.com/zbirenbaum/copilot.lua",
-
   -- UI and Statusline
   "https://github.com/folke/edgy.nvim",
   "https://github.com/folke/snacks.nvim",
