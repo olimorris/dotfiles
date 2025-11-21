@@ -136,14 +136,15 @@ keymap({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<CR>")
 keymap("v", "<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>")
 
 -- Inline completions
-keymap("i", "<C-a>", function()
+keymap("i", "<C-a>", vim.lsp.inline_completion.get, opts)
+keymap("i", "<C-f>", function()
   require("codecompanion").inline_accept_word()
-end)
+end, opts)
 keymap("i", "<C-l>", function()
   require("codecompanion").inline_accept_line()
-end)
+end, opts)
 -- vim.keymap.set("i", "<C-f>", vim.lsp.inline_completion.get, { desc = "LSP: accept inline completion" })
--- vim.keymap.set("i", "<C-g>", vim.lsp.inline_completion.select, { desc = "LSP: switch inline completion" })
+vim.keymap.set("i", "<C-g>", vim.lsp.inline_completion.select, { desc = "LSP: switch inline completion" })
 
 -- Snacks
 keymap("n", "<Leader>t", function()
