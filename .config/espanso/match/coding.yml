@@ -1,0 +1,8 @@
+matches:
+  - trigger: "ccjj"
+    replace: "CodeCompanion"
+
+  - trigger: "`jj"
+    replace: |
+      ```$|$
+      ```

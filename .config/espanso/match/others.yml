@@ -1,0 +1,51 @@
+matches:
+  - trigger: "todayjj"
+    replace: "{{now}}"
+    vars:
+      - name: now
+        type: date
+        params:
+          format: "%Y-%m-%d"
+
+  - trigger: "subjj"
+    replace: |
+            Hi there,
+
+            I can't see an unsubscribe button on your email. Are you aware of the law surrounding direct Marketing and advertising? I've included a link below:
+
+            https://www.gov.uk/marketing-advertising-law/direct-marketing
+
+            I also ask that you manually unsubscribe me from your marketing emails.
+
+            Regards,
+            Oli
+
+  - trigger: "gdprjj"
+    replace: |
+          To Whom It May Concern:
+
+          I am hereby requesting immediate erasure of personal data concerning me according to Article 15 GDPR.
+
+          Please erase all personal data concerning me as defined by Article 4(1) GDPR.
+
+          I am of the opinion that the requirements set forth in Article 17(1) GDPR are fulfilled.
+
+          If I have given consent to the processing of my personal data (e.g. according to Article 6(1) or Article 9(2) GDPR), I am hereby withdrawing said consent.
+          In addition, I am objecting to the processing of personal data concerning me (which includes profiling), according to Article 21 GDPR.
+
+          In case you have disclosed the affected personal data to third parties, you have to communicate my request for erasure of the affected personal data, as well as any references to it, to each recipient as laid down in Article 19 GDPR. Please also inform me about those recipients.
+
+          If you object to the requested erasure, you have to justify that to me.
+
+          My request explicitly includes any other services and companies for which you are the controller as defined by Article 4(7) GDPR.
+
+          As laid down in Article 12(3) GDPR, you have to confirm the erasure to me without undue delay and in any event within one month of receipt of the request.
+
+          I am including the following information necessary to identify me:
+          Enter your identification data here. This often includes information like your name, your date of birth, your address, your email address and so on.
+
+          If you do not answer my request within the stated period, I am reserving the right to take legal action against you and to lodge a complaint with the responsible supervisory authority.
+
+          Yours sincerely,
+
+          Oli Morris

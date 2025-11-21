@@ -1,0 +1,14 @@
+matches:
+  - trigger: "mmjj"
+    replace: |
+      \begin{matrix}
+      $|$
+      \end{matrix}
+
+  - trigger: "mfjj"
+    replace: |
+      \frac{$|$}{}
+
+  - trigger: "mqjj"
+    replace: |
+      \qquad $|$
