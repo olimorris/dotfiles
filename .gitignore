@@ -31,6 +31,13 @@
 !dotbot.conf.yaml
 !dotbot_uninstall
 
+# Espanso
+!.config/espanso/config/default.yml
+!.config/espanso/match/coding.yml
+!.config/espanso/match/math.yml
+!.config/espanso/match/others.yml
+!.config/espanso/match/words.yml
+
 # Git
 !.github/**/*
 !.gitignore
