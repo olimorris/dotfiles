@@ -114,9 +114,65 @@ require("codecompanion").setup({
           },
         })
       end,
+      -- opencode = function()
+      --   return require("codecompanion.adapters").extend("opencode", {
+      --     env = {
+      --       OPENCODE_API_KEY = "cmd:op read op://personal/opencode/credential --no-newline",
+      --     },
+      --   })
+      -- end,
     },
   },
   prompt_library = {
+    ["Anki Flashcards"] = {
+      strategy = "chat",
+      description = "Generate concise Anki flashcards from the current buffer",
+      opts = {
+        adapter = {
+          name = "copilot",
+          model = "claude-haiku-4.5",
+        },
+        index = 5,
+        ignore_system_prompt = true,
+        is_slash_command = false,
+      },
+      prompts = {
+        {
+          role = "user",
+          content = [[You are an expert in Knowledge Representation and Spaced Repetition Systems (Anki).
+
+I will provide you with notes. Your task is to extract ONLY the most critical "Key Points" and convert them into concise flashcards.
+
+### Rules for Generation:
+1.  **Quality over Quantity**: Filter for high-value concepts, definitions, or strict logic only.
+2.  **Conciseness**: The "Back" side must be brief. Avoid long paragraphs.
+3.  **Maths**: Use standard LaTeX syntax for all equations (e.g., $x^2$ or $\int f(x) dx$).
+4.  **Format**: Since I will copy-paste these manually, output them in clearly labeled blocks separated by a horizontal rule.
+
+### Example Output:
+
+Front:
+What is the time complexity of a binary search?
+
+Back:
+$O(\log n)$
+
+---
+
+Front:
+Define a Pure Function.
+
+Back:
+A function where the return value is determined only by its input values, with no side effects.
+
+---
+
+### Notes to process:
+
+]],
+        },
+      },
+    },
     ["Blog Image Generator"] = {
       strategy = "chat",
       description = "Create a prompt for generating blog images",
@@ -190,8 +246,8 @@ When the user asks about a mathematical topic, follow this structure:
 ### Formatting and Constraints
 - **Headings**: Use H3 headings (`###`) or smaller for any section titles.
 - **Mathematical Notation**: Use KaTeX for all mathematical notation.
-    - For **inline** mathematics, use single dollar sign delimiters. Example: `The equation is $E=mc^2$.`
-    - For **block** mathematics, use `\[` and `\]` delimiters. Example: `\[ x^2 + y^2 = z^2 \]`
+    - For **inline** mathematics, use single dollar sign (`$`) delimiters. Example: `The equation is $E=mc^2$.`
+    - For **block** (multi-line) mathematics, use double dollar sign (`$$`) delimiters. Example: `$$ x^2 + y^2 = z^2 $$`
 - **Code Examples**: All code examples must be in Python.
 - **Tone**: Maintain a collaborative and encouraging tone. Be clear and show all steps in your reasoning.]],
         },
@@ -521,13 +577,6 @@ After your analysis, provide a final, revised pseudocode plan. This new plan sho
       -- show_settings = true,
       show_reasoning = false,
       fold_context = true,
-    },
-    diff = {
-      provider_opts = {
-        inline = {
-          layout = "buffer",
-        },
-      },
     },
   },
   memory = {
