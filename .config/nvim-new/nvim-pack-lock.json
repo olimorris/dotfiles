@@ -1,24 +1,20 @@
 {
   "plugins": {
     "aerial.nvim": {
-      "rev": "5e687b5",
+      "rev": "3c42785",
       "src": "https://github.com/stevearc/aerial.nvim"
     },
     "blink.cmp": {
-      "rev": "327fff9",
+      "rev": "b19413d",
       "src": "https://github.com/saghen/blink.cmp",
       "version": "1.0.0 - 2.0.0"
     },
     "conform.nvim": {
-      "rev": "9fd3d5e",
+      "rev": "6208aef",
       "src": "https://github.com/stevearc/conform.nvim"
     },
-    "copilot.lua": {
-      "rev": "93adf98",
-      "src": "https://github.com/zbirenbaum/copilot.lua"
-    },
     "edgy.nvim": {
-      "rev": "541705c",
+      "rev": "8bfd280",
       "src": "https://github.com/folke/edgy.nvim"
     },
     "fidget.nvim": {
@@ -30,7 +26,7 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "gitsigns.nvim": {
-      "rev": "20ad441",
+      "rev": "cdafc32",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "guess-indent.nvim": {
@@ -42,11 +38,11 @@
       "src": "https://github.com/rebelot/heirline.nvim"
     },
     "mason.nvim": {
-      "rev": "ad7146a",
+      "rev": "57e5a8a",
       "src": "https://github.com/mason-org/mason.nvim"
     },
     "mini.test": {
-      "rev": "051c5f1",
+      "rev": "22f98a7",
       "src": "https://github.com/nvim-mini/mini.test"
     },
     "nvim-autopairs": {
@@ -58,7 +54,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "645f42e8",
+      "rev": "3bbae7b3",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
@@ -67,7 +63,7 @@
       "src": "https://github.com/RRethy/nvim-treesitter-endwise"
     },
     "nvim-treesitter-textobjects": {
-      "rev": "1b2d85d",
+      "rev": "227165a",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
     },
@@ -76,11 +72,11 @@
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oil.nvim": {
-      "rev": "7e1cd77",
+      "rev": "01cb3a8",
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "overseer.nvim": {
-      "rev": "c77c78b",
+      "rev": "36298ea",
       "src": "https://github.com/stevearc/overseer.nvim"
     },
     "plenary.nvim": {
@@ -92,15 +88,15 @@
       "src": "https://github.com/kevinhwang91/promise-async"
     },
     "render-markdown.nvim": {
-      "rev": "bfd67f1",
+      "rev": "6e0e890",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "snacks.nvim": {
-      "rev": "e2c1c52",
+      "rev": "fe7cfe9",
       "src": "https://github.com/folke/snacks.nvim"
     },
     "todo-comments.nvim": {
-      "rev": "19d461d",
+      "rev": "31e3c38",
       "src": "https://github.com/folke/todo-comments.nvim"
     },
     "troublesum.nvim": {
@@ -108,7 +104,7 @@
       "src": "https://github.com/ivanjermakov/troublesum.nvim"
     },
     "vimtex": {
-      "rev": "be9deac3",
+      "rev": "32bcb392",
       "src": "https://github.com/lervag/vimtex"
     },
     "virt-column.nvim": {
