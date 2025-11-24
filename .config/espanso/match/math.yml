@@ -1,9 +1,9 @@
 matches:
   - trigger: "mmjj"
     replace: |
-      \begin{matrix}
+      \begin{pmatrix}
       $|$
-      \end{matrix}
+      \end{pmatrix}
 
   - trigger: "mfjj"
     replace: |
