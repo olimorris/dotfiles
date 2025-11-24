@@ -8,7 +8,7 @@ require("blink.cmp").setup({
     ["<C-k>"] = {},
     ["<C-j>"] = {},
     ["<C-y>"] = { "show", "show_documentation", "hide_documentation" },
-    ["<CR>"] = { "select_and_accept", "fallback" },
+    ["<CR>"] = { "accept", "fallback" },
     ["<S-Tab>"] = { "select_prev", "fallback" },
     ["<Tab>"] = { "select_next", "fallback" },
     ["<C-b>"] = { "scroll_documentation_down", "fallback" },
@@ -30,9 +30,7 @@ require("blink.cmp").setup({
     },
     list = {
       selection = {
-        preselect = function(ctx)
-          return not require("blink.cmp").snippet_active({ direction = 1 })
-        end,
+        preselect = false,
         auto_insert = false,
       },
     },
