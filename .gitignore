@@ -11,8 +11,6 @@
 !.config/env/.env.example
 !.config/fish/*
 !.config/git/**/*
-!.config/hammerspoon/**/*
-!.config/karabiner/karabiner.json
 !.config/mackup/**/*
 !.config/mcphub/**/*
 !.config/mise/**/*
@@ -67,6 +65,7 @@
 
 # Config
 .config/nvim/plugin
+.config/hammerspoon/Spoons/*
 .config/wezterm/encryption_key.txt
 
 # Fish
