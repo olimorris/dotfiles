@@ -41,6 +41,8 @@
 --- })
 --- ```
 
+local commands_set = false
+
 ---@param bufnr integer,
 ---@param client vim.lsp.Client
 local function sign_in(bufnr, client)
@@ -131,5 +133,15 @@ return {
     vim.api.nvim_buf_create_user_command(bufnr, "LspCopilotSignOut", function()
       sign_out(bufnr, client)
     end, { desc = "Sign out Copilot with GitHub" })
+
+    if not commands_set then
+      vim.api.nvim_create_user_command("LspCopilotStart", function()
+        vim.lsp.enable("copilot")
+      end, { desc = "Start the Copilot LSP" })
+      vim.api.nvim_create_user_command("LspCopilotStop", function()
+        vim.lsp.enable("copilot", false)
+      end, { desc = "Stop the Copilot LSP" })
+      commands_set = true
+    end
   end,
 }
