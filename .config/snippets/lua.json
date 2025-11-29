@@ -3,4 +3,12 @@
     "prefix": ["pp"],
     "body": ["print(vim.inspect($0))"]
   }
+  "Function": {
+    "prefix": ["fn"],
+    "body": ["function ${1:function_name}(${2:args})", "  $0", "end"]
+  },
+  "Local function": {
+    "prefix": ["lf"],
+    "body": ["local function ${1:function_name}(${2:args})", "  $0", "end"]
+  }
 }
