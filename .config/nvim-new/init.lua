@@ -13,7 +13,6 @@ vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/codecompanion.nvim
 om.plugins = {
   -- Dependencies
   "https://github.com/nvim-lua/plenary.nvim",
-  "https://github.com/kevinhwang91/promise-async",
   "https://github.com/nvim-tree/nvim-web-devicons",
 
   -- UI and Statusline
@@ -24,7 +23,6 @@ om.plugins = {
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/folke/todo-comments.nvim",
   "https://github.com/nmac427/guess-indent.nvim",
-  "https://github.com/lukas-reineke/virt-column.nvim",
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
 
   -- LSP
@@ -41,7 +39,6 @@ om.plugins = {
   "https://github.com/kylechui/nvim-surround",
 
   -- Completion
-  "https://github.com/rafamadriz/friendly-snippets",
   { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("^1") },
 
   -- Tree-sitter

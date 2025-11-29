@@ -1,7 +1,7 @@
 {
   "plugins": {
     "aerial.nvim": {
-      "rev": "3c42785",
+      "rev": "8bb8697",
       "src": "https://github.com/stevearc/aerial.nvim"
     },
     "blink.cmp": {
@@ -10,7 +10,7 @@
       "version": "1.0.0 - 2.0.0"
     },
     "conform.nvim": {
-      "rev": "6208aef",
+      "rev": "4993e07",
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "edgy.nvim": {
@@ -21,12 +21,8 @@
       "rev": "e32b672",
       "src": "https://github.com/j-hui/fidget.nvim"
     },
-    "friendly-snippets": {
-      "rev": "572f566",
-      "src": "https://github.com/rafamadriz/friendly-snippets"
-    },
     "gitsigns.nvim": {
-      "rev": "cdafc32",
+      "rev": "5813e48",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "guess-indent.nvim": {
@@ -54,7 +50,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "3bbae7b3",
+      "rev": "17885756",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
@@ -63,7 +59,7 @@
       "src": "https://github.com/RRethy/nvim-treesitter-endwise"
     },
     "nvim-treesitter-textobjects": {
-      "rev": "227165a",
+      "rev": "63c4dce",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
     },
@@ -76,16 +72,12 @@
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "overseer.nvim": {
-      "rev": "36298ea",
+      "rev": "9b6811c",
       "src": "https://github.com/stevearc/overseer.nvim"
     },
     "plenary.nvim": {
       "rev": "b9fd522",
       "src": "https://github.com/nvim-lua/plenary.nvim"
-    },
-    "promise-async": {
-      "rev": "119e896",
-      "src": "https://github.com/kevinhwang91/promise-async"
     },
     "render-markdown.nvim": {
       "rev": "6e0e890",
@@ -106,10 +98,6 @@
     "vimtex": {
       "rev": "32bcb392",
       "src": "https://github.com/lervag/vimtex"
-    },
-    "virt-column.nvim": {
-      "rev": "b87e3e0",
-      "src": "https://github.com/lukas-reineke/virt-column.nvim"
     }
   }
 }
