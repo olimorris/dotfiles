@@ -10,6 +10,7 @@ require("mason").setup()
 vim.lsp.inline_completion.enable()
 vim.lsp.enable({
   "copilot",
+  "jdtls",
   "lua_ls",
   "pyright",
   "ruby_lsp",
