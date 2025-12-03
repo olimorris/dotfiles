@@ -4,16 +4,17 @@ namespace :work do
     task :files, [:progress] do |_t, args|
       run %( /bin/date -u )
 
-      dirs = {
-        # '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles"
-        'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code"
+      dirs_with_filters = {
+        '.dotfiles' => { remote: "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles", filter: 'dotfiles_filter.txt' },
+        'Code' => { remote: "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code", filter: 'code_filter.txt' }
       }
 
       flag = ' -P' if args[:progress]
-      filter = ' --filter-from ~/.config/rclone/base_filter.txt --filter-from ~/.config/rclone/work_filter.txt'
+      base_filter = ' --filter-from ~/.config/rclone/base_filter.txt'
 
-      dirs.each do |local, remote|
-        run %( /opt/homebrew/bin/rclone copy #{remote}#{flag} ~/#{local}#{filter} )
+      dirs_with_filters.each do |local, config|
+        specific_filter = " --filter-from ~/.config/rclone/#{config[:filter]}"
+        run %( /opt/homebrew/bin/rclone copy #{config[:remote]} ~/#{local}#{base_filter}#{specific_filter}#{flag} )
       end
     end
   end
@@ -23,17 +24,19 @@ namespace :work do
     task :files, [:progress] do |_t, args|
       run %( /bin/date -u )
 
-      dirs = {
-        # '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles"
-        'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code"
+      dirs_with_filters = {
+        '.dotfiles' => { remote: "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles", filter: 'dotfiles_filter.txt' },
+        'Code' => { remote: "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code", filter: 'code_filter.txt' }
       }
 
       flag = ' -P' if args[:progress]
-      filter = ' --filter-from ~/.config/rclone/base_filter.txt --filter-from ~/.config/rclone/work_filter.txt'
+      base_filter = ' --filter-from ~/.config/rclone/base_filter.txt'
 
-      dirs.each do |local, remote|
-        run %( /opt/homebrew/bin/rclone copy ~/#{local} #{remote}#{flag}#{filter} )
+      dirs_with_filters.each do |local, config|
+        specific_filter = " --filter-from ~/.config/rclone/#{config[:filter]}"
+        run %( /opt/homebrew/bin/rclone copy ~/#{local} #{config[:remote]}#{base_filter}#{specific_filter}#{flag} )
       end
     end
   end
 end
+

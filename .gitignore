@@ -17,7 +17,8 @@
 !.config/nvim/**/*
 !.config/nvim-new/**/*
 !.config/rclone/base_filter.txt
-!.config/rclone/work_filter.txt
+!.config/rclone/code_filter.txt
+!.config/rclone/dotfiles_filter.txt
 !.config/snippets/**/*
 !.config/ssh/config
 !.config/vim/**/*
@@ -73,7 +74,6 @@
 .config/fish/fish_history
 
 # Others
-misc/enhance-rails-intellisense-in-solargraph
 .DS_Store
 backup
 .repro
