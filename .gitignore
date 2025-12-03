@@ -17,7 +17,8 @@
 !.config/nix/**/*
 !.config/nvim/**/*
 !.config/nvim-new/**/*
-!.config/rclone/filter_list.txt
+!.config/rclone/base_filter.txt
+!.config/rclone/work_filter.txt
 !.config/snippets/**/*
 !.config/ssh/config
 !.config/vim/**/*
