@@ -111,8 +111,8 @@ task :uninstall do
   Rake::Task['uninstall:dotfiles'].invoke
 end
 
-desc "Sync'ing personal and work settings"
-task :work do
+namespace :work do
+  desc 'Pull work settings from cloud to Mac'
   task :pull do
     section 'Cloud -> Mac'
 
@@ -130,6 +130,8 @@ task :work do
     Rake::Task['install:app_config'].invoke
     Rake::Task['install:dotfiles'].invoke
   end
+
+  desc 'Push work settings from Mac to cloud'
   task :push do
     section 'Mac -> Cloud'
 

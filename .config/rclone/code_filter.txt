@@ -1,0 +1,10 @@
+# Exclude these folders first
+- AAI/**
+- Java/**
+- Neovim/**
+- Ruby/Blog/**
+- Ruby/hledger-forecast/**
+
+# Include everything else
++ **
+
