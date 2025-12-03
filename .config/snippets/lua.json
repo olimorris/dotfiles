@@ -2,7 +2,7 @@
   "Print table": {
     "prefix": ["pp"],
     "body": ["print(vim.inspect($0))"]
-  }
+  },
   "Function": {
     "prefix": ["fn"],
     "body": ["function ${1:function_name}(${2:args})", "  $0", "end"]
@@ -10,5 +10,17 @@
   "Local function": {
     "prefix": ["lf"],
     "body": ["local function ${1:function_name}(${2:args})", "  $0", "end"]
+  },
+  "Mini Test Function - 1 param": {
+    "prefix": ["mtf"],
+    "body": ["T[\"${1:test_name}\"][\"$2\"] = function()", "  $0", "end"]
+  },
+  "Mini Test Function - 2 param": {
+    "prefix": ["mtf2"],
+    "body": [
+      "T[\"${1:test_name}\"][\"$2\"][\"$3\"] = function()",
+      "  $0",
+      "end"
+    ]
   }
 }
