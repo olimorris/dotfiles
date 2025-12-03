@@ -14,7 +14,7 @@ namespace :work do
 
       dirs_with_filters.each do |local, config|
         specific_filter = " --filter-from ~/.config/rclone/#{config[:filter]}"
-        run %( /opt/homebrew/bin/rclone copy #{config[:remote]} ~/#{local}#{base_filter}#{specific_filter}#{flag} )
+        run %( /opt/homebrew/bin/rclone sync #{config[:remote]} ~/#{local}#{base_filter}#{specific_filter}#{flag} )
       end
     end
   end
@@ -34,7 +34,7 @@ namespace :work do
 
       dirs_with_filters.each do |local, config|
         specific_filter = " --filter-from ~/.config/rclone/#{config[:filter]}"
-        run %( /opt/homebrew/bin/rclone copy ~/#{local} #{config[:remote]}#{base_filter}#{specific_filter}#{flag} )
+        run %( /opt/homebrew/bin/rclone sync ~/#{local} #{config[:remote]}#{base_filter}#{specific_filter}#{flag} )
       end
     end
   end
