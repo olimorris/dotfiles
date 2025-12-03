@@ -17,12 +17,12 @@ om.plugins = {
 
   -- UI and Statusline
   "https://github.com/folke/edgy.nvim",
+  "https://github.com/tpope/vim-sleuth",
   "https://github.com/folke/snacks.nvim",
   "https://github.com/j-hui/fidget.nvim",
   "https://github.com/rebelot/heirline.nvim",
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/folke/todo-comments.nvim",
-  "https://github.com/nmac427/guess-indent.nvim",
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
 
   -- LSP
@@ -31,7 +31,6 @@ om.plugins = {
   "https://github.com/ivanjermakov/troublesum.nvim",
 
   -- Editor
-  "https://github.com/lervag/vimtex",
   "https://github.com/stevearc/oil.nvim",
   "https://github.com/nvim-mini/mini.test",
   "https://github.com/stevearc/aerial.nvim",

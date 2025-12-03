@@ -8,6 +8,7 @@
 !.config/bash/**/*
 !.config/composer/composer.json
 !.config/efm-langserver/*
+!.config/elgato/*
 !.config/env/.env.example
 !.config/fish/*
 !.config/git/**/*
@@ -17,6 +18,7 @@
 !.config/nix/**/*
 !.config/nvim/**/*
 !.config/nvim-new/**/*
+!.config/obs/**/*
 !.config/rclone/base_filter.txt
 !.config/rclone/work_filter.txt
 !.config/snippets/**/*

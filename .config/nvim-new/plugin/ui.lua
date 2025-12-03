@@ -1,5 +1,3 @@
-require("guess-indent").setup()
-
 require("todo-comments").setup({
   signs = false,
   highlight = {
@@ -23,7 +21,7 @@ require("render-markdown").setup({
             group = { icon = " ", highlight = "CodeCompanionChatIcon" },
             help = { icon = "󰘥 ", highlight = "CodeCompanionChatIcon" },
             image = { icon = " ", highlight = "CodeCompanionChatIcon" },
-            memory = { icon = "󰧑 ", highlight = "CodeCompanionChatIcon" },
+            rules = { icon = "󰧑 ", highlight = "CodeCompanionChatIcon" },
             symbols = { icon = " ", highlight = "CodeCompanionChatIcon" },
             tool = { icon = "󰯠 ", highlight = "CodeCompanionChatIcon" },
             url = { icon = "󰌹 ", highlight = "CodeCompanionChatIcon" },
