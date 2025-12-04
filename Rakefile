@@ -135,7 +135,7 @@ namespace :work do
   task :push do
     section 'Mac -> Cloud'
 
-    Rake::Task['work:backup:files'].invoke
     Rake::Task['backup:app_config'].invoke
+    Rake::Task['work:backup:files'].invoke
   end
 end
