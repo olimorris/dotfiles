@@ -1,8 +1,5 @@
 # Include only these paths
-+ .config/elgato/**
-+ .config/obs/**
-+ .config/rclone/**
-+ misc/**
++ misc/mackup/**
 
 # Exclude everything else by default
 - **
