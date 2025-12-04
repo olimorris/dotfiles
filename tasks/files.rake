@@ -5,9 +5,9 @@ namespace :backup do
 
     if ENV['DRY_RUN']
       puts "~> Chill! It's a dry run"
-      system %( mackup backup --dry-run && mackup uninstall --dry-run )
+      system %( mackup backup --dry-run && mackup restore --dry-run )
     else
-      run %( mackup backup --force && mackup uninstall --force )
+      run %( mackup backup --force && mackup restore --force )
     end
   end
 
@@ -51,9 +51,9 @@ namespace :install do
 
     if ENV['DRY_RUN']
       puts "~> Chill! It's a dry run"
-      system %( mackup restore --dry-run && mackup uninstall --dry-run )
+      system %( mackup restore --dry-run )
     else
-      run %( mackup restore --force && mackup uninstall --force )
+      run %( mackup restore --force )
     end
   end
 
