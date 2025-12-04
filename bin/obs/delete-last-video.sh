@@ -1,6 +1,6 @@
 #!/bin/bash
 
-obs_folder="/Users/Oli/Movies/OBS"
+obs_folder="$HOME/Movies/OBS"
 
 # Find the newest file in the folder
 newest_file=$(ls -t "$obs_folder"/* 2>/dev/null | head -n 1)

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-obs_folder="/Users/Oli/Movies/OBS"
+obs_folder="$HOME/Movies/OBS"
 
 echo "Looking in: $obs_folder"
 

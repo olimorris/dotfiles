@@ -53,6 +53,8 @@ namespace :install do
       puts "~> Chill! It's a dry run"
       system %( mackup restore --dry-run )
     else
+      run %( rm -rf /usr/local/bin/obs ) if File.exist?('/usr/local/bin/obs')
+      run %( ln -s #{File.expand_path('~/.dotfiles/bin/obs')} /usr/local/bin/obs )
       run %( mackup restore --force )
     end
   end

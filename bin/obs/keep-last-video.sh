@@ -1,6 +1,6 @@
 #!/bin/bash
 
-obs_folder="/Users/Oli/Movies/OBS"
+obs_folder="$HOME/Movies/OBS"
 keep_folder="$obs_folder/Keep"
 
 # Find the newest file in the folder
