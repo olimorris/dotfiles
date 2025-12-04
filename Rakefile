@@ -51,8 +51,8 @@ task :install do
   Rake::Task['install:fish'].invoke unless testing?
 
   # Files
+  Rake::Task['install:dotbot'].invoke
   Rake::Task['install:app_config'].invoke
-  Rake::Task['install:dotfiles'].invoke
 
   # System
   Rake::Task['install:chmod'].invoke
@@ -108,11 +108,11 @@ desc 'Uninstall'
 task :uninstall do
   section 'Uninstalling'
 
-  Rake::Task['uninstall:dotfiles'].invoke
+  Rake::Task['uninstall:dotbot'].invoke
 end
 
 namespace :work do
-  desc 'Pull work settings from cloud to Mac'
+  desc 'Cloud -> Mac (Work)'
   task :pull do
     section 'Cloud -> Mac'
 
@@ -127,14 +127,15 @@ namespace :work do
     Rake::Task['install:pip'].invoke unless testing?
 
     # App config
+    Rake::Task['install:dotbot'].invoke
     Rake::Task['install:app_config'].invoke
-    Rake::Task['install:dotfiles'].invoke
   end
 
-  desc 'Push work settings from Mac to cloud'
+  desc 'Mac (Work) -> Cloud'
   task :push do
     section 'Mac -> Cloud'
 
     Rake::Task['work:backup:files'].invoke
+    Rake::Task['backup:app_config'].invoke
   end
 end

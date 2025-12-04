@@ -59,7 +59,7 @@ namespace :install do
     end
   end
 
-  task :dotfiles do
+  task :dotbot do
     section 'Using Dotbot to symlink dotfiles'
 
     run %( dotbot -c dotbot.conf.yaml )
@@ -71,7 +71,7 @@ namespace :uninstall do
 
   # Don't need to uninstall Mackup as we don't use symlinks
 
-  task :dotfiles do
+  task :dotbot do
     section 'Uninstall Dotbot and restoring dotfiles'
 
     run %( python dotbot_uninstall )
