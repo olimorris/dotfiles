@@ -6,6 +6,8 @@ anki
 audacity
 cleanshot
 discord
+elgato-camera-hub
+elgato-stream-deck
 espanso
 font-dejavu-sans-mono-for-powerline
 git-credential-manager
@@ -45,3 +47,4 @@ visual-studio-code
 vlc
 wezterm@nightly
 zed
+zotero

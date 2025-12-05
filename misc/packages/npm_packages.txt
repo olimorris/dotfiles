@@ -2,35 +2,35 @@
   "name": "lib",
   "dependencies": {
     "@anthropic-ai/claude-code": {
-      "version": "2.0.50",
+      "version": "2.0.59",
       "overridden": false
     },
     "@google/gemini-cli": {
-      "version": "0.17.1",
+      "version": "0.19.3",
       "overridden": false
     },
     "@openai/codex": {
-      "version": "0.63.0",
+      "version": "0.65.0",
       "overridden": false
     },
     "@zed-industries/claude-code-acp": {
-      "version": "0.10.6",
+      "version": "0.11.0",
       "overridden": false
     },
     "@zed-industries/codex-acp": {
-      "version": "0.5.0",
+      "version": "0.6.0",
       "overridden": false
     },
     "corepack": {
-      "version": "0.34.4",
+      "version": "0.34.5",
       "overridden": false
     },
     "npm": {
-      "version": "11.6.3",
+      "version": "11.6.4",
       "overridden": false
     },
     "opencode-ai": {
-      "version": "1.0.107",
+      "version": "1.0.133",
       "overridden": false
     }
   }
