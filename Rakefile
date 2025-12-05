@@ -119,12 +119,12 @@ namespace :work do
     Rake::Task['work:restore:files'].invoke
 
     # Install packages
-    Rake::Task['install:brew_packages'].invoke
-    Rake::Task['install:brew_cask_packages'].invoke
-    Rake::Task['install:brew_clean_up'].invoke
-    Rake::Task['install:gems'].invoke unless testing?
-    Rake::Task['install:npm'].invoke unless testing?
-    Rake::Task['install:pip'].invoke unless testing?
+    # Rake::Task['install:brew_packages'].invoke
+    # Rake::Task['install:brew_cask_packages'].invoke
+    # Rake::Task['install:brew_clean_up'].invoke
+    # Rake::Task['install:gems'].invoke unless testing?
+    # Rake::Task['install:npm'].invoke unless testing?
+    # Rake::Task['install:pip'].invoke unless testing?
 
     # App config
     Rake::Task['install:dotbot'].invoke
