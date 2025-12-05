@@ -113,6 +113,7 @@ defineLayout("Coding", 1, {
 
 defineLayout("Study", 2, {
   { "Spotify", "0,0 1.75x4", { moveToScreen = "monitor" } },
+  { "Typora", "0,0 1.75x4", { onlyIfOpen = true, moveToScreen = "monitor" } },
   { "Safari", "1.75,0 2.5x4", { focus = true, moveToScreen = "monitor" } },
   { "Notion", "4.25,0 1.75x4", { moveToScreen = "monitor" } },
   { "UPDF", "4.25,0 1.75x4", { onlyIfOpen = true, moveToScreen = "monitor" } },

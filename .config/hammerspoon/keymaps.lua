@@ -46,13 +46,20 @@ local LaunchOrToggle = function(key, app_name, app_filename)
       -- Launch
       if app_filename then
         return hs.application.launchOrFocus(app_filename)
+      else
+        app = hs.application.find(app_name)
+        hs.application.launchOrFocus(app_name)
+        app.setFrontmost(app)
+        app.activate(app)
       end
 
-      app = hs.application.find(app_name)
-
-      hs.application.launchOrFocus(app_name)
-      app.setFrontmost(app)
-      app.activate(app)
+      -- Move cursor to the application window
+      local window = app:mainWindow()
+      if window then
+        local frame = window:frame()
+        local centerPoint = hs.geometry.point(frame.x + frame.w / 2, frame.y + frame.h / 2)
+        hs.mouse.absolutePosition(centerPoint)
+      end
     end
   end)
 end
