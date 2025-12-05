@@ -63,7 +63,8 @@ autocmd("VimEnter", {
   callback = function()
     if _G.om.on_personal then
       local timer = vim.loop.new_timer()
-      timer:start(0, 120000, function()
+      -- Delay initial sync by 5 seconds to avoid blocking startup
+      timer:start(5000, 120000, function()
         om.GitRemoteSync()
       end)
     end
