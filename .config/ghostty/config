@@ -9,7 +9,7 @@ theme = dark:onedarkpro_vaporwave,light:onedarkpro_onelight
 
 # macOS settings
 macos-titlebar-style = tabs
-macos-option-as-alt = true
+macos-option-as-alt = left
 
 # Others
 copy-on-select = true
