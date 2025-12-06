@@ -13,7 +13,7 @@ local apps = {
   n = "Bear", -- Notes
   o = "Notion", -- Life OS
   r = "Reminders",
-  t = "WezTerm", -- Terminal
+  t = "Ghostty", -- Terminal
   --w = RESERVED
 }
 

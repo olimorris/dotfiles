@@ -12,6 +12,9 @@
     ~/.config/efm-langserver: .config/efm-langserver
     ~/.config/espanso: .config/espanso
     ~/.config/fish: .config/fish
+    ~/.config/ghostty: .config/ghostty
+    ~/.config/ghostty/themes:
+        path: ~/.cache/nvim/onedarkpro_dotfiles/extras/ghostty
     ~/.config/hammerspoon: .config/hammerspoon
     ~/.config/lazygit: .config/lazygit
     ~/.config/mise: .config/mise
@@ -19,7 +22,6 @@
     ~/.config/nvim-new: .config/nvim-new
     ~/.config/rclone: .config/rclone
     ~/.config/snippets: .config/snippets
-    ~/.config/superwhisper: .config/superwhisper
     ~/.config/vivid: .config/vivid
     ~/.config/wezterm: .config/wezterm
 

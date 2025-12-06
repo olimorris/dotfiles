@@ -11,6 +11,7 @@
 !.config/env/.env.example
 !.config/fish/*
 !.config/git/**/*
+!.config/ghostty/**/*
 !.config/mackup/**/*
 !.config/mise/**/*
 !.config/nix/**/*
@@ -67,6 +68,7 @@
 # Config
 .config/nvim/plugin
 .config/hammerspoon/Spoons/*
+.config/ghostty/themes
 .config/wezterm/encryption_key.txt
 
 # Fish
