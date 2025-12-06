@@ -12,7 +12,7 @@ if [ -n "$newest_file" ]; then
 
     # Try VLC first, fallback to default player
     if [ -d "/Applications/VLC.app" ]; then
-        /Applications/VLC.app/Contents/MacOS/VLC --play-and-exit "$newest_file"
+        open -a VLC "$newest_file"
     else
         open "$newest_file"
     fi
