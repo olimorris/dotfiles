@@ -117,13 +117,6 @@ require("codecompanion").setup({
       },
     },
   },
-  interactions = {
-    background = {
-      chat = {
-        opts = { enabled = true },
-      },
-    },
-  },
   strategies = {
     chat = {
       adapter = {
