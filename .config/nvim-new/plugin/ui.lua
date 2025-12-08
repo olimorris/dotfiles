@@ -11,6 +11,10 @@ require("todo-comments").setup({
 require("render-markdown").setup({
   completions = { blink = { enabled = true } },
   file_types = { "codecompanion", "markdown", "nvim-pack" },
+  latex = {
+    enabled = false,
+    render_modes = false,
+  },
   overrides = {
     filetype = {
       codecompanion = {
