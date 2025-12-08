@@ -196,14 +196,7 @@ end, opts)
 keymap("n", "<LocalLeader>r", "<cmd>OverseerRun<cr>", opts)
 
 -- Aerial
-keymap("n", "<C-t>", function()
-  require("aerial").snacks_picker({
-    layout = {
-      preset = "dropdown",
-      preview = false,
-    },
-  })
-end, opts)
+keymap("n", "<C-t>", "<cmd>AerialToggle float<CR>", opts)
 
 -- Multiple Cursors
 -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
