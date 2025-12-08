@@ -7,8 +7,8 @@ font-style-italic = "Medium Italic"
 theme = dark:onedarkpro_vaporwave,light:onedarkpro_onelight
 
 # macOS settings
-macos-titlebar-style = tabs
 macos-option-as-alt = left
+macos-titlebar-style = tabs
 
 # Others
 copy-on-select = true
