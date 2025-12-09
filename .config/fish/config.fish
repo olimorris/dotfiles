@@ -6,24 +6,24 @@ set -x EDITOR nvim
 set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
 set -x HOMEBREW_NO_ANALYTICS 1
 set -x GOPATH "$HOME/.go"
+set -x EXTRAS "$HOME/.cache/nvim-new/onedarkpro_dotfiles/extras"
 
  # Paths
 fish_add_path -p "$(brew --prefix rustup)/bin" "$(brew --prefix)/bin" "$HOME/.cargo/bin" "$HOME/.dotfiles/bin" "$HOME/.local/share/nvim/mason/bin" "$HOME/.local/bin" "$GOPATH/bin"
 
 function theme
   set -f VARIANT "$(cat /tmp/oli-theme)"
-  set -f FORMAT "$HOME/.cache/nvim/onedarkpro_dotfiles/extras/fish/%s.fish"
+  set -f FORMAT "$EXTRAS/fish/%s.fish"
 
   if [ "$VARIANT" = "light" ]
-    set -f THEME "onedarkpro_onelight"
+    set -gx THEME "onedarkpro_onelight"
   else
-    set -f THEME "onedarkpro_vaporwave"
+    set -gx THEME "onedarkpro_vaporwave"
   end
 
   source $(printf $FORMAT $THEME)
 end
 
-source $HOME/.config/fish/fzf.fish
 source $HOME/.config/fish/aliases.fish
 source $HOME/.config/fish/functions.fish
 source $HOME/.config/fish/fish_prompt.fish
@@ -37,5 +37,6 @@ if status is-interactive
     theme
     mise activate fish | source
     zoxide init fish | source
+    source $HOME/.config/fish/fzf.fish
 end
 

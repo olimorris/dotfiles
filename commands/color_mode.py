@@ -2,20 +2,16 @@ import os
 import subprocess
 import sys
 
-starship_path = "~/.config/starship"
-
 # If we toggle dark mode via Alfred, we end up in a infinite loop. The dark-mode
-# binary changes the MacOS mode which in turn causes color-mode-notify to run
+# binary changes the macOS mode which in turn causes color-mode-notify to run
 # this script. This script then calls dark-mode (via the app_macos method)
 # which kick starts this loop all over again. We use this boolean var
-# to detect when we've run the command via the cmdline or alfred.
+# to detect when we've run the command via the cmdline or Alfred.
 ran_from_cmd_line = False
 
 # The order in which apps are changed
 apps = [
     "macos",
-    # "starship",
-    "fish",
 ]
 
 
@@ -42,34 +38,6 @@ def app_macos(mode):
 
     with open(os.path.expanduser(path_to_file), "w") as config_file:
         config_file.write(contents)
-
-
-def app_starship(mode):
-    """
-    Change the prompt in the terminal
-    """
-    if mode == "dark":
-        return subprocess.run(
-            [
-                "cp",
-                os.path.expanduser(starship_path + "/starship_dark.toml"),
-                os.path.expanduser(starship_path + "/starship.toml"),
-            ]
-        )
-
-    if mode == "light":
-        return subprocess.run(
-            [
-                "cp",
-                os.path.expanduser(starship_path + "/starship_light.toml"),
-                os.path.expanduser(starship_path + "/starship.toml"),
-            ]
-        )
-
-
-
-def app_fish(mode):
-    return subprocess.run(["/opt/homebrew/bin/fish"])
 
 
 def run_apps(mode=None):
