@@ -1035,11 +1035,9 @@ require("heirline").setup({
   statuscolumn = statuscolumn(),
   opts = {
     disable_winbar_cb = function(args)
-      local conditions = require("heirline.conditions")
-
       return conditions.buffer_matches({
         buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
-        filetype = { "alpha", "oil", "lspinfo", "snacks_dashboard", "toggleterm" },
+        filetype = { "alpha", "oil", "codecompanion", "lspinfo", "snacks_dashboard", "toggleterm" },
       }, args.buf)
     end,
   },
