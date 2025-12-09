@@ -274,8 +274,8 @@ local function statuscolumn()
     {
       condition = function()
         return not conditions.buffer_matches({
-          buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
-          filetype = { "alpha", "harpoon", "oil", "lspinfo", "snacks_dashboard", "toggleterm" },
+          buftype = { "prompt", "help", "quickfix", "terminal" },
+          filetype = { "lspinfo", "snacks_dashboard", "toggleterm" },
         })
       end,
       static = {
