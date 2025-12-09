@@ -115,6 +115,7 @@ require("onedarkpro").setup({
     SnacksPickerPrompt = { bg = "${picker_results}", fg = "${purple}", bold = true },
     SnacksPickerSelected = { bg = "${picker_results}", fg = "${orange}" },
     SnacksPickerTitle = { bg = "${purple}", fg = "${picker_results}", bold = true },
+    SnacksPickerTree = { bg = "${picker_results}" },
     SnacksPickerToggle = { bg = "${purple}", fg = "${picker_results}", italic = true },
     SnacksPickerTotals = { bg = "${picker_results}", fg = "${purple}", bold = true },
     SnacksPickerUnselected = { bg = "${picker_results}" },
