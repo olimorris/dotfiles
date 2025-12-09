@@ -76,3 +76,23 @@ end
 hs.hotkey.bind(hyper, "H", function()
   hs.hints.windowHints()
 end)
+
+-- local function moveCursorToMonitor(direction)
+--   return function()
+--     local screen = hs.mouse.getCurrentScreen()
+--     local nextScreen
+--
+--     if direction == "right" then
+--       nextScreen = screen:next()
+--     else
+--       nextScreen = screen:previous()
+--     end
+--
+--     local rect = nextScreen:fullFrame()
+--     local center = hs.geometry.rect(rect).center
+--     hs.mouse.setAbsolutePosition(center)
+--   end
+-- end
+--
+-- hs.hotkey.bind(hyper, ",", moveCursorToMonitor("left"))
+-- hs.hotkey.bind(hyper, ".", moveCursorToMonitor("right"))
