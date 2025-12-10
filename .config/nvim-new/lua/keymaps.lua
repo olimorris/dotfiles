@@ -195,6 +195,11 @@ end, opts)
 -- Overseer
 keymap("n", "<LocalLeader>r", "<cmd>OverseerRun<cr>", opts)
 
+-- Quicker
+keymap("n", "<Leader>q", function()
+  require("quicker").toggle()
+end, opts)
+
 -- Aerial
 keymap("n", "<C-t>", function()
   require("aerial").snacks_picker({

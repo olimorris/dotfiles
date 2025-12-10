@@ -28,6 +28,8 @@ require("oil").setup({
 
 require("mini.test").setup()
 
+require("quicker").setup()
+
 require("aerial").setup({
   autojump = true,
   close_on_select = true,
