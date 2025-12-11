@@ -27,7 +27,7 @@ namespace :backup do
 
       flag = args[:progress] ? ' -P -v' : ''
       filter = ' --filter-from ~/.config/rclone/base_filter.txt'
-      speed_flags = ' --fast-list --use-mmap --transfers=8 --check-first'
+      speed_flags = ' --fast-list --use-mmap --transfers=16 --checkers=16 --size-only --no-traverse'
 
       dirs.each do |local, remote|
         run %( /opt/homebrew/bin/rclone sync ~/#{local} #{remote}#{filter}#{speed_flags}#{flag} )

@@ -11,7 +11,7 @@ namespace :work do
 
       flag = args[:progress] ? ' -P -v' : ''
       base_filter = ' --filter-from ~/.config/rclone/base_filter.txt'
-      speed_flags = ' --fast-list --use-mmap --transfers=8 --check-first'
+      speed_flags = ' --fast-list --use-mmap --transfers=16 --checkers=16 --size-only --no-traverse'
 
       dirs_with_filters.each do |local, config|
         specific_filter = " --filter-from ~/.config/rclone/#{config[:filter]}"
@@ -32,7 +32,7 @@ namespace :work do
 
       flag = args[:progress] ? ' -P -v' : ''
       base_filter = ' --filter-from ~/.config/rclone/base_filter.txt'
-      speed_flags = ' --fast-list --use-mmap --transfers=8 --check-first'
+      speed_flags = ' --fast-list --use-mmap --transfers=16 --checkers=16 --size-only --no-traverse'
 
       dirs_with_filters.each do |local, config|
         specific_filter = " --filter-from ~/.config/rclone/#{config[:filter]}"
