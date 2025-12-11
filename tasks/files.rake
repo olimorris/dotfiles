@@ -27,7 +27,7 @@ namespace :backup do
 
       flag = args[:progress] ? ' -P -v' : ''
       filter = ' --filter-from ~/.config/rclone/base_filter.txt'
-      speed_flags = ' --fast-list --use-mmap --transfers=16 --checkers=16 --size-only --no-traverse'
+      speed_flags = ' --fast-list --use-mmap --transfers=16 --checkers=16 --size-only'
 
       dirs.each do |local, remote|
         run %( /opt/homebrew/bin/rclone sync ~/#{local} #{remote}#{filter}#{speed_flags}#{flag} )
@@ -59,6 +59,29 @@ namespace :install do
       run %( mackup restore --force )
     end
   end
+
+    task :files, [:progress] do |_t, args|
+      run %( /bin/date -u )
+
+      section 'Using RCLONE to backup files'
+
+      dirs = {
+        '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles",
+        'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code",
+        'OliDocs' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Documents",
+        'Downloads' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Downloads",
+        'Documents' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:ICloud_Docs"
+      }
+
+      flag = args[:progress] ? ' -P -v' : ''
+      filter = ' --filter-from ~/.config/rclone/base_filter.txt'
+      speed_flags = ' --fast-list --use-mmap --transfers=16 --checkers=16 --size-only'
+
+      dirs.each do |local, remote|
+        run %( /opt/homebrew/bin/rclone sync ~/#{local} #{remote}#{filter}#{speed_flags}#{flag} )
+      end
+    end
+
 
   task :dotbot do
     section 'Using Dotbot to symlink dotfiles'
