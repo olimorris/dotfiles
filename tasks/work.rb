@@ -9,12 +9,13 @@ namespace :work do
         'Code' => { remote: "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code", filter: 'code_filter.txt' }
       }
 
-      flag = ' -P' if args[:progress]
+      flag = args[:progress] ? ' -P -v' : ''
       base_filter = ' --filter-from ~/.config/rclone/base_filter.txt'
+      speed_flags = ' --fast-list --use-mmap --transfers=8 --check-first'
 
       dirs_with_filters.each do |local, config|
         specific_filter = " --filter-from ~/.config/rclone/#{config[:filter]}"
-        run %( /opt/homebrew/bin/rclone sync #{config[:remote]} ~/#{local}#{base_filter}#{specific_filter}#{flag} )
+        run %( /opt/homebrew/bin/rclone sync #{config[:remote]} ~/#{local}#{base_filter}#{specific_filter}#{speed_flags}#{flag} )
       end
     end
   end
@@ -29,14 +30,14 @@ namespace :work do
         'Code' => { remote: "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code", filter: 'code_filter.txt' }
       }
 
-      flag = ' -P' if args[:progress]
+      flag = args[:progress] ? ' -P -v' : ''
       base_filter = ' --filter-from ~/.config/rclone/base_filter.txt'
+      speed_flags = ' --fast-list --use-mmap --transfers=8 --check-first'
 
       dirs_with_filters.each do |local, config|
         specific_filter = " --filter-from ~/.config/rclone/#{config[:filter]}"
-        run %( /opt/homebrew/bin/rclone sync ~/#{local} #{config[:remote]}#{base_filter}#{specific_filter}#{flag} )
+        run %( /opt/homebrew/bin/rclone sync ~/#{local} #{config[:remote]}#{base_filter}#{specific_filter}#{speed_flags}#{flag} )
       end
     end
   end
 end
-

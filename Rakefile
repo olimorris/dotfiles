@@ -113,10 +113,10 @@ end
 
 namespace :work do
   desc 'Cloud -> Mac (Work)'
-  task :pull do
+  task :pull, [:progress] do |_t, args|
     section 'Cloud -> Mac'
 
-    Rake::Task['work:restore:files'].invoke
+  Rake::Task['work:restore:files'].invoke(args[:progress])
 
     # Install packages
     # Rake::Task['install:brew_packages'].invoke
@@ -132,10 +132,10 @@ namespace :work do
   end
 
   desc 'Mac (Work) -> Cloud'
-  task :push do
+  task :push, [:progress] do |_t, args|
     section 'Mac -> Cloud'
 
     Rake::Task['backup:app_config'].invoke
-    Rake::Task['work:backup:files'].invoke
+    Rake::Task['work:backup:files'].invoke(args[:progress])
   end
 end

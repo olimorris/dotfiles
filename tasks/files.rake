@@ -11,27 +11,28 @@ namespace :backup do
     end
   end
 
-  desc 'Backup files'
-  task :files, [:progress] do |_t, args|
-    run %( /bin/date -u )
+    desc 'Backup files'
+    task :files, [:progress] do |_t, args|
+      run %( /bin/date -u )
 
-    section 'Using RCLONE to backup files'
+      section 'Using RCLONE to backup files'
 
-    dirs = {
-      '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles",
-      'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code",
-      'OliDocs' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Documents",
-      'Downloads' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Downloads",
-      'Documents' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:ICloud_Docs"
-    }
+      dirs = {
+        '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles",
+        'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code",
+        'OliDocs' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Documents",
+        'Downloads' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Downloads",
+        'Documents' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:ICloud_Docs"
+      }
 
-    flag = ' -P' if args[:progress]
-    filter = ' --filter-from ~/.config/rclone/base_filter.txt'
+      flag = args[:progress] ? ' -P -v' : ''
+      filter = ' --filter-from ~/.config/rclone/base_filter.txt'
+      speed_flags = ' --fast-list --use-mmap --transfers=8 --check-first'
 
-    dirs.each do |local, remote|
-      run %( /opt/homebrew/bin/rclone sync ~/#{local} #{remote}#{flag}#{filter} )
+      dirs.each do |local, remote|
+        run %( /opt/homebrew/bin/rclone sync ~/#{local} #{remote}#{filter}#{speed_flags}#{flag} )
+      end
     end
-  end
 end
 
 namespace :install do
@@ -53,8 +54,8 @@ namespace :install do
       puts "~> Chill! It's a dry run"
       system %( mackup restore --dry-run )
     else
-      run %( rm -rf /usr/local/bin/obs ) if File.exist?('/usr/local/bin/obs')
-      run %( ln -s #{File.expand_path('~/.dotfiles/bin/recording')} /usr/local/bin/recording )
+      # run %( rm -rf /usr/local/bin/obs ) if File.exist?('/usr/local/bin/obs')
+      # run %( ln -s #{File.expand_path('~/.dotfiles/bin/recording')} /usr/local/bin/recording )
       run %( mackup restore --force )
     end
   end
