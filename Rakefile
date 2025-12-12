@@ -32,6 +32,9 @@ task :install do
 
   Rake::Task['tests:setup'].invoke if testing?
 
+  # Fetch files first. Currently we're doing this manually so don't need this step
+  # Rake::Task['install:files'].invoke
+
   # Packages
   Rake::Task['install:xcode'].invoke
   Rake::Task['install:brew'].invoke
@@ -116,7 +119,7 @@ namespace :work do
   task :pull, [:progress] do |_t, args|
     section 'Cloud -> Mac'
 
-  Rake::Task['work:restore:files'].invoke(args[:progress])
+    Rake::Task['work:restore:files'].invoke(args[:progress])
 
     # Install packages
     # Rake::Task['install:brew_packages'].invoke

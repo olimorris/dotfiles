@@ -11,28 +11,28 @@ namespace :backup do
     end
   end
 
-    desc 'Backup files'
-    task :files, [:progress] do |_t, args|
-      run %( /bin/date -u )
+  desc 'Backup files'
+  task :files, [:progress] do |_t, args|
+    run %( /bin/date -u )
 
-      section 'Using RCLONE to backup files'
+    section 'Using RCLONE to backup files'
 
-      dirs = {
-        '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles",
-        'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code",
-        'OliDocs' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Documents",
-        'Downloads' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Downloads",
-        'Documents' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:ICloud_Docs"
-      }
+    dirs = {
+      '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles",
+      'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code",
+      'OliDocs' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Documents",
+      'Downloads' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Downloads",
+      'Documents' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:ICloud_Docs"
+    }
 
-      flag = args[:progress] ? ' -P -v' : ''
-      filter = ' --filter-from ~/.config/rclone/base_filter.txt'
-      speed_flags = ' --fast-list --use-mmap --transfers=16 --checkers=16 --size-only'
+    flag = args[:progress] ? ' -P -v' : ''
+    filter = ' --filter-from ~/.config/rclone/base_filter.txt'
+    speed_flags = ' --fast-list --use-mmap --transfers=16 --checkers=16 --size-only'
 
-      dirs.each do |local, remote|
-        run %( /opt/homebrew/bin/rclone sync ~/#{local} #{remote}#{filter}#{speed_flags}#{flag} )
-      end
+    dirs.each do |local, remote|
+      run %( /opt/homebrew/bin/rclone sync ~/#{local} #{remote}#{filter}#{speed_flags}#{flag} )
     end
+  end
 end
 
 namespace :install do
@@ -60,33 +60,32 @@ namespace :install do
     end
   end
 
-    task :files, [:progress] do |_t, args|
-      run %( /bin/date -u )
-
-      section 'Using RCLONE to backup files'
-
-      dirs = {
-        '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles",
-        'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code",
-        'OliDocs' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Documents",
-        'Downloads' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Downloads",
-        'Documents' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:ICloud_Docs"
-      }
-
-      flag = args[:progress] ? ' -P -v' : ''
-      filter = ' --filter-from ~/.config/rclone/base_filter.txt'
-      speed_flags = ' --fast-list --use-mmap --transfers=16 --checkers=16 --size-only'
-
-      dirs.each do |local, remote|
-        run %( /opt/homebrew/bin/rclone sync ~/#{local} #{remote}#{filter}#{speed_flags}#{flag} )
-      end
-    end
-
-
   task :dotbot do
     section 'Using Dotbot to symlink dotfiles'
 
     run %( dotbot -c dotbot.conf.yaml )
+  end
+
+  task :files, [:progress] do |_t, args|
+    run %( /bin/date -u )
+
+    section 'Using RCLONE to restore files'
+
+    dirs = {
+      '.dotfiles' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:dotfiles",
+      'Code' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Code",
+      'OliDocs' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Documents",
+      'Downloads' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:Downloads",
+      'Documents' => "#{ENV['STORAGE_ENCRYPTED_FOLDER']}:ICloud_Docs"
+    }
+
+    flag = args[:progress] ? ' -P -v' : ''
+    filter = ' --filter-from ~/.config/rclone/base_filter.txt'
+    speed_flags = ' --fast-list --use-mmap --transfers=16 --checkers=16 --size-only'
+
+    dirs.each do |local, remote|
+      run %( /opt/homebrew/bin/rclone sync #{remote} ~/#{local}#{filter}#{speed_flags}#{flag} )
+    end
   end
 end
 
