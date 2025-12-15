@@ -1,3 +1,6 @@
+# Include these folders first
++ Neovim/themer.nvim/**
+
 # Exclude these folders first
 - AAI/**
 - Java/**
@@ -7,4 +10,3 @@
 
 # Include everything else
 + **
-+ Neovim/themer.nvim
