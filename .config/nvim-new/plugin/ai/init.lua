@@ -153,6 +153,13 @@ require("codecompanion").setup({
         model = "gpt-4.1",
       },
     },
+    background = {
+      chat = {
+        opts = {
+          enabled = true,
+        },
+      },
+    },
   },
   display = {
     action_palette = {
@@ -164,13 +171,6 @@ require("codecompanion").setup({
       -- show_settings = true,
       show_reasoning = false,
       fold_context = true,
-    },
-  },
-  rules = {
-    opts = {
-      chat = {
-        enabled = true,
-      },
     },
   },
   opts = {
