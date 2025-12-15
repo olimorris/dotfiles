@@ -12,6 +12,10 @@ set -x EXTRAS "$HOME/.cache/nvim-new/onedarkpro_dotfiles/extras"
 fish_add_path -p "$(brew --prefix rustup)/bin" "$(brew --prefix)/bin" "$HOME/.cargo/bin" "$HOME/.dotfiles/bin" "$HOME/.local/share/nvim/mason/bin" "$HOME/.local/bin" "$GOPATH/bin"
 
 function theme
+  if not test -f /tmp/oli-theme
+    echo "dark" > /tmp/oli-theme
+  end
+
   set -f VARIANT "$(cat /tmp/oli-theme)"
   set -f FORMAT "$EXTRAS/fish/%s.fish"
 
