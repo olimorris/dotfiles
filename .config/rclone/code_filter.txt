@@ -7,4 +7,4 @@
 
 # Include everything else
 + **
-
++ Neovim/themer.nvim
