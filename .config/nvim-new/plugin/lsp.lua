@@ -42,15 +42,10 @@ require("conform").setup({
   },
 })
 
-require("troublesum").setup({
+require("diagnostics").setup({
   enabled = function()
     local ft = vim.bo.filetype
     return ft ~= "lazy" and ft ~= "mason" and ft ~= "codecompanion"
   end,
-  severity_format = vim
-    .iter(ipairs(icons))
-    :map(function(_, icon)
-      return icon
-    end)
-    :totable(),
+  severity_format = icons,
 })

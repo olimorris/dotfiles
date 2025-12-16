@@ -28,7 +28,6 @@ om.plugins = {
   -- LSP
   "https://github.com/mason-org/mason.nvim",
   "https://github.com/stevearc/conform.nvim",
-  "https://github.com/ivanjermakov/troublesum.nvim",
 
   -- Editor
   "https://github.com/stevearc/oil.nvim",
