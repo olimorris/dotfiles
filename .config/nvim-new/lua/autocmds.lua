@@ -7,6 +7,15 @@ local function augroup(name)
   return api.nvim_create_augroup(name, { clear = true })
 end
 
+autocmd("PackChanged", {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == "nvim-treesitter" and (kind == "install" or kind == "update") then
+      vim.cmd("TSUpdate")
+    end
+  end,
+})
+
 -- ConcealAttributes
 autocmd({ "BufEnter", "BufWritePost", "TextChanged", "InsertLeave" }, {
   group = augroup("dotfiles.concealattributes"),
