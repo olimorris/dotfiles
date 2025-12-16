@@ -9,6 +9,7 @@ vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/persisted.nvim"))
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim"))
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim/after")) -- Needed for TS queries
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/codecompanion.nvim"))
+vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/aerial.nvim"))
 
 om.plugins = {
   -- Dependencies
@@ -32,7 +33,7 @@ om.plugins = {
   -- Editor
   "https://github.com/stevearc/oil.nvim",
   "https://github.com/nvim-mini/mini.test",
-  "https://github.com/stevearc/aerial.nvim",
+  -- "https://github.com/stevearc/aerial.nvim",
   "https://github.com/stevearc/overseer.nvim",
   "https://github.com/kylechui/nvim-surround",
 
@@ -41,8 +42,8 @@ om.plugins = {
 
   -- Tree-sitter
   "https://github.com/windwp/nvim-autopairs",
-  "https://github.com/RRethy/nvim-treesitter-endwise",
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
+  { src = "https://github.com/ixti/nvim-treesitter-endwise", version = "nvim-0-11-compat" },
+  "https://github.com/nvim-treesitter/nvim-treesitter",
   { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main" },
 }
 
