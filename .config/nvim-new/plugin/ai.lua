@@ -141,9 +141,13 @@ require("codecompanion").setup({
         },
       },
       tools = {
+        ["hledger"] = {
+          description = "Execute hledger queries to analyze financial data from journal files",
+          callback = "~/OliDocs/ff/Finances/hledger.lua",
+        },
         ["math"] = {
           description = "Calculate mathematical expressions, derivatives, integrals, and solve equations.",
-          callback = "~/.dotfiles/.config/nvim-new/plugin/ai/tools/math.lua",
+          callback = "~/.dotfiles/.config/tools/math.lua",
         },
       },
     },

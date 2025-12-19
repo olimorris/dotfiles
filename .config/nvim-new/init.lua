@@ -9,7 +9,6 @@ vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/persisted.nvim"))
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim"))
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim/after")) -- Needed for TS queries
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/codecompanion.nvim"))
-vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/aerial.nvim"))
 
 om.plugins = {
   -- Dependencies
@@ -33,7 +32,7 @@ om.plugins = {
   -- Editor
   "https://github.com/stevearc/oil.nvim",
   "https://github.com/nvim-mini/mini.test",
-  -- "https://github.com/stevearc/aerial.nvim",
+  "https://github.com/stevearc/aerial.nvim",
   "https://github.com/stevearc/overseer.nvim",
   "https://github.com/kylechui/nvim-surround",
 

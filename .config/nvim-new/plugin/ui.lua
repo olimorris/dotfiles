@@ -38,39 +38,6 @@ require("render-markdown").setup({
   sign = { enabled = false },
 })
 
-require("edgy").setup({
-  animate = { enabled = false },
-  options = {
-    top = { size = 10 },
-  },
-  bottom = {
-    {
-      ft = "snacks_terminal",
-      size = { height = om.on_big_screen and 20 or 0.2 },
-      title = "Terminal %{b:snacks_terminal.id}",
-      filter = function(_buf, win)
-        return vim.w[win].snacks_win
-          and vim.w[win].snacks_win.position == "bottom"
-          and vim.w[win].snacks_win.relative == "editor"
-          and not vim.w[win].trouble_preview
-      end,
-    },
-    { ft = "qf", title = "QuickFix" },
-    {
-      ft = "help",
-      size = { height = 20 },
-      -- only show help buffers
-      filter = function(buf)
-        return vim.bo[buf].buftype == "help"
-      end,
-    },
-    { title = "Neotest Output", ft = "neotest-output-panel", size = { height = 15 } },
-  },
-  right = {
-    -- { ft = "oil", title = "File Explorer", size = { width = 0.3 } },
-  },
-})
-
 require("gitsigns").setup({
   signs = {
     add = { text = "│" },
