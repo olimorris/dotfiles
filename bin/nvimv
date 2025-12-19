@@ -23,16 +23,21 @@ Commands:
   upgrade|up      [TAG] Upgrade the given tag
   use|u           [TAG] Use the given tag
   remove|rm       [TAG] Remove the given tag
+  rollback|rb          Rollback to the previous version
 
-  dirs            Print the directories in use by the script
-  list|ls         List all installed tags
-  list-remote|lsr List all available tags
+  current              Show the currently active version
+  history              Show version history
+  dirs                 Print the directories in use by the script
+  list|ls              List all installed tags
+  list-remote|lsr      List all available tags
 EOF
 }
 
 PREFIX="${PREFIX:-$HOME/.local}"
 INSTALL_DIR="$PREFIX/bin"
 DATA_DIR="${XDG_DATA_HOME:-$PREFIX/share}/nvimv"
+CURRENT_FILE="$DATA_DIR/current"
+HISTORY_FILE="$DATA_DIR/history"
 
 _print_env() {
 	tag=$1
@@ -186,8 +191,69 @@ use_tag() {
 		install_tag $tag
 	fi
 
+	# Save current version to history before switching
+	if [ -f "$CURRENT_FILE" ]; then
+		current=$(cat "$CURRENT_FILE")
+		mkdir -p "$DATA_DIR"
+		echo "$current" >> "$HISTORY_FILE"
+	fi
+
+	# Update current version
+	mkdir -p "$DATA_DIR"
+	echo "$tag" > "$CURRENT_FILE"
+
 	_print_shim "$tag" >"$INSTALL_DIR/nvim"
 	chmod +x "$INSTALL_DIR/nvim"
+}
+
+get_current() {
+	if [ -f "$CURRENT_FILE" ]; then
+		cat "$CURRENT_FILE"
+	else
+		echo "No version currently set"
+		return 1
+	fi
+}
+
+show_history() {
+	if [ -f "$HISTORY_FILE" ]; then
+		cat "$HISTORY_FILE" | tail -n 10
+	else
+		echo "No version history"
+	fi
+}
+
+rollback_version() {
+	if [ ! -f "$HISTORY_FILE" ]; then
+		echo "No version history available"
+		exit 1
+	fi
+
+	# Get the previous version (last line in history)
+	previous=$(tail -n 1 "$HISTORY_FILE")
+
+	if [ -z "$previous" ]; then
+		echo "No previous version found"
+		exit 1
+	fi
+
+	# Remove the last line from history
+	sed -i.bak '$ d' "$HISTORY_FILE"
+	rm -f "$HISTORY_FILE.bak"
+
+	# Switch to previous version (don't add to history)
+	base_dir="$DATA_DIR/tags/$previous"
+	if test ! -d "$base_dir"; then
+		echo "Previous version '$previous' is not installed. Installing..."
+		mkdir -p "$base_dir"
+		install_tag "$previous"
+	fi
+
+	echo "$previous" > "$CURRENT_FILE"
+	_print_shim "$previous" >"$INSTALL_DIR/nvim"
+	chmod +x "$INSTALL_DIR/nvim"
+
+	echo "Rolled back to: $previous"
 }
 
 if test $# -eq 0; then
@@ -201,6 +267,15 @@ case "$subcommand" in
 --help | -h | h | help)
 	_print_help
 	exit 0
+	;;
+current)
+	get_current
+	;;
+history)
+	show_history
+	;;
+rollback | rb)
+	rollback_version
 	;;
 env)
 	if [[ $# -eq 0 ]]; then
@@ -271,3 +346,7 @@ remove | rm)
 	exit 1
 	;;
 esac
+
+
+
+
