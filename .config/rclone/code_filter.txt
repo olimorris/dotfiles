@@ -1,5 +1,6 @@
 # Include these folders first
 + Neovim/themer.nvim/**
++ Neovim/codecompanion.nvim/memories/**
 
 # Exclude these folders first
 - AAI/**
