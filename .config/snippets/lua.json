@@ -11,6 +11,18 @@
     "prefix": ["lf"],
     "body": ["local function ${1:function_name}(${2:args})", "  $0", "end"]
   },
+  "New": {
+    "prefix": ["new"],
+    "body": [
+      "function ${1:class_name}.new(args)",
+      "  local self = setmetatable({",
+      "    $0",
+      "  }, { __index = ${1:class_name} })",
+      "",
+      "  return self",
+      "end"
+    ]
+  },
   "Mini Test Function - 1 param": {
     "prefix": ["mtf"],
     "body": ["T[\"${1:test_name}\"][\"$2\"] = function()", "  $0", "end"]
