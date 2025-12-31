@@ -3,7 +3,6 @@ local treesitter = require("nvim-treesitter")
 -- Some default parsers that I always want installed
 local ensure_installed = {
   "css",
-  "csv",
   "diff",
   "gitcommit",
   "gitignore",
@@ -50,6 +49,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
     local ignored_fts = {
       "codecompanion",
+      "csv",
       "prompt",
       "snacks_dashboard",
       "snacks_input",
