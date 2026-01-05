@@ -23,3 +23,5 @@
 - .repro/
 - .deps/
 - .ruby-lsp/
+- .venv/
+- .ipynb_checkpoints/
