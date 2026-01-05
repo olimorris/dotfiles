@@ -40,25 +40,19 @@ require("persisted").setup({
   save_dir = Sessiondir .. "/",
   use_git_branch = true,
   autosave = true,
-  -- autoload = true,
-  -- allowed_dirs = {
-  --   "~/Code",
-  -- },
-  -- on_autoload_no_session = function()
-  --   return vim.notify("No session found", vim.log.levels.WARN)
-  -- end,
   should_save = function()
-    local excluded_filetypes = {
-      "alpha",
-      "oil",
-      "lazy",
-      "",
-    }
-
-    for _, filetype in ipairs(excluded_filetypes) do
-      if vim.bo.filetype == filetype then
+    -- Don't save if there are no meaningful buffers open
+    local bufs = vim.tbl_filter(function(b)
+      if
+        vim.bo[b].buftype ~= ""
+        or vim.tbl_contains({ "codecompanion", "gitcommit", "gitrebase", "jj" }, vim.bo[b].filetype)
+      then
         return false
       end
+      return vim.api.nvim_buf_get_name(b) ~= ""
+    end, vim.api.nvim_list_bufs())
+    if #bufs < 1 then
+      return false
     end
 
     return true

@@ -13,7 +13,6 @@ local ensure_installed = {
   "lua",
   "markdown",
   "markdown_inline",
-  "norg",
   "regex",
   "ruby",
   "scss",
@@ -64,8 +63,7 @@ vim.api.nvim_create_autocmd("FileType", {
     local lang = vim.treesitter.language.get_lang(ft)
     treesitter.install({ lang }):await(function(err)
       if err then
-        vim.notify("Could not install Tree-sitter parser for " .. ft .. ". Err:\n" .. err)
-        return
+        return vim.notify("Could not install Tree-sitter parser for " .. ft .. ". Err:\n" .. err)
       end
 
       pcall(vim.treesitter.start, args.buf)
