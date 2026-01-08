@@ -7,7 +7,7 @@ local v, fn, api = vim.v, vim.fn, vim.api
 local function winbar()
   local bit = require("bit")
 
-  local sep = "  "
+  local sep = "  "
 
   local Spacer = {
     provider = " ",
