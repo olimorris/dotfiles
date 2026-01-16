@@ -48,18 +48,18 @@ require("codecompanion").setup({
           },
         })
       end,
-      ollama = function()
-        return require("codecompanion.adapters").extend("ollama", {
-          schema = {
-            model = {
-              default = "qwen3:latest",
-            },
-            num_ctx = {
-              default = 20000,
-            },
-          },
-        })
-      end,
+      -- ollama = function()
+      --   return require("codecompanion.adapters").extend("ollama", {
+      --     schema = {
+      --       model = {
+      --         default = "qwen3:latest",
+      --       },
+      --       num_ctx = {
+      --         default = 20000,
+      --       },
+      --     },
+      --   })
+      -- end,
       openai = function()
         return require("codecompanion.adapters").extend("openai", {
           env = {
@@ -123,8 +123,23 @@ require("codecompanion").setup({
         name = "copilot",
         model = "claude-haiku-4.5",
       },
+      -- adapter = {
+      --   name = "claude_code",
+      --   model = "opus",
+      -- },
+      -- adapter = "claude_code",
       roles = {
         user = "olimorris",
+      },
+      mcp = {
+        servers = {
+          ["tavily-mcp"] = {
+            cmd = { "npx", "-y", "tavily-mcp@latest" },
+            env = {
+              TAVILY_API_KEY = "cmd:op read op://personal/Tavily_API/credential --no-newline",
+            },
+          },
+        },
       },
       keymaps = {
         send = {
@@ -179,7 +194,8 @@ require("codecompanion").setup({
   },
   opts = {
     language = "British English",
-    log_level = "DEBUG",
+    log_level = "INFO",
+    test_mode = true,
   },
 })
 vim.cmd([[cab cc CodeCompanion]])
