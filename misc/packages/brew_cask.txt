@@ -6,10 +6,12 @@ anki
 audacity
 cleanshot
 discord
+displaylink
 elgato-camera-hub
 elgato-stream-deck
 espanso
 font-dejavu-sans-mono-for-powerline
+ghostty
 git-credential-manager
 git-credential-manager-core
 google-chrome
@@ -20,8 +22,10 @@ imaging-edge
 inkscape
 itsycal
 jordanbaird-ice
+keepingyouawake
 launchcontrol
 little-snitch
+lookaway
 mactex
 mitmproxy
 monitorcontrol
@@ -36,6 +40,7 @@ reminders-menubar
 screenflow
 sketch
 spotify
+stats
 steam
 superkey
 syntax-highlight
