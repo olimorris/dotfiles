@@ -22,7 +22,7 @@
     ~/.config/nvim-new: .config/nvim-new
     ~/.config/rclone: .config/rclone
     ~/.config/snippets: .config/snippets
-    ~/.config/vivid: .config/vivid
+    ~/.config/voiceink: .config/voiceink
     ~/.config/wezterm: .config/wezterm
 
     # Launch Agents

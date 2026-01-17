@@ -23,7 +23,6 @@
 !.config/snippets/**/*
 !.config/ssh/config
 !.config/vim/**/*
-!.config/vivid/**/*
 !.config/wezterm/**/*
 !.config/zsh/**/*
 
