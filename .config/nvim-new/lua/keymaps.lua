@@ -21,6 +21,7 @@ keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down", silent 
 
 -- Editing words
 keymap("n", "<LocalLeader>,", "<cmd>norm A,<CR>", { desc = "Append comma" })
+keymap("n", "<LocalLeader>:", "<cmd>norm A:<CR>", { desc = "Append colon" })
 keymap("n", "<LocalLeader>;", "<cmd>norm A;<CR>", { desc = "Append semicolon" })
 
 -- Wrap text

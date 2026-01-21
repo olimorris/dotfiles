@@ -29,18 +29,6 @@ local ensure_installed = {
 }
 treesitter.install(ensure_installed)
 
-vim.api.nvim_create_autocmd("PackChanged", {
-  group = vim.api.nvim_create_augroup("dotfiles.pack", { clear = true }),
-  callback = function(args)
-    local spec = args.data.spec
-    if spec and spec.name == "nvim-treesitter" and args.data.kind == "update" then
-      vim.schedule(function()
-        treesitter.update()
-      end)
-    end
-  end,
-})
-
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("dotfiles.treesitter", { clear = true }),
   callback = function(args)

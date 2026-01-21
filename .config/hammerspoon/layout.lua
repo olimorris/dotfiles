@@ -112,19 +112,10 @@ defineLayout("Coding", 1, {
 })
 
 defineLayout("Study", 2, {
-  { "Spotify", "0,0 1.75x4", { moveToScreen = "monitor" } },
+  { "Spotify", "0,0 1.75x4", { onlyIfOpen = true, moveToScreen = "monitor" } },
   { "Typora", "0,0 1.75x4", { onlyIfOpen = true, moveToScreen = "monitor" } },
-  { "Safari", "1.75,0 2.5x4", { moveToScreen = "monitor" } },
-  { "Notion", "4.25,0 1.75x4", { moveToScreen = "monitor" } },
-  { "UPDF", "4.25,0 1.75x4", { onlyIfOpen = true, moveToScreen = "monitor" } },
-  { "Ghostty", "0,0 6x4", { moveToScreen = "laptop" } },
-})
-
-defineLayout("Assignment", 3, {
-  { "Spotify", "0,0 1.75x4", { moveToScreen = "monitor" } },
-  { "Typora", "0,0 1.75x4", { onlyIfOpen = true, moveToScreen = "monitor" } },
-  { "Notion", "0,0 6x4", { moveToScreen = "laptop" } },
-  { "Safari", "1.75,0 2.5x4", { moveToScreen = "monitor" } },
+  { "Safari", "0,0 1.75x4", { moveToScreen = "monitor" } },
   { "Ghostty", "1.75,0 2.5x4", { moveToScreen = "monitor" } },
   { "UPDF", "4.25,0 1.75x4", { moveToScreen = "monitor" } },
+  { "Notion", "0,0 6x4", { moveToScreen = "laptop" } },
 })

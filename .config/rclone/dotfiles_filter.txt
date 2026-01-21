@@ -1,6 +1,11 @@
 # Include only these paths
++ misc/
 + misc/mackup/**
++ .config/
++ .config/prompts/
++ .config/prompts/**
 
 # Exclude everything else by default
 - **
+
 
