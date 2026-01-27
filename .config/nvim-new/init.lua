@@ -35,6 +35,7 @@ om.plugins = {
   "https://github.com/stevearc/aerial.nvim",
   "https://github.com/stevearc/overseer.nvim",
   "https://github.com/kylechui/nvim-surround",
+  "https://github.com/chrisgrieser/nvim-scissors",
 
   -- Completion
   { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("^1") },

@@ -1,0 +1,7 @@
+{
+  "init": {
+    "prefix": "init",
+    "body": ["def __init__(self${1:}):", "    ${2:pass}"]
+  }
+}
+

@@ -1,5 +1,9 @@
 local command = vim.api.nvim_create_user_command --[[@type function]]
 
+command("ReloadSnippets", function()
+  require("blink.cmp.sources.lib").reload()
+end, { desc = "Reload Blink.cmp snippets" })
+
 command("LineNumbers", function()
   om.ToggleLineNumbers()
 end, { desc = "Toggle line numbers" })
