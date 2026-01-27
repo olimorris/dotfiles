@@ -211,14 +211,6 @@ keymap("n", "<C-t>", function()
   })
 end, opts)
 
--- Scissors
-keymap("n", "<LocalLeader>se", function()
-  require("scissors").editSnippet()
-end, opts)
-keymap({ "n", "x" }, "<LocalLeader>sa", function()
-  require("scissors").addNewSnippet()
-end, opts)
-
 -- Multiple Cursors
 -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
 -- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298

@@ -81,7 +81,3 @@ overseer.register_template({
     filetype = { "python" },
   },
 })
-
-require("scissors").setup({
-  snippetDir = "~/.config/snippets",
-})
