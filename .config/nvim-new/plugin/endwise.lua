@@ -95,6 +95,7 @@ local function get_indent_for_node(node)
 end
 
 ---Insert "end" if at an endwise position
+---@return boolean
 local function insert_end()
   local should_end, indent_node = should_insert_end()
 
