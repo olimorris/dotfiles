@@ -131,16 +131,6 @@ require("codecompanion").setup({
       roles = {
         user = "olimorris",
       },
-      mcp = {
-        servers = {
-          ["tavily-mcp"] = {
-            cmd = { "npx", "-y", "tavily-mcp@latest" },
-            env = {
-              TAVILY_API_KEY = "cmd:op read op://personal/Tavily_API/credential --no-newline",
-            },
-          },
-        },
-      },
       keymaps = {
         send = {
           modes = {
@@ -190,6 +180,20 @@ require("codecompanion").setup({
       -- show_settings = true,
       show_reasoning = false,
       fold_context = true,
+    },
+  },
+  mcp = {
+    enabled = false,
+    servers = {
+      ["tavily-mcp"] = {
+        cmd = { "npx", "-y", "tavily-mcp@latest" },
+        env = {
+          TAVILY_API_KEY = "cmd:op read op://personal/Tavily_API/credential --no-newline",
+        },
+        opts = {
+          enabled = true,
+        },
+      },
     },
   },
   opts = {

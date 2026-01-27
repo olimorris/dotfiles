@@ -133,7 +133,12 @@ end, { desc = "Select local scope" })
 
 -- CodeCompanion
 keymap({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<CR>")
-keymap({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<CR>")
+keymap({ "n", "v" }, "<Leader>a", function()
+  if vim.o.columns < 100 then
+    return require("codecompanion").toggle({ window_opts = { layout = "float", width = 1 } })
+  end
+  require("codecompanion").toggle()
+end, opts)
 keymap("v", "<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>")
 
 -- Inline completions
