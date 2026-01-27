@@ -41,7 +41,6 @@ om.plugins = {
 
   -- Tree-sitter
   "https://github.com/windwp/nvim-autopairs",
-  { src = "https://github.com/ixti/nvim-treesitter-endwise", version = "nvim-0-11-compat" },
   "https://github.com/nvim-treesitter/nvim-treesitter",
   { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main" },
 }
