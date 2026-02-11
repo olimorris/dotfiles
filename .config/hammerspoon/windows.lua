@@ -70,12 +70,16 @@ end)
 
 -- Modal Window Management
 local modal = hs.hotkey.modal.new(Hyper, "W")
+local modalAlert = nil
 
 function modal:entered()
-  hs.alert.show("Window Mode")
+  modalAlert = hs.alert.show("Window Mode", hs.alert.defaultStyle, hs.screen.mainScreen(), 999999)
 end
 function modal:exited()
-  hs.alert.closeAll()
+  if modalAlert then
+    hs.alert.closeSpecific(modalAlert)
+    modalAlert = nil
+  end
 end
 
 -- Halves
