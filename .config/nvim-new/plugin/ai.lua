@@ -190,6 +190,15 @@ require("codecompanion").setup({
         env = {
           TAVILY_API_KEY = "cmd:op read op://personal/Tavily_API/credential --no-newline",
         },
+        tool_defaults = {
+          require_approval_before = true,
+        },
+        opts = {
+          enabled = true,
+        },
+      },
+      ["sequential-thinking"] = {
+        cmd = { "npx", "-y", "@modelcontextprotocol/server-sequential-thinking" },
         opts = {
           enabled = true,
         },
@@ -198,7 +207,7 @@ require("codecompanion").setup({
   },
   opts = {
     language = "British English",
-    log_level = "INFO",
+    log_level = "DEBUG",
     test_mode = true,
   },
 })
