@@ -102,6 +102,9 @@ require("codecompanion").setup({
       end,
       claude_code = function()
         return require("codecompanion.adapters").extend("claude_code", {
+          defaults = {
+            mcpServers = "inherit_from_config",
+          },
           env = {
             CLAUDE_CODE_OAUTH_TOKEN = "cmd:op read op://personal/Claude_Code_OAuth/credential --no-newline",
           },
@@ -148,11 +151,11 @@ require("codecompanion").setup({
       tools = {
         ["hledger"] = {
           description = "Execute hledger queries to analyze financial data from journal files",
-          callback = "~/OliDocs/ff/Finances/hledger.lua",
+          path = "~/OliDocs/ff/Finances/hledger.lua",
         },
         ["math"] = {
           description = "Calculate mathematical expressions, derivatives, integrals, and solve equations.",
-          callback = "~/.dotfiles/.config/tools/math.lua",
+          path = "~/.dotfiles/.config/tools/math.lua",
         },
       },
     },
@@ -183,8 +186,13 @@ require("codecompanion").setup({
     },
   },
   mcp = {
-    enabled = false,
     servers = {
+      ["memory"] = {
+        cmd = { "npx", "-y", "@modelcontextprotocol/server-memory" },
+      },
+      ["sequential-thinking"] = {
+        cmd = { "npx", "-y", "@modelcontextprotocol/server-sequential-thinking" },
+      },
       ["tavily-mcp"] = {
         cmd = { "npx", "-y", "tavily-mcp@latest" },
         env = {
@@ -193,21 +201,17 @@ require("codecompanion").setup({
         tool_defaults = {
           require_approval_before = true,
         },
-        opts = {
-          enabled = true,
-        },
-      },
-      ["sequential-thinking"] = {
-        cmd = { "npx", "-y", "@modelcontextprotocol/server-sequential-thinking" },
-        opts = {
-          enabled = true,
-        },
       },
     },
   },
   opts = {
     language = "British English",
     log_level = "DEBUG",
+    per_project_config = {
+      files = {
+        ".codecompanion.lua",
+      },
+    },
     test_mode = true,
   },
 })
