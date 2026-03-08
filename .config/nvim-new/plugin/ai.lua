@@ -120,7 +120,7 @@ require("codecompanion").setup({
       },
     },
   },
-  strategies = {
+  interactions = {
     chat = {
       adapter = {
         name = "copilot",
@@ -156,6 +156,16 @@ require("codecompanion").setup({
         ["math"] = {
           description = "Calculate mathematical expressions, derivatives, integrals, and solve equations.",
           path = "~/.dotfiles/.config/tools/math.lua",
+        },
+      },
+    },
+    cli = {
+      agent = "claude_code",
+      agents = {
+        claude_code = {
+          cmd = "claude",
+          args = {},
+          description = "Claude Code CLI",
         },
       },
     },
