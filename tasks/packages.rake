@@ -47,8 +47,6 @@ namespace :backup do
     else
       puts 'Warning: npm list command failed, skipping backup'
     end
-
-    run %( npm -g upgrade )
   end
 
   desc 'Backup PIP files'

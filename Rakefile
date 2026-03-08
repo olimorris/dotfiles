@@ -59,15 +59,9 @@ task :install do
 
   # System
   Rake::Task['install:chmod'].invoke
-  Rake::Task['install:fish'].invoke
   Rake::Task['install:fonts'].invoke
   Rake::Task['install:hammerspoon'].invoke
   Rake::Task['install:launch_agents'].invoke
-
-  # Packages
-  Rake::Task['install:gems'].invoke
-  Rake::Task['install:npm'].invoke
-  Rake::Task['install:pip'].invoke
 
   # Apps
   Rake::Task['install:vim'].invoke
@@ -82,11 +76,21 @@ task :update do
 
   Rake::Task['tests:setup'].invoke if testing?
 
-  # Packages
+  # Backup packages before brew upgrade (which may update runtimes via mise)
+  Rake::Task['backup:gems'].invoke
+  Rake::Task['backup:npm'].invoke
+  Rake::Task['backup:pip'].invoke
+
+  # Brew upgrade (may install new Python/Node/Ruby versions)
   Rake::Task['update:brew'].invoke
   Rake::Task['update:fish'].invoke
+
+  # Reinstall and upgrade packages under the (potentially new) runtimes
+  Rake::Task['install:gems'].invoke
   Rake::Task['update:gems'].invoke
+  Rake::Task['install:npm'].invoke
   Rake::Task['update:npm'].invoke
+  Rake::Task['install:pip'].invoke
   Rake::Task['update:pip'].invoke
 
   # System
@@ -96,6 +100,15 @@ task :update do
   Rake::Task['update:vim'].invoke
   Rake::Task['update:neovim'].invoke
   Rake::Task['update:wezterm'].invoke
+end
+
+desc 'Install Language Packages (gems, npm, pip)'
+task :packages do
+  section 'Installing Packages'
+
+  Rake::Task['install:gems'].invoke
+  Rake::Task['install:npm'].invoke
+  Rake::Task['install:pip'].invoke
 end
 
 desc 'Sync Everything'
