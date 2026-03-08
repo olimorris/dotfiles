@@ -47,7 +47,7 @@ alias sep='ruby ~/.dotfiles/commands/make_separator.rb'
 
 # Neovim / Vim
 alias vim='/opt/homebrew/bin/vim'
-alias nn='NVIM_APPNAME=nvim-new nvim'
+# alias nn='NVIM_APPNAME=nvim-new nvim'
 
 # Python
 alias jp='jupyter notebook'
