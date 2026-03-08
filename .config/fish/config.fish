@@ -6,7 +6,7 @@ set -x EDITOR nvim
 set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
 set -x HOMEBREW_NO_ANALYTICS 1
 set -x GOPATH "$HOME/.go"
-set -x EXTRAS "$HOME/.cache/nvim-new/onedarkpro_dotfiles/extras"
+set -x EXTRAS "$HOME/.cache/nvim/onedarkpro_dotfiles/extras"
 
  # Paths
 fish_add_path -p "$(brew --prefix rustup)/bin" "$(brew --prefix)/bin" "$HOME/.cargo/bin" "$HOME/.dotfiles/bin" "$HOME/.local/share/nvim/mason/bin" "$HOME/.local/bin" "$GOPATH/bin"
