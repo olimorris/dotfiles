@@ -8,6 +8,7 @@ local hyper = Hyper
 ]]
 local apps = {
   a = "Anki",
+  b = "Google Chrome", -- Browser
   e = "Microsoft Excel",
   f = "Finder",
   n = "Bear", -- Notes
@@ -19,12 +20,10 @@ local apps = {
 
 if OnPersonal then
   apps.c = "Visual Studio Code" -- VS Code
-  apps.b = "Safari" -- Browser
   apps.p = "UPDF"
   apps["["] = "1Password" -- It's next to P...
 else
   apps.c = "Teams" -- Chat
-  apps.b = "Google Chrome" -- Browser
   apps.m = "Microsoft Outlook" -- Mail
   apps.p = "Microsoft PowerPoint"
   apps.r = "Microsoft To Do"
