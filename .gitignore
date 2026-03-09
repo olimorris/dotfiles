@@ -12,11 +12,11 @@
 !.config/fish/*
 !.config/git/**/*
 !.config/ghostty/**/*
+!.config/hammerspoon/**/*
 !.config/mackup/**/*
 !.config/mise/**/*
 !.config/nix/**/*
 !.config/nvim/**/*
-!.config/nvim-new/**/*
 !.config/rclone/base_filter.txt
 !.config/rclone/code_filter.txt
 !.config/rclone/dotfiles_filter.txt
@@ -65,7 +65,6 @@
 ################################### BLACKLIST ##################################
 
 # Config
-.config/nvim/plugin
 .config/hammerspoon/Spoons/*
 .config/ghostty/themes
 .config/wezterm/encryption_key.txt
