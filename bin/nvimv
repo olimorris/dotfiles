@@ -161,6 +161,7 @@ install_tag() {
 		exit 1
 	fi
 	_download_tag "$tag"
+	use_tag "$tag"
 }
 
 upgrade_tag() {
@@ -179,6 +180,7 @@ upgrade_tag() {
 	esac
 
 	_download_tag "$tag"
+	use_tag "$tag"
 }
 
 use_tag() {
