@@ -110,6 +110,18 @@ require("codecompanion").setup({
           },
         })
       end,
+      claude_code_work = function()
+        return require("codecompanion.adapters").extend("claude_code", {
+          name = "claude_code_work",
+          formatted_name = "Claude Code Work",
+          defaults = {
+            mcpServers = "inherit_from_config",
+          },
+          env = {
+            CLAUDE_CODE_OAUTH_TOKEN = "cmd:op read op://personal/Claude_Code_OAuth_Work/credential --no-newline",
+          },
+        })
+      end,
     },
   },
   prompt_library = {
