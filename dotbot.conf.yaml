@@ -19,6 +19,8 @@
     ~/.config/lazygit: .config/lazygit
     ~/.config/mise: .config/mise
     ~/.config/nvim: .config/nvim
+    ~/.config/opencode/themes:
+        path: ~/.cache/nvim/onedarkpro_dotfiles/extras/opencode
     ~/.config/rclone: .config/rclone
     ~/.config/snippets: .config/snippets
     ~/.config/voiceink: .config/voiceink
