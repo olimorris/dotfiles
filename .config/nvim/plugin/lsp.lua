@@ -13,7 +13,6 @@ vim.lsp.enable({
   "jdtls",
   "lua_ls",
   "pyright",
-  "ruby_lsp",
 })
 
 vim.diagnostic.config({
@@ -38,7 +37,7 @@ require("conform").setup({
     json = { "prettier" },
     lua = { "stylua" },
     python = { "isort", "black" },
-    ruby = { "rubocop" },
+    ruby = { "rubyfmt" },
   },
 })
 
