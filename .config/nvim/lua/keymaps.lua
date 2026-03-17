@@ -2,7 +2,6 @@ local keymap = vim.keymap.set --[[@type function]]
 local opts = { noremap = true, silent = true }
 
 keymap("n", "<C-q>", "<cmd>q<CR>", { silent = true, desc = "Quit Neovim" })
-keymap("t", "<Esc>", "<C-\\><C-n>", vim.tbl_extend("force", opts, { nowait = true, desc = "Exit terminal mode" }))
 
 -- Buffers
 keymap("n", "<C-y>", "<cmd>%y+<CR>", { desc = "Copy buffer" })

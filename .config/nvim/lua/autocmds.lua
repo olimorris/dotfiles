@@ -150,18 +150,6 @@ autocmd("FileType", {
   end,
 })
 
-autocmd("TermOpen", {
-  group = augroup("dotfiles.terminal"),
-  pattern = "term://*",
-  callback = function()
-    if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
-      local opts = { silent = false, buffer = 0 }
-      vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
-      vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
-    end
-  end,
-})
-
 autocmd("BufWritePre", {
   group = augroup("dotfiles.remove_trailing_whitespace"),
   pattern = "*",
