@@ -34,18 +34,21 @@ vo.completeopt = { "menuone", "noselect" } -- Completion opions for code complet
 vo.cursorlineopt = "screenline,number" -- Highlight the screen line of the cursor with CursorLine and the line number with CursorLineNr
 vo.emoji = false -- Turn off emojis
 vo.fillchars = {
-  fold = " ",
-  foldopen = "",
-  foldclose = "",
-  foldsep = " ",
-  diff = " ",
   eob = " ",
+  diff = " ",
+  fold = " ",
+  foldopen = "",
+  foldclose = "",
+  foldsep = " ",
+  foldinner = " ",
+  msgsep = "─",
 }
 
 vo.foldcolumn = "1" -- Show the fold column
 vo.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vo.foldlevelstart = 99
 vo.foldenable = true
+vo.foldtext = "" -- Standard Vim fold text is gross. Don't use it
 
 vo.smartcase = true -- Switch to case-sensitive when there is a capital letter in the search
 vo.ignorecase = true -- Ignore case when searching
