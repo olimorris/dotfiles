@@ -13,6 +13,7 @@ vim.lsp.enable({
   "jdtls",
   "lua_ls",
   "pyright",
+  "ruby_lsp",
 })
 
 vim.diagnostic.config({
