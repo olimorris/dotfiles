@@ -180,6 +180,12 @@ require("codecompanion").setup({
           description = "Claude Code CLI",
           provider = "terminal",
         },
+        opencode = {
+          cmd = "opencode",
+          args = {},
+          description = "OpenCode",
+          provider = "terminal",
+        },
       },
     },
     inline = {

@@ -136,9 +136,26 @@ keymap({ "n", "v" }, "<Leader>a", function()
   if vim.o.columns < 100 then
     return require("codecompanion").toggle({ window_opts = { layout = "float", width = 1 } })
   end
-  require("codecompanion").toggle()
+  require("codecompanion").toggle({ window_opts = { layout = "vertical" } })
 end, opts)
 keymap("v", "<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>")
+
+-- CodeCompanion CLI mappings
+keymap({ "n", "v" }, "<LocalLeader>cp", function()
+  return require("codecompanion").cli({ prompt = true })
+end, { desc = "Prompt the CLI agent" })
+keymap({ "n", "v" }, "<LocalLeader>ca", function()
+  return require("codecompanion").cli("#{this}", { focus = false })
+end, { desc = "Add context to the CLI agent" })
+keymap("n", "<LocalLeader>cd", function()
+  return require("codecompanion").cli("#{diagnostics} Can you fix these?", { focus = true, submit = true })
+end, { desc = "Send diagnostics to CLI agent" })
+keymap("n", "<LocalLeader>ct", function()
+  return require("codecompanion").cli(
+    "#{terminal} Sharing the output from the terminal. Can you fix it?",
+    { focus = false, submit = true }
+  )
+end)
 
 -- Inline completions
 keymap("i", "<C-a>", vim.lsp.inline_completion.get, opts)
