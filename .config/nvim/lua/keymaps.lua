@@ -169,9 +169,6 @@ end, opts)
 vim.keymap.set("i", "<C-g>", vim.lsp.inline_completion.select, { desc = "LSP: switch inline completion" })
 
 -- Snacks
-keymap("n", "<Leader>t", function()
-  require("snacks").picker.todo_comments()
-end, opts)
 keymap({ "n", "t" }, "<C-x>", function()
   Snacks.terminal.toggle()
 end, opts)
