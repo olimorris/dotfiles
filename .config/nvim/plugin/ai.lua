@@ -174,6 +174,12 @@ require("codecompanion").setup({
     cli = {
       agent = "claude_code",
       agents = {
+        augment = {
+          cmd = "auggie",
+          args = {},
+          description = "Augment CLI",
+          provider = "terminal",
+        },
         claude_code = {
           cmd = "claude",
           args = {},
