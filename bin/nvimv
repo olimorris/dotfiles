@@ -130,6 +130,10 @@ _download_tag() {
 		base_dir="$DATA_DIR/tags/$tag"
 		tar_name="$(echo "$asset" | jq -r '.name')"
 		mkdir -p "$base_dir"
+
+		# Remove old extracted files to prevent stale leftovers
+		find "$base_dir" -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} +
+
 		cd "$base_dir"
 		curl -LO "$(echo "$asset" | jq -r '.browser_download_url')"
 
