@@ -1,16 +1,6 @@
-require("todo-comments").setup({
-  signs = false,
-  highlight = {
-    keyword = "bg",
-  },
-  keywords = {
-    FIX = { icon = " " }, -- Custom fix icon
-  },
-})
-
 require("render-markdown").setup({
   completions = { blink = { enabled = true } },
-  file_types = { "codecompanion", "markdown", "nvim-pack" },
+  file_types = { "codecompanion", "codecompanion_input", "markdown", "nvim-pack" },
   latex = {
     enabled = false,
     render_modes = false,

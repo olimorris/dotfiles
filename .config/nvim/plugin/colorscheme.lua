@@ -57,9 +57,6 @@ require("onedarkpro").setup({
     ["@markup.raw.block.markdown"] = { bg = "${codeblock}" },
     ["@markup.quote.markdown"] = { italic = true, extend = true },
 
-    EdgyNormal = { bg = "${bg}" },
-    EdgyTitle = { fg = "${purple}", bold = true },
-
     NormalFloat = { bg = "${bg}" }, -- Set the terminal background to be the same as the editor
     FloatBorder = { fg = "${gray}", bg = "${bg}" },
 

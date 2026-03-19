@@ -16,13 +16,11 @@ om.plugins = {
   "https://github.com/nvim-tree/nvim-web-devicons",
 
   -- UI and Statusline
-  "https://github.com/folke/edgy.nvim",
   "https://github.com/tpope/vim-sleuth",
   "https://github.com/folke/snacks.nvim",
   "https://github.com/j-hui/fidget.nvim",
   "https://github.com/rebelot/heirline.nvim",
   "https://github.com/lewis6991/gitsigns.nvim",
-  "https://github.com/folke/todo-comments.nvim",
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
 
   -- LSP
