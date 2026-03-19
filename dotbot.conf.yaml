@@ -21,6 +21,7 @@
     ~/.config/nvim: .config/nvim
     ~/.config/opencode/themes:
         path: ~/.cache/nvim/onedarkpro_dotfiles/extras/opencode
+    ~/.config/opencode/opencode.json: .config/opencode/opencode.json
     ~/.config/rclone: .config/rclone
     ~/.config/snippets: .config/snippets
     ~/.config/voiceink: .config/voiceink
@@ -32,6 +33,9 @@
     ~/Library/LaunchAgents/oli.finance-output.plist: misc/LaunchAgents/oli.finance-output.plist
 
     # Others
+    ~/.claude/rules/PERSONAL.md:
+        force: true
+        path: PERSONAL.md
     ~/.applescript: .config/applescript
     ~/.bash_profile: .config/bash/.bash_profile
     ~/.bashrc: .config/bash/.bashrc

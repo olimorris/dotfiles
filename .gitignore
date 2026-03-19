@@ -4,6 +4,8 @@
 
 ################################### WHITELIST ##################################
 
+!PERSONAL.md
+
 # Config
 !.config/bash/**/*
 !.config/composer/composer.json
@@ -17,6 +19,7 @@
 !.config/mise/**/*
 !.config/nix/**/*
 !.config/nvim/**/*
+!.config/opencode/**/*
 !.config/rclone/base_filter.txt
 !.config/rclone/code_filter.txt
 !.config/rclone/dotfiles_filter.txt

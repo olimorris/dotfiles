@@ -169,6 +169,13 @@ require("codecompanion").setup({
           description = "Calculate mathematical expressions, derivatives, integrals, and solve equations.",
           path = "~/.dotfiles/.config/tools/math.lua",
         },
+        ["memory"] = {
+          opts = {
+            whitelist = {
+              { path = "~/.dotfiles/PERSONAL.md", as = "/personal" },
+            },
+          },
+        },
       },
     },
     cli = {
@@ -236,6 +243,14 @@ require("codecompanion").setup({
         tool_defaults = {
           require_approval_before = true,
         },
+      },
+    },
+  },
+  rules = {
+    default = {
+      files = {
+        { path = "~/.dotfiles/PERSONAL.md", parser = "codecompanion" },
+        { path = "CLAUDE.md", parser = "claude" },
       },
     },
   },
