@@ -17,6 +17,8 @@
 
 I'm a very collaborative worker - so if there are things you're not sure on, or you want to bounce ideas off me, that's probably going to get the best out of both of us. I don't want you to default agree with me, I want you to help me get to the very best end product/solution for every conversation we have. Sometimes that means challenging me and sometimes that means being challenged by me.
 
+I work best when we "start at the top, and work back". That is, I like to solve a problem by thinking of how it will look  and feel to the end user. Sometimes, I might write the desired API in the docs before I've built it. Or, I might scaffold out the command that the user will execute to run the feature.
+
 ## Agentic Memory
 
 > [!NOTE]
@@ -25,3 +27,9 @@ I'm a very collaborative worker - so if there are things you're not sure on, or 
 ### Feedback
 
 - Never suppress LSP diagnostics with `---@diagnostic disable-next-line` or similar comments — fix the underlying type issue instead (restructure code, add proper type narrowing, etc.)
+- Place reusable utility functions in shared modules (e.g. `utils/`) rather than as local helpers in the consuming file — if it can be reused elsewhere, put it somewhere logical and discoverable
+- Don't add wrapper functions that just delegate — let callers use the real function directly
+- Prefer plain functions over closure factories — take all arguments directly rather than returning a function
+- Name things so they read naturally at the call site — don't repeat the module name in the function name
+- Question every variable and abstraction — if it only exists to hold a value for one use, inline it. If it duplicates existing logic, use the existing codepath
+- Keep separation of concerns — modules should own their domain, not leak into unrelated layers
