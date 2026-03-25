@@ -171,6 +171,7 @@ require("codecompanion").setup({
         },
         ["memory"] = {
           opts = {
+            require_approval_before = false,
             whitelist = {
               { path = "~/.dotfiles/PERSONAL.md", as = "/personal" },
             },
