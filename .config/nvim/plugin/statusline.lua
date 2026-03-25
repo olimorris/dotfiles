@@ -865,7 +865,7 @@ local function statusline()
       },
       on_click = {
         callback = function()
-          vim.cmd("SessionToggle")
+          vim.cmd("Persisted toggle")
         end,
         name = "sl_session_click",
       },
@@ -911,11 +911,11 @@ local function statusline()
     },
     update = {
       "User",
-      pattern = "CodeCompanionTools*",
+      pattern = "CodeCompanionToolApproval*",
       callback = function(self, args)
-        if args.match == "CodeCompanionToolsStarted" then
+        if args.match == "CodeCompanionToolApprovalRequested" then
           self.processing = true
-        elseif args.match == "CodeCompanionToolsFinished" then
+        elseif args.match == "CodeCompanionToolApprovalFinished" then
           self.processing = false
         end
         vim.cmd("redrawstatus")
@@ -926,7 +926,7 @@ local function statusline()
         return self.processing
       end,
       provider = " 󱙺  ",
-      hl = { fg = "green" },
+      hl = { fg = "red" },
     },
   }
 
