@@ -141,7 +141,7 @@ end, opts)
 keymap("v", "<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>")
 
 -- CodeCompanion CLI mappings
-keymap({ "n", "v" }, "<LocalLeader>cp", function()
+keymap({ "n", "v" }, "<C-p>", function()
   return require("codecompanion").cli({ prompt = true })
 end, { desc = "Prompt the CLI agent" })
 keymap({ "n", "v" }, "<LocalLeader>ca", function()
@@ -167,6 +167,14 @@ keymap("i", "<C-l>", function()
 end, opts)
 -- vim.keymap.set("i", "<C-f>", vim.lsp.inline_completion.get, { desc = "LSP: accept inline completion" })
 vim.keymap.set("i", "<C-g>", vim.lsp.inline_completion.select, { desc = "LSP: switch inline completion" })
+
+-- GitSigns
+keymap("n", "<LocalLeader>gn", function()
+  require("gitsigns").next_hunk()
+end, opts)
+keymap("n", "<LocalLeader>gp", function()
+  require("gitsigns").prev_hunk()
+end, opts)
 
 -- Snacks
 keymap({ "n", "t" }, "<C-x>", function()
@@ -194,7 +202,7 @@ keymap("n", "<Leader>h", function()
   Snacks.picker.notifications()
 end, opts)
 keymap("n", "<LocalLeader>gb", function()
-  Snacks.gitbrowse()
+  Snacks.git.blame_line()
 end, opts)
 keymap("n", "<LocalLeader>u", function()
   Snacks.picker.undo()
