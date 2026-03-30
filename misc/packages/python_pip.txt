@@ -124,6 +124,7 @@ pygame==2.6.1
 Pygments==2.19.2
 pylatexenc==2.10
 pyparsing==3.2.3
+pypdf==6.6.0
 pyproject_hooks==1.2.0
 pytest==8.4.1
 python-dateutil==2.9.0.post0

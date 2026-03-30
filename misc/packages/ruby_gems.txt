@@ -2,6 +2,7 @@ addressable
 base64
 benchmark
 bigdecimal
+bootsnap
 bundler
 cgi
 chronic
@@ -77,6 +78,7 @@ minima
 minimal-mistakes-jekyll
 minitest
 money
+msgpack
 mutex_m
 net-ftp
 net-http
@@ -116,6 +118,7 @@ readline
 readline-ext
 reckon
 reline
+repl_type_completor
 resolv
 resolv-replace
 rexml
