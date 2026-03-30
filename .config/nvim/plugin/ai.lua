@@ -252,6 +252,7 @@ require("codecompanion").setup({
       files = {
         { path = "~/.dotfiles/PERSONAL.md", parser = "codecompanion" },
         { path = "CLAUDE.md", parser = "claude" },
+        { path = "AGENTS.md", parser = "claude" },
       },
     },
   },
