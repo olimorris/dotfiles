@@ -20,7 +20,7 @@ alias lg='lazygit'
 alias hs='hledger-forecast summarize -f $FINANCES/forecast.csv'
 alias hfu='hledger-ui -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal'
 alias hf='hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal --auto'
-alias hg='hledger-forecast generate -t $FINANCES/actuals.journal -f $FINANCES/forecast.csv -o $FINANCES/forecast.journal --force'
+alias hg='hledger-forecast generate -f $FINANCES/forecast.csv -o $FINANCES/forecast.journal --force'
 alias hb='hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal bal -M --tree --budget expenses -b "1 month ago" -e "2 months"'
 alias hfs='hledger -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal --forecast="this month".. --auto bal "^(ass|liab)" --tree -H -e "1 month"'
 

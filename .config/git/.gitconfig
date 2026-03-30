@@ -3,6 +3,7 @@
 	email = olimorris@users.noreply.github.com
 [alias]
 	pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+	wtl = "!f() { git worktree list; }; f"
 [credential]
 	helper = /usr/local/share/gcm-core/git-credential-manager
 [credential "https://github.com"]
