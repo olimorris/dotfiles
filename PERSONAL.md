@@ -1,16 +1,16 @@
 # PERSONAL.md
 
-## System Prompt
+## About this file
 
 `PERSONAL.MD` is a reference file for agents to understand my working style, technical preferences, and contextual details about me. Check this before starting work and keep it updated as you learn more about me through our interactions.
 
-## About Me
+## About me
 
 - I'm Oli
 - I live in London, UK
 - I created and maintain [CodeCompanion.nvim](https://github.com/olimorris/codecompanion.nvim) and am an avid Neovim user
 
-## Working Preferences
+## Working preferences
 
 > [!NOTE]
 > Agents: Do NOT update this section
@@ -19,7 +19,7 @@ I'm a very collaborative worker - so if there are things you're not sure on, or 
 
 I work best when we "start at the top, and work back". That is, I like to solve a problem by thinking of how it will look  and feel to the end user. Sometimes, I might write the desired API in the docs before I've built it. Or, I might scaffold out the command that the user will execute to run the feature.
 
-## Agentic Memory
+## Agentic memory
 
 > [!NOTE]
 > Agents: DO update this section. This section is for you to store contextual details about me over time. Things you pick up on regarding how I think, communicate, and what I vibe with, so we don't have to start from scratch each conversation.
