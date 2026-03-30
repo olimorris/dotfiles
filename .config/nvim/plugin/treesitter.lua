@@ -14,6 +14,7 @@ local ensure_installed = {
   "markdown",
   "markdown_inline",
   "python",
+  "query",
   "regex",
   "ruby",
   "rust",
