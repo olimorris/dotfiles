@@ -1,10 +1,10 @@
 # PERSONAL.md
 
-## About this file
+## About
 
 `PERSONAL.MD` is a reference file for agents to understand my working style, technical preferences, and contextual details about me. Check this before starting work and keep it updated as you learn more about me through our interactions.
 
-## About me
+## Me
 
 - I'm Oli
 - I live in London, UK
@@ -33,3 +33,4 @@ I work best when we "start at the top, and work back". That is, I like to solve 
 - Name things so they read naturally at the call site — don't repeat the module name in the function name
 - Question every variable and abstraction — if it only exists to hold a value for one use, inline it. If it duplicates existing logic, use the existing codepath
 - Keep separation of concerns — modules should own their domain, not leak into unrelated layers
+- Always sort table properties in alphabetical order
