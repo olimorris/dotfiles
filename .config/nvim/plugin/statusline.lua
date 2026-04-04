@@ -681,6 +681,8 @@ local function statusline()
     update = {
       "User",
       pattern = {
+        "CodeCompanionACPConnected",
+        "CodeCompanionACPModeChanged",
         "CodeCompanionChatModel",
         "CodeCompanionChatOpened",
         "CodeCompanionRequest*",
