@@ -10,13 +10,13 @@ require("render-markdown").setup({
       codecompanion = {
         html = {
           tag = {
-            buf = { icon = " ", highlight = "CodeCompanionChatIcon" },
-            file = { icon = " ", highlight = "CodeCompanionChatIcon" },
-            group = { icon = " ", highlight = "CodeCompanionChatIcon" },
+            buf = { icon = " ", highlight = "CodeCompanionChatIcon" },
+            file = { icon = " ", highlight = "CodeCompanionChatIcon" },
+            group = { icon = " ", highlight = "CodeCompanionChatIcon" },
             help = { icon = "󰘥 ", highlight = "CodeCompanionChatIcon" },
-            image = { icon = " ", highlight = "CodeCompanionChatIcon" },
+            image = { icon = " ", highlight = "CodeCompanionChatIcon" },
             rules = { icon = "󰧑 ", highlight = "CodeCompanionChatIcon" },
-            symbols = { icon = " ", highlight = "CodeCompanionChatIcon" },
+            symbols = { icon = " ", highlight = "CodeCompanionChatIcon" },
             tool = { icon = "󰯠 ", highlight = "CodeCompanionChatIcon" },
             url = { icon = "󰌹 ", highlight = "CodeCompanionChatIcon" },
           },
@@ -42,7 +42,6 @@ require("gitsigns").setup({
   linehl = false,
 })
 
-local end_time
 require("snacks").setup({
   styles = {
     lazygit = {
@@ -57,83 +56,126 @@ require("snacks").setup({
   bufdelete = { enabled = true },
   dashboard = {
     enabled = true,
-    preset = {
-      keys = {
-        { icon = " ", key = "l", desc = "Load Session", action = ":lua require('persisted').load()" },
-        { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-        { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-        { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-        { icon = "󱘣 ", key = "s", desc = "Search Files", action = ":lua Snacks.dashboard.pick('live_grep')" },
-        {
-          icon = "󰚰",
-          key = "U",
-          desc = "Update Plugins",
-          action = function()
-            vim.cmd("PackSync")
-          end,
-        },
-        { icon = " ", key = "q", desc = "Quit", action = ":qa" },
-      },
-    },
     sections = {
-      {
-        section = "terminal",
-        cmd = "lolcat --seed=24 ~/.config/nvim/static/neovim.cat",
-        indent = -5,
-        height = 9,
-        width = 69,
-        padding = 1,
-      },
-      {
-        section = "keys",
-        indent = 1,
-        padding = 1,
-      },
       function()
-        if not end_time then
-          end_time = vim.loop.hrtime()
-        end
-        local plugins = vim.pack.get()
-        local active_count = #vim
-          .iter(plugins)
-          :filter(function(plugin)
-            return plugin.active
-          end)
-          :totable()
         return {
           align = "center",
+          padding = 1,
           text = {
-            { "⚡️ Neovim loaded ", hl = "SnacksDashboardFooterText" },
-            { tostring(active_count + 3) .. "/" .. tostring(#plugins + 3), hl = "SnacksDashboardFooterEmphasis" },
-            { " plugins in ", hl = "SnacksDashboardFooterText" },
-            {
-              string.format("%.2fms", (end_time - om.nvim_start_time) / 1e6),
-              hl = "SnacksDashboardFooterEmphasis",
-            },
+            { "│ ", hl = "Special" },
+            { "╲ ││\n", hl = "String" },
+            { "││", hl = "Special" },
+            { "╲╲││\n", hl = "String" },
+            { "││ ", hl = "Special" },
+            { "╲ │", hl = "String" },
           },
         }
       end,
       function()
-        local version = vim.version()
-        local version_string = string.format(
-          "v%d.%d.%d%s%s",
-          version.major,
-          version.minor,
-          version.patch,
-          version.prerelease and ("-" .. version.prerelease) or "",
-          version.build and ("-" .. version.build) or ""
-        )
-
+        local v = vim.version()
         return {
           align = "center",
           text = {
             {
-              version_string,
-              hl = "SnacksDashboardFooterVersion",
+              string.format("NVIM v%d.%d.%d", v.major, v.minor, v.patch),
+              hl = "String",
             },
           },
         }
       end,
+      {
+        align = "center",
+        text = {
+          {
+            "──────────────────────────────────────────────",
+            hl = "NonText",
+          },
+        },
+      },
+      {
+        align = "center",
+        text = { { "Nvim is open source and freely distributable" } },
+      },
+      {
+        align = "center",
+        text = { { "https://neovim.io/#chat", hl = "SnacksDashboardDesc" } },
+      },
+      {
+        align = "center",
+        text = {
+          {
+            "──────────────────────────────────────────────",
+            hl = "NonText",
+          },
+        },
+      },
+      {
+        align = "center",
+        action = ":lua require('persisted').load()",
+        key = "l",
+        text = {
+          { "type  " },
+          { "l", hl = "SnacksDashboardKey" },
+          { "  to load session    " },
+        },
+      },
+      {
+        align = "center",
+        action = ":ene | startinsert",
+        key = "n",
+        text = {
+          { "type  " },
+          { "n", hl = "SnacksDashboardKey" },
+          { "  to create new file " },
+        },
+      },
+      {
+        align = "center",
+        action = function()
+          vim.cmd("PackSync")
+        end,
+        key = "U",
+        text = {
+          { "type  " },
+          { "U", hl = "SnacksDashboardKey" },
+          { "  to update plugins  " },
+        },
+      },
+      {
+        align = "center",
+        action = ":qa",
+        key = "q",
+        text = {
+          { "type  " },
+          { "q", hl = "SnacksDashboardKey" },
+          { "  to exit            " },
+        },
+      },
+      {
+        align = "center",
+        text = {
+          {
+            "──────────────────────────────────────────────",
+            hl = "NonText",
+          },
+        },
+      },
+      {
+        align = "center",
+        text = { { "Help poor children in Uganda!" } },
+      },
+      {
+        align = "center",
+        action = ":help Kuwasha",
+        key = "K",
+        text = {
+          { "type  " },
+          { ":", hl = "SpecialKey" },
+          { "help Kuwasha", hl = "SnacksDashboardCommand" },
+          { "<Enter>", hl = "SpecialKey" },
+          { "  for information    " },
+        },
+      },
     },
   },
   image = {
