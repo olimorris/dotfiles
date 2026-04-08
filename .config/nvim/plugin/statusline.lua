@@ -715,7 +715,9 @@ local function statusline()
       end,
       {
         provider = function(self)
-          return "  " .. self.chat_metadata.adapter.model .. " "
+          if type(self.chat_metadata.adapter.model) == "string" then
+            return "  " .. self.chat_metadata.adapter.model .. " "
+          end
         end,
         hl = { fg = "gray", bg = "bg" },
       },
