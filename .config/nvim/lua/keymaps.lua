@@ -51,6 +51,11 @@ keymap("n", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Split: Move right" })
 keymap("n", "<Leader>c", "<cmd>wincmd q<CR>", { desc = "Split: Close" })
 keymap("n", "<Leader>s", "<cmd>wincmd o<CR>", { desc = "Split: Close all but current" })
 
+-- jump
+keymap("n", "s", function()
+  require("jump").start()
+end, { desc = "Jump to text" })
+
 -- nvim-surround
 keymap("x", "(", "S)", { remap = true, desc = "Surround with ()'s" })
 keymap("x", ")", "S)", { remap = true, desc = "Surround with ()'s" })

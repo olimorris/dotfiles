@@ -1,3 +1,7 @@
+require("jump").setup({
+  labels = "asdfghjkl;'",
+})
+
 require("nvim-surround").setup()
 
 require("oil").setup({
