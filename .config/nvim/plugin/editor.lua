@@ -1,6 +1,4 @@
-require("jump").setup({
-  labels = "asdfghjkl;'",
-})
+require("jump").setup()
 
 require("nvim-surround").setup()
 
