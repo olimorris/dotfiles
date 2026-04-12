@@ -2,137 +2,138 @@
 # This Rakefile should not be run with sudo, it will use sudo where necessary.
 # To perform tasks in a 'dry run' state append the following to your command:
 # DRY_RUN=true
-DOTS_FOLDER = '.dotfiles'
+DOTS_FOLDER = ".dotfiles"
 DIRECTORY_NAME = File.dirname(__dir__)
-SKIP_TESTS_FOR = %w[].freeze # mas.rake brew.rake
+# mas.rake brew.rake
+SKIP_TESTS_FOR = %w[].freeze
 
-Dir.glob('./tasks/**/*').map { |file| load file }
+Dir.glob("./tasks/**/*").map { |file| load(file) }
 
-task default: [:backup]
+task(default: [:backup])
 
-desc 'Backup Everything'
-task :backup do
-  section 'Backing up'
+desc("Backup Everything")
+task(:backup) do
+  section("Backing up")
 
   # Packages
-  Rake::Task['backup:brew'].invoke
-  Rake::Task['backup:app_store'].invoke
-  Rake::Task['backup:gems'].invoke
-  Rake::Task['backup:npm'].invoke
-  Rake::Task['backup:pip'].invoke
+  Rake::Task["backup:brew"].invoke
+  Rake::Task["backup:app_store"].invoke
+  Rake::Task["backup:gems"].invoke
+  Rake::Task["backup:npm"].invoke
+  Rake::Task["backup:pip"].invoke
 
   # Files
-  Rake::Task['backup:app_config'].invoke
-  Rake::Task['backup:files'].invoke
+  Rake::Task["backup:app_config"].invoke
+  Rake::Task["backup:files"].invoke
 end
 
-desc 'Install Everything'
-task :install do
-  section 'Installing'
+desc("Install Everything")
+task(:install) do
+  section("Installing")
 
-  Rake::Task['tests:setup'].invoke if testing?
+  Rake::Task["tests:setup"].invoke if testing?
 
   # Fetch files first. Currently we're doing this manually so don't need this step
   # Rake::Task['install:files'].invoke
 
   # Packages
-  Rake::Task['install:xcode'].invoke
-  Rake::Task['install:brew'].invoke
-  Rake::Task['install:brew_packages'].invoke
-  Rake::Task['install:brew_cask_packages'].invoke
-  Rake::Task['install:brew_clean_up'].invoke
-  Rake::Task['install:app_store'].invoke unless testing?
+  Rake::Task["install:xcode"].invoke
+  Rake::Task["install:brew"].invoke
+  Rake::Task["install:brew_packages"].invoke
+  Rake::Task["install:brew_cask_packages"].invoke
+  Rake::Task["install:brew_clean_up"].invoke
+  Rake::Task["install:app_store"].invoke unless testing?
 
-  Rake::Task['install:servers'].invoke
+  Rake::Task["install:servers"].invoke
 
   # Packages
-  Rake::Task['install:rust'].invoke unless testing?
-  Rake::Task['install:cargo'].invoke unless testing?
-  Rake::Task['install:gems'].invoke unless testing?
-  Rake::Task['install:npm'].invoke unless testing?
-  Rake::Task['install:pip'].invoke unless testing?
-  Rake::Task['install:fish'].invoke unless testing?
+  Rake::Task["install:rust"].invoke unless testing?
+  Rake::Task["install:cargo"].invoke unless testing?
+  Rake::Task["install:gems"].invoke unless testing?
+  Rake::Task["install:npm"].invoke unless testing?
+  Rake::Task["install:pip"].invoke unless testing?
+  Rake::Task["install:fish"].invoke unless testing?
 
   # Files
-  Rake::Task['install:dotbot'].invoke
-  Rake::Task['install:app_config'].invoke
+  Rake::Task["install:dotbot"].invoke
+  Rake::Task["install:app_config"].invoke
 
   # System
-  Rake::Task['install:chmod'].invoke
-  Rake::Task['install:fonts'].invoke
-  Rake::Task['install:hammerspoon'].invoke
-  Rake::Task['install:launch_agents'].invoke
+  Rake::Task["install:chmod"].invoke
+  Rake::Task["install:fonts"].invoke
+  Rake::Task["install:hammerspoon"].invoke
+  Rake::Task["install:launch_agents"].invoke
 
   # Apps
-  Rake::Task['install:vim'].invoke
-  Rake::Task['install:neovim'].invoke
+  Rake::Task["install:vim"].invoke
+  Rake::Task["install:neovim"].invoke
 
-  Rake::Task['install:macos'].invoke
+  Rake::Task["install:macos"].invoke
 end
 
-desc 'Update Everything'
-task :update do
-  section 'Updating'
+desc("Update Everything")
+task(:update) do
+  section("Updating")
 
-  Rake::Task['tests:setup'].invoke if testing?
+  Rake::Task["tests:setup"].invoke if testing?
 
   # Backup packages before brew upgrade (which may update runtimes via mise)
-  Rake::Task['backup:gems'].invoke
-  Rake::Task['backup:npm'].invoke
-  Rake::Task['backup:pip'].invoke
+  Rake::Task["backup:gems"].invoke
+  Rake::Task["backup:npm"].invoke
+  Rake::Task["backup:pip"].invoke
 
   # Brew upgrade (may install new Python/Node/Ruby versions)
-  Rake::Task['update:brew'].invoke
-  Rake::Task['update:fish'].invoke
+  Rake::Task["update:brew"].invoke
+  Rake::Task["update:fish"].invoke
 
   # Reinstall and upgrade packages under the (potentially new) runtimes
-  Rake::Task['install:gems'].invoke
-  Rake::Task['update:gems'].invoke
-  Rake::Task['install:npm'].invoke
-  Rake::Task['update:npm'].invoke
-  Rake::Task['install:pip'].invoke
-  Rake::Task['update:pip'].invoke
+  Rake::Task["install:gems"].invoke
+  Rake::Task["update:gems"].invoke
+  Rake::Task["install:npm"].invoke
+  Rake::Task["update:npm"].invoke
+  Rake::Task["install:pip"].invoke
+  Rake::Task["update:pip"].invoke
 
   # System
-  Rake::Task['update:servers'].invoke
+  Rake::Task["update:servers"].invoke
 
   # Apps
-  Rake::Task['update:vim'].invoke
-  Rake::Task['update:neovim'].invoke
-  Rake::Task['update:wezterm'].invoke
+  Rake::Task["update:vim"].invoke
+  Rake::Task["update:neovim"].invoke
+  Rake::Task["update:wezterm"].invoke
 end
 
-desc 'Install Language Packages (gems, npm, pip)'
-task :packages do
-  section 'Installing Packages'
+desc("Install Language Packages (gems, npm, pip)")
+task(:packages) do
+  section("Installing Packages")
 
-  Rake::Task['install:gems'].invoke
-  Rake::Task['install:npm'].invoke
-  Rake::Task['install:pip'].invoke
+  Rake::Task["install:gems"].invoke
+  Rake::Task["install:npm"].invoke
+  Rake::Task["install:pip"].invoke
 end
 
-desc 'Sync Everything'
-task :sync do
-  section 'Syncing'
+desc("Sync Everything")
+task(:sync) do
+  section("Syncing")
 
-  Rake::Task['update'].invoke
-  Rake::Task['backup'].invoke
-  Rake::Task['install:brew_clean_up'].invoke
+  Rake::Task["update"].invoke
+  Rake::Task["backup"].invoke
+  Rake::Task["install:brew_clean_up"].invoke
 end
 
-desc 'Uninstall'
-task :uninstall do
-  section 'Uninstalling'
+desc("Uninstall")
+task(:uninstall) do
+  section("Uninstalling")
 
-  Rake::Task['uninstall:dotbot'].invoke
+  Rake::Task["uninstall:dotbot"].invoke
 end
 
-namespace :work do
-  desc 'Cloud -> Mac (Work)'
-  task :pull, [:progress] do |_t, args|
-    section 'Cloud -> Mac'
+namespace(:work) do
+  desc("Cloud -> Mac (Work)")
+  task(:pull, [:progress]) do |_t, args|
+    section("Cloud -> Mac")
 
-    Rake::Task['work:restore:files'].invoke(args[:progress])
+    Rake::Task["work:restore:files"].invoke(args[:progress])
 
     # Install packages
     # Rake::Task['install:brew_packages'].invoke
@@ -143,15 +144,15 @@ namespace :work do
     # Rake::Task['install:pip'].invoke unless testing?
 
     # App config
-    Rake::Task['install:dotbot'].invoke
-    Rake::Task['install:app_config'].invoke
+    Rake::Task["install:dotbot"].invoke
+    Rake::Task["install:app_config"].invoke
   end
 
-  desc 'Mac (Work) -> Cloud'
-  task :push, [:progress] do |_t, args|
-    section 'Mac -> Cloud'
+  desc("Mac (Work) -> Cloud")
+  task(:push, [:progress]) do |_t, args|
+    section("Mac -> Cloud")
 
-    Rake::Task['backup:app_config'].invoke
-    Rake::Task['work:backup:files'].invoke(args[:progress])
+    Rake::Task["backup:app_config"].invoke
+    Rake::Task["work:backup:files"].invoke(args[:progress])
   end
 end
