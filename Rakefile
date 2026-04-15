@@ -100,7 +100,6 @@ task(:update) do
   # Apps
   Rake::Task["update:vim"].invoke
   Rake::Task["update:neovim"].invoke
-  Rake::Task["update:wezterm"].invoke
 end
 
 desc("Install Language Packages (gems, npm, pip)")

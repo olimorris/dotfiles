@@ -25,7 +25,6 @@
     ~/.config/rclone: .config/rclone
     ~/.config/snippets: .config/snippets
     ~/.config/voiceink: .config/voiceink
-    ~/.config/wezterm: .config/wezterm
 
     # Launch Agents
     ~/Library/LaunchAgents/oli.cloud-backup.plist: misc/LaunchAgents/oli.cloud-backup.plist
