@@ -72,6 +72,123 @@ for key, app_name in pairs(apps) do
   end
 end
 
+--------------------------- APP-SPECIFIC KEYMAPS ------------------------------
+local function ghosttySessionizer()
+  local home = os.getenv("HOME")
+
+  -- Get open Ghostty windows
+  local windows = {}
+  local ok, result = hs.osascript.applescript([[
+    tell application "Ghostty"
+      set output to ""
+      repeat with w in (every window)
+        set wid to id of w
+        set t to focused terminal of selected tab of w
+        set wdir to working directory of t
+        set output to output & wid & "|||" & wdir & ":::"
+      end repeat
+      return output
+    end tell
+  ]])
+  if ok and result then
+    for entry in result:gmatch("([^:::]+):::") do
+      local id, dir = entry:match("(.+)|||(.+)")
+      if id and dir then
+        windows[dir] = id
+      end
+    end
+  end
+
+  -- Get zoxide directories
+  local zoxide_dirs = {}
+  local handle = io.popen("/opt/homebrew/bin/zoxide query -l -s 2>/dev/null")
+  if handle then
+    local output = handle:read("*a")
+    handle:close()
+    for score, dir in output:gmatch("%s*([%d.]+)%s+([^\n]+)") do
+      table.insert(zoxide_dirs, { dir = dir, score = tonumber(score) })
+    end
+  end
+  table.sort(zoxide_dirs, function(a, b)
+    return a.score > b.score
+  end)
+
+  -- Build choices: zoxide order, tagging open windows
+  local choices = {}
+  local seen = {}
+  for _, entry in ipairs(zoxide_dirs) do
+    seen[entry.dir] = true
+    table.insert(choices, {
+      text = entry.dir:gsub(home, "~"),
+      subText = windows[entry.dir] and "open" or nil,
+      dir = entry.dir,
+      windowId = windows[entry.dir],
+    })
+  end
+  for dir, id in pairs(windows) do
+    if not seen[dir] then
+      table.insert(choices, {
+        text = dir:gsub(home, "~"),
+        subText = "open",
+        dir = dir,
+        windowId = id,
+      })
+    end
+  end
+
+  local chooser = hs.chooser.new(function(choice)
+    if not choice then
+      return
+    end
+
+    if choice.windowId then
+      hs.osascript.applescript(string.format(
+        [[
+        tell application "Ghostty"
+          activate window (first window whose id is "%s")
+        end tell
+      ]],
+        choice.windowId
+      ))
+    else
+      hs.osascript.applescript(string.format(
+        [[
+        tell application "Ghostty"
+          set cfg to new surface configuration
+          set initial working directory of cfg to "%s"
+          new window with configuration cfg
+        end tell
+      ]],
+        choice.dir
+      ))
+    end
+
+    -- Bump zoxide score
+    hs.execute(string.format("/opt/homebrew/bin/zoxide add %q", choice.dir))
+  end)
+
+  chooser:choices(choices)
+  chooser:show()
+end
+
+local ghosttyKeys = hs.hotkey.modal.new()
+ghosttyKeys:bind({ "ctrl" }, "w", ghosttySessionizer)
+
+local appWatcher = hs.application.watcher.new(function(name, event)
+  if name == "Ghostty" then
+    if event == hs.application.watcher.activated then
+      ghosttyKeys:enter()
+    elseif event == hs.application.watcher.deactivated then
+      ghosttyKeys:exit()
+    end
+  end
+end)
+appWatcher:start()
+
+if hs.application.frontmostApplication():name() == "Ghostty" then
+  ghosttyKeys:enter()
+end
+
 -------------------------------------OTHERS-------------------------------------
 hs.hotkey.bind(hyper, "H", function()
   hs.hints.windowHints()
