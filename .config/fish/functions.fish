@@ -49,3 +49,16 @@ end
 function col -d "Test if color is working"
     curl -s https://gist.githubusercontent.com/HaleTom/89ffe32783f89f403bba96bd7bcd1263/raw/e50a28ec54188d2413518788de6c6367ffcea4f7/print256colours.sh | bash
 end
+
+function cleanvid -d "Re-encode a video with libx264 and CRF 20"
+    if not set -q argv[1]
+        echo "Usage: cleanvid <video_path>"
+        return 1
+    end
+
+    set input $argv[1]
+    set base (string replace -r '\.mp4$' '' $input)
+    set output "$base CLEAN.mp4"
+
+    ffmpeg -i "$input" -vcodec libx264 -crf 20 "$output"
+end
