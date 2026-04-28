@@ -8,6 +8,7 @@
 
 - link:
     # Config directory
+    # Location on disk: Location in dotfiles
     ~/.config/1password: .config/1password
     ~/.config/efm-langserver: .config/efm-langserver
     ~/.config/espanso: .config/espanso
@@ -18,6 +19,7 @@
     ~/.config/hammerspoon: .config/hammerspoon
     ~/.config/lazygit: .config/lazygit
     ~/.config/mise: .config/mise
+    ~/.nanobot: .config/nanobot
     ~/.config/nvim: .config/nvim
     ~/.config/opencode/themes:
         path: ~/.cache/nvim/onedarkpro_dotfiles/extras/opencode
