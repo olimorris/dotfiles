@@ -9,8 +9,10 @@ window.animationDuration = 0.0
 -- [[ Constants ]] ------------------------------------------------------------
 local POSITIONS = {
   halves = {
+    bottom = "0,2 6x2",
     left = "0,0 3x4",
     right = "3,0 3x4",
+    top = "0,0 6x2",
   },
   thirds = {
     left = "0,0 2x4",
@@ -31,22 +33,46 @@ local POSITIONS = {
   end,
 }
 
--- Simplified: Move focused window to a destination screen and apply a simple layout.
-local function moveAndResizeWindow(destination_screen_fn)
+local DIRECTIONS = {
+  down = { neighbor = "toSouth", opposite = "top", reverseNeighbor = "toNorth", target = "bottom" },
+  left = { neighbor = "toWest", opposite = "right", reverseNeighbor = "toEast", target = "left" },
+  right = { neighbor = "toEast", opposite = "left", reverseNeighbor = "toWest", target = "right" },
+  up = { neighbor = "toNorth", opposite = "bottom", reverseNeighbor = "toSouth", target = "top" },
+}
+
+local function snapOrWrap(direction)
   local win = hs.window.focusedWindow()
   if not win then
     return
   end
 
-  local destination_screen = destination_screen_fn(win:screen())
-  if not destination_screen then
-    return
+  local d = DIRECTIONS[direction]
+  local screen = win:screen()
+  local targetCell = POSITIONS.halves[d.target]
+  local frame = win:frame()
+  local targetFrame = hs.grid.getCell(targetCell, screen)
+
+  local atEdge = math.abs(frame.x - targetFrame.x) < 5
+    and math.abs(frame.y - targetFrame.y) < 5
+    and math.abs(frame.w - targetFrame.w) < 5
+    and math.abs(frame.h - targetFrame.h) < 5
+
+  if atEdge then
+    local adjacent = screen[d.neighbor](screen)
+    if not adjacent then
+      adjacent = screen
+      while adjacent[d.reverseNeighbor](adjacent) do
+        adjacent = adjacent[d.reverseNeighbor](adjacent)
+      end
+    end
+    if adjacent ~= screen then
+      win:moveToScreen(adjacent)
+      hs.grid.set(win, POSITIONS.halves[d.opposite], adjacent)
+      return
+    end
   end
 
-  win:moveToScreen(destination_screen)
-
-  -- Apply a simple default layout (left half on destination screen)
-  hs.grid.set(win, POSITIONS.halves.left, destination_screen)
+  hs.grid.set(win, targetCell, screen)
 end
 
 -- [[ Window Management ]] -----------------------------------------------------
@@ -82,18 +108,20 @@ function modal:exited()
   end
 end
 
--- Halves
+-- Halves (snap to half on current screen; if already at that edge, jump to the
+-- adjacent screen and snap to the opposite half so it lands flush against the
+-- previous screen)
 modal:bind({}, "h", function()
-  local win = hs.window.focusedWindow()
-  if win then
-    hs.grid.set(win, POSITIONS.halves.left)
-  end
+  snapOrWrap("left")
+end)
+modal:bind({}, "j", function()
+  snapOrWrap("down")
+end)
+modal:bind({}, "k", function()
+  snapOrWrap("up")
 end)
 modal:bind({}, "l", function()
-  local win = hs.window.focusedWindow()
-  if win then
-    hs.grid.set(win, POSITIONS.halves.right)
-  end
+  snapOrWrap("right")
 end)
 
 modal:bind({}, "1", function()
@@ -125,18 +153,6 @@ modal:bind({}, "5", function()
   if win then
     win:setFrame(POSITIONS.p1080({ chrome = true }))
   end
-end)
-
--- Move to next/previous screen
-modal:bind({}, "j", function()
-  moveAndResizeWindow(function(currentScreen)
-    return currentScreen:next()
-  end)
-end)
-modal:bind({}, "k", function()
-  moveAndResizeWindow(function(currentScreen)
-    return currentScreen:previous()
-  end)
 end)
 
 -- Exit modal
