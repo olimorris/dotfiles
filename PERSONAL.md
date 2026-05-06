@@ -34,3 +34,5 @@ I work best when we "start at the top, and work back". That is, I like to solve 
 - Question every variable and abstraction — if it only exists to hold a value for one use, inline it. If it duplicates existing logic, use the existing codepath
 - Keep separation of concerns — modules should own their domain, not leak into unrelated layers
 - Always sort table properties in alphabetical order
+- Run make commands directly (e.g. `make test`), not `cd /path && make test`
+- Avoid jargon shortcuts like "no-op" in code, comments, commit messages, and chat — say what the code actually does ("returns unchanged", "does nothing", "skipped because already edited")
