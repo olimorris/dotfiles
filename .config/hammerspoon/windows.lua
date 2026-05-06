@@ -34,13 +34,21 @@ local POSITIONS = {
 }
 
 local DIRECTIONS = {
-  down = { neighbor = "toSouth", opposite = "top", reverseNeighbor = "toNorth", target = "bottom" },
-  left = { neighbor = "toWest", opposite = "right", reverseNeighbor = "toEast", target = "left" },
-  right = { neighbor = "toEast", opposite = "left", reverseNeighbor = "toWest", target = "right" },
-  up = { neighbor = "toNorth", opposite = "bottom", reverseNeighbor = "toSouth", target = "top" },
+  down = { neighbor = "toSouth", reverseNeighbor = "toNorth", target = "bottom" },
+  left = { neighbor = "toWest", reverseNeighbor = "toEast", target = "left" },
+  right = { neighbor = "toEast", reverseNeighbor = "toWest", target = "right" },
+  up = { neighbor = "toNorth", reverseNeighbor = "toSouth", target = "top" },
 }
 
-local function snapOrWrap(direction)
+local function snapHalf(direction)
+  local win = hs.window.focusedWindow()
+  if not win then
+    return
+  end
+  hs.grid.set(win, POSITIONS.halves[DIRECTIONS[direction].target])
+end
+
+local function moveToAdjacent(direction)
   local win = hs.window.focusedWindow()
   if not win then
     return
@@ -48,31 +56,18 @@ local function snapOrWrap(direction)
 
   local d = DIRECTIONS[direction]
   local screen = win:screen()
-  local targetCell = POSITIONS.halves[d.target]
-  local frame = win:frame()
-  local targetFrame = hs.grid.getCell(targetCell, screen)
+  local adjacent = screen[d.neighbor](screen)
 
-  local atEdge = math.abs(frame.x - targetFrame.x) < 5
-    and math.abs(frame.y - targetFrame.y) < 5
-    and math.abs(frame.w - targetFrame.w) < 5
-    and math.abs(frame.h - targetFrame.h) < 5
-
-  if atEdge then
-    local adjacent = screen[d.neighbor](screen)
-    if not adjacent then
-      adjacent = screen
-      while adjacent[d.reverseNeighbor](adjacent) do
-        adjacent = adjacent[d.reverseNeighbor](adjacent)
-      end
-    end
-    if adjacent ~= screen then
-      win:moveToScreen(adjacent)
-      hs.grid.set(win, POSITIONS.halves[d.opposite], adjacent)
-      return
+  if not adjacent then
+    adjacent = screen
+    while adjacent[d.reverseNeighbor](adjacent) do
+      adjacent = adjacent[d.reverseNeighbor](adjacent)
     end
   end
 
-  hs.grid.set(win, targetCell, screen)
+  if adjacent ~= screen then
+    win:moveToScreen(adjacent)
+  end
 end
 
 -- [[ Window Management ]] -----------------------------------------------------
@@ -108,20 +103,32 @@ function modal:exited()
   end
 end
 
--- Halves (snap to half on current screen; if already at that edge, jump to the
--- adjacent screen and snap to the opposite half so it lands flush against the
--- previous screen)
+-- Halves on the current screen
 modal:bind({}, "h", function()
-  snapOrWrap("left")
+  snapHalf("left")
 end)
 modal:bind({}, "j", function()
-  snapOrWrap("down")
+  snapHalf("down")
 end)
 modal:bind({}, "k", function()
-  snapOrWrap("up")
+  snapHalf("up")
 end)
 modal:bind({}, "l", function()
-  snapOrWrap("right")
+  snapHalf("right")
+end)
+
+-- Move to the adjacent monitor (wraps around)
+modal:bind({}, "left", function()
+  moveToAdjacent("left")
+end)
+modal:bind({}, "down", function()
+  moveToAdjacent("down")
+end)
+modal:bind({}, "up", function()
+  moveToAdjacent("up")
+end)
+modal:bind({}, "right", function()
+  moveToAdjacent("right")
 end)
 
 modal:bind({}, "1", function()
