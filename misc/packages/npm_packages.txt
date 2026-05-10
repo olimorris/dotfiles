@@ -2,19 +2,19 @@
   "name": "lib",
   "dependencies": {
     "@agentclientprotocol/claude-agent-acp": {
-      "version": "0.26.0",
+      "version": "0.31.4",
       "overridden": false
     },
     "@augmentcode/auggie": {
-      "version": "0.23.0",
+      "version": "0.25.2",
       "overridden": false
     },
     "@google/gemini-cli": {
-      "version": "0.37.1",
+      "version": "0.39.0",
       "overridden": false
     },
     "@openai/codex": {
-      "version": "0.116.0",
+      "version": "0.124.0",
       "overridden": false
     },
     "@zed-industries/codex-acp": {
@@ -22,7 +22,7 @@
       "overridden": false
     },
     "corepack": {
-      "version": "0.34.6",
+      "version": "0.34.7",
       "overridden": false
     },
     "npm": {
@@ -30,7 +30,7 @@
       "overridden": false
     },
     "opencode-ai": {
-      "version": "1.4.3",
+      "version": "1.14.22",
       "overridden": false
     }
   }

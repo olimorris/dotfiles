@@ -1,7 +1,7 @@
 act
 age
+anomalyco/tap/opencode
 bats-core
-cagent
 code-minimap
 composer
 dark-mode
@@ -26,12 +26,14 @@ lazygit
 ledger
 librsync
 libvterm
+llvm@21
 lolcat
 luajit
 mackup
 mas
 mbedtls
 mise
+mole
 moor
 most
 mvfst
@@ -45,12 +47,13 @@ pipx
 pngpaste
 rclone
 reattach-to-user-namespace
-ripgrep
 rust
+shared-mime-info
 shfmt
 shunit2
 spring-io/tap/spring-boot
 subversion
+tmux
 tokei
 tree
 tree-sitter
@@ -59,7 +62,6 @@ typos-cli
 universal-ctags
 uv
 vim
-vivid
 vldmrkl/formulae/airdrop-cli
 vtk
 watchman
