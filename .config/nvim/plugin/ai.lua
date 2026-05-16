@@ -138,11 +138,6 @@ require("codecompanion").setup({
         name = "copilot",
         model = "claude-haiku-4.5",
       },
-      -- adapter = {
-      --   name = "claude_code",
-      --   model = "opus",
-      -- },
-      -- adapter = "claude_code",
       roles = {
         user = "olimorris",
       },
@@ -248,11 +243,14 @@ require("codecompanion").setup({
     },
   },
   rules = {
-    default = {
+    personal = {
       files = {
         { path = "~/.dotfiles/PERSONAL.md", parser = "codecompanion" },
-        { path = "CLAUDE.md", parser = "claude" },
-        { path = "AGENTS.md", parser = "claude" },
+      },
+    },
+    opts = {
+      chat = {
+        autoload = { "default", "personal" },
       },
     },
   },
@@ -264,7 +262,7 @@ require("codecompanion").setup({
         ".codecompanion.lua",
       },
     },
-    test_mode = true,
+    -- test_mode = true,
   },
 })
 vim.cmd([[cab cc CodeCompanion]])
