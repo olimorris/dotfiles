@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://user-images.githubusercontent.com/9512444/224173335-446d701d-cca3-41bd-8889-572a93ddaf41.png" alt="Dotfiles">
+<img src="https://github.com/user-attachments/assets/52545f6b-1825-462d-b578-14ad27ee9dca" alt="Dotfiles">
 </p>
 
 <h1 align="center">Oli's Dotfiles</h1>
