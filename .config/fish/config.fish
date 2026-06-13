@@ -1,42 +1,36 @@
 set -g fish_greeting ""
 
 # Variables
-set -x GPG_TTY (tty)
-set -x EDITOR nvim
-set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
-set -x HOMEBREW_NO_ANALYTICS 1
-set -x GOPATH "$HOME/.go"
-set -x EXTRAS "$HOME/.cache/nvim/onedarkpro_dotfiles/extras"
+set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
+set -gx EDITOR nvim
+set -gx EXTRAS "$HOME/.cache/nvim/onedarkpro_dotfiles/extras"
+set -gx GOPATH "$HOME/.go"
+set -gx GPG_TTY (tty)
+set -gx HOMEBREW_NO_ANALYTICS 1
 
- # Paths
-fish_add_path -p "$(brew --prefix rustup)/bin" "$(brew --prefix)/bin" "$HOME/.cargo/bin" "$HOME/.dotfiles/bin" "$HOME/.local/share/nvim/mason/bin" "$HOME/.local/bin" "$GOPATH/bin"
+# Paths
+fish_add_path -p /opt/homebrew/opt/rustup/bin /opt/homebrew/bin ~/.cargo/bin ~/.dotfiles/bin ~/.local/share/nvim/mason/bin ~/.local/bin $GOPATH/bin
 
 function theme
-  if not test -f /tmp/oli-theme
-    echo "dark" > /tmp/oli-theme
-  end
+  test -f /tmp/oli-theme; or echo dark > /tmp/oli-theme
 
-  set -f VARIANT "$(cat /tmp/oli-theme)"
-  set -f FORMAT "$EXTRAS/fish/%s.fish"
-
-  if [ "$VARIANT" = "light" ]
-    set -gx THEME "onedarkpro_onelight"
+  read -l variant < /tmp/oli-theme
+  if test "$variant" = light
+    set -gx THEME onedarkpro_onelight
   else
-    set -gx THEME "onedarkpro_vaporwave"
+    set -gx THEME onedarkpro_vaporwave
   end
 
-  source $(printf $FORMAT $THEME)
+  source "$EXTRAS/fish/$THEME.fish"
 end
-
-source $HOME/.config/fish/aliases.fish
-source $HOME/.config/fish/functions.fish
-source $HOME/.config/fish/fish_prompt.fish
 
 # History configuration
 set -g fish_history_limit 10000
-set -g fish_history_save_on_exit true
 
 if status is-interactive
+    source $HOME/.config/fish/aliases.fish
+    source $HOME/.config/fish/functions.fish
+    source $HOME/.config/fish/fish_prompt.fish
     load_env_vars ~/.env
     theme
     mise activate fish | source
