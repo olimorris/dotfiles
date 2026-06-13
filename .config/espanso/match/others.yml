@@ -9,16 +9,29 @@ matches:
 
   - trigger: "subjj"
     replace: |
-            Hi there,
+      Hi there,
 
-            I can't see an unsubscribe button on your email. Are you aware of the law surrounding direct Marketing and advertising? I've included a link below:
+      I can't see an unsubscribe button on your email. Are you aware of the law surrounding direct Marketing and advertising? I've included a link below:
 
-            https://www.gov.uk/marketing-advertising-law/direct-marketing
+      https://www.gov.uk/marketing-advertising-law/direct-marketing
 
-            I also ask that you manually unsubscribe me from your marketing emails.
+      I also ask that you manually unsubscribe me from your marketing emails.
 
-            Regards,
-            Oli
+      Regards,
+      Oli
+
+  - trigger: "unsubjj"
+    replace: |
+      Hi,
+
+      I never subscribed to your mailing list and since you have this email address, I know you’ve scraped it from the GitHub.
+
+      This is not cool.
+
+      I’m reporting this to the ICO as an unsolicited marketing email sent without prior consent - a breach of PECR and UK GDPR.
+
+      Thanks,
+      Oli
 
   - trigger: "gdprjj"
     replace: |
