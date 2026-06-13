@@ -154,6 +154,11 @@ require("codecompanion").setup({
             dirs = { "~/Documents/Screenshots" },
           },
         },
+        ["share"] = {
+          opts = {
+            token = os.getenv("GITHUB_GIST_TOKEN"),
+          },
+        },
       },
       tools = {
         ["hledger"] = {
@@ -200,10 +205,14 @@ require("codecompanion").setup({
     inline = {
       adapter = {
         name = "copilot",
-        model = "gpt-4.1",
+        model = "claude-haiku-4.5",
       },
     },
     background = {
+      adapter = {
+        name = "copilot",
+        model = "gpt-5-mini",
+      },
       chat = {
         opts = {
           enabled = true,
