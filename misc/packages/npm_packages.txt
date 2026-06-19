@@ -2,35 +2,35 @@
   "name": "lib",
   "dependencies": {
     "@agentclientprotocol/claude-agent-acp": {
-      "version": "0.31.4",
+      "version": "0.44.0",
       "overridden": false
     },
     "@augmentcode/auggie": {
-      "version": "0.25.2",
+      "version": "0.29.0",
       "overridden": false
     },
     "@google/gemini-cli": {
-      "version": "0.39.0",
+      "version": "0.46.0",
       "overridden": false
     },
     "@openai/codex": {
-      "version": "0.124.0",
+      "version": "0.139.0",
       "overridden": false
     },
     "@zed-industries/codex-acp": {
-      "version": "0.11.1",
+      "version": "0.16.0",
       "overridden": false
     },
     "corepack": {
-      "version": "0.34.7",
+      "version": "0.35.0",
       "overridden": false
     },
     "npm": {
-      "version": "10.9.7",
+      "version": "11.16.0",
       "overridden": false
     },
     "opencode-ai": {
-      "version": "1.14.22",
+      "version": "1.17.3",
       "overridden": false
     }
   }

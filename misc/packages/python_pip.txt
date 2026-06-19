@@ -115,7 +115,8 @@ mpmath==1.3.0
 msgpack==1.1.1
 multidict==6.7.1
 namex==0.1.0
--e git+https://github.com/HKUDS/nanobot.git@185a8fd34dd43ef10a99bff5653d7393e5731fee#egg=nanobot_ai
+# Editable install with no version control (nanobot-ai==0.1.5.post2)
+-e /Users/Oli/.dotfiles/src/nanobot-ai
 nbclient==0.10.2
 nbconvert==7.16.6
 nbformat==5.10.4
