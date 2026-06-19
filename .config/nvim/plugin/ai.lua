@@ -48,6 +48,13 @@ require("codecompanion").setup({
           },
         })
       end,
+      openrouter = function()
+        return require("codecompanion.adapters").extend("openrouter", {
+          env = {
+            api_key = "cmd:op read op://personal/OpenRouter_API/credential --no-newline",
+          },
+        })
+      end,
       -- ollama = function()
       --   return require("codecompanion.adapters").extend("ollama", {
       --     schema = {
@@ -230,6 +237,14 @@ require("codecompanion").setup({
       -- show_settings = true,
       show_reasoning = false,
       fold_context = true,
+    },
+  },
+  extensions = {
+    fs_monitor = {
+      enabled = true,
+      opts = {
+        keymap = "gD",
+      },
     },
   },
   mcp = {
