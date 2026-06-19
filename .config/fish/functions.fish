@@ -62,3 +62,5 @@ function cleanvid -d "Re-encode a video with libx264 and CRF 20"
 
     ffmpeg -i "$input" -vcodec libx264 -crf 20 "$output"
 end
+
+
