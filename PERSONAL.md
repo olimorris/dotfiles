@@ -26,16 +26,8 @@ I work best when we "start at the top, and work back". That is, I like to solve 
 
 ### Feedback
 
-- Never suppress LSP diagnostics with `---@diagnostic disable-next-line` or similar comments — fix the underlying type issue instead (restructure code, add proper type narrowing, etc.)
-- Place reusable utility functions in shared modules (e.g. `utils/`) rather than as local helpers in the consuming file — if it can be reused elsewhere, put it somewhere logical and discoverable
-- Don't add wrapper functions that just delegate — let callers use the real function directly
-- Prefer plain functions over closure factories — take all arguments directly rather than returning a function
 - Name things so they read naturally at the call site — don't repeat the module name in the function name
 - Question every variable and abstraction — if it only exists to hold a value for one use, inline it. If it duplicates existing logic, use the existing codepath
 - Keep separation of concerns — modules should own their domain, not leak into unrelated layers
-- Always sort table properties in alphabetical order
-- Run make commands directly (e.g. `make test`), not `cd /path && make test`
 - Avoid jargon shortcuts like "no-op" in code, comments, commit messages, and chat — say what the code actually does ("returns unchanged", "does nothing", "skipped because already edited")
-- Tests prefer inline data over semantic helpers — write message tables, adapter structs, etc. directly in each test rather than building factories like `tagged_user(tag, content)` or `fake_chat(messages)`. Tests can be long, clunky, repetitive; readability beats conciseness because the reader shouldn't have to investigate a helper to understand what's being tested
-- Test comments: present tense, active voice, concise — no em-dashes, no "should be" prefixes, drop trailing narration that just describes the next assertion. Keep intent comments that explain *why* you're asserting
-- Use the project's canonical vocabulary in naming — in CodeCompanion that's "chat"/"messages", not "conversation". Constants name their unit (`min_token_savings = 10000`, not `clear_at_least`). Pick domain-specific verbs over generic ones (`compaction.compact()` over `compaction.apply()`); avoid verbs with hidden connotations (`commit` suggests stack/Git semantics — prefer `update_*` for one-shot replacements). When two functions form a semantic pair, name them symmetrically (`messages_to_summarize` ↔ `messages_to_retain`)
+- Write for the cold reader — names, descriptions, and APIs should be self-evident without prior context. If understanding something requires knowing the implementation, the fixture content, or what came before, that's a signal to simplify or restate. This applies equally to code, comments, test descriptions, and conversation.
