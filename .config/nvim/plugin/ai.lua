@@ -55,6 +55,13 @@ require("codecompanion").setup({
           },
         })
       end,
+      openrouter_title_generation = function()
+        return require("codecompanion.adapters").extend("openrouter", {
+          env = {
+            api_key = "OPENROUTER_TITLE_GENERATION_KEY",
+          },
+        })
+      end,
       -- ollama = function()
       --   return require("codecompanion.adapters").extend("ollama", {
       --     schema = {
@@ -217,8 +224,8 @@ require("codecompanion").setup({
     },
     background = {
       adapter = {
-        name = "copilot",
-        model = "gpt-5-mini",
+        name = "openrouter_title_generation",
+        model = "microsoft/phi-4",
       },
       chat = {
         opts = {
