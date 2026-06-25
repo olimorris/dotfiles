@@ -19,6 +19,7 @@
     ~/.config/hammerspoon: .config/hammerspoon
     ~/.config/lazygit: .config/lazygit
     ~/.config/mise: .config/mise
+    ~/.config/obs-sidecar: .config/obs-sidecar
     ~/.nanobot: .config/nanobot
     ~/.config/nvim: .config/nvim
     ~/.config/opencode/themes:
