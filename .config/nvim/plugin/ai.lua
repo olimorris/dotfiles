@@ -60,6 +60,7 @@ require("codecompanion").setup({
           env = {
             api_key = "OPENROUTER_TITLE_GENERATION_KEY",
           },
+          opts = { session_id = "title_generation" },
         })
       end,
       -- ollama = function()
@@ -225,7 +226,7 @@ require("codecompanion").setup({
     background = {
       adapter = {
         name = "openrouter_title_generation",
-        model = "microsoft/phi-4",
+        model = "openai/gpt-oss-120b",
       },
       chat = {
         opts = {
