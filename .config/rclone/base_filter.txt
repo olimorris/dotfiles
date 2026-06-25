@@ -20,6 +20,7 @@
 - .Trash/
 - .Spotlight-V100/
 - .fseventsd/
+- deps/
 - .repro/
 - .deps/
 - .ruby-lsp/
