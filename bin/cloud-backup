@@ -2,8 +2,8 @@
 
 export PATH="$HOME/.local/share/mise/shims:$PATH"
 
-. /Users/Oli/.env
+. $HOME/.env
 export STORAGE_FOLDER
 export STORAGE_ENCRYPTED_FOLDER
 
-cd /Users/Oli/.dotfiles && rake backup:files
+cd $HOME/.dotfiles && rake backup:files
