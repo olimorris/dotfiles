@@ -25,5 +25,6 @@
 - .deps/
 - .ruby-lsp/
 - .venv/
+- .envs/
 - .ipynb_checkpoints/
-- fcpbundle
+- *.fcpbundle
