@@ -27,4 +27,4 @@
 - .venv/
 - .envs/
 - .ipynb_checkpoints/
-- *.fcpbundle
+- *.fcpbundle/**
