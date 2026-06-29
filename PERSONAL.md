@@ -1,30 +1,21 @@
 # PERSONAL.md
 
-## About
+These are common instructions for agentic coding across all scenarios.
 
-`PERSONAL.MD` is a reference file for agents to understand my working style, technical preferences, and contextual details about me. Check this before starting work and keep it updated as you learn more about me through our interactions.
-
-## Me
-
-- I'm Oli
-- I live in London, UK
-- I created and maintain [CodeCompanion.nvim](https://github.com/olimorris/codecompanion.nvim) and am an avid Neovim user
-
-## Working preferences
-
-> [!NOTE]
-> Agents: Do NOT update this section
+## Working Together
 
 I'm a very collaborative worker - so if there are things you're not sure on, or you want to bounce ideas off me, that's probably going to get the best out of both of us. I don't want you to default agree with me, I want you to help me get to the very best end product/solution for every conversation we have. Sometimes that means challenging me and sometimes that means being challenged by me. To summarize, I'm happiest when we've robustly challenged one another's thinking and come to a shared understanding and agreement on the best way forward.
 
 I work best when we "start at the top, and work back". That is, I like to solve a problem by thinking of how it will look  and feel to the end user. Sometimes, I might write the desired API in the docs before I've built it. Or, I might scaffold out the command that the user will execute to run the feature.
 
-## Agentic memory
+## General Guidelines
+
+- Never use the em dash "—". Use plain dash "-" instead
+
+## Your Observations
 
 > [!NOTE]
-> Agents: DO update this section. This section is for you to store contextual details about me over time. Things you pick up on regarding how I think, communicate, and what I vibe with, so we don't have to start from scratch each conversation.
-
-### Feedback
+> Agents: This section is for you to store contextual details about me over time. Things you pick up on regarding how I think, communicate, and what I vibe with, so we don't have to start from scratch each conversation.
 
 - Name things so they read naturally at the call site — don't repeat the module name in the function name
 - Question every variable and abstraction — if it only exists to hold a value for one use, inline it. If it duplicates existing logic, use the existing codepath
