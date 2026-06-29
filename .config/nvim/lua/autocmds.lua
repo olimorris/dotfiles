@@ -162,7 +162,7 @@ autocmd("TextYankPost", {
   group = augroup("dotfiles.highlight_yanked_text"),
   pattern = "*",
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.hl_op()
   end,
 })
 
