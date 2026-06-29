@@ -139,7 +139,7 @@ end, { desc = "Select local scope" })
 keymap({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<CR>")
 keymap({ "n", "v" }, "<Leader>a", function()
   if vim.o.columns < 100 then
-    return require("codecompanion").toggle({ window_opts = { layout = "float", width = 1 } })
+    return require("codecompanion").toggle({ window_opts = { layout = "float", width = vim.o.columns } })
   end
   require("codecompanion").toggle({ window_opts = { layout = "vertical" } })
 end, opts)
