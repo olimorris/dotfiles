@@ -1,130 +1,24 @@
 require("codecompanion").setup({
   adapters = {
     http = {
-      anthropic = function()
-        return require("codecompanion.adapters").extend("anthropic", {
-          env = {
-            api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline",
-          },
-          schema = {
-            extended_thinking = {
-              default = true,
-            },
-          },
-        })
-      end,
-      deepseek = function()
-        return require("codecompanion.adapters").extend("deepseek", {
-          env = {
-            api_key = "cmd:op read op://personal/DeepSeek_API/credential --no-newline",
-          },
-        })
-      end,
-      gemini = function()
-        return require("codecompanion.adapters").extend("gemini", {
-          env = {
-            api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline",
-          },
-        })
-      end,
-      mistral = function()
-        return require("codecompanion.adapters").extend("mistral", {
-          env = {
-            api_key = "cmd:op read op://personal/Mistral_API/credential --no-newline",
-          },
-        })
-      end,
-      novita = function()
-        return require("codecompanion.adapters").extend("novita", {
-          env = {
-            api_key = "cmd:op read op://personal/Novita_API/credential --no-newline",
-          },
-          schema = {
-            model = {
-              default = function()
-                return "qwen/qwen3-coder-480b-a35b-instruct"
-              end,
-            },
-          },
-        })
-      end,
-      openrouter = function()
-        return require("codecompanion.adapters").extend("openrouter", {
-          env = {
-            api_key = "cmd:op read op://personal/OpenRouter_API/credential --no-newline",
-          },
-        })
-      end,
+      extend = {
+        anthropic = { env = { api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline" } },
+        deepseek = { env = { api_key = "cmd:op read op://personal/DeepSeek_API/credential --no-newline" } },
+        gemini = { env = { api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline" } },
+        mistral = { env = { api_key = "cmd:op read op://personal/Mistral_API/credential --no-newline" } },
+        openai = { env = { api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline" } },
+        openai_responses = { env = { api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline" } },
+        openrouter = { env = { api_key = "cmd:op read op://personal/OpenRouter_API/credential --no-newline" } },
+        xai = { env = { api_key = "cmd:op read op://personal/xAI_API/credential --no-newline" } },
+      },
       openrouter_title_generation = function()
         return require("codecompanion.adapters").extend("openrouter", {
-          env = {
-            api_key = "OPENROUTER_TITLE_GENERATION_KEY",
-          },
+          env = { api_key = "OPENROUTER_TITLE_GENERATION_KEY" },
           opts = { session_id = "title_generation" },
-        })
-      end,
-      -- ollama = function()
-      --   return require("codecompanion.adapters").extend("ollama", {
-      --     schema = {
-      --       model = {
-      --         default = "qwen3:latest",
-      --       },
-      --       num_ctx = {
-      --         default = 20000,
-      --       },
-      --     },
-      --   })
-      -- end,
-      openai = function()
-        return require("codecompanion.adapters").extend("openai", {
-          env = {
-            api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
-          },
-        })
-      end,
-      openai_responses = function()
-        return require("codecompanion.adapters").extend("openai_responses", {
-          env = {
-            api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
-          },
-        })
-      end,
-      xai = function()
-        return require("codecompanion.adapters").extend("xai", {
-          env = {
-            api_key = "cmd:op read op://personal/xAI_API/credential --no-newline",
-          },
         })
       end,
     },
     acp = {
-      gemini_cli = function()
-        return require("codecompanion.adapters").extend("gemini_cli", {
-          defaults = {
-            auth_method = "gemini-api-key", -- One of: "gemini-api-key" | "oauth-personal" | | "vertex-ai"
-          },
-          env = {
-            GEMINI_API_KEY = "cmd:op read op://personal/Gemini_API/credential --no-newline",
-          },
-        })
-      end,
-      codex = function()
-        return require("codecompanion.adapters").extend("codex", {
-          env = {
-            OPENAI_API_KEY = "cmd:op read op://personal/OpenAI_API/credential --no-newline",
-          },
-        })
-      end,
-      claude_code = function()
-        return require("codecompanion.adapters").extend("claude_code", {
-          defaults = {
-            mcpServers = "inherit_from_config",
-          },
-          env = {
-            CLAUDE_CODE_OAUTH_TOKEN = "cmd:op read op://personal/Claude_Code_OAuth/credential --no-newline",
-          },
-        })
-      end,
       claude_code_work = function()
         return require("codecompanion.adapters").extend("claude_code", {
           name = "claude_code_work",
@@ -137,6 +31,19 @@ require("codecompanion").setup({
           },
         })
       end,
+      extend = {
+        claude_code = {
+          defaults = { mcpServers = "inherit_from_config" },
+          env = { CLAUDE_CODE_OAUTH_TOKEN = "cmd:op read op://personal/Claude_Code_OAuth/credential --no-newline" },
+        },
+        codex = {
+          env = { OPENAI_API_KEY = "cmd:op read op://personal/OpenAI_API/credential --no-newline" },
+        },
+        gemini_cli = {
+          defaults = { auth_method = "gemini-api-key" },
+          env = { GEMINI_API_KEY = "cmd:op read op://personal/Gemini_API/credential --no-newline" },
+        },
+      },
     },
   },
   prompt_library = {
@@ -245,14 +152,6 @@ require("codecompanion").setup({
       -- show_settings = true,
       show_reasoning = false,
       fold_context = true,
-    },
-  },
-  extensions = {
-    fs_monitor = {
-      enabled = true,
-      opts = {
-        keymap = "gD",
-      },
     },
   },
   mcp = {
