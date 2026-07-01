@@ -86,16 +86,16 @@ task(:update) do
   Rake::Task["update:brew"].invoke
   Rake::Task["update:fish"].invoke
 
-  # Reinstall and upgrade packages under the (potentially new) runtimes
+  # Servers
+  Rake::Task["update:servers"].invoke
+
+  # Then reinstall and update packages
   Rake::Task["install:gems"].invoke
   Rake::Task["update:gems"].invoke
   Rake::Task["install:npm"].invoke
   Rake::Task["update:npm"].invoke
   Rake::Task["install:pip"].invoke
   Rake::Task["update:pip"].invoke
-
-  # System
-  Rake::Task["update:servers"].invoke
 
   # Apps
   Rake::Task["update:vim"].invoke
