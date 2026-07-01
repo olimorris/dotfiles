@@ -1,5 +1,3 @@
-require("jump").setup()
-
 require("nvim-surround").setup()
 
 require("oil").setup({

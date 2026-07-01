@@ -33,11 +33,9 @@ om.plugins = {
   "https://github.com/stevearc/aerial.nvim",
   "https://github.com/stevearc/overseer.nvim",
   "https://github.com/kylechui/nvim-surround",
-  "https://github.com/yorickpeterse/nvim-jump",
-  "https://github.com/bassamsdata/fs-monitor.nvim",
 
   -- Completion
-  { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("^1") },
+  { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
 
   -- Tree-sitter
   "https://github.com/windwp/nvim-autopairs",
