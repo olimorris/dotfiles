@@ -42,6 +42,10 @@ function om.GitRemoteSync()
   local git_fetch = Job:new({
     command = "git",
     args = { "fetch" },
+    env = {
+      GIT_SSH_COMMAND = "ssh -o BatchMode=yes",
+      GIT_TERMINAL_PROMPT = "0",
+    },
     on_start = function()
       _G.GitStatus.status = "pending"
     end,

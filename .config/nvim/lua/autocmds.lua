@@ -58,27 +58,27 @@ autocmd("User", {
 -- })
 
 -- GitTrackRemoteBranch
-local git_group = augroup("dotfiles.git_track_remote_branch")
-autocmd("TermLeave", {
-  group = git_group,
-  pattern = "*",
-  callback = function()
-    om.GitRemoteSync()
-  end,
-})
-autocmd("VimEnter", {
-  group = git_group,
-  pattern = "*",
-  callback = function()
-    if _G.om.on_personal then
-      local timer = vim.loop.new_timer()
-      -- Delay initial sync by 5 seconds to avoid blocking startup
-      timer:start(5000, 120000, function()
-        om.GitRemoteSync()
-      end)
-    end
-  end,
-})
+-- local git_group = augroup("dotfiles.git_track_remote_branch")
+-- autocmd("TermLeave", {
+--   group = git_group,
+--   pattern = "*",
+--   callback = function()
+--     om.GitRemoteSync()
+--   end,
+-- })
+-- autocmd("VimEnter", {
+--   group = git_group,
+--   pattern = "*",
+--   callback = function()
+--     if _G.om.on_personal then
+--       local timer = vim.loop.new_timer()
+--       -- Delay initial sync by 5 seconds to avoid blocking startup
+--       timer:start(5000, 120000, function()
+--         om.GitRemoteSync()
+--       end)
+--     end
+--   end,
+-- })
 
 local filetype_group = augroup("dotfiles.filetypes")
 autocmd("FileType", {
