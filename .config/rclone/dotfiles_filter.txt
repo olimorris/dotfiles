@@ -1,9 +1,8 @@
 # Include only these paths
 + misc/
 + misc/mackup/**
-+ .config/
-+ .config/prompts/
 + .config/prompts/**
++ .config/obs-sidecar/**
 
 # Exclude everything else by default
 - **
