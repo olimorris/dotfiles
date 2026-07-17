@@ -13,3 +13,17 @@ macos-titlebar-style = tabs
 # Others
 copy-on-select = true
 working-directory = ~/.dotfiles
+
+# (Hit ctrl-a twice for normal function)
+keybind = ctrl+a>r=reload_config
+keybind = ctrl+a>n=new_window
+
+# Splits
+keybind = ctrl+a>\=new_split:right
+keybind = ctrl+a>-=new_split:down
+keybind = ctrl+a>j=goto_split:bottom
+keybind = ctrl+a>k=goto_split:top
+keybind = ctrl+a>h=goto_split:left
+keybind = ctrl+a>l=goto_split:right
+
+keybind = ctrl+a>e=equalize_splits
