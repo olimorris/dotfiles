@@ -5,6 +5,7 @@ require("codecompanion").setup({
         anthropic = { env = { api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline" } },
         deepseek = { env = { api_key = "cmd:op read op://personal/DeepSeek_API/credential --no-newline" } },
         gemini = { env = { api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline" } },
+        gemini_interactions = { env = { api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline" } },
         mistral = { env = { api_key = "cmd:op read op://personal/Mistral_API/credential --no-newline" } },
         openai = { env = { api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline" } },
         openai_responses = { env = { api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline" } },
@@ -156,9 +157,6 @@ require("codecompanion").setup({
   },
   mcp = {
     servers = {
-      ["memory"] = {
-        cmd = { "npx", "-y", "@modelcontextprotocol/server-memory" },
-      },
       ["sequential-thinking"] = {
         cmd = { "npx", "-y", "@modelcontextprotocol/server-sequential-thinking" },
       },
@@ -182,6 +180,7 @@ require("codecompanion").setup({
     opts = {
       chat = {
         autoload = { "default", "personal" },
+        autoload_groups_in_prompt_library = true,
       },
     },
   },
