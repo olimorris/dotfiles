@@ -24,7 +24,6 @@
 !.config/rclone/code_filter.txt
 !.config/rclone/dotfiles_filter.txt
 !.config/snippets/**/*
-!.config/ssh/config
 !.config/vim/**/*
 !.config/zsh/**/*
 
