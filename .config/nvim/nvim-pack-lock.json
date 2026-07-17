@@ -18,7 +18,7 @@
       "src": "https://github.com/j-hui/fidget.nvim"
     },
     "gitsigns.nvim": {
-      "rev": "6d808f99bd63303646794406e270bd553ad7792e",
+      "rev": "31d6fb2d618bca1482b9f274751ead5f03461408",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "heirline.nvim": {
@@ -30,16 +30,12 @@
       "src": "https://github.com/mason-org/mason.nvim"
     },
     "mini.test": {
-      "rev": "4b187876dc134c820677f9e67f0b28910be739ea",
+      "rev": "86a2f85cca908077f29ab11565472e8055fa13e8",
       "src": "https://github.com/nvim-mini/mini.test"
     },
     "nvim-autopairs": {
       "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
       "src": "https://github.com/windwp/nvim-autopairs"
-    },
-    "nvim-jump": {
-      "rev": "672204397c51507d7a821bc61ba9fad7dbed4303",
-      "src": "https://github.com/yorickpeterse/nvim-jump"
     },
     "nvim-surround": {
       "rev": "9291040de8cd8a4439eb64c441e8d5d2bf884a5a",
@@ -55,7 +51,7 @@
       "version": "'main'"
     },
     "nvim-web-devicons": {
-      "rev": "4fc505ac7bd7692824a142e96e5f529c133862f8",
+      "rev": "0ca28b61a04fe7426cefbdd52c2647ef0e335b5f",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oil.nvim": {
