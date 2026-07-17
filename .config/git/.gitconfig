@@ -4,10 +4,10 @@
 [alias]
 	pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
 	wtl = "!f() { git worktree list; }; f"
-[credential]
-	helper = /usr/local/share/gcm-core/git-credential-manager
 [credential "https://github.com"]
 	useHttpPath = true
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
 [core]
 	excludesfile = /Users/Oli/.gitignore_global
 	editor = nvim
@@ -31,3 +31,6 @@
 
 [diff]
 	tool = delta
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
