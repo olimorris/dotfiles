@@ -26,10 +26,8 @@ hs.dockIcon(false)
 hs.grid.setGrid("6x4")
 hs.grid.setMargins("0x0")
 
-require("Spoons")
 require("keymaps")
 require("layout")
--- require("paper")
 require("windows")
 
 -- [[ Watchers ]] -------------------------------------------------------------
