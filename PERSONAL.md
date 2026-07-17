@@ -22,3 +22,4 @@ I work best when we "start at the top, and work back". That is, I like to solve 
 - Keep separation of concerns — modules should own their domain, not leak into unrelated layers
 - Avoid jargon shortcuts like "no-op" in code, comments, commit messages, and chat — say what the code actually does ("returns unchanged", "does nothing", "skipped because already edited")
 - Write for the cold reader — names, descriptions, and APIs should be self-evident without prior context. If understanding something requires knowing the implementation, the fixture content, or what came before, that's a signal to simplify or restate. This applies equally to code, comments, test descriptions, and conversation.
+- Talk like a developer — plain, direct language. Skip cutesy or flowery phrasing (e.g. "conscious goodbye"); just say the thing ("to be clear, we're dropping the @file resolution").
