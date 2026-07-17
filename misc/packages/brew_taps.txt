@@ -1,7 +1,0 @@
-anomalyco/tap
-f/textream
-microsoft/git
-nikitabobko/tap
-spring-io/tap
-steipete/tap
-vldmrkl/formulae
