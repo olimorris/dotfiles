@@ -166,6 +166,15 @@ autocmd("TextYankPost", {
   end,
 })
 
+-- When you resize Neovim, equalise the splits
+autocmd("VimResized", {
+  group = augroup("dotfiles.resize_windows"),
+  pattern = "*",
+  callback = function()
+    vim.cmd("wincmd =")
+  end,
+})
+
 -- autocmd("User", {
 --   pattern = "CodeCompanionChatOpened",
 --   callback = function()
