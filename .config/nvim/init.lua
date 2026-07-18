@@ -2,7 +2,9 @@ _G.om = {}
 om.home = os.getenv("HOME")
 om.nvim_start_time = vim.uv.hrtime()
 om.on_personal = vim.fn.getenv("USER") == "Oli"
-om.on_big_screen = vim.o.columns > 150 and vim.o.lines >= 40
+om.on_big_screen = function()
+  return vim.o.columns > 150 and vim.o.lines >= 40
+end
 
 -- Local plugins
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/persisted.nvim"))
