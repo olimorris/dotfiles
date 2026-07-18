@@ -138,21 +138,23 @@ function om.ToggleLineNumbers()
 end
 
 local augroup = vim.api.nvim_create_augroup("PandocAutoCompile", { clear = true })
-local pandoc_enabled = false
+local pandoc_autocmds = {}
 
 ---Export a markdown file to a PDF using Pandoc
 function om.Pandoc()
-  if pandoc_enabled then
-    vim.api.nvim_clear_autocmds({ group = augroup })
-    pandoc_enabled = false
+  local bufnr = vim.api.nvim_get_current_buf()
+
+  if pandoc_autocmds[bufnr] then
+    vim.api.nvim_del_autocmd(pandoc_autocmds[bufnr])
+    pandoc_autocmds[bufnr] = nil
     return vim.notify("Auto-compile disabled", vim.log.levels.INFO, { title = "Pandoc" })
   end
 
-  vim.api.nvim_create_autocmd("BufWritePost", {
+  pandoc_autocmds[bufnr] = vim.api.nvim_create_autocmd("BufWritePost", {
     group = augroup,
-    pattern = "*.md",
+    buffer = bufnr,
     callback = function(args)
-      local file = args.file
+      local file = vim.fn.fnamemodify(args.file, ":p")
       local output = vim.fn.fnamemodify(file, ":r") .. ".pdf"
       local dir = vim.fn.fnamemodify(file, ":h")
 
@@ -169,6 +171,5 @@ function om.Pandoc()
     end,
   })
 
-  pandoc_enabled = true
   vim.notify("Auto-compile enabled", vim.log.levels.INFO, { title = "Pandoc" })
 end
