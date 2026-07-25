@@ -1,8 +1,11 @@
 addressable
+ast
 base64
 benchmark
 bigdecimal
 bootsnap
+bubbles
+bubbletea
 bundler
 cgi
 chronic
@@ -17,6 +20,7 @@ dentaku
 did_you_mean
 diff-lcs
 digest
+docile
 drb
 em-websocket
 english
@@ -34,7 +38,9 @@ find
 forwardable
 forwardable-extended
 getoptlong
+glamour
 google-protobuf
+harmonica
 highline
 hledger-forecast
 http_parser.rb
@@ -64,6 +70,8 @@ json
 kramdown
 kramdown-parser-gfm
 language_server-protocol
+lint_roller
+lipgloss
 liquid
 liquid_pluralize
 liquid_reading_time
@@ -77,6 +85,8 @@ mini_i18n
 minima
 minimal-mistakes-jekyll
 minitest
+minitest-mock
+minitest-rg
 money
 msgpack
 mutex_m
@@ -96,6 +106,8 @@ open3
 openssl
 optparse
 ostruct
+parallel
+parser
 pathname
 pathutil
 power_assert
@@ -117,6 +129,7 @@ rdoc
 readline
 readline-ext
 reckon
+regexp_parser
 reline
 repl_type_completor
 resolv
@@ -131,7 +144,14 @@ rspec-its
 rspec-mocks
 rspec-support
 rss
+rubocop
+rubocop-ast
+rubocop-minitest
+rubocop-packaging
+rubocop-performance
+rubocop-rake
 ruby-lsp
+ruby-progressbar
 ruby-vips
 ruby2_keywords
 rubygems-update
@@ -141,6 +161,9 @@ sawyer
 securerandom
 set
 shellwords
+simplecov
+simplecov-html
+simplecov_json_formatter
 singleton
 sorbet-runtime
 stringio
@@ -150,6 +173,7 @@ syslog
 tempfile
 terminal-table
 test-unit
+thor
 time
 timeout
 tmpdir

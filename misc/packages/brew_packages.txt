@@ -26,7 +26,6 @@ lazygit
 ledger
 librsync
 libvterm
-llvm@21
 lolcat
 luajit
 mackup
@@ -48,10 +47,8 @@ pngpaste
 rclone
 reattach-to-user-namespace
 rust
-shared-mime-info
 shfmt
 shunit2
-spring-io/tap/spring-boot
 subversion
 tmux
 tokei
@@ -62,7 +59,6 @@ typos-cli
 universal-ctags
 uv
 vim
-vldmrkl/formulae/airdrop-cli
 vtk
 watchman
 wget

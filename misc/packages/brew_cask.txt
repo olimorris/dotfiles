@@ -24,6 +24,7 @@ hazel
 imageoptim
 imaging-edge
 inkscape
+joplin
 jordanbaird-ice
 keepingyouawake
 keycastr
@@ -35,6 +36,7 @@ mitmproxy
 monitorcontrol
 notion
 obs
+opensuperwhisper
 pearcleaner
 pixelsnap
 postman
@@ -55,6 +57,7 @@ textream
 thaw
 typora
 updf
+vb-cable
 visual-studio-code
 vlc
 voiceink

@@ -2,11 +2,11 @@
   "name": "lib",
   "dependencies": {
     "@agentclientprotocol/claude-agent-acp": {
-      "version": "0.54.1",
+      "version": "0.57.0",
       "overridden": false
     },
     "@agentclientprotocol/codex-acp": {
-      "version": "1.0.2",
+      "version": "1.1.2",
       "overridden": false
     },
     "@augmentcode/auggie": {
@@ -26,11 +26,7 @@
       "overridden": false
     },
     "npm": {
-      "version": "11.18.0",
-      "overridden": false
-    },
-    "opencode-ai": {
-      "version": "1.17.12",
+      "version": "10.9.8",
       "overridden": false
     }
   }
