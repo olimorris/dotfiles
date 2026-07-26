@@ -11,6 +11,22 @@ function mkd -d "Create a directory and set CWD"
     end
 end
 
+function lg -d "List files in long format"
+    set -l tmp_dir (mktemp -d)
+    set -l new_dir_file "$tmp_dir/newdir"
+
+    LAZYGIT_NEW_DIR_FILE=$new_dir_file lazygit $argv
+
+    if test -f $new_dir_file
+        set -l new_dir (cat $new_dir_file)
+        if test -n "$new_dir" -a "$new_dir" != (pwd)
+            cd $new_dir
+        end
+    end
+
+    rm -rf $tmp_dir
+end
+
 function load_env_vars -d "Load variables in a .env file"
     for i in (cat $argv)
         set arr (echo $i |tr = \n)
