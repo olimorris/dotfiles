@@ -138,7 +138,7 @@ keymap({ "n", "v" }, "<Leader>a", function()
   end
   require("codecompanion").toggle({ window_opts = { layout = "vertical" } })
 end, opts)
-keymap("v", "<LocalLeader>a", "<cmd>CodeCompanionChat Add<CR>")
+keymap({ "n", "v" }, "<LocalLeader>a", "<cmd>CodeCompanionCodeReview Comment<CR>")
 
 -- CodeCompanion CLI mappings
 keymap({ "n", "v" }, "<C-p>", function()
