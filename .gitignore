@@ -15,6 +15,7 @@
 !.config/git/**/*
 !.config/ghostty/**/*
 !.config/hammerspoon/**/*
+!.config/lazygit/**/*
 !.config/mackup/**/*
 !.config/mise/**/*
 !.config/nix/**/*
