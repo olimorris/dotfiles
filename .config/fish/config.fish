@@ -1,6 +1,7 @@
 set -g fish_greeting ""
 
 # Variables
+set -gx XDG_CONFIG_HOME "$HOME/.config"
 set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
 set -gx EDITOR nvim
 set -gx EXTRAS "$HOME/.cache/nvim/onedarkpro_dotfiles/extras"
