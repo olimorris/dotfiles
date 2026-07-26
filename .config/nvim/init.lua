@@ -10,7 +10,17 @@ end
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/persisted.nvim"))
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim"))
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim/after")) -- Needed for TS queries
-vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/codecompanion.nvim"))
+
+local function codecompanion_worktree()
+  local file = io.open(om.home .. "/.codecompanion-worktree-state", "r")
+  if not file then
+    return "main"
+  end
+  local worktree = file:read("*l")
+  file:close()
+  return worktree or "main"
+end
+vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/codecompanion.nvim/" .. codecompanion_worktree()))
 
 om.plugins = {
   -- Dependencies
