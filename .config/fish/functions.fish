@@ -46,6 +46,16 @@ function nv -d "Launch Neovim"
     end
 end
 
+function nvimcc -d "Launch Neovim against a CodeCompanion worktree"
+    set -l worktree main
+    if count $argv >/dev/null
+        set worktree $argv[1]
+        set -e argv[1]
+    end
+
+    CODECOMPANION_WORKTREE=$worktree nv $argv
+end
+
 function o -d Open
     if count $argv >/dev/null
         open $argv
