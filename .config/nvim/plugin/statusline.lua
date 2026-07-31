@@ -541,8 +541,21 @@ local function statusline()
 
   local GitBranch = {
     condition = conditions.is_git_repo,
+    static = {
+      open_lazygit = function()
+        Snacks.lazygit()
+      end,
+    },
+    update = {
+      "User",
+      pattern = "GitSignsUpdate",
+      callback = vim.schedule_wrap(function()
+        vim.cmd("redrawstatus")
+      end),
+    },
     init = function(self)
       self.status_dict = vim.b.gitsigns_status_dict
+      self.worktree = self.status_dict.gitdir:match("worktrees/([^/]+)$")
     end,
     {
       condition = function(self)
@@ -553,11 +566,38 @@ local function statusline()
       LeftSlantStart,
       {
         provider = function(self)
-          return "  " .. (self.status_dict.head == "" and "main" or self.status_dict.head) .. " "
+          return "  "
         end,
         on_click = {
-          callback = function()
-            om.ListBranches()
+          callback = function(self)
+            self.open_lazygit()
+          end,
+          name = "sl_git_click",
+        },
+        hl = { fg = "gray", bg = "statusline_bg" },
+      },
+      {
+        condition = function(self)
+          return self.worktree ~= nil
+        end,
+        provider = function(self)
+          return self.worktree .. "/"
+        end,
+        on_click = {
+          callback = function(self)
+            self.open_lazygit()
+          end,
+          name = "sl_git_click",
+        },
+        hl = { fg = "gray", bg = "statusline_bg" },
+      },
+      {
+        provider = function(self)
+          return (self.status_dict.head == "" and "main" or self.status_dict.head) .. " "
+        end,
+        on_click = {
+          callback = function(self)
+            self.open_lazygit()
           end,
           name = "sl_git_click",
         },
