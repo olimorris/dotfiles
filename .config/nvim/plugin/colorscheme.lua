@@ -53,6 +53,7 @@ require("onedarkpro").setup({
     CodeCompanionChatToolSuccess = { fg = "${gray}", bg = "NONE", italic = true },
     CodeCompanionTokens = { fg = "${gray}", italic = true },
     CodeCompanionVirtualText = { fg = "${gray}", italic = true },
+    CodeCompanionCodeReviewComment = { fg = "${cyan}", italic = true },
 
     ["@markup.raw.block.markdown"] = { bg = "${codeblock}" },
     ["@markup.quote.markdown"] = { italic = true, extend = true },
