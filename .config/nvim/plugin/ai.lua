@@ -13,10 +13,15 @@ require("codecompanion").setup({
         openrouter = { env = { api_key = "cmd:op read op://personal/OpenRouter_API/credential --no-newline" } },
         xai = { env = { api_key = "cmd:op read op://personal/xAI_API/credential --no-newline" } },
       },
-      openrouter_title_generation = function()
+      openrouter_background = function()
         return require("codecompanion.adapters").extend("openrouter", {
           env = { api_key = "OPENROUTER_TITLE_GENERATION_KEY" },
-          opts = { session_id = "title_generation" },
+          opts = { session_id = "CodeCompanion_background" },
+          schema = {
+            ["reasoning.effort"] = {
+              enabled = false,
+            },
+          },
         })
       end,
     },
@@ -57,11 +62,36 @@ require("codecompanion").setup({
     },
   },
   interactions = {
-    chat = {
-      adapter = {
-        name = "copilot",
-        model = "claude-haiku-4.5",
+    background = {
+      chat = {
+        callbacks = {
+          ["on_ready"] = {
+            actions = {
+              {
+                path = "interactions.background.builtin.chat_make_title",
+                adapter = {
+                  name = "openrouter_background",
+                  model = "openai/gpt-oss-120b",
+                },
+              },
+            },
+          },
+        },
+        opts = {
+          enabled = true,
+        },
       },
+      gates = {
+        judge = {
+          enabled = true,
+          adapter = {
+            name = "openrouter_background",
+            model = "openai/gpt-oss-120b",
+          },
+        },
+      },
+    },
+    chat = {
       roles = {
         user = "olimorris",
       },
@@ -101,6 +131,11 @@ require("codecompanion").setup({
             },
           },
         },
+        ["run_command"] = {
+          opts = {
+            judge_in_yolo_mode = true,
+          },
+        },
       },
     },
     cli = {
@@ -126,20 +161,11 @@ require("codecompanion").setup({
         },
       },
     },
-    inline = {
-      adapter = {
-        name = "copilot",
-        model = "claude-haiku-4.5",
-      },
-    },
-    background = {
-      adapter = {
-        name = "openrouter_title_generation",
-        model = "openai/gpt-oss-120b",
-      },
-      chat = {
-        opts = {
-          enabled = true,
+    code_review = {
+      display = {
+        virtual_text = {
+          icon = "  ",
+          overflow = "wrap",
         },
       },
     },
@@ -197,24 +223,51 @@ require("codecompanion").setup({
   },
 })
 vim.cmd([[cab cc CodeCompanion]])
+vim.cmd([[cab ccc CodeCompanionCodeReview Comment]])
 
-local spinner = {
-  completed = "󰗡 Completed",
-  error = " Error",
-  cancelled = "󰜺 Cancelled",
+local SPINNER_MESSAGES = {
+  request = {
+    started = "  Sending...",
+    success = "  Completed",
+    error = "  Failed",
+    cancelled = "󰜺  Cancelled",
+  },
+  judge = {
+    started = "  Checking...",
+    success = "󰕥  Checked",
+    error = "󰦞  Check Failed",
+    cancelled = "󰜺  Cancelled",
+  },
 }
 
----Format the adapter name and model for display with the spinner
+---Format an adapter's name and model for display with the spinner
 ---@param adapter CodeCompanion.Adapter
 ---@return string
 local function format_adapter(adapter)
-  local parts = {}
-  table.insert(parts, adapter.formatted_name)
   if adapter.model and adapter.model ~= "" then
-    table.insert(parts, "(" .. adapter.model .. ")")
+    return adapter.formatted_name .. " (" .. adapter.model .. ")"
   end
-  return table.concat(parts, " ")
+  return adapter.formatted_name
 end
+
+local SPINNER_EVENTS = {
+  {
+    started = "CodeCompanionRequestStarted",
+    finished = "CodeCompanionRequestFinished",
+    messages = SPINNER_MESSAGES.request,
+    client_name = function(data)
+      return format_adapter(data.adapter)
+    end,
+  },
+  {
+    started = "CodeCompanionToolsJudgeStarted",
+    finished = "CodeCompanionToolsJudgeFinished",
+    messages = SPINNER_MESSAGES.judge,
+    client_name = function(data)
+      return data.tool
+    end,
+  },
+}
 
 ---Setup the spinner for CodeCompanion
 ---@return nil
@@ -224,43 +277,35 @@ local function codecompanion_spinner()
     return
   end
 
-  spinner.handles = {}
-
+  local handles = {}
   local group = vim.api.nvim_create_augroup("dotfiles.codecompanion.spinner", {})
 
-  vim.api.nvim_create_autocmd("User", {
-    pattern = "CodeCompanionRequestStarted",
-    group = group,
-    callback = function(args)
-      local handle = progress.handle.create({
-        title = "",
-        message = "  Sending...",
-        lsp_client = {
-          name = format_adapter(args.data.adapter),
-        },
-      })
-      spinner.handles[args.data.id] = handle
-    end,
-  })
+  for _, event in ipairs(SPINNER_EVENTS) do
+    vim.api.nvim_create_autocmd("User", {
+      pattern = event.started,
+      group = group,
+      callback = function(args)
+        handles[args.data.id] = progress.handle.create({
+          title = "",
+          message = event.messages.started,
+          lsp_client = { name = event.client_name(args.data) },
+        })
+      end,
+    })
 
-  vim.api.nvim_create_autocmd("User", {
-    pattern = "CodeCompanionRequestFinished",
-    group = group,
-    callback = function(args)
-      local handle = spinner.handles[args.data.id]
-      spinner.handles[args.data.id] = nil
-      if handle then
-        if args.data.status == "success" then
-          handle.message = spinner.completed
-        elseif args.data.status == "error" then
-          handle.message = spinner.error
-        else
-          handle.message = spinner.cancelled
+    vim.api.nvim_create_autocmd("User", {
+      pattern = event.finished,
+      group = group,
+      callback = function(args)
+        local handle = handles[args.data.id]
+        handles[args.data.id] = nil
+        if handle then
+          handle.message = event.messages[args.data.status] or event.messages.cancelled
+          handle:finish()
         end
-        handle:finish()
-      end
-    end,
-  })
+      end,
+    })
+  end
 end
 
 codecompanion_spinner()
