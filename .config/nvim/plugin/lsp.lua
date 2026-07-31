@@ -11,6 +11,7 @@ vim.lsp.inline_completion.enable()
 vim.lsp.enable({
   "copilot",
   "jdtls",
+  "jsonls",
   "lua_ls",
   "pyright",
   "ruby_lsp",
