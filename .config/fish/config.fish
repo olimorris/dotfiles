@@ -10,7 +10,7 @@ set -gx GPG_TTY (tty)
 set -gx HOMEBREW_NO_ANALYTICS 1
 
 # Paths
-fish_add_path -p /opt/homebrew/opt/rustup/bin /opt/homebrew/bin ~/.cargo/bin ~/.dotfiles/bin ~/.local/share/nvim/mason/bin ~/.local/bin $GOPATH/bin
+fish_add_path -p /opt/homebrew/opt/rustup/bin /opt/homebrew/bin ~/.cargo/bin ~/.dotfiles/bin ~/.local/share/nvim/mason/bin ~/.local/bin $GOPATH/bin ~/Code/Ruby/hledger-forecast/bin
 
 function theme
   test -f /tmp/oli-theme; or echo dark > /tmp/oli-theme

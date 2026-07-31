@@ -86,7 +86,7 @@ function cleanvid -d "Re-encode a video with libx264 and CRF 20"
     set base (string replace -r '\.mp4$' '' $input)
     set output "$base CLEAN.mp4"
 
-    ffmpeg -i "$input" -vcodec libx264 -crf 20 "$output"
+    ffmpeg -i "$input" -vcodec libx264 -crf 20 -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc bt709 "$output"
 end
 
 
