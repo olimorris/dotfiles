@@ -131,14 +131,24 @@ keymap({ "x", "o" }, "as", function()
 end, { desc = "Select local scope" })
 
 -- CodeCompanion
-keymap({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<CR>")
+keymap(
+  { "n", "v" },
+  "<C-a>",
+  "<cmd>CodeCompanionActions<CR>",
+  vim.tbl_extend("force", opts, { desc = "CodeCompanion: Actions" })
+)
 keymap({ "n", "v" }, "<Leader>a", function()
   if vim.o.columns < 100 then
     return require("codecompanion").toggle({ window_opts = { layout = "float", width = vim.o.columns } })
   end
   require("codecompanion").toggle({ window_opts = { layout = "vertical" } })
-end, opts)
-keymap({ "n", "v" }, "<LocalLeader>a", "<cmd>CodeCompanionCodeReview Comment<CR>")
+end, vim.tbl_extend("force", opts, { desc = "CodeCompanion: Toggle" }))
+keymap(
+  { "n", "v" },
+  "<LocalLeader>a",
+  "<cmd>CodeCompanionCodeReview Comment<CR>",
+  vim.tbl_extend("force", opts, { desc = "CodeCompanion: Code Review Comment" })
+)
 
 -- CodeCompanion CLI mappings
 keymap({ "n", "v" }, "<C-p>", function()
