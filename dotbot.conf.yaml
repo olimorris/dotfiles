@@ -20,6 +20,7 @@
     ~/.config/lazygit: .config/lazygit
     ~/.config/mise: .config/mise
     ~/.config/obs-sidecar: .config/obs-sidecar
+    ~/.config/pomodoro-cli: .config/pomodoro-cli
     ~/.nanobot: .config/nanobot
     ~/.config/nvim: .config/nvim
     ~/.config/opencode/themes:
