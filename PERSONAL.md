@@ -16,17 +16,18 @@ I work best when we "start at the top, and work back". That is, I like to solve 
 
 > [!NOTE]
 > Agents: This section is for you to store contextual details about me over time. Things you pick up on regarding how I think, communicate, and what I vibe with, so we don't have to start from scratch each conversation.
+>
+> Every observation must pass this test: **would it still make sense to someone who has never seen the project you learnt it in?** If not, rewrite it until it does, or leave it out. No file names, module names, function names, language features, library names or tool specifics. Those belong in that project's own agent instructions, not here.
 
-- Name things so they read naturally at the call site — don't repeat the module name in the function name
-- Question every variable and abstraction — if it only exists to hold a value for one use, inline it. If it duplicates existing logic, use the existing codepath
-- Keep separation of concerns — modules should own their domain, not leak into unrelated layers
-- Avoid jargon shortcuts like "no-op" in code, comments, commit messages, and chat — say what the code actually does ("returns unchanged", "does nothing", "skipped because already edited")
-- Write for the cold reader — names, descriptions, and APIs should be self-evident without prior context. If understanding something requires knowing the implementation, the fixture content, or what came before, that's a signal to simplify or restate. This applies equally to code, comments, test descriptions, and conversation.
-- Talk like a developer - plain, direct language. Skip cutesy or flowery phrasing (e.g. "conscious goodbye"); just say the thing ("to be clear, we're dropping the @file resolution").
-- Test what you own, not what a library renders - assert on your own logic and contracts (with fakes at the seams), not a dependency's output; check UI by hand.
-- Prefer one integration test over many unit tests - if a single test can cover the behaviour without being tightly coupled to any config value, function or method, write that instead of a pile of unit tests. Default to fewer and broader; a UI module deserves 1-2 tests, not eight. Don't encode lifecycle/wiring you can eyeball once (autocmd registration, teardown)
-- Group module-level constants in a `CONSTANTS` table rather than loose locals
-- Don't echo information in the UI that's already visible elsewhere - if the buffer already shows it, a status/output message repeating it is noise
-- Judge extraction by domain, not by consumer count - pure mechanism (vim API wrangling) belongs in the util that owns that domain even with one consumer; keep policy with the caller
-- Don't editorialise when reporting. Say what the problem is and what changed the stakes, in one plain sentence - not "this was on your known rough edges list when it was an obscure corner". Write as if briefing a senior developer: no narrative framing, no reaching for a turn of phrase, no restating history he already knows
-- Don't use dismissive labels ("wart", "hack", "ugly") for design decisions in his code - he's usually already weighed the trade-off and hit a real constraint. Describe the cost plainly instead ("this is a mode users have to be taught") and ask what the constraint was
+- Name things so they read naturally where they're used - don't repeat the surrounding context in the name, and name something for what it does rather than for when it's used. A name that reads as a question shouldn't be the thing that takes the action
+- Question every abstraction - if it only exists to serve one use, fold it back in. If it duplicates something that already exists, use what's already there
+- Keep separation of concerns - each part should own its domain and not leak into unrelated ones
+- Decide where something belongs by domain, not by how many things use it. Shared mechanism sits with the domain that owns it; decisions stay with the caller
+- Avoid jargon shortcuts - say what actually happens ("returns unchanged", "does nothing", "skipped because it was already handled")
+- Write for the cold reader - names, descriptions and explanations should be self-evident without prior context. If understanding something depends on knowing what came before, restate or simplify it
+- Talk plainly and directly. Skip cutesy or flowery phrasing (e.g. "conscious goodbye"); just say the thing
+- Don't repeat information that's already visible elsewhere - if it's already on screen, saying it again is noise
+- Don't editorialise when reporting. Say what the problem is and what changed the stakes, in one plain sentence. Write as if briefing a senior colleague: no narrative framing, no reaching for a turn of phrase, no restating history he already knows
+- Don't use dismissive labels ("wart", "hack", "ugly") for decisions in his work - he's usually already weighed the trade-off and hit a real constraint. Describe the cost plainly instead and ask what the constraint was
+- Test what he owns, not what a dependency does, and prefer one broad test over a pile of narrow ones. Don't cover things that can be checked by eye once
+- Check his comprehension throughout a piece of work rather than saving it for the end - check in right after each new idea or mechanism lands, not once the whole thing is finished
