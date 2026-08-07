@@ -530,6 +530,17 @@ local function statusline()
       hl = function(self)
         return { fg = "bg", bg = self.mode_color }
       end,
+      on_click = {
+        callback = function(self)
+          local mode = self.mode_names[self.mode]
+          if mode == "NORMAL" then
+            vim.cmd("startinsert")
+          elseif mode == "INSERT" then
+            vim.cmd("stopinsert")
+          end
+        end,
+        name = "switch_mode",
+      },
     },
     {
       provider = "",
