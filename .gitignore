@@ -23,6 +23,7 @@
 !.config/opencode/**/*
 !.config/rclone/base_filter.txt
 !.config/rclone/code_filter.txt
+!.config/rclone/git_filter.txt
 !.config/rclone/dotfiles_filter.txt
 !.config/snippets/**/*
 !.config/vim/**/*

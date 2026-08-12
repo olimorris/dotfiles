@@ -1,0 +1,7 @@
+# Never sync git's lock files - copying one to the other machine makes git there
+# refuse to operate until it's removed by hand
+- *.lock
+
++ Neovim/**/.git/**
++ Neovim/**/.git
+- **

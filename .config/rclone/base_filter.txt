@@ -3,6 +3,7 @@
 - vendor/
 - tmp/
 - .git/
+- .git
 - .config/fish/completions/**
 - .config/fish/functions/**
 - .config/superwhisper/recordings/**

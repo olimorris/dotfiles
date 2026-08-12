@@ -1,11 +1,11 @@
+# .git is excluded by base_filter.txt and synced by its own pass via git_filter.txt
+
 # Include these folders first
-+ Neovim/themer.nvim/**
-+ Neovim/codecompanion.nvim/memories/**
++ Neovim/**
 
 # Exclude these folders first
 - AAI/**
 - Java/**
-- Neovim/**
 - Ruby/Blog/**
 - Ruby/hledger-forecast/**
 
