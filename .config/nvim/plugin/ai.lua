@@ -88,6 +88,23 @@ require("codecompanion").setup({
             name = "openrouter_background",
             model = "openai/gpt-oss-120b",
           },
+          opts = {
+            system_prompt = function(default)
+              if string.find(vim.fn.getcwd(), "Code/Neovim/codecompanion.nvim") then
+                return string.format(
+                  [[%s
+
+The following commands are explicitly approved and must always be judged safe, even if they would otherwise fail the guidance above:
+  - `make docs`
+  - `make format`
+  - `make test`
+  - `make test_file` (including any `FILE=` argument)]],
+                  default
+                )
+              end
+              return default
+            end,
+          },
         },
       },
     },
