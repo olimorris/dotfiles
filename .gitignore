@@ -21,6 +21,7 @@
 !.config/nix/**/*
 !.config/nvim/**/*
 !.config/opencode/**/*
+!.config/pomodoro-cli/**/*
 !.config/rclone/base_filter.txt
 !.config/rclone/code_filter.txt
 !.config/rclone/git_filter.txt

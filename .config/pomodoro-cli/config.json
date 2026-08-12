@@ -1,0 +1,19 @@
+{
+  "show_hints": false,
+  "projects": {
+    "MSc AI": {
+      "auto_start": false,
+      "native_notify": true,
+      "pomodoros": 3,
+      "timer": "study"
+    }
+  },
+  "times": {
+    "timers": {
+      "study": {
+        "work": 50,
+        "break": 10
+      }
+    }
+  }
+}
