@@ -6,14 +6,18 @@
 #   rake work:restore:files           # restore, quiet
 #   rake work:restore:files[true]     # restore, with progress output
 #
+#   GIT=1 rake work:backup:files      # also sync .git folders (off by default)
+#
 # How it's structured:
 #   Each dir gets its own filter file (dotfiles_filter.txt, code_filter.txt) layered
 #   on top of base_filter.txt (common exclusions like .DS_Store, node_modules/, etc).
 #
 #   base_filter.txt excludes .git everywhere, so Code/**/.git gets a separate pass via
-#   git_filter.txt. That pass deliberately omits --size-only, unlike the main sync:
-#   refs are fixed length (refs/heads/<branch> is always 41 bytes), so comparing on
-#   size alone would silently never propagate a branch moving to a new commit.
+#   git_filter.txt. That pass is opt-in via GIT=1 - git history is heavy and rarely
+#   needs moving, so the default sync carries working trees only. It also deliberately
+#   omits --size-only, unlike the main sync: refs are fixed length (refs/heads/<branch>
+#   is always 41 bytes), so comparing on size alone would silently never propagate a
+#   branch moving to a new commit.
 #
 #   --size-only is used for the main sync for speed, trading off exact content
 #   verification for fewer/faster checks.
@@ -36,6 +40,15 @@ end
 
 def rclone_filters(*names)
   names.map { |name| " --filter-from #{RCLONE_FILTER_DIR}/#{name}" }.join
+end
+
+# The .git pass is opt-in. Announce the skip so a sync that quietly left history
+# behind doesn't look like one that moved it.
+def sync_git?
+  return true if ENV["GIT"]
+
+  puts "~> Skipping .git folders (set GIT=1 to include them)"
+  false
 end
 
 # Rewrite the two pointer files git keeps for each linked worktree. Both hold absolute
@@ -81,6 +94,8 @@ namespace(:work) do
         run(" #{RCLONE} sync #{config[:remote]} ~/#{local}#{filters}#{speed_flags}#{other_flags}#{flag} ")
       end
 
+      next unless sync_git?
+
       git_remote = "#{ENV["STORAGE_ENCRYPTED_FOLDER"]}:Code"
       git_filters = rclone_filters("git_filter.txt")
       git_flags = " --use-mmap --transfers=32 --checkers=32"
@@ -102,6 +117,8 @@ namespace(:work) do
         filters = rclone_filters("base_filter.txt", config[:filter])
         run(" #{RCLONE} sync ~/#{local} #{config[:remote]}#{filters}#{speed_flags}#{flag} ")
       end
+
+      next unless sync_git?
 
       git_filters = rclone_filters("git_filter.txt")
       git_flags = " --use-mmap --transfers=32 --checkers=32"
