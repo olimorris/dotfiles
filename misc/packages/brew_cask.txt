@@ -49,7 +49,6 @@ spotify
 stats
 steam
 superkey
-superwhisper
 syntax-highlight
 tableplus
 telegram
@@ -61,6 +60,6 @@ vb-cable
 visual-studio-code
 vlc
 voiceink
-wispr-flow
 zed
+zoom
 zotero

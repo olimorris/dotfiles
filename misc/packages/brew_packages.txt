@@ -4,6 +4,7 @@ anomalyco/tap/opencode
 bats-core
 code-minimap
 composer
+coreutils
 dark-mode
 dash-shell
 docker
@@ -20,6 +21,7 @@ git
 git-delta
 glow
 go
+herdr
 hledger
 imagemagick
 lazygit
@@ -56,6 +58,7 @@ tree
 tree-sitter
 tree-sitter-cli
 typos-cli
+unbound
 universal-ctags
 uv
 vim

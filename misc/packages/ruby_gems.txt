@@ -42,7 +42,6 @@ glamour
 google-protobuf
 harmonica
 highline
-hledger-forecast
 http_parser.rb
 i18n
 io-console
