@@ -153,6 +153,11 @@ The following commands are explicitly approved and must always be judged safe, e
             judge_in_yolo_mode = true,
           },
         },
+        ["web_search"] = {
+          opts = {
+            adapter = "duckduckgo",
+          },
+        },
       },
     },
     cli = {
