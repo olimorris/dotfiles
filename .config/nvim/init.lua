@@ -11,6 +11,7 @@ vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/persisted.nvim"))
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim"))
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim/after")) -- Needed for TS queries
 
+-- CodeCompanion uses worktrees
 local codecompanion_worktree = vim.fn.getenv("CODECOMPANION_WORKTREE")
 if codecompanion_worktree == vim.NIL then
   codecompanion_worktree = "main"
