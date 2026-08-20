@@ -172,7 +172,7 @@ local function ghosttySessionizer()
 end
 
 local ghosttyKeys = hs.hotkey.modal.new()
-ghosttyKeys:bind({ "ctrl" }, "w", ghosttySessionizer)
+-- ghosttyKeys:bind({ "ctrl" }, "w", ghosttySessionizer)
 
 local appWatcher = hs.application.watcher.new(function(name, event)
   if name == "Ghostty" then
