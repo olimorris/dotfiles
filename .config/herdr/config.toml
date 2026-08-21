@@ -1,0 +1,54 @@
+onboarding = false
+
+[theme.custom]
+text = "#B4B7CF"
+red = "#E16765"
+yellow = "#EAE852"
+green = "#75BE78"
+blue = "#25ABE4"
+teal = "#46A3AF"
+peach = "#EAA041"
+mauve = "#c678dd"
+
+# Panel colours
+accent = "purple"
+panel_bg = "#222435"
+sidebar_bg = "#1f2030"
+active_row_bg = "#2a2c41"
+surface0 = "#222435"
+overlay0 = "#585B89"
+
+[keys]
+prefix = "ctrl+v"
+
+# default mac keymaps
+new_tab = "cmd+t"
+close_tab = "cmd+w"
+next_tab = "ctrl+tab"
+switch_tab = "cmd+1..9"
+previous_tab = "ctrl+shift+tab"
+
+new_workspace = "cmd+n"
+next_workspace = "cmd+j"
+previous_workspace = "cmd+k"
+
+toggle_sidebar = "cmd+s"
+
+[ui]
+prompt_new_tab_name = false
+# sidebar_collapsed_mode = "hidden"
+hide_tab_bar_when_single_tab = true
+show_agent_labels_on_pane_borders = false
+
+[ui.toast]
+delay_seconds = 1
+delivery = "herdr"
+
+[ui.toast.herdr]
+position = "bottom-right"
+
+[[keys.command]]
+key = "ctrl+w"
+type = "plugin_action"
+command = "sessionizer.pick"
+description = "fuzzy-switch workspace"

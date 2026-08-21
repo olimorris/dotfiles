@@ -37,5 +37,10 @@ if status is-interactive
     mise activate fish | source
     zoxide init fish | source
     source $HOME/.config/fish/fzf.fish
+
+    # herdr-automatic-rename plugin
+    for _f in $HOME/.config/herdr/plugins/github/herdr-automatic-rename-*/shell/hook.fish
+      test -r "$_f"; and source "$_f"; and break
+    end
 end
 

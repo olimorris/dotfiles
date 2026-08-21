@@ -8,22 +8,38 @@ theme = dark:onedarkpro_vaporwave,light:onedarkpro_onelight
 
 # macOS settings
 macos-option-as-alt = left
-macos-titlebar-style = tabs
+macos-titlebar-style = hidden
 
 # Others
 copy-on-select = true
 working-directory = ~/.dotfiles
 
-# (Hit ctrl-a twice for normal function)
-keybind = ctrl+z>r=reload_config
-keybind = ctrl+z>n=new_window
+# herdr - unbind keymaps
+keybind = cmd+t=unbind
+keybind = cmd+w=unbind
+keybind = ctrl+w=unbind
 
-# Splits
-keybind = ctrl+z>\=new_split:right
-keybind = ctrl+z>-=new_split:down
-keybind = ctrl+z>j=goto_split:bottom
-keybind = ctrl+z>k=goto_split:top
-keybind = ctrl+z>h=goto_split:left
-keybind = ctrl+z>l=goto_split:right
+# ctrl+tab has no legacy terminal encoding, so it must be forwarded explicitly
+# as a Kitty keyboard protocol (CSI u) sequence for herdr to receive it
+keybind = ctrl+tab=text:\x1b[9;5u
+keybind = ctrl+shift+tab=text:\x1b[9;6u
 
-keybind = ctrl+z>e=equalize_splits
+keybind = cmd+1=unbind
+keybind = cmd+2=unbind
+keybind = cmd+3=unbind
+keybind = cmd+4=unbind
+keybind = cmd+5=unbind
+keybind = cmd+6=unbind
+keybind = cmd+7=unbind
+keybind = cmd+8=unbind
+keybind = cmd+9=unbind
+keybind = cmd+digit_1=unbind
+keybind = cmd+digit_2=unbind
+keybind = cmd+digit_3=unbind
+keybind = cmd+digit_4=unbind
+keybind = cmd+digit_5=unbind
+keybind = cmd+digit_6=unbind
+keybind = cmd+digit_7=unbind
+keybind = cmd+digit_8=unbind
+keybind = cmd+digit_9=unbind
+

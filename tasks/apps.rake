@@ -22,6 +22,12 @@ namespace(:install) do
     run(" nvim --headless +'OneDarkProExtras' +qall")
   end
 
+  desc("Install herdr plugins")
+  task(:herdr) do
+
+    run(" herdr plugin install salkhalil/herdr-sessionizer --yes ") unless testing?
+    run(" herdr plugin install qu8n/herdr-automatic-rename --yes ") unless testing?
+  end
 end
 
 namespace(:update) do

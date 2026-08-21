@@ -15,6 +15,7 @@
 !.config/git/**/*
 !.config/ghostty/**/*
 !.config/hammerspoon/**/*
+!.config/herdr/config.toml
 !.config/lazygit/**/*
 !.config/mackup/**/*
 !.config/mise/**/*
@@ -69,6 +70,7 @@
 ################################### BLACKLIST ##################################
 
 # Config
+.config/herdr/plugins/*
 .config/hammerspoon/Spoons/*
 .config/ghostty/themes
 
