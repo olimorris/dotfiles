@@ -29,7 +29,9 @@ switch_tab = "cmd+1..9"
 previous_tab = "ctrl+shift+tab"
 
 new_workspace = "cmd+n"
+next_agent = "cmd+shift+j"
 next_workspace = "cmd+j"
+previous_agent = "cmd+shift+k"
 previous_workspace = "cmd+k"
 
 toggle_sidebar = "cmd+s"
@@ -40,6 +42,7 @@ prompt_new_tab_name = false
 hide_tab_bar_when_single_tab = true
 show_agent_labels_on_pane_borders = false
 
+agent_panel_sort = "spaces"
 [ui.toast]
 delay_seconds = 1
 delivery = "herdr"

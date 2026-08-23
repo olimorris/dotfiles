@@ -24,6 +24,9 @@ keybind = ctrl+w=unbind
 keybind = ctrl+tab=text:\x1b[9;5u
 keybind = ctrl+shift+tab=text:\x1b[9;6u
 
+keybind = cmd+shift+j=unbind
+keybind = cmd+shift+k=unbind
+
 keybind = cmd+1=unbind
 keybind = cmd+2=unbind
 keybind = cmd+3=unbind
