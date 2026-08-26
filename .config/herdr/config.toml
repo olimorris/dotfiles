@@ -1,5 +1,8 @@
 onboarding = false
 
+[theme]
+auto_switch = true
+
 [theme.custom]
 text = "#B4B7CF"
 red = "#E16765"
@@ -11,7 +14,7 @@ peach = "#EAA041"
 mauve = "#c678dd"
 
 # Panel colours
-accent = "purple"
+accent = "blue"
 panel_bg = "#222435"
 sidebar_bg = "#1f2030"
 active_row_bg = "#2a2c41"
@@ -33,16 +36,19 @@ next_agent = "cmd+shift+j"
 next_workspace = "cmd+j"
 previous_agent = "cmd+shift+k"
 previous_workspace = "cmd+k"
+switch_workspace = "cmd+alt+1..9"
 
 toggle_sidebar = "cmd+s"
 
+split_vertical = "prefix+\\"
+split_horizontal = "prefix+minus"
+
 [ui]
 prompt_new_tab_name = false
-# sidebar_collapsed_mode = "hidden"
 hide_tab_bar_when_single_tab = true
 show_agent_labels_on_pane_borders = false
-
 agent_panel_sort = "spaces"
+
 [ui.toast]
 delay_seconds = 1
 delivery = "herdr"
@@ -55,3 +61,22 @@ key = "ctrl+w"
 type = "plugin_action"
 command = "sessionizer.pick"
 description = "fuzzy-switch workspace"
+
+[[keys.command]]
+key = "prefix+t"
+type = "plugin_action"
+command = "olimorris.pomodoro-cli.start"
+description = "start pomodoro"
+
+[[keys.command]]
+key = "prefix+P"
+type = "plugin_action"
+command = "olimorris.pomodoro-cli.pause"
+description = "pause or resume pomodoro"
+
+[[keys.command]]
+key = "prefix+S"
+type = "plugin_action"
+command = "olimorris.pomodoro-cli.skip"
+description = "skip pomodoro"
+

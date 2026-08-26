@@ -14,19 +14,24 @@ macos-titlebar-style = hidden
 copy-on-select = true
 working-directory = ~/.dotfiles
 
-# herdr - unbind keymaps
+keybind = cmd+shift+n=new_window
+
+###############################################################################
+# herdr keybinds
+###############################################################################
+
 keybind = cmd+t=unbind
+keybind = cmd+n=unbind
 keybind = cmd+w=unbind
 keybind = ctrl+w=unbind
 
-# ctrl+tab has no legacy terminal encoding, so it must be forwarded explicitly
-# as a Kitty keyboard protocol (CSI u) sequence for herdr to receive it
 keybind = ctrl+tab=text:\x1b[9;5u
 keybind = ctrl+shift+tab=text:\x1b[9;6u
 
 keybind = cmd+shift+j=unbind
 keybind = cmd+shift+k=unbind
 
+# switch tabs
 keybind = cmd+1=unbind
 keybind = cmd+2=unbind
 keybind = cmd+3=unbind
