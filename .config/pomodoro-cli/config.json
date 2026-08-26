@@ -3,7 +3,6 @@
   "projects": {
     "MSc AI": {
       "auto_start": false,
-      "native_notify": true,
       "pomodoros": 3,
       "timer": "study"
     }
