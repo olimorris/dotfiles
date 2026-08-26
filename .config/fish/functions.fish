@@ -57,8 +57,9 @@ function nvimcc -d "Launch Neovim against a CodeCompanion worktree"
 end
 
 function pom
-    cd ~/Code/Ruby/pomodoro-cli
+    pushd ~/Code/Ruby/pomodoro-cli
     bundle exec exe/pomodoro-cli $argv
+    popd
 end
 
 function o -d Open
