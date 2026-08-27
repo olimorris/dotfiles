@@ -1,10 +1,12 @@
 # Include only these paths
 + misc/
 + misc/mackup/**
++ misc/ui/**
++ misc/sounds/**
++ misc/macro_searches.txt
++ misc/VoiceInk_Settings_Backup.json
 + .config/prompts/**
 + .config/obs-sidecar/**
 
 # Exclude everything else by default
 - **
-
-
