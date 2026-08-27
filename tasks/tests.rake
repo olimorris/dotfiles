@@ -6,7 +6,7 @@ namespace :tests do
     if testing?
       DOTS_FOLDER = 'dotfiles'
     end
-    run %( cp #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/tests/stubs/app_store.txt #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/misc/packages/app_store.txt)
+    run %( cp #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/tests/stubs/app_store.txt #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/misc/packages/app_store_common.txt)
     run %( cp #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/tests/stubs/python_pip.txt #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/misc/packages/python_pip.txt)
     run %( cp #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/tests/stubs/ruby_gems.txt #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/misc/packages/ruby_gems.txt)
     run %( cp #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/tests/stubs/brew_taps.txt #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/misc/packages/brew_taps.txt)

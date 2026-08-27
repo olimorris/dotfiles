@@ -9,7 +9,9 @@ BREW_CASK_PERSONAL_FILE = File.expand_path("../misc/packages/brew_cask_personal.
 BREW_CASK_WORK_FILE = File.expand_path("../misc/packages/brew_cask_work.txt", __dir__).gsub(/ /, "\\ ")
 CARGO_FILE = File.expand_path("../misc/packages/rust_cargo.txt", __dir__).gsub(/ /, "\\ ")
 GEMS_FILE = File.expand_path("../misc/packages/ruby_gems.txt", __dir__).gsub(/ /, "\\ ")
-MAS_FILE = File.expand_path("../misc/packages/app_store.txt", __dir__).gsub(/ /, "\\ ")
+MAS_COMMON_FILE = File.expand_path("../misc/packages/app_store_common.txt", __dir__).gsub(/ /, "\\ ")
+MAS_PERSONAL_FILE = File.expand_path("../misc/packages/app_store_personal.txt", __dir__).gsub(/ /, "\\ ")
+MAS_WORK_FILE = File.expand_path("../misc/packages/app_store_work.txt", __dir__).gsub(/ /, "\\ ")
 NPM_FILE = File.expand_path("../misc/packages/npm_packages.txt", __dir__).gsub(/ /, "\\ ")
 PIP_FILE = File.expand_path("../misc/packages/python_pip.txt", __dir__).gsub(/ /, "\\ ")
 
@@ -30,7 +32,7 @@ namespace(:backup) do
   task(:app_store) do
     section("Backing up App Store apps")
 
-    run(" mas list \> #{MAS_FILE} ")
+    backup_mas_list(MAS_COMMON_FILE, mas_machine_file)
   end
 
   desc("Backup Ruby Gems")
@@ -253,6 +255,18 @@ def backup_brew_list(list_cmd, common_file, machine_file)
   File.write(machine_file.gsub("\\ ", " "), "#{unique.join("\n")}\n") unless ENV["DRY_RUN"]
 end
 
+# mas list prints "<id>  <name>  (<version>)", so the same app reads differently on two
+# machines whenever a version does. Match on the id alone - comparing whole lines would
+# file every version bump as a machine-specific app.
+def backup_mas_list(common_file, machine_file)
+  common_ids = File.readlines(common_file).map { |line| line.split.first }
+  installed = `mas list`.lines.map(&:strip).reject(&:empty?)
+  unique = installed.reject { |line| common_ids.include?(line.split.first) }
+
+  puts("~> mas list (#{unique.size} unique, #{installed.size - unique.size} already in common)")
+  File.write(machine_file.gsub("\\ ", " "), "#{unique.join("\n")}\n") unless ENV["DRY_RUN"]
+end
+
 def brew_packages_machine_file
   personal_machine? ? BREW_PACKAGES_PERSONAL_FILE : BREW_PACKAGES_WORK_FILE
 end
@@ -269,8 +283,14 @@ def brew_cask_packages
   (File.readlines(BREW_CASK_COMMON_FILE) + File.readlines(brew_cask_machine_file)).map(&:strip)
 end
 
+def mas_machine_file
+  personal_machine? ? MAS_PERSONAL_FILE : MAS_WORK_FILE
+end
+
 def app_store_apps
-  File.readlines(MAS_FILE).map(&:split).map(&:first)
+  # compact drops the nil from a machine file that is empty apart from its newline
+  (File.readlines(MAS_COMMON_FILE) + File.readlines(mas_machine_file))
+    .map { |line| line.split.first }.compact
 end
 
 def cargo_apps
