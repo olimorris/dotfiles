@@ -208,6 +208,10 @@ use_tag() {
 	mkdir -p "$DATA_DIR"
 	echo "$tag" > "$CURRENT_FILE"
 
+	# On a fresh Mac ~/.local/bin doesn't exist yet, and the redirect below fails
+	# with "no such file or directory" before nvim is ever written.
+	mkdir -p "$INSTALL_DIR"
+
 	_print_shim "$tag" >"$INSTALL_DIR/nvim"
 	chmod +x "$INSTALL_DIR/nvim"
 }
@@ -256,6 +260,7 @@ rollback_version() {
 	fi
 
 	echo "$previous" > "$CURRENT_FILE"
+	mkdir -p "$INSTALL_DIR"
 	_print_shim "$previous" >"$INSTALL_DIR/nvim"
 	chmod +x "$INSTALL_DIR/nvim"
 

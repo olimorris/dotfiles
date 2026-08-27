@@ -133,7 +133,9 @@ namespace(:install) do
   task(:rust) do
     section("Installing Rust")
 
-    run("curl https://sh.rustup.rs -sSf | sh")
+    # -y: rustup's installer is interactive by default and blocks the whole run
+    # waiting on a "proceed with installation" answer that nobody is there to give.
+    run(" curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y ")
   end
 
   desc("Install Rust Cargo")
@@ -188,14 +190,46 @@ namespace(:install) do
     run(" pip install -r #{PIP_FILE} ")
   end
 
-  desc("Install Fish plugins")
+  desc("Install Fish plugins and make Fish the login shell")
   task(:fish) do
     section("Installing Fish plugins")
 
+    # The whole pipeline is fish syntax, and `run` shells out via /bin/sh - so it has
+    # to go through `fish -c`. Previously sh was handed `... | source` directly and
+    # fisher never installed.
     run(
-      " curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher "
+      " fish -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher' "
     )
     run(" fish -c \"fisher update\" ")
+
+    Rake::Task["install:default_shell"].invoke
+  end
+
+  desc("Make Fish the login shell")
+  task(:default_shell) do
+    section("Setting Fish as the login shell")
+
+    fish = "/opt/homebrew/bin/fish"
+    unless File.executable?(fish)
+      puts("~> #{fish} not found, skipping")
+      next
+    end
+
+    # chsh refuses any shell that isn't listed in /etc/shells, so register it first.
+    if File.readlines("/etc/shells").map(&:strip).include?(fish)
+      puts("~> Already in /etc/shells")
+    else
+      run(" echo #{fish} | sudo tee -a /etc/shells ")
+    end
+
+    user = `whoami`.strip
+    if `dscl . -read /Users/#{user} UserShell`.strip.end_with?(fish)
+      puts("~> Already the login shell")
+    else
+      # sudo chsh rather than plain chsh: plain chsh prompts for the account password
+      # through PAM, and sudo is usually already primed by this point in the run.
+      run(" sudo chsh -s #{fish} #{user} ")
+    end
   end
 end
 

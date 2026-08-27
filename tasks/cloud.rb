@@ -1,4 +1,8 @@
-# Backup and restore ~/.dotfiles and ~/Code to/from an encrypted remote via rclone.
+# Backup and restore files to/from an encrypted remote via rclone. This is the only
+# file sync path - tasks/files.rake used to hold a second, pre-rewrite copy of it.
+#
+# ~/.dotfiles and ~/Code sync on both Macs. ~/OliDocs, ~/Downloads and ~/Documents
+# sync on the personal Mac only, in both directions - see personal_dirs below.
 #
 # Usage:
 #   rake cloud:backup:files            # backup, quiet
@@ -49,15 +53,42 @@ def storage_remote
   raise "STORAGE_ENCRYPTED_FOLDER is not set - copy .env from 1Password to .config/env/.env"
 end
 
-def rclone_dirs
+# Synced on every machine. These two have to stay in step across both Macs.
+def shared_dirs
   {
     ".dotfiles" => {remote: "#{storage_remote}:dotfiles", filter: "dotfiles_filter.txt"},
     "Code" => {remote: "#{storage_remote}:Code", filter: "code_filter.txt"}
   }
 end
 
+# Personal machine only, in *both* directions. The work Mac has no business holding
+# these, and it must not push them either: rclone sync mirrors, so a push from a Mac
+# that doesn't have them would delete the backup made by the one that does.
+#
+# Gating on personal_machine? fails safe. A personal Mac misread as work skips these
+# dirs; the reverse - a work Mac misread as personal - is the one that destroys data,
+# and that only happens if ComputerName is set wrong by hand.
+def personal_dirs
+  unless personal_machine?
+    puts("~> Skipping OliDocs, Downloads and Documents (not the personal machine)")
+    return {}
+  end
+
+  {
+    "OliDocs" => {remote: "#{storage_remote}:Documents"},
+    "Downloads" => {remote: "#{storage_remote}:Downloads"},
+    "Documents" => {remote: "#{storage_remote}:ICloud_Docs"}
+  }
+end
+
+def rclone_dirs
+  shared_dirs.merge(personal_dirs)
+end
+
+# compact drops the nil from a dir with no filter of its own - base_filter is enough
+# for the document folders, which need exclusions but no whitelist.
 def rclone_filters(*names)
-  names.map { |name| " --filter-from #{RCLONE_DIR}/#{name}" }.join
+  names.compact.map { |name| " --filter-from #{RCLONE_DIR}/#{name}" }.join
 end
 
 # The .git pass is opt-in. Announce the skip so a sync that quietly left history
@@ -101,6 +132,7 @@ namespace(:cloud) do
   namespace(:restore) do
     desc("Restore files")
     task(:files, [:progress]) do |_t, args|
+      section("Using rclone to restore files")
       run(" /bin/date -u ")
 
       flag = args[:progress] ? " -P -v" : ""
@@ -132,6 +164,7 @@ namespace(:cloud) do
   namespace(:backup) do
     desc("Backup files")
     task(:files, [:progress]) do |_t, args|
+      section("Using rclone to backup files")
       run(" /bin/date -u ")
 
       flag = args[:progress] ? " -P -v" : ""

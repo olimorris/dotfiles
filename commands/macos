@@ -36,13 +36,16 @@ sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.pl
 defaults write com.apple.menuextra.clock IsAnalog -bool true
 
 # Set computer name (as done via System Preferences → Sharing)
-echo "Please enter the desired name for the computer:"
-read computer_name
-
-sudo scutil --set ComputerName "$computer_name"
-sudo scutil --set HostName "$computer_name"
-sudo scutil --set LocalHostName "$computer_name"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$computer_name"
+# Done by hand, before `rake init`. personal_machine? in tasks/utils.rb reads
+# ComputerName to pick the personal vs work package lists, so it has to be right
+# before any package task runs - not set here, at the tail of the install.
+# echo "Please enter the desired name for the computer:"
+# read computer_name
+#
+# sudo scutil --set ComputerName "$computer_name"
+# sudo scutil --set HostName "$computer_name"
+# sudo scutil --set LocalHostName "$computer_name"
+# sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$computer_name"
 
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
@@ -731,20 +734,12 @@ for app in "Activity Monitor" \
 	"Contacts" \
 	"Dock" \
 	"Finder" \
-	"Google Chrome Canary" \
 	"Google Chrome" \
 	"Mail" \
 	"Messages" \
-	"Opera" \
 	"Photos" \
 	"Safari" \
-	"SizeUp" \
-	"SystemUIServer" \
-	"Terminal" \
-	"Transmission" \
-	"Tweetbot" \
-	"Twitter" \
-	"iCal"; do
+	"SystemUIServer"; do
 	killall "${app}" &>/dev/null
 done
 echo "Done. Note that some of these changes require a logout/restart to take effect."
