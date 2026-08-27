@@ -54,6 +54,8 @@ task(:install) do
 
   Rake::Task["tests:setup"].invoke if testing?
 
+  Rake::Task["install:sudo"].invoke
+
   # Fetch files first. Currently we're doing this manually so don't need this step
   # Rake::Task['install:files'].invoke
 

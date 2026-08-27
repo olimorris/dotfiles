@@ -8,6 +8,25 @@ namespace :install do
     run %( chmod -R +x ~/.dotfiles/bin/ )
   end
 
+  desc 'Prime sudo for the rest of the run'
+  task :sudo do
+    section 'Priming sudo'
+
+    next if testing?
+
+    # Ask once up front so the brew steps don't stop to prompt, then refresh in the
+    # background - sudo's timestamp lapses after 5 minutes and a full install runs
+    # far longer. commands/macos does the same, but install:macos runs last, well
+    # after the packages that need it. The loop exits when this rake process does.
+    run(' sudo -v ', check: true)
+
+    # The keep-alive is a real background process, so it has to respect DRY_RUN too.
+    next if ENV['DRY_RUN']
+
+    keep_alive = "while true; do sudo -n true; sleep 60; kill -0 #{Process.pid} 2>/dev/null || exit; done"
+    Process.detach(spawn(keep_alive, out: File::NULL, err: File::NULL))
+  end
+
   desc 'Install fonts'
   task :fonts do
     section 'Installing fonts'

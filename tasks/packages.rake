@@ -73,7 +73,7 @@ namespace(:install) do
   task(:brew) do
     section("Installing Homebrew")
 
-    run(" /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\" ", check: true)
+    run(" NONINTERACTIVE=1 /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\" ", check: true)
     run(" echo >> /Users/$(whoami)/.zprofile")
     run(" echo 'eval \"$(/opt/homebrew/bin/brew shellenv)\"' >> /Users/$(whoami)/.zprofile")
 
