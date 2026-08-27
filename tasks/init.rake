@@ -3,7 +3,7 @@ task(:init) do
   section("Bootstrapping a new Mac")
 
   Rake::Task["install:brew"].invoke
-  run(" brew install rclone ")
+  run(" brew install rclone ", check: true)
   Rake::Task["cloud:pull"].invoke
   Rake::Task["install"].invoke
 end

@@ -7,6 +7,12 @@ DIRECTORY_NAME = File.dirname(__dir__)
 # mas.rake brew.rake
 SKIP_TESTS_FOR = %w[].freeze
 
+# Put Homebrew on PATH for this process. `run` shells out via `system`, so an
+# `eval "$(brew shellenv)"` inside a task only ever changes a subshell that then
+# exits - on a fresh Mac every later `brew` call would still be off-PATH. Also
+# covers launchd, which runs the backup agent with a minimal PATH.
+ENV["PATH"] = "/opt/homebrew/bin:/opt/homebrew/sbin:#{ENV["PATH"]}" unless ENV["PATH"].include?("/opt/homebrew/bin")
+
 Dir.glob("./tasks/**/*").map { |file| load(file) }
 
 task(default: [:backup])

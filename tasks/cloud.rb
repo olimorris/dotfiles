@@ -25,6 +25,11 @@
 #   --fast-list is deliberately absent: the Koofr backend reports ListR: false, so the
 #   flag does nothing on this remote.
 #
+#   The rclone calls are check: true. A restore that fails silently is worse than one
+#   that stops: cloud:pull goes on to run install:app_config, which does a
+#   `mackup restore --force` against whatever misc/mackup holds - nothing, if the
+#   sync never ran.
+#
 #   Restore finishes by repairing git worktree pointer files, which hold absolute paths
 #   and so arrive pointing at the source machine's home directory.
 
@@ -91,7 +96,7 @@ namespace(:cloud) do
 
       rclone_dirs.each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
-        run(" #{RCLONE} sync #{config[:remote]} ~/#{local}#{filters}#{speed_flags}#{other_flags}#{flag} ")
+        run(" #{RCLONE} sync #{config[:remote]} ~/#{local}#{filters}#{speed_flags}#{other_flags}#{flag} ", check: true)
       end
 
       next unless sync_git?
@@ -99,7 +104,7 @@ namespace(:cloud) do
       git_remote = "#{ENV["STORAGE_ENCRYPTED_FOLDER"]}:Code"
       git_filters = rclone_filters("git_filter.txt")
       git_flags = " --use-mmap --transfers=32 --checkers=32"
-      run(" #{RCLONE} sync #{git_remote} ~/Code#{git_filters}#{git_flags}#{other_flags}#{flag} ")
+      run(" #{RCLONE} sync #{git_remote} ~/Code#{git_filters}#{git_flags}#{other_flags}#{flag} ", check: true)
 
       repair_worktree_pointers(File.expand_path("~/Code"))
     end
@@ -115,14 +120,14 @@ namespace(:cloud) do
 
       rclone_dirs.each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
-        run(" #{RCLONE} sync ~/#{local} #{config[:remote]}#{filters}#{speed_flags}#{flag} ")
+        run(" #{RCLONE} sync ~/#{local} #{config[:remote]}#{filters}#{speed_flags}#{flag} ", check: true)
       end
 
       next unless sync_git?
 
       git_filters = rclone_filters("git_filter.txt")
       git_flags = " --use-mmap --transfers=32 --checkers=32"
-      run(" #{RCLONE} sync ~/Code #{ENV["STORAGE_ENCRYPTED_FOLDER"]}:Code#{git_filters}#{git_flags}#{flag} ")
+      run(" #{RCLONE} sync ~/Code #{ENV["STORAGE_ENCRYPTED_FOLDER"]}:Code#{git_filters}#{git_flags}#{flag} ", check: true)
     end
   end
 end
