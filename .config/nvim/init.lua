@@ -1,7 +1,7 @@
 _G.om = {}
 om.home = os.getenv("HOME")
 om.nvim_start_time = vim.uv.hrtime()
-om.on_personal = vim.fn.getenv("USER") == "Oli"
+om.on_personal = vim.uv.os_gethostname() == "Oli's MacBook Pro"
 om.on_big_screen = function()
   return vim.o.columns > 150 and vim.o.lines >= 40
 end
