@@ -39,6 +39,17 @@
 
 RCLONE = "/opt/homebrew/bin/rclone"
 
+# Koofr rate-limits and answers with 429 "you have sent too many requests in a given
+# amount of time" when rclone fans out hard - ~/Code trips it because it's thousands of
+# small files. --transfers and --checkers are the wrong knob for this: they cap how many
+# operations run at once, not how many requests per second leave the machine, and 16
+# fast metadata checks blow through a per-second cap easily. --tpslimit caps the request
+# rate itself, which is what Koofr is actually counting.
+#
+# rclone already retries a 429 on its own (--low-level-retries, default 10), so seeing
+# the message at all means the retries were exhausted. Drop the 10 if it comes back.
+PACING = " --tpslimit 10 --tpslimit-burst 10"
+
 # Read the filters and rclone.conf from the repo, not ~/.config/rclone. That path is a
 # symlink created by install:dotbot, which rake init only reaches *after* the restore
 # has run - so on a fresh Mac nothing is there yet. The repo is present from the git
@@ -137,7 +148,7 @@ namespace(:cloud) do
 
       flag = args[:progress] ? " -P -v" : ""
       other_flags = " --delete-before"
-      speed_flags = " --use-mmap --transfers=16 --checkers=16 --size-only"
+      speed_flags = " --use-mmap --transfers=16 --checkers=16 --size-only#{PACING}"
 
       rclone_dirs.each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
@@ -151,7 +162,7 @@ namespace(:cloud) do
 
       git_remote = "#{storage_remote}:Code"
       git_filters = rclone_filters("git_filter.txt")
-      git_flags = " --use-mmap --transfers=32 --checkers=32"
+      git_flags = " --use-mmap --transfers=16 --checkers=16#{PACING}"
       run(
         " #{RCLONE}#{RCLONE_CONFIG} sync #{git_remote} ~/Code#{git_filters}#{git_flags}#{other_flags}#{flag} ",
         check: true
@@ -168,7 +179,7 @@ namespace(:cloud) do
       run(" /bin/date -u ")
 
       flag = args[:progress] ? " -P -v" : ""
-      speed_flags = " --use-mmap --transfers=16 --checkers=16 --size-only"
+      speed_flags = " --use-mmap --transfers=16 --checkers=16 --size-only#{PACING}"
 
       rclone_dirs.each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
@@ -181,7 +192,7 @@ namespace(:cloud) do
       next unless sync_git?
 
       git_filters = rclone_filters("git_filter.txt")
-      git_flags = " --use-mmap --transfers=32 --checkers=32"
+      git_flags = " --use-mmap --transfers=16 --checkers=16#{PACING}"
       run(
         " #{RCLONE}#{RCLONE_CONFIG} sync ~/Code #{storage_remote}:Code#{git_filters}#{git_flags}#{flag} ",
         check: true

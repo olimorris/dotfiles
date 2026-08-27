@@ -5,6 +5,7 @@
 + misc/sounds/**
 + misc/macro_searches.txt
 + misc/VoiceInk_Settings_Backup.json
++ .config/espanso/**
 + .config/prompts/**
 + .config/obs-sidecar/**
 
