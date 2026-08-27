@@ -23,8 +23,8 @@ My current Neovim config can be found <a href="https://github.com/olimorris/dotf
 git clone https://github.com/olimorris/dotfiles.git ~/.dotfiles
 ```
 
-- Copy `.env` from 1Password to `.config/env/.env` and update as required
 - Copy `rclone.conf` from 1Password to `~/.dotfiles/.config/rclone/rclone.conf`
+- Copy `.env` from 1Password to `~/.dotfiles/.config/env/.env` and update as required
 - Open up a terminal and run:
 
 ```bash
