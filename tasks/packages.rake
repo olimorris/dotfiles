@@ -1,245 +1,257 @@
-require 'json'
+require "json"
 
-BREW_TAPS_FILE = File.expand_path('../misc/packages/brew_taps.txt', __dir__).gsub(/ /, '\ ')
-BREW_PACKAGES_COMMON_FILE = File.expand_path('../misc/packages/brew_packages_common.txt', __dir__).gsub(/ /, '\ ')
-BREW_PACKAGES_PERSONAL_FILE = File.expand_path('../misc/packages/brew_packages_personal.txt', __dir__).gsub(/ /, '\ ')
-BREW_PACKAGES_WORK_FILE = File.expand_path('../misc/packages/brew_packages_work.txt', __dir__).gsub(/ /, '\ ')
-BREW_CASK_COMMON_FILE = File.expand_path('../misc/packages/brew_cask_common.txt', __dir__).gsub(/ /, '\ ')
-BREW_CASK_PERSONAL_FILE = File.expand_path('../misc/packages/brew_cask_personal.txt', __dir__).gsub(/ /, '\ ')
-BREW_CASK_WORK_FILE = File.expand_path('../misc/packages/brew_cask_work.txt', __dir__).gsub(/ /, '\ ')
-CARGO_FILE = File.expand_path('../misc/packages/rust_cargo.txt', __dir__).gsub(/ /, '\ ')
-GEMS_FILE = File.expand_path('../misc/packages/ruby_gems.txt', __dir__).gsub(/ /, '\ ')
-MAS_FILE = File.expand_path('../misc/packages/app_store.txt', __dir__).gsub(/ /, '\ ')
-NPM_FILE = File.expand_path('../misc/packages/npm_packages.txt', __dir__).gsub(/ /, '\ ')
-PIP_FILE = File.expand_path('../misc/packages/python_pip.txt', __dir__).gsub(/ /, '\ ')
+BREW_TAPS_FILE = File.expand_path("../misc/packages/brew_taps.txt", __dir__).gsub(/ /, "\\ ")
+BREW_PACKAGES_COMMON_FILE = File.expand_path("../misc/packages/brew_packages_common.txt", __dir__).gsub(/ /, "\\ ")
+BREW_PACKAGES_PERSONAL_FILE = File.expand_path("../misc/packages/brew_packages_personal.txt", __dir__).gsub(/ /, "\\ ")
+BREW_PACKAGES_WORK_FILE = File.expand_path("../misc/packages/brew_packages_work.txt", __dir__).gsub(/ /, "\\ ")
+BREW_CASK_COMMON_FILE = File.expand_path("../misc/packages/brew_cask_common.txt", __dir__).gsub(/ /, "\\ ")
+BREW_CASK_PERSONAL_FILE = File.expand_path("../misc/packages/brew_cask_personal.txt", __dir__).gsub(/ /, "\\ ")
+BREW_CASK_WORK_FILE = File.expand_path("../misc/packages/brew_cask_work.txt", __dir__).gsub(/ /, "\\ ")
+CARGO_FILE = File.expand_path("../misc/packages/rust_cargo.txt", __dir__).gsub(/ /, "\\ ")
+GEMS_FILE = File.expand_path("../misc/packages/ruby_gems.txt", __dir__).gsub(/ /, "\\ ")
+MAS_FILE = File.expand_path("../misc/packages/app_store.txt", __dir__).gsub(/ /, "\\ ")
+NPM_FILE = File.expand_path("../misc/packages/npm_packages.txt", __dir__).gsub(/ /, "\\ ")
+PIP_FILE = File.expand_path("../misc/packages/python_pip.txt", __dir__).gsub(/ /, "\\ ")
 
 # HEAD_ONLY_FORMULAS = %w( neovim )
-HEAD_ONLY_FORMULAS = ''
+HEAD_ONLY_FORMULAS = ""
 
-namespace :backup do
-  desc 'Backup Homebrew'
-  task :brew do
-    section 'Backing up Homebrew'
+namespace(:backup) do
+  desc("Backup Homebrew")
+  task(:brew) do
+    section("Backing up Homebrew")
 
-    run %( brew leaves > #{brew_packages_machine_file} )
-    run %( brew list --cask > #{brew_cask_machine_file} )
-    run %( brew tap > #{BREW_TAPS_FILE} )
+    backup_brew_list("brew leaves", BREW_PACKAGES_COMMON_FILE, brew_packages_machine_file)
+    backup_brew_list("brew list --cask", BREW_CASK_COMMON_FILE, brew_cask_machine_file)
+    run(" brew tap > #{BREW_TAPS_FILE} ")
   end
 
-  desc 'Backup App Store'
-  task :app_store do
-    section 'Backing up App Store apps'
+  desc("Backup App Store")
+  task(:app_store) do
+    section("Backing up App Store apps")
 
-    run %( mas list \> #{MAS_FILE} )
+    run(" mas list \> #{MAS_FILE} ")
   end
 
-  desc 'Backup Ruby Gems'
-  task :gems do
-    section 'Backing up Ruby Gems'
+  desc("Backup Ruby Gems")
+  task(:gems) do
+    section("Backing up Ruby Gems")
 
-    run %( gem list --no-versions | sed '1d' | awk '\{gsub\(/\\/.*\\//,"",$1\); print\}' \> #{GEMS_FILE} )
+    run(" gem list --no-versions | sed '1d' | awk '\{gsub(/\\/.*\\//,\"\",$1); print\}' \> #{GEMS_FILE} ")
   end
 
-  desc 'Backup NPM files'
-  task :npm do
-    section 'Backing up NPM files'
+  desc("Backup NPM files")
+  task(:npm) do
+    section("Backing up NPM files")
 
     # Check if npm command succeeds before redirecting
-    if system('npm ls --global --depth=0 --json >/dev/null 2>&1')
-      run %( npm ls --global --depth=0 --json > #{NPM_FILE} )
-      run %( npm prefix -g > #{NPM_FILE}.prefix )
+    if system("npm ls --global --depth=0 --json >/dev/null 2>&1")
+      run(" npm ls --global --depth=0 --json > #{NPM_FILE} ")
+      run(" npm prefix -g > #{NPM_FILE}.prefix ")
     else
-      puts 'Warning: npm list command failed, skipping backup'
+      puts("Warning: npm list command failed, skipping backup")
     end
   end
 
-  desc 'Backup PIP files'
-  task :pip do
-    section 'Backing up PIP files'
+  desc("Backup PIP files")
+  task(:pip) do
+    section("Backing up PIP files")
 
-    run %( pip freeze \> #{PIP_FILE} )
+    run(" pip freeze \> #{PIP_FILE} ")
   end
 end
 
-namespace :install do
-  desc 'Install XCode'
-  task :xcode do
-    section 'Installing XCode'
+namespace(:install) do
+  desc("Install XCode")
+  task(:xcode) do
+    section("Installing XCode")
 
-    run %( xcode-select --install )
+    run(" xcode-select --install ")
   end
 
-  desc 'Install Homebrew'
-  task :brew do
-    section 'Installing Homebrew'
+  desc("Install Homebrew")
+  task(:brew) do
+    section("Installing Homebrew")
 
-    run %( /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\" )
-    run %( echo >> /Users/$(whoami)/.zprofile)
-    run %( echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/$(whoami)/.zprofile)
-    run %( eval "$(/opt/homebrew/bin/brew shellenv)" )
+    run(" /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\" ")
+    run(" echo >> /Users/$(whoami)/.zprofile")
+    run(" echo 'eval \"$(/opt/homebrew/bin/brew shellenv)\"' >> /Users/$(whoami)/.zprofile")
+    run(" eval \"$(/opt/homebrew/bin/brew shellenv)\" ")
 
     # puts '~> Updating Homebrew directory permissions'
     # run %( sudo chown -R $(whoami) /usr/local/ )
     # run %( sudo chown -R $(whoami) /opt/homebrew/ )
 
-    puts '~> Installing Homebrew taps'
+    puts("~> Installing Homebrew taps")
     brew_taps.each do |tap|
-      run %( brew tap #{tap} )
+      run(" brew tap #{tap} ")
     end
 
-    run %( brew analytics off )
+    run(" brew analytics off ")
   end
 
-  desc 'Install Homebrew Packages'
-  task :brew_packages do
-    section 'Installing Homebrew Packages'
+  desc("Install Homebrew Packages")
+  task(:brew_packages) do
+    section("Installing Homebrew Packages")
 
     brew_packages.each do |package|
       if HEAD_ONLY_FORMULAS.include?(package)
-        run %( brew install --HEAD #{package} )
+        run(" brew install --HEAD #{package} ")
       else
-        run %( brew install #{package} )
+        run(" brew install #{package} ")
       end
     end
   end
 
-  desc 'Install Homebrew Cask Packages'
-  task :brew_cask_packages do
-    section 'Installing Homebrew Cask Packages'
+  desc("Install Homebrew Cask Packages")
+  task(:brew_cask_packages) do
+    section("Installing Homebrew Cask Packages")
 
     brew_cask_packages.each do |package|
-      run %( brew install --force --appdir="/Applications" --fontdir="/Library/Fonts" #{package} )
+      run(" brew install --force --appdir=\"/Applications\" --fontdir=\"/Library/Fonts\" #{package} ")
     end
   end
 
-  desc 'Clean up Homebrew'
-  task :brew_clean_up do
-    section 'Cleaning up Homebrew'
+  desc("Clean up Homebrew")
+  task(:brew_clean_up) do
+    section("Cleaning up Homebrew")
 
-    run %( brew cleanup )
+    run(" brew cleanup ")
   end
 
-  desc 'Install App Store apps'
-  task :app_store do
-    section 'Installing App Store apps'
+  desc("Install App Store apps")
+  task(:app_store) do
+    section("Installing App Store apps")
 
     app_store_apps.each do |app|
-      run %( mas install #{app} )
+      run(" mas install #{app} ")
     end
   end
 
-  desc 'Install Rust'
-  task :rust do
-    section 'Installing Rust'
+  desc("Install Rust")
+  task(:rust) do
+    section("Installing Rust")
 
-    run %(curl https://sh.rustup.rs -sSf | sh)
+    run("curl https://sh.rustup.rs -sSf | sh")
   end
 
-  desc 'Install Rust Cargo'
-  task :cargo do
-    section 'Installing Rust Cargo'
+  desc("Install Rust Cargo")
+  task(:cargo) do
+    section("Installing Rust Cargo")
 
     cargo_apps.each do |app|
-      run %( cargo install #{app} )
+      run(" cargo install #{app} ")
     end
   end
 
-  desc 'Install Ruby Gems'
-  task :gems do
-    section 'Installing Ruby Gems'
+  desc("Install Ruby Gems")
+  task(:gems) do
+    section("Installing Ruby Gems")
 
-    run %( xargs gem install \< #{GEMS_FILE} )
+    run(" xargs gem install \< #{GEMS_FILE} ")
   end
 
-  desc 'Install NPM files'
-  task :npm do
-    section 'Installing NPM files'
+  desc("Install NPM files")
+  task(:npm) do
+    section("Installing NPM files")
 
     unless File.exist?(NPM_FILE)
-      puts "No npm backup file found at #{NPM_FILE}"
+      puts("No npm backup file found at #{NPM_FILE}")
       next
     end
 
     begin
       data = JSON.parse(File.read(NPM_FILE))
-      deps = data.fetch('dependencies', {})
+      deps = data.fetch("dependencies", {})
       if deps.empty?
-        puts 'No global packages listed in npm backup'
+        puts("No global packages listed in npm backup")
       else
         deps.each do |name, info|
           # Skip npm itself to avoid changing the running npm while installing
-          next if name == 'npm'
+          next if name == "npm"
 
-          version = info && info['version'] ? "@#{info['version']}" : ''
-          run %( npm install -g #{name}#{version} )
+          version = info && info["version"] ? "@#{info["version"]}" : ""
+          run(" npm install -g #{name}#{version} ")
         end
       end
+
     rescue StandardError => e
-      puts "Failed to parse #{NPM_FILE}: #{e}"
+      puts("Failed to parse #{NPM_FILE}: #{e}")
     end
   end
 
-  desc 'Install PIP files'
-  task :pip do
-    section 'Installing PIP files'
+  desc("Install PIP files")
+  task(:pip) do
+    section("Installing PIP files")
 
-    run %( pip install -r #{PIP_FILE} )
+    run(" pip install -r #{PIP_FILE} ")
   end
 
-  desc 'Install Fish plugins'
-  task :fish do
-    section 'Installing Fish plugins'
+  desc("Install Fish plugins")
+  task(:fish) do
+    section("Installing Fish plugins")
 
-    run %( curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher )
-    run %( fish -c "fisher update" )
+    run(
+      " curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher "
+    )
+    run(" fish -c \"fisher update\" ")
   end
 end
 
-namespace :update do
-  desc 'Update Homebrew'
-  task :brew do
-    section 'Updating Homebrew'
+namespace(:update) do
+  desc("Update Homebrew")
+  task(:brew) do
+    section("Updating Homebrew")
 
-    run %( brew update )
-    run %( brew upgrade )
+    run(" brew update ")
+    run(" brew upgrade ")
   end
 
-  desc 'Update Fish'
-  task :fish do
-    section 'Updating Fish plugins'
+  desc("Update Fish")
+  task(:fish) do
+    section("Updating Fish plugins")
 
-    run %( fish -c "fisher update" )
+    run(" fish -c \"fisher update\" ")
   end
 
-  desc 'Update Ruby Gems'
-  task :gems do
-    section 'Updating Ruby Gems'
+  desc("Update Ruby Gems")
+  task(:gems) do
+    section("Updating Ruby Gems")
 
-    run %( gem update --system && gem update )
+    run(" gem update --system && gem update ")
   end
 
-  desc 'Update NPM packages'
-  task :npm do
-    section 'Updating NPM'
+  desc("Update NPM packages")
+  task(:npm) do
+    section("Updating NPM")
 
-    run %( npm install -g npm && npm update -g )
+    run(" npm install -g npm && npm update -g ")
   end
 
-  desc 'Update PIP files'
-  task :pip do
-    section 'Updating PIP files'
+  desc("Update PIP files")
+  task(:pip) do
+    section("Updating PIP files")
 
     begin
-      run %( pip install --upgrade pip )
-      run %( pip install -r #{PIP_FILE} --upgrade )
+      run(" pip install --upgrade pip ")
+      run(" pip install -r #{PIP_FILE} --upgrade ")
     rescue StandardError
-      puts 'PIP update failed'
+      puts("PIP update failed")
     end
   end
 end
 
 def brew_taps
   File.readlines(BREW_TAPS_FILE).map(&:strip)
+end
+
+def backup_brew_list(list_cmd, common_file, machine_file)
+  common = File.readlines(common_file).map(&:strip)
+  installed = `#{list_cmd}`.lines.map(&:strip).reject(&:empty?)
+  unique = installed - common
+
+  puts("~> #{list_cmd} (#{unique.size} unique, #{installed.size - unique.size} already in common)")
+  File.write(machine_file.gsub("\\ ", " "), "#{unique.join("\n")}\n") unless ENV["DRY_RUN"]
 end
 
 def brew_packages_machine_file
