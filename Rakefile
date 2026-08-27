@@ -13,6 +13,21 @@ SKIP_TESTS_FOR = %w[].freeze
 # covers launchd, which runs the backup agent with a minimal PATH.
 ENV["PATH"] = "/opt/homebrew/bin:/opt/homebrew/sbin:#{ENV["PATH"]}" unless ENV["PATH"].include?("/opt/homebrew/bin")
 
+# Load .env into this process. The shell normally does this from ~/.env, but that's a
+# dotbot symlink that doesn't exist until install:dotbot runs - and rake init needs
+# STORAGE_ENCRYPTED_FOLDER before then, to know which remote to restore from. Anything
+# already set wins, so a configured shell still takes precedence.
+env_file = File.expand_path(".config/env/.env", __dir__)
+if File.exist?(env_file)
+  File.readlines(env_file).each do |line|
+    line = line.strip
+    next if line.empty? || line.start_with?("#")
+
+    key, value = line.split("=", 2)
+    ENV[key] ||= value if value
+  end
+end
+
 Dir.glob("./tasks/**/*").map { |file| load(file) }
 
 task(default: [:backup])

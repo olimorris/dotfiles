@@ -42,10 +42,17 @@ RCLONE = "/opt/homebrew/bin/rclone"
 RCLONE_DIR = File.expand_path("../.config/rclone", __dir__)
 RCLONE_CONFIG = " --config #{RCLONE_DIR}/rclone.conf"
 
+def storage_remote
+  remote = ENV["STORAGE_ENCRYPTED_FOLDER"]
+  return remote unless remote.nil? || remote.empty?
+
+  raise "STORAGE_ENCRYPTED_FOLDER is not set - copy .env from 1Password to .config/env/.env"
+end
+
 def rclone_dirs
   {
-    ".dotfiles" => {remote: "#{ENV["STORAGE_ENCRYPTED_FOLDER"]}:dotfiles", filter: "dotfiles_filter.txt"},
-    "Code" => {remote: "#{ENV["STORAGE_ENCRYPTED_FOLDER"]}:Code", filter: "code_filter.txt"}
+    ".dotfiles" => {remote: "#{storage_remote}:dotfiles", filter: "dotfiles_filter.txt"},
+    "Code" => {remote: "#{storage_remote}:Code", filter: "code_filter.txt"}
   }
 end
 
@@ -58,7 +65,7 @@ end
 def sync_git?
   return true if ENV["GIT"]
 
-  puts "~> Skipping .git folders (set GIT=1 to include them)"
+  puts("~> Skipping .git folders (set GIT=1 to include them)")
   false
 end
 
@@ -86,7 +93,7 @@ end
 def rewrite_pointer(path, contents)
   return if File.exist?(path) && File.read(path) == contents
 
-  puts "~> repairing worktree pointer #{path}"
+  puts("~> repairing worktree pointer #{path}")
   File.write(path, contents) unless ENV["DRY_RUN"]
 end
 
@@ -102,15 +109,21 @@ namespace(:cloud) do
 
       rclone_dirs.each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
-        run(" #{RCLONE}#{RCLONE_CONFIG} sync #{config[:remote]} ~/#{local}#{filters}#{speed_flags}#{other_flags}#{flag} ", check: true)
+        run(
+          " #{RCLONE}#{RCLONE_CONFIG} sync #{config[:remote]} ~/#{local}#{filters}#{speed_flags}#{other_flags}#{flag} ",
+          check: true
+        )
       end
 
       next unless sync_git?
 
-      git_remote = "#{ENV["STORAGE_ENCRYPTED_FOLDER"]}:Code"
+      git_remote = "#{storage_remote}:Code"
       git_filters = rclone_filters("git_filter.txt")
       git_flags = " --use-mmap --transfers=32 --checkers=32"
-      run(" #{RCLONE}#{RCLONE_CONFIG} sync #{git_remote} ~/Code#{git_filters}#{git_flags}#{other_flags}#{flag} ", check: true)
+      run(
+        " #{RCLONE}#{RCLONE_CONFIG} sync #{git_remote} ~/Code#{git_filters}#{git_flags}#{other_flags}#{flag} ",
+        check: true
+      )
 
       repair_worktree_pointers(File.expand_path("~/Code"))
     end
@@ -126,14 +139,20 @@ namespace(:cloud) do
 
       rclone_dirs.each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
-        run(" #{RCLONE}#{RCLONE_CONFIG} sync ~/#{local} #{config[:remote]}#{filters}#{speed_flags}#{flag} ", check: true)
+        run(
+          " #{RCLONE}#{RCLONE_CONFIG} sync ~/#{local} #{config[:remote]}#{filters}#{speed_flags}#{flag} ",
+          check: true
+        )
       end
 
       next unless sync_git?
 
       git_filters = rclone_filters("git_filter.txt")
       git_flags = " --use-mmap --transfers=32 --checkers=32"
-      run(" #{RCLONE}#{RCLONE_CONFIG} sync ~/Code #{ENV["STORAGE_ENCRYPTED_FOLDER"]}:Code#{git_filters}#{git_flags}#{flag} ", check: true)
+      run(
+        " #{RCLONE}#{RCLONE_CONFIG} sync ~/Code #{storage_remote}:Code#{git_filters}#{git_flags}#{flag} ",
+        check: true
+      )
     end
   end
 end
