@@ -109,6 +109,7 @@ parallel
 parser
 pathname
 pathutil
+pomodoro-cli
 power_assert
 pp
 prettyprint

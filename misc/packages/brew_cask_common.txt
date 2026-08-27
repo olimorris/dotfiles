@@ -3,6 +3,7 @@
 aldente
 alfred
 anki
+bartender
 blackhole-2ch
 claude-code
 cleanshot

@@ -30,11 +30,11 @@
       "src": "https://github.com/mason-org/mason.nvim"
     },
     "mini.test": {
-      "rev": "86a2f85cca908077f29ab11565472e8055fa13e8",
+      "rev": "56e1399c130080a289d7c0a86d46e48f70a22e3d",
       "src": "https://github.com/nvim-mini/mini.test"
     },
     "nvim-autopairs": {
-      "rev": "7b9923abad60b903ece7c52940e1321d39eccc79",
+      "rev": "430522f95fe4fb7c511ec64f8c1a90cc6a66c05c",
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-surround": {
@@ -42,7 +42,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "074aa4422bf029908338e855d0c0f71470a971bb",
+      "rev": "8b98b4470eb326f1c7b50dae79f8c963568e5720",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-textobjects": {
