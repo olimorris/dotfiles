@@ -40,6 +40,9 @@ switch_workspace = "cmd+alt+1..9"
 
 toggle_sidebar = "cmd+s"
 
+new_worktree = "prefix+n"
+open_worktree = "prefix+o"
+
 split_vertical = "prefix+\\"
 split_horizontal = "prefix+minus"
 
