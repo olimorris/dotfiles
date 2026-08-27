@@ -20,7 +20,7 @@ My current Neovim config can be found <a href="https://github.com/olimorris/dotf
 - Clone the dotfiles:
 
 ```bash
-git clone git@github.com:olimorris/dotfiles.git ~/.dotfiles
+git clone https://github.com/olimorris/dotfiles.git ~/.dotfiles
 ```
 
 - Copy `.env` from 1Password to `.config/env/.env` and update as required
