@@ -5,9 +5,13 @@
 + misc/sounds/**
 + misc/macro_searches.txt
 + misc/VoiceInk_Settings_Backup.json
++ .config/1password/**
++ .config/applescript/**
 + .config/espanso/**
-+ .config/prompts/**
++ .config/nanobot/**
 + .config/obs-sidecar/**
++ .config/prompts/**
++ .config/ssh/**
 
 # Exclude everything else by default
 - **

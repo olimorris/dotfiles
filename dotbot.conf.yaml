@@ -29,7 +29,6 @@
     ~/.config/opencode/opencode.json: .config/opencode/opencode.json
     ~/.config/rclone: .config/rclone
     ~/.config/snippets: .config/snippets
-    ~/.config/voiceink: .config/voiceink
 
     # Launch Agents
     ~/Library/LaunchAgents/oli.cloud-backup.plist: misc/LaunchAgents/oli.cloud-backup.plist
