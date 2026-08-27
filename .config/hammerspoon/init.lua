@@ -16,7 +16,7 @@ end)
 -- [[ General Settings ]] -----------------------------------------------------
 local host = require("hs.host")
 local name = host.localizedName()
-OnPersonal = (name:find("AAGB") == nil)
+OnPersonal = (name == "Oli's MacBook Pro")
 
 hs.automaticallyCheckForUpdates(true)
 hs.menuIcon(true)

@@ -24,11 +24,7 @@ if OnPersonal then
   apps.p = "UPDF"
   apps["["] = "1Password" -- It's next to P...
 else
-  apps.c = "Teams" -- Chat
-  apps.m = "Microsoft Outlook" -- Mail
-  apps.p = "Microsoft PowerPoint"
-  apps.r = "Microsoft To Do"
-  apps.z = "Zoom"
+  apps.c = "Slack" -- Chat
 end
 
 local LaunchOrToggle = function(key, app_name, app_filename)
