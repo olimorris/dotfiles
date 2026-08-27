@@ -7,11 +7,25 @@ DIRECTORY_NAME = File.dirname(__dir__)
 # mas.rake brew.rake
 SKIP_TESTS_FOR = %w[].freeze
 
-# Put Homebrew on PATH for this process. `run` shells out via `system`, so an
-# `eval "$(brew shellenv)"` inside a task only ever changes a subshell that then
-# exits - on a fresh Mac every later `brew` call would still be off-PATH. Also
-# covers launchd, which runs the backup agent with a minimal PATH.
-ENV["PATH"] = "/opt/homebrew/bin:/opt/homebrew/sbin:#{ENV["PATH"]}" unless ENV["PATH"].include?("/opt/homebrew/bin")
+# Put the dirs these tasks install into on PATH for this process. `run` shells out via
+# `system`, so an `eval "$(brew shellenv)"` inside a task only ever changes a subshell
+# that then exits - on a fresh Mac every later `brew` call would still be off-PATH.
+# Also covers launchd, which runs the backup agent with a minimal PATH.
+#
+# The last three are here for the same reason. The fish config adds them, but rake gets
+# run from whatever shell is current, which on a fresh Mac is zsh - so without them
+# install:cargo can't find cargo, and install:neovim can't find nvimv or the nvim shim
+# nvimv writes into ~/.local/bin.
+EXTRA_PATHS = [
+  "/opt/homebrew/bin",
+  "/opt/homebrew/sbin",
+  File.expand_path("bin", __dir__),
+  File.expand_path("~/.local/bin"),
+  File.expand_path("~/.cargo/bin")
+].freeze
+
+missing_paths = EXTRA_PATHS - ENV["PATH"].to_s.split(File::PATH_SEPARATOR)
+ENV["PATH"] = (missing_paths + [ENV["PATH"]]).join(File::PATH_SEPARATOR) unless missing_paths.empty?
 
 # Load .env into this process. The shell normally does this from ~/.env, but that's a
 # dotbot symlink that doesn't exist until install:dotbot runs - and rake init needs
@@ -43,9 +57,8 @@ task(:backup) do
   Rake::Task["backup:npm"].invoke
   Rake::Task["backup:pip"].invoke
 
-  # Files
-  Rake::Task["backup:app_config"].invoke
-  Rake::Task["backup:files"].invoke
+  # Files. cloud:push is the only file sync path - it does mackup, then rclone.
+  Rake::Task["cloud:push"].invoke
 end
 
 desc("Install Everything")
@@ -54,33 +67,37 @@ task(:install) do
 
   Rake::Task["tests:setup"].invoke if testing?
 
-  # Fetch files first. Currently we're doing this manually so don't need this step
-  # Rake::Task['install:files'].invoke
-
-  # Packages
-  Rake::Task["install:xcode"].invoke
+  # Homebrew first: everything below is either a brew package or needs one.
+  # install:xcode is deliberately not here. The Homebrew installer installs the
+  # Command Line Tools itself, and `xcode-select --install` exits non-zero once
+  # they're present, so it only ever added noise to the failed-commands report.
   Rake::Task["install:brew"].invoke
   Rake::Task["install:brew_packages"].invoke
   Rake::Task["install:brew_cask_packages"].invoke
   Rake::Task["install:brew_clean_up"].invoke
   Rake::Task["install:app_store"].invoke unless testing?
 
-  Rake::Task["install:servers"].invoke
+  # Files next, not last. dotbot puts ~/.config/mise, ~/.config/fish and ~/.env in
+  # place and chmod makes ~/.dotfiles/bin runnable - every step below needs one of
+  # those. These used to sit near the end, so `rake install` on its own ran mise and
+  # fish against config that did not exist yet, while `rake init` got the right order
+  # by accident because cloud:pull had already run them.
+  Rake::Task["install:dotbot"].invoke
+  Rake::Task["install:app_config"].invoke
+  Rake::Task["install:chmod"].invoke
 
-  # Packages
+  # Runtimes, then the packages that need them
+  Rake::Task["install:servers"].invoke
   Rake::Task["install:rust"].invoke unless testing?
   Rake::Task["install:cargo"].invoke unless testing?
   Rake::Task["install:gems"].invoke unless testing?
   Rake::Task["install:npm"].invoke unless testing?
   Rake::Task["install:pip"].invoke unless testing?
+
+  # Shell
   Rake::Task["install:fish"].invoke unless testing?
 
-  # Files
-  Rake::Task["install:dotbot"].invoke
-  Rake::Task["install:app_config"].invoke
-
   # System
-  Rake::Task["install:chmod"].invoke
   Rake::Task["install:fonts"].invoke
   Rake::Task["install:hammerspoon"].invoke
   Rake::Task["install:launch_agents"].invoke
@@ -88,6 +105,18 @@ task(:install) do
   # Apps
   Rake::Task["install:vim"].invoke
   Rake::Task["install:neovim"].invoke
+  Rake::Task["install:herdr"].invoke unless testing?
+
+  # Dotbot runs a second time on purpose. Two of its links - the ghostty and opencode
+  # theme directories - point into ~/.cache/nvim/onedarkpro_dotfiles/extras, which
+  # nothing creates until install:neovim runs OneDarkProExtras. On the first pass those
+  # two have no source, so dotbot skips them and exits 1 (it still makes every other
+  # link). By this point the cache exists, so this pass picks up the stragglers.
+  #
+  # reenable is required: rake runs a task at most once per process, so a plain second
+  # invoke would silently do nothing.
+  Rake::Task["install:dotbot"].reenable
+  Rake::Task["install:dotbot"].invoke
 
   Rake::Task["install:macos"].invoke
 end
