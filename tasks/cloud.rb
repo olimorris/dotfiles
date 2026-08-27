@@ -34,7 +34,13 @@
 #   and so arrive pointing at the source machine's home directory.
 
 RCLONE = "/opt/homebrew/bin/rclone"
-RCLONE_FILTER_DIR = "~/.config/rclone"
+
+# Read the filters and rclone.conf from the repo, not ~/.config/rclone. That path is a
+# symlink created by install:dotbot, which rake init only reaches *after* the restore
+# has run - so on a fresh Mac nothing is there yet. The repo is present from the git
+# clone, and the README already has rclone.conf copied into it by hand.
+RCLONE_DIR = File.expand_path("../.config/rclone", __dir__)
+RCLONE_CONFIG = " --config #{RCLONE_DIR}/rclone.conf"
 
 def rclone_dirs
   {
@@ -44,7 +50,7 @@ def rclone_dirs
 end
 
 def rclone_filters(*names)
-  names.map { |name| " --filter-from #{RCLONE_FILTER_DIR}/#{name}" }.join
+  names.map { |name| " --filter-from #{RCLONE_DIR}/#{name}" }.join
 end
 
 # The .git pass is opt-in. Announce the skip so a sync that quietly left history
@@ -96,7 +102,7 @@ namespace(:cloud) do
 
       rclone_dirs.each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
-        run(" #{RCLONE} sync #{config[:remote]} ~/#{local}#{filters}#{speed_flags}#{other_flags}#{flag} ", check: true)
+        run(" #{RCLONE}#{RCLONE_CONFIG} sync #{config[:remote]} ~/#{local}#{filters}#{speed_flags}#{other_flags}#{flag} ", check: true)
       end
 
       next unless sync_git?
@@ -104,7 +110,7 @@ namespace(:cloud) do
       git_remote = "#{ENV["STORAGE_ENCRYPTED_FOLDER"]}:Code"
       git_filters = rclone_filters("git_filter.txt")
       git_flags = " --use-mmap --transfers=32 --checkers=32"
-      run(" #{RCLONE} sync #{git_remote} ~/Code#{git_filters}#{git_flags}#{other_flags}#{flag} ", check: true)
+      run(" #{RCLONE}#{RCLONE_CONFIG} sync #{git_remote} ~/Code#{git_filters}#{git_flags}#{other_flags}#{flag} ", check: true)
 
       repair_worktree_pointers(File.expand_path("~/Code"))
     end
@@ -120,14 +126,14 @@ namespace(:cloud) do
 
       rclone_dirs.each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
-        run(" #{RCLONE} sync ~/#{local} #{config[:remote]}#{filters}#{speed_flags}#{flag} ", check: true)
+        run(" #{RCLONE}#{RCLONE_CONFIG} sync ~/#{local} #{config[:remote]}#{filters}#{speed_flags}#{flag} ", check: true)
       end
 
       next unless sync_git?
 
       git_filters = rclone_filters("git_filter.txt")
       git_flags = " --use-mmap --transfers=32 --checkers=32"
-      run(" #{RCLONE} sync ~/Code #{ENV["STORAGE_ENCRYPTED_FOLDER"]}:Code#{git_filters}#{git_flags}#{flag} ", check: true)
+      run(" #{RCLONE}#{RCLONE_CONFIG} sync ~/Code #{ENV["STORAGE_ENCRYPTED_FOLDER"]}:Code#{git_filters}#{git_flags}#{flag} ", check: true)
     end
   end
 end
