@@ -127,12 +127,12 @@ task(:uninstall) do
   Rake::Task["uninstall:dotbot"].invoke
 end
 
-namespace(:work) do
-  desc("Cloud -> Mac (Work). GIT=1 to also sync .git folders")
+namespace(:cloud) do
+  desc("Cloud -> Mac. GIT=1 to also sync .git folders")
   task(:pull, [:progress]) do |_t, args|
     section("Cloud -> Mac")
 
-    Rake::Task["work:restore:files"].invoke(args[:progress])
+    Rake::Task["cloud:restore:files"].invoke(args[:progress])
 
     # Install packages
     # Rake::Task['install:brew_packages'].invoke
@@ -147,11 +147,11 @@ namespace(:work) do
     Rake::Task["install:app_config"].invoke
   end
 
-  desc("Mac (Work) -> Cloud. GIT=1 to also sync .git folders")
+  desc("Mac -> Cloud. GIT=1 to also sync .git folders")
   task(:push, [:progress]) do |_t, args|
     section("Mac -> Cloud")
 
     Rake::Task["backup:app_config"].invoke
-    Rake::Task["work:backup:files"].invoke(args[:progress])
+    Rake::Task["cloud:backup:files"].invoke(args[:progress])
   end
 end

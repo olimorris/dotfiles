@@ -36,6 +36,10 @@ def testing?
   ENV['TEST_ENV']
 end
 
+def personal_machine?
+  `scutil --get ComputerName`.strip == "Oli's MacBook Pro"
+end
+
 def find_replace(file_name, find, replace)
   file_name_new = file_name.gsub('~', ENV['HOME'])
   text = File.read(file_name_new)

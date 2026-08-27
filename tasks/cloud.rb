@@ -1,12 +1,12 @@
 # Backup and restore ~/.dotfiles and ~/Code to/from an encrypted remote via rclone.
 #
 # Usage:
-#   rake work:backup:files            # backup, quiet
-#   rake work:backup:files[true]      # backup, with progress output
-#   rake work:restore:files           # restore, quiet
-#   rake work:restore:files[true]     # restore, with progress output
+#   rake cloud:backup:files            # backup, quiet
+#   rake cloud:backup:files[true]      # backup, with progress output
+#   rake cloud:restore:files           # restore, quiet
+#   rake cloud:restore:files[true]     # restore, with progress output
 #
-#   GIT=1 rake work:backup:files      # also sync .git folders (off by default)
+#   GIT=1 rake cloud:backup:files      # also sync .git folders (off by default)
 #
 # How it's structured:
 #   Each dir gets its own filter file (dotfiles_filter.txt, code_filter.txt) layered
@@ -79,7 +79,7 @@ def rewrite_pointer(path, contents)
   File.write(path, contents) unless ENV["DRY_RUN"]
 end
 
-namespace(:work) do
+namespace(:cloud) do
   namespace(:restore) do
     desc("Restore files")
     task(:files, [:progress]) do |_t, args|

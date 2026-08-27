@@ -1,8 +1,12 @@
 require 'json'
 
 BREW_TAPS_FILE = File.expand_path('../misc/packages/brew_taps.txt', __dir__).gsub(/ /, '\ ')
-BREW_PACKAGES_FILE = File.expand_path('../misc/packages/brew_packages.txt', __dir__).gsub(/ /, '\ ')
-BREW_CASK_PACKAGES_FILE = File.expand_path('../misc/packages/brew_cask.txt', __dir__).gsub(/ /, '\ ')
+BREW_PACKAGES_COMMON_FILE = File.expand_path('../misc/packages/brew_packages_common.txt', __dir__).gsub(/ /, '\ ')
+BREW_PACKAGES_PERSONAL_FILE = File.expand_path('../misc/packages/brew_packages_personal.txt', __dir__).gsub(/ /, '\ ')
+BREW_PACKAGES_WORK_FILE = File.expand_path('../misc/packages/brew_packages_work.txt', __dir__).gsub(/ /, '\ ')
+BREW_CASK_COMMON_FILE = File.expand_path('../misc/packages/brew_cask_common.txt', __dir__).gsub(/ /, '\ ')
+BREW_CASK_PERSONAL_FILE = File.expand_path('../misc/packages/brew_cask_personal.txt', __dir__).gsub(/ /, '\ ')
+BREW_CASK_WORK_FILE = File.expand_path('../misc/packages/brew_cask_work.txt', __dir__).gsub(/ /, '\ ')
 CARGO_FILE = File.expand_path('../misc/packages/rust_cargo.txt', __dir__).gsub(/ /, '\ ')
 GEMS_FILE = File.expand_path('../misc/packages/ruby_gems.txt', __dir__).gsub(/ /, '\ ')
 MAS_FILE = File.expand_path('../misc/packages/app_store.txt', __dir__).gsub(/ /, '\ ')
@@ -17,8 +21,8 @@ namespace :backup do
   task :brew do
     section 'Backing up Homebrew'
 
-    run %( brew leaves > #{BREW_PACKAGES_FILE} )
-    run %( brew list --cask > #{BREW_CASK_PACKAGES_FILE} )
+    run %( brew leaves > #{brew_packages_machine_file} )
+    run %( brew list --cask > #{brew_cask_machine_file} )
     run %( brew tap > #{BREW_TAPS_FILE} )
   end
 
@@ -238,12 +242,20 @@ def brew_taps
   File.readlines(BREW_TAPS_FILE).map(&:strip)
 end
 
+def brew_packages_machine_file
+  personal_machine? ? BREW_PACKAGES_PERSONAL_FILE : BREW_PACKAGES_WORK_FILE
+end
+
+def brew_cask_machine_file
+  personal_machine? ? BREW_CASK_PERSONAL_FILE : BREW_CASK_WORK_FILE
+end
+
 def brew_packages
-  File.readlines(BREW_PACKAGES_FILE).map(&:strip)
+  (File.readlines(BREW_PACKAGES_COMMON_FILE) + File.readlines(brew_packages_machine_file)).map(&:strip)
 end
 
 def brew_cask_packages
-  File.readlines(BREW_CASK_PACKAGES_FILE).map(&:strip)
+  (File.readlines(BREW_CASK_COMMON_FILE) + File.readlines(brew_cask_machine_file)).map(&:strip)
 end
 
 def app_store_apps

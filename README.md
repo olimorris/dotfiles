@@ -17,11 +17,17 @@ My current Neovim config can be found <a href="https://github.com/olimorris/dotf
 ## :computer: Setting up a new Mac
 
 - Ensure you're signed into iCloud and the App Store
-- Download the `~/Code` and `~/.dotfiles` folders from online storage
+- Clone the dotfiles:
+
+```bash
+git clone git@github.com:olimorris/dotfiles.git ~/.dotfiles
+```
+
+- Copy `rclone.conf` from 1Password to `~/.dotfiles/.config/rclone/rclone.conf`
 - Open up a terminal and run:
 
 ```bash
-cd ~/.dotfiles && rake install
+cd ~/.dotfiles && rake init
 ```
 
 - Grab a coffee. This will take a while
