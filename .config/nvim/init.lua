@@ -31,8 +31,9 @@ om.plugins = {
   "https://github.com/tpope/vim-sleuth",
   "https://github.com/folke/snacks.nvim",
   "https://github.com/j-hui/fidget.nvim",
-  "https://github.com/rebelot/heirline.nvim",
   "https://github.com/lewis6991/gitsigns.nvim",
+  "https://github.com/nvim-mini/mini.statusline",
+  "https://github.com/nvim-mini/mini.statuscolumn",
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
 
   -- LSP

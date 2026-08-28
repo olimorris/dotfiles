@@ -1,41 +1,32 @@
 require("onedarkpro").setup({
   colors = {
     vaporwave = {
+      breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'vaporwave')",
       codeblock = "require('onedarkpro.helpers').lighten('bg', 2, 'vaporwave')",
-      statusline_bg = "require('onedarkpro.helpers').lighten('bg', 4, 'vaporwave')", -- gray
-      statuscolumn_border = "require('onedarkpro.helpers').lighten('bg', 4, 'vaporwave')", -- gray
-      ellipsis = "require('onedarkpro.helpers').lighten('bg', 4, 'vaporwave')", -- gray
+      copilot = "require('onedarkpro.helpers').darken('gray', 8, 'vaporwave')",
       picker_results = "require('onedarkpro.helpers').darken('bg', 4, 'vaporwave')",
       picker_selection = "require('onedarkpro.helpers').darken('bg', 8, 'vaporwave')",
-      copilot = "require('onedarkpro.helpers').darken('gray', 8, 'vaporwave')",
-      breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'vaporwave')",
-      light_gray = "require('onedarkpro.helpers').darken('gray', 7, 'vaporwave')",
+      statusline_fill = "require('onedarkpro.helpers').lighten('bg', 2, 'vaporwave')",
     },
     onedark = {
+      breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'onedark')",
       codeblock = "require('onedarkpro.helpers').lighten('bg', 2, 'onedark')",
-      statusline_bg = "#2e323b", -- gray
-      statuscolumn_border = "#4b5160", -- gray
-      ellipsis = "#808080", -- gray
+      copilot = "require('onedarkpro.helpers').darken('gray', 8, 'onedark')",
       picker_results = "require('onedarkpro.helpers').darken('bg', 4, 'onedark')",
       picker_selection = "require('onedarkpro.helpers').darken('bg', 8, 'onedark')",
-      copilot = "require('onedarkpro.helpers').darken('gray', 8, 'onedark')",
-      breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'onedark')",
-      light_gray = "require('onedarkpro.helpers').darken('gray', 7, 'onedark')",
+      statusline_fill = "require('onedarkpro.helpers').lighten('bg', 2, 'onedark')",
     },
     light = {
+      breadcrumbs = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
       codeblock = "require('onedarkpro.helpers').darken('bg', 3, 'onelight')",
-      comment = "#bebebe", -- Revert back to original comment colors
-      statusline_bg = "#f0f0f0", -- gray
-      statuscolumn_border = "#e7e7e7", -- gray
-      ellipsis = "#808080", -- gray
+      comment = "#bebebe",
+      copilot = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
       git_add = "require('onedarkpro.helpers').get_preloaded_colors('onelight').green",
       git_change = "require('onedarkpro.helpers').get_preloaded_colors('onelight').yellow",
       git_delete = "require('onedarkpro.helpers').get_preloaded_colors('onelight').red",
       picker_results = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
       picker_selection = "require('onedarkpro.helpers').darken('bg', 9, 'onelight')",
-      copilot = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
-      breadcrumbs = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
-      light_gray = "require('onedarkpro.helpers').lighten('gray', 10, 'onelight')",
+      statusline_fill = "require('onedarkpro.helpers').darken('bg', 2, 'onelight')",
     },
     rainbow = {
       "${green}",
@@ -83,12 +74,37 @@ require("onedarkpro").setup({
     -- DAP UI
     DapUIBreakpointsCurrentLine = { fg = "${yellow}", bold = true },
 
-    -- Heirline
-    Heirline = { bg = "${statusline_bg}" },
-    HeirlineStatusColumn = { fg = "${statuscolumn_border}" },
-    HeirlineBufferline = { fg = { dark = "#939aa3", light = "#6a6a6a" } },
-    HeirlineWinbar = { fg = "${breadcrumbs}", italic = true },
-    HeirlineWinbarEmphasis = { fg = "${fg}", italic = true },
+    -- Statusline
+    StatusLine = { fg = "${gray}", bg = "${statusline_fill}" },
+    StatusLineNC = { fg = "${gray}", bg = "${statusline_fill}" },
+
+    -- Mode names come from MiniStatusline.section_mode, which has no separate
+    -- select or terminal group: select falls under visual, terminal under other
+    MiniStatuslineModeNormal = { fg = "${bg}", bg = "${purple}", bold = true },
+    MiniStatuslineModeInsert = { fg = "${bg}", bg = "${green}", bold = true },
+    MiniStatuslineModeVisual = { fg = "${bg}", bg = "${orange}", bold = true },
+    MiniStatuslineModeReplace = { fg = "${bg}", bg = "${green}", bold = true },
+    MiniStatuslineModeCommand = { fg = "${bg}", bg = "${orange}", bold = true },
+    MiniStatuslineModeOther = { fg = "${bg}", bg = "${red}", bold = true },
+
+    StatuslineBlock = { fg = "${gray}", bg = "${statusline_fill}" },
+    StatuslineBlockAhead = { fg = "${green}", bg = "${statusline_fill}" },
+    StatuslineBlockBehind = { fg = "${red}", bg = "${statusline_fill}" },
+
+    StatuslineText = { fg = "${gray}", bg = "${statusline_fill}" },
+    StatuslineRequest = { fg = "${yellow}", bg = "${statusline_fill}" },
+    StatuslineApproval = { fg = "${red}", bg = "${statusline_fill}" },
+
+    StatuslineMacro = { fg = "${bg}", bg = "${blue}" },
+    StatuslineSearch = { fg = "${bg}", bg = "${yellow}" },
+    StatuslineRuler = { fg = "${bg}", bg = "${gray}", bold = true },
+
+    -- Winbar
+    WinbarPath = { fg = "${breadcrumbs}", italic = true },
+    WinbarFile = { fg = "${fg}", italic = true },
+    WinbarSymbol = { link = "Comment" },
+    WinbarModified = { fg = "${red}" },
+    WinbarReadonly = { fg = "${blue}" },
 
     -- Luasnip
     LuaSnipChoiceNode = { fg = "${yellow}" },
@@ -178,12 +194,10 @@ function om.ToggleTheme(mode)
       change_theme("dark", themes.dark)
     end
   end
-
-  local utils = require("heirline.utils")
-  utils.on_colorscheme(require("onedarkpro.helpers").get_colors())
 end
 
 vim.api.nvim_create_autocmd("VimEnter", {
+  nested = true,
   callback = function()
     if not om.ToggleTheme then
       return
