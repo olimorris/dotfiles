@@ -1,54 +1,62 @@
-# Backup and restore files to/from an encrypted remote via rclone. This is the only
-# file sync path - tasks/files.rake used to hold a second, pre-rewrite copy of it.
+# rclone backup and restore to an encrypted remote.
 #
-# ~/.dotfiles and ~/Code sync on both Macs. ~/OliDocs, ~/Downloads and ~/Documents
-# sync on the personal Mac only, in both directions - see personal_dirs below.
+# Commands
+#   rake cloud:push            local -> cloud
+#   rake cloud:pull            cloud -> local
+#   rake cloud:push[true]      either one, with progress output
+#   GIT=1 rake cloud:push      also carry .git folders
+#   FORCE=1 rake cloud:push    overwrite cloud files that are newer than the local ones
 #
-# Usage:
-#   rake cloud:backup:files            # backup, quiet
-#   rake cloud:backup:files[true]      # backup, with progress output
-#   rake cloud:restore:files           # restore, quiet
-#   rake cloud:restore:files[true]     # restore, with progress output
+#   cloud:push and cloud:pull live in the Rakefile and wrap the two tasks below with the
+#   mackup and dotbot steps. cloud:backup:files and cloud:restore:files skip those.
 #
-#   GIT=1 rake cloud:backup:files      # also sync .git folders (off by default)
+# What happens
+#   push   rclone copy --update. Adds and overwrites, never deletes, and skips any file
+#          the cloud has a newer copy of. Clearing stale files from the cloud is manual.
+#   pull   rclone sync --delete-before. Mirrors the cloud onto the machine. Local files
+#          the cloud doesn't have are deleted.
 #
-# How it's structured:
-#   Each dir gets its own filter file (dotfiles_filter.txt, code_filter.txt) layered
-#   on top of base_filter.txt (common exclusions like .DS_Store, node_modules/, etc).
+#   So deleting a file locally leaves it in the cloud, and the next pull brings it back.
 #
-#   base_filter.txt excludes .git everywhere, so Code/**/.git gets a separate pass via
-#   git_filter.txt. That pass is opt-in via GIT=1 - git history is heavy and rarely
-#   needs moving, so the default sync carries working trees only. It also deliberately
-#   omits --size-only, unlike the main sync: refs are fixed length (refs/heads/<branch>
-#   is always 41 bytes), so comparing on size alone would silently never propagate a
-#   branch moving to a new commit.
+# What syncs
+#   .dotfiles                       whitelist: misc/{mackup,ui,sounds}, .config/prompts,
+#                                   .config/obs-sidecar. The rest of .dotfiles is in git.
+#   Code                            all but AAI, Java, Ruby/Blog, Ruby/hledger-forecast
+#   OliDocs, Downloads, Documents   personal Mac only, both directions
 #
-#   --size-only is used for the main sync for speed, trading off exact content
-#   verification for fewer/faster checks.
+#   base_filter.txt excludes .DS_Store, node_modules, .git, caches and build output from
+#   all of them. Filters apply to both sides, so an excluded file is never deleted either
+#   - a pull cannot touch your local node_modules or .git.
 #
-#   --fast-list is deliberately absent: the Koofr backend reports ListR: false, so the
-#   flag does nothing on this remote.
-#
-#   The rclone calls are check: true. A restore that fails silently is worse than one
-#   that stops: cloud:pull goes on to run install:app_config, which does a
-#   `mackup restore --force` against whatever misc/mackup holds - nothing, if the
-#   sync never ran.
-#
-#   Restore finishes by repairing git worktree pointer files, which hold absolute paths
-#   and so arrive pointing at the source machine's home directory.
+# Notes
+#   --size-only    fast, but a file edited without changing size is not re-uploaded
+#   .git pass      separate and opt-in, omits --size-only: refs are fixed length, so a
+#                  size comparison would never notice a branch moving to a new commit
+#   --fast-list    unusable, the remote reports ListR: false, so every directory costs
+#                  its own API call - ~4,900 for Code, which is why a run takes ~50s
+#   check: true    a restore that failed silently would leave install:app_config running
+#                  mackup against an empty misc/mackup
+#   worktrees      restore rewrites git worktree pointers, which hold absolute paths and
+#                  arrive pointing at the other machine's home directory
 
 RCLONE = "/opt/homebrew/bin/rclone"
 
-# Koofr rate-limits and answers with 429 "you have sent too many requests in a given
-# amount of time" when rclone fans out hard - ~/Code trips it because it's thousands of
-# small files. --transfers and --checkers are the wrong knob for this: they cap how many
-# operations run at once, not how many requests per second leave the machine, and 16
-# fast metadata checks blow through a per-second cap easily. --tpslimit caps the request
-# rate itself, which is what Koofr is actually counting.
+# Koofr answers 429 "you have sent too many requests in a given amount of time" when
+# rclone fans out hard, but it's the transfer phase that trips it, not the listing.
+# Measured: a full unthrottled recursive listing of the Code remote covered 9,994
+# directories in 48s at ~210 requests/sec with no 429 at all.
 #
-# rclone already retries a 429 on its own (--low-level-retries, default 10), so seeing
-# the message at all means the retries were exhausted. Drop the 10 if it comes back.
-PACING = " --tpslimit 10 --tpslimit-burst 10"
+# That distinction decides the numbers below, because listing is what dominates an
+# ordinary run. The remote reports ListR: false, so --fast-list does nothing here and
+# every directory costs its own API call - ~4,900 of them for ~/Code once the filters
+# have pruned it. A --tpslimit of 10 therefore puts an 8 minute floor under a sync that
+# changed a single file. 100 keeps a real ceiling for the transfer phase while costing
+# the listing about 25 seconds over running uncapped.
+#
+# --transfers is the other half, and the one that was actually causing the 429s: 16
+# concurrent uploads of small files generate far more requests per second than listing
+# does. 8 is the cap on that storm; --checkers stays at 16 because listing can take it.
+PACING = " --transfers=8 --checkers=16 --tpslimit 100 --tpslimit-burst 100"
 
 # Read the filters and rclone.conf from the repo, not ~/.config/rclone. That path is a
 # symlink created by install:dotbot, which rake init only reaches *after* the restore
@@ -102,6 +110,22 @@ def rclone_filters(*names)
   names.compact.map { |name| " --filter-from #{RCLONE_DIR}/#{name}" }.join
 end
 
+# --update makes a push skip any file the remote holds a newer copy of. Without it, a
+# machine that hasn't pulled in a while quietly pushes its stale versions over newer
+# cloud data: copy with --size-only has no notion of newer or older, it just makes the
+# destination match the source wherever the sizes differ. The remote stores modtimes to
+# 1ms precision, so the comparison is real rather than a silent no-op.
+#
+# FORCE=1 drops the flag, for the one thing it blocks: deliberately rolling the cloud
+# back to an older copy held on this machine. Announce it, because it re-enables exactly
+# the overwrite the rest of the time we're trying to prevent.
+def update_flag
+  return " --update" unless ENV["FORCE"]
+
+  puts("~> FORCE set - this push will overwrite newer files in the cloud")
+  ""
+end
+
 # The .git pass is opt-in. Announce the skip so a sync that quietly left history
 # behind doesn't look like one that moved it.
 def sync_git?
@@ -148,7 +172,7 @@ namespace(:cloud) do
 
       flag = args[:progress] ? " -P -v" : ""
       other_flags = " --delete-before"
-      speed_flags = " --use-mmap --transfers=16 --checkers=16 --size-only#{PACING}"
+      speed_flags = " --use-mmap --size-only#{PACING}"
 
       rclone_dirs.each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
@@ -162,7 +186,7 @@ namespace(:cloud) do
 
       git_remote = "#{storage_remote}:Code"
       git_filters = rclone_filters("git_filter.txt")
-      git_flags = " --use-mmap --transfers=16 --checkers=16#{PACING}"
+      git_flags = " --use-mmap#{PACING}"
       run(
         " #{RCLONE}#{RCLONE_CONFIG} sync #{git_remote} ~/Code#{git_filters}#{git_flags}#{other_flags}#{flag} ",
         check: true
@@ -179,12 +203,18 @@ namespace(:cloud) do
       run(" /bin/date -u ")
 
       flag = args[:progress] ? " -P -v" : ""
-      speed_flags = " --use-mmap --transfers=16 --checkers=16 --size-only#{PACING}"
+      update = update_flag
+      speed_flags = " --use-mmap --size-only#{PACING}#{update}"
 
+      # copy, not sync. sync mirrors, so with two Macs pushing to one remote each push
+      # deleted whatever the other machine didn't have - a push from here proposed
+      # removing 1,724 files, including git worktrees that only exist on the other Mac.
+      # copy writes new and changed files and never removes anything, so the remote only
+      # ever grows. Clearing out stale files there is a deliberate, manual job.
       rclone_dirs.each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
         run(
-          " #{RCLONE}#{RCLONE_CONFIG} sync ~/#{local} #{config[:remote]}#{filters}#{speed_flags}#{flag} ",
+          " #{RCLONE}#{RCLONE_CONFIG} copy ~/#{local} #{config[:remote]}#{filters}#{speed_flags}#{flag} ",
           check: true
         )
       end
@@ -192,9 +222,9 @@ namespace(:cloud) do
       next unless sync_git?
 
       git_filters = rclone_filters("git_filter.txt")
-      git_flags = " --use-mmap --transfers=16 --checkers=16#{PACING}"
+      git_flags = " --use-mmap#{PACING}#{update}"
       run(
-        " #{RCLONE}#{RCLONE_CONFIG} sync ~/Code #{storage_remote}:Code#{git_filters}#{git_flags}#{flag} ",
+        " #{RCLONE}#{RCLONE_CONFIG} copy ~/Code #{storage_remote}:Code#{git_filters}#{git_flags}#{flag} ",
         check: true
       )
     end
