@@ -16,6 +16,16 @@ I work best when we "start at the top, and work back". That is, I like to solve 
 - **Never** use the em dash "—". Use plain dash "-" instead
 - **Responses**: Keep them concise and to the point. Avoid long-winded explanations and unnecessary details
 
+### Code Comments
+
+I want to read code like an essay: names and control flow should carry the narrative, and comments should add only what the code itself cannot say.
+
+- **Don't restate the name**: remove comments that merely repeat a function, type, variable, or module name. Keep structured documentation only when it provides useful API detail such as parameters, return values, errors, or side effects
+- **Don't state what context already makes obvious**: do not explain scope, lifetime, visibility, or straightforward control flow when the surrounding code already shows it
+- **Comment the why, never the what**: reserve comments for a non-obvious constraint, external API quirk, compatibility requirement, ordering dependency, or the reason for a guard. If an experienced reader would not be confused without it, remove it
+- **Single line, always**: if the reasoning needs a paragraph, record it in the commit message, issue, design document, or API documentation instead
+- **Earn the keep**: default to no comment. Every surviving comment should be one the reader would miss if it were gone
+
 ### 3. Self-Improvement Loop
 
 - After ANY correction from the user: update this file with the pattern
