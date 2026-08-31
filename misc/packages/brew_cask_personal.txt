@@ -1,9 +1,0 @@
-audacity
-discord
-mactex
-mitmproxy
-spotify
-steam
-updf
-zoom
-zotero
