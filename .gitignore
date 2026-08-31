@@ -55,7 +55,6 @@
 # Other dirs
 !bin/**/*
 !commands/**/*
-!misc/packages/**/*
 !tasks/**/*
 !tests/**/*
 !misc/LaunchAgents/**/*
