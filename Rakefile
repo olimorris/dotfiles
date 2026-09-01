@@ -152,10 +152,13 @@ task(:update) do
   Rake::Task["update:neovim"].invoke
 end
 
-desc("Install Language Packages (gems, npm, pip)")
+desc("Install Packages (brew, gems, npm, pip)")
 task(:packages) do
   section("Installing Packages")
 
+  Rake::Task["install:brew_packages"].invoke
+  Rake::Task["install:brew_cask_packages"].invoke
+  Rake::Task["install:brew_clean_up"].invoke
   Rake::Task["install:gems"].invoke
   Rake::Task["install:npm"].invoke
   Rake::Task["install:pip"].invoke
