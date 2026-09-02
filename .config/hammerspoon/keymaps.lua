@@ -1,5 +1,62 @@
 local hyper = Hyper
 
+-- Marks an `apps` entry as "find/open a Chrome tab whose URL starts with urlPattern"
+-- instead of the usual LaunchOrToggle-by-app-name behavior.
+local function ChromeTabToggle(urlPattern)
+  return { chromeTabUrlPattern = urlPattern }
+end
+
+local function bindChromeTabToggle(key, urlPattern)
+  hs.hotkey.bind(hyper, key, function()
+    local app = hs.application.get("Google Chrome")
+    if app and app:isFrontmost() then
+      local ok, activeURL =
+        hs.osascript.applescript('tell application "Google Chrome" to return URL of active tab of window 1')
+      if ok and activeURL and activeURL:sub(1, #urlPattern) == urlPattern then
+        app:hide()
+        return
+      end
+    end
+
+    hs.osascript.applescript(string.format(
+      [[
+      tell application "Google Chrome"
+        activate
+        if (count of windows) = 0 then
+          make new window
+        end if
+        set targetURL to "%s"
+        set found to false
+        repeat with w in windows
+          set tabList to tabs of w
+          repeat with i from 1 to (count of tabList)
+            if (URL of item i of tabList) starts with targetURL then
+              set index of w to 1
+              set active tab index of w to i
+              set found to true
+              exit repeat
+            end if
+          end repeat
+          if found then exit repeat
+        end repeat
+        if not found then
+          tell window 1 to make new tab with properties {URL:targetURL}
+        end if
+      end tell
+    ]],
+      urlPattern
+    ))
+
+    app = hs.application.get("Google Chrome")
+    local window = app and app:mainWindow()
+    if window then
+      local frame = window:frame()
+      local centerPoint = hs.geometry.point(frame.x + frame.w / 2, frame.y + frame.h / 2)
+      hs.mouse.absolutePosition(centerPoint)
+    end
+  end)
+end
+
 ------------------------------- APP LAUNCH/TOGGLE ------------------------------
 --[[
   The list of keys and apps which enable launching and toggling
@@ -25,6 +82,8 @@ if OnPersonal then
   apps["["] = "1Password" -- It's next to P...
 else
   apps.c = "Slack" -- Chat
+  apps.d = ChromeTabToggle("https://calendar.google.com/") -- Diary
+  apps.m = ChromeTabToggle("https://mail.google.com/")
 end
 
 local LaunchOrToggle = function(key, app_name, app_filename)
@@ -61,7 +120,9 @@ local LaunchOrToggle = function(key, app_name, app_filename)
 end
 
 for key, app_name in pairs(apps) do
-  if type(app_name) == "table" then
+  if type(app_name) == "table" and app_name.chromeTabUrlPattern then
+    bindChromeTabToggle(key, app_name.chromeTabUrlPattern)
+  elseif type(app_name) == "table" then
     LaunchOrToggle(key, app_name[1], app_name[2])
   else
     LaunchOrToggle(key, app_name)
