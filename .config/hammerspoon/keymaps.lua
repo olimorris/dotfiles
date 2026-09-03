@@ -66,23 +66,24 @@ end
 local apps = {
   a = "Anki",
   b = "Google Chrome", -- Browser
-  e = "Microsoft Excel",
   f = "Finder",
   n = "Bear", -- Notes
   o = "Notion", -- Life OS
-  r = "Reminders",
   t = "Ghostty", -- Terminal
   --w = RESERVED
 }
 
 if OnPersonal then
   apps.c = "Visual Studio Code" -- VS Code
+  apps.e = "Microsoft Excel"
   apps.k = "Keynote"
   apps.p = "UPDF"
+  apps.r = "Reminders"
   apps["["] = "1Password" -- It's next to P...
 else
   apps.c = "Slack" -- Chat
   apps.d = ChromeTabToggle("https://calendar.google.com/") -- Diary
+  apps.l = ChromeTabToggle("https://claude.ai/") -- LLM
   apps.m = ChromeTabToggle("https://mail.google.com/")
 end
 

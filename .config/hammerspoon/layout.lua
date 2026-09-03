@@ -36,7 +36,7 @@ end
 ---Process a single app in the layout
 ---@param app_name string Name of the application
 ---@param grid_settings string Grid settings
----@param opts table Options (focus, moveToScreen, onlyIfOpen)
+---@param opts table Options (focus, moveToScreen, onlyIfOpen, url)
 ---@return nil
 local function processApp(app_name, grid_settings, opts)
   -- Check if app should only be processed if open
@@ -44,8 +44,12 @@ local function processApp(app_name, grid_settings, opts)
     return
   end
 
-  -- Always ensure app is launched
-  hs.application.launchOrFocus(app_name)
+  if opts.url then
+    hs.urlevent.openURL(opts.url) -- opens in default browser, then falls through to grid it via app_name
+  else
+    -- Always ensure app is launched
+    hs.application.launchOrFocus(app_name)
+  end
 
   -- Small delay to let app launch if needed
   hs.timer.doAfter(0.3, function()
@@ -106,24 +110,43 @@ hs.screen.watcher
   :start()
 
 -- [[ Layouts ] ---------------------------------------------------------------
-defineLayout("Coding", 1, {
-  { "Ghostty", "0,0 3x4", { focus = true, moveToScreen = "monitor" } },
-  { "Chrome", "3,0 3x4", { moveToScreen = "monitor" } },
-})
+if OnPersonal then
+  defineLayout("Coding", 1, {
+    { "Ghostty", "0,0 3x4", { focus = true, moveToScreen = "monitor" } },
+    { "Chrome", "3,0 3x4", { moveToScreen = "monitor" } },
+  })
 
-defineLayout("Study", 2, {
-  { "Spotify", "0,0 1.75x4", { onlyIfOpen = true, moveToScreen = "monitor" } },
-  { "Typora", "0,0 1.75x4", { onlyIfOpen = true, moveToScreen = "monitor" } },
-  { "Chrome", "1.75,0 2.5x4", { moveToScreen = "monitor" } },
-  { "Ghostty", "0,0 1.75x4", { moveToScreen = "monitor" } },
-  -- { "UPDF", "4.25,0 1.75x4", { moveToScreen = "monitor" } },
-  { "Notion", "4.25,0 1.75x4", { moveToScreen = "monitor" } },
-  -- { "Notion", "0,0 6x4", { moveToScreen = "laptop" } },
-})
+  defineLayout("Study", 2, {
+    { "Spotify", "0,0 1.75x4", { onlyIfOpen = true, moveToScreen = "monitor" } },
+    { "Typora", "0,0 1.75x4", { onlyIfOpen = true, moveToScreen = "monitor" } },
+    { "Chrome", "1.75,0 2.5x4", { moveToScreen = "monitor" } },
+    { "Ghostty", "0,0 1.75x4", { moveToScreen = "monitor" } },
+    -- { "UPDF", "4.25,0 1.75x4", { moveToScreen = "monitor" } },
+    { "Notion", "4.25,0 1.75x4", { moveToScreen = "monitor" } },
+    -- { "Notion", "0,0 6x4", { moveToScreen = "laptop" } },
+  })
 
-defineLayout("Assignment", 3, {
-  { "Ghostty", "0,0 2.5x4", { focus = true, moveToScreen = "monitor" } },
-  { "Chrome", "2.5,0 3.5x4", { moveToScreen = "monitor" } },
-  { "Notion", "0,0 6x4", { moveToScreen = "laptop" } },
-  { "Spotify", "0,0 6x4", { onlyIfOpen = true, moveToScreen = "laptop" } },
-})
+  defineLayout("Assignment", 3, {
+    { "Ghostty", "0,0 2.5x4", { focus = true, moveToScreen = "monitor" } },
+    { "Chrome", "2.5,0 3.5x4", { moveToScreen = "monitor" } },
+    { "Notion", "0,0 6x4", { moveToScreen = "laptop" } },
+    { "Spotify", "0,0 6x4", { onlyIfOpen = true, moveToScreen = "laptop" } },
+  })
+else
+  defineLayout("Default", 1, {
+    { "Slack", "0,0 2x2", { moveToScreen = "monitor" } },
+    { "Notion", "0,2 2x2", { moveToScreen = "monitor" } },
+    { "Chrome", "2,0 4x4", { focus = true, moveToScreen = "monitor" } },
+    { "Ghostty", "0,0 6x4", { moveToScreen = "laptop" } },
+  })
+
+  defineLayout("Standup", 2, {
+    { "Chrome", "0,0 6x2", { focus = true, moveToScreen = "monitor", url = "https://meet.google.com" } },
+    { "Notion", "0,2 6x2", { moveToScreen = "monitor" } },
+  })
+
+  defineLayout("Deep Work", 3, {
+    { "Ghostty", "0,0 3x4", { focus = true, moveToScreen = "monitor" } },
+    { "Chrome", "3,0 3x4", { moveToScreen = "monitor" } },
+  })
+end
