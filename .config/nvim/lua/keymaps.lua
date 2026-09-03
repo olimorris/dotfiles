@@ -62,7 +62,10 @@ keymap("x", "]", "S]", { remap = true, desc = "Surround with []'s" })
 -- Misc
 keymap("v", ">", ">gv", { desc = "Indent" })
 keymap("v", "<", "<gv", { desc = "Outdent" })
-keymap("n", "<Esc>", "<cmd>:noh<CR>", { desc = "Clear searches" })
+keymap("n", "<Esc>", function()
+  vim.cmd.noh()
+  vim.api.nvim_buf_clear_namespace(0, vim.api.nvim_create_namespace("nvim.multicursor"), 0, -1)
+end, { desc = "Clear searches" })
 
 keymap("n", "<Leader>rt", "<cmd>restart<CR>", { desc = "Restart Neovim" })
 
@@ -241,59 +244,6 @@ keymap("n", "<C-t>", function()
     },
   })
 end, opts)
-
--- Multiple Cursors
--- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
--- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
-
-vim.g.mc = vim.api.nvim_replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]], true, true, true)
-
-function SetupMultipleCursors()
-  keymap(
-    "n",
-    "<Enter>",
-    [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]],
-    { remap = true, silent = true }
-  )
-end
-
--- 1. Position the cursor anywhere in the word you wish to change;
--- 2. Or, visually make a selection;
--- 3. Hit cn, type the new word, then go back to Normal mode;
--- 4. Hit `.` n-1 times, where n is the number of replacements.
-keymap("n", "cn", "*``cgn", { desc = "Initiate multiple cursors" })
-keymap("x", "cn", [[g:mc . "``cgn"]], { expr = true, desc = "Initiate multiple cursors" })
-keymap("n", "cN", "*``cgN", { desc = "Initiate multiple cursors (backwards)" })
-keymap("x", "cN", [[g:mc . "``cgN"]], { expr = true, desc = "Initiate multiple cursors (backwards)" })
-
--- 1. Position the cursor over a word; alternatively, make a selection.
--- 2. Hit cq to start recording the macro.
--- 3. Once you are done with the macro, go back to normal mode.
--- 4. Hit Enter to repeat the macro over search matches.
-keymap(
-  "n",
-  "cq",
-  [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>*``qz]],
-  { desc = "Initiate multiple cursors with macros" }
-)
-keymap(
-  "x",
-  "cq",
-  [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . g:mc . "``qz"]],
-  { expr = true, desc = "Initiate multiple cursors with macros" }
-)
-keymap(
-  "n",
-  "cQ",
-  [[:\<C-u>call v:lua.SetupMultipleCursors()<CR>#``qz]],
-  { desc = "Initiate multiple cursors with macros (backwards)" }
-)
-keymap(
-  "x",
-  "cQ",
-  [[":\<C-u>call v:lua.SetupMultipleCursors()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
-  { expr = true, desc = "Initiate multiple cursors with macros (backwards)" }
-)
 
 --[[
   Marks / Bookmarks / Harpoon Replacement in c.60 LOC
