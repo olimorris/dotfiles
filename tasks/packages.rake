@@ -1,5 +1,7 @@
+require "fileutils"
 require "json"
 
+PACKAGES_FOLDER = File.expand_path("../misc/packages", __dir__)
 BREW_TAPS_FILE = File.expand_path("../misc/packages/brew_taps.txt", __dir__).gsub(/ /, "\\ ")
 BREW_PACKAGES_COMMON_FILE = File.expand_path("../misc/packages/brew_packages_common.txt", __dir__).gsub(/ /, "\\ ")
 BREW_PACKAGES_PERSONAL_FILE = File.expand_path("../misc/packages/brew_packages_personal.txt", __dir__).gsub(/ /, "\\ ")
@@ -22,6 +24,7 @@ namespace(:backup) do
   desc("Backup Homebrew")
   task(:brew) do
     section("Backing up Homebrew")
+    ensure_packages_folder
 
     backup_brew_list("brew leaves", BREW_PACKAGES_COMMON_FILE, brew_packages_machine_file)
     backup_brew_list("brew list --cask", BREW_CASK_COMMON_FILE, brew_cask_machine_file)
@@ -31,6 +34,7 @@ namespace(:backup) do
   desc("Backup App Store")
   task(:app_store) do
     section("Backing up App Store apps")
+    ensure_packages_folder
 
     backup_mas_list(MAS_COMMON_FILE, mas_machine_file)
   end
@@ -38,6 +42,7 @@ namespace(:backup) do
   desc("Backup Ruby Gems")
   task(:gems) do
     section("Backing up Ruby Gems")
+    ensure_packages_folder
 
     run(" gem list --no-versions | sed '1d' | awk '\{gsub(/\\/.*\\//,\"\",$1); print\}' \> #{GEMS_FILE} ")
   end
@@ -45,6 +50,7 @@ namespace(:backup) do
   desc("Backup NPM files")
   task(:npm) do
     section("Backing up NPM files")
+    ensure_packages_folder
 
     # Check if npm command succeeds before redirecting
     if system("npm ls --global --depth=0 --json >/dev/null 2>&1")
@@ -58,6 +64,7 @@ namespace(:backup) do
   desc("Backup PIP files")
   task(:pip) do
     section("Backing up PIP files")
+    ensure_packages_folder
 
     run(" pip freeze \> #{PIP_FILE} ")
   end
@@ -151,6 +158,8 @@ namespace(:install) do
   task(:gems) do
     section("Installing Ruby Gems")
 
+    next unless package_file?(GEMS_FILE)
+
     run(" xargs gem install \< #{GEMS_FILE} ")
   end
 
@@ -186,6 +195,8 @@ namespace(:install) do
   desc("Install PIP files")
   task(:pip) do
     section("Installing PIP files")
+
+    next unless package_file?(PIP_FILE)
 
     run(" pip install -r #{PIP_FILE} ")
   end
@@ -276,12 +287,36 @@ namespace(:update) do
   end
 end
 
+# misc/packages is rclone-synced rather than committed, so on a fresh clone - or in
+# CI, where only a few stubs get written - a list is legitimately absent.
+def package_lines(file)
+  path = file.gsub("\\ ", " ")
+  unless File.exist?(path)
+    puts("~> #{File.basename(path)} not found, skipping")
+    return []
+  end
+
+  File.readlines(path).map(&:strip).reject(&:empty?)
+end
+
+def package_file?(file)
+  path = file.gsub("\\ ", " ")
+  return true if File.exist?(path)
+
+  puts("~> #{File.basename(path)} not found, skipping")
+  false
+end
+
+def ensure_packages_folder
+  FileUtils.mkdir_p(PACKAGES_FOLDER)
+end
+
 def brew_taps
-  File.readlines(BREW_TAPS_FILE).map(&:strip)
+  package_lines(BREW_TAPS_FILE)
 end
 
 def backup_brew_list(list_cmd, common_file, machine_file)
-  common = File.readlines(common_file).map(&:strip)
+  common = package_lines(common_file)
   installed = `#{list_cmd}`.lines.map(&:strip).reject(&:empty?)
   unique = installed - common
 
@@ -293,7 +328,7 @@ end
 # machines whenever a version does. Match on the id alone - comparing whole lines would
 # file every version bump as a machine-specific app.
 def backup_mas_list(common_file, machine_file)
-  common_ids = File.readlines(common_file).map { |line| line.split.first }
+  common_ids = package_lines(common_file).map { |line| line.split.first }
   installed = `mas list`.lines.map(&:strip).reject(&:empty?)
   unique = installed.reject { |line| common_ids.include?(line.split.first) }
 
@@ -310,11 +345,11 @@ def brew_cask_machine_file
 end
 
 def brew_packages
-  (File.readlines(BREW_PACKAGES_COMMON_FILE) + File.readlines(brew_packages_machine_file)).map(&:strip)
+  package_lines(BREW_PACKAGES_COMMON_FILE) + package_lines(brew_packages_machine_file)
 end
 
 def brew_cask_packages
-  (File.readlines(BREW_CASK_COMMON_FILE) + File.readlines(brew_cask_machine_file)).map(&:strip)
+  package_lines(BREW_CASK_COMMON_FILE) + package_lines(brew_cask_machine_file)
 end
 
 def mas_machine_file
@@ -322,11 +357,9 @@ def mas_machine_file
 end
 
 def app_store_apps
-  # compact drops the nil from a machine file that is empty apart from its newline
-  (File.readlines(MAS_COMMON_FILE) + File.readlines(mas_machine_file))
-    .map { |line| line.split.first }.compact
+  (package_lines(MAS_COMMON_FILE) + package_lines(mas_machine_file)).map { |line| line.split.first }
 end
 
 def cargo_apps
-  File.readlines(CARGO_FILE).map(&:split).map(&:first)
+  package_lines(CARGO_FILE).map { |line| line.split.first }
 end

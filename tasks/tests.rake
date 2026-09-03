@@ -1,17 +1,25 @@
-namespace :tests do
-  desc "Setup tests"
-  task :setup do
-    section "Setting up the tests"
+namespace(:tests) do
+  desc("Setup tests")
+  task(:setup) do
+    section("Setting up the tests")
 
-    if testing?
-      DOTS_FOLDER = 'dotfiles'
+    stubs = File.expand_path("../tests/stubs", __dir__)
+
+    # misc/packages is rclone-synced, not committed, so a CI checkout has no folder to
+    # copy the stubs into.
+    ensure_packages_folder
+
+    {
+      "app_store.txt" => MAS_COMMON_FILE,
+      "python_pip.txt" => PIP_FILE,
+      "ruby_gems.txt" => GEMS_FILE,
+      "brew_taps.txt" => BREW_TAPS_FILE,
+      "brew_packages.txt" => brew_packages_machine_file,
+      "brew_cask.txt" => brew_cask_machine_file
+    }.each do |stub, target|
+      run(" cp #{File.join(stubs, stub)} #{target} ")
     end
-    run %( cp #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/tests/stubs/app_store.txt #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/misc/packages/app_store_common.txt)
-    run %( cp #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/tests/stubs/python_pip.txt #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/misc/packages/python_pip.txt)
-    run %( cp #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/tests/stubs/ruby_gems.txt #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/misc/packages/ruby_gems.txt)
-    run %( cp #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/tests/stubs/brew_taps.txt #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/misc/packages/brew_taps.txt)
-    run %( cp #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/tests/stubs/.mackup.cfg #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/.config/mackup/.mackup.cfg)
-    run %( cp #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/tests/stubs/brew_packages.txt #{brew_packages_machine_file})
-    run %( cp #{DIRECTORY_NAME + File::SEPARATOR + DOTS_FOLDER}/tests/stubs/brew_cask.txt #{brew_cask_machine_file})
+
+    run(" cp #{File.join(stubs, ".mackup.cfg")} #{File.expand_path("../.config/mackup/.mackup.cfg", __dir__)} ")
   end
 end

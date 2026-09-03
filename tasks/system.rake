@@ -1,4 +1,4 @@
-FONT_PATH = File.expand_path('misc/ui/fonts').gsub(/ /, '\ ')
+FONT_PATH = File.expand_path('../misc/ui/fonts', __dir__)
 
 namespace :install do
   desc 'Make dotfiles/bin executable'
@@ -12,15 +12,22 @@ namespace :install do
   task :fonts do
     section 'Installing fonts'
 
-    unless testing?
-      Dir.foreach(FONT_PATH) do |font|
-        next if ['.', '..', '.DS_Store'].include?(font)
+    next if testing?
 
-        escaped_path = FONT_PATH.gsub("'") { "\\'" }
-        escaped_path = escaped_path.gsub(' ') { '\\ ' }
-        font = font.gsub(' ') { '\\ ' }
-        run %( cp #{escaped_path}/#{font} ~/Library/Fonts )
-      end
+    # misc/ui is rclone-synced rather than committed, so on a fresh clone the fonts
+    # aren't there until the first cloud:pull.
+    unless Dir.exist?(FONT_PATH)
+      puts "~> #{FONT_PATH} not found, skipping"
+      next
+    end
+
+    Dir.foreach(FONT_PATH) do |font|
+      next if ['.', '..', '.DS_Store'].include?(font)
+
+      escaped_path = FONT_PATH.gsub("'") { "\\'" }
+      escaped_path = escaped_path.gsub(' ') { '\\ ' }
+      font = font.gsub(' ') { '\\ ' }
+      run %( cp #{escaped_path}/#{font} ~/Library/Fonts )
     end
   end
 
