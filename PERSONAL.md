@@ -16,6 +16,10 @@ I work best when we "start at the top, and work back". That is, I like to solve 
 - **Never** use the em dash "—". Use plain dash "-" instead
 - **Responses**: Keep them concise and to the point. Avoid long-winded explanations and unnecessary details
 
+### General Conversation
+
+- When brainstorming or discussing problems, present them as a real-world scenario that impacts the underlying application.
+
 ### Code Comments
 
 I want to read code like an essay: names and control flow should carry the narrative, and comments should add only what the code itself cannot say.
