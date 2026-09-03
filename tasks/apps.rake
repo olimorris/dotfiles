@@ -26,6 +26,7 @@ namespace(:install) do
         run(" nvimv ls | grep -qx #{tag} || nvimv install #{tag} ")
       end
     end
+
     run(" nvim --headless +'OneDarkProExtras' +qall ")
   end
 
@@ -35,6 +36,7 @@ namespace(:install) do
 
     run(" herdr plugin install salkhalil/herdr-sessionizer --yes ") unless testing?
     run(" herdr plugin install qu8n/herdr-automatic-rename --yes ") unless testing?
+    run(" herdr plugin install tajdien/herdr-confirm-close --yes ") unless testing?
   end
 end
 

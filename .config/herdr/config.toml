@@ -21,12 +21,13 @@ active_row_bg = "#2a2c41"
 surface0 = "#222435"
 overlay0 = "#585B89"
 
+
 [keys]
 prefix = "ctrl+v"
 
 # default mac keymaps
 new_tab = "cmd+t"
-close_tab = "cmd+w"
+close_tab = ""
 next_tab = "ctrl+tab"
 switch_tab = "cmd+1..9"
 previous_tab = "ctrl+shift+tab"
@@ -47,10 +48,10 @@ split_vertical = "prefix+\\"
 split_horizontal = "prefix+minus"
 
 [ui]
+agent_panel_sort = "spaces"
 prompt_new_tab_name = false
 hide_tab_bar_when_single_tab = true
 show_agent_labels_on_pane_borders = false
-agent_panel_sort = "spaces"
 
 [ui.toast]
 delay_seconds = 1
@@ -83,3 +84,8 @@ type = "plugin_action"
 command = "olimorris.pomodoro-cli.skip"
 description = "skip pomodoro"
 
+[[keys.command]]
+key = "cmd+w"
+command = "confirm-close.confirm-close-tab"
+type = "plugin_action"
+description = "Close tab (with confirmation)"
