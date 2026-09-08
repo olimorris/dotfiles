@@ -1,6 +1,7 @@
 # Include only these paths
 + misc/
 + misc/mackup/**
++ misc/LaunchAgents/**
 + misc/packages/**
 + misc/ui/**
 + misc/sounds/**
