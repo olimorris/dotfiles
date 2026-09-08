@@ -141,8 +141,8 @@ else
   })
 
   defineLayout("Standup", 2, {
-    { "Chrome", "0,0 6x2", { focus = true, moveToScreen = "monitor", url = "https://meet.google.com" } },
-    { "Notion", "0,2 6x2", { moveToScreen = "monitor" } },
+    { "Chrome", "0,0 6x4", { focus = true, moveToScreen = "laptop", url = "https://meet.google.com" } },
+    { "Notion", "0,0 6x4", { moveToScreen = "monitor" } },
   })
 
   defineLayout("Deep Work", 3, {

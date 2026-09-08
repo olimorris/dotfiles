@@ -70,6 +70,7 @@ local apps = {
   n = "Bear", -- Notes
   o = "Notion", -- Life OS
   t = "Ghostty", -- Terminal
+  v = "OBS", -- Video
   --w = RESERVED
 }
 
