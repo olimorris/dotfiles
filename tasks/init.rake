@@ -10,6 +10,8 @@ task(:init) do
   # Mac the dotbot and mackup steps of cloud:pull used to fail with command not found.
   run(" brew install rclone dotbot mackup ", check: true)
 
+  # A fresh Mac has no ~/Code at all, and the pull now leaves it alone unless asked.
+  ENV["CODE"] = "1"
   Rake::Task["cloud:pull"].invoke
   Rake::Task["install"].invoke
 end

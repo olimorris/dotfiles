@@ -6,4 +6,8 @@ export PATH="$HOME/.local/share/mise/shims:$PATH"
 export STORAGE_FOLDER
 export STORAGE_ENCRYPTED_FOLDER
 
+# ~/Code is opt-in for a hand-run push, but the scheduled backup is the only thing
+# protecting it - nothing else copies working trees off this Mac.
+export CODE=1
+
 cd $HOME/.dotfiles && rake cloud:backup:files

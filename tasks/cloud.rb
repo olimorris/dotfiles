@@ -4,7 +4,8 @@
 #   rake cloud:push            local -> cloud
 #   rake cloud:pull            cloud -> local
 #   rake cloud:push[true]      either one, with progress output
-#   GIT=1 rake cloud:push      also carry .git folders
+#   CODE=1 rake cloud:push     also carry ~/Code
+#   GIT=1 CODE=1 rake cloud:push   also carry the .git folders inside ~/Code
 #   FORCE=1 rake cloud:push    overwrite cloud files that are newer than the local ones
 #
 #   cloud:push and cloud:pull live in the Rakefile and wrap the two tasks below with the
@@ -21,7 +22,8 @@
 # What syncs
 #   .dotfiles                       whitelist: misc/{mackup,ui,sounds}, .config/prompts,
 #                                   .config/obs-sidecar. The rest of .dotfiles is in git.
-#   Code                            all but AAI, Java, Ruby/Blog, Ruby/hledger-forecast
+#   Code                            opt-in, CODE=1. All but AAI, Java, Ruby/Blog,
+#                                   Ruby/hledger-forecast
 #   OliDocs, Downloads, Documents   personal Mac only, both directions
 #
 #   base_filter.txt excludes .DS_Store, node_modules, .git, caches and build output from
@@ -72,12 +74,12 @@ def storage_remote
   raise "STORAGE_ENCRYPTED_FOLDER is not set - copy .env from 1Password to .config/env/.env"
 end
 
-# Synced on every machine. These two have to stay in step across both Macs.
+# Synced on every machine. These have to stay in step across both Macs.
 def shared_dirs
-  {
-    ".dotfiles" => {remote: "#{storage_remote}:dotfiles", filter: "dotfiles_filter.txt"},
-    "Code" => {remote: "#{storage_remote}:Code", filter: "code_filter.txt"}
-  }
+  dirs = {".dotfiles" => {remote: "#{storage_remote}:dotfiles", filter: "dotfiles_filter.txt"}}
+  return dirs unless sync_code?
+
+  dirs.merge("Code" => {remote: "#{storage_remote}:Code", filter: "code_filter.txt"})
 end
 
 # Personal machine only, in *both* directions. The work Mac has no business holding
@@ -126,12 +128,23 @@ def update_flag
   ""
 end
 
-# The .git pass is opt-in. Announce the skip so a sync that quietly left history
-# behind doesn't look like one that moved it.
-def sync_git?
-  return true if ENV["GIT"]
+# ~/Code is opt-in. It is by far the largest of the synced dirs - ~4,900 directory
+# listings once filtered - so including it turns a few-second run into a ~50s one.
+def sync_code?
+  return true if ENV["CODE"]
 
-  puts("~> Skipping .git folders (set GIT=1 to include them)")
+  puts("~> Skipping Code (set CODE=1 to include it)")
+  false
+end
+
+# The .git pass is opt-in, and it only ever covers ~/Code - restoring .git folders
+# without the working trees beside them would leave repos that git can't open.
+# Announce the skip so a sync that quietly left history behind doesn't look like one
+# that moved it.
+def sync_git?
+  return true if ENV["GIT"] && ENV["CODE"]
+
+  puts("~> Skipping .git folders (needs GIT=1 and CODE=1)")
   false
 end
 

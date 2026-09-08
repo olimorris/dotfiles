@@ -4,8 +4,6 @@
 + Neovim/**
 
 # Exclude these folders first
-- AAI/**
-- Java/**
 - Ruby/Blog/**
 - Ruby/hledger-forecast/**
 

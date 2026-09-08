@@ -181,7 +181,7 @@ task(:uninstall) do
 end
 
 namespace(:cloud) do
-  desc("Cloud -> Mac. GIT=1 to also sync .git folders")
+  desc("Cloud -> Mac. CODE=1 to also sync ~/Code, GIT=1 for its .git folders")
   task(:pull, [:progress]) do |_t, args|
     section("Cloud -> Mac")
 
@@ -200,7 +200,7 @@ namespace(:cloud) do
     Rake::Task["install:app_config"].invoke
   end
 
-  desc("Mac -> Cloud. GIT=1 to also sync .git folders")
+  desc("Mac -> Cloud. CODE=1 to also sync ~/Code, GIT=1 for its .git folders")
   task(:push, [:progress]) do |_t, args|
     section("Mac -> Cloud")
 
