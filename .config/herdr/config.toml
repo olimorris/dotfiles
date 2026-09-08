@@ -21,6 +21,23 @@ active_row_bg = "#2a2c41"
 surface0 = "#222435"
 overlay0 = "#585B89"
 
+[theme.custom.light]
+text = "#6a6a6a"
+red = "#e05661"
+yellow = "#eea825"
+green = "#1da912"
+blue = "#118dc3"
+teal = "#56b6c2"
+peach = "#ee9025"
+mauve = "#9a77cf"
+
+# Panel colours
+accent = "blue"
+panel_bg = "#f4f4f4"
+sidebar_bg = "#f0f0f0"
+active_row_bg = "#e4e4e4"
+surface0 = "#f4f4f4"
+overlay0 = "#9b9fa6"
 
 [keys]
 prefix = "ctrl+v"
