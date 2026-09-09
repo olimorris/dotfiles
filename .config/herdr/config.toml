@@ -12,14 +12,16 @@ blue = "#25ABE4"
 teal = "#46A3AF"
 peach = "#EAA041"
 mauve = "#c678dd"
-
 # Panel colours
 accent = "blue"
 panel_bg = "#222435"
 sidebar_bg = "#1f2030"
+surface_dim = "#1f2030" # No coloured dividing lines
 active_row_bg = "#2a2c41"
 surface0 = "#222435"
-overlay0 = "#585B89"
+subtext0 = "#B4B7CF" # Workspace text
+overlay0 = "#585B89" # Inactive worktree text
+overlay1 = "#585B89" # Tab coloured text
 
 [theme.custom.light]
 text = "#6a6a6a"
@@ -30,14 +32,16 @@ blue = "#118dc3"
 teal = "#56b6c2"
 peach = "#ee9025"
 mauve = "#9a77cf"
-
 # Panel colours
 accent = "blue"
 panel_bg = "#f4f4f4"
 sidebar_bg = "#f0f0f0"
+surface_dim = "#f0f0f0" # No coloured dividing lines
 active_row_bg = "#e4e4e4"
 surface0 = "#f4f4f4"
-overlay0 = "#9b9fa6"
+subtext0 = "#6a6a6a" # Workspace text
+overlay0 = "#9b9fa6" # Inactive worktree text
+overlay1 = "#9b9fa6" # Tab coloured text
 
 [keys]
 prefix = "ctrl+v"
