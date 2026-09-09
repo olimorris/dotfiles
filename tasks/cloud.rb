@@ -20,11 +20,9 @@
 #   So deleting a file locally leaves it in the cloud, and the next pull brings it back.
 #
 # What syncs
-#   .dotfiles                       whitelist: misc/{mackup,ui,sounds}, .config/prompts,
-#                                   .config/obs-sidecar. The rest of .dotfiles is in git.
-#   Code                            opt-in, CODE=1. All but AAI, Java, Ruby/Blog,
-#                                   Ruby/hledger-forecast
-#   OliDocs, Downloads, Documents   personal Mac only, both directions
+#   .dotfiles   whitelist: misc/{mackup,ui,sounds}, .config/prompts, .config/obs-sidecar.
+#               The rest of .dotfiles is in git.
+#   Code        opt-in, CODE=1. All but AAI, Java, Ruby/Blog, Ruby/hledger-forecast
 #
 #   base_filter.txt excludes .DS_Store, node_modules, .git, caches and build output from
 #   all of them. Filters apply to both sides, so an excluded file is never deleted either
@@ -82,32 +80,6 @@ def shared_dirs
   dirs.merge("Code" => {remote: "#{storage_remote}:Code", filter: "code_filter.txt"})
 end
 
-# Personal machine only, in *both* directions. The work Mac has no business holding
-# these, and it must not push them either: rclone sync mirrors, so a push from a Mac
-# that doesn't have them would delete the backup made by the one that does.
-#
-# Gating on personal_machine? fails safe. A personal Mac misread as work skips these
-# dirs; the reverse - a work Mac misread as personal - is the one that destroys data,
-# and that only happens if ComputerName is set wrong by hand.
-def personal_dirs
-  unless personal_machine?
-    puts("~> Skipping OliDocs, Downloads and Documents (not the personal machine)")
-    return {}
-  end
-
-  {
-    "OliDocs" => {remote: "#{storage_remote}:Documents"},
-    "Downloads" => {remote: "#{storage_remote}:Downloads"},
-    "Documents" => {remote: "#{storage_remote}:ICloud_Docs"}
-  }
-end
-
-def rclone_dirs
-  shared_dirs.merge(personal_dirs)
-end
-
-# compact drops the nil from a dir with no filter of its own - base_filter is enough
-# for the document folders, which need exclusions but no whitelist.
 def rclone_filters(*names)
   names.compact.map { |name| " --filter-from #{RCLONE_DIR}/#{name}" }.join
 end
@@ -187,7 +159,7 @@ namespace(:cloud) do
       other_flags = " --delete-before"
       speed_flags = " --use-mmap --size-only#{PACING}"
 
-      rclone_dirs.each do |local, config|
+      shared_dirs.each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
         run(
           " #{RCLONE}#{RCLONE_CONFIG} sync #{config[:remote]} ~/#{local}#{filters}#{speed_flags}#{other_flags}#{flag} ",
@@ -224,7 +196,7 @@ namespace(:cloud) do
       # removing 1,724 files, including git worktrees that only exist on the other Mac.
       # copy writes new and changed files and never removes anything, so the remote only
       # ever grows. Clearing out stale files there is a deliberate, manual job.
-      rclone_dirs.each do |local, config|
+      shared_dirs.each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
         run(
           " #{RCLONE}#{RCLONE_CONFIG} copy ~/#{local} #{config[:remote]}#{filters}#{speed_flags}#{flag} ",
