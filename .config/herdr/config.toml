@@ -34,11 +34,11 @@ peach = "#ee9025"
 mauve = "#9a77cf"
 # Panel colours
 accent = "blue"
-panel_bg = "#f4f4f4"
+panel_bg = "#fafafa"
 sidebar_bg = "#f0f0f0"
 surface_dim = "#f0f0f0" # No coloured dividing lines
 active_row_bg = "#e4e4e4"
-surface0 = "#f4f4f4"
+surface0 = "#fafafa"
 subtext0 = "#6a6a6a" # Workspace text
 overlay0 = "#9b9fa6" # Inactive worktree text
 overlay1 = "#9b9fa6" # Tab coloured text
@@ -61,9 +61,6 @@ previous_workspace = "cmd+k"
 switch_workspace = "cmd+alt+1..9"
 
 toggle_sidebar = "cmd+s"
-
-new_worktree = "prefix+n"
-open_worktree = "prefix+o"
 
 split_vertical = "prefix+\\"
 split_horizontal = "prefix+minus"
@@ -110,3 +107,15 @@ key = "cmd+w"
 command = "confirm-close.confirm-close-tab"
 type = "plugin_action"
 description = "Close tab (with confirmation)"
+
+[[keys.command]]
+key = "prefix+shift+g"
+type = "plugin_action"
+command = "worktrunk.open"
+description = "Worktree: switch / create from default branch"
+
+[[keys.command]]
+key = "prefix+shift+x"
+type = "plugin_action"
+command = "worktrunk.remove"
+description = "Worktree: remove"
