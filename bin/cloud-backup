@@ -10,4 +10,4 @@ export STORAGE_ENCRYPTED_FOLDER
 # protecting it - nothing else copies working trees off this Mac.
 export CODE=1
 
-cd $HOME/.dotfiles && rake cloud:backup:files
+cd $HOME/.dotfiles && rake backup:app_config cloud:backup:files

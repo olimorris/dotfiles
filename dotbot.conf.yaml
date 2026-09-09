@@ -48,8 +48,6 @@
     ~/.env: .config/env/.env
     ~/.gitconfig: .config/git/.gitconfig
     ~/.gitignore_global: .config/git/.gitignore_global
-    ~/.mackup: .config/mackup/.mackup
-    ~/.mackup.cfg: .config/mackup/.mackup.cfg
     ~/.profile: .config/bash/.profile
     ~/.pypirc: .config/.pypirc
     ~/.ssh: .config/ssh
