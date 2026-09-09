@@ -11,7 +11,7 @@
 !.config/composer/composer.json
 !.config/efm-langserver/*
 !.config/env/.env.example
-!.config/fish/*
+!.config/fish/**/*
 !.config/git/**/*
 !.config/ghostty/**/*
 !.config/hammerspoon/**/*
@@ -29,6 +29,7 @@
 !.config/rclone/dotfiles_filter.txt
 !.config/snippets/**/*
 !.config/vim/**/*
+!.config/worktrunk/**/*
 !.config/zsh/**/*
 
 # Dotbot

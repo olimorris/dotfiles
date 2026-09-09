@@ -1,0 +1,4 @@
+[projects."github.com/olimorris/codecompanion.nvim"]
+approved-commands = [
+    "cd doc && npm install",
+]
