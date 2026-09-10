@@ -1,9 +1,10 @@
 function __nvimcc_worktrees
-    echo main
-    set -l dir ~/.herdr/worktrees/main
-    test -d $dir; or return
-    for entry in $dir/*/
-        basename $entry
+    set -l dir /Users/Oli/Code/Neovim/codecompanion.nvim
+    if test -d $dir
+        for entry in $dir/*/
+            set -l name (basename $entry)
+            test $name = main; or echo $name
+        end
     end
 end
 

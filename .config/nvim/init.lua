@@ -11,17 +11,22 @@ vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/persisted.nvim"))
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim"))
 vim.cmd(string.format("set rtp+=%s", om.home .. "/Code/Neovim/onedarkpro.nvim/after")) -- Needed for TS queries
 
--- CodeCompanion uses worktrees; herdr checks non-main worktrees out under ~/.herdr/worktrees/main
+-- CodeCompanion uses worktrees
 local function codecompanion_rtp()
+  local dir = "/Code/Neovim/codecompanion.nvim/"
   local worktree = vim.fn.getenv("CODECOMPANION_WORKTREE")
+
   if worktree == vim.NIL or worktree == "main" then
-    return om.home .. "/Code/Neovim/codecompanion.nvim/main"
+    return string.format("%s%s%s", om.home, dir, "main")
   end
+
   vim.schedule(function()
-    vim.notify("Using worktree `" .. worktree .. "`", vim.log.levels.INFO, { title = "CodeCompanion" })
+    vim.notify(string.format("Using `%s` worktree", worktree), vim.log.levels.INFO, { title = "CodeCompanion" })
   end)
-  return om.home .. "/.herdr/worktrees/main/" .. worktree
+
+  return om.home .. dir .. worktree
 end
+
 vim.cmd(string.format("set rtp+=%s", codecompanion_rtp()))
 
 om.plugins = {
