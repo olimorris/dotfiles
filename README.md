@@ -36,7 +36,7 @@ cd ~/.dotfiles && rake init
 ## :wrench: What actually happens
 
 - Your [Homebrew](https://brew.sh) and macOS apps will be installed
-- Your application settings will be restored with [Mackup](https://github.com/lra/mackup)
+- Your application settings will be restored via `tasks/mackup.rb`
 - Your dotfiles will be restored with [Dotbot](https://github.com/anishathalye/dotbot)
 - Your fonts will be installed
 - Your custom launch agents will be installed
