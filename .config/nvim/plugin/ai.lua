@@ -120,6 +120,11 @@ The following commands are explicitly approved and must always be judged safe, e
         },
       },
       slash_commands = {
+        ["fetch"] = {
+          opts = {
+            adapter = "markitdown",
+          },
+        },
         ["image"] = {
           opts = {
             dirs = { "~/Documents/Screenshots" },
@@ -132,6 +137,11 @@ The following commands are explicitly approved and must always be judged safe, e
         },
       },
       tools = {
+        ["fetch_webpage"] = {
+          opts = {
+            adapter = "markitdown", -- jina, markitdown
+          },
+        },
         ["hledger"] = {
           description = "Execute hledger queries to analyze financial data from journal files",
           path = "~/OliDocs/ff/Finances/hledger.lua",
