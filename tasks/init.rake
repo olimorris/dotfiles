@@ -10,8 +10,10 @@ task(:init) do
   # Mac the dotbot and mackup steps of cloud:pull used to fail with command not found.
   run(" brew install rclone dotbot mackup ", check: true)
 
-  # A fresh Mac has no ~/Code at all, and the pull now leaves it alone unless asked.
+  # A fresh Mac has no ~/Code or ~/OliDocs at all, and the pull now leaves both alone
+  # unless asked. init is the one place that restore is the whole point, so set both.
   ENV["CODE"] = "1"
+  ENV["DOCS"] = "1"
   Rake::Task["cloud:pull"].invoke
   Rake::Task["install"].invoke
 end
