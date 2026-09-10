@@ -32,7 +32,9 @@
 #   - a pull cannot touch your local node_modules or .git.
 #
 # Notes
-#   --size-only    fast, but a file edited without changing size is not re-uploaded
+#   --size-only    fast, but a file edited without changing size is not re-uploaded. The
+#                  push drops it for the document folders, which have no git copy to
+#                  recover from; the restore still uses it everywhere
 #   .git pass      separate and opt-in, omits --size-only: refs are fixed length, so a
 #                  size comparison would never notice a branch moving to a new commit
 #   --fast-list    unusable, the remote reports ListR: false, so every directory costs
@@ -99,9 +101,9 @@ def personal_dirs
   end
 
   {
-    "OliDocs" => {remote: "#{storage_remote}:Documents"},
-    "Downloads" => {remote: "#{storage_remote}:Downloads"},
-    "Documents" => {remote: "#{storage_remote}:ICloud_Docs"}
+    "OliDocs" => {remote: "#{storage_remote}:Documents", by_modtime: true},
+    "Downloads" => {remote: "#{storage_remote}:Downloads", by_modtime: true},
+    "Documents" => {remote: "#{storage_remote}:ICloud_Docs", by_modtime: true}
   }
 end
 
@@ -228,7 +230,7 @@ namespace(:cloud) do
 
       flag = args[:progress] ? " -P -v" : ""
       update = update_flag
-      speed_flags = " --use-mmap --size-only#{PACING}#{update}"
+      speed_flags = " --use-mmap#{PACING}#{update}"
 
       # copy, not sync. sync mirrors, so with two Macs pushing to one remote each push
       # deleted whatever the other machine didn't have - a push from here proposed
@@ -244,10 +246,17 @@ namespace(:cloud) do
       shared_dirs.merge(personal_dirs).each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
 
+        # The document folders compare on modtime, everything else on size. The cloud is
+        # the only copy those three have, so a spreadsheet edited without changing its
+        # byte count has to still be noticed. Code keeps --size-only because a branch
+        # switch restamps thousands of unchanged files, and git holds a second copy of
+        # anything a missed upload there would cost.
+        compare = config[:by_modtime] ? "" : " --size-only"
+
         # run returns nil when DRY_RUN or TEST_ENV skip the command, so only an explicit
         # false is a failure.
         failed << local if run(
-          " #{RCLONE}#{RCLONE_CONFIG} copy ~/#{local} #{config[:remote]}#{filters}#{speed_flags}#{flag} "
+          " #{RCLONE}#{RCLONE_CONFIG} copy ~/#{local} #{config[:remote]}#{filters}#{compare}#{speed_flags}#{flag} "
         ) == false
       end
 
