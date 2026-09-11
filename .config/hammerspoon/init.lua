@@ -31,6 +31,14 @@ require("layout")
 require("windows")
 
 -- [[ Watchers ]] -------------------------------------------------------------
+hs.screen.watcher
+  .new(function()
+    hs.timer.doAfter(1, function() -- delay to allow the screen to stabilize
+      hs.reload()
+    end)
+  end)
+  :start()
+
 hs.pathwatcher
   .new(os.getenv("HOME") .. "/.config/hammerspoon/", function(files)
     hs.reload()

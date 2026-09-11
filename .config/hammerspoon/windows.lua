@@ -1,3 +1,4 @@
+local util = require("lib.util")
 local window = require("hs.window")
 
 -- [[ Key Bindings ]] ---------------------------------------------------------
@@ -7,31 +8,21 @@ local win_keys = { "alt" }
 window.animationDuration = 0.0
 
 -- [[ Constants ]] ------------------------------------------------------------
-local POSITIONS = {
-  halves = {
-    bottom = "0,2 6x2",
-    left = "0,0 3x4",
-    right = "3,0 3x4",
-    top = "0,0 6x2",
-  },
-  thirds = {
-    left = "0,0 2x4",
-    center = "2,0 2x4",
-    right = "4,0 2x4",
-  },
-  p1080 = function(opts)
-    opts = opts or {}
-    local chromeOffset = opts.chrome and 87 or 0
+---A 1080p-ish frame, inset from the screen edges
+---@param opts? { chrome?: boolean } chrome adds room for a browser's toolbar
+---@return table
+local function p1080(opts)
+  opts = opts or {}
+  local chromeOffset = opts.chrome and 87 or 0
 
-    local screen = hs.screen.mainScreen() or hs.screen.primaryScreen()
-    local screenFrame = screen:frame()
+  local screen = hs.screen.mainScreen() or hs.screen.primaryScreen()
+  local screenFrame = screen:frame()
 
-    local w = math.min(1920, math.max(100, screenFrame.w - 50))
-    local h = math.min(1080 + chromeOffset, math.max(100, screenFrame.h - 50))
+  local w = math.min(1920, math.max(100, screenFrame.w - 50))
+  local h = math.min(1080 + chromeOffset, math.max(100, screenFrame.h - 50))
 
-    return hs.geometry.rect(screenFrame.x + 25, screenFrame.y + 25, w, h)
-  end,
-}
+  return hs.geometry.rect(screenFrame.x + 25, screenFrame.y + 25, w, h)
+end
 
 local DIRECTIONS = {
   down = { neighbor = "toSouth", reverseNeighbor = "toNorth", target = "bottom" },
@@ -40,56 +31,56 @@ local DIRECTIONS = {
   up = { neighbor = "toNorth", reverseNeighbor = "toSouth", target = "top" },
 }
 
-local function snapHalf(direction)
-  local win = hs.window.focusedWindow()
-  if not win then
-    return
-  end
-  hs.grid.set(win, POSITIONS.halves[DIRECTIONS[direction].target])
+local function snapTo(grid_settings)
+  return util.onFocusedWindow(function(win)
+    hs.grid.set(win, grid_settings)
+  end)
 end
 
+local function frameTo(builder, opts)
+  return util.onFocusedWindow(function(win)
+    win:setFrame(builder(opts))
+  end)
+end
+
+---Move to the neighbouring screen, wrapping around at the far edge
 local function moveToAdjacent(direction)
-  local win = hs.window.focusedWindow()
-  if not win then
-    return
-  end
+  return util.onFocusedWindow(function(win)
+    local d = DIRECTIONS[direction]
+    local screen = win:screen()
+    local adjacent = screen[d.neighbor](screen)
 
-  local d = DIRECTIONS[direction]
-  local screen = win:screen()
-  local adjacent = screen[d.neighbor](screen)
-
-  if not adjacent then
-    adjacent = screen
-    while adjacent[d.reverseNeighbor](adjacent) do
-      adjacent = adjacent[d.reverseNeighbor](adjacent)
+    if not adjacent then
+      adjacent = screen
+      while adjacent[d.reverseNeighbor](adjacent) do
+        adjacent = adjacent[d.reverseNeighbor](adjacent)
+      end
     end
-  end
 
-  if adjacent ~= screen then
-    win:moveToScreen(adjacent)
-  end
+    if adjacent ~= screen then
+      win:moveToScreen(adjacent)
+    end
+  end)
 end
 
 -- [[ Window Management ]] -----------------------------------------------------
-
--- Maximize the focused window
-hs.hotkey.bind(win_keys, "m", function()
-  local win = hs.window.focusedWindow()
-  if win then
+hs.hotkey.bind(
+  win_keys,
+  "m",
+  util.onFocusedWindow(function(win)
     win:maximize()
-  end
-end)
+  end)
+)
 
--- Center
-hs.hotkey.bind(win_keys, "c", function()
-  local win = hs.window.focusedWindow()
-  if win.centerOnScreen then
+hs.hotkey.bind(
+  win_keys,
+  "c",
+  util.onFocusedWindow(function(win)
     win:centerOnScreen()
-    return
-  end
-end)
+  end)
+)
 
--- Modal Window Management
+-- [[ Modal Window Management ]] -----------------------------------------------
 local modal = hs.hotkey.modal.new(Hyper, "W")
 local modalAlert = nil
 
@@ -103,64 +94,33 @@ function modal:exited()
   end
 end
 
+---Any action leaves the modal, so it can't be left listening after a keypress
+local function bind(key, action)
+  modal:bind({}, key, function()
+    action()
+    modal:exit()
+  end)
+end
+
 -- Halves on the current screen
-modal:bind({}, "h", function()
-  snapHalf("left")
-end)
-modal:bind({}, "j", function()
-  moveToAdjacent("down")
-end)
-modal:bind({}, "k", function()
-  moveToAdjacent("up")
-end)
-modal:bind({}, "l", function()
-  snapHalf("right")
-end)
+bind("h", snapTo(util.GRID.halves.left))
+bind("l", snapTo(util.GRID.halves.right))
+
+bind("j", moveToAdjacent("down"))
+bind("k", moveToAdjacent("up"))
 
 -- Move to the adjacent monitor (wraps around)
-modal:bind({}, "left", function()
-  moveToAdjacent("left")
-end)
-modal:bind({}, "down", function()
-  moveToAdjacent("down")
-end)
-modal:bind({}, "up", function()
-  moveToAdjacent("up")
-end)
-modal:bind({}, "right", function()
-  moveToAdjacent("right")
-end)
+bind("left", moveToAdjacent("left"))
+bind("down", moveToAdjacent("down"))
+bind("up", moveToAdjacent("up"))
+bind("right", moveToAdjacent("right"))
 
-modal:bind({}, "1", function()
-  local win = hs.window.focusedWindow()
-  if win then
-    hs.grid.set(win, POSITIONS.thirds.left)
-  end
-end)
-modal:bind({}, "2", function()
-  local win = hs.window.focusedWindow()
-  if win then
-    hs.grid.set(win, POSITIONS.thirds.center)
-  end
-end)
-modal:bind({}, "3", function()
-  local win = hs.window.focusedWindow()
-  if win then
-    hs.grid.set(win, POSITIONS.thirds.right)
-  end
-end)
-modal:bind({}, "4", function()
-  local win = hs.window.focusedWindow()
-  if win then
-    win:setFrame(POSITIONS.p1080())
-  end
-end)
-modal:bind({}, "5", function()
-  local win = hs.window.focusedWindow()
-  if win then
-    win:setFrame(POSITIONS.p1080({ chrome = true }))
-  end
-end)
+-- Thirds and fixed-size frames
+bind("1", snapTo(util.GRID.thirds.left))
+bind("2", snapTo(util.GRID.thirds.center))
+bind("3", snapTo(util.GRID.thirds.right))
+bind("4", frameTo(p1080))
+bind("5", frameTo(p1080, { chrome = true }))
 
 -- Exit modal
 modal:bind({}, "escape", function()
