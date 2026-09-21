@@ -1,4 +1,6 @@
 [projects."github.com/olimorris/codecompanion.nvim"]
 approved-commands = [
     "cd doc && npm install",
+    "cp -r {{ primary_worktree_path }}/memories {{ worktree_path }}/memories",
+    "ln -s {{ primary_worktree_path }}/memories {{ worktree_path }}/memories",
 ]

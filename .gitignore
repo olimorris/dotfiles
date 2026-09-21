@@ -29,7 +29,7 @@
 !.config/rclone/dotfiles_filter.txt
 !.config/snippets/**/*
 !.config/vim/**/*
-!.config/worktrunk/**/*
+!.config/worktrunk/config.toml
 !.config/zsh/**/*
 
 # Dotbot
