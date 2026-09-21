@@ -81,8 +81,8 @@ position = "bottom-right"
 [[keys.command]]
 key = "ctrl+w"
 type = "plugin_action"
-command = "sessionizer.pick"
-description = "fuzzy-switch workspace"
+command = "fullerzz.sesh.open-picker"
+description = "Open Sesh picker"
 
 [[keys.command]]
 key = "prefix+t"
@@ -104,8 +104,8 @@ description = "skip pomodoro"
 
 [[keys.command]]
 key = "cmd+w"
-command = "confirm-close.confirm-close-tab"
 type = "plugin_action"
+command = "confirm-close.confirm-close-tab"
 description = "Close tab (with confirmation)"
 
 [[keys.command]]

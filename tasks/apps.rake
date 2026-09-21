@@ -34,7 +34,7 @@ namespace(:install) do
   task(:herdr) do
     section("Installing herdr plugins")
 
-    run(" herdr plugin install salkhalil/herdr-sessionizer --yes ") unless testing?
+    run(" herdr plugin install fullerzz/herdr-plugin-sesh --yes ") unless testing?
     run(" herdr plugin install qu8n/herdr-automatic-rename --yes ") unless testing?
     run(" herdr plugin install tajdien/herdr-confirm-close --yes ") unless testing?
     run(" herdr plugin install devashish2203/herdr-worktrunk --yes ") unless testing?
