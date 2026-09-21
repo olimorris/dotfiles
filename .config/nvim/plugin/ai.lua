@@ -125,7 +125,7 @@ The following commands are explicitly approved and must always be judged safe, e
             adapter = "markitdown",
           },
         },
-        ["image"] = {
+        ["file"] = {
           opts = {
             dirs = { "~/Documents/Screenshots" },
           },
@@ -167,6 +167,9 @@ The following commands are explicitly approved and must always be judged safe, e
           opts = {
             adapter = "duckduckgo",
           },
+        },
+        opts = {
+          default_tools = { "memory" },
         },
       },
     },

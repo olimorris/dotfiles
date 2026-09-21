@@ -99,6 +99,14 @@ require("onedarkpro").setup({
     StatuslineSearch = { fg = "${bg}", bg = "${yellow}" },
     StatuslineRuler = { fg = "${bg}", bg = "${gray}", bold = true },
 
+    -- Tabline
+    TabLine = { fg = "${gray}", bg = "${statusline_fill}" },
+    TabLineSel = { fg = "${fg}", bg = "${statusline_fill}" },
+    TabLineFill = { bg = "${statusline_fill}" },
+
+    TablineModified = { fg = "${red}", bg = "${statusline_fill}" },
+    TablineClose = { fg = "${red}", bg = "${statusline_fill}" },
+
     -- Winbar
     WinbarPath = { fg = "${breadcrumbs}", italic = true },
     WinbarFile = { fg = "${fg}", italic = true },

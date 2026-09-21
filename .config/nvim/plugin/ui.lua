@@ -224,6 +224,7 @@ require("snacks").setup({
       preview = {
         wo = {
           foldcolumn = "0",
+          wrap = true,
         },
       },
     },

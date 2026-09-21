@@ -318,3 +318,7 @@ keymap("n", "<Leader>mD", function()
   vim.cmd("delmarks A-I")
   vim.notify("Deleted all marks", vim.log.levels.INFO, { title = "Marks" })
 end, { desc = "Delete all marks" })
+
+-- Abbreviations --------------------------------------------------------------
+vim.cmd([[cab tn tabnext]])
+vim.cmd([[cab tp tabprevious]])
