@@ -42,7 +42,14 @@ namespace :install do
   task :launch_agents do
     section 'Installing Launch Agents'
 
-    run %( launchctl load -w ~/Library/LaunchAgents/oli.cloud-backup.plist )
+    # cloud:backup:files always carries ~/Code - the work Mac has no business pushing
+    # that into the personal cloud backup, so the scheduled agent stays personal-only.
+    if personal_machine?
+      run %( launchctl load -w ~/Library/LaunchAgents/oli.cloud-backup.plist )
+    else
+      puts("~> Skipping oli.cloud-backup (not the personal machine)")
+    end
+
     run %( launchctl load -w ~/Library/LaunchAgents/oli.color-mode-notify.plist )
     run %( launchctl load -w ~/Library/LaunchAgents/oli.finance-output.plist )
   end

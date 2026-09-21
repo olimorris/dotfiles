@@ -57,7 +57,9 @@ task(:backup) do
   Rake::Task["backup:npm"].invoke
   Rake::Task["backup:pip"].invoke
 
-  # Files. cloud:push is the only file sync path - it does mackup, then rclone.
+  # Files. work:push carries dotfiles, cloud:push carries Code and the document
+  # folders. Both do mackup, then rclone.
+  Rake::Task["work:push"].invoke
   Rake::Task["cloud:push"].invoke
 end
 
@@ -181,7 +183,7 @@ task(:uninstall) do
 end
 
 namespace(:cloud) do
-  desc("Cloud -> Mac. CODE=1 to also sync ~/Code, GIT=1 for its .git folders, DOCS=1 for the document folders")
+  desc("Cloud -> Mac. Code and Code/.git (GIT=1) and document folders (DOCS=1)")
   task(:pull, [:progress]) do |_t, args|
     section("Cloud -> Mac")
 
@@ -200,11 +202,30 @@ namespace(:cloud) do
     Rake::Task["install:app_config"].invoke
   end
 
-  desc("Mac -> Cloud. CODE=1 to also sync ~/Code, GIT=1 for its .git folders. Document folders always included")
+  desc("Mac -> Cloud. Code and document folders always included, Code/.git with GIT=1")
   task(:push, [:progress]) do |_t, args|
     section("Mac -> Cloud")
 
     Rake::Task["backup:app_config"].invoke
     Rake::Task["cloud:backup:files"].invoke(args[:progress])
+  end
+end
+
+namespace(:work) do
+  desc("Cloud -> Mac, dotfiles only")
+  task(:pull, [:progress]) do |_t, args|
+    section("Cloud -> Mac (dotfiles)")
+
+    Rake::Task["work:restore:files"].invoke(args[:progress])
+    Rake::Task["install:dotbot"].invoke
+    Rake::Task["install:app_config"].invoke
+  end
+
+  desc("Mac -> Cloud, dotfiles only")
+  task(:push, [:progress]) do |_t, args|
+    section("Mac -> Cloud (dotfiles)")
+
+    Rake::Task["backup:app_config"].invoke
+    Rake::Task["work:backup:files"].invoke(args[:progress])
   end
 end

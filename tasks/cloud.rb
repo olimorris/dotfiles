@@ -1,11 +1,12 @@
-# rclone backup and restore to an encrypted remote.
+# rclone backup and restore to an encrypted remote. This is the everything channel -
+# ~/Code and the document folders. .dotfiles has its own copy-only channel in work.rb,
+# for moving an edit between the two Macs without waiting on a full cloud round trip.
 #
 # Commands
 #   rake cloud:push            local -> cloud
 #   rake cloud:pull            cloud -> local
 #   rake cloud:push[true]      either one, with progress output
-#   CODE=1 rake cloud:push     also carry ~/Code
-#   GIT=1 CODE=1 rake cloud:push   also carry the .git folders inside ~/Code
+#   GIT=1 rake cloud:push      also carry the .git folders inside ~/Code
 #   FORCE=1 rake cloud:push    overwrite cloud files that are newer than the local ones
 #   DOCS=1 rake cloud:pull     also restore OliDocs, Downloads and Documents
 #
@@ -21,9 +22,7 @@
 #   So deleting a file locally leaves it in the cloud, and the next pull brings it back.
 #
 # What syncs
-#   .dotfiles   whitelist: misc/{mackup,ui,sounds}, .config/prompts, .config/obs-sidecar.
-#               The rest of .dotfiles is in git.
-#   Code        opt-in, CODE=1. All but AAI, Java, Ruby/Blog, Ruby/hledger-forecast
+#   Code        all but AAI, Java, Ruby/Blog, Ruby/hledger-forecast
 #   OliDocs, Downloads, Documents
 #               personal Mac only. Always pushed, only pulled with DOCS=1
 #
@@ -84,10 +83,7 @@ end
 
 # Synced on every machine. These have to stay in step across both Macs.
 def shared_dirs
-  dirs = {".dotfiles" => {remote: "#{storage_remote}:dotfiles", filter: "dotfiles_filter.txt"}}
-  return dirs unless sync_code?
-
-  dirs.merge("Code" => {remote: "#{storage_remote}:Code", filter: "code_filter.txt"})
+  {"Code" => {remote: "#{storage_remote}:Code", filter: "code_filter.txt"}}
 end
 
 # Personal machine only. The work Mac has its own ~/Downloads and ~/Documents, so a push
@@ -110,9 +106,9 @@ end
 
 # Pull-side only. A pull is sync --delete-before with no --update, so it mirrors the cloud
 # onto the machine: every document that hasn't been pushed yet is deleted, and every one
-# the cloud holds an older copy of is rolled back. .dotfiles and Code survive that because
-# git holds a second copy; these three have nothing to recover from. DOCS=1 is the
-# deliberate opt-in, for restoring onto a fresh Mac.
+# the cloud holds an older copy of is rolled back. Code survives that because git holds a
+# second copy; these three have nothing to recover from. DOCS=1 is the deliberate opt-in,
+# for restoring onto a fresh Mac.
 def pull_personal_dirs
   return personal_dirs if ENV["DOCS"]
 
@@ -126,29 +122,23 @@ def rclone_filters(*names)
   names.compact.map { |name| " --filter-from #{RCLONE_DIR}/#{name}" }.join
 end
 
-# --update makes a push skip any file the remote holds a newer copy of. Without it, a
-# machine that hasn't pulled in a while quietly pushes its stale versions over newer
-# cloud data: copy with --size-only has no notion of newer or older, it just makes the
-# destination match the source wherever the sizes differ. The remote stores modtimes to
-# 1ms precision, so the comparison is real rather than a silent no-op.
+# --update makes a copy skip any file the destination holds a newer copy of. Without
+# it, a machine that hasn't pulled in a while quietly pushes its stale versions over
+# newer cloud data: copy with --size-only has no notion of newer or older, it just makes
+# the destination match the source wherever the sizes differ. The remote stores modtimes
+# to 1ms precision, so the comparison is real rather than a silent no-op.
 #
-# FORCE=1 drops the flag, for the one thing it blocks: deliberately rolling the cloud
-# back to an older copy held on this machine. Announce it, because it re-enables exactly
-# the overwrite the rest of the time we're trying to prevent.
+# Shared with work.rb's copy-both-ways channel, where the same flag guards a pull
+# against overwriting a newer local edit with a stale cloud copy.
+#
+# FORCE=1 drops the flag, for the one thing it blocks: deliberately rolling the
+# destination back to an older copy held on the source. Announce it, because it
+# re-enables exactly the overwrite the rest of the time we're trying to prevent.
 def update_flag
   return " --update" unless ENV["FORCE"]
 
-  puts("~> FORCE set - this push will overwrite newer files in the cloud")
+  puts("~> FORCE set - this run will overwrite newer files at the destination")
   ""
-end
-
-# ~/Code is opt-in. It is by far the largest of the synced dirs - ~4,900 directory
-# listings once filtered - so including it turns a few-second run into a ~50s one.
-def sync_code?
-  return true if ENV["CODE"]
-
-  puts("~> Skipping Code (set CODE=1 to include it)")
-  false
 end
 
 # The .git pass is opt-in, and it only ever covers ~/Code - restoring .git folders
@@ -156,9 +146,9 @@ end
 # Announce the skip so a sync that quietly left history behind doesn't look like one
 # that moved it.
 def sync_git?
-  return true if ENV["GIT"] && ENV["CODE"]
+  return true if ENV["GIT"]
 
-  puts("~> Skipping .git folders (needs GIT=1 and CODE=1)")
+  puts("~> Skipping .git folders (set GIT=1 to include them)")
   false
 end
 
