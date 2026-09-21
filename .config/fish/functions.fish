@@ -95,4 +95,16 @@ function cleanvid -d "Re-encode a video with libx264 and CRF 20"
     ffmpeg -i "$input" -vcodec libx264 -crf 20 -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc bt709 "$output"
 end
 
+function extractaudio -d "Extract audio from a video file as mp3"
+    if not set -q argv[1]
+        echo "Usage: extractaudio <video_path>"
+        return 1
+    end
+
+    set input $argv[1]
+    set output (string replace -r '\.[^.]+$' '' $input)".mp3"
+
+    ffmpeg -i "$input" -vn -acodec libmp3lame -q:a 2 "$output"
+end
+
 
