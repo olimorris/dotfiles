@@ -22,7 +22,6 @@ local by_chrome_tab = {}
 
 -- Anything with its own behaviour
 local by_action = {
-  g = meet.sendToPrompter,
   -- Wrapped, so a hotkey arg can never land in windowHints' optional first param
   H = function()
     hs.hints.windowHints()
@@ -32,11 +31,13 @@ local by_action = {
 if OnPersonal then
   by_app.c = "Visual Studio Code" -- VS Code
   by_app.e = "Microsoft Excel"
-  by_app.k = "Keynote"
+  by_chrome_tab.g = "https://github.com" -- GitHub
+  by_chrome_tab.l = "https://claude.ai" -- LLM
   by_app.p = "UPDF"
   by_app.r = "Reminders"
   by_app["["] = "1Password" -- It's next to P...
 else
+  by_action["g"] = meet.sendToPrompter
   by_app.c = "Slack" -- Chat
   by_app.l = "Claude" -- LLM
   by_chrome_tab.d = "https://calendar.google.com/" -- Diary
