@@ -198,7 +198,7 @@ The following commands are explicitly approved and must always be judged safe, e
     },
     code_review = {
       display = {
-        virtual_text = {
+        comments = {
           icon = "  ",
           overflow = "wrap",
         },
@@ -232,6 +232,9 @@ The following commands are explicitly approved and must always be judged safe, e
         },
       },
     },
+    -- opts = {
+    --   default_servers = { "fetch" },
+    -- },
   },
   rules = {
     personal = {
