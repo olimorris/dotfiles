@@ -85,6 +85,7 @@ task(:install) do
   # fish against config that did not exist yet, while `rake init` got the right order
   # by accident because cloud:pull had already run them.
   Rake::Task["install:dotbot"].invoke
+  Rake::Task["install:skills"].invoke
   Rake::Task["install:app_config"].invoke
   Rake::Task["install:chmod"].invoke
 
@@ -199,6 +200,7 @@ namespace(:cloud) do
 
     # App config
     Rake::Task["install:dotbot"].invoke
+    Rake::Task["install:skills"].invoke
     Rake::Task["install:app_config"].invoke
   end
 
@@ -218,6 +220,7 @@ namespace(:work) do
 
     Rake::Task["work:restore:files"].invoke(args[:progress])
     Rake::Task["install:dotbot"].invoke
+    Rake::Task["install:skills"].invoke
     Rake::Task["install:app_config"].invoke
   end
 

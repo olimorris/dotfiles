@@ -9,6 +9,7 @@
 - link:
     # Config directory
     # Location on disk: Location in dotfiles
+    ~/.agents: .config/agents
     ~/.config/1password: .config/1password
     ~/.config/efm-langserver: .config/efm-langserver
     ~/.config/espanso: .config/espanso
