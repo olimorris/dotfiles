@@ -111,7 +111,7 @@ description = "Close tab (with confirmation)"
 [[keys.command]]
 key = "prefix+shift+g"
 type = "plugin_action"
-command = "worktrunk.open"
+command = "worktrunk.open-current"
 description = "Worktree: switch / create from default branch"
 
 [[keys.command]]
