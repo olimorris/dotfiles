@@ -3,4 +3,10 @@ approved-commands = [
     "cd doc && npm install",
     "cp -r {{ primary_worktree_path }}/memories {{ worktree_path }}/memories",
     "ln -s {{ primary_worktree_path }}/memories {{ worktree_path }}/memories",
+    "make deps",
+    """
+for path in memories tests/scripts/tool_testing/config.local.lua tests/scripts/tool_testing/.env; do
+  ln -sfn {{ primary_worktree_path }}/$path {{ worktree_path }}/$path
+done
+""",
 ]
