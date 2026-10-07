@@ -1,5 +1,5 @@
-# rclone copy --update to the dotfiles-only channel: misc/mackup, .config/ssh,
-# .config/prompts and the rest of dotfiles_filter.txt's whitelist. This is for moving an
+# rclone copy --update to the dotfiles-only channel: all of ~/.dotfiles except .git and
+# the machine-local files dotfiles_filter.txt excludes. This is for moving an
 # edit between the two Macs, not backing everything up - see cloud.rb for that, which
 # also owns the shared rclone constants and helpers this file reuses.
 #

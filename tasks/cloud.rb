@@ -47,6 +47,8 @@
 #                  rejects anything over 255 with a 400
 #   worktrees      restore rewrites git worktree pointers, which hold absolute paths and
 #                  arrive pointing at the other machine's home directory
+#   --links        symlinks travel as .rclonelink files. Without it they're skipped, so a
+#                  worktree's link to main/memories never reaches the other Mac
 
 RCLONE = "/opt/homebrew/bin/rclone"
 
@@ -189,7 +191,7 @@ namespace(:cloud) do
 
       flag = args[:progress] ? " -P -v" : ""
       other_flags = " --delete-before"
-      speed_flags = " --use-mmap --size-only#{PACING}"
+      speed_flags = " --use-mmap --links --size-only#{PACING}"
 
       shared_dirs.merge(pull_personal_dirs).each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
@@ -221,7 +223,7 @@ namespace(:cloud) do
 
       flag = args[:progress] ? " -P -v" : ""
       update = update_flag
-      speed_flags = " --use-mmap#{PACING}#{update}"
+      speed_flags = " --use-mmap --links#{PACING}#{update}"
 
       # copy, not sync. sync mirrors, so with two Macs pushing to one remote each push
       # deleted whatever the other machine didn't have - a push from here proposed
