@@ -1,19 +1,6 @@
-# Include only these paths
-+ misc/
-+ misc/mackup/**
-+ misc/LaunchAgents/**
-+ misc/packages/**
-+ misc/ui/**
-+ misc/sounds/**
-+ misc/macro_searches.txt
-+ misc/VoiceInk_Settings_Backup.json
-+ .config/1password/**
-+ .config/applescript/**
-+ .config/espanso/**
-+ .config/nanobot/**
-+ .config/obs-sidecar/**
-+ .config/prompts/**
-+ .config/ssh/**
-
-# Exclude everything else by default
-- **
+# Everything syncs except these, which belong to one machine
+- .config/fish/fish_variables
+- .config/herdr/session.json
+- .config/herdr/plugins/**
+- .claude/settings.local.json
+- .config/rclone/rclone.conf
