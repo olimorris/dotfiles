@@ -6,4 +6,4 @@ export PATH="$HOME/.local/share/mise/shims:$PATH"
 export STORAGE_FOLDER
 export STORAGE_ENCRYPTED_FOLDER
 
-cd $HOME/.dotfiles && rake backup:app_config cloud:backup:files
+cd $HOME/.dotfiles && rake backup

@@ -23,6 +23,24 @@
 #   Deleting a file for good is a manual job - remove it from Koofr directly, same as
 #   cloud.rb's push side.
 
+def copy_dotfiles(from, to, progress, check: false)
+  flag = progress ? " -P -v" : ""
+  filters = rclone_filters("base_filter.txt", "dotfiles_filter.txt")
+  speed_flags = " --use-mmap#{PACING}#{update_flag}"
+
+  run(" #{RCLONE}#{RCLONE_CONFIG} copy #{from} #{to}#{filters}#{speed_flags}#{flag} ", check: check)
+end
+
+def restore_dotfiles(progress)
+  copy_dotfiles("#{storage_remote}:dotfiles", "~/.dotfiles", progress, check: true)
+end
+
+# run returns false on failure rather than raising, so cloud:backup:files can collect it
+# alongside its own dirs.
+def backup_dotfiles(progress)
+  copy_dotfiles("~/.dotfiles", "#{storage_remote}:dotfiles", progress)
+end
+
 namespace(:work) do
   namespace(:restore) do
     desc("Restore dotfiles from the cloud")
@@ -30,14 +48,7 @@ namespace(:work) do
       section("Using rclone to restore dotfiles")
       run(" /bin/date -u ")
 
-      flag = args[:progress] ? " -P -v" : ""
-      filters = rclone_filters("base_filter.txt", "dotfiles_filter.txt")
-      speed_flags = " --use-mmap#{PACING}#{update_flag}"
-
-      run(
-        " #{RCLONE}#{RCLONE_CONFIG} copy #{storage_remote}:dotfiles ~/.dotfiles#{filters}#{speed_flags}#{flag} ",
-        check: true
-      )
+      restore_dotfiles(args[:progress])
     end
   end
 
@@ -47,14 +58,7 @@ namespace(:work) do
       section("Using rclone to backup dotfiles")
       run(" /bin/date -u ")
 
-      flag = args[:progress] ? " -P -v" : ""
-      filters = rclone_filters("base_filter.txt", "dotfiles_filter.txt")
-      speed_flags = " --use-mmap#{PACING}#{update_flag}"
-
-      run(
-        " #{RCLONE}#{RCLONE_CONFIG} copy ~/.dotfiles #{storage_remote}:dotfiles#{filters}#{speed_flags}#{flag} ",
-        check: true
-      )
+      raise "Backup failed for: .dotfiles" if backup_dotfiles(args[:progress]) == false
     end
   end
 end

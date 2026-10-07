@@ -1,6 +1,7 @@
 # rclone backup and restore to an encrypted remote. This is the everything channel -
-# ~/Code and the document folders. .dotfiles has its own copy-only channel in work.rb,
-# for moving an edit between the two Macs without waiting on a full cloud round trip.
+# ~/Code and the document folders here, plus .dotfiles via work.rb's copy-only helpers.
+# work:push and work:pull run those alone, for moving an edit between the two Macs
+# without waiting on a full cloud round trip.
 #
 # Commands
 #   rake cloud:push            local -> cloud
@@ -22,6 +23,8 @@
 #   So deleting a file locally leaves it in the cloud, and the next pull brings it back.
 #
 # What syncs
+#   .dotfiles   all but the machine-local files in dotfiles_filter.txt. Both directions
+#               are copy --update, see work.rb
 #   Code        all but AAI, Java, Ruby/Blog, Ruby/hledger-forecast
 #   OliDocs, Downloads, Documents
 #               personal Mac only. Always pushed, only pulled with DOCS=1
@@ -193,6 +196,8 @@ namespace(:cloud) do
       other_flags = " --delete-before"
       speed_flags = " --use-mmap --links --size-only#{PACING}"
 
+      restore_dotfiles(args[:progress])
+
       shared_dirs.merge(pull_personal_dirs).each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])
         run(
@@ -235,6 +240,7 @@ namespace(:cloud) do
       # backing up at all, and those three have no git copy to fall back on. Collect the
       # failures instead and raise once at the end, so the run is still recorded as bad.
       failed = []
+      failed << ".dotfiles" if backup_dotfiles(args[:progress]) == false
 
       shared_dirs.merge(personal_dirs).each do |local, config|
         filters = rclone_filters("base_filter.txt", config[:filter])

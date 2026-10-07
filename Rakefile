@@ -57,9 +57,6 @@ task(:backup) do
   Rake::Task["backup:npm"].invoke
   Rake::Task["backup:pip"].invoke
 
-  # Files. work:push carries dotfiles, cloud:push carries Code and the document
-  # folders. Both do mackup, then rclone.
-  Rake::Task["work:push"].invoke
   Rake::Task["cloud:push"].invoke
 end
 
@@ -184,7 +181,7 @@ task(:uninstall) do
 end
 
 namespace(:cloud) do
-  desc("Cloud -> Mac. Code and Code/.git (GIT=1) and document folders (DOCS=1)")
+  desc("Cloud -> Mac. Dotfiles, Code, Code/.git (GIT=1) and document folders (DOCS=1)")
   task(:pull, [:progress]) do |_t, args|
     section("Cloud -> Mac")
 
@@ -204,7 +201,7 @@ namespace(:cloud) do
     Rake::Task["install:app_config"].invoke
   end
 
-  desc("Mac -> Cloud. Code and document folders always included, Code/.git with GIT=1")
+  desc("Mac -> Cloud. Dotfiles, Code and document folders always included, Code/.git with GIT=1")
   task(:push, [:progress]) do |_t, args|
     section("Mac -> Cloud")
 
@@ -214,10 +211,13 @@ namespace(:cloud) do
 end
 
 namespace(:work) do
-  desc("Cloud -> Mac, dotfiles only")
+  desc("Cloud -> Mac, dotfiles only. git pull first, then Koofr")
   task(:pull, [:progress]) do |_t, args|
     section("Cloud -> Mac (dotfiles)")
 
+    # Before the Koofr copy, which would otherwise leave git-tracked files modified and
+    # block the pull. Not fatal - a failed pull is reported at exit and the rest still runs.
+    run(" git -C #{__dir__} pull ")
     Rake::Task["work:restore:files"].invoke(args[:progress])
     Rake::Task["install:dotbot"].invoke
     Rake::Task["install:skills"].invoke
