@@ -32,10 +32,16 @@
     ~/.config/snippets: .config/snippets
     ~/.config/worktrunk: .config/worktrunk
 
-    # Launch Agents
-    ~/Library/LaunchAgents/oli.cloud-backup.plist: misc/LaunchAgents/oli.cloud-backup.plist
-    ~/Library/LaunchAgents/oli.color-mode-notify.plist: misc/LaunchAgents/oli.color-mode-notify.plist
-    ~/Library/LaunchAgents/oli.finance-output.plist: misc/LaunchAgents/oli.finance-output.plist
+    # Launch Agents, personal Mac only
+    ~/Library/LaunchAgents/oli.cloud-backup.plist:
+        if: &personal_mac "[ \"$(scutil --get ComputerName)\" = \"Oli's MacBook Pro\" ]"
+        path: misc/LaunchAgents/oli.cloud-backup.plist
+    ~/Library/LaunchAgents/oli.color-mode-notify.plist:
+        if: *personal_mac
+        path: misc/LaunchAgents/oli.color-mode-notify.plist
+    ~/Library/LaunchAgents/oli.finance-output.plist:
+        if: *personal_mac
+        path: misc/LaunchAgents/oli.finance-output.plist
 
     # Others
     ~/.claude/rules/PERSONAL.md:

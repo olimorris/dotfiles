@@ -42,16 +42,21 @@ namespace :install do
   task :launch_agents do
     section 'Installing Launch Agents'
 
-    # cloud:backup:files always carries ~/Code - the work Mac has no business pushing
-    # that into the personal cloud backup, so the scheduled agent stays personal-only.
-    if personal_machine?
-      run %( launchctl load -w ~/Library/LaunchAgents/oli.cloud-backup.plist )
-    else
-      puts("~> Skipping oli.cloud-backup (not the personal machine)")
-    end
+    labels = %w[oli.cloud-backup oli.color-mode-notify oli.finance-output]
 
-    run %( launchctl load -w ~/Library/LaunchAgents/oli.color-mode-notify.plist )
-    run %( launchctl load -w ~/Library/LaunchAgents/oli.finance-output.plist )
+    if personal_machine?
+      labels.each { |label| run %( launchctl load -w ~/Library/LaunchAgents/#{label}.plist ) }
+    else
+      # dotbot only links these on the personal Mac now, but a work Mac set up before that
+      # still has the links, and launchd would load them again at the next login.
+      puts("~> Removing launch agents (not the personal machine)")
+      labels.each do |label|
+        plist = File.expand_path("~/Library/LaunchAgents/#{label}.plist")
+        next unless File.symlink?(plist)
+
+        run %( launchctl bootout gui/$(id -u) "#{plist}" 2>/dev/null; rm "#{plist}" )
+      end
+    end
   end
 
   desc 'Install macOS Configurations'
