@@ -29,9 +29,9 @@ autocmd({ "BufEnter", "BufWritePost", "TextChanged", "InsertLeave" }, {
 local cc = augroup("dotfiles.codecompanion")
 autocmd("User", {
   group = cc,
-  pattern = "CodeCompanionInlineFinished",
-  callback = function()
-    vim.lsp.buf.format()
+  pattern = "CodeCompanionInlineAccepted",
+  callback = function(args)
+    require("conform").format({ bufnr = args.data.bufnr, lsp_format = "fallback" })
   end,
 })
 
@@ -42,20 +42,6 @@ autocmd("User", {
     vim.treesitter.start(args.data.bufnr, "markdown")
   end,
 })
-
--- Heirline
--- autocmd("User", {
---   group = augroup("Heirline"),
---   pattern = "HeirlineInitWinbar",
---   callback = function(args)
---     local buf = args.buf
---     local buftype = vim.tbl_contains({ "prompt", "nofile", "help", "quickfix" }, vim.bo[buf].buftype)
---     local filetype = vim.tbl_contains({ "", "alpha", "gitcommit", "fugitive" }, vim.bo[buf].filetype)
---     if buftype or filetype then
---       vim.opt_local.winbar = nil
---     end
---   end,
--- })
 
 -- GitTrackRemoteBranch
 -- local git_group = augroup("dotfiles.git_track_remote_branch")
