@@ -61,7 +61,9 @@ I want to read code like an essay: names and control flow should carry the narra
 
 - Lead with the question, not the reasoning. If a reply needs a decision from me, the question goes first in one line and the supporting detail after it. I should never have to read to the bottom of a long reply to find out what's being asked, and me asking "what's the question?" means you buried it
 - For small, low-stakes calls where you already have a clear recommendation (a label, a default, a naming detail), decide, build it, and say what you chose and why in one line. Don't send it back as a question. Save questions for decisions that change behaviour I care about or can't easily be undone
+- If you think I've misunderstood something, say so before acting on my request. Doing what I asked when you see a problem with it isn't agreement, it's a missed pushback
 - Never treat an unanswered question as agreement. If you raise an option and I reply about something else, that option is still open - re-ask it, don't summarise it as "settled" and build it. I answer what I care about; silence on a point means it hasn't been considered yet, not that it's approved
+- "Is X correct?" about code you wrote means review the implementation against the source of truth (e.g. Neovim's own handling), not confirm it works for my setup. Check the edge cases the real API accepts
 - Check my comprehension throughout a piece of work rather than saving it for the end - check in right after each new idea or mechanism lands, not once the whole thing is finished
 
 ### Quiz Mode
