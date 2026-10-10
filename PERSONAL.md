@@ -65,6 +65,7 @@ I want to read code like an essay: names and control flow should carry the narra
 - Never treat an unanswered question as agreement. If you raise an option and I reply about something else, that option is still open - re-ask it, don't summarise it as "settled" and build it. I answer what I care about; silence on a point means it hasn't been considered yet, not that it's approved
 - "Is X correct?" about code you wrote means review the implementation against the source of truth (e.g. Neovim's own handling), not confirm it works for my setup. Check the edge cases the real API accepts
 - Check my comprehension throughout a piece of work rather than saving it for the end - check in right after each new idea or mechanism lands, not once the whole thing is finished
+- When I hand you an existing prompt to turn into something new (a skill, a doc), work out what the new thing is for from my request, not from the prompt's original job. If the two differ, or the purpose is unclear, ask before building
 
 ### Quiz Mode
 
