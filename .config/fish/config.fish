@@ -12,12 +12,16 @@ set -gx HOMEBREW_NO_ANALYTICS 1
 # Paths
 fish_add_path -p /opt/homebrew/opt/rustup/bin /opt/homebrew/bin ~/.cargo/bin ~/.dotfiles/bin ~/.local/share/nvim/mason/bin ~/.local/bin $GOPATH/bin ~/Code/Ruby/hledger-forecast/bin
 
-function theme
-  if not test -f /tmp/oli-theme
-    defaults read -g AppleInterfaceStyle &>/dev/null; and echo dark > /tmp/oli-theme; or echo light > /tmp/oli-theme
+function theme --on-variable fish_terminal_color_theme
+  set -l variant $fish_terminal_color_theme
+  # Unset until the first prompt, and stays unknown in terminals that don't report their colors
+  if not contains -- "$variant" light dark
+    if not test -f /tmp/oli-theme
+      defaults read -g AppleInterfaceStyle &>/dev/null; and echo dark > /tmp/oli-theme; or echo light > /tmp/oli-theme
+    end
+    read variant < /tmp/oli-theme
   end
 
-  read -l variant < /tmp/oli-theme
   if test "$variant" = light
     set -gx THEME onedarkpro_onelight
   else
@@ -25,6 +29,7 @@ function theme
   end
 
   source "$EXTRAS/fish/$THEME.fish"
+  source $HOME/.config/fish/fzf.fish
 end
 
 # History configuration
@@ -38,6 +43,5 @@ if status is-interactive
     theme
     mise activate fish | source
     zoxide init fish | source
-    source $HOME/.config/fish/fzf.fish
 end
 
