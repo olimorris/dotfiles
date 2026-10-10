@@ -1,7 +1,7 @@
 git:
   diffRenderers:
     - colorArg: always
-      command: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+      command: delta --{{colorScheme}} --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
 os:
   editPreset: nvim
 gui:
