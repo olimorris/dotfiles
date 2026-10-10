@@ -1,4 +1,3 @@
-import os
 import subprocess
 import sys
 
@@ -19,25 +18,11 @@ def app_macos(mode):
     """
     Change the macOS environment
     """
-    path_to_file = "/tmp/oli-theme"
+    if ran_from_cmd_line:
+        subprocess.run(["dark-mode", "on" if mode == "dark" else "off"])
 
-    # Open the color_mode file
-    with open(os.path.expanduser(path_to_file), "r") as config_file:
-        contents = config_file.read()
-
-    # Change the mode to ensure on a fresh startup, the color is remembered
-    if mode == "dark":
-        contents = contents.replace("light", "dark")
-        if ran_from_cmd_line:
-            subprocess.run(["dark-mode", "on"])
-
-    if mode == "light":
-        contents = contents.replace("dark", "light")
-        if ran_from_cmd_line:
-            subprocess.run(["dark-mode", "off"])
-
-    with open(os.path.expanduser(path_to_file), "w") as config_file:
-        config_file.write(contents)
+    with open("/tmp/oli-theme", "w") as theme_file:
+        theme_file.write(mode)
 
 
 def run_apps(mode=None):

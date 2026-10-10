@@ -61,7 +61,6 @@
 
 # Other files
 !.tool-versions
-!.config/.color_mode
 !Rakefile
 !README.md
 !stylua.toml

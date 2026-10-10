@@ -42,7 +42,9 @@ namespace :install do
   task :launch_agents do
     section 'Installing Launch Agents'
 
-    labels = %w[oli.cloud-backup oli.color-mode-notify oli.finance-output]
+    run %( launchctl load -w ~/Library/LaunchAgents/oli.color-mode-notify.plist )
+
+    labels = %w[oli.cloud-backup oli.finance-output]
 
     if personal_machine?
       labels.each { |label| run %( launchctl load -w ~/Library/LaunchAgents/#{label}.plist ) }
