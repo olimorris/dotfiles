@@ -5,11 +5,11 @@ require("codecompanion").setup({
         anthropic = { env = { api_key = "cmd:op read op://personal/Anthropic_API/credential --no-newline" } },
         deepseek = { env = { api_key = "cmd:op read op://personal/DeepSeek_API/credential --no-newline" } },
         gemini = { env = { api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline" } },
-        gemini_interactions = { env = { api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline" } },
+        gemini_legacy = { env = { api_key = "cmd:op read op://personal/Gemini_API/credential --no-newline" } },
         kimi = { env = { api_key = "cmd:op read op://personal/Kimi_API/credential --no-newline" } },
         mistral = { env = { api_key = "cmd:op read op://personal/Mistral_API/credential --no-newline" } },
         openai = { env = { api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline" } },
-        openai_responses = { env = { api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline" } },
+        openai_legacy = { env = { api_key = "cmd:op read op://personal/OpenAI_API/credential --no-newline" } },
         openrouter = { env = { api_key = "cmd:op read op://personal/OpenRouter_API/credential --no-newline" } },
         xai = { env = { api_key = "cmd:op read op://personal/xAI_API/credential --no-newline" } },
       },
@@ -120,11 +120,6 @@ The following commands are explicitly approved and must always be judged safe, e
         },
       },
       slash_commands = {
-        ["fetch"] = {
-          opts = {
-            adapter = "markitdown",
-          },
-        },
         ["file"] = {
           opts = {
             dirs = { "~/Documents/Screenshots" },
@@ -137,11 +132,6 @@ The following commands are explicitly approved and must always be judged safe, e
         },
       },
       tools = {
-        ["fetch_webpage"] = {
-          opts = {
-            adapter = "markitdown", -- jina, markitdown
-          },
-        },
         ["hledger"] = {
           description = "Execute hledger queries to analyze financial data from journal files",
           path = "~/OliDocs/ff/Finances/hledger.lua",
@@ -160,7 +150,7 @@ The following commands are explicitly approved and must always be judged safe, e
         },
         ["run_command"] = {
           opts = {
-            judge_in_yolo_mode = true,
+            judge = true,
           },
         },
         ["web_search"] = {
@@ -202,6 +192,12 @@ The following commands are explicitly approved and must always be judged safe, e
           icon = "  ",
           overflow = "wrap",
         },
+      },
+    },
+    inline = {
+      adapter = {
+        name = "copilot",
+        model = "claude-sonnet-5.5",
       },
     },
   },
