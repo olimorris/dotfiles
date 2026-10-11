@@ -3,9 +3,5 @@
 # Include these folders first
 + Neovim/**
 
-# Exclude these folders first
-- Ruby/Blog/**
-- Ruby/hledger-forecast/**
-
 # Include everything else
 + **

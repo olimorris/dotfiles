@@ -25,7 +25,7 @@
 # What syncs
 #   .dotfiles   all but the machine-local files in dotfiles_filter.txt. Both directions
 #               are copy --update, see work.rb
-#   Code        all but AAI, Java, Ruby/Blog, Ruby/hledger-forecast
+#   Code
 #   OliDocs, Downloads, Documents
 #               personal Mac only. Always pushed, only pulled with DOCS=1
 #
@@ -247,17 +247,21 @@ namespace(:cloud) do
 
         # run returns nil when DRY_RUN or TEST_ENV skip the command, so only an explicit
         # false is a failure.
-        failed << local if run(
-          " #{RCLONE}#{RCLONE_CONFIG} copy ~/#{local} #{config[:remote]}#{filters}#{speed_flags}#{flag} "
-        ) == false
+        if run(
+            " #{RCLONE}#{RCLONE_CONFIG} copy ~/#{local} #{config[:remote]}#{filters}#{speed_flags}#{flag} "
+          ) == false
+          failed << local
+        end
       end
 
       if sync_git?
         git_filters = rclone_filters("git_filter.txt")
         git_flags = " --use-mmap#{PACING}#{update}"
-        failed << "Code/.git" if run(
-          " #{RCLONE}#{RCLONE_CONFIG} copy ~/Code #{storage_remote}:Code#{git_filters}#{git_flags}#{flag} "
-        ) == false
+        if run(
+            " #{RCLONE}#{RCLONE_CONFIG} copy ~/Code #{storage_remote}:Code#{git_filters}#{git_flags}#{flag} "
+          ) == false
+          failed << "Code/.git"
+        end
       end
 
       raise "Backup failed for: #{failed.join(", ")}" if failed.any?
