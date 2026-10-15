@@ -56,4 +56,11 @@ namespace(:update) do
     run(" nvimv upgrade nightly ") unless testing?
     run(" nvim --headless +'OneDarkProExtras' +qall")
   end
+
+  desc("Update herdr plugins")
+  task(:herdr) do
+    section("Updating herdr plugins")
+
+    run(" herdr plugin update ") unless testing?
+  end
 end
