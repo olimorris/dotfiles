@@ -53,6 +53,12 @@ backup sync --dotfiles --code    # push, then pull
 backup reset --code              # make this Mac match the cloud, deleting local extras
 ```
 
+- To save this Mac's package lists into `~/.dotfiles` without pushing:
+
+```bash
+rake backup:packages
+```
+
 - To apply the files in `~/.dotfiles` to this Mac:
 
 ```bash

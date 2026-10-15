@@ -177,7 +177,7 @@ module Cloud
 
   def push(groups)
     if groups.include?("dotfiles")
-      %w[brew app_store gems npm pip].each { |list| Rake::Task["backup:#{list}"].invoke }
+      Rake::Task["backup:packages"].invoke
       Rake::Task["backup:app_config"].invoke
     end
 

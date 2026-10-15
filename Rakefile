@@ -141,6 +141,17 @@ task(:update) do
   Rake::Task["install:brew_clean_up"].invoke
 end
 
+namespace(:backup) do
+  desc("Save this Mac's package lists (brew, casks, App Store, gems, npm, pip) into ~/.dotfiles")
+  task(:packages) do
+    Rake::Task["backup:brew"].invoke
+    Rake::Task["backup:app_store"].invoke
+    Rake::Task["backup:gems"].invoke
+    Rake::Task["backup:npm"].invoke
+    Rake::Task["backup:pip"].invoke
+  end
+end
+
 desc("Apply the files in ~/.dotfiles to this Mac: links, app configs and packages")
 task(:setup) do
   Rake::Task["setup:links"].invoke
