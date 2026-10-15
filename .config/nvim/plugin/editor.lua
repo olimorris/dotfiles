@@ -81,3 +81,29 @@ overseer.register_template({
     filetype = { "python" },
   },
 })
+
+overseer.register_template({
+  name = "Xcode",
+  condition = {
+    filetype = { "swift" },
+  },
+  generator = function()
+    local root = vim.fs.root(0, "buildServer.json")
+    if not root then
+      return {}
+    end
+
+    return {
+      {
+        name = "Xcode: Build",
+        builder = function()
+          return {
+            cmd = { "make", "build" },
+            cwd = root,
+            components = { { "open_output", direction = "dock", focus = true }, "default" },
+          }
+        end,
+      },
+    }
+  end,
+})

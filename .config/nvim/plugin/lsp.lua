@@ -15,6 +15,7 @@ vim.lsp.enable({
   "lua_ls",
   "pyright",
   "ruby_lsp",
+  "sourcekit",
 })
 
 vim.diagnostic.config({
@@ -40,6 +41,7 @@ require("conform").setup({
     lua = { "stylua" },
     python = { "isort", "black" },
     ruby = { "rubyfmt" },
+    swift = { "swiftformat" },
   },
 })
 
