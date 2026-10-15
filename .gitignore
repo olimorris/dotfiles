@@ -28,7 +28,6 @@
 !.config/rclone/git_filter.txt
 !.config/rclone/dotfiles_filter.txt
 !.config/snippets/**/*
-!.config/vim/**/*
 !.config/worktrunk/config.toml
 !.config/zsh/**/*
 
@@ -48,10 +47,6 @@
 !.gitignore
 !.gitignore_global
 !.gitmodules
-
-# Vim
-!minimal.vim
-!vim/**/*
 
 # Other dirs
 !bin/**/*
