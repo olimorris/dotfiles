@@ -44,23 +44,9 @@ end
 
 Dir.glob("./tasks/**/*").map { |file| load(file) }
 
-task(default: [:backup])
+task(:default) { system("rake", "-T") }
 
-desc("Backup Everything")
-task(:backup) do
-  section("Backing up")
-
-  # Packages
-  Rake::Task["backup:brew"].invoke
-  Rake::Task["backup:app_store"].invoke
-  Rake::Task["backup:gems"].invoke
-  Rake::Task["backup:npm"].invoke
-  Rake::Task["backup:pip"].invoke
-
-  Rake::Task["cloud:push"].invoke
-end
-
-desc("Install Everything")
+desc("Install everything")
 task(:install) do
   section("Installing")
 
@@ -80,7 +66,7 @@ task(:install) do
   # place and chmod makes ~/.dotfiles/bin runnable - every step below needs one of
   # those. These used to sit near the end, so `rake install` on its own ran mise and
   # fish against config that did not exist yet, while `rake init` got the right order
-  # by accident because cloud:pull had already run them.
+  # by accident because cloud:reset had already run them.
   Rake::Task["install:dotbot"].invoke
   Rake::Task["install:skills"].invoke
   Rake::Task["install:app_config"].invoke
@@ -103,7 +89,6 @@ task(:install) do
   Rake::Task["install:launch_agents"].invoke
 
   # Apps
-  Rake::Task["install:vim"].invoke
   Rake::Task["install:neovim"].invoke
   Rake::Task["install:herdr"].invoke unless testing?
 
@@ -121,7 +106,7 @@ task(:install) do
   Rake::Task["install:macos"].invoke
 end
 
-desc("Update Everything")
+desc("Update everything, then refresh the package lists")
 task(:update) do
   section("Updating")
 
@@ -148,29 +133,48 @@ task(:update) do
   Rake::Task["update:pip"].invoke
 
   # Apps
-  Rake::Task["update:vim"].invoke
   Rake::Task["update:neovim"].invoke
+
+  # gems, npm and pip were saved above, and rake runs each task once per process
+  Rake::Task["backup:brew"].invoke
+  Rake::Task["backup:app_store"].invoke
+  Rake::Task["install:brew_clean_up"].invoke
 end
 
-desc("Install Packages (brew, gems, npm, pip)")
-task(:packages) do
-  section("Installing Packages")
-
-  Rake::Task["install:brew_packages"].invoke
-  Rake::Task["install:brew_cask_packages"].invoke
-  Rake::Task["install:brew_clean_up"].invoke
-  Rake::Task["install:gems"].invoke
-  Rake::Task["install:npm"].invoke
-  Rake::Task["install:pip"].invoke
+desc("Apply the files in ~/.dotfiles to this Mac: links, app configs and packages")
+task(:setup) do
+  Rake::Task["setup:links"].invoke
+  Rake::Task["setup:apps"].invoke
+  Rake::Task["setup:packages"].invoke
 end
 
-desc("Sync Everything")
-task(:sync) do
-  section("Syncing")
+namespace(:setup) do
+  desc("Symlink dotfiles and agent skills")
+  task(:links) do
+    Rake::Task["install:dotbot"].invoke
+    Rake::Task["install:skills"].invoke
+  end
 
-  Rake::Task["update"].invoke
-  Rake::Task["backup"].invoke
-  Rake::Task["install:brew_clean_up"].invoke
+  desc("Restore app configs")
+  task(:apps) do
+    Rake::Task["install:app_config"].invoke
+  end
+
+  desc("Install packages from the lists (brew, casks, App Store, gems, npm, pip). Never uninstalls")
+  task(:packages) do
+    Rake::Task["install:brew_packages"].invoke
+    Rake::Task["install:brew_cask_packages"].invoke
+    Rake::Task["install:brew_clean_up"].invoke
+    Rake::Task["install:app_store"].invoke
+    Rake::Task["install:gems"].invoke
+    Rake::Task["install:npm"].invoke
+    Rake::Task["install:pip"].invoke
+  end
+
+  desc("Apply macOS defaults. Asks for sudo")
+  task(:macos) do
+    Rake::Task["install:macos"].invoke
+  end
 end
 
 desc("Uninstall")
@@ -178,57 +182,4 @@ task(:uninstall) do
   section("Uninstalling")
 
   Rake::Task["uninstall:dotbot"].invoke
-end
-
-namespace(:cloud) do
-  desc("Cloud -> Mac. Dotfiles, Code, Code/.git (GIT=1) and document folders (DOCS=1)")
-  task(:pull, [:progress]) do |_t, args|
-    section("Cloud -> Mac")
-
-    Rake::Task["cloud:restore:files"].invoke(args[:progress])
-
-    # Install packages
-    # Rake::Task['install:brew_packages'].invoke
-    # Rake::Task['install:brew_cask_packages'].invoke
-    # Rake::Task['install:brew_clean_up'].invoke
-    # Rake::Task['install:gems'].invoke unless testing?
-    # Rake::Task['install:npm'].invoke unless testing?
-    # Rake::Task['install:pip'].invoke unless testing?
-
-    # App config
-    Rake::Task["install:dotbot"].invoke
-    Rake::Task["install:skills"].invoke
-    Rake::Task["install:app_config"].invoke
-  end
-
-  desc("Mac -> Cloud. Dotfiles, Code and document folders always included, Code/.git with GIT=1")
-  task(:push, [:progress]) do |_t, args|
-    section("Mac -> Cloud")
-
-    Rake::Task["backup:app_config"].invoke
-    Rake::Task["cloud:backup:files"].invoke(args[:progress])
-  end
-end
-
-namespace(:work) do
-  desc("Cloud -> Mac, dotfiles only. git pull first, then Koofr")
-  task(:pull, [:progress]) do |_t, args|
-    section("Cloud -> Mac (dotfiles)")
-
-    # Before the Koofr copy, which would otherwise leave git-tracked files modified and
-    # block the pull. Not fatal - a failed pull is reported at exit and the rest still runs.
-    run(" git -C #{__dir__} pull ")
-    Rake::Task["work:restore:files"].invoke(args[:progress])
-    Rake::Task["install:dotbot"].invoke
-    Rake::Task["install:skills"].invoke
-    Rake::Task["install:app_config"].invoke
-  end
-
-  desc("Mac -> Cloud, dotfiles only")
-  task(:push, [:progress]) do |_t, args|
-    section("Mac -> Cloud (dotfiles)")
-
-    Rake::Task["backup:app_config"].invoke
-    Rake::Task["work:backup:files"].invoke(args[:progress])
-  end
 end

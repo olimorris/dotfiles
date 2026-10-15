@@ -21,7 +21,6 @@ PIP_FILE = File.expand_path("../misc/packages/python_pip.txt", __dir__).gsub(/ /
 HEAD_ONLY_FORMULAS = ""
 
 namespace(:backup) do
-  desc("Backup Homebrew")
   task(:brew) do
     section("Backing up Homebrew")
     ensure_packages_folder
@@ -31,7 +30,6 @@ namespace(:backup) do
     run(" brew tap > #{BREW_TAPS_FILE} ")
   end
 
-  desc("Backup App Store")
   task(:app_store) do
     section("Backing up App Store apps")
     ensure_packages_folder
@@ -39,7 +37,6 @@ namespace(:backup) do
     backup_mas_list(MAS_COMMON_FILE, mas_machine_file)
   end
 
-  desc("Backup Ruby Gems")
   task(:gems) do
     section("Backing up Ruby Gems")
     ensure_packages_folder
@@ -47,7 +44,6 @@ namespace(:backup) do
     run(" gem list --no-versions | sed '1d' | awk '\{gsub(/\\/.*\\//,\"\",$1); print\}' \> #{GEMS_FILE} ")
   end
 
-  desc("Backup NPM files")
   task(:npm) do
     section("Backing up NPM files")
     ensure_packages_folder
@@ -61,7 +57,6 @@ namespace(:backup) do
     end
   end
 
-  desc("Backup PIP files")
   task(:pip) do
     section("Backing up PIP files")
     ensure_packages_folder
@@ -71,14 +66,12 @@ namespace(:backup) do
 end
 
 namespace(:install) do
-  desc("Install XCode")
   task(:xcode) do
     section("Installing XCode")
 
     run(" xcode-select --install ")
   end
 
-  desc("Install Homebrew")
   task(:brew) do
     section("Installing Homebrew")
 
@@ -98,7 +91,6 @@ namespace(:install) do
     run(" brew analytics off ")
   end
 
-  desc("Install Homebrew Packages")
   task(:brew_packages) do
     section("Installing Homebrew Packages")
 
@@ -111,7 +103,6 @@ namespace(:install) do
     end
   end
 
-  desc("Install Homebrew Cask Packages")
   task(:brew_cask_packages) do
     section("Installing Homebrew Cask Packages")
 
@@ -120,14 +111,12 @@ namespace(:install) do
     end
   end
 
-  desc("Clean up Homebrew")
   task(:brew_clean_up) do
     section("Cleaning up Homebrew")
 
     run(" brew cleanup ")
   end
 
-  desc("Install App Store apps")
   task(:app_store) do
     section("Installing App Store apps")
 
@@ -136,7 +125,6 @@ namespace(:install) do
     end
   end
 
-  desc("Install Rust")
   task(:rust) do
     section("Installing Rust")
 
@@ -145,7 +133,6 @@ namespace(:install) do
     run(" curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y ")
   end
 
-  desc("Install Rust Cargo")
   task(:cargo) do
     section("Installing Rust Cargo")
 
@@ -154,7 +141,6 @@ namespace(:install) do
     end
   end
 
-  desc("Install Ruby Gems")
   task(:gems) do
     section("Installing Ruby Gems")
 
@@ -163,7 +149,6 @@ namespace(:install) do
     run(" xargs gem install \< #{GEMS_FILE} ")
   end
 
-  desc("Install NPM files")
   task(:npm) do
     section("Installing NPM files")
 
@@ -192,7 +177,6 @@ namespace(:install) do
     end
   end
 
-  desc("Install PIP files")
   task(:pip) do
     section("Installing PIP files")
 
@@ -201,7 +185,6 @@ namespace(:install) do
     run(" pip install -r #{PIP_FILE} ")
   end
 
-  desc("Install Fish plugins and make Fish the login shell")
   task(:fish) do
     section("Installing Fish plugins")
 
@@ -216,7 +199,6 @@ namespace(:install) do
     Rake::Task["install:default_shell"].invoke
   end
 
-  desc("Make Fish the login shell")
   task(:default_shell) do
     section("Setting Fish as the login shell")
 
@@ -245,7 +227,6 @@ namespace(:install) do
 end
 
 namespace(:update) do
-  desc("Update Homebrew")
   task(:brew) do
     section("Updating Homebrew")
 
@@ -253,28 +234,24 @@ namespace(:update) do
     run(" brew upgrade ")
   end
 
-  desc("Update Fish")
   task(:fish) do
     section("Updating Fish plugins")
 
     run(" fish -c \"fisher update\" ")
   end
 
-  desc("Update Ruby Gems")
   task(:gems) do
     section("Updating Ruby Gems")
 
     run(" gem update --system && gem update ")
   end
 
-  desc("Update NPM packages")
   task(:npm) do
     section("Updating NPM")
 
     run(" npm install -g npm && npm update -g ")
   end
 
-  desc("Update PIP files")
   task(:pip) do
     section("Updating PIP files")
 

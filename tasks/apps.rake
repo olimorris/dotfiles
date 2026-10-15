@@ -1,21 +1,4 @@
 namespace(:install) do
-  desc("Install Vim plugins")
-  task(:vim) do
-    section("Installing Vim plugins")
-
-    unless testing?
-      # -p: ~/.vim doesn't exist on a fresh Mac, and a plain mkdir also fails on
-      # every re-run once the directories are there.
-      run(" mkdir -p ~/.vim/swp ")
-      run(" mkdir -p ~/.vim/undo ")
-      run(
-        " curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim "
-      )
-      run(" vim +PlugInstall +qall ")
-    end
-  end
-
-  desc("Install Neovim")
   task(:neovim) do
     section("Installing Neovim")
 
@@ -30,7 +13,6 @@ namespace(:install) do
     run(" nvim --headless +'OneDarkProExtras' +qall ")
   end
 
-  desc("Install herdr plugins")
   task(:herdr) do
     section("Installing herdr plugins")
 
@@ -41,14 +23,6 @@ namespace(:install) do
 end
 
 namespace(:update) do
-  desc("Update Vim plugins")
-  task(:vim) do
-    section("Updating Vim plugins")
-
-    run(" vim +PlugUpdate +qall ") unless testing?
-  end
-
-  desc("Update Neovim")
   task(:neovim) do
     section("Updating Neovim")
 
@@ -57,7 +31,6 @@ namespace(:update) do
     run(" nvim --headless +'OneDarkProExtras' +qall")
   end
 
-  desc("Update herdr plugins")
   task(:herdr) do
     section("Updating herdr plugins")
 

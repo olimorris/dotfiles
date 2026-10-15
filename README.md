@@ -44,16 +44,29 @@ cd ~/.dotfiles && rake init
 
 ## :floppy_disk: Useful commands
 
-- To backup your dotfiles:
+- To move files between Macs (run `backup --help` for the groups and options):
 
 ```bash
-cd ~/.dotfiles && rake backup
+backup push --dotfiles --code    # Mac -> cloud, newer file wins, nothing deleted
+backup pull --dotfiles --code    # cloud -> Mac, newer file wins, nothing deleted
+backup sync --dotfiles --code    # push, then pull
+backup reset --code              # make this Mac match the cloud, deleting local extras
 ```
 
-- To update and backup your dotfiles:
+- To apply the files in `~/.dotfiles` to this Mac:
 
 ```bash
-cd ~/.dotfiles && rake sync
+rake setup             # links, app configs and packages
+rake setup:links       # dotbot and agent skills
+rake setup:apps        # app configs
+rake setup:packages    # brew, casks, App Store, gems, npm, pip. Never uninstalls
+rake setup:macos       # macOS defaults, not part of rake setup
+```
+
+- To update everything and refresh the package lists:
+
+```bash
+cd ~/.dotfiles && rake update
 ```
 
 ## :keyboard: Useful keymaps

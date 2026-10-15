@@ -4,16 +4,17 @@ task(:init) do
 
   Rake::Task["install:brew"].invoke
 
-  # cloud:pull needs all three of these before anything else exists: rclone
+  # cloud:reset needs all three of these before anything else exists: rclone
   # to fetch the files, dotbot to symlink them, mackup to restore app config.
   # install:brew_packages installs them too, but that runs later, inside `install` - so
   # on a genuinely fresh Mac the dotbot and mackup steps used to fail with command not
   # found.
   run(" brew install rclone dotbot mackup ", check: true)
 
-  # A fresh Mac has no ~/OliDocs at all, and the pull now leaves it alone unless asked.
-  # init is the one place that restore is the whole point, so set it.
-  ENV["DOCS"] = "1"
-  Rake::Task["cloud:pull"].invoke
+  # reset, not pull. The clone gives every file in ~/.dotfiles a newer modtime than its
+  # cloud copy, so a pull would skip them all.
+  ENV["CLOUD_GROUPS"] = Cloud::GROUPS.join(",")
+  ENV["YES"] = "1"
+  Rake::Task["cloud:reset"].invoke
   Rake::Task["install"].invoke
 end

@@ -1,9 +1,0 @@
-#!/bin/sh
-
-export PATH="$HOME/.local/share/mise/shims:$PATH"
-
-. $HOME/.env
-export STORAGE_FOLDER
-export STORAGE_ENCRYPTED_FOLDER
-
-cd $HOME/.dotfiles && rake backup

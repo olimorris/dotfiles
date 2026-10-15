@@ -1,5 +1,4 @@
 namespace :backup do
-  desc 'Backup app config'
   task :app_config do
     section 'Backing up app configs'
 
@@ -8,8 +7,6 @@ namespace :backup do
 end
 
 namespace :install do
-  desc 'Install files'
-
   task :app_config do
     section 'Restoring app configs'
 
@@ -24,7 +21,6 @@ namespace :install do
     run %( dotbot -c dotbot.conf.yaml )
   end
 
-  desc 'Symlink each agent skill into ~/.claude/skills'
   task :skills do
     section 'Symlinking agent skills for Claude'
 
@@ -53,8 +49,6 @@ namespace :install do
 end
 
 namespace :uninstall do
-  desc 'Uninstall dotfiles'
-
   task :dotbot do
     section 'Uninstall Dotbot and restoring dotfiles'
 

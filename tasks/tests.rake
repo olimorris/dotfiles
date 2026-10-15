@@ -1,5 +1,4 @@
 namespace(:tests) do
-  desc("Setup tests")
   task(:setup) do
     section("Setting up the tests")
 

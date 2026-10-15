@@ -2,9 +2,7 @@
 alias dot='cd ~/.dotfiles'
 alias ed='nvim ~/.dotfiles'
 alias db='dotbot -c dotbot.conf.yaml'
-alias up='cd ~/.dotfiles && rake sync'
-alias backup='cd ~/.dotfiles && rake backup'
-alias bf='cd ~/.dotfiles && rake backup:files'
+alias up='cd ~/.dotfiles && rake update'
 alias cleanup='ruby ~/.dotfiles/commands/clean_up.rb ~/Downloads'
 
 # Fish
@@ -41,9 +39,6 @@ alias chmodall='sudo chmod -R 0777'
 alias copyssh='pbcopy < ~/.ssh/$1'
 alias mssh='ruby ~/.dotfiles/commands/ssh.rb'
 alias sep='ruby ~/.dotfiles/commands/make_separator.rb'
-
-# Neovim / Vim
-alias vim='/opt/homebrew/bin/vim'
 
 # Python
 alias jp='jupyter notebook'

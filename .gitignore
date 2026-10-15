@@ -78,7 +78,7 @@
 
 # Others
 .DS_Store
-backup
+/backup
 .repro
 misc/mackup
 

@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# launchd runs this with a minimal PATH that has no rake
+export PATH="$HOME/.local/share/mise/shims:/opt/homebrew/bin:$PATH"
+
+_print_help() {
+	cat <<EOF
+Usage: backup <command> <groups...> [options]
+
+Commands
+  push      Mac -> cloud. Newer file wins, nothing is deleted
+  pull      cloud -> Mac. Newer file wins, nothing is deleted
+  sync      push, then pull
+  reset     make this Mac match the cloud exactly. Local extras are deleted
+
+Groups (at least one)
+  --dotfiles    ~/.dotfiles
+  --code        ~/Code
+  --docs        ~/OliDocs, ~/Downloads, ~/Documents
+  --git         the .git folders in ~/Code (needs --code)
+
+Options
+  --force       push/pull also overwrite files that are newer at the destination
+  --progress    show rclone progress
+  --dry-run     print the commands, run nothing
+  -y, --yes     don't ask for confirmation
+  -h, --help    show this help
+
+Examples
+  backup push --dotfiles --code
+  backup sync --code --git
+  backup reset --code
+EOF
+}
+
+command="${1:-}"
+case "$command" in
+push | pull | sync | reset) shift ;;
+-h | --help)
+	_print_help
+	exit 0
+	;;
+*)
+	_print_help >&2
+	exit 1
+	;;
+esac
+
+groups=()
+while [ $# -gt 0 ]; do
+	case "$1" in
+	--dotfiles | --code | --docs | --git) groups+=("${1#--}") ;;
+	--force) export FORCE=1 ;;
+	--progress) export PROGRESS=1 ;;
+	--dry-run) export DRY_RUN=true ;;
+	-y | --yes) export YES=1 ;;
+	-h | --help)
+		_print_help
+		exit 0
+		;;
+	*)
+		echo "Unknown option: $1" >&2
+		exit 1
+		;;
+	esac
+	shift
+done
+
+if [ ${#groups[@]} -eq 0 ]; then
+	echo "No groups given. Pick one or more: --dotfiles --code --docs --git" >&2
+	exit 1
+fi
+
+CLOUD_GROUPS="$(IFS=,; echo "${groups[*]}")"
+
+if [[ ",$CLOUD_GROUPS," == *,git,* && ",$CLOUD_GROUPS," != *,code,* ]]; then
+	echo "--git needs --code: .git folders without their working trees leave repos git can't open" >&2
+	exit 1
+fi
+export CLOUD_GROUPS
+
+cd "$HOME/.dotfiles"
+exec rake "cloud:$command"

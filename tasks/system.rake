@@ -1,21 +1,19 @@
 FONT_PATH = File.expand_path('../misc/ui/fonts', __dir__)
 
 namespace :install do
-  desc 'Make dotfiles/bin executable'
   task :chmod do
     section 'Making dotfiles/bin executable'
 
     run %( chmod -R +x ~/.dotfiles/bin/ )
   end
 
-  desc 'Install fonts'
   task :fonts do
     section 'Installing fonts'
 
     next if testing?
 
     # misc/ui is rclone-synced rather than committed, so on a fresh clone the fonts
-    # aren't there until the first cloud:pull.
+    # aren't there until the first cloud:reset.
     unless Dir.exist?(FONT_PATH)
       puts "~> #{FONT_PATH} not found, skipping"
       next
@@ -31,14 +29,12 @@ namespace :install do
     end
   end
 
-  desc 'Change Hammerspoon directory'
   task :hammerspoon do
     section 'Changing Hammerspoon directory'
 
     run %( defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua" )
   end
 
-  desc 'Install Launch Agents'
   task :launch_agents do
     section 'Installing Launch Agents'
 
@@ -61,14 +57,12 @@ namespace :install do
     end
   end
 
-  desc 'Install macOS Configurations'
   task :macos do
     section 'Installing macOS Configurations'
 
     run %( sh ./commands/macos )
   end
 
-  desc 'Install Servers'
   task :servers do
     section 'Installing servers'
 
@@ -77,7 +71,6 @@ namespace :install do
 end
 
 namespace :update do
-  desc 'Patch fonts'
   task :fonts do
     section 'Patching fonts'
 
@@ -102,7 +95,6 @@ namespace :update do
     end
   end
 
-  desc 'Update Servers'
   task :servers do
     section 'Updating servers'
 
