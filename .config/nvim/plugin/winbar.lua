@@ -52,7 +52,7 @@ local section = {
   flags = function()
     local out = ""
     if vim.bo.modified then
-      out = out .. "%#WinbarModified# "
+      out = out .. "%#WinbarModified# ●"
     end
     if vim.bo.readonly or not vim.bo.modifiable then
       out = out .. "%#WinbarReadonly# "
