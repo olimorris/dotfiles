@@ -34,9 +34,9 @@
 
     # Launch Agents
     ~/Library/LaunchAgents/oli.color-mode-notify.plist: misc/LaunchAgents/oli.color-mode-notify.plist
-    ~/Library/LaunchAgents/oli.cloud-backup.plist:
+    ~/Library/LaunchAgents/oli.backup.plist:
         if: &personal_mac "[ \"$(scutil --get ComputerName)\" = \"Oli's MacBook Pro\" ]"
-        path: misc/LaunchAgents/oli.cloud-backup.plist
+        path: misc/LaunchAgents/oli.backup.plist
     ~/Library/LaunchAgents/oli.finance-output.plist:
         if: *personal_mac
         path: misc/LaunchAgents/oli.finance-output.plist
