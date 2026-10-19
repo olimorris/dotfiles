@@ -14,6 +14,7 @@ local by_app = {
   o = "Notion", -- Life OS
   t = "Ghostty", -- Terminal
   v = "OBS", -- Video
+  z = "Zotero",
   --w = RESERVED
 }
 

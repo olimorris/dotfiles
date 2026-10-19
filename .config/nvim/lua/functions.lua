@@ -158,14 +158,33 @@ function om.Pandoc()
       local output = vim.fn.fnamemodify(file, ":r") .. ".pdf"
       local dir = vim.fn.fnamemodify(file, ":h")
 
-      vim.system({ "pandoc", file, "-o", output, "--pdf-engine=xelatex" }, { cwd = dir }, function(result)
-        vim.schedule(function()
-          if result.code == 0 then
-            local relative_output = vim.fn.fnamemodify(output, ":t")
-            vim.notify("Exported `" .. relative_output .. "`", vim.log.levels.INFO, { title = "Pandoc" })
-          else
+      local citeproc = { "--citeproc" }
+      local csl = vim.fs.joinpath(vim.fn.getcwd(), "default.csl")
+      if vim.uv.fs_stat(csl) then
+        table.insert(citeproc, "--csl=" .. csl)
+      end
+
+      local export = vim.list_extend({ "pandoc", file, "-o", output, "--pdf-engine=xelatex" }, citeproc)
+      local count = vim.list_extend({ "pandoc", file, "-t", "plain", "-M", "suppress-bibliography=true" }, citeproc)
+
+      vim.system(export, { cwd = dir }, function(result)
+        if result.code ~= 0 then
+          return vim.schedule(function()
             vim.notify("Export failed (exit code " .. result.code .. ")", vim.log.levels.ERROR, { title = "Pandoc" })
-          end
+          end)
+        end
+
+        -- Count the rendered text so front matter and markdown syntax don't inflate the total
+        vim.system(count, { cwd = dir }, function(plain)
+          local words = select(2, (plain.stdout or ""):gsub("%S*%w%S*", ""))
+          vim.schedule(function()
+            local relative_output = vim.fn.fnamemodify(output, ":t")
+            vim.notify(
+              "Exported `" .. relative_output .. "` (" .. words .. " words)",
+              vim.log.levels.INFO,
+              { title = "Pandoc" }
+            )
+          end)
         end)
       end)
     end,

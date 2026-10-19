@@ -18,7 +18,8 @@ if OnPersonal then
 
   layout.define("Assignment", 3, {
     { "Ghostty", "0,0 2.5x4", { focus = true, moveToScreen = "monitor" } },
-    { "Chrome", "2.5,0 3.5x4", { moveToScreen = "monitor" } },
+    { "Chrome", "2.5,0 2x4", { moveToScreen = "monitor" } },
+    { "Zotero", "4.5,0 1.5x4", { onlyIfOpen = true, moveToScreen = "monitor" } },
     { "Notion", "0,0 6x4", { moveToScreen = "laptop" } },
     { "Spotify", "0,0 6x4", { onlyIfOpen = true, moveToScreen = "laptop" } },
   })
