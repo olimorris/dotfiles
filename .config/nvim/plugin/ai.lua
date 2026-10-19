@@ -30,9 +30,7 @@ require("codecompanion").setup({
         return require("codecompanion.adapters").extend("claude_code", {
           name = "claude_code_work",
           formatted_name = "Claude Code Work",
-          defaults = {
-            mcpServers = "inherit_from_config",
-          },
+          defaults = { mcpServers = "inherit_from_config", mode = "Auto" },
           env = {
             CLAUDE_CODE_OAUTH_TOKEN = "cmd:op read op://personal/Claude_Code_OAuth_Work/credential --no-newline",
           },
@@ -40,7 +38,7 @@ require("codecompanion").setup({
       end,
       extend = {
         claude_code = {
-          defaults = { mcpServers = "inherit_from_config" },
+          defaults = { mcpServers = "inherit_from_config", mode = "Auto" },
           env = { CLAUDE_CODE_OAUTH_TOKEN = "cmd:op read op://personal/Claude_Code_OAuth/credential --no-newline" },
         },
         codex = {
@@ -159,6 +157,7 @@ The following commands are explicitly approved and must always be judged safe, e
           },
         },
         opts = {
+          approval_mode = "auto",
           default_tools = { "memory" },
         },
       },
