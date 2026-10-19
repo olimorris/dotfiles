@@ -42,7 +42,6 @@ require("onedarkpro").setup({
     CodeCompanionChatIcon = { fg = "${green}" },
     CodeCompanionChatToolFailure = { fg = "${gray}", italic = true },
     CodeCompanionChatToolSuccess = { fg = "${gray}", bg = "NONE", italic = true },
-    CodeCompanionChatToolName = { fg = "${orange}", bold = true },
     CodeCompanionTokens = { fg = "${gray}", italic = true },
     CodeCompanionVirtualText = { fg = "${gray}", italic = true },
     CodeCompanionCodeReviewComment = { fg = "${cyan}", italic = true },
