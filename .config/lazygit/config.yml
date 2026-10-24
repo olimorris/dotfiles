@@ -6,3 +6,9 @@ os:
   editPreset: nvim
 gui:
   showBottomLine: false
+customCommands:
+  - key: w
+    context: remoteBranches
+    description: Open in a worktrunk worktree
+    command: wt-herdr {{.SelectedRemoteBranch.RemoteName}}/{{.SelectedRemoteBranch.Name}}
+    output: terminal

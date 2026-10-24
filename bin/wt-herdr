@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Usage: wt-herdr <ref>
+# Switch to (or create) a worktrunk worktree for <ref> and, inside herdr, open it as a worktree workspace
+
+ref=${1:?usage: wt-herdr <ref>}
+
+result=$(command wt switch "$ref" --no-cd --format=json)
+[[ -n ${HERDR_WORKSPACE_ID:-} ]] || exit 0
+
+branch=$(jq -r '.branch' <<<"$result")
+wtpath=$(jq -r '.path' <<<"$result")
+# Registering under the current workspace fails when it's itself a linked worktree
+repo_root=$(herdr worktree list --cwd "$PWD" --json | jq -r '.result.source.repo_root')
+
+open_args=(--cwd "$repo_root" --path "$wtpath" --focus)
+# Picking the main checkout's branch would rename the repo's own workspace to it
+[[ $(cd "$wtpath" && pwd -P) != $(cd "$repo_root" && pwd -P) ]] && open_args+=(--label "$branch")
+
+herdr worktree open "${open_args[@]}" >/dev/null
