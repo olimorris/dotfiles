@@ -40,7 +40,7 @@ namespace :install do
 
     run %( launchctl load -w ~/Library/LaunchAgents/oli.color-mode-notify.plist )
 
-    labels = %w[oli.cloud-backup oli.finance-output]
+    labels = %w[oli.backup oli.finance-output]
 
     if personal_machine?
       labels.each { |label| run %( launchctl load -w ~/Library/LaunchAgents/#{label}.plist ) }
