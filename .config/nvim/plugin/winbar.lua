@@ -3,7 +3,7 @@ local api, fn = vim.api, vim.fn
 om.winbar = {}
 
 local ignored_buftypes = { "nofile", "prompt", "help", "quickfix", "terminal" }
-local ignored_filetypes = { "alpha", "oil", "codecompanion", "lspinfo", "snacks_dashboard", "toggleterm" }
+local ignored_filetypes = { "alpha", "oil", "lspinfo", "snacks_dashboard", "toggleterm" }
 
 ---Path prefixes collapsed to something friendlier to read
 local shorten = table.concat({
@@ -116,6 +116,10 @@ api.nvim_create_autocmd({ "BufWinEnter", "BufFilePost", "FileType", "TermOpen", 
   callback = function()
     local buf = api.nvim_get_current_buf()
     if api.nvim_win_get_buf(0) ~= buf or api.nvim_win_get_config(0).relative ~= "" then
+      return
+    end
+    -- CodeCompanion sets its own winbar on chat windows and ours would overwrite it
+    if vim.bo[buf].filetype == "codecompanion" then
       return
     end
     vim.wo.winbar = ignored(buf) and "" or WINBAR

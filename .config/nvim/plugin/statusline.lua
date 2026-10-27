@@ -68,7 +68,8 @@ local function minimised()
 end
 
 local function in_codecompanion()
-  return package.loaded.codecompanion ~= nil and vim.bo.filetype == "codecompanion"
+  return package.loaded.codecompanion ~= nil
+    and (vim.bo.filetype == "codecompanion" or vim.bo.filetype == "codecompanion_chat_input")
 end
 
 -- Sections -------------------------------------------------------------------

@@ -1,13 +1,13 @@
 require("render-markdown").setup({
   completions = { blink = { enabled = true } },
-  file_types = { "codecompanion", "codecompanion_input", "markdown", "nvim-pack" },
+  file_types = { "codecompanion", "codecompanion_chat_input", "codecompanion_input", "markdown", "nvim-pack" },
   latex = {
     enabled = false,
     render_modes = false,
   },
   overrides = {
     filetype = {
-      codecompanion = {
+      codecompanion_chat_input = {
         html = {
           tag = {
             buf = { icon = "󰍛 ", highlight = "CodeCompanionChatIcon" },
