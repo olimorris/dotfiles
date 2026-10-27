@@ -12,6 +12,7 @@ local by_app = {
   f = "Finder",
   n = "Bear", -- Notes
   o = "Notion", -- Life OS
+  s = "Strata",
   t = "Ghostty", -- Terminal
   v = "OBS", -- Video
   z = "Zotero",
