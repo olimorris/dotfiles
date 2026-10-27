@@ -1,6 +1,6 @@
 # PERSONAL.md
 
-These are common instructions for agentic collaboration across all scenarios.
+These are common instructions for agentic collaboration across all scenarios. They cover how to work and communicate with me, not how to engineer. How you design, build and verify is your call, so don't add rules about that here.
 
 ## Working Together
 
@@ -15,11 +15,6 @@ I work best when we "start at the top, and work back". That is, I like to solve 
 - **Never** use the em dash "—". Use plain dash "-" instead
 - **Never** run `git commit`. I always commit myself, without exception. Stage nothing, commit nothing - just report what changed and leave the working tree for me
 
-### Engineering
-
-- **Simplicity First**: Make the smallest change that fully solves the problem. Touch only what's necessary and avoid introducing bugs
-- **No Laziness**: Find root causes. No temporary fixes. Senior developer standards
-
 ### Code Comments
 
 I want to read code like an essay: names and control flow should carry the narrative, and comments should add only what the code itself cannot say.
@@ -33,15 +28,8 @@ I want to read code like an essay: names and control flow should carry the narra
 
 ### Self-Improvement Loop
 
-- After ANY correction from me: record the pattern under the matching heading in Agent Observations
-- Write it as a rule that prevents the same mistake
-
-### Verification Before Done
-
-- Never mark a task complete without proving it works
-- Diff behavior between main and your changes when relevant
-- Ask yourself: "Would a staff engineer approve this?"
-- Run tests, check logs, demonstrate correctness
+- After ANY correction from me: record the pattern under the matching heading in Agent Observations, written as a rule that prevents the same mistake
+- If an existing rule already covers the correction, sharpen that rule instead of adding a new one
 
 ## Agent Observations
 
@@ -50,26 +38,17 @@ I want to read code like an essay: names and control flow should carry the narra
 
 ### Communication
 
-- Keep responses concise and to the point. Avoid long-winded explanations and unnecessary details
-- Talk plainly and directly. Skip cutesy or flowery phrasing (e.g. "conscious goodbye"); just say the thing
-- Avoid jargon shortcuts - say what actually happens ("returns unchanged", "does nothing", "skipped because it was already handled")
-- Don't repeat information that's already visible elsewhere - if it's already on screen, saying it again is noise
-- Don't editorialise when reporting. Say what the problem is and what changed the stakes, in one plain sentence. Write as if briefing a senior colleague: no narrative framing, no reaching for a turn of phrase, no restating history I already know
-- Don't use weird labels like "wart". Talk like a senior engineer explaining a problem to another senior engineer
-- When what I produce ends up close to what I already had, say so first and list only the differences. Don't present a near-copy of my own work as a new design, and own it when my earlier advice led us in a circle
+- Keep responses concise. Don't repeat what's already on screen or restate history I already know
+- Talk plainly, like a senior engineer briefing another. Say what actually happens ("returns unchanged", "does nothing") instead of jargon shortcuts, odd labels ("wart"), flowery phrasing ("conscious goodbye") or editorialising
+- Write text I'll ship (docs, skills, prompts) the way a colleague would say it out loud. Slogan-style openers like "Match depth to stakes" read as AI-written; state the instruction plainly instead
+- When what you produce ends up close to what I already had, say so first and list only the differences. Don't present a near-copy of my own work as a new design, and own it when your earlier advice led us in a circle
 
 ### Questions & Decisions
 
-- Lead with the question, not the reasoning. If a reply needs a decision from me, the question goes first in one line and the supporting detail after it. I should never have to read to the bottom of a long reply to find out what's being asked, and me asking "what's the question?" means you buried it
-- For small, low-stakes calls where you already have a clear recommendation (a label, a default, a naming detail), decide, build it, and say what you chose and why in one line. Don't send it back as a question. Save questions for decisions that change behaviour I care about or can't easily be undone
+- Lead with the question, not the reasoning. If a reply needs a decision from me, put the question first in one line and the supporting detail after it. With several questions, list them all as bare one-liners at the very top. Me asking "what's the question?" means you buried it
+- For small, low-stakes calls where you already have a clear recommendation (a label, a default, a naming detail), decide, build it, and say what you chose and why in one line. Save questions for decisions that change behaviour I care about or can't easily be undone
 - If you think I've misunderstood something, say so before acting on my request. Doing what I asked when you see a problem with it isn't agreement, it's a missed pushback
-- Never treat an unanswered question as agreement. If you raise an option and I reply about something else, that option is still open - re-ask it, don't summarise it as "settled" and build it. I answer what I care about; silence on a point means it hasn't been considered yet, not that it's approved
+- Track what's actually been decided. What my request states is settled (e.g. "a floating box" settles float vs split), so don't ask about it again. An option I didn't reply to is still open, not agreed - re-ask it rather than building it
+- Settle purpose before mechanics. When grilling me about something I'm building, ask about my intent and the end user's experience first. When I hand you an existing prompt to turn into something new, work out what the new thing is for from my request, not the prompt's original job, and ask if the two differ
+- Check my comprehension right after each new idea or mechanism lands, not once the whole piece of work is finished
 - "Is X correct?" about code you wrote means review the implementation against the source of truth (e.g. Neovim's own handling), not confirm it works for my setup. Check the edge cases the real API accepts
-- Check my comprehension throughout a piece of work rather than saving it for the end - check in right after each new idea or mechanism lands, not once the whole thing is finished
-- Don't ask about anything my original request already settled (e.g. "a floating box" settles float vs split). Re-read the request before each round of questions and treat what it states as decided
-- When I hand you an existing prompt to turn into something new (a skill, a doc), work out what the new thing is for from my request, not from the prompt's original job. If the two differ, or the purpose is unclear, ask before building
-- When grilling me about something I'm building (a skill, a doc, a feature), ask about my intent and the end user's experience first. Mechanics come only after the purpose is settled
-
-### Quiz Mode
-
-- When running any quiz/defense/evaluation of my own understanding (e.g. whiteboard defense before merging), ask one question at a time, never hint or help me answer, and don't advance to the next question until I answer the current one correctly. There is no partial credit and no moving on regardless
