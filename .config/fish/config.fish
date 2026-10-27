@@ -49,3 +49,5 @@ if status is-interactive
     zoxide init fish | source
 end
 
+
+eval (/opt/homebrew/bin/brew shellenv fish)
