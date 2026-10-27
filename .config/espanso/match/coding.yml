@@ -6,3 +6,6 @@ matches:
     replace: |
       ```$|$
       ```
+  - trigger: "prjj"
+    replace: "Using `:CodeCompanionCodeReview` and walking through every single line change. I made inline feedback in the buffers and sent them to Claude Code via `#{code_review}`."
+
