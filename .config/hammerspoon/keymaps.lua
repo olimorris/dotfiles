@@ -31,11 +31,9 @@ local by_action = {
 }
 
 if OnPersonal then
-  by_app.c = "Visual Studio Code" -- VS Code
   by_app.e = "Microsoft Excel"
   by_chrome_tab.g = "https://github.com" -- GitHub
   by_chrome_tab.l = "https://claude.ai" -- LLM
-  by_app.p = "UPDF"
   by_app.r = "Reminders"
   by_app["["] = "1Password" -- It's next to P...
 else
