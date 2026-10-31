@@ -166,17 +166,22 @@ function om.Pandoc()
         end
 
         -- Count the rendered text so front matter and markdown syntax don't inflate the total
-        vim.system({ "pandoc", file, "-t", "plain", "--citeproc", "-M", "suppress-bibliography=true" }, { cwd = dir }, function(plain)
-          local words = select(2, (plain.stdout or ""):gsub("%S*%w%S*", ""))
-          vim.schedule(function()
-            local relative_output = vim.fn.fnamemodify(output, ":t")
-            vim.notify(
-              "Exported `" .. relative_output .. "` (" .. words .. " words)",
-              vim.log.levels.INFO,
-              { title = "Pandoc" }
-            )
-          end)
-        end)
+        vim.system(
+          { "pandoc", file, "-t", "plain", "--citeproc", "-M", "suppress-bibliography=true" },
+          { cwd = dir },
+          function(plain)
+            local text = (plain.stdout or ""):gsub("\nFigures\n.*", "")
+            local words = select(2, text:gsub("%S*%w%S*", ""))
+            vim.schedule(function()
+              local relative_output = vim.fn.fnamemodify(output, ":t")
+              vim.notify(
+                "Exported `" .. relative_output .. "` (" .. words .. " words)",
+                vim.log.levels.INFO,
+                { title = "Pandoc" }
+              )
+            end)
+          end
+        )
       end)
     end,
   })
