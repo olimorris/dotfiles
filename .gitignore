@@ -28,6 +28,7 @@
 !.config/rclone/git_filter.txt
 !.config/rclone/dotfiles_filter.txt
 !.config/rex/init.lua
+!.config/rex/session-label.lua
 !.config/rex/zoxide-picker.sh
 !.config/snippets/**/*
 !.config/worktrunk/config.toml

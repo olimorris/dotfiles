@@ -1,5 +1,7 @@
-require("rex-worktrunk").setup({ base = "@" })
-require("rex-sessionizer").setup({ script = "~/.config/rex/zoxide-picker.sh" })
+local label = require("session-label")
+
+require("rex-worktrunk").setup({ base = "@", force_delete = true, label = label })
+require("rex-sessionizer").setup({ script = "~/.config/rex/zoxide-picker.sh", label = label })
 
 rex.bind("ctrl+w", "sessionizer")
 
