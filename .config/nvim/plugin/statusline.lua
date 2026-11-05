@@ -35,7 +35,6 @@ local trunc = {
   mode = 90,
   git = 70,
   filetype = 90,
-  codecompanion = 110,
   search = 75,
 }
 
@@ -152,29 +151,17 @@ local section = {
 
   ---@return table Section strings, each possibly empty
   codecompanion = function()
-    local out = { context = "", model = "", tokens = "", cycles = "" }
+    local out = { tokens = "", cycles = "" }
     if not in_codecompanion() then
       return out
     end
 
-    local context = _G.codecompanion_current_context
-    if
-      context
-      and not codecompanion.requesting
-      and not MiniStatusline.is_truncated(trunc.codecompanion)
-      and api.nvim_buf_is_valid(context)
-    then
-      out.context = " " .. fn.fnamemodify(api.nvim_buf_get_name(context), ":t")
-    end
-
-    local metadata = _G.codecompanion_chat_metadata and _G.codecompanion_chat_metadata[api.nvim_get_current_buf()]
+    local chat = require("codecompanion").buf_get_chat(api.nvim_get_current_buf())
+    local metadata = chat and _G.codecompanion_chat_metadata and _G.codecompanion_chat_metadata[chat.bufnr]
     if not metadata then
       return out
     end
 
-    if type(metadata.adapter and metadata.adapter.model) == "string" and not codecompanion.requesting then
-      out.model = " " .. metadata.adapter.model
-    end
     if (metadata.tokens or 0) > 0 then
       out.tokens = "󰔖 " .. metadata.tokens
     end
@@ -266,8 +253,6 @@ local function content()
     { hl = "StatuslineBlock", strings = { clickable("session", section.session()) } },
     { hl = "StatuslineMacro", strings = { section.macro() } },
     {
-      { hl = "StatuslineText", strings = { cc.context } },
-      { hl = "StatuslineText", strings = { cc.model } },
       { hl = "StatuslineBlock", strings = { cc.tokens } },
       { hl = "StatuslineBlock", strings = { cc.cycles } },
     },
@@ -300,9 +285,7 @@ api.nvim_create_autocmd("User", {
     "PersistedDeletePost",
     "CodeCompanionACPConnected",
     "CodeCompanionACPModeChanged",
-    "CodeCompanionChatModel",
     "CodeCompanionChatOpened",
-    "CodeCompanionContextChanged",
   },
   callback = redraw,
 })

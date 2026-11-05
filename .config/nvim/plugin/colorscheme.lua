@@ -91,7 +91,6 @@ require("onedarkpro").setup({
     StatuslineBlockAhead = { fg = "${green}", bg = "${statusline_fill}" },
     StatuslineBlockBehind = { fg = "${red}", bg = "${statusline_fill}" },
 
-    StatuslineText = { fg = "${gray}", bg = "${statusline_fill}" },
     StatuslineRequest = { fg = "${yellow}", bg = "${statusline_fill}" },
     StatuslineApproval = { fg = "${red}", bg = "${statusline_fill}" },
 
