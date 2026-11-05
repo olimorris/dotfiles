@@ -10,5 +10,5 @@ customCommands:
   - key: w
     context: remoteBranches
     description: Open in a worktrunk worktree
-    command: wt-herdr {{.SelectedRemoteBranch.RemoteName}}/{{.SelectedRemoteBranch.Name}}
+    command: if [ -n "$REX_SESSION" ]; then wt-rex {{.SelectedRemoteBranch.RemoteName}}/{{.SelectedRemoteBranch.Name}}; else wt-herdr {{.SelectedRemoteBranch.RemoteName}}/{{.SelectedRemoteBranch.Name}}; fi
     output: terminal

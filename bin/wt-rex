@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Usage: wt-rex <ref>
+# Switch to (or create) a worktrunk worktree for <ref> and, inside Rex, open it as its own session
+
+ref=${1:?usage: wt-rex <ref>}
+
+result=$(command wt switch "$ref" --no-cd --format=json)
+[[ -n ${REX_SESSION:-} ]] || exit 0
+
+rex do worktree_go path="$(jq -r '.path' <<<"$result")" >/dev/null

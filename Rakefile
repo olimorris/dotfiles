@@ -91,6 +91,7 @@ task(:install) do
   # Apps
   Rake::Task["install:neovim"].invoke
   Rake::Task["install:herdr"].invoke unless testing?
+  Rake::Task["install:rex"].invoke unless testing?
 
   # Dotbot runs a second time on purpose. Two of its links - the ghostty and opencode
   # theme directories - point into ~/.cache/nvim/onedarkpro_dotfiles/extras, which

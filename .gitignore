@@ -27,6 +27,8 @@
 !.config/rclone/code_filter.txt
 !.config/rclone/git_filter.txt
 !.config/rclone/dotfiles_filter.txt
+!.config/rex/init.lua
+!.config/rex/zoxide-picker.sh
 !.config/snippets/**/*
 !.config/worktrunk/config.toml
 !.config/zsh/**/*
@@ -64,6 +66,8 @@
 
 # Config
 .config/herdr/plugins/*
+.config/rex/rex-worktrunk
+.config/rex/rex-sessionizer
 .config/hammerspoon/Spoons/*
 .config/ghostty/themes
 

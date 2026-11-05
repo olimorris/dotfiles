@@ -20,6 +20,13 @@ namespace(:install) do
     run(" herdr plugin install tajdien/herdr-confirm-close --yes ") unless testing?
     run(" herdr plugin install devashish2203/herdr-worktrunk --yes ") unless testing?
   end
+
+  task(:rex) do
+    section("Installing rex plugins")
+
+    run(" [ -d ~/.config/rex/rex-worktrunk ] || git clone https://github.com/haxybaxy/rex-worktrunk ~/.config/rex/rex-worktrunk ") unless testing?
+    run(" [ -d ~/.config/rex/rex-sessionizer ] || git clone https://github.com/haxybaxy/rex-sessionizer ~/.config/rex/rex-sessionizer ") unless testing?
+  end
 end
 
 namespace(:update) do
@@ -35,5 +42,12 @@ namespace(:update) do
     section("Updating herdr plugins")
 
     run(" herdr plugin update ") unless testing?
+  end
+
+  task(:rex) do
+    section("Updating rex plugins")
+
+    run(" git -C ~/.config/rex/rex-worktrunk pull ") unless testing?
+    run(" git -C ~/.config/rex/rex-sessionizer pull ") unless testing?
   end
 end
