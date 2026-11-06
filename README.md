@@ -63,9 +63,9 @@ rake backup:packages
 
 ```bash
 rake setup             # links, app configs and packages
-rake setup:links       # dotbot and agent skills
+rake setup:links       # dotbot
 rake setup:apps        # app configs
-rake setup:packages    # brew, casks, App Store, gems, npm, pip. Never uninstalls
+rake setup:packages    # brew, casks, App Store, gems, npm, pip, skills. Never uninstalls
 rake setup:macos       # macOS defaults, not part of rake setup
 ```
 

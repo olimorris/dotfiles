@@ -68,7 +68,6 @@ task(:install) do
   # fish against config that did not exist yet, while `rake init` got the right order
   # by accident because cloud:reset had already run them.
   Rake::Task["install:dotbot"].invoke
-  Rake::Task["install:skills"].invoke
   Rake::Task["install:app_config"].invoke
   Rake::Task["install:chmod"].invoke
 
@@ -78,6 +77,7 @@ task(:install) do
   Rake::Task["install:cargo"].invoke unless testing?
   Rake::Task["install:gems"].invoke unless testing?
   Rake::Task["install:npm"].invoke unless testing?
+  Rake::Task["install:skills"].invoke unless testing?
   Rake::Task["install:pip"].invoke unless testing?
 
   # Shell
@@ -117,13 +117,11 @@ task(:update) do
   Rake::Task["backup:gems"].invoke
   Rake::Task["backup:npm"].invoke
   Rake::Task["backup:pip"].invoke
+  Rake::Task["backup:skills"].invoke
 
   # Brew upgrade (may install new Python/Node/Ruby versions)
   Rake::Task["update:brew"].invoke
   Rake::Task["update:fish"].invoke
-
-  # Servers
-  Rake::Task["update:servers"].invoke
 
   # Then reinstall and update packages
   Rake::Task["install:gems"].invoke
@@ -132,24 +130,28 @@ task(:update) do
   Rake::Task["update:npm"].invoke
   Rake::Task["install:pip"].invoke
   Rake::Task["update:pip"].invoke
+  Rake::Task["install:skills"].invoke
+  Rake::Task["update:skills"].invoke
 
   # Apps
   Rake::Task["update:neovim"].invoke
+  Rake::Task["update:herdr"].invoke unless testing?
 
-  # gems, npm and pip were saved above, and rake runs each task once per process
+  # gems, npm, pip and skills were saved above, and rake runs each task once per process
   Rake::Task["backup:brew"].invoke
   Rake::Task["backup:app_store"].invoke
   Rake::Task["install:brew_clean_up"].invoke
 end
 
 namespace(:backup) do
-  desc("Save this Mac's package lists (brew, casks, App Store, gems, npm, pip) into ~/.dotfiles")
+  desc("Save this Mac's package lists (brew, casks, App Store, gems, npm, pip, skills) into ~/.dotfiles")
   task(:packages) do
     Rake::Task["backup:brew"].invoke
     Rake::Task["backup:app_store"].invoke
     Rake::Task["backup:gems"].invoke
     Rake::Task["backup:npm"].invoke
     Rake::Task["backup:pip"].invoke
+    Rake::Task["backup:skills"].invoke
   end
 end
 
@@ -161,10 +163,9 @@ task(:setup) do
 end
 
 namespace(:setup) do
-  desc("Symlink dotfiles and agent skills")
+  desc("Symlink dotfiles")
   task(:links) do
     Rake::Task["install:dotbot"].invoke
-    Rake::Task["install:skills"].invoke
   end
 
   desc("Restore app configs")
@@ -172,7 +173,7 @@ namespace(:setup) do
     Rake::Task["install:app_config"].invoke
   end
 
-  desc("Install packages from the lists (brew, casks, App Store, gems, npm, pip). Never uninstalls")
+  desc("Install packages from the lists (brew, casks, App Store, gems, npm, pip, skills). Never uninstalls")
   task(:packages) do
     Rake::Task["install:brew_packages"].invoke
     Rake::Task["install:brew_cask_packages"].invoke
@@ -181,6 +182,7 @@ namespace(:setup) do
     Rake::Task["install:gems"].invoke
     Rake::Task["install:npm"].invoke
     Rake::Task["install:pip"].invoke
+    Rake::Task["install:skills"].invoke
   end
 
   desc("Apply macOS defaults. Asks for sudo")

@@ -16,6 +16,7 @@ MAS_PERSONAL_FILE = File.expand_path("../misc/packages/app_store_personal.txt", 
 MAS_WORK_FILE = File.expand_path("../misc/packages/app_store_work.txt", __dir__).gsub(/ /, "\\ ")
 NPM_FILE = File.expand_path("../misc/packages/npm_packages.txt", __dir__).gsub(/ /, "\\ ")
 PIP_FILE = File.expand_path("../misc/packages/python_pip.txt", __dir__).gsub(/ /, "\\ ")
+SKILLS_FILE = File.expand_path("../misc/packages/agent_skills.json", __dir__).gsub(/ /, "\\ ")
 
 # HEAD_ONLY_FORMULAS = %w( neovim )
 HEAD_ONLY_FORMULAS = ""
@@ -62,6 +63,14 @@ namespace(:backup) do
     ensure_packages_folder
 
     run(" pip freeze \> #{PIP_FILE} ")
+  end
+
+  task(:skills) do
+    section("Backing up agent skills")
+    ensure_packages_folder
+
+    # Hand-copied skills have no source, so `npx skills add` could never restore them
+    run(" npx -y skills ls -g --json | jq '[.[] | select(.source) | {name, source}] | sort_by(.name)' > #{SKILLS_FILE} ")
   end
 end
 
@@ -177,6 +186,21 @@ namespace(:install) do
     end
   end
 
+  task(:skills) do
+    section("Installing agent skills")
+
+    unless File.exist?(SKILLS_FILE)
+      puts("No skills backup file found at #{SKILLS_FILE}")
+      next
+    end
+
+    JSON.parse(File.read(SKILLS_FILE)).group_by { |skill| skill["source"] }.each do |source, skills|
+      names = skills.map { |skill| skill["name"] }.join(" ")
+      # Claude alone gets a copy in ~/.claude/skills; adding Codex keeps one copy in ~/.agents and symlinks Claude to it
+      run(" npx -y skills add #{source} -g -a claude-code codex -s #{names} -y ")
+    end
+  end
+
   task(:pip) do
     section("Installing PIP files")
 
@@ -250,6 +274,12 @@ namespace(:update) do
     section("Updating NPM")
 
     run(" npm install -g npm && npm update -g ")
+  end
+
+  task(:skills) do
+    section("Updating agent skills")
+
+    run(" npx -y skills update -g -y ")
   end
 
   task(:pip) do

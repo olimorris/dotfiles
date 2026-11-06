@@ -17,7 +17,7 @@
 # Groups
 #   dotfiles    ~/.dotfiles, minus .git and the machine-local files in dotfiles_filter.txt.
 #               A push refreshes the package lists and mackup first. A pull runs git pull
-#               first, and a pull or reset runs dotbot, skills and mackup after
+#               first, and a pull or reset runs dotbot and mackup after
 #   code        ~/Code
 #   docs        ~/OliDocs, ~/Downloads, ~/Documents
 #   git         the .git folders inside ~/Code. Needs code, as .git folders without their
