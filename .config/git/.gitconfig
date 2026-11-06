@@ -4,6 +4,9 @@
 [alias]
 	pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
 	wtl = "!f() { git worktree list; }; f"
+[credential]
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
 [credential "https://github.com"]
 	useHttpPath = true
 	helper = 
@@ -34,9 +37,6 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
-[credential]
-	helper = 
-	helper = /usr/local/share/gcm-core/git-credential-manager
 [credential "https://dev.azure.com"]
 	useHttpPath = true
 [pull]
