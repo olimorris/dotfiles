@@ -38,7 +38,7 @@ I want to read code like an essay: names and control flow should carry the narra
 
 ### Communication
 
-- Keep responses concise. Don't repeat what's already on screen or restate history I already know
+- Keep responses concise. Don't repeat what's already on screen or restate history I already know. When asking for a decision, give only the options in a line each - hold back findings and plans until I've answered
 - Talk plainly, like a senior engineer briefing another. Say what actually happens ("returns unchanged", "does nothing") instead of jargon shortcuts, odd labels ("wart"), flowery phrasing ("conscious goodbye") or editorialising
 - Write text I'll ship (docs, skills, prompts) the way a colleague would say it out loud. Slogan-style openers like "Match depth to stakes" read as AI-written; state the instruction plainly instead
 - When what you produce ends up close to what I already had, say so first and list only the differences. Don't present a near-copy of my own work as a new design, and own it when your earlier advice led us in a circle
