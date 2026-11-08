@@ -1,0 +1,12 @@
+{
+  "place": "none",
+  "title": "Worktrees",
+  "overlay": {
+    "kind": "popup",
+    "frame": "none",
+    "at": "top",
+    "offset": 96,
+    "width": 576,
+    "height": 420
+  }
+}

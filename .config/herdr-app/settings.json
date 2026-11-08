@@ -1,0 +1,17 @@
+{
+  "zoom": 1.0,
+  "sounds": {
+    "enabled": true
+  },
+  "font": "OperatorMono Herdr",
+  "font_size": 21.0,
+  "font_ligatures": false,
+  "telemetry": false,
+  "minimum_contrast": 1.0,
+  "option_as_alt": "left",
+  "theme": {
+    "light": "onedarkpro-onelight",
+    "dark": "onedarkpro-vaporwave"
+  },
+  "pane_scrollbars": false
+}

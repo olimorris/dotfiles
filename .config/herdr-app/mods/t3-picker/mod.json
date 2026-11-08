@@ -1,0 +1,16 @@
+{
+  "place": "none",
+  "title": "Go to",
+  "overlay": {
+    "kind": "popup",
+    "frame": "none",
+    "at": "top",
+    "offset": 96,
+    "width": 576,
+    "height": 420
+  },
+  "cloned_from": {
+    "name": "picker",
+    "version": "0.1.13"
+  }
+}

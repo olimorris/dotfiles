@@ -16,6 +16,16 @@
 !.config/ghostty/**/*
 !.config/hammerspoon/**/*
 !.config/herdr/config.toml
+!.config/herdr-app/keys.json
+!.config/herdr-app/settings.json
+!.config/herdr-app/programs.json
+!.config/herdr-app/layouts/herdr-t3.*
+!.config/herdr-app/layouts/workspace.json
+!.config/herdr-app/my-icons/*
+!.config/herdr-app/themes/onedarkpro-*.json
+!.config/herdr-app/mods/t3-*/**/*
+!.config/herdr-app/mods/pomodoro/**/*
+!.config/herdr-app/mods/worktrunk/**/*
 !.config/lazygit/**/*
 !.config/mackup/**/*
 !.config/mise/**/*
@@ -67,6 +77,8 @@
 
 # Config
 .config/herdr/plugins/*
+.config/herdr-app/mods/**/gpui-kit.d.ts
+.config/herdr-app/mods/win98/README.md
 .config/rex/rex-worktrunk
 .config/rex/rex-sessionizer
 .config/hammerspoon/Spoons/*

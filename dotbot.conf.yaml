@@ -18,6 +18,7 @@
         path: ~/.cache/nvim/onedarkpro_dotfiles/extras/ghostty
     ~/.config/hammerspoon: .config/hammerspoon
     ~/.config/herdr: .config/herdr
+    ~/.config/herdr-app: .config/herdr-app
     ~/.config/lazygit: .config/lazygit
     ~/.config/mise: .config/mise
     ~/.config/obs-sidecar: .config/obs-sidecar

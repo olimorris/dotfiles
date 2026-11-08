@@ -1,0 +1,6 @@
+{
+  "programs": {
+    "codecompanion": { "name": "CodeCompanion", "icon": "my-icons/codecompanion.svg", "tint": false },
+    "nvim": { "icon": "my-icons/neovim.svg", "tint": false }
+  }
+}

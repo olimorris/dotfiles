@@ -1,0 +1,9 @@
+{
+  "place": "none",
+  "title": "Spaces",
+  "focusable": true,
+  "cloned_from": {
+    "name": "spaces",
+    "version": "0.1.10"
+  }
+}
