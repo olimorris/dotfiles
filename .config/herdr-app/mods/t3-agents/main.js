@@ -15,6 +15,8 @@ const SORTS = [
   { id: "grouped", label: "Grouped by space", icon: "layers" },
 ];
 const sortOf = () => SORTS.find((s) => s.id === shared("agents.sort")) ?? SORTS[0];
+const hereOnly = () => shared("agents.here") === true;
+const isRemote = (a) => a.address.includes("/");
 
 const SORT_WIDTH = 200;
 
@@ -176,6 +178,9 @@ export default class Agents extends View {
     const viewing = (a) => a.focused || (a.address === ancestor && this.isFolded(a.address));
     this.track(list, now);
     this.hold(list);
+    // After tracking, so a hidden machine's agents don't come back with their state times reset.
+    this.anyRemote = list.some(isRemote);
+    if (hereOnly()) list = list.filter((a) => !isRemote(a));
     const byPriority = sort.id === "priority";
     const under = subAgents(list, all);
     const kidsOf = new Map(list.map((a) => [a.address, under(a.address)]));
@@ -252,7 +257,24 @@ export default class Agents extends View {
             .items_center()
             .justify_between()
             .child(div().text_size(12).font_medium().text_color(t.muted).child("Agents"))
-            .child(
+            .child(h_flex().gap(2).items_center()
+              // Only worth a button once another machine has agents, or it would have no way off.
+              .when(this.anyRemote || hereOnly(), (el) => el.child(
+                tip(this, t, "ag-here", hereOnly() ? "Showing this computer's agents: show all machines" : "Show only this computer's agents", stop(this, t, "ag-here", div()
+                  .id("ag-here")
+                  .size(28).flex_none().flex().items_center().justify_center().rounded(8)
+                  .role("button").accessibility_label("This computer only")
+                  .text_color(hereOnly() || this.hot === "ag-here" ? t.foreground : t.dim)
+                  .when(hereOnly(), (el) => el.bg(t.selected))
+                  .hover((s) => s.bg(t.hover))
+                  .on_hover(glow(this, "ag-here"))
+                  .on_click((_e, cx) => {
+                    setShared("agents.here", !hereOnly());
+                    cx.notify();
+                  })
+                  .child(svg("mods/t3-agents/icons/monitor.svg").size(16)), 8)),
+              ))
+              .child(
               tip(this, t, "ag-sort", `Sort agents: ${sort.label}`, stop(this, t, "ag-sort", div()
                 .id("ag-sort")
                 .size(28).flex_none().flex().items_center().justify_center().rounded(8)
@@ -270,10 +292,12 @@ export default class Agents extends View {
                   cx.notify();
                 })
                 .child(svg(`mods/t3-agents/icons/${sort.icon}.svg`).size(16)), 8)),
-            ),
+            )),
       )
       .when(list.length === 0, (el) =>
-        el.child(div().px(16).py(24).text_center().text_size(12).line_height("16px").text_color(t.dim).child("No agent status yet. Agents show up here when they report their status. Older versions and agents inside tmux may not.")),
+        el.child(div().px(16).py(24).text_center().text_size(12).line_height("16px").text_color(t.dim).child(hereOnly() && this.anyRemote
+          ? "No agents on this computer. Agents on other machines are hidden."
+          : "No agent status yet. Agents show up here when they report their status. Older versions and agents inside tmux may not.")),
       )
       .child(v_flex().id("ag-list").flex_1().min_h(0).px(8).pb(8).overflow_y_scroll()
         // The rows in one box that scrolls, so the leaving ones placed in it scroll with them.
