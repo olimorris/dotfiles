@@ -381,6 +381,7 @@ export default class Spaces extends View {
       const machine = this.machines.find(k => k.name === m) ?? repair?.machine;
       const connected = !m || machine?.state === "connected";
       const rebuilt = this.rebuilt(machine) || !!repair;
+      const needsLogin = Boolean(m) && machine?.state === "needs_login";
       const folded = this.folded.has(m);
       const id = m ?? "local";
       // Drawn as the agents list's shelves, T3's: 2 and 8 in, the chevron at the row's end and its + as T3's folder has it, 24 and 2 before.
@@ -404,7 +405,13 @@ export default class Spaces extends View {
         .child(h_flex().flex_1().min_w(0).gap(8).items_center()
           .child(div().min_w(0).truncate().child(m ?? "This computer"))
           .child(tipMark(this, t, `machine-state-${id}`, connected ? "Connected" : (machine?.state ?? "asleep").replace(/_/g, " ").replace(/^./, c => c.toUpperCase()), div().size(6).rounded_full().flex_none().bg(connected ? t.ansi2 : t.dim))))
-        .when(!connected && !rebuilt, el => el.child(div().flex_none().child((machine?.state ?? "asleep").replace(/_/g, " "))))
+        .when(!connected && !rebuilt && !needsLogin, el => el.child(div().flex_none().child((machine?.state ?? "asleep").replace(/_/g, " "))))
+        // In a terminal: the login asks for a password or code, which only the person can type.
+        .when(needsLogin, el => el.child(tip(this, t, `machine-login-${m}`, `Log in to ${m}`, stop(this, t, `machine-login-${m}`, div().id(`machine-login-${m}`).flex_none().text_color(t.muted)
+          .hover(s => s.text_color(t.foreground)).on_hover(glow(this, `machine-login-${m}`))
+          .role("button").accessibility_label(`Log in to ${m}`)
+          .on_click((_e, cx) => { cx.stop_propagation(); run("terminal.open", { argv: ["hc", "machine", "login", m], name: `Log in to ${m}`, place: "tab" }); })
+          .child("Log in"), 4))))
         .when(rebuilt, el => el.child(h_flex().flex_none().gap(4).items_center()
           .child(div().max_w(140).truncate().child(repair?.error || "rebuilt ·"))
           .child(tip(this, t, `machine-connect-${m}`, `Connect ${m}`, stop(this, t, `machine-connect-${m}`, div().id(`machine-connect-${m}`).text_color(repair?.error ? t.blocked : t.muted)
@@ -510,6 +517,10 @@ export default class Spaces extends View {
     // end, and folded, the count; dim, brightening when hovered.
     const foldId = `space-fold-${w.id}`;
     const rowId = `space-${w.id}`;
+    const tabs = new Set((w.tabs ?? []).map((c) => c.id));
+    // Not w.status: it ranks done above working, so a space with one agent done and another working would hide the spinner.
+    const working = ps.filter((p) => tabs.has(p.tab) && p.status === "working").length;
+    const spinner = svg("mods/workspace-chrome/spinner.svg").size(12).flex_none().text_color(t.working).spin(900);
     const el = v_flex()
       .relative()
       .px(10)
@@ -531,6 +542,8 @@ export default class Spaces extends View {
           .when(!tree, el => el.child(projectMark(w, 16, t, ps)))
           .child(div().min_w(0).max_w(150).truncate().font_medium().text_color(t.foreground + "e6").child(w.name))
           .child(g ? this.gitTail(g, tree, w.name, t, w.id, ghost) : div().flex_1())
+          .when(working > 0, el => el.child(ghost ? spinner
+            : tipMark(this, t, `working-${w.id}`, working === 1 ? "1 agent working" : `${working} agents working`, div().id(`working-${w.id}`).role("status").child(spinner))))
           .when(kids > 0, el => el.child(this.foldButton(t, foldId, g.repo, hiding, ghost))),
       );
     if (ghost) return el;
