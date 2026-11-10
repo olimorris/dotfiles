@@ -112,11 +112,16 @@ export default class Worktrunk extends View {
     this.confirm = null;
     this.busy = `Removing ${item.branch ?? short(item.path)}…`;
     cx.notify();
+    // Without it a PR merged on GitHub since the last fetch looks unmerged, and wt keeps the branch.
+    await exec("git", ["fetch", "--quiet", "origin"], { cwd: this.main, timeout: 15000 }).catch(() => {});
     // wt refuses uncommitted changes itself; its reason is shown as is.
     const r = await exec("wt", ["remove", "--foreground", "--format", "json", item.branch ?? item.path], { cwd: this.main });
     this.busy = null;
     if (r.code !== 0) {
       this.error = lastLines(r) || "wt remove failed.";
+      // wt deletes the folder before it handles the branch, so a branch error can leave a space pointing at nothing.
+      if (item.path && (await exec("test", ["-d", item.path])).code !== 0) this.closeSpacesIn(item.path);
+      await this.load();
       cx.notify();
       return;
     }
@@ -127,13 +132,17 @@ export default class Worktrunk extends View {
       cx.notify();
       return;
     }
-    const ps = panes();
-    if (item.path) for (const s of spaces()) if (!s.machine && inside(placeOf(s, ps), item.path)) run("space.close", { id: s.id, confirmed: true });
+    if (item.path) this.closeSpacesIn(item.path);
     const title = kept ? `Removed the worktree, kept ${item.branch}: it has unmerged changes` : `Removed ${item.branch ?? short(item.path)}`;
     notify({ title, level: kept ? "info" : "success", timeout: 3000 });
     await this.load();
     this.at = Math.min(this.at, Math.max(0, this.items().length - 1));
     cx.notify();
+  }
+
+  closeSpacesIn(path) {
+    const ps = panes();
+    for (const s of spaces()) if (!s.machine && inside(placeOf(s, ps), path)) run("space.close", { id: s.id, confirmed: true });
   }
 
   row(item, i) {
