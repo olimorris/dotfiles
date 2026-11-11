@@ -17,6 +17,7 @@
 !.config/ghostty/**/*
 !.config/hammerspoon/**/*
 !.config/herdr/config.toml
+!.config/herdr-app/fonts/build.py
 !.config/herdr-app/keys.json
 !.config/herdr-app/settings.json
 !.config/herdr-app/programs.json

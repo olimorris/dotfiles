@@ -3,7 +3,7 @@
   "sounds": {
     "enabled": true
   },
-  "font": "OperatorMono Herdr",
+  "font": "OperatorMono Tall",
   "font_size": 21.0,
   "font_ligatures": false,
   "telemetry": false,
