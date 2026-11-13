@@ -11,6 +11,10 @@ alias fu='fisher update'
 alias fr='fisher remove'
 alias fi='fisher install'
 
+# Git
+alias gp='git push'
+alias gpl='git pull'
+
 # hledger
 alias hs='hledger-forecast summarize -f $FINANCES/forecast.csv'
 alias hfu='hledger-ui -f $FINANCES/actuals.journal -f $FINANCES/forecast.journal'
