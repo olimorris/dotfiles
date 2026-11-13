@@ -142,7 +142,8 @@ export default class Worktrunk extends View {
 
   closeSpacesIn(path) {
     const ps = panes();
-    for (const s of spaces()) if (!s.machine && inside(placeOf(s, ps), path)) run("space.close", { id: s.id, confirmed: true });
+    // By its folder too: wt moves the worktree into .git/wt/trash first, and the shells' folders move with it.
+    for (const s of spaces()) if (!s.machine && (inside(placeOf(s, ps), path) || inside(s.folder, path))) run("space.close", { id: s.id, confirmed: true });
   }
 
   row(item, i) {
