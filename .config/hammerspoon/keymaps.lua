@@ -10,11 +10,12 @@ local by_app = {
   a = "Anki",
   b = "Google Chrome", -- Browser
   f = "Finder",
+  l = "Claude", -- LLM
   n = "Bear", -- Notes
   o = "Notion", -- Life OS
   r = "Reminders",
   s = "Strata",
-  t = "Herdr", -- Terminal
+  t = "Rex", -- Terminal
   v = "OBS", -- Video
   z = "Zotero",
   --w = RESERVED
@@ -34,12 +35,10 @@ local by_action = {
 if OnPersonal then
   by_app.e = "Microsoft Excel"
   by_chrome_tab.g = "https://github.com" -- GitHub
-  by_chrome_tab.l = "https://claude.ai" -- LLM
   by_app["["] = "1Password" -- It's next to P...
 else
   by_action["g"] = meet.sendToPrompter
   by_app.c = "Slack" -- Chat
-  by_app.l = "Claude" -- LLM
   by_chrome_tab.d = "https://calendar.google.com/" -- Diary
   by_chrome_tab.m = "https://mail.google.com/"
 end
