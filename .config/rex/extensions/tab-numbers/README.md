@@ -18,8 +18,8 @@ Then run `rex config reload`. Every config load, including `rex config check`,
 launches a replacement watcher. The launcher briefly waits for the local server
 to become reachable at startup; it does not start a missing server itself.
 
-The launcher defaults to Rex's macOS app-managed binary location. To override
-it, set `REX_TAB_NUMBERS_BIN` to an executable path in the **server's environment**.
+The launcher runs the same `rex` binary that loaded the config. To use a
+different one, set `REX_TAB_NUMBERS_BIN` to an executable path in the **server's environment**.
 Requires macOS `/usr/bin/shlock`, `/bin/ps`, and `/bin/kill`.
 
 ## Manual use

@@ -3,7 +3,7 @@
 local script = ".config/rex/extensions/tab-numbers/watcher.lua"
 local real_io, real_rename, real_remove = io, os.rename, os.remove
 local files, views, handlers, writes, locked, fail_rename, unreadable
-local current_pid, identities, signals, stuck, guard_busy
+local current_pid, identities, signals, stuck, guard_busy, processes
 local instance_id, root
 local function equal(actual, expected)
     assert(actual == expected, tostring(actual) .. " ~= " .. tostring(expected))
@@ -29,6 +29,7 @@ end
 local function reset()
     files, views, handlers, writes, locked, fail_rename, unreadable = {}, {}, {}, 0, false, false, false
     current_pid, identities, signals, stuck, guard_busy = 100, {}, 0, false, false
+    processes = {}
     instance_id = "test-server"
     root = (os.getenv("XDG_STATE_HOME") or (os.getenv("HOME") .. "/.local/state")) .. "/rex/tab-numbers"
     views.s1 = { windows = {
@@ -57,11 +58,17 @@ end
 os.remove = function(path) files[path] = nil; return true end
 rex = {
     args = {},
-    call = function(method)
+    call = function(method, query)
         if method == "server.status" then return { instance_id = instance_id, host_id = "test-host" } end
+        if method == "com.superlogical.terminal.process" then
+            return processes[query.block_id] and { foreground = processes[query.block_id] }
+        end
         equal(method, "session.list")
+        local ids = {}
+        for id in pairs(views) do ids[#ids + 1] = id end
+        table.sort(ids)
         local sessions = {}
-        for id in pairs(views) do sessions[#sessions + 1] = { session_id = id } end
+        for _, id in ipairs(ids) do sessions[#sessions + 1] = { session_id = id } end
         return { sessions = sessions }
     end,
     exec = function(argv)
@@ -111,6 +118,16 @@ rex = {
             writes = writes + 1
             return {}
         end,
+        set_block_label = function(query)
+            for _, window in ipairs(views[query.session_id].windows) do
+                for _, layer in ipairs(window.layers or {}) do
+                    for _, block in ipairs(layer.blocks) do
+                        if block.block_id == query.block_id then block.label = query.label end
+                    end
+                end
+            end
+            return {}
+        end,
     },
     on = function(event, handler) handlers[event] = handler end,
     log = function() end,
@@ -150,7 +167,7 @@ local ok, err = pcall(function()
 
     views.s2 = { windows = { { window_id = "c", label = "logs" } } }
     handlers.session_created({}, { session = { session_id = "s2" } })
-    equal(views.s2.windows[1].label, "1: logs")
+    equal(views.s2.windows[1].label, "2: logs") -- Numbering runs on from s1's one tab.
     views.s2 = nil
     handlers.session_destroyed({}, { session_id = "s2" })
 
@@ -245,6 +262,24 @@ local ok, err = pcall(function()
     equal(pcall(run), false)
     equal(signals, 0)
     equal(writes, 0)
+
+    -- Panes still on Rex's default label show their program and directory; renamed ones are kept.
+    reset()
+    local home = os.getenv("HOME")
+    local editor = { block_id = "p1", label = "shell" }
+    local named = { block_id = "p2", label = "server" }
+    views.s1.windows[1].layers = { { kind = "tiled", blocks = { editor, named } } }
+    processes.p1 = { name = "nvim", cwd = home .. "/.dotfiles/.config" }
+    processes.p2 = { name = "npm", cwd = home }
+    run()
+    equal(editor.label, "nvim ~/.d/.config")
+    equal(named.label, "server")
+    processes.p1 = { name = "fish", cwd = home .. "/.dotfiles" }
+    emit("s1")
+    equal(editor.label, "~/.dotfiles")
+    run("remove")
+    equal(editor.label, "shell")
+    equal(named.label, "server")
 end)
 io, os.rename, os.remove = real_io, real_rename, real_remove
 if not ok then error(err, 0) end

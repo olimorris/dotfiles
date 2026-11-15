@@ -132,6 +132,8 @@ else
     if not missing.ok then error(open_error or "Cannot read tab-numbers state", 0) end
 end
 
+state.panes = state.panes or {}
+
 -- Import legacy per-instance ownership without modifying its recovery files.
 -- Exact session/window IDs AND applied labels are required; numeric syntax is
 -- never evidence of ownership. Multiple generations may contain stacked labels.
@@ -218,8 +220,7 @@ local function title_block(window)
 end
 
 -- A custom label hides the app's own "program + directory" title, so rebuild that title here
-local function generated_title(session_id, window)
-    local block_id = title_block(window)
+local function block_title(session_id, block_id)
     local result = block_id and rex.call("com.superlogical.terminal.process", {
         session_id = session_id, block_id = block_id, args = {},
     })
@@ -234,6 +235,47 @@ end
 
 local function is_default_label(window_id, label)
     return label == "" or label == "Window " .. window_id:sub(-8)
+end
+
+local default_pane_labels = { [""] = true, shell = true }
+
+-- Without this, the sidebar lists every pane as "shell"; a pane you rename yourself is left alone
+local function sync_panes(session_id, windows)
+    local records = state.panes[session_id] or {}
+    state.panes[session_id] = records
+    local live = {}
+    for _, window in ipairs(windows) do
+        for _, layer in ipairs(window.layers or {}) do
+            for _, block in ipairs(layer.blocks or {}) do
+                local id, label = block.block_id, block.label or ""
+                live[id] = true
+                local previous = records[id]
+                local original = previous and previous.applied == label and previous.original or label
+                local desired = original
+                if mode ~= "remove" and default_pane_labels[original] then
+                    desired = block_title(session_id, id) or original
+                end
+                desired = shorten(desired, 128):gsub("%s+$", "")
+                if desired ~= label then
+                    records[id] = { original = original, applied = desired }
+                    save()
+                    local result, err = rex.session.set_block_label{
+                        session_id = session_id, block_id = id, label = desired,
+                    }
+                    if not result then
+                        records[id] = previous
+                        save()
+                        error(err, 0)
+                    end
+                end
+                records[id] = mode ~= "remove" and { original = original, applied = desired } or nil
+            end
+        end
+    end
+    for id in pairs(records) do
+        if not live[id] then records[id] = nil end
+    end
+    if mode == "remove" then state.panes[session_id] = nil end
 end
 
 local attached = {}
@@ -255,7 +297,7 @@ local function sync(session_id, offset)
         -- Never strip arbitrary numeric text or an unrecognized manual rename.
         local original = original_title(session_id, id, label)
         if is_default_label(id, original) then original = "" end
-        local title = original ~= "" and original or generated_title(session_id, window) or ("Window " .. id:sub(-8))
+        local title = original ~= "" and original or block_title(session_id, title_block(window)) or ("Window " .. id:sub(-8))
         local prefix = tostring(offset + index) .. ": "
         local desired = mode == "remove" and original or prefix .. shorten(title, 128 - #prefix)
         -- Rex trims labels; record the exact value it will store, including
@@ -281,6 +323,7 @@ local function sync(session_id, offset)
         if not live[id] then records[id] = nil end
     end
     if mode == "remove" then state.sessions[session_id] = nil end
+    sync_panes(session_id, view.windows or {})
     save()
     return #(view.windows or {})
 end
@@ -297,6 +340,9 @@ local function sync_all()
     for id in pairs(state.sessions) do
         if not live[id] then state.sessions[id] = nil end
     end
+    for id in pairs(state.panes) do
+        if not live[id] then state.panes[id] = nil end
+    end
     save()
 end
 
@@ -310,6 +356,7 @@ if mode == "watch" then
     rex.on("session_destroyed", function(_, ev)
         attached[ev.session_id] = nil
         state.sessions[ev.session_id] = nil
+        state.panes[ev.session_id] = nil
         sync_all()
     end)
 end
