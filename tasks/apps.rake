@@ -26,6 +26,8 @@ namespace(:install) do
 
     run(" [ -d ~/.config/rex/rex-worktrunk ] || git clone https://github.com/haxybaxy/rex-worktrunk ~/.config/rex/rex-worktrunk ") unless testing?
     run(" [ -d ~/.config/rex/rex-floaters ] || git clone https://github.com/enkelm/rex-floaters ~/.config/rex/rex-floaters ") unless testing?
+    run(" [ -d ~/.config/rex/rex-sessionizer ] || git clone https://github.com/haxybaxy/rex-sessionizer ~/.config/rex/rex-sessionizer ") unless testing?
+    run(" curl -fsSL https://raw.githubusercontent.com/YangJonghun/rex-agent-resume/main/install.sh | sh ") unless testing?
   end
 end
 
@@ -49,5 +51,7 @@ namespace(:update) do
 
     run(" git -C ~/.config/rex/rex-worktrunk pull ") unless testing?
     run(" git -C ~/.config/rex/rex-floaters pull ") unless testing?
+    run(" git -C ~/.config/rex/rex-sessionizer pull ") unless testing?
+    run(" curl -fsSL https://raw.githubusercontent.com/YangJonghun/rex-agent-resume/main/install.sh | sh ") unless testing?
   end
 end
