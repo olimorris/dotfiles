@@ -16,6 +16,7 @@ set -gx HOMEBREW_NO_ANALYTICS 1
 set -gx SSH_AUTH_SOCK "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 
 # Paths
+eval (/opt/homebrew/bin/brew shellenv fish)
 fish_add_path -p /opt/homebrew/opt/rustup/bin /opt/homebrew/bin ~/.cargo/bin ~/.dotfiles/bin ~/.local/share/nvim/mason/bin ~/.local/bin $GOPATH/bin ~/Code/Ruby/hledger-forecast/bin
 
 function theme --on-variable fish_terminal_color_theme
@@ -50,6 +51,3 @@ if status is-interactive
     mise activate fish | source
     zoxide init fish | source
 end
-
-
-eval (/opt/homebrew/bin/brew shellenv fish)
