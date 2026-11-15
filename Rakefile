@@ -136,6 +136,7 @@ task(:update) do
   # Apps
   Rake::Task["update:neovim"].invoke
   Rake::Task["update:herdr"].invoke unless testing?
+  Rake::Task["update:rex"].invoke unless testing?
 
   # gems, npm, pip and skills were saved above, and rake runs each task once per process
   Rake::Task["backup:brew"].invoke

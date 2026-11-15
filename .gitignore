@@ -41,7 +41,7 @@
 !.config/rclone/dotfiles_filter.txt
 !.config/rex/init.lua
 !.config/rex/session-label.lua
-!.config/rex/zoxide-picker.sh
+!.config/rex/extensions/tab-numbers/*
 !.config/snippets/**/*
 !.config/worktrunk/config.toml
 !.config/zsh/**/*
@@ -82,7 +82,7 @@
 .config/herdr-app/mods/**/gpui-kit.d.ts
 .config/herdr-app/mods/win98/README.md
 .config/rex/rex-worktrunk
-.config/rex/rex-sessionizer
+.config/rex/rex-floaters
 .config/hammerspoon/Spoons/*
 .config/ghostty/themes
 
