@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# obs-sidecar runs this without the login shell PATH, so Homebrew's ffmpeg isn't found
+export PATH="/opt/homebrew/bin:$PATH"
+
 obs_folder="$HOME/Movies/OBS"
 keep_folder="$obs_folder/Keep"
 
@@ -14,7 +17,7 @@ if [ -n "$newest_file" ]; then
         mp4_file="${newest_file%.mkv}.mp4"
         echo "Remuxing to mp4: $newest_file"
 
-        if ffmpeg -y -i "$newest_file" -c copy "$mp4_file"; then
+        if ffmpeg -nostdin -y -i "$newest_file" -c copy "$mp4_file"; then
             osascript -e "tell application \"Finder\" to delete POSIX file \"$newest_file\"" 2>/dev/null
             newest_file="$mp4_file"
         else
