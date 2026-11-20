@@ -13,21 +13,30 @@ namespace(:install) do
     run(" nvim --headless +'OneDarkProExtras' +qall ")
   end
 
-  task(:herdr) do
-    section("Installing herdr plugins")
-
-    run(" herdr plugin install fullerzz/herdr-plugin-sesh --yes ") unless testing?
-    run(" herdr plugin install tajdien/herdr-confirm-close --yes ") unless testing?
-    run(" herdr plugin install devashish2203/herdr-worktrunk --yes ") unless testing?
-  end
-
   task(:rex) do
     section("Installing rex plugins")
 
-    run(" [ -d ~/.config/rex/rex-worktrunk ] || git clone https://github.com/haxybaxy/rex-worktrunk ~/.config/rex/rex-worktrunk ") unless testing?
-    run(" [ -d ~/.config/rex/rex-floaters ] || git clone https://github.com/enkelm/rex-floaters ~/.config/rex/rex-floaters ") unless testing?
-    run(" [ -d ~/.config/rex/rex-sessionizer ] || git clone https://github.com/haxybaxy/rex-sessionizer ~/.config/rex/rex-sessionizer ") unless testing?
-    run(" curl -fsSL https://raw.githubusercontent.com/YangJonghun/rex-agent-resume/main/install.sh | sh ") unless testing?
+    unless testing?
+      run(
+        " [ -d ~/.config/rex/rex-worktrunk ] || git clone https://github.com/haxybaxy/rex-worktrunk ~/.config/rex/rex-worktrunk "
+      )
+    end
+
+    unless testing?
+      run(
+        " [ -d ~/.config/rex/rex-floaters ] || git clone https://github.com/enkelm/rex-floaters ~/.config/rex/rex-floaters "
+      )
+    end
+
+    unless testing?
+      run(
+        " [ -d ~/.config/rex/rex-sessionizer ] || git clone https://github.com/haxybaxy/rex-sessionizer ~/.config/rex/rex-sessionizer "
+      )
+    end
+
+    unless testing?
+      run(" curl -fsSL https://raw.githubusercontent.com/YangJonghun/rex-agent-resume/main/install.sh | sh ")
+    end
   end
 end
 
@@ -40,18 +49,14 @@ namespace(:update) do
     run(" nvim --headless +'OneDarkProExtras' +qall")
   end
 
-  task(:herdr) do
-    section("Updating herdr plugins")
-
-    run(" herdr plugin update ") unless testing?
-  end
-
   task(:rex) do
     section("Updating rex plugins")
 
     run(" git -C ~/.config/rex/rex-worktrunk pull ") unless testing?
     run(" git -C ~/.config/rex/rex-floaters pull ") unless testing?
     run(" git -C ~/.config/rex/rex-sessionizer pull ") unless testing?
-    run(" curl -fsSL https://raw.githubusercontent.com/YangJonghun/rex-agent-resume/main/install.sh | sh ") unless testing?
+    unless testing?
+      run(" curl -fsSL https://raw.githubusercontent.com/YangJonghun/rex-agent-resume/main/install.sh | sh ")
+    end
   end
 end

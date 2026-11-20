@@ -90,7 +90,6 @@ task(:install) do
 
   # Apps
   Rake::Task["install:neovim"].invoke
-  Rake::Task["install:herdr"].invoke unless testing?
   Rake::Task["install:rex"].invoke unless testing?
 
   # Dotbot runs a second time on purpose. Two of its links - the ghostty and opencode
@@ -135,7 +134,6 @@ task(:update) do
 
   # Apps
   Rake::Task["update:neovim"].invoke
-  Rake::Task["update:herdr"].invoke unless testing?
   Rake::Task["update:rex"].invoke unless testing?
 
   # gems, npm, pip and skills were saved above, and rake runs each task once per process
