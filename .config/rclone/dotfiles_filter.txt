@@ -1,6 +1,4 @@
 # Everything syncs except these, which belong to one machine
 - .config/fish/fish_variables
-- .config/herdr/session.json
-- .config/herdr/plugins/**
 - .claude/settings.local.json
 - .config/rclone/rclone.conf
