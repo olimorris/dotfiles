@@ -6,8 +6,6 @@ require("extensions.tab-numbers")
 require("rex-sessionizer").setup({ script = "~/.config/rex/zoxide-picker.sh" })
 
 rex.bind("ctrl+v>ctrl+v", "pane.send_key", { key = "ctrl+v" })
-rex.bind("ctrl+v>shift+g", "worktree")
-rex.bind("ctrl+v>shift+x", "worktree_remove")
 rex.bind("ctrl+v>\\", "pane.split", { direction = "right" })
 rex.bind("ctrl+v>-", "pane.split", { direction = "down" })
 
@@ -15,6 +13,8 @@ rex.bind("cmd+n", "session.new")
 rex.bind("shift+cmd+n", "client.window.new")
 rex.bind("shift+cmd+k", "session.switch")
 rex.bind("cmd+s", "client.sidebar.toggle")
+rex.bind("cmd+g", "worktree")
+rex.bind("shift+cmd+backspace", "worktree_remove")
 rex.bind("ctrl+w", "sessionizer")
 
 -- Every tab in every session, in the same order extensions/tab-numbers numbers them

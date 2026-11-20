@@ -29,7 +29,7 @@ end
 local function reset()
     files, views, handlers, writes, locked, fail_rename, unreadable = {}, {}, {}, 0, false, false, false
     current_pid, identities, signals, stuck, guard_busy = 100, {}, 0, false, false
-    processes = {}
+    processes, branches = {}, {}
     instance_id = "test-server"
     root = (os.getenv("XDG_STATE_HOME") or (os.getenv("HOME") .. "/.local/state")) .. "/rex/tab-numbers"
     views.s1 = { windows = {
@@ -79,6 +79,10 @@ rex = {
         end
         if argv[1] == "/bin/ps" then
             return { ok = identities[argv[4]] ~= nil, stdout = identities[argv[4]] or "" }
+        end
+        if argv[1] == "git" then
+            local name = branches[argv[3]]
+            return { ok = name ~= nil, stdout = name and (name .. "\n") or "" }
         end
         if argv[1] == "/bin/kill" then
             signals = signals + 1
@@ -277,6 +281,10 @@ local ok, err = pcall(function()
     processes.p1 = { name = "fish", cwd = home .. "/.dotfiles" }
     emit("s1")
     equal(editor.label, "~/.dotfiles")
+    processes.p1 = { name = "claude", cwd = home .. "/Code/feat-x" }
+    branches[home .. "/Code/feat-x"] = "feat/x"
+    emit("s1")
+    equal(editor.label, "Claude feat/x")
     run("remove")
     equal(editor.label, "shell")
     equal(named.label, "server")

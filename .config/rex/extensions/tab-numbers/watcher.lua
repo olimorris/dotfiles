@@ -205,6 +205,12 @@ local function short_path(dir)
     return (dir:sub(1, 1) == "/" and "/" or "") .. table.concat(parts, "/")
 end
 
+local function branch(dir)
+    local result = rex.exec({ "git", "-C", dir, "symbolic-ref", "--short", "-q", "HEAD" })
+    local name = result and result.ok and result.stdout:gsub("%s+$", "")
+    return name ~= "" and name or nil
+end
+
 -- Without this, opening a floater such as lazygit retitles the tab to "rex"
 local function title_block(window)
     local first_tiled
@@ -227,7 +233,7 @@ local function block_title(session_id, block_id)
     local process = result and result.foreground
     if not process then return nil end
     local program = ((process.argv0 or process.name or ""):match("([^/]+)$") or ""):gsub("^%-", "")
-    local dir = process.cwd and short_path(process.cwd)
+    local dir = process.cwd and (branch(process.cwd) or short_path(process.cwd))
     if shells[program] or program == "" then return dir end
     program = pretty_names[program] or program
     return dir and (program .. " " .. dir) or program
