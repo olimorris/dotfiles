@@ -9,6 +9,7 @@
 
 # Config
 !.config/bash/**/*
+!.config/claude/settings.json
 !.config/composer/composer.json
 !.config/efm-langserver/*
 !.config/env/.env.example
