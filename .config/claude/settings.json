@@ -1,0 +1,159 @@
+{
+  "agentPushNotifEnabled": true,
+  "enabledPlugins": {
+    "agent-skills@addy-agent-skills": true,
+    "devrel-skills@n8n-devrel": true,
+    "lua-lsp@claude-plugins-official": true,
+    "n8n-skills@n8n-io": true,
+    "postman@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "slack@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true
+  },
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_CODE_MODE": "1"
+  },
+  "extraKnownMarketplaces": {
+    "addy-agent-skills": {
+      "source": {
+        "repo": "addyosmani/agent-skills",
+        "source": "github"
+      }
+    },
+    "n8n-devrel": {
+      "source": {
+        "repo": "n8n-io/devrel-skills",
+        "source": "github"
+      }
+    },
+    "n8n-io": {
+      "autoUpdate": true,
+      "source": {
+        "repo": "n8n-io/skills",
+        "source": "github"
+      }
+    }
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" approval_requested",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" approval_requested",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" approval_finished",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "/bin/sh -c 'rex __internal session-start --agent claude 2>/dev/null || true'",
+            "timeout": 5,
+            "type": "command"
+          },
+          {
+            "command": "/Users/Oli/.dotfiles/bin/rex-name-session --hook",
+            "timeout": 5,
+            "type": "command"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "/Users/Oli/.local/share/rex-agent-resume/bin/rex-agent-resume-hook claude",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "^(startup|resume|clear|compact|fork)$"
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "gh-axi",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "chrome-devtools-axi",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "lavish-axi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" done",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" submitted",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  },
+  "model": "opus[1m]",
+  "modelSettings": {
+    "claude-fable-5-2": {
+      "effortLevel": "high"
+    }
+  },
+  "pluginConfigs": {
+    "n8n-skills@n8n-io": {
+      "options": {
+        "n8n_url": "https://tdr.app.n8n.cloud"
+      }
+    }
+  },
+  "theme": "auto"
+}

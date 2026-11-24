@@ -41,7 +41,9 @@
         path: misc/LaunchAgents/oli.finance-output.plist
 
     # Others
-    ~/.claude.json: .config/.claude.json
+    ~/.claude/settings.json:
+        force: false
+        path: .config/claude/settings.json
     ~/.claude/rules/PERSONAL.md:
         force: true
         path: PERSONAL.md
