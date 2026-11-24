@@ -1,46 +1,15 @@
 {
-  "agentPushNotifEnabled": true,
-  "enabledPlugins": {
-    "agent-skills@addy-agent-skills": true,
-    "devrel-skills@n8n-devrel": true,
-    "lua-lsp@claude-plugins-official": true,
-    "n8n-skills@n8n-io": true,
-    "postman@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true,
-    "slack@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true
-  },
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_CODE_MODE": "1"
   },
-  "extraKnownMarketplaces": {
-    "addy-agent-skills": {
-      "source": {
-        "repo": "addyosmani/agent-skills",
-        "source": "github"
-      }
-    },
-    "n8n-devrel": {
-      "source": {
-        "repo": "n8n-io/devrel-skills",
-        "source": "github"
-      }
-    },
-    "n8n-io": {
-      "autoUpdate": true,
-      "source": {
-        "repo": "n8n-io/skills",
-        "source": "github"
-      }
-    }
-  },
+  "model": "opus[1m]",
   "hooks": {
     "Notification": [
       {
         "hooks": [
           {
-            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" approval_requested",
-            "type": "command"
+            "type": "command",
+            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" approval_requested"
           }
         ]
       }
@@ -49,8 +18,8 @@
       {
         "hooks": [
           {
-            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" approval_requested",
-            "type": "command"
+            "type": "command",
+            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" approval_requested"
           }
         ]
       }
@@ -59,8 +28,8 @@
       {
         "hooks": [
           {
-            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" approval_finished",
-            "type": "command"
+            "type": "command",
+            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" approval_finished"
           }
         ]
       }
@@ -69,26 +38,26 @@
       {
         "hooks": [
           {
+            "type": "command",
             "command": "/bin/sh -c 'rex __internal session-start --agent claude 2>/dev/null || true'",
-            "timeout": 5,
-            "type": "command"
+            "timeout": 5
           },
           {
+            "type": "command",
             "command": "/Users/Oli/.dotfiles/bin/rex-name-session --hook",
-            "timeout": 5,
-            "type": "command"
+            "timeout": 5
           }
         ]
       },
       {
+        "matcher": "^(startup|resume|clear|compact|fork)$",
         "hooks": [
           {
+            "type": "command",
             "command": "/Users/Oli/.local/share/rex-agent-resume/bin/rex-agent-resume-hook claude",
-            "timeout": 10,
-            "type": "command"
+            "timeout": 10
           }
-        ],
-        "matcher": "^(startup|resume|clear|compact|fork)$"
+        ]
       },
       {
         "matcher": "",
@@ -125,8 +94,8 @@
       {
         "hooks": [
           {
-            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" done",
-            "type": "command"
+            "type": "command",
+            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" done"
           }
         ]
       }
@@ -135,14 +104,45 @@
       {
         "hooks": [
           {
-            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" submitted",
-            "type": "command"
+            "type": "command",
+            "command": "[ -z \"$CODECOMPANION_HOOK\" ] || \"$CODECOMPANION_HOOK\" submitted"
           }
         ]
       }
     ]
   },
-  "model": "opus[1m]",
+  "enabledPlugins": {
+    "agent-skills@addy-agent-skills": true,
+    "devrel-skills@n8n-devrel": true,
+    "lua-lsp@claude-plugins-official": true,
+    "n8n-skills@n8n-io": true,
+    "postman@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "slack@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true,
+    "telegram@anthropic-plugin-directory": true
+  },
+  "extraKnownMarketplaces": {
+    "addy-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "addyosmani/agent-skills"
+      }
+    },
+    "n8n-devrel": {
+      "source": {
+        "source": "github",
+        "repo": "n8n-io/devrel-skills"
+      }
+    },
+    "n8n-io": {
+      "source": {
+        "source": "github",
+        "repo": "n8n-io/skills"
+      },
+      "autoUpdate": true
+    }
+  },
   "modelSettings": {
     "claude-fable-5-2": {
       "effortLevel": "high"
@@ -155,5 +155,6 @@
       }
     }
   },
-  "theme": "auto"
+  "theme": "auto",
+  "agentPushNotifEnabled": true
 }
