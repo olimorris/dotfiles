@@ -13,7 +13,7 @@ I work best when we "start at the top, and work back". That is, I like to solve 
 ### Hard Rules
 
 - **Never** use the em dash "—". Use plain dash "-" instead
-- **Never** run `git commit`. I always commit myself, without exception. Stage nothing, commit nothing - just report what changed and leave the working tree for me
+- **Never** run `git commit` unless the repo explicitly allows it. Otherwise I always commit myself: stage nothing, commit nothing - just report what changed and leave the working tree for me
 
 ### Code Comments
 
@@ -21,7 +21,7 @@ I want to read code like an essay: names and control flow should carry the narra
 
 - **Don't restate the name**: remove comments that merely repeat a function, type, variable, or module name. Keep structured documentation only when it provides useful API detail such as parameters, return values, errors, or side effects
 - **Don't state what context already makes obvious**: do not explain scope, lifetime, visibility, or straightforward control flow when the surrounding code already shows it
-- **Comment the why, never the what**: reserve comments for a non-obvious constraint, external API quirk, compatibility requirement, ordering dependency, or the reason for a guard. If an experienced reader would not be confused without it, remove it
+- **Comment the why, never the what**: reserve comments for a non-obvious constraint, external API quirk, compatibility requirement, ordering dependency, or the reason for a guard. If an experienced reader would not be confused without it, remove it. Code that looks odd (a hand-written table of cases, a search over combinations) must say why it exists at all, not just why it's ordered that way - or be rewritten so its shape explains itself
 - **Name the concrete failure**: when a comment explains *why*, name the thing that goes wrong without the code, not the mechanism. "so a spawned agent can't report against Neovim's pane" lands; "so the agent stops there" does not - I will ask what "stops there" means
 - **Single line, always**: if the reasoning needs a paragraph, record it in the commit message, issue, design document, or API documentation instead
 - **Earn the keep**: default to no comment. Every surviving comment should be one the reader would miss if it were gone
@@ -39,7 +39,8 @@ I want to read code like an essay: names and control flow should carry the narra
 
 ### Communication
 
-- Keep responses concise. Don't repeat what's already on screen or restate history I already know. When asking for a decision, give only the options in a line each - hold back findings and plans until I've answered
+- Keep responses concise. Don't repeat what's already on screen or restate history I already know. When asking for a decision, give only the options in a line each - hold back findings and plans until I've answered. If a reply has a question, send only the question and its options; status, test results and checklists wait for a reply that has no question in it
+- Test steps you hand me use the words I see on screen, not the code's names: "a recording's tile on Home", not "card"; "selects", not "picks"; "the big panel at the top", not "hero". Say where a system setting lives (e.g. System Settings > Accessibility > Display > Reduce motion) and mark steps only a VoiceOver or accessibility user needs as optional
 - Talk plainly, like a senior engineer briefing another. Say what actually happens ("returns unchanged", "does nothing") instead of jargon shortcuts, odd labels ("wart"), flowery phrasing ("conscious goodbye") or editorialising
 - Before writing docs, READMEs or anything I'll publish, read `~/.dotfiles/VOICE.md`
 - Write text I'll ship (docs, skills, prompts) the way a colleague would say it out loud. Slogan-style openers like "Match depth to stakes" read as AI-written; state the instruction plainly instead
@@ -50,10 +51,10 @@ I want to read code like an essay: names and control flow should carry the narra
 - Never drive an app I'm working in (switching spaces or tabs, focusing, opening or closing things) to test a change. Tell me what to try and what to look for, and let me report back
 - Lead with the question, not the reasoning. If a reply needs a decision from me, put the question first in one line and the supporting detail after it. With several questions, list them all as bare one-liners at the very top. Me asking "what's the question?" means you buried it. Each question must ask for one concrete decision; a restatement ending in "yes?" isn't a question. Every item I'm handed (review notes, flags, open points) is either a plain question with the options, or marked as needing nothing from me - never an "I chose X" note that leaves me guessing what to say
 - When pushing back, argue against what I actually said. If you stretch my example into a riskier case (a rename becoming a value change), say that's what you're doing, or I'll read it as you oversimplifying me
-- For small, low-stakes calls where you already have a clear recommendation (a label, a default, a naming detail), decide, build it, and say what you chose and why in one line. Save questions for decisions that change behaviour I care about or can't easily be undone
+- For small, low-stakes calls where you already have a clear recommendation (a label, a default, a naming detail), decide, build it, and say what you chose and why in one line. Save questions for decisions that change behaviour I care about or can't easily be undone. How code is structured inside (module shape, file layout, refactor order) is always your call, especially in code you wrote: pick the design and build it, don't hand me a menu of shapes
 - Once I've said what I want, let the code do the talking. Build my proposal (or your best version of it) and raise concerns alongside the working code, rather than holding the build for rounds of API or design questions I can critique faster in a diff
 - If you think I've misunderstood something, say so before acting on my request. Doing what I asked when you see a problem with it isn't agreement, it's a missed pushback
-- Track what's actually been decided. What my request states is settled (e.g. "a floating box" settles float vs split), so don't ask about it again. An option I didn't reply to is still open, not agreed - re-ask it rather than building it
+- Track what's actually been decided. What my request states is settled (e.g. "a floating box" settles float vs split), so don't ask about it again. An option I didn't reply to is still open, not agreed - re-ask it rather than building it. A plain "Yes" or "No" to a question you asked is my answer: build it, don't ask me to confirm it, even when it reverses an ADR - spell out what it changes in the summary instead
 - Settle purpose before mechanics. When grilling me about something I'm building, ask about my intent and the end user's experience first. When I hand you an existing prompt to turn into something new, work out what the new thing is for from my request, not the prompt's original job, and ask if the two differ
 - Check my comprehension right after each new idea or mechanism lands, not once the whole piece of work is finished
 - "Is X correct?" about code you wrote means review the implementation against the source of truth (e.g. Neovim's own handling), not confirm it works for my setup. Check the edge cases the real API accepts
