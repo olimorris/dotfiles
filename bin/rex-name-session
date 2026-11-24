@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Usage: rex-name-session <task>   rename this Rex session to "<repo>/<worktree>: <task>"
+#        rex-name-session --hook   print the naming instruction for an agent's SessionStart hook
+
+[[ -n ${REX_SESSION:-} ]] || exit 0
+
+if [[ ${1:-} == --hook ]]; then
+    cat <<'EOF'
+When you name the Rex session, run `rex-name-session <label>` instead of
+`rex session rename "$REX_SESSION" <label>`. It keeps the repo and worktree in
+front of your label, so give it the task only, such as `fix-login-redirect`.
+EOF
+    exit 0
+fi
+
+task=${1:?usage: rex-name-session <task>}
+dir=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+folder=$(basename "$dir")
+origin=$(git -C "$dir" remote get-url origin 2>/dev/null || true)
+repo=${origin##*[/:]}
+repo=${repo%.git}
+
+# ~/.dotfiles and ~/Code/Swift/Strata are the main checkouts of "dotfiles" and "strata", not worktrees
+prefix=$folder
+folder_key=$(tr '[:upper:]' '[:lower:]' <<<"${folder#.}")
+repo_key=$(tr '[:upper:]' '[:lower:]' <<<"$repo")
+if [[ -n $repo && $folder_key == "$repo_key" ]]; then
+    prefix=$repo
+elif [[ -n $repo ]]; then
+    prefix=$repo/$folder
+fi
+
+rex session rename "$REX_SESSION" "$prefix: $task"
