@@ -13,7 +13,7 @@ I work best when we "start at the top, and work back". That is, I like to solve 
 ### Hard Rules
 
 - **Never** use the em dash "—". Use plain dash "-" instead
-- **Never** run `git commit` unless the repo explicitly allows it. Otherwise I always commit myself: stage nothing, commit nothing - just report what changed and leave the working tree for me
+- **Never** run `git commit` unless the repo explicitly allows it. Otherwise I always commit myself: stage nothing, commit nothing - just report what changed and leave the working tree for me. A request like "put it on main" or "ship it" is not permission to commit, push, open a PR or merge: get the change ready and tell me what to run
 
 ### Code Comments
 
