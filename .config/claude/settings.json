@@ -2,6 +2,9 @@
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_CODE_MODE": "1"
   },
+  "permissions": {
+    "deny": []
+  },
   "model": "opus[1m]",
   "hooks": {
     "Notification": [
@@ -39,7 +42,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/bin/sh -c 'rex __internal session-start --agent claude 2>/dev/null || true'",
+            "command": "/bin/sh -c 'rex __internal session-start --agent claude --feature-session-naming=false 2>/dev/null || true'",
             "timeout": 5
           },
           {
@@ -120,7 +123,8 @@
     "pyright-lsp@claude-plugins-official": true,
     "slack@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
-    "telegram@anthropic-plugin-directory": true
+    "cc-plugin-telemetry@builtin": false,
+    "telegram@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
     "addy-agent-skills": {
@@ -146,6 +150,9 @@
   "modelSettings": {
     "claude-fable-5-2": {
       "effortLevel": "high"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "medium"
     }
   },
   "pluginConfigs": {
@@ -154,6 +161,10 @@
         "n8n_url": "https://tdr.app.n8n.cloud"
       }
     }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "jq -r '(.context_window.total_input_tokens // 0) as $t | (if $t >= 1000 then \"\\(($t / 100 | floor) / 10)k\" else \"\\($t)\" end) as $n | \"\\u001b[1;38;2;245;195;68m\\($n)\\u001b[0m (\\(.context_window.used_percentage // 0 | round)%) · \\(.model.display_name)\\(if .effort.level then \" (\\(.effort.level))\" else \"\" end)\"'"
   },
   "theme": "auto",
   "agentPushNotifEnabled": true
